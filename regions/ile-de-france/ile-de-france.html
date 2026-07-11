@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Île-de-France — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-ile-de-france.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">Î</span>le-de-<br><span style="padding-left: 120px;"><span class="titre-initial">F</span>rance</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-ile-de-france.png" alt="Écusson Île-de-France" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/entrecote-bercy.html">Entrecôte sauce Bercy</a></li>
+              <li><a href="gastronomie/plats-emblematiques/pot-au-feu-parisien.html">Pot-au-feu à la parisienne</a></li>
+              <li><a href="gastronomie/plats-emblematiques/soupe-oignon.html">Soupe à l'oignon gratinée</a></li>
+              <li><a href="gastronomie/plats-emblematiques/steak-frites.html">Steak-frites (plat national parisien)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/sole-meuniere.html">Sole meunière</a></li>
+              <li><a href="gastronomie/plats-emblematiques/lapin-moutarde.html">Lapin à la moutarde de Meaux</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/brie-meaux.html">Brie de Meaux AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/brie-melun.html">Brie de Melun AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/moutarde-meaux.html">Moutarde de Meaux IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/cresson-seine-et-marne.html">Cresson de fontaine de Seine-et-Marne</a></li>
+              <li><a href="gastronomie/fromages-terroir/champignon-paris.html">Champignon de Paris (né en Île-de-France)</a></li>
+              <li><a href="gastronomie/fromages-terroir/asperge-argenteuil.html">Asperge d'Argenteuil (tradition maraîchère)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥐</span> Boulangerie & gastronomie parisienne</div>
+            <ul>
+              <li><a href="gastronomie/boulangerie/croissant-parisien.html">Croissant au beurre parisien</a></li>
+              <li><a href="gastronomie/boulangerie/baguette-tradition.html">Baguette tradition (patrimoine UNESCO)</a></li>
+              <li><a href="gastronomie/boulangerie/macaron-laduree.html">Macaron parisien (Ladurée, Pierre Hermé)</a></li>
+              <li><a href="gastronomie/boulangerie/eclair-chocolat.html">Éclair au chocolat</a></li>
+              <li><a href="gastronomie/boulangerie/millefeuille.html">Millefeuille</a></li>
+              <li><a href="gastronomie/boulangerie/paris-brest.html">Paris-Brest</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & confiseries</div>
+            <ul>
+              <li><a href="gastronomie/douceur/nougat-montargis.html">Pralines de Montargis (Mazet)</a></li>
+              <li><a href="gastronomie/douceur/sucre-pomme.html">Pithiviers fondant (Loiret, limitrophe)</a></li>
+              <li><a href="gastronomie/douceur/tarte-bourdaloue.html">Tarte Bourdaloue (poire et amandes)</a></li>
+              <li><a href="gastronomie/douceur/financier-paris.html">Financier parisien</a></li>
+              <li><a href="gastronomie/douceur/opera-patisserie.html">Opéra (gâteau emblématique parisien)</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Paris — rives de la Seine (Notre-Dame, Louvre, Eiffel)</li>
+              <li>Château et parc de Versailles</li>
+              <li>Château et parc de Fontainebleau</li>
+              <li>Baguette de tradition française (patrimoine immatériel)</li>
+              <li>Repas gastronomique des Français (patrimoine immatériel)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & résidences royales</div>
+            <ul>
+              <li>Château de Versailles (Louis XIV)</li>
+              <li>Château de Fontainebleau</li>
+              <li>Château de Vaux-le-Vicomte (Fouquet)</li>
+              <li>Château de Chantilly (Oise, limitrophe)</li>
+              <li>Château de Saint-Germain-en-Laye</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Grands musées parisiens</div>
+            <ul>
+              <li>Musée du Louvre (1er musée mondial)</li>
+              <li>Musée d'Orsay (impressionnisme)</li>
+              <li>Centre Georges-Pompidou (art moderne)</li>
+              <li>Musée de l'Orangerie (Nymphéas de Monet)</li>
+              <li>Musée du quai Branly — Jacques Chirac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale Notre-Dame de Paris</li>
+              <li>Basilique du Sacré-Cœur (Montmartre)</li>
+              <li>Sainte-Chapelle (vitraux gothiques)</li>
+              <li>Tour Eiffel (symbole mondial)</li>
+              <li>Opéra Garnier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & massifs</div>
+            <ul>
+              <li>Forêt de Fontainebleau (17 000 ha — escalade)</li>
+              <li>Forêt de Rambouillet (Seine-et-Yvelines)</li>
+              <li>Forêt de Sénart (Essonne)</li>
+              <li>Forêt de Montmorency (Val-d'Oise)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💧</span> Fleuves, rivières & lacs</div>
+            <ul>
+              <li>Seine (traversée de Paris — 776 km)</li>
+              <li>Marne (val de Marne)</li>
+              <li>Oise (Val-d'Oise)</li>
+              <li>Base de loisirs de Cergy-Pontoise</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Parcs & jardins</div>
+            <ul>
+              <li>Jardins de Versailles (Le Nôtre)</li>
+              <li>Bois de Boulogne et Bois de Vincennes</li>
+              <li>Jardins des Tuileries et du Palais-Royal</li>
+              <li>Parc de Sceaux (Hauts-de-Seine)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Espaces naturels protégés</div>
+            <ul>
+              <li>Parc naturel régional du Gâtinais français</li>
+              <li>Parc naturel régional de la Haute Vallée de Chevreuse</li>
+              <li>Réserve naturelle de l'Île-Saint-Denis</li>
+              <li>Marais de la Bassée (Seine-et-Marne)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>👗</span> Haute couture & mode</div>
+            <ul>
+              <li>Maisons de couture parisiennes (Chanel, Dior, Saint Laurent…)</li>
+              <li>Fédération de la Haute Couture et de la Mode</li>
+              <li>Ateliers de broderie et de plumasserie du Marais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💎</span> Joaillerie & orfèvrerie</div>
+            <ul>
+              <li>Place Vendôme (Cartier, Van Cleef, Chaumet…)</li>
+              <li>Orfèvrerie de Saint-Nicolas-d'Aliermont</li>
+              <li>Gravure et médaille de la Monnaie de Paris</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>📚</span> Édition & arts graphiques</div>
+            <ul>
+              <li>Imprimerie nationale (Paris)</li>
+              <li>Reliure d'art parisienne</li>
+              <li>Lithographie et estampe (ateliers du Marais)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪑</span> Mobilier & décoration</div>
+            <ul>
+              <li>Manufacture des Gobelins (tapisserie royale)</li>
+              <li>Manufacture de Sèvres (porcelaine)</li>
+              <li>Manufacture de la Savonnerie (tapis)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Francilien (parler parisien — norme du français standard)</li>
+              <li>Académie française (gardienne de la langue)</li>
+              <li>Capital mondiale de la littérature (Hugo, Balzac, Proust…)</li>
+              <li>Cinéma français — capitale mondiale du 7e art</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Arts vivants & spectacles</div>
+            <ul>
+              <li>Opéra national de Paris (Garnier & Bastille)</li>
+              <li>Comédie-Française (théâtre national)</li>
+              <li>Cabaret — Moulin Rouge, Lido, Crazy Horse</li>
+              <li>Festival d'Automne à Paris</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏆</span> Sports & événements</div>
+            <ul>
+              <li>Roland-Garros (tennis — Terre battue)</li>
+              <li>Tour de France (arrivée sur les Champs-Élysées)</li>
+              <li>Paris Saint-Germain (football)</li>
+              <li>Paris 2024 — Jeux Olympiques et Paralympiques</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎆</span> Fêtes & traditions parisiennes</div>
+            <ul>
+              <li>Feux du 14 juillet (Tour Eiffel)</li>
+              <li>Nuit Blanche (premier samedi d'octobre)</li>
+              <li>Fête de la Musique (21 juin)</li>
+              <li>Paris Carnaval (défilé de Montmartre)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages & bourgs</div>
+            <ul>
+              <li>Barbizon (Seine-et-Marne — école de peinture)</li>
+              <li>Auvers-sur-Oise (Val-d'Oise — Van Gogh)</li>
+              <li>Provins (Seine-et-Marne — cité médiévale UNESCO)</li>
+              <li>Moret-sur-Loing (Seine-et-Marne — Sisley)</li>
+              <li>La Roche-Guyon (Val-d'Oise)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villes royales & historiques</div>
+            <ul>
+              <li>Versailles (ville-château — Louis XIV)</li>
+              <li>Saint-Germain-en-Laye (berceau de Louis XIV)</li>
+              <li>Fontainebleau (résidence impériale)</li>
+              <li>Senlis (Oise, limitrophe — cathédrale gothique)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Villages des peintres</div>
+            <ul>
+              <li>Auvers-sur-Oise (Van Gogh — derniers tableaux)</li>
+              <li>Barbizon (Millet, Rousseau, Corot)</li>
+              <li>Moret-sur-Loing (Alfred Sisley)</li>
+              <li>Giverny (Monet — Normandie, tout proche)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Auvers-sur-Oise</h3>
+            <p>Dans ce modeste village du Val-d'Oise, Vincent van Gogh passa les soixante-dix derniers jours de sa vie en 1890 et y peignit plus de soixante-dix toiles, dont l'Église d'Auvers et les Champs de blé aux corbeaux. Il y repose aux côtés de son frère Théo dans le petit cimetière du village. Aujourd'hui, Auvers-sur-Oise est un lieu de pèlerinage mondial pour les amateurs d'art, avec la Maison de Van Gogh et l'Auberge Ravoux intactes.</p>
+            <span class="village-star-tag">Village des peintres</span>
+            <span class="village-star-tag">Val-d'Oise</span>
+            <span class="village-star-tag">Héritage Van Gogh</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Fashion Week Homme — Paris</h4><p>La semaine de la mode masculine ouvre l'année parisienne — défilés dans les grands hôtels particuliers et les musées de la capitale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Salon du Livre de Paris</h4><p>Le plus grand salon littéraire francophone réunit chaque printemps auteurs, éditeurs et lecteurs du monde entier à Paris.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Roland-Garros — Internationaux de France</h4><p>Le deuxième Grand Chelem de tennis se dispute sur la terre battue du stade Roland-Garros, porte d'Auteuil, depuis 1928.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête de la Musique</h4><p>Le 21 juin, toute la France et toutes les rues de Paris résonnent de concerts gratuits — une fête née à Paris en 1982 devenue mondiale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Défilé du 14 juillet & Feux d'artifice</h4><p>Le défilé militaire sur les Champs-Élysées et le feu d'artifice de la Tour Eiffel — la fête nationale la plus regardée au monde.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Arrivée du Tour de France</h4><p>Les Champs-Élysées accueillent chaque juillet le sprint final du Tour de France — l'une des images les plus iconiques du sport mondial.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Nuit Blanche — Paris</h4><p>La capitale s'illumine d'installations artistiques nocturnes gratuites dans tout Paris — musées ouverts, performances et lumière jusqu'à l'aube.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>FIAC — Foire Internationale d'Art Contemporain</h4><p>Le Grand Palais accueille les plus grandes galeries mondiales pour la foire d'art contemporain la plus prestigieuse de France.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Île-de-France</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🗼</span>
+            <h4>Paris Essentiel</h4>
+            <p>Tour Eiffel, Louvre, Notre-Dame, Montmartre, Marais, Saint-Germain-des-Prés — les incontournables de la capitale en quelques jours.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">👑</span>
+            <h4>Versailles & les Châteaux Royaux</h4>
+            <p>Versailles, Vaux-le-Vicomte, Fontainebleau, Saint-Germain-en-Laye — la grandeur royale de l'Île-de-France à portée de RER.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🎨</span>
+            <h4>Sur les pas des Impressionnistes</h4>
+            <p>Auvers-sur-Oise, Barbizon, Moret-sur-Loing, Argenteuil — les villages qui ont vu naître l'impressionnisme aux portes de Paris.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌲</span>
+            <h4>Forêt de Fontainebleau</h4>
+            <p>Escalade sur les chaos de grès, randonnées et le village de Barbizon — le poumon vert de l'Île-de-France classé au patrimoine.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏛️</span>
+            <h4>Paris des Musées</h4>
+            <p>Louvre, Orsay, Pompidou, Orangerie, Branly, Picasso — la plus grande concentration de chefs-d'œuvre au monde dans un rayon de 5 km.</p>
+            <span class="parcours-item-duree">⏱ 4 à 7 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏘️</span>
+            <h4>Provins — Cité Médiévale</h4>
+            <p>Remparts, tour César, souterrains et joutes médiévales dans cette cité champenoise classée UNESCO aux portes de la Brie.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

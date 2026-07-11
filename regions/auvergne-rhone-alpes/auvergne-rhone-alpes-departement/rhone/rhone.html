@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhône — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -105px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 170px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../auvergne-rhone-alpes.html" class="fiche-topbar-btn">Auvergne-Rhône-Alpes</a>
+          <a href="../../carte-auvergne-rhone-alpes.html" class="fiche-topbar-btn">Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 40px;"></span>Le <span class="titre-initial">R</span>hône</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/auvergne-rhone-alpes/rhone.png" alt="Écusson Rhône" />
+        </div>
+
+        <span class="fiche-hero-ancien">Préfecture : Lyon · Département 69</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">Traditions</button>
+          <button class="fiche-tab" data-panel="villages">Villages</button>
+          <button class="fiche-tab" data-panel="agenda">Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+            <ul>
+              <li>Quenelles de Lyon</li>
+              <li>Andouillette lyonnaise</li>
+              <li>Saucisson lyonnais (brioché ou pistaché)</li>
+              <li>Cervelle de canut (fromage blanc aux herbes)</li>
+              <li>Coq au vin</li>
+              <li>Tablier de sapeur</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+            <ul>
+              <li>Praline rose de Lyon</li>
+              <li>Charcuterie lyonnaise</li>
+              <li>Volaille du Lyonnais</li>
+              <li>Fromage de chèvre du Beaujolais</li>
+              <li>Marrons du Beaujolais</li>
+              <li>Miel du Lyonnais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vin</span> Vins & boissons</div>
+            <ul>
+              <li>Beaujolais AOP (Beaujolais Nouveau)</li>
+              <li>Crus du Beaujolais (Morgon, Fleurie, Brouilly)</li>
+              <li>Côtes du Rhône (partie sud du département)</li>
+              <li>Vin de pays du Lyonnais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Dessert</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Tarte aux pralines roses</li>
+              <li>Coussin de Lyon (praline et chocolat)</li>
+              <li>Bugnes lyonnaises</li>
+              <li>Confiture de marrons du Beaujolais</li>
+              <li>Nougat de Lyon</li>
+              <li>Cerises du Lyonnais confites</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Site</span> Sites UNESCO & historiques</div>
+            <ul>
+              <li>Vieux Lyon, plus grand quartier Renaissance de France (UNESCO)</li>
+              <li>Basilique Notre-Dame de Fourvière</li>
+              <li>Traboules du Vieux Lyon et de la Croix-Rousse</li>
+              <li>Théâtres romains de Fourvière</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Quartier</span> Quartiers & mémoire ouvrière</div>
+            <ul>
+              <li>Croix-Rousse, colline des Canuts</li>
+              <li>Confluence, quartier contemporain</li>
+              <li>Presqu'île et l'Hôtel-Dieu</li>
+              <li>Maison des Canuts</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Sites viticoles & villages</div>
+            <ul>
+              <li>Oingt, village de pierres dorées du Beaujolais</li>
+              <li>Villié-Morgon, cœur du cru Morgon</li>
+              <li>Vignoble en terrasses du Beaujolais</li>
+              <li>Château de Bagnols (Beaujolais)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
+            <ul>
+              <li>Musée des Confluences</li>
+              <li>Musée des Beaux-Arts de Lyon</li>
+              <li>Musée Gadagne</li>
+              <li>Institut Lumière, berceau du cinéma</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Colline</span> Beaujolais & collines</div>
+            <ul>
+              <li>Collines du Beaujolais et ses vignobles</li>
+              <li>Monts du Lyonnais</li>
+              <li>Pierres dorées du Beaujolais</li>
+              <li>Vallée d'Azergues</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fleuve</span> Vallée du Rhône</div>
+            <ul>
+              <li>Confluence du Rhône et de la Saône</li>
+              <li>Berges du Rhône à Lyon</li>
+              <li>Île Barbe</li>
+              <li>Parc de la Tête d'Or</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Faune</span> Faune & biodiversité</div>
+            <ul>
+              <li>Oiseaux du parc de la Tête d'Or</li>
+              <li>Faune des Monts du Lyonnais</li>
+              <li>Vignes et biodiversité du Beaujolais</li>
+              <li>Poissons du Rhône et de la Saône</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Paysage</span> Paysages & panoramas</div>
+            <ul>
+              <li>Panorama depuis Fourvière sur Lyon</li>
+              <li>Vignobles du Beaujolais au coucher du soleil</li>
+              <li>Confluence Rhône-Saône</li>
+              <li>Collines dorées du Beaujolais</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Soie</span> Soie & textile</div>
+            <ul>
+              <li>Tradition de la soierie lyonnaise (canuts)</li>
+              <li>Métiers à tisser Jacquard</li>
+              <li>Maison des Canuts, mémoire vivante</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Gastronomie & bouchons</div>
+            <ul>
+              <li>Tradition des bouchons lyonnais</li>
+              <li>Charcuterie lyonnaise artisanale</li>
+              <li>Confection de la praline rose</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vigne</span> Viticulture</div>
+            <ul>
+              <li>Élaboration du Beaujolais, macération semi-carbonique</li>
+              <li>Vendanges manuelles dans le Beaujolais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Conserve</span> Produits artisanaux</div>
+            <ul>
+              <li>Fabrication du coussin de Lyon</li>
+              <li>Confiserie à la praline</li>
+              <li>Miel du Lyonnais artisanal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Langue</span> Langue & identité</div>
+            <ul>
+              <li>Francoprovençal lyonnais</li>
+              <li>Mémoire des canuts et des révoltes ouvrières</li>
+              <li>Tradition du théâtre de Guignol, né à Lyon</li>
+              <li>Héritage des frères Lumière, inventeurs du cinéma</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bouchon</span> Gastronomie & bouchons</div>
+            <ul>
+              <li>Tradition des mères lyonnaises, cuisinières emblématiques</li>
+              <li>Héritage de Paul Bocuse</li>
+              <li>Culture des bouchons lyonnais</li>
+              <li>Vendanges et fête du Beaujolais Nouveau</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fete</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Fête des Lumières (8 décembre)</li>
+              <li>Fête du Beaujolais Nouveau (troisième jeudi de novembre)</li>
+              <li>Nuits de Fourvière, festival estival</li>
+              <li>Fête des Canuts à la Croix-Rousse</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+            <ul>
+              <li>Confection des quenelles lyonnaises</li>
+              <li>Élaboration de la praline rose</li>
+              <li>Vinification du Beaujolais</li>
+              <li>Tradition des bouchons et des mères lyonnaises</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Oingt (pierres dorées du Beaujolais)</li>
+              <li>Ternand</li>
+              <li>Villié-Morgon</li>
+              <li>Odenas</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vigne</span> Villages viticoles du Beaujolais</div>
+            <ul>
+              <li>Fleurie</li>
+              <li>Chiroubles</li>
+              <li>Juliénas</li>
+              <li>Chénas</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bourg</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Lyon (préfecture, capitale gastronomique)</li>
+              <li>Villefranche-sur-Saône, capitale du Beaujolais</li>
+              <li>Tarare, cité de la mousseline</li>
+              <li>L'Arbresle, porte des Monts du Lyonnais</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">Etoile</div>
+          <div>
+            <h3>Village à l'honneur : Oingt</h3>
+            <p>Bâti en pierres dorées caractéristiques du Beaujolais, ce village médiéval perché domine la vallée d'Azergues depuis son donjon du XIIe siècle. Ses ateliers d'artisans d'art, ses ruelles fleuries et le panorama exceptionnel sur les vignobles environnants en ont fait l'un des Plus Beaux Villages de France.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Pierres dorées du Beaujolais</span>
+            <span class="village-star-tag">Panorama sur les vignes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>Calendrier</span> Fêtes & événements de l'année dans le Rhône</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Festival Quais du Polar</h4><p>Grand festival littéraire dédié au roman policier, avec rencontres d'auteurs dans toute la ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête des Canuts</h4><p>Célébration de la mémoire ouvrière et textile de la Croix-Rousse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Nuits de Fourvière</h4><p>Festival de spectacles, concerts et théâtre dans le cadre exceptionnel du théâtre antique.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Fête des vendanges du Beaujolais</h4><p>Célébration des vendanges dans les villages viticoles du Beaujolais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Festival Lumière</h4><p>Grand festival de cinéma organisé par l'Institut Lumière, berceau du septième art.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Fête du Beaujolais Nouveau</h4><p>Le troisième jeudi de novembre, célébration du premier vin de l'année dans toute la région.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Fête des Lumières</h4><p>Le 8 décembre, Lyon s'illumine dans l'un des plus grands événements lumineux de France.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël de Lyon</h4><p>Chalets et animations sur la Presqu'île pendant la période des fêtes.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Le Rhône se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">Gourmand</button>
+          <button class="filter-btn" data-filter="culture">Culture</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="famille">Famille</button>
+          <button class="filter-btn" data-filter="romantique">Romantique</button>
+          <button class="filter-btn" data-filter="actif">Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bouchons lyonnais et quenelles</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché des Halles</strong> de Lyon Paul Bocuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des spécialités</strong> charcutières lyonnaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans un bouchon traditionnel autour de quenelles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le Vieux Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin du Beaujolais.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Praline rose, douceur emblématique</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une confiserie</strong> traditionnelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la fabrication</strong> de la praline rose.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une tarte aux pralines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les rues gourmandes de Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de coussin de Lyon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Beaujolais et ses crus</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Beaujolais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine viticole</strong> du Beaujolais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de Morgon et de Fleurie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble en terrasses.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un coq au vin et d'un verre de Brouilly.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marché des Halles de Lyon Paul Bocuse</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Découverte des étals</strong> des Halles de Lyon Paul Bocuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> chez les producteurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une andouillette lyonnaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la Presqu'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de bugnes lyonnaises.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vieux Lyon et basilique de Fourvière</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans le Vieux Lyon, plus grand quartier Renaissance de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des traboules</strong> secrètes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans un bouchon typique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Montée</strong> vers la basilique de Fourvière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Panorama</strong> sur Lyon au coucher du soleil.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Croix-Rousse, mémoire des canuts</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Croix-Rousse</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la Maison des Canuts</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des traboules</strong> de la Croix-Rousse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur le plateau de la Croix-Rousse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les pentes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Musée des Confluences</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Confluence</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du Musée des Confluences</strong>, architecture spectaculaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des collections scientifiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la confluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le quartier de la Confluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers la Presqu'île.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Oingt et les pierres dorées du Beaujolais</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Oingt</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans le village d'Oingt.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du donjon</strong> et des ateliers d'artisans.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur la vallée d'Azergues.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les vignobles environnants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les villages de pierres dorées.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parc de la Tête d'Or</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans le parc de la Tête d'Or, poumon vert de Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du jardin botanique</strong> et de la roseraie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> autour du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers le centre de Lyon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vignobles du Beaujolais à vélo</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Beaujolais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> dans les vignobles du Beaujolais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par plusieurs villages viticoles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un village de pierres dorées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, dégustation de fin de parcours.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Confluence Rhône-Saône</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> au bord de la confluence du Rhône et de la Saône.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> du quartier contemporain de la Confluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> le long des berges.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la confluence.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Monts du Lyonnais, randonnée pastorale</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Monts du Lyonnais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans les Monts du Lyonnais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des paysages vallonnés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur la région lyonnaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers un village du Lyonnais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Lyon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Musée des Confluences en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du Musée des Confluences.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers pédagogiques</strong> pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la confluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le quartier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parc de la Tête d'Or en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du zoo gratuit</strong> du parc de la Tête d'Or.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade en famille</strong> dans le parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en barque</strong> sur le lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong>.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Institut Lumière en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de l'Institut Lumière, berceau du cinéma.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'histoire</strong> des frères Lumière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier cinéma</strong> pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers le centre.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Beaujolais en famille, ferme et vignes</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Beaujolais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme pédagogique</strong> du Beaujolais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des vignes</strong> en famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans la campagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans un village de pierres dorées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fourvière au coucher du soleil</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans le Vieux Lyon avant l'affluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la basilique</strong> en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong> avec vue sur Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les traboules.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis l'esplanade de Fourvière.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vieux Lyon, romance dans les traboules</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vieux Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les traboules du Vieux Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des cours</strong> Renaissance à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans un bouchon typique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long de la Saône.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans le Vieux Lyon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vignobles du Beaujolais en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Beaujolais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les vignobles du Beaujolais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation à deux</strong> dans un domaine familial.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans un village de pierres dorées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les collines du Beaujolais.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Berges du Rhône en soirée</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> le long des berges du Rhône.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des jardins et promenades.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur la Presqu'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> au bord du Rhône.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo dans le vignoble du Beaujolais</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 35 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> à travers les vignobles du Beaujolais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par plusieurs domaines viticoles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> dans la campagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un village de pierres dorées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et dégustation de Beaujolais bien méritée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans les Monts du Lyonnais</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Monts du Lyonnais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> pour une randonnée dans les Monts du Lyonnais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> de vallons et de crêtes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> avec panorama.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un village voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération au village.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak sur la Saône</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Saône</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> sur la Saône.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> sous les ponts historiques de Lyon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une berge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la descente.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Course urbaine à Lyon, berges et parcs</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lyon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Course matinale</strong> le long des berges du Rhône.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par la Presqu'île et la Confluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> dans un parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers le parc de la Tête d'Or.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération en terrasse.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

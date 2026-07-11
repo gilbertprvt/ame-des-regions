@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corse-du-Sud — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -105px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 170px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../corse.html" class="fiche-topbar-btn">Corse</a>
+          <a href="../../carte-corse.html" class="fiche-topbar-btn">Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1> <span style="padding-left: 30px;"><span class="titre-initial">C</span>orse-du-<span class="titre-initial">S</span>ud</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/corse/corse-du-sud/corse.png" alt="Écusson Corse-du-Sud" />
+        </div>
+
+        <span class="fiche-hero-ancien">Préfecture : Ajaccio · Département 2A</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">Traditions</button>
+          <button class="fiche-tab" data-panel="villages">Villages</button>
+          <button class="fiche-tab" data-panel="agenda">Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+            <ul>
+              <li>Charcuterie corse (figatellu, coppa, lonzu, prisuttu)</li>
+              <li>Fromage Brocciu AOP</li>
+              <li>Soupe corse (minestra)</li>
+              <li>Sanglier à la corse</li>
+              <li>Aubergines à la bonifacienne</li>
+              <li>Fiadone</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+            <ul>
+              <li>Brocciu AOP</li>
+              <li>Charcuterie AOP du Sud Corse</li>
+              <li>Miel de Corse AOP (maquis)</li>
+              <li>Clémentine de Corse IGP</li>
+              <li>Huile d'olive de Corse</li>
+              <li>Farine de châtaigne AOP</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vin</span> Vins & boissons</div>
+            <ul>
+              <li>Ajaccio AOP</li>
+              <li>Vin de Corse Sartène AOP</li>
+              <li>Muscat du Cap Corse</li>
+              <li>Eau de vie de myrte</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Dessert</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Fiadone au brocciu</li>
+              <li>Canistrelli</li>
+              <li>Confiture de figues de Barbarie</li>
+              <li>Nougat corse au miel du maquis</li>
+              <li>Beignets au brocciu</li>
+              <li>Pâtes de fruits corses</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Napoleon</span> Sites napoléoniens</div>
+            <ul>
+              <li>Maison Bonaparte (Ajaccio)</li>
+              <li>Palais Fesch, musée des Beaux-Arts</li>
+              <li>Cathédrale Notre-Dame-de-l'Assomption d'Ajaccio</li>
+              <li>Place Foch et statue de Napoléon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Falaise</span> Sites UNESCO & falaises</div>
+            <ul>
+              <li>Golfe de Porto (UNESCO)</li>
+              <li>Calanques de Piana</li>
+              <li>Réserve naturelle de Scandola</li>
+              <li>Citadelle de Bonifacio sur ses falaises calcaires</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Montagne</span> Villages & montagnes</div>
+            <ul>
+              <li>Sartène, ville la plus corse de Corse</li>
+              <li>Zonza, porte des Aiguilles de Bavella</li>
+              <li>Aiguilles de Bavella</li>
+              <li>Col de Bavella</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
+            <ul>
+              <li>Maison Bonaparte</li>
+              <li>Palais Fesch</li>
+              <li>Musée de Bonifacio</li>
+              <li>Musée de la Préhistoire Corse (Sartène)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Golfe</span> Golfe de Porto & littoral</div>
+            <ul>
+              <li>Golfe de Porto, UNESCO</li>
+              <li>Calanques de Piana</li>
+              <li>Réserve naturelle de Scandola</li>
+              <li>Îles Sanguinaires</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Montagne</span> Montagnes & Bavella</div>
+            <ul>
+              <li>Aiguilles de Bavella</li>
+              <li>Col de Bavella</li>
+              <li>Forêt de l'Ospedale</li>
+              <li>Massif du Monte Incudine</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Faune</span> Faune & biodiversité</div>
+            <ul>
+              <li>Balbuzards pêcheurs de Scandola</li>
+              <li>Mouflons des Aiguilles de Bavella</li>
+              <li>Faune marine des îles Lavezzi</li>
+              <li>Tortues d'Hermann du sud Corse</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Paysage</span> Paysages & panoramas</div>
+            <ul>
+              <li>Calanques de Piana au coucher du soleil</li>
+              <li>Panorama depuis les Aiguilles de Bavella</li>
+              <li>Falaises de Bonifacio</li>
+              <li>Îles Sanguinaires depuis Ajaccio</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Charcuterie</span> Charcuterie & fromagerie</div>
+            <ul>
+              <li>Fabrication de la charcuterie du Sud Corse</li>
+              <li>Élaboration du Brocciu en bergerie</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vigne</span> Viticulture</div>
+            <ul>
+              <li>Élaboration du vin d'Ajaccio AOP</li>
+              <li>Vinification de Sartène</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Corail</span> Corail & artisanat marin</div>
+            <ul>
+              <li>Tradition du corail de Bonifacio</li>
+              <li>Pêche traditionnelle</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Conserve</span> Produits artisanaux</div>
+            <ul>
+              <li>Miel du maquis corse artisanal</li>
+              <li>Distillation de l'eau de vie de myrte</li>
+              <li>Confiserie au brocciu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Langue</span> Langue & identité</div>
+            <ul>
+              <li>Langue corse, dialecte du Sud</li>
+              <li>Héritage napoléonien d'Ajaccio</li>
+              <li>Mémoire de la vendetta à Sartène</li>
+              <li>Chants polyphoniques corses</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Elevage</span> Élevage & terroir</div>
+            <ul>
+              <li>Élevage porcin en liberté dans le maquis</li>
+              <li>Transhumance vers les Aiguilles de Bavella</li>
+              <li>Viticulture d'Ajaccio et de Sartène</li>
+              <li>Pêche traditionnelle à Bonifacio</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fete</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Fête de Napoléon à Ajaccio</li>
+              <li>Procession du Catenacciu à Sartène (Vendredi Saint)</li>
+              <li>Fête de la Charcuterie corse</li>
+              <li>Rencontres polyphoniques</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+            <ul>
+              <li>Confection de la charcuterie du maquis</li>
+              <li>Élaboration du Brocciu et du fiadone</li>
+              <li>Vinification de l'Ajaccio et du Sartène</li>
+              <li>Cuisine du sanglier et du gibier corse</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Villages remarquables</div>
+            <ul>
+              <li>Sartène, ville la plus corse de Corse</li>
+              <li>Zonza, porte des Aiguilles de Bavella</li>
+              <li>Zicavo</li>
+              <li>Coti-Chiavari</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cote</span> Cités côtières</div>
+            <ul>
+              <li>Bonifacio, cité sur ses falaises</li>
+              <li>Porto, golfe classé UNESCO</li>
+              <li>Propriano, port de plaisance</li>
+              <li>Piana, calanques emblématiques</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bourg</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Ajaccio (préfecture, cité de Napoléon)</li>
+              <li>Sartène</li>
+              <li>Bonifacio</li>
+              <li>Porto-Vecchio</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">Etoile</div>
+          <div>
+            <h3>Village à l'honneur : Bonifacio</h3>
+            <p>Perchée sur des falaises calcaires vertigineuses dominant la Méditerranée, cette cité fortifiée génoise offre l'un des panoramas les plus spectaculaires de Corse. Sa citadelle, ses maisons hautes accrochées au bord du vide et le port naturel niché dans les falaises en font une étape incontournable du sud de l'île.</p>
+            <span class="village-star-tag">Cité fortifiée génoise</span>
+            <span class="village-star-tag">Falaises de Bonifacio</span>
+            <span class="village-star-tag">Panorama sur la Méditerranée</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>Calendrier</span> Fêtes & événements de l'année en Corse-du-Sud</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars-Avril</div>
+                <div><h4>Procession du Catenacciu à Sartène</h4><p>Célèbre procession du Vendredi Saint, l'une des plus anciennes traditions religieuses de Corse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête de la Transhumance vers Bavella</h4><p>Montée des troupeaux vers les alpages des Aiguilles de Bavella.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de Napoléon à Ajaccio</h4><p>Célébration de l'enfant du pays, défilés et animations dans la ville natale de l'Empereur.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de la Charcuterie corse</h4><p>Producteurs et éleveurs célèbrent les spécialités charcutières AOP du Sud Corse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Vendanges à Ajaccio et Sartène</h4><p>Les domaines viticoles ouvrent leurs portes pour célébrer les vendanges.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Fête de la Châtaigne</h4><p>Marchés et animations autour du fruit d'automne emblématique de l'île.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Foire de l'Olive</h4><p>Producteurs présentent leur huile d'olive et leurs olives de Corse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël d'Ajaccio</h4><p>Chalets et illuminations dans le centre-ville, au bord du golfe.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">La Corse-du-Sud se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">Gourmand</button>
+          <button class="filter-btn" data-filter="culture">Culture</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="famille">Famille</button>
+          <button class="filter-btn" data-filter="romantique">Romantique</button>
+          <button class="filter-btn" data-filter="actif">Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route de la charcuterie du Sud Corse</h4>
+              </div>
+              <span class="jour-duree">Journée complète · maquis corse</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une exploitation</strong> porcine dans le maquis.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la fabrication</strong> de la charcuterie traditionnelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une planche de charcuterie corse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le maquis corse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin d'Ajaccio.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vins d'Ajaccio et de Sartène</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio à Sartène</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine viticole</strong> d'Ajaccio.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> du cépage Sciaccarellu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble de Sartène.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un sanglier à la corse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Brocciu et fiadone</h4>
+              </div>
+              <span class="jour-duree">Journée complète · collines du sud Corse</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une bergerie</strong> productrice de Brocciu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la fabrication</strong> traditionnelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un fiadone maison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les collines du sud Corse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de canistrelli.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marché d'Ajaccio et saveurs napoléoniennes</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché d'Ajaccio</strong>, produits locaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des spécialités</strong> impériales.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur les traces de Napoléon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin et de charcuterie.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ajaccio, cité de Napoléon</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la Maison Bonaparte</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du Palais</strong> Fesch.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur la place Foch.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le golfe d'Ajaccio.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bonifacio, cité fortifiée sur les falaises</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bonifacio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la citadelle</strong> de Bonifacio.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des falaises calcaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur la Méditerranée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en bateau</strong> vers les grottes marines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les falaises.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Sartène, ville la plus corse de Corse</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Sartène</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles de Sartène.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du musée</strong> de la Préhistoire Corse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Aiguilles de Bavella</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bavella</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Découverte des Aiguilles</strong> de Bavella depuis le col.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les formations granitiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur les aiguilles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la forêt de l'Ospedale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Zonza.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Golfe de Porto et calanques de Piana</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Porto</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en bateau</strong> dans le golfe de Porto.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des calanques de Piana.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> face aux falaises rouges.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade</strong> dans une crique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le golfe de Porto.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Réserve naturelle de Scandola</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Scandola</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Excursion en bateau</strong> vers la réserve de Scandola.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> de la faune marine protégée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le bateau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Observation</strong> des balbuzards pêcheurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Porto.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Îles Sanguinaires</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Traversée en bateau</strong> vers les îles Sanguinaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> sur l'île principale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur Ajaccio.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> du phare et de la végétation.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les îles.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Aiguilles de Bavella, randonnée alpine</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bavella</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans les Aiguilles de Bavella.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des formations granitiques spectaculaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les aiguilles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers le trou de la bombe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Zonza.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Maison Bonaparte en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de la Maison Bonaparte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> de l'enfance de Napoléon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans un parc d'Ajaccio.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong>.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Îles Sanguinaires en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Traversée en bateau</strong> en famille vers les îles Sanguinaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade ludique</strong> sur l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade en famille</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Ajaccio.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ferme de la charcuterie en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · maquis corse</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme pédagogique</strong> d'élevage porcin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la vie</strong> des cochons en liberté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à la ferme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le maquis corse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bonifacio en famille, falaises et grottes marines</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bonifacio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en bateau</strong> en famille vers les grottes marines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte ludique</strong> de la citadelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les falaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles de la ville haute.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Îles Sanguinaires au coucher du soleil</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Ajaccio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> au bord du golfe d'Ajaccio avant l'affluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée romantique</strong> vers les îles Sanguinaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> face à la mer.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les îles Sanguinaires.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bonifacio en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bonifacio</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans la citadelle de Bonifacio.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des falaises</strong> à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> avec vue sur la Méditerranée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en bateau</strong> vers les grottes marines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les falaises.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Calanques de Piana en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Piana</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les calanques de Piana.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des formations</strong> rocheuses à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> face au golfe de Porto.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long de la côte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les falaises rouges.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Aiguilles de Bavella, romance en altitude</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bavella</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée romantique</strong> vers les Aiguilles de Bavella.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du panorama</strong> à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> en altitude.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans la forêt de l'Ospedale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les aiguilles granitiques.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans les Aiguilles de Bavella</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bavella</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> pour une randonnée dans les Aiguilles de Bavella.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> de passages techniques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> avec panorama.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers le trou de la bombe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération à Zonza.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak dans le golfe de Porto</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Porto</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> dans le golfe de Porto.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Exploration</strong> des calanques de Piana.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la navigation.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans la réserve de Scandola</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Scandola</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée accompagnée</strong> dans la réserve de Scandola.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> de la faune protégée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un point de vue.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Plongée dans les îles Lavezzi</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Îles Lavezzi</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Session de plongée</strong> dans les îles Lavezzi.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Exploration</strong> des fonds marins.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la plongée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

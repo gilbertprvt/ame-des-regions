@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puy-de-Dôme — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -105px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 170px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../auvergne-rhone-alpes.html" class="fiche-topbar-btn">Auvergne-Rhône-Alpes</a>
+          <a href="../../carte-auvergne-rhone-alpes.html" class="fiche-topbar-btn">Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 30px;"><span class="titre-initial">P</span>uy-de-<span class="titre-initial">D</span>ôme</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/auvergne-rhone-alpes/puy-de-dome.png" alt="Écusson Puy-de-Dôme" />
+        </div>
+
+        <span class="fiche-hero-ancien">Préfecture : Clermont-Ferrand · Département 63</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">Traditions</button>
+          <button class="fiche-tab" data-panel="villages">Villages</button>
+          <button class="fiche-tab" data-panel="agenda">Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+            <ul>
+              <li>Truffade</li>
+              <li>Aligot auvergnat</li>
+              <li>Potée auvergnate</li>
+              <li>Pounti</li>
+              <li>Tripoux</li>
+              <li>Saint-Nectaire AOP</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+            <ul>
+              <li>Saint-Nectaire AOP</li>
+              <li>Fourme d'Ambert AOP</li>
+              <li>Bleu d'Auvergne AOP</li>
+              <li>Lentilles blondes d'Auvergne</li>
+              <li>Miel d'Auvergne</li>
+              <li>Charcuterie auvergnate</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vin</span> Vins & boissons</div>
+            <ul>
+              <li>Côtes d'Auvergne AOP</li>
+              <li>Eaux thermales du Mont-Dore et de La Bourboule</li>
+              <li>Eaux thermales de Royat et de Châtel-Guyon</li>
+              <li>Liqueur de gentiane d'Auvergne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Dessert</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Pompe aux pommes de terre</li>
+              <li>Confiture de myrtilles d'Auvergne</li>
+              <li>Croquants auvergnats</li>
+              <li>Gâteau à la broche</li>
+              <li>Nougat d'Auvergne</li>
+              <li>Miel et pain d'épices artisanal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Volcan</span> Sites UNESCO & volcaniques</div>
+            <ul>
+              <li>Chaîne des Puys, faille de Limagne (UNESCO)</li>
+              <li>Puy de Dôme et son temple gallo-romain de Mercure</li>
+              <li>Panoramique des Dômes, train à crémaillère</li>
+              <li>Vulcania, parc de découverte du volcanisme</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Eglise</span> Sites religieux</div>
+            <ul>
+              <li>Cathédrale Notre-Dame-de-l'Assomption (pierre de Volvic)</li>
+              <li>Basilique Notre-Dame-du-Port (UNESCO, chemins de Compostelle)</li>
+              <li>Église de Saint-Nectaire, art roman auvergnat</li>
+              <li>Château de Murol</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Villages & châteaux</div>
+            <ul>
+              <li>Besse-et-Saint-Anastaise</li>
+              <li>Saint-Saturnin</li>
+              <li>Usson</li>
+              <li>Château de Cordès</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
+            <ul>
+              <li>Vulcania</li>
+              <li>Musée Bargoin</li>
+              <li>Aventure Michelin</li>
+              <li>Musée d'Art Roger-Quilliot</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Volcan</span> Volcans & Chaîne des Puys</div>
+            <ul>
+              <li>Puy de Dôme</li>
+              <li>Puy de Sancy, point culminant du Massif central</li>
+              <li>Chaîne des Puys</li>
+              <li>Monts Dore</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Lac</span> Lacs volcaniques</div>
+            <ul>
+              <li>Lac Pavin, lac de cratère</li>
+              <li>Lac Chambon</li>
+              <li>Lac d'Aydat</li>
+              <li>Gorges de la Sioule</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Faune</span> Faune & biodiversité</div>
+            <ul>
+              <li>Mouflons et chamois des Monts Dore</li>
+              <li>Salamandres et faune des lacs volcaniques</li>
+              <li>Oiseaux du plateau du Cézallier</li>
+              <li>Faune des tourbières d'Auvergne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Paysage</span> Paysages & panoramas</div>
+            <ul>
+              <li>Panorama depuis le Puy de Dôme</li>
+              <li>Chaîne des Puys au coucher du soleil</li>
+              <li>Lac Pavin et ses eaux profondes</li>
+              <li>Plateau du Cézallier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fromage</span> Fromagerie</div>
+            <ul>
+              <li>Fabrication du Saint-Nectaire fermier</li>
+              <li>Élaboration de la Fourme d'Ambert</li>
+              <li>Affinage du Bleu d'Auvergne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Pierre</span> Pierre volcanique</div>
+            <ul>
+              <li>Taille de la pierre de Volvic</li>
+              <li>Sculpture sur pierre noire volcanique</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Thermal</span> Thermalisme</div>
+            <ul>
+              <li>Savoir-faire thermal du Mont-Dore et de La Bourboule</li>
+              <li>Embouteillage des eaux de Volvic</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Conserve</span> Produits artisanaux</div>
+            <ul>
+              <li>Confection de la truffade et de l'aligot</li>
+              <li>Miel d'Auvergne artisanal</li>
+              <li>Distillation de la gentiane</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Langue</span> Langue & identité</div>
+            <ul>
+              <li>Occitan auvergnat</li>
+              <li>Culture volcanique et thermale</li>
+              <li>Mémoire de Vercingétorix (bataille de Gergovie)</li>
+              <li>Toponymie auvergnate</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Buron</span> Élevage & alpages</div>
+            <ul>
+              <li>Estive des troupeaux sur les Monts Dore</li>
+              <li>Production du Saint-Nectaire en alpage</li>
+              <li>Élevage bovin auvergnat</li>
+              <li>Tradition des burons auvergnats</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fete</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Fête du Saint-Nectaire</li>
+              <li>Foire aux fromages d'Ambert</li>
+              <li>Estivales de Clermont-Ferrand</li>
+              <li>Fêtes votives des villages auvergnats</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+            <ul>
+              <li>Confection de la truffade et de l'aligot</li>
+              <li>Élaboration du Saint-Nectaire et de la Fourme d'Ambert</li>
+              <li>Estive et vie pastorale des burons</li>
+              <li>Vendanges dans le vignoble des Côtes d'Auvergne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Besse-et-Saint-Anastaise</li>
+              <li>Saint-Saturnin</li>
+              <li>Usson</li>
+              <li>Montpeyroux</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Thermal</span> Villages thermaux & volcaniques</div>
+            <ul>
+              <li>Le Mont-Dore</li>
+              <li>La Bourboule</li>
+              <li>Royat</li>
+              <li>Châtel-Guyon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bourg</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Clermont-Ferrand (préfecture, cité de Vercingétorix)</li>
+              <li>Riom, ancienne capitale d'Auvergne</li>
+              <li>Issoire</li>
+              <li>Ambert, capitale de la Fourme</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">Etoile</div>
+          <div>
+            <h3>Village à l'honneur : Besse-et-Saint-Anastaise</h3>
+            <p>Bâti en pierre volcanique sombre au pied du massif du Sancy, ce village médiéval a conservé ses ruelles pavées, ses maisons à tourelles et sa porte fortifiée. Point de départ vers le lac Pavin et les pistes du Mont-Dore, il incarne l'authenticité des villages d'Auvergne entre tradition pastorale et tourisme de montagne.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Massif du Sancy</span>
+            <span class="village-star-tag">Pierre volcanique</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>Calendrier</span> Fêtes & événements de l'année dans le Puy-de-Dôme</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête de l'Estive</h4><p>Montée des troupeaux vers les alpages, célébration de la culture pastorale auvergnate.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête du Saint-Nectaire</h4><p>Producteurs et affineurs célèbrent ce fromage emblématique des Monts Dore.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Estivales de Clermont-Ferrand</h4><p>Festival musical et animations gratuites dans toute la ville durant l'été.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Foire aux fromages d'Ambert</h4><p>Grande foire dédiée à la Fourme d'Ambert et aux fromages bleus d'Auvergne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Vendanges dans le vignoble des Côtes d'Auvergne</h4><p>Les domaines viticoles ouvrent leurs portes pour célébrer les vendanges de la Limagne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Fête de la Pomme et de la Châtaigne</h4><p>Marchés et animations autour des fruits d'automne dans les villages auvergnats.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Foire-exposition de Clermont-Ferrand</h4><p>Grande foire régionale rassemblant producteurs et artisans d'Auvergne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël de Clermont-Ferrand</h4><p>Chalets et illuminations au pied de la cathédrale de pierre noire.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Le Puy-de-Dôme se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">Gourmand</button>
+          <button class="filter-btn" data-filter="culture">Culture</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="famille">Famille</button>
+          <button class="filter-btn" data-filter="romantique">Romantique</button>
+          <button class="filter-btn" data-filter="actif">Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Saint-Nectaire</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Massif du Sancy</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme</strong> productrice de Saint-Nectaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'affinage</strong> en cave.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une truffade au Saint-Nectaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les alpages du Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin des Côtes d'Auvergne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fourme d'Ambert et Bleu d'Auvergne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Livradois</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une fromagerie</strong> productrice de Fourme d'Ambert.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'affinage</strong> du fromage bleu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une salade à la Fourme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne du Livradois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de Bleu d'Auvergne et de vin local.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Truffade et aligot, tradition auvergnate</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Clermont-Ferrand</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Clermont-Ferrand</strong>, produits locaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la préparation</strong> de la truffade.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un authentique aligot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de pounti et de vin d'Auvergne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vins des Côtes d'Auvergne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Limagne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine viticole</strong> des Côtes d'Auvergne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble de la Limagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'une potée auvergnate.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Clermont-Ferrand, cathédrale noire et Vercingétorix</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Clermont-Ferrand centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la cathédrale</strong> Notre-Dame-de-l'Assomption, pierre de Volvic.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la statue</strong> de Vercingétorix.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du musée</strong> Bargoin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade</strong> dans les rues de la vieille ville.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy de Dôme et Vulcania</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Chaîne des Puys</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Ascension du Puy de Dôme</strong> en train à crémaillère.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du temple</strong> gallo-romain de Mercure.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur la Chaîne des Puys.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de Vulcania</strong>, parc du volcanisme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Clermont-Ferrand.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Basilique Notre-Dame-du-Port</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Clermont-Ferrand</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la basilique</strong> romane, chef-d'œuvre auvergnat.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des chapiteaux</strong> sculptés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vieux Clermont.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Besse-et-Saint-Anastaise, village de pierre volcanique</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Besse-et-Saint-Anastaise</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles de Besse-et-Saint-Anastaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la porte fortifiée</strong> et des maisons à tourelles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers le lac Pavin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par le massif du Sancy.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy de Dôme, ascension emblématique</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Puy de Dôme</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Ascension</strong> du Puy de Dôme à pied ou en train.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> du panorama sur la Chaîne des Puys.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au sommet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur les crêtes environnantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers la vallée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lac Pavin, cratère mystérieux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Besse</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> autour du lac Pavin, cratère volcanique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des légendes locales.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> vers le massif environnant.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Besse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy de Sancy, toit du Massif central</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Le Mont-Dore</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée</strong> vers le Puy de Sancy, point culminant du Massif central.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> du panorama à 360 degrés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en altitude.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> vers les crêtes du Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Le Mont-Dore.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gorges de la Sioule</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gorges de la Sioule</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans les gorges de la Sioule.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des points de vue sur la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers un village voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vulcania en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vulcania</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de Vulcania, parc du volcanisme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Simulateurs</strong> et expériences interactives.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le site.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> des expositions scientifiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Clermont-Ferrand.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Aventure Michelin en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Clermont-Ferrand</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du musée Aventure Michelin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'histoire</strong> du pneu et de Bibendum.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Ateliers pédagogiques</strong> pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers le centre.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ferme du Saint-Nectaire en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Massif du Sancy</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme pédagogique</strong> productrice de Saint-Nectaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la traite</strong> et de la fabrication.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à la ferme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les alpages du Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Besse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lac Chambon en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lac Chambon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en famille</strong> au bord du lac Chambon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Baignade</strong> sur une plage aménagée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> autour du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy de Dôme au coucher du soleil</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Puy de Dôme</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> au pied du Puy de Dôme avant l'affluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ascension romantique</strong> en train à crémaillère.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en altitude</strong> avec vue panoramique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur le site gallo-romain.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la Chaîne des Puys.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lac Pavin en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lac Pavin</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> autour du lac Pavin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des légendes</strong> du cratère à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans la forêt environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le lac.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Besse-et-Saint-Anastaise en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Besse-et-Saint-Anastaise</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la porte fortifiée</strong> à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> vers le massif du Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les toits de pierre volcanique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy de Sancy, romance en altitude</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Puy de Sancy</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée romantique</strong> vers le Puy de Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du panorama</strong> à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> en altitude.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> sur les crêtes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les Monts Dore.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée au Puy de Sancy</h4>
+              </div>
+              <span class="jour-duree">Journée complète · dénivelé important</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> pour l'ascension du Puy de Sancy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> des crêtes du massif.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> avec panorama.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente</strong> par un sentier différent.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération au Mont-Dore.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parapente au Puy de Dôme</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Puy de Dôme</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Session de parapente</strong> depuis le sommet du Puy de Dôme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Vol</strong> au-dessus de la Chaîne des Puys.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> sur les crêtes environnantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération bien méritée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans la Chaîne des Puys</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 30 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> dans la Chaîne des Puys.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par plusieurs volcans endormis.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en altitude.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les crêtes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et Saint-Nectaire bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak sur le lac d'Aydat</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lac d'Aydat</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> sur le lac d'Aydat.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Exploration</strong> des rives volcaniques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la navigation.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

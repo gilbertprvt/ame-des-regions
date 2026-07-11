@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yvoire — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../auvergne-rhone-alpes.html" class="produit-btn-retour">
+            ← Retour à la fiche Auvergne-Rhône-Alpes
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          <h1><em>Y</em>voire</h1>
+        </div>
+      <img src="../../../../assets/departement/auvergne-rhone-alpes/carte-auvergne-rhone-alpes-mini.png"
+               alt="Carte de l'Auvergne-Rhône-Alpes"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/régions/ecusson-auvergne-rhone-alpes.png" alt="Écusson Auvergne-Rhône-Alpes" />
+        </div>
+
+    <div class="hero-label-bas">
+    ⟹ Plus Beaux Villages de France ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#parcours"             >🚶 Parcours de visite</a>
+          <a href="#variantes"            >🔀 Variantes de visite</a>
+          <a href="#ou-manger"            >📍 Où prolonger la visite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Posée sur une pointe de la rive française du lac Léman, entre Genève et Thonon, Yvoire est une ancienne place forte fondée au tout début du XIVᵉ siècle par <strong>Amédée V, comte de Savoie</strong>, qui fait édifier ici un château et des remparts pour surveiller le lac et contrôler la route reliant Genève à la haute vallée du Rhône et à l'Italie. Le site, disputé entre la Maison de Savoie et le comté de Genève puis de Faucigny, devient un verrou stratégique du Chablais.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+                   <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/yvoire-chateau-remparts-leman.jpg"
+                        alt="Le château et les remparts d'Yvoire au bord du lac Léman" />
+                    <figcaption>Le donjon du château veille sur le Léman depuis plus de 700 ans</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>Ceints d'épais <strong>remparts</strong> construits en demi-cercle d'une berge à l'autre et percés de deux portes fortifiées surmontées de tours de guet, le bourg et son donjon carré traversent les siècles non sans mal : au XVIᵉ siècle, lors des guerres opposant le duc de Savoie aux Français, aux Bernois et aux Genevois, le château est incendié et les remparts découronnés de leurs défenses. Seuls les murs du grand donjon rectangulaire subsistent, sommairement aménagés pour rester habitables. D'importants travaux de restauration, menés par la famille Bouvier d'Yvoire — propriétaire des lieux depuis le XVIIᵉ siècle — lui redonnent tout son éclat entre 1919 et 1939.</p>
+
+              <p>Le climat de guerre s'apaisant, les villageois se tournent durablement vers l'agriculture et la pêche, faisant vivre le port jusqu'au milieu du XXᵉ siècle. Attachés à la mémoire de leurs remparts et de leurs portes anciennes, ils obtiennent leur classement au titre des Monuments Historiques. Ce n'est qu'après la Seconde Guerre mondiale que le village s'ouvre progressivement au tourisme, les habitantes garnissant peu à peu leurs façades de fleurs : Yvoire reçoit son premier prix national de fleurissement dès 1959, devient Grand Prix National du Fleurissement à partir de 1992 et représente même la France au Concours Européen du Fleurissement en 2002, où elle décroche la médaille d'argent.</p>
+
+              <p>Classée parmi les <strong>Plus Beaux Villages de France</strong>, la cité médiévale se visite exclusivement à pied. En 2006, pour les 700 ans du village, la <strong>Maison de l'Histoire</strong> ouvre ses portes dans la Grande Rue pour raconter, maquettes à l'appui, la formation de ce bourg fortifié devenu l'un des sites les plus prisés des rives du Léman.</p>
+            </div>
+          </section>
+
+            <figure class="photo-bloc photo-centre" style="max-width: 450px;">
+            <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/yvoire-jardin-cinq-sens-labyrinthe.jpg"
+                  alt="Le Jardin des Cinq Sens dans l'ancien potager du château d'Yvoire" />
+              <figcaption>Le Jardin des Cinq Sens, aménagé dans l'ancien potager du château</figcaption>
+            </figure>
+
+            <div class="clearfix"></div>
+
+          <!-- PARCOURS DE VISITE -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours traditionnel
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">2h à 2h30</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏰</div>
+                <div>
+                  <div class="recette-meta-label">Château</div>
+                  <div class="recette-meta-val">Donjon du XIVᵉ s. (extérieur, propriété privée)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Départ</div>
+                  <div class="recette-meta-val">Porte de Nernier (remparts)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile · village entièrement piéton</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Incontournables du village</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">1</span> Remparts et portes fortifiées (XIVᵉ s.)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">2</span> Château d'Yvoire</div>
+                <div class="ingredient-item"><span class="ingredient-qte">3</span> Église Saint-Pancrace et son clocher à bulbe</div>
+                <div class="ingredient-item"><span class="ingredient-qte">4</span> Jardin des Cinq Sens</div>
+                <div class="ingredient-item"><span class="ingredient-qte">5</span> Port des pêcheurs et Grand Port</div>
+              </div>
+            </div>
+
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Franchir les remparts</div>
+                  <div class="etape-texte">Entrez dans la cité médiévale par l'une des deux portes fortifiées classées Monument Historique, en levant les yeux vers les meurtrières et les anciens gonds de bois.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Longer le port des pêcheurs</div>
+                  <div class="etape-texte">Découvrez les anciennes maisons de pêcheurs et le port de plaisance, aujourd'hui point de départ des croisières sur le Léman.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Admirer le château</div>
+                  <div class="etape-texte">Contemplez le donjon carré du château, édifié par Amédée V de Savoie en 1306, propriété privée de la famille d'Yvoire depuis le XVIIᵉ siècle.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Visiter l'église Saint-Pancrace</div>
+                  <div class="etape-texte">Repérez son clocher à bulbe si caractéristique, qui scintille au-dessus des toits du village médiéval.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Flâner au Jardin des Cinq Sens</div>
+                  <div class="etape-texte">Installé dans l'ancien potager du château, ce labyrinthe végétal inspiré du Moyen Âge invite à une promenade sensorielle parmi plus de 1 500 variétés de plantes.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Rejoindre la jetée</div>
+                  <div class="etape-texte">Terminez la visite au bout de la jetée du Grand Port, face au lac, pour un point de vue imprenable sur le château d'un côté et les eaux du Léman de l'autre.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes de visite
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Croisière sur le Léman :</strong> embarquez à bord de l'Odina, premier bateau hybride à passagers du lac, ou d'un bateau Belle Époque de la Compagnie Générale de Navigation, pour rejoindre Genève, Nyon ou Lausanne.</p>
+              <p><strong>Sentier vers Nernier :</strong> rejoignez à pied en 20 minutes ce village voisin surnommé « la Perle du Lac » et « Village des Peintres », aux maisons colorées ornées de citations de poètes.</p>
+              <p><strong>Visite nocturne :</strong> le village illuminé, les yeux dans les reflets dorés du Léman au coucher du soleil, offre une atmosphère très différente de la journée.</p>
+              <p><strong>Domaine de Rovorée - La Châtaignière :</strong> accessible par la voie verte, cet espace naturel planté de châtaigniers centenaires abrite les vestiges d'une ancienne cité médiévale et de beaux panoramas sur le lac.</p>
+            </div>
+          </section>
+
+          <!-- OÙ PROLONGER LA VISITE -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où prolonger la visite ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Yvoire s'inscrit sur l'une des plus belles rives du lac Léman, entre Chablais savoyard et Genève.</p>
+
+              <p><strong>Nernier</strong> charmant village de peintres aux maisons colorées, à 20 minutes à pied.</p>
+
+              <p><strong>Excenevex</strong> et son exceptionnelle plage de sable fin, la seule du lac Léman.</p>
+
+              <p><strong>Thonon-les-Bains</strong> et le château de Ripaille, à une vingtaine de minutes.</p>
+
+              <p><strong>Genève</strong> accessible en croisière depuis le port d'Yvoire.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Auvergne-Rhône-Alpes</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Haute-Savoie · Chablais, bord du lac Léman</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Cité médiévale lacustre & village fleuri</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Toute l'année · jardin d'avril à octobre</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Visite culturelle · Croisière sur le lac · Balade</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Plus Beaux Villages de France · Monuments historiques (remparts, portes) · Jardin Remarquable</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Association Les Plus Beaux Villages de France</span>
+              </div>
+
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="auvergne-rhone-alpes.html" class="btn-retour-fixe" id="btnRetour">
+    ← Auvergne-Rhône-Alpes
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="auvergne-rhone-alpes.html">Auvergne-Rhône-Alpes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lot-et-Garonne — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Zone centrale hero */
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours — intro & filtres */
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* Parcours — cartes "journée" */
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    /* Parcours (ancien style, conservé pour compatibilité) */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../nouvelle-aquitaine.html" class="fiche-topbar-btn">↩ Nouvelle-Aquitaine</a>
+          <a href="../../carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">L</span>ot-et-<br><span style="padding-left: 40px;"><span class="titre-initial">G</span>aronne</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+         <img src="../../../../assets/departement/nouvelle-aquitaine/lot-et-garonne.png" alt="Écusson Lot-et-Garonne" />
+        </div>
+
+        <span class="fiche-hero-ancien">🏛️ Préfecture : Agen · Département 47</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍑</span> Spécialités incontournables</div>
+            <ul>
+              <li>Pruneaux d'Agen IGP (emblème du département)</li>
+              <li>Foie gras du Sud-Ouest IGP</li>
+              <li>Confit de canard gascon</li>
+              <li>Tomates de Marmande (Label Rouge)</li>
+              <li>Fraises du Lot-et-Garonne</li>
+              <li>Poule au pot d'Henri IV</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Produits du terroir</div>
+            <ul>
+              <li>Pruneaux mi-cuits et pruneaux fourrés</li>
+              <li>Asperges des sables des Landes de Gascogne</li>
+              <li>Haricots lingots du Lot-et-Garonne</li>
+              <li>Noix et noisettes du Lot-et-Garonne</li>
+              <li>Melons du Val de Garonne</li>
+              <li>Ail violet de Cadours</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li>Buzet AOP (rouge, blanc, rosé)</li>
+              <li>Côtes du Marmandais AOP</li>
+              <li>Brulhois IGP (rouge tannique)</li>
+              <li>Floc de Gascogne AOC (apéritif)</li>
+              <li>Armagnac (eau-de-vie gasconne)</li>
+              <li>Liqueur de pruneau d'Agen</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Pruneaux fourrés au marzipan</li>
+              <li>Gâteau aux pruneaux d'Agen</li>
+              <li>Croustade gasconne aux pruneaux</li>
+              <li>Confiture de pruneaux maison</li>
+              <li>Pastis gascon (feuilles de brick et Armagnac)</li>
+              <li>Nougats et chocolats aux pruneaux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Sites & monuments classés</div>
+            <ul>
+              <li>Cathédrale Saint-Caprais d'Agen</li>
+              <li>Château de Bonaguil (forteresse médiévale)</li>
+              <li>Abbaye de Moirax (romane)</li>
+              <li>Église de Sainte-Livrade-sur-Lot</li>
+              <li>Menhir de Clermont-Dessous</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & bastides</div>
+            <ul>
+              <li>Château de Bonaguil (chef-d'œuvre gothique)</li>
+              <li>Château de Duras (dominant la Dordogne)</li>
+              <li>Bastide de Villeneuve-sur-Lot</li>
+              <li>Bastide de Monflanquin (la plus belle)</li>
+              <li>Bastide de Vianne (remparts intacts)</li>
+              <li>Château de Xaintrailles</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices religieux</div>
+            <ul>
+              <li>Cathédrale Saint-Caprais d'Agen</li>
+              <li>Abbaye bénédictine de Moirax</li>
+              <li>Prieuré de Clairac</li>
+              <li>Église romane de Pujols</li>
+              <li>Chapelle de Dévillac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée des Beaux-Arts d'Agen (Goya)</li>
+              <li>Musée du Pruneau à Granges-sur-Lot</li>
+              <li>Musée de Gajac à Villeneuve-sur-Lot</li>
+              <li>Musée du Château de Duras</li>
+              <li>Écomusée de la Truffe à Sainte-Alvère</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏞️</span> Vallées & rivières</div>
+            <ul>
+              <li>Vallée de la Garonne (axe central du département)</li>
+              <li>Vallée du Lot (gorges et bastides)</li>
+              <li>Vallée de la Baïse (voie verte)</li>
+              <li>Vallée du Dropt (vignobles et châteaux)</li>
+              <li>Confluent Lot-Garonne à Aiguillon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & espaces naturels</div>
+            <ul>
+              <li>Forêt de la Double et du Landais</li>
+              <li>Coteaux de Gascogne (vignes et vergers)</li>
+              <li>Landes gasconnes (pins et bruyères)</li>
+              <li>Plaine alluviale de la Garonne</li>
+              <li>Marais de la Mazière</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦅</span> Faune & biodiversité</div>
+            <ul>
+              <li>Grues cendrées (migration automnale)</li>
+              <li>Loutres de la Garonne et du Lot</li>
+              <li>Castors réintroduits sur le Lot</li>
+              <li>Cigognes (nidification)</li>
+              <li>Alose et lamproie (poissons migrateurs)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Paysages & panoramas</div>
+            <ul>
+              <li>Vue depuis Pujols-le-Haut (village perché)</li>
+              <li>Panorama de Monflanquin sur les coteaux</li>
+              <li>Boucle du Lot à Castelmoron</li>
+              <li>Vergers de pruniers en fleurs (mars)</li>
+              <li>Vue sur la Garonne depuis Clermont-Dessous</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪨</span> Pierre & poterie</div>
+            <ul>
+              <li>Poteries et céramiques du Val de Garonne</li>
+              <li>Sculpture sur pierre de Granitola</li>
+              <li>Taille de pierre des bastides médiévales</li>
+              <li>Mosaïque et vitrail contemporain (Agen)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & vannerie</div>
+            <ul>
+              <li>Ébénisterie gasconne (meubles anciens)</li>
+              <li>Vannerie d'osier du Val de Garonne</li>
+              <li>Fabrication de tonneaux (Buzet)</li>
+              <li>Sculpture sur bois de tilleul</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Arts & création</div>
+            <ul>
+              <li>École des Beaux-Arts d'Agen</li>
+              <li>Ateliers de peinture sur soie (Nérac)</li>
+              <li>Broderie et dentelle gasconne</li>
+              <li>Faïence et majolique d'inspiration gasconne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥫</span> Conserveries & gastronomie</div>
+            <ul>
+              <li>Confiseries et conserves de pruneaux</li>
+              <li>Conserveries de foie gras artisanales</li>
+              <li>Huile de noix et de noisette du Lot-et-Garonne</li>
+              <li>Vinaigres et condiments au pruneau</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & identité</div>
+            <ul>
+              <li>Gascon (dialecte occitan du Sud-Ouest)</li>
+              <li>Patois agenais (variante locale)</li>
+              <li>Toponymie gallo-romaine et gasconne</li>
+              <li>Identité gasconne forte (entre Gascogne et Guyenne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Musiques & danses</div>
+            <ul>
+              <li>Bourrée gasconne et branle</li>
+              <li>Chants occitans gascons</li>
+              <li>Festival de Jazz à Agen</li>
+              <li>Fêtes de la Garonne (musiques du fleuve)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍑</span> Traditions culinaires</div>
+            <ul>
+              <li>Récolte et séchage des pruneaux (août-septembre)</li>
+              <li>Gavage des canards et oies (tradition gasconne)</li>
+              <li>Cueillette des asperges au printemps</li>
+              <li>Marchés au gras de Nérac et Agen</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Fête du Pruneau à Agen (septembre)</li>
+              <li>Fête d'Henri IV à Nérac (juillet)</li>
+              <li>Festival du Film de Villeneuve-sur-Lot</li>
+              <li>Foires aux vins de Buzet et Duras</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Pujols (village médiéval perché)</li>
+              <li>Monflanquin (bastide royale)</li>
+              <li>Tournon-d'Agenais (village fortifié)</li>
+              <li>Saint-Maurin (village abbatial)</li>
+              <li>Laussun (village perché du Dropt)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Bastides médiévales</div>
+            <ul>
+              <li>Monflanquin (bastide anglaise, 1256)</li>
+              <li>Villeneuve-sur-Lot (bastide royale)</li>
+              <li>Vianne (remparts et tours intacts)</li>
+              <li>Eymet (bastide franco-anglaise)</li>
+              <li>Castillonnès (bastide du Dropt)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Agen (capitale des pruneaux et des arts)</li>
+              <li>Nérac (cité d'Henri IV et Margot)</li>
+              <li>Marmande (capitale de la tomate)</li>
+              <li>Villeneuve-sur-Lot (vieille ville médiévale)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Pujols</h3>
+            <p>Perché sur son éperon rocheux dominant la vallée du Lot, Pujols est l'un des plus beaux villages de France. Ses ruelles pavées, ses maisons à colombages du XV<sup>e</sup> siècle, son église romane et ses remparts médiévaux offrent un voyage dans le temps saisissant. La vue panoramique sur Villeneuve-sur-Lot et les coteaux du Lot-et-Garonne est époustouflante, surtout au coucher du soleil.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Vallée du Lot</span>
+            <span class="village-star-tag">Village médiéval</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année en Lot-et-Garonne</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Février</div>
+                <div><h4>Foire au Gras de Nérac</h4><p>La grande foire aux foie gras, canards et oies gras du Sud-Ouest, dans la tradition des marchés d'hiver gascons.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Floraison des pruniers</h4><p>Les vergers de pruniers se parent de blanc — des milliers d'arbres en fleurs offrent un spectacle unique sur les coteaux agenais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Fête de l'Asperge à Laplume</h4><p>Les asperges des sables à l'honneur — producteurs locaux, dégustations et animations autour de ce légume de prestige.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Fête d'Henri IV à Nérac</h4><p>Reconstitution historique, défilés en costumes Renaissance et animations pour célébrer le souvenir du Vert-Galant dans sa ville de jeunesse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Festival de Jazz d'Agen</h4><p>Concerts en plein air, scènes multiples et jam-sessions dans les rues et places d'Agen — l'un des grands rendez-vous musicaux du Sud-Ouest.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Récolte des pruneaux</h4><p>La grande saison du pruneau — les vergers s'animent, les séchoirs tournent et les conserveries travaillent d'arrache-pied pour le joyau du département.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Fête du Pruneau à Agen</h4><p>Le rendez-vous incontournable des amateurs de pruneaux — marché de producteurs, animations gastronomiques et concours du meilleur pruneau fourré.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Salon des Vins de Buzet</h4><p>Les vignerons de la coopérative de Buzet ouvrent leurs portes — dégustations, visites de chais et découverte des derniers millésimes.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Le Lot-et-Garonne se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre"><span>☀️</span> Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">🍽️ Gourmand</button>
+          <button class="filter-btn" data-filter="culture">🏛️ Culture</button>
+          <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+          <button class="filter-btn" data-filter="famille">👨‍👩‍👧 Famille</button>
+          <button class="filter-btn" data-filter="romantique">💕 Romantique</button>
+          <button class="filter-btn" data-filter="actif">🚴 Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Pruneau d'Agen</h4>
+                <span class="jour-card-icon">🍑</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un verger de pruniers</strong> à Granges-sur-Lot, cœur de la production du pruneau d'Agen.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée du Pruneau</strong>, histoire et procédés de séchage traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un magret aux pruneaux, spécialité gasconne emblématique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une conserverie</strong>, fabrication des pruneaux fourrés au marzipan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de liqueur de pruneau</strong> en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Foie gras et confit gascon</h4>
+                <span class="jour-card-icon">🦆</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un élevage</strong> de canards gras, tradition gasconne du gavage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Marché au gras</strong> de Nérac ou d'Agen selon la saison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un confit de canard et de sa garniture de pommes sarladaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une conserverie</strong> familiale, secrets de fabrication du foie gras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner gastronomique</strong> autour d'un menu tout foie gras.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Tomates de Marmande et légumes du Val de Garonne</h4>
+                <span class="jour-card-icon">🍅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en été</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une exploitation</strong> de tomates de Marmande Label Rouge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Marché de Marmande</strong>, capitale de la tomate, légumes du Val de Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une tarte à la tomate et d'un melon du Val de Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une exploitation d'ail violet</strong> de Cadours, tradition gasconne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'une ratatouille gasconne et d'un verre de Buzet.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vins de Buzet et Côtes du Marmandais</h4>
+                <span class="jour-card-icon">🍷</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la coopérative</strong> de Buzet-sur-Baïse, chais et méthodes de vinification.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de Buzet rouge, blanc et rosé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes, accords mets et vins du Lot-et-Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> des Côtes du Marmandais, appellation méconnue et généreuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de Floc de Gascogne</strong> au coucher du soleil sur les vignes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Douceurs gasconnes, pastis et croustade</h4>
+                <span class="jour-card-icon">🍰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Agen ou Villeneuve-sur-Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Pâtisserie artisanale</strong>, fabrication du pastis gascon aux feuilles de brick et à l'Armagnac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la croustade</strong> gasconne aux pruneaux, recette ancestrale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge gasconne du centre-ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier confiture</strong> de pruneaux maison chez un artisan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de nougat et chocolats</strong> aux pruneaux pour clore la journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Asperges des sables et ail violet de Cadours</h4>
+                <span class="jour-card-icon">🥬</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal au printemps</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une exploitation d'asperges</strong> des sables des Landes de Gascogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Récolte matinale</strong>, découverte de la culture sous sable.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'asperges fraîchement récoltées, sauce mousseline.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'un producteur d'ail violet</strong> de Cadours, tradition gasconne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de haricots lingots</strong> du Lot-et-Garonne en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Agen, cathédrale et musée des Beaux-Arts</h4>
+                <span class="jour-card-icon">🏛️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Agen centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cathédrale Saint-Caprais</strong> d'Agen, joyau architectural du centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée des Beaux-Arts</strong>, collections incluant des œuvres de Goya.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique d'Agen.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade sur le pont-canal</strong>, prouesse d'ingénierie du XIX<sup>e</sup> siècle sur la Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade sur les quais</strong> de la Garonne, lumière du soir sur la préfecture.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Bonaguil, chef-d'œuvre gothique</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Bonaguil</strong>, forteresse gothique parmi les mieux conservées de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite guidée</strong> des fortifications et du donjon du château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur la forteresse et son écrin de verdure.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les environs</strong>, villages typiques du Fumélois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le château, moment photographique privilégié.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Nérac, cité d'Henri IV et de Margot</h4>
+                <span class="jour-card-icon">👑</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château d'Henri IV</strong> à Nérac, résidence de jeunesse du futur roi de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans les jardins</strong> de la Garenne, allées ombragées le long de la Baïse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Baïse, dans le vieux Nérac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au Petit Nérac</strong>, quartier pittoresque aux maisons à colombages.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade au moulin de Barbaste</strong> à proximité, moulin fortifié unique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Monflanquin, bastide royale</h4>
+                <span class="jour-card-icon">🏘️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans Monflanquin</strong>, bastide anglaise fondée en 1256, place centrale à arcades.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du plan en damier</strong>, caractéristique architecturale des bastides.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner sous les arcades</strong>, ambiance médiévale préservée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade panoramique</strong> sur les coteaux environnants, vue sur la campagne du Lot-et-Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, lumière dorée sur les collines gasconnes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Abbaye de Moirax, art roman préservé</h4>
+                <span class="jour-card-icon">⛪</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 10 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Abbaye bénédictine de Moirax</strong>, chapiteaux sculptés remarquables de l'art roman.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans le village</strong> paisible de Moirax.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les environs, ambiance rurale et calme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le prieuré de Clairac</strong> à proximité, cité monastique historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Agen, à travers les coteaux gascons.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Duras, dominant la Dordogne</h4>
+                <span class="jour-card-icon">🏯</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 55 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Duras</strong>, forteresse médiévale devenue demeure Renaissance.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée du château</strong>, mobilier d'époque et histoire de la vicomté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village de Duras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le vignoble</strong> de Duras, appellation en pleine renaissance.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis les remparts du château.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée du Lot en canoë</h4>
+                <span class="jour-card-icon">🚣</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km en canoë</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> sur le Lot, entre Villeneuve-sur-Lot et Aiguillon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant Pujols</strong>, village perché dominant la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une berge</strong>, ombragée par les grands arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Reprise de la descente</strong>, falaises calcaires et villages discrets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Arrivée au confluent</strong> Lot-Garonne à Aiguillon, satisfaction d'une belle descente.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Confluent Lot-Garonne à Aiguillon</h4>
+                <span class="jour-card-icon">🏞️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Aiguillon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade au confluent</strong> du Lot et de la Garonne, spectacle des eaux mêlées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation de la faune</strong>, loutres et castors réintroduits sur le Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord des berges, dans la plaine alluviale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans la plaine</strong> alluviale de la Garonne, paysages agricoles ouverts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le confluent, moment paisible.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Baïse, voie verte</h4>
+                <span class="jour-card-icon">🌾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Buzet à Lavardac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long de la Baïse</strong> canalisée, écluses et ports fluviaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des cigognes</strong>, nidification le long de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau, à l'ombre des platanes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la balade</strong> vers Lavardac, villages gascons fleuris.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, lumière dorée sur la Baïse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Grues cendrées en migration</h4>
+                <span class="jour-card-icon">🦢</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en automne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Observation des grues cendrées</strong> en migration automnale, spectacle aérien impressionnant.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans la plaine</strong> alluviale, zones de halte des oiseaux migrateurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au calme, dans un cadre naturel exceptionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Affût photo</strong> pour observer les vols en formation.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> accompagné du chant des grues.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée du Dropt, vignobles et châteaux</h4>
+                <span class="jour-card-icon">🍇</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · nord du département</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long du Dropt</strong>, rivière calme bordée de vignobles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant les châteaux</strong> viticoles surplombant la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la rivière, entre vignes et prairies.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers Castillonnès</strong>, bastide dominant la vallée du Dropt.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vignobles du Dropt.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Coteaux de Gascogne, vergers en fleurs</h4>
+                <span class="jour-card-icon">🌸</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en mars</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans les vergers</strong> de pruniers en fleurs, spectacle blanc unique en mars.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Point de vue panoramique</strong> depuis les coteaux agenais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au milieu des vergers fleuris.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les vignobles</strong> voisins, coteaux de Gascogne verdoyants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vergers en fleurs, moment printanier privilégié.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Musée du Pruneau en famille</h4>
+                <span class="jour-card-icon">👨‍👩‍👧</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Granges-sur-Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du musée du Pruneau, parcours interactif pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Atelier fabrication</strong> de pruneaux fourrés, activité manuelle pour toute la famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le verger du musée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les vergers</strong> de pruniers, jeu de piste pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation en famille</strong> de pruneaux et de jus de fruits.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Bonaguil, exploration ludique</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> dans le château de Bonaguil, à la recherche des secrets de la forteresse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique</strong> des tours et remparts, explications adaptées aux enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur la forteresse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Animation médiévale</strong> en saison estivale, initiation au tir à l'arc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> dans les environs avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bastide de Vianne en famille</h4>
+                <span class="jour-card-icon">🏘️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade ludique</strong> le long des remparts intacts de Vianne, jeu de piste pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'une verrerie</strong> artisanale, démonstration de soufflage du verre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le village de Vianne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au bord de la Baïse</strong>, jeux au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canoë sur le Lot en famille</h4>
+                <span class="jour-card-icon">🛶</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 8 km en canoë</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> adaptée aux familles, parcours court et tranquille sur le Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant Pujols</strong>, vue sur le village perché depuis l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une plage de galets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade surveillée</strong> dans une zone calme de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> à Villeneuve-sur-Lot avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Jardins de la Garenne à Nérac</h4>
+                <span class="jour-card-icon">🌳</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Nérac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade ludique</strong> dans les jardins de la Garenne, à la découverte de la nature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du château</strong> d'Henri IV, anecdotes ludiques sur le jeune roi.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans les jardins, au bord de la Baïse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au Petit Nérac</strong>, maisons à colombages et ruelles pittoresques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pujols, village perché en famille</h4>
+                <span class="jour-card-icon">🏘️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 5 km de Villeneuve-sur-Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> dans les ruelles pavées de Pujols, à la découverte des maisons à colombages.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique de l'église</strong> romane et des remparts médiévaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue panoramique sur Villeneuve-sur-Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Ateliers d'artisans</strong> installés dans le village, poterie et peinture.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> face aux coteaux avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pujols au coucher du soleil</h4>
+                <span class="jour-card-icon">🌅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 5 km de Villeneuve-sur-Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans Pujols, avant l'affluence, pour profiter du village à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'église</strong> romane et des remparts médiévaux du XV<sup>e</sup> siècle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, vue sur la vallée du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les ruelles pavées, main dans la main.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur Villeneuve-sur-Lot, panorama époustouflant depuis le village perché.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Nérac, escapade royale à deux</h4>
+                <span class="jour-card-icon">💕</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à deux</strong> dans les jardins de la Garenne, sur les pas d'Henri IV et Margot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du château</strong>, résidence de jeunesse du Vert-Galant.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> au bord de la Baïse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en barque</strong> à deux sur la Baïse, sous les frondaisons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans le vieux Nérac.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Duras, tête-à-tête historique</h4>
+                <span class="jour-card-icon">🏯</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 55 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château</strong> de Duras en tête-à-tête, forteresse devenue demeure Renaissance.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans les appartements</strong> d'époque, ambiance feutrée et raffinée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> dans le village de Duras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le vignoble</strong>, main dans la main entre les rangs de vigne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis les remparts du château.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Monflanquin, bastide de charme</h4>
+                <span class="jour-card-icon">💌</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à deux</strong> sous les arcades de la place de Monflanquin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les ruelles médiévales, échoppes d'artisans d'art.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> sous les arcades de la bastide.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade panoramique</strong> sur les coteaux, vue sur la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> avec vue sur la bastide illuminée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Dégustation privée à Buzet</h4>
+                <span class="jour-card-icon">🍷</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km d'Agen</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite privée d'un domaine</strong> de Buzet, loin des groupes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation intimiste</strong> dans les chais centenaires du domaine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner gastronomique</strong> dans les vignes de Buzet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade romantique</strong> le long de la Baïse, entre écluses et vignobles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vignes de Buzet, verre à la main.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Balade en gabare sur le Lot</h4>
+                <span class="jour-card-icon">⛵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Villeneuve-sur-Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans Villeneuve-sur-Lot</strong>, bastide royale au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Embarquement en gabare</strong> traditionnelle, navigation à deux sur le Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en terrasse, au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers Pujols</strong>, village perché dominant la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le Lot, moment suspendu à deux.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canoë-kayak sur le Lot</h4>
+                <span class="jour-card-icon">🚣</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km en canoë</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ en canoë</strong> depuis Villeneuve-sur-Lot, direction Aiguillon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage sous les falaises</strong> calcaires, vue sur les bastides depuis l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une berge</strong>, pause bien méritée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Reprise de la descente</strong>, villages perchés et moulins anciens.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Arrivée au confluent</strong> Lot-Garonne, satisfaction d'une belle descente.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur la voie verte de la Baïse</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 40 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> de Buzet, le long de la Baïse canalisée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Vianne</strong>, pause fraîcheur devant les remparts intacts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la voie verte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Lavardac</strong>, écluses et ports fluviaux sur le trajet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong>, satisfaction d'une belle sortie le long de la Baïse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans les coteaux de Gascogne</h4>
+                <span class="jour-card-icon">🥾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 18 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans les coteaux</strong> de Gascogne, vergers et vignes en dénivelé doux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage par un point de vue</strong> panoramique sur la vallée de la Garonne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong>, produits locaux énergétiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la randonnée</strong> à travers vergers de pruniers et vignobles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et récupération</strong>, verre de Buzet bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT autour du château de Bonaguil</h4>
+                <span class="jour-card-icon">🚵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> dans les forêts du Fumélois, sentiers techniques et dénivelé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant le château</strong> de Bonaguil, halte photo et technique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en forêt, à l'ombre des chênes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les crêtes surplombant la vallée du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et verre de vin du Marmandais bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée le long du Dropt</h4>
+                <span class="jour-card-icon">🧭</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée le long du Dropt</strong>, rivière calme entre vignobles et prairies.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant d'anciens moulins</strong>, témoins discrets du passé rural.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique au bord de l'eau</strong>, fraîcheur sous les frondaisons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la randonnée</strong> vers Castillonnès, bastide du Dropt.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, silence retrouvé de cette vallée peu fréquentée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur la route des bastides</h4>
+                <span class="jour-card-icon">🚲</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> de Villeneuve-sur-Lot, direction Monflanquin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Monflanquin</strong>, pause fraîcheur sous les arcades.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la route, entre bastides.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Castillonnès</strong>, paysages de coteaux gascons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour à Villeneuve-sur-Lot</strong>, satisfaction d'une belle boucle à vélo.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

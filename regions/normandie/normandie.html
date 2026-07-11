@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Normandie — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-normandie.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">N</span>ormandie</h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-normandie.png" alt="Écusson Normandie" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/tripes-caen.html">Tripes à la mode de Caen</a></li>
+              <li><a href="gastronomie/plats-emblematiques/sole-normande.html">Sole à la normande</a></li>
+              <li><a href="gastronomie/plats-emblematiques/poulet-vallee-auge.html">Poulet à la vallée d'Auge (crème et cidre)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/marmite-dieppoise.html">Marmite dieppoise (fruits de mer)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/canard-rouennais.html">Canard à la rouennaise</a></li>
+              <li><a href="gastronomie/plats-emblematiques/agneau-pre-sale.html">Agneau de pré-salé du Mont-Saint-Michel IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/camembert.html">Camembert de Normandie AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/livarot.html">Livarot AOP (le colonel)</a></li>
+              <li><a href="gastronomie/fromages-terroir/pont-leveque.html">Pont-l'Évêque AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/neufchatel.html">Neufchâtel AOP (cœur de Bray)</a></li>
+              <li><a href="gastronomie/fromages-terroir/beurre-isigny.html">Beurre d'Isigny AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/creme-isigny.html">Crème d'Isigny AOP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍺</span> Cidre, calvados & boissons</div>
+            <ul>
+              <li><a href="gastronomie/boisson/calvados-aop.html">Calvados AOP (eau-de-vie de pomme)</a></li>
+              <li><a href="gastronomie/boisson/cidre-normand.html">Cidre de Normandie IGP</a></li>
+              <li><a href="gastronomie/boisson/pommeau-normandie.html">Pommeau de Normandie AOP</a></li>
+              <li><a href="gastronomie/boisson/poiré-domfront.html">Poiré de Domfront AOP</a></li>
+              <li><a href="gastronomie/boisson/eau-de-vie-poire.html">Eau-de-vie de poire du Perche</a></li>
+              <li><a href="gastronomie/boisson/biere-normande.html">Bières artisanales normandes</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/teurgoule.html">Teurgoule (riz au lait normand)</a></li>
+              <li><a href="gastronomie/douceur/bourdelot.html">Bourdelot (pomme en croûte)</a></li>
+              <li><a href="gastronomie/douceur/mirliton-rouen.html">Mirliton de Rouen</a></li>
+              <li><a href="gastronomie/douceur/sable-normand.html">Sablé normand au beurre</a></li>
+              <li><a href="gastronomie/douceur/sucre-pomme-caen.html">Sucre de pomme de Caen</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Mont-Saint-Michel et sa baie</li>
+              <li>Tapisserie de Bayeux (candidate UNESCO)</li>
+              <li>Le Havre — ville reconstruite par Auguste Perret</li>
+              <li>Cathédrale de Rouen</li>
+              <li>Sites du Débarquement (Mémoire du Monde)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Abbaye du Mont-Saint-Michel</li>
+              <li>Cathédrale Notre-Dame de Rouen</li>
+              <li>Abbaye aux Hommes et aux Dames (Caen)</li>
+              <li>Château Guillaume-le-Conquérant (Falaise)</li>
+              <li>Château Gaillard (Les Andelys)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée du Débarquement (Arromanches)</li>
+              <li>Mémorial de Caen (Seconde Guerre mondiale)</li>
+              <li>Musée des Beaux-Arts de Rouen</li>
+              <li>Musée d'Impressionnismes de Giverny</li>
+              <li>Cité de la Mer (Cherbourg — sous-marin Le Redoutable)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚔️</span> Mémoire & Débarquement</div>
+            <ul>
+              <li>Plages du Débarquement (juin 1944)</li>
+              <li>Cimetière américain de Colleville-sur-Mer</li>
+              <li>Pointe du Hoc (Calvados)</li>
+              <li>Batterie de Longues-sur-Mer</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Littoral & falaises</div>
+            <ul>
+              <li>Falaises d'Étretat (Alabâtre — arches naturelles)</li>
+              <li>Côte Fleurie (Deauville, Trouville, Cabourg)</li>
+              <li>Côte de Nacre (plages du Débarquement)</li>
+              <li>Baie du Mont-Saint-Michel (marées d'exception)</li>
+              <li>Côte d'Albâtre (Fécamp, Dieppe)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Bocage & campagne</div>
+            <ul>
+              <li>Pays d'Auge (pommiers et manoirs)</li>
+              <li>Bocage normand (haies et herbages)</li>
+              <li>Plaine de Caen (terres agricoles)</li>
+              <li>Perche (forêts et prairies — cheval percheron)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & parcs</div>
+            <ul>
+              <li>Forêt de Brotonne (Parc naturel régional)</li>
+              <li>Forêt d'Écouves (Orne — plus haute d'Normandie)</li>
+              <li>Parc naturel régional du Perche</li>
+              <li>Parc naturel régional des Marais du Cotentin</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦢</span> Estuaires & marais</div>
+            <ul>
+              <li>Estuaire de la Seine (Pont de Normandie)</li>
+              <li>Marais du Cotentin et du Bessin</li>
+              <li>Baie des Veys</li>
+              <li>Estuaire de l'Orne (réserve naturelle)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪡</span> Dentelle & broderie</div>
+            <ul>
+              <li>Dentelle d'Alençon (point d'Alençon — UNESCO)</li>
+              <li>Dentelle de Bayeux (point de Bayeux)</li>
+              <li>Broderie normande (costumes et costumes de fête)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Céramique & faïence</div>
+            <ul>
+              <li>Faïences de Rouen (XVIIe–XVIIIe siècle)</li>
+              <li>Poteries de Noron-la-Poterie (Calvados)</li>
+              <li>Grès de Ger (Manche)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍎</span> Cidrerie & distillation</div>
+            <ul>
+              <li>Cidreries artisanales du Pays d'Auge</li>
+              <li>Distilleries de calvados (Père Magloire, Boulard…)</li>
+              <li>Fabrication du pommeau et du poiré</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & construction</div>
+            <ul>
+              <li>Charpenterie à pans de bois (colombages normands)</li>
+              <li>Ébénisterie du Perche</li>
+              <li>Fabrication de meubles normands (armoires peintes)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Normand (dialecte d'oïl)</li>
+              <li>Héritage viking et ducal (Rollon, Guillaume le Conquérant)</li>
+              <li>Pays de Flaubert, Maupassant et Proust</li>
+              <li>École impressionniste (Monet à Giverny)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Contredanse normande</li>
+              <li>Festival de l'Impressionnisme (Rouen)</li>
+              <li>Festival Normandie Impressionniste</li>
+              <li>Jazz sous les Pommiers (Coutances)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏇</span> Sports & traditions</div>
+            <ul>
+              <li>Hippisme et haras (haras du Pin — Versailles du cheval)</li>
+              <li>Cheval percheron et boulonnais</li>
+              <li>Golf (Deauville, Étretat)</li>
+              <li>Voile (Cherbourg, Dieppe — routes de la mer)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Commémoration du Débarquement (6 juin)</li>
+              <li>Fête de Jeanne d'Arc à Rouen (mai)</li>
+              <li>Foire de Caen (automne)</li>
+              <li>Fêtes médiévales de Bayeux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Beuvron-en-Auge (Calvados)</li>
+              <li>Lyons-la-Forêt (Eure)</li>
+              <li>Saint-Céneri-le-Gérei (Orne)</li>
+              <li>Barfleur (Manche)</li>
+              <li>Le Bec-Hellouin (Eure)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages à colombages</div>
+            <ul>
+              <li>Beuvron-en-Auge (maisons à pans de bois)</li>
+              <li>Honfleur (vieux bassin et maisons ardoisées)</li>
+              <li>Lisieux (Pays d'Auge)</li>
+              <li>Verneuil-sur-Avre (Eure)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Honfleur (Calvados — port et lumière des peintres)</li>
+              <li>Étretat (Seine-Maritime — falaises)</li>
+              <li>Giverny (Eure — jardins de Monet)</li>
+              <li>Les Andelys (Eure — Château Gaillard)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Honfleur</h3>
+            <p>Au fond de l'estuaire de la Seine, Honfleur est l'un des ports les plus peints et les plus photographiés de France. Ses maisons ardoisées à six ou sept étages qui se mirent dans le vieux bassin ont fasciné Boudin, Monet, Courbet et Seurat. Berceau de l'impressionnisme avant la lettre, la ville natale d'Erik Satie et de Samuel de Champlain conserve une âme de port de découvreurs et un charme intact que les siècles n'ont pas entamé.</p>
+            <span class="village-star-tag">Port historique classé</span>
+            <span class="village-star-tag">Calvados</span>
+            <span class="village-star-tag">Berceau de l'impressionnisme</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Carnaval de Granville</h4><p>L'un des plus grands carnavals de France — quatre jours de fête populaire et de défilés costumés dans cette ville portuaire de la Manche.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête de Jeanne d'Arc — Rouen</h4><p>Rouen commémore chaque mai le procès et le supplice de Jeanne d'Arc, avec reconstitutions historiques et cérémonies sur la place du Vieux-Marché.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Commémoration du Débarquement — 6 juin</h4><p>Les cérémonies internationales sur les plages du Débarquement rassemblent chaque année des milliers de visiteurs en hommage aux soldats alliés.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Jazz sous les Pommiers — Coutances</h4><p>Festival de jazz de référence dans le bocage normand — dix jours de concerts gratuits et payants sous les pommiers en fleurs de la Manche.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Armada de Rouen</h4><p>Tous les quatre à cinq ans, les plus grands voiliers du monde remontent la Seine jusqu'à Rouen — un spectacle maritime unique au monde.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fêtes Médiévales de Bayeux</h4><p>La capitale de la tapisserie se transforme en cité médiévale — joutes, troubadours et marchés artisanaux dans les rues de la vieille ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Festival Normandie Impressionniste</h4><p>Tous les deux ans, la Normandie célèbre son patrimoine impressionniste avec expositions, événements culturels et parcours artistiques dans toute la région.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Foire de la Saint-Romain — Rouen</h4><p>L'une des plus anciennes foires de France — festivités automnales dans la capitale normande depuis le XIe siècle.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Normandie</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⚔️</span>
+            <h4>Route des Plages du Débarquement</h4>
+            <p>Utah Beach, Omaha Beach, Pointe du Hoc, Arromanches — le chemin de mémoire du 6 juin 1944 le long de la Côte de Nacre.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍎</span>
+            <h4>Route du Cidre — Pays d'Auge</h4>
+            <p>Cambremer, Beuvron-en-Auge, Bonnebosq — cidreries, calvados et manoirs à colombages au cœur du verger normand.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🎨</span>
+            <h4>Sur les pas des Impressionnistes</h4>
+            <p>Giverny, Étretat, Honfleur, Rouen — les paysages qui inspirèrent Monet, Boudin, Courbet et toute l'école impressionniste française.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏛️</span>
+            <h4>Route des Abbayes Normandes</h4>
+            <p>Le Bec-Hellouin, Jumièges, Saint-Wandrille, Caen — les joyaux de l'architecture romane et gothique normande le long de la Seine.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌊</span>
+            <h4>Falaises d'Étretat & Côte d'Albâtre</h4>
+            <p>Fécamp, Étretat, Yport, Dieppe — les falaises de craie blanche et les arches naturelles qui ont inspiré Monet et Victor Hugo.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏔️</span>
+            <h4>Mont-Saint-Michel & Baie</h4>
+            <p>L'abbaye millénaire, les grèves et les moutons de pré-salé — l'un des sites les plus visités du monde entre Normandie et Bretagne.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gers — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../occitanie.html" class="fiche-topbar-btn">Occitanie</a>
+          <a href="../../carte-occitanie.html" class="fiche-topbar-btn">Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 50px;">Le <span class="titre-initial">G</span>ers</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/occitanie/gers.png" alt="Écusson Gers" />
+        </div>
+
+        <span class="fiche-hero-ancien">Préfecture : Auch · Département 32</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">Traditions</button>
+          <button class="fiche-tab" data-panel="villages">Villages</button>
+          <button class="fiche-tab" data-panel="agenda">Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+            <ul>
+              <li>Foie gras du Gers</li>
+              <li>Magret de canard</li>
+              <li>Croustade gasconne (pastis gascon aux pommes et Armagnac)</li>
+              <li>Poule au pot à la gasconne</li>
+              <li>Garbure gersoise</li>
+              <li>Confit de canard</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+            <ul>
+              <li>Canard et oie gras du Gers</li>
+              <li>Ail blanc de Lomagne IGP</li>
+              <li>Melon du Gers</li>
+              <li>Volaille fermière de Gascogne</li>
+              <li>Noix du Gers</li>
+              <li>Miel de Gascogne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vin</span> Vins & spiritueux</div>
+            <ul>
+              <li>Armagnac AOP (plus vieille eau-de-vie de France)</li>
+              <li>Floc de Gascogne AOP</li>
+              <li>Côtes de Gascogne IGP</li>
+              <li>Saint-Mont AOP</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Dessert</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Croustade aux pommes et à l'Armagnac</li>
+              <li>Pastis gascon</li>
+              <li>Gâteau à la broche</li>
+              <li>Confiture de prunes d'ente à l'Armagnac</li>
+              <li>Nougatine gasconne</li>
+              <li>Tourtière landaise</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Site</span> Sites UNESCO & religieux</div>
+            <ul>
+              <li>Cathédrale Sainte-Marie d'Auch (UNESCO, chemins de Compostelle)</li>
+              <li>Collégiale Saint-Pierre de La Romieu (UNESCO)</li>
+              <li>Abbaye de Flaran</li>
+              <li>Cloître de Condom</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Villages fortifiés & bastides</div>
+            <ul>
+              <li>Larressingle, plus petit village fortifié de France</li>
+              <li>Fourcès, bastide circulaire unique</li>
+              <li>Lavardens et son château</li>
+              <li>Bassoues et son donjon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Monument</span> Monuments & mémoire gasconne</div>
+            <ul>
+              <li>Escalier monumental et statue de d'Artagnan (Auch)</li>
+              <li>Château de Lavardens</li>
+              <li>Donjon de Bassoues</li>
+              <li>Château de Cassaigne (route de l'Armagnac)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
+            <ul>
+              <li>Musée des Jacobins (Auch)</li>
+              <li>Musée de l'Armagnac (Condom)</li>
+              <li>Vitraux Renaissance et stalles sculptées de la cathédrale d'Auch</li>
+              <li>Maison natale de d'Artagnan (Lupiac)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Colline</span> Collines & paysages</div>
+            <ul>
+              <li>Petite Toscane du Gers, collines gasconnes</li>
+              <li>Vallée de la Baïse</li>
+              <li>Vallée du Gers</li>
+              <li>Astarac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Riviere</span> Rivières & lacs</div>
+            <ul>
+              <li>La Baïse et ses écluses</li>
+              <li>L'Adour, à la frontière du Gers</li>
+              <li>Lacs collinaires de Gascogne</li>
+              <li>Le Gers, rivière traversant le département</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Faune</span> Faune & biodiversité</div>
+            <ul>
+              <li>Palmipèdes gras des élevages gersois</li>
+              <li>Oiseaux migrateurs des vallées</li>
+              <li>Faune des forêts de Gascogne</li>
+              <li>Vergers de prunes d'ente</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Paysage</span> Paysages & panoramas</div>
+            <ul>
+              <li>Panoramas depuis les collines de l'Astarac</li>
+              <li>Vignobles de l'Armagnac au coucher du soleil</li>
+              <li>Champs de tournesols gascons</li>
+              <li>Vallée de la Baïse depuis Condom</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Alambic</span> Distillation & spiritueux</div>
+            <ul>
+              <li>Distillation traditionnelle de l'Armagnac (alambic continu)</li>
+              <li>Élaboration du Floc de Gascogne</li>
+              <li>Tonnellerie pour le vieillissement de l'Armagnac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Elevage</span> Élevage & gavage</div>
+            <ul>
+              <li>Gavage traditionnel des canards et oies</li>
+              <li>Élevage de volailles fermières de Gascogne</li>
+              <li>Transformation du foie gras</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Patisserie</span> Boulangerie & pâtisserie</div>
+            <ul>
+              <li>Confection de la croustade gasconne</li>
+              <li>Fabrication du pastis gascon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Conserve</span> Produits artisanaux</div>
+            <ul>
+              <li>Confiture de prunes d'ente à l'Armagnac</li>
+              <li>Miel de Gascogne artisanal</li>
+              <li>Conserverie de confits et rillettes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Langue</span> Langue & identité</div>
+            <ul>
+              <li>Gascon, dialecte occitan</li>
+              <li>Légende de d'Artagnan et des mousquetaires</li>
+              <li>Identité gasconne et art de vivre</li>
+              <li>Toponymie gasconne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Jazz</span> Jazz & culture vivante</div>
+            <ul>
+              <li>Jazz in Marciac, festival international</li>
+              <li>Vie culturelle des bastides gersoises</li>
+              <li>Marchés au gras traditionnels</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fete</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Jazz in Marciac (juillet-août)</li>
+              <li>Fêtes de la Pentecôte à Condom</li>
+              <li>Foire aux vins et à l'Armagnac</li>
+              <li>Marché au gras d'hiver</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+            <ul>
+              <li>Gavage et confection du foie gras</li>
+              <li>Distillation de l'Armagnac en méthode ancestrale</li>
+              <li>Confection de la croustade aux pommes</li>
+              <li>Élaboration du Floc de Gascogne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Larressingle (plus petit village fortifié de France)</li>
+              <li>Fourcès (bastide circulaire)</li>
+              <li>La Romieu (collégiale UNESCO)</li>
+              <li>Lavardens</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bastide</span> Bastides gersoises</div>
+            <ul>
+              <li>Mirande</li>
+              <li>Marciac (capitale du jazz)</li>
+              <li>Vic-Fezensac</li>
+              <li>Bassoues</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bourg</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Auch (préfecture, cité de d'Artagnan)</li>
+              <li>Condom (capitale de l'Armagnac)</li>
+              <li>Lectoure (cité de l'Astarac)</li>
+              <li>Lupiac (village natal de d'Artagnan)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">Etoile</div>
+          <div>
+            <h3>Village à l'honneur : La Romieu</h3>
+            <p>Bâtie au XIVe siècle autour d'une collégiale gothique classée au patrimoine mondial de l'UNESCO, cette petite cité fut fondée par un enfant du pays devenu cardinal à Avignon. Son cloître aux voûtes élégantes, ses tours d'angle et la légende des chats qui sauvèrent le village de la famine en font une étape empreinte de mystère et de charme.</p>
+            <span class="village-star-tag">UNESCO Chemins de Compostelle</span>
+            <span class="village-star-tag">Cité du cardinal</span>
+            <span class="village-star-tag">Légende des chats</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>Calendrier</span> Fêtes & événements de l'année dans le Gers</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Février</div>
+                <div><h4>Marché au gras d'hiver</h4><p>Grande foire au foie gras et aux produits du canard dans les villages gersois.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fêtes de la Pentecôte à Condom</h4><p>Bandas, animations gasconnes et marchés festifs dans la capitale de l'Armagnac.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet-Août</div>
+                <div><h4>Jazz in Marciac</h4><p>Immense festival international de jazz qui transforme le petit village en scène planétaire.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Circuit des bastides et villages fortifiés</h4><p>Marchés nocturnes et animations dans les bastides gersoises tout l'été.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Fête des Vendanges de l'Armagnac</h4><p>Célébration des vendanges dans les vignobles du Bas-Armagnac et de la Ténarèze.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Foire aux vins et à l'Armagnac de Condom</h4><p>Producteurs et négociants se rassemblent pour présenter leurs meilleurs crus.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Marché au foie gras d'automne</h4><p>Grande foire gourmande annonçant la saison des fêtes dans les halles gersoises.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël d'Auch</h4><p>Chalets et animations au pied de la cathédrale et de l'escalier monumental.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Le Gers se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">Gourmand</button>
+          <button class="filter-btn" data-filter="culture">Culture</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="famille">Famille</button>
+          <button class="filter-btn" data-filter="romantique">Romantique</button>
+          <button class="filter-btn" data-filter="actif">Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route de l'Armagnac et du Floc de Gascogne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bas-Armagnac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une distillerie</strong> d'Armagnac, découverte de l'alambic continu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> d'Armagnac et de Floc de Gascogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un confit de canard.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les vignobles de l'Armagnac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de croustade à l'Armagnac.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Foie gras et canard gras du Gers</h4>
+              </div>
+              <span class="jour-duree">Journée complète · campagne gersoise</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un élevage</strong> de canards gras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du gavage</strong> traditionnel et de la transformation du foie gras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un foie gras poêlé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Marché au gras</strong> dans un village gersois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de magret et de vin de Saint-Mont.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marché de d'Artagnan et saveurs d'Auch</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Auch</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché d'Auch</strong>, produits locaux gascons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la croustade</strong> gasconne chez un pâtissier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une garbure gersoise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur les traces de d'Artagnan dans la vieille ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> d'Armagnac au pied de l'escalier monumental.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ail blanc de Lomagne et terroir gersois</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lomagne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une exploitation</strong> d'ail blanc de Lomagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la récolte</strong> et du tressage traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une soupe à l'ail gersoise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne de Lomagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de melon du Gers et de vin local.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Auch, cité de d'Artagnan</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Auch centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cathédrale Sainte-Marie</strong> d'Auch, vitraux Renaissance et stalles sculptées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Escalier monumental</strong> et statue de d'Artagnan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée des Jacobins</strong>, riches collections.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade</strong> dans les pousterles, ruelles typiques d'Auch.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Condom et la route de l'Armagnac</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Condom</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du cloître</strong> de Condom.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée de l'Armagnac</strong>, histoire de la précieuse eau-de-vie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Baïse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en gabarre</strong> sur la Baïse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> d'Armagnac dans un chai historique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>La Romieu, cité du cardinal et des chats</h4>
+              </div>
+              <span class="jour-duree">Journée complète · La Romieu</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la collégiale</strong> Saint-Pierre, classée UNESCO.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le cloître et les jardins.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> de la légende des chats de La Romieu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la campagne gersoise.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Larressingle et Fourcès, villages fortifiés</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Larressingle à Fourcès</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans Larressingle, plus petit village fortifié de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des remparts</strong> et du donjon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans un village voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de Fourcès</strong>, bastide circulaire unique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur la place ronde de Fourcès.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Baïse à vélo</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Condom</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> le long de la Baïse depuis Condom.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les écluses historiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers Nérac ou un village voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Condom.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Collines de l'Astarac, la petite Toscane gasconne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Astarac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans les collines de l'Astarac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Panorama</strong> sur les vallées et vignobles environnants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une crête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les vergers et vignobles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les collines gasconnes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vergers et vignobles de l'Armagnac</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bas-Armagnac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les vignobles du Bas-Armagnac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des vergers de prunes d'ente.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans la campagne gersoise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'un chai</strong> traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vignes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lacs et étangs de Gascogne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · lacs collinaires</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> autour d'un lac collinaire de Gascogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation</strong> des oiseaux migrateurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade</strong> ou balade en barque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la campagne environnante.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Sur les traces de d'Artagnan en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lupiac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de la maison natale de d'Artagnan à Lupiac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> sur le thème des mousquetaires.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans la campagne gersoise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à Auch</strong>, statue et escalier monumental.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Larressingle et Fourcès en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Larressingle à Fourcès</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de Larressingle, village fortifié miniature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le donjon et les remparts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> de la place ronde de Fourcès.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong>.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ferme pédagogique du canard gras en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · campagne gersoise</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme pédagogique</strong>, découverte des canards.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Explication ludique</strong> du gavage et de la transformation.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à la ferme.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Jazz in Marciac en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Marciac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans le village de Marciac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers musicaux</strong> pour enfants en période de festival.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur la place du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Concert ou animation</strong> musicale en journée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Auch.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Auch au coucher du soleil</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Auch</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans la vieille ville d'Auch.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la cathédrale</strong> en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong> avec vue sur la vallée du Gers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les pousterles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis l'escalier monumental.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Condom, romance sur la Baïse</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Condom</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles de Condom.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Croisière en gabarre</strong> sur la Baïse à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation d'Armagnac</strong> en amoureux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans un chai historique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fourcès, escapade dans la bastide circulaire</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Fourcès</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> sur la place ronde de Fourcès.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des jardins</strong> et bords de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la bastide.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vignobles de l'Armagnac en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bas-Armagnac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les vignobles du Bas-Armagnac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation à deux</strong> dans un chai familial.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> parmi les alambics traditionnels.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vignobles gersois.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur la route de l'Armagnac</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 35 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> à travers les vignobles de l'Armagnac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par plusieurs domaines viticoles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> dans la campagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers Condom.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et dégustation d'Armagnac bien méritée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans les collines de l'Astarac</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Astarac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> pour une randonnée dans l'Astarac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> de vallons et de crêtes gasconnes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> avec panorama.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un village voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération au village.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canoë sur la Baïse</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Condom à Nérac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> sur la Baïse depuis Condom.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les écluses historiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une berge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la descente vers Nérac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans la campagne gersoise</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 35 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> à travers les collines et vallées du Gers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par des villages typiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en pleine campagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les crêtes environnantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et foie gras bien mérité.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

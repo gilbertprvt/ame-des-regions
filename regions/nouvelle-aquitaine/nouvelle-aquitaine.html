@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nouvelle-Aquitaine — L'Âme des Régions</title>
+<link rel="stylesheet" href="../../style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+.fiche-page { background: var(--ivoire); }
+/* ===== EN-TÊTE BLEU ===== */
+.fiche-hero {
+background: #2C4A7C;
+color: white;
+padding: 20px 0 16px;
+position: relative;
+    }
+.fiche-hero::before {
+content: '';
+position: absolute; inset: 0;
+background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+pointer-events: none;
+    }
+/* Logo + boutons */
+.fiche-topbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+position: relative;
+    }
+.fiche-logo {
+font-family: var(--font-titre);
+font-size: 30px;
+font-weight: 700;
+color: white;
+text-decoration: none;
+letter-spacing: 0.01em;
+position: relative;
+top: -30px;  /* ← ajustez cette valeur */
+    }
+.fiche-logo span { color: #C8843A; }
+.fiche-topbar-liens { 
+display: flex; 
+gap: 10px; 
+position: relative;
+top: 15px;  /* ← ajustez cette valeur */
+    }
+.fiche-topbar-btn {
+padding: 7px 18px;
+border: 1px solid rgba(255,255,255,0.35);
+border-radius: 24px;
+color: rgba(255,255,255,0.85);
+font-size: 20px;
+font-family: var(--font-corps);
+text-decoration: none;
+transition: all 0.18s;
+position: relative;
+z-index: 10;
+    }
+.fiche-topbar-btn:hover {
+background: rgba(255,255,255,0.15);
+color: white;
+border-color: rgba(255,255,255,0.7);
+    }
+/* Titre + badges */
+.fiche-hero-ecusson {
+display: flex;
+flex-direction: column;    /* ← écusson + badge empilés */
+align-items: center;       /* ← centré */
+position: absolute;
+left: 460px;
+top: -56px;  /* ← ajustez cette valeur */
+    }
+.fiche-hero-ecusson img {
+height: 180px;
+width: auto;
+filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+.fiche-hero-titre h1 {
+font-family: var(--font-titre);
+font-size: clamp(36px, 5.5vw, 62px);
+font-weight: 700;
+line-height: 1; /* ← écart entre les ligne*/
+padding-left: 0px;
+margin-top: -50px;   /* ← ajustez cette valeur hauteur titre*/
+    }
+.titre-initial { color: #C8843A; }
+.fiche-hero-droite {
+display: flex;
+flex-direction: column;
+gap: 8px;
+align-items: flex-end;
+flex-shrink: 0;
+padding-top: 0;
+position: relative;
+top: -75px;
+    }
+/* Citation */
+.fiche-citation {
+background: #2C4A7C;
+border-left: 3px solid #C8843A;
+padding: 12px 18px;
+margin: 16px auto 0 auto;
+max-width: fit-content;
+font-family: var(--font-titre);
+font-style: italic;
+font-size: 18px;
+color: #FAC775;
+position: relative;
+top: -45px;
+    }
+.fiche-citation-auteur {
+display: block;
+font-size: 12px;
+font-style: normal;
+color: #FAC775;
+margin-top: 5px;
+font-family: var(--font-corps);
+    }
+/* ===== ONGLETS ===== */
+.fiche-tabs-wrap {
+background: white;
+padding: 20px 0;
+border-bottom: 1px solid var(--bordure);
+margin-top: 20px;
+    }
+.fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.fiche-tab {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 9px 20px;
+border-radius: 24px;
+border: 1px solid var(--bordure);
+background: white;
+color: var(--texte-doux);
+font-family: var(--font-corps);
+font-size: 14px;
+font-weight: 500;
+cursor: pointer;
+white-space: nowrap;
+transition: all 0.18s;
+    }
+.fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+.fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+/* ===== CONTENU ===== */
+.fiche-body { padding: 40px 0 60px; }
+.fiche-panel { display: none; }
+.fiche-panel.active { display: block; }
+.blocs-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 18px;
+margin-bottom: 24px;
+    }
+.bloc {
+background: white;
+border: 1px solid var(--bordure);
+border-radius: var(--rayon-lg);
+padding: 20px 22px;
+    }
+.bloc-full { grid-column: 1 / -1; }
+.bloc-titre {
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 0.09em;
+color: var(--ocre);
+font-weight: 600;
+margin-bottom: 14px;
+display: flex;
+align-items: center;
+gap: 8px;
+    }
+.bloc-titre span { font-size: 16px; }
+.bloc ul { padding-left: 16px; list-style: disc; }
+.bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+.bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+/* Agenda */
+.agenda-list { display: flex; flex-direction: column; gap: 10px; }
+.agenda-item {
+display: grid;
+grid-template-columns: 72px 1fr;
+gap: 14px;
+align-items: center;
+padding: 12px 16px;
+background: var(--ivoire);
+border-radius: var(--rayon);
+border: 1px solid var(--bordure);
+    }
+.agenda-mois {
+text-align: center;
+font-family: var(--font-titre);
+font-size: 13px;
+color: var(--bleu-profond);
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+    }
+.agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+.agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+/* Parcours */
+.parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.parcours-item {
+background: var(--bleu-clair);
+border: 1px solid #B5D4F4;
+border-radius: var(--rayon-lg);
+padding: 18px;
+    }
+.parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+.parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+.parcours-item-duree {
+display: inline-block;
+margin-top: 10px;
+font-size: 11px;
+color: var(--bleu-profond);
+background: rgba(44,74,124,0.1);
+padding: 2px 10px;
+border-radius: 20px;
+    }
+/* Village star */
+.village-star {
+background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+border: 1px solid #F0C878;
+border-radius: var(--rayon-lg);
+padding: 22px 24px;
+display: grid;
+grid-template-columns: auto 1fr;
+gap: 20px;
+align-items: center;
+margin-top: 8px;
+    }
+.village-star-icon { font-size: 48px; }
+.village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+.village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+.village-star-tag {
+display: inline-block;
+background: rgba(139,94,10,0.12);
+color: #8B5E0A;
+font-size: 11px;
+padding: 2px 10px;
+border-radius: 20px;
+margin-top: 8px;
+margin-right: 4px;
+    }
+.fiche-hero-inner {
+position: relative;
+    }
+@media (max-width: 680px) {
+.fiche-hero-inner { flex-direction: column; position: relative; }
+.fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+.fiche-citation { margin-left: 0; }
+.fiche-hero-droite { align-items: flex-start; }
+.village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+</style>
+</head>
+<body class="fiche-page">
+<!--<h1><span class="titre-initial">N</span>ouvelle-<br><span style="padding-left: 60px;"><span class="titre-initial">A</span>quitaine</span></h1>-->
+<div class="fiche-hero">
+<div class="container">
+<!-- VILLAGES -->
+<div class="fiche-topbar">
+<a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+<a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+<a href="carte-nouvelle-aquitaine.html" class="fiche-topbar-btn"> 🗺️ Carte des départements </a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1><span style="padding-left: 60px;"></span><span class="titre-initial">N</span>ouvelle-<br><span style="padding-left: 120px;"><span class="titre-initial">A</span>quitaine</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img src="../../assets/régions/ecusson-nouvelle-aquitaine.png" alt="Écusson Nouvelle-Aquitaine" />
+</div>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+<button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+<button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+<button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+<ul>            
+<li><a href="gastronomie/plats-emblematiques/entrecote-bordelaise.html">Entrecôte à la bordelaise</a></li>
+<li><a href="gastronomie/plats-emblematiques/foie-gras.html">Foie gras du Périgord IGP</a></li>
+<li><a href="gastronomie/plats-emblematiques/magret-de-canard.html">Magret de canard</a></li>
+<li><a href="gastronomie/plats-emblematiques/huitres-bassin-arcachon.html">Huîtres du Bassin d'Arcachon</a></li>
+<li><a href="gastronomie/plats-emblematiques/lamproie-bordelaise.html">Lamproie à la bordelaise </a></li>
+<li><a href="gastronomie/plats-emblematiques/poulet-basquaise.html">Poulet basquaise </a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+<ul>
+<li><a href="gastronomie/fromages-terroir/ossau-iraty.html">Ossau-Iraty AOP (brebis basque) </a></li>
+<li><a href="gastronomie/fromages-terroir/beurre-charentes-poitou.html">Beurre Charentes-Poitou AOP </a></li>
+<li><a href="gastronomie/fromages-terroir/sel-ile-de-re.html">Sel de l'île de Ré IGP </a></li>
+<li><a href="gastronomie/fromages-terroir/truffe-noire-perigord.html">Truffe noire du Périgord</a></li>
+<li><a href="gastronomie/fromages-terroir/jambon-de-bayonne.html">Jambon de Bayonne IGP</a></li>
+<li><a href="gastronomie/fromages-terroir/noix-perigord.html">Noix du Périgord AOP</a></li>
+</ul>
+</div>          <div class="bloc">
+<div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+<ul>
+<li><a href="gastronomie/vin-boisson/vins-bordeaux-aop.html">Bordeaux AOP (Saint-Émilion, Pomerol…)</a></li>
+<li><a href="gastronomie/vin-boisson/cognac-aop.html">Cognac AOP</a></li>
+<li><a href="gastronomie/vin-boisson/armagnac-aop.html">Armagnac AOP</a></li>
+<li><a href="gastronomie/vin-boisson/bergerac-aop.html">Bergerac AOP</a></li>
+<li><a href="gastronomie/vin-boisson/pineau-des-charentes.html">Pineau des Charentes AOP</a></li>
+<li><a href="gastronomie/vin-boisson/jurancon-aop.html">Jurançon AOP</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🍰</span> Douceurs</div>
+<ul>
+<li><a href="gastronomie/douceur/cannele-bordelais.html">Cannelé bordelais</a></li>
+<li><a href="gastronomie/douceur/macaron-saint-emilion.html">Macaron de Saint-Émilion</a></li>
+<li><a href="gastronomie/douceur/gateau-basque.html">Gâteau basque</a></li>
+<li><a href="gastronomie/douceur/madeleine-de-dax.html">Madeleine de Dax</a></li>
+<li><a href="gastronomie/douceur/tourteau-fromager-poitevin.html">Tourteau fromager poitevin</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- PATRIMOINE -->
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+<ul>
+<li><a href="patrimoine/UNESCO/bordeaux-port-de-la-lune.html">Bordeaux, Port de la Lune</a></li>
+<li><a href="patrimoine/UNESCO/les-eyzies-de-tayac.html">les-eyzies-de-tayac</a></li>
+<li><a href="patrimoine/UNESCO/grottes-ornees-vezere-lascaux.html">Grottes ornées de la Vézère (Lascaux)</a></li>
+<li><a href="patrimoine/UNESCO/chemins-de-saint-jacques.html">Chemins de Saint-Jacques</a></li>
+<li><a href="patrimoine/UNESCO/phare-de-cordouan.html">Phare de Cordouan</a></li>
+<li><a href="patrimoine/UNESCO/dune-du-pilat.html">Dune du Pilat (site remarquable)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+<ul>
+<li><a href="patrimoine/édifices-remarquable/cathedrale-saint-andre-bordeaux.html">Cathédrale Saint-André de Bordeaux</a></li>
+<li><a href="patrimoine/édifices-remarquable/chateau-de-pau.html">Château de Pau (Henri IV)</a></li>
+<li><a href="patrimoine/édifices-remarquable/cite-episcopale-de-perigueux.html">Cité épiscopale de Périgueux</a></li>
+<li><a href="patrimoine/édifices-remarquable/chateau-de-castelnaud.html">Château de Castelnaud (Dordogne)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+<ul>
+<li><a href="patrimoine/musées-et-culture/musee-daquitaine.html">Musée d'Aquitaine (Bordeaux)</a></li>
+<li><a href="patrimoine/musées-et-culture/lascaux-iv.html">Lascaux IV — Grotte reconstituée</a></li>
+<li><a href="patrimoine/musées-et-culture/musee-basque-de-bayonne.html">Musée Basque de Bayonne</a></li>
+<li><a href="patrimoine/musées-et-culture/capc-musee-dart-contemporain.html">CAPC Musée d'art contemporain (Bordeaux)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🗿</span> Préhistoire</div>
+<ul>
+<li><a href="patrimoine/préhistoire/vallee-de-la-vezere.html">Vallée de la Vézère (Les Eyzies)</a></li>
+<li><a href="patrimoine/préhistoire/grotte-de-font-de-gaume.html">Grotte de Font-de-Gaume</a></li>
+<li><a href="patrimoine/préhistoire/abri-du-cap-blanc.html">Abri du Cap Blanc</a></li>
+<li><a href="patrimoine/préhistoire/site-de-la-madeleine.html">Site de La Madeleine</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- NATURE -->
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>🌊</span> Littoral atlantique</div>
+<ul>
+<li><a href="nature/littoral-atlantique/cote-d-argent.html">Côte d'Argent (270 km de plages)</a></li>
+<li><a href="nature/littoral-atlantique/bassin-d-arcachon.html">Bassin d'Arcachon</a></li>
+<li><a href="nature/littoral-atlantique/cote-basque.html">Côte Basque (Biarritz, Hendaye)</a></li>
+<li><a href="nature/littoral-atlantique/ile-de-re-et-ile-d-oleron.html">Île de Ré et île d'Oléron</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🌲</span> Forêts & landes</div>
+<ul>
+<li><a href="nature/forets-et-landes/foret-des-landes.html">Forêt des Landes (plus grande d'Europe)</a></li>
+<li><a href="nature/forets-et-landes/parc-naturel-regional-landes-de-gascogne.html">Parc naturel régional des Landes de Gascogne</a></li>
+<li><a href="nature/forets-et-landes/plateau-de-millevaches.html">Plateau de Millevaches (Corrèze)</a></li>
+<li><a href="nature/forets-et-landes/foret-de-chize.html">Forêt de Chizé (Deux-Sèvres)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🏔️</span> Montagne & vallées</div>
+<ul>
+<li><a href="nature/montagne-et-vallées/pyrenees-atlantiques.html">Pyrénées atlantiques</a></li>
+<li><a href="nature/montagne-et-vallées/parc-national-des-pyrenees.html">Parc national des Pyrénées</a></li>
+<li><a href="nature/montagne-et-vallées/vallee-d-ossau.html">Vallée d'Ossau</a></li>
+<li><a href="nature/montagne-et-vallées/gorges-de-la-vezere.html">Gorges de la Vézère</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>💧</span> Fleuves & marais</div>
+<ul>
+<li><a href="nature/fleuves-et-marais/marais-poitevin.html">Marais poitevin (Venise verte)</a></li>
+<li><a href="nature/fleuves-et-marais/estuaire-de-la-gironde.html">Estuaire de la Gironde</a></li>
+<li><a href="nature/fleuves-et-marais/riviere-dordogne.html">Rivière Dordogne</a></li>
+<li><a href="nature/fleuves-et-marais/riviere-charente.html">Rivière Charente</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>🎨</span> Porcelaine & céramique</div>
+<ul>
+
+
+<li><a href="artisanat/porcelaine-céramique/porcelaine-de-limoges.html">Porcelaine de Limoges (capitale mondiale)</a></li>
+<li><a href="artisanat/porcelaine-céramique/poteries-de-sadirac.html">Poteries de Sadirac (Gironde)</a></li>
+<li><a href="artisanat/porcelaine-céramique/faiences-de-la-rochelle.html">Faïences de La Rochelle</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🧵</span> Textile & cuir</div>
+<ul>
+
+<li><a href="artisanat/textile-cuir/espadrilles-basques.html">Espadrilles basques</a></li>
+<li><a href="artisanat/textile-cuir/tissage-de-nontron.html">Tissage de Nontron</a></li>
+<li><a href="artisanat/textile-cuir/lin-du-marais-poitevin.html">Lin du marais poitevin</a></li>
+</ul>
+</div>
+
+<div class="bloc">
+<div class="bloc-titre"><span>🪵</span> Bois & tonnellerie</div>
+<ul>
+<li><a href="artisanat/bois-tonellerie/tonnellerie-bordelaise.html">Tonnellerie bordelaise (barriques)</a></li>
+<li><a href="artisanat/bois-tonellerie/charpentes-landaises.html">Charpentes landaises</a></li>
+<li><a href="artisanat/bois-tonellerie/sculpture-sur-bois-pyreneenne.html">Sculpture sur bois pyrénéenne</a></li>
+</ul>
+</div>
+
+<div class="bloc">
+<div class="bloc-titre"><span>🏺</span> Verrerie & cristal</div>
+<ul>
+<li><a href="artisanat/verrerie-cristal/soufflage-de-verre-du-perigord.html">Soufflage de verre du Périgord</a></li>
+<li><a href="artisanat/verrerie-cristal/emaux-de-limoges.html">Soufflage de verre du Périgord</a></li>
+
+</ul>
+</div>
+</div>
+</div>
+
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+<ul>
+
+<li><a href="villages/plus-beaux-villages/la-roque-gageac.html">La Roque-Gageac (Dordogne)</a></li>
+<li><a href="villages/plus-beaux-villages/segur-le-chateau.html">Ségur-le-Château (Corrèze)</a></li>
+<li><a href="villages/plus-beaux-villages/aubeterre-sur-dronne.html">Aubeterre-sur-Dronne (Charente)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🏰</span> Villages médiévaux</div>
+<ul>
+<li><a href="villages/villages-medievaux/sarlat-la-caneda.html">Sarlat-la-Canéda (Dordogne)</a></li>
+<li><a href="villages/villages-medievaux/perigueux.html">Périgueux (bastide romaine)</a></li>
+<li><a href="villages/villages-medievaux/bergerac.html">Bergerac (vignobles et littérature)</a></li>
+<li><a href="villages/villages-medievaux/domme.html">Domme (bastide royale)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+<ul>
+
+    <li><a href="villages/villages-pittoresques/saint-jean-de-luz.html">Saint-Jean-de-Luz (Pyrénées-Atl.)</a></li>
+    <li><a href="villages/villages-pittoresques/collonges-la-rouge.html">Collonges-la-Rouge (Corrèze)</a></li>
+    <li><a href="villages/villages-pittoresques/pons.html">Pons (Charente-Maritime)</a></li>
+     <li><a href="villages/villages-pittoresques/angles-sur-l-anglin.html">Angles-sur-l'Anglin (Vienne)</a></li>
+
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">✨</div>
+<div>
+<h3>Village à l'honneur : Saint-Cirq-Lapopie</h3>
+<p>Suspendu au-dessus de la vallée du Lot, ce village médiéval classé parmi les plus beaux de France a inspiré André Breton qui le décrivit comme « un endroit irrémédiablement beau ». Ses ruelles pavées, ses maisons à colombages et ses ateliers d'artisans en font un joyau du Quercy.</p>
+<span class="village-star-tag">Plus Beau Village de France</span>
+<span class="village-star-tag">Classé monument historique</span>
+<span class="village-star-tag">Vallée du Lot</span>
+</div>
+</div>
+</div>
+<!-- AGENDA -->
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Foire au Jambon de Bayonne</h4><p>Marché traditionnel autour du célèbre jambon IGP — dégustations, animations et artisans basques.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Bordeaux Fête le Vin</h4><p>Grand rendez-vous biennal sur les quais de Bordeaux — dégustations de grands crus et festin girondin.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Surf Open de Lacanau</h4><p>Compétition internationale de surf sur la côte atlantique, dans le cadre de la Coupe du Monde de Surf.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Festival de Cognac</h4><p>Festival international du film policier — projections en plein air dans le cadre du vieux Cognac.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Garorock — Marmande</h4><p>Festival de musiques actuelles sur les bords de la Garonne — l'un des grands festivals rock du Sud-Ouest.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Fêtes de Bayonne</h4><p>Cinq jours de fête basque — bandas, corridas, concerts et traditions autour du blanc et du rouge.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Nuit des Châteaux — Dordogne</h4><p>Les châteaux de la Dordogne ouvrent leurs portes la nuit, illuminés et animés par des spectacles son et lumière.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Nov.</div>
+<div><h4>Foire à la Truffe de Périgueux</h4><p>La foire aux truffes noires du Périgord — la plus précieuse des truffes françaises à l'honneur.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+<nav class="footer-nav">
+<a href="#">Mentions légales</a>
+<a href="#">Contact</a>
+<a href="#">Contribuer</a>
+</nav>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+// Onglets
+const tabs   = document.querySelectorAll('.fiche-tab');
+const panels = document.querySelectorAll('.fiche-panel');
+const TAB_STORAGE_KEY = 'nouvelle-aquitaine-onglet-actif';
+
+function activerOnglet(nomPanel) {
+  const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+  const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+  if (!tabCorrespondant || !panelCorrespondant) return false;
+  tabs.forEach(t => t.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
+  tabCorrespondant.classList.add('active');
+  panelCorrespondant.classList.add('active');
+  return true;
+}
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', function() {
+    activerOnglet(this.dataset.panel);
+    try {
+      localStorage.setItem(TAB_STORAGE_KEY, this.dataset.panel);
+    } catch (e) {
+      // localStorage indisponible (navigation privée, etc.) : on ignore silencieusement
+    }
+  });
+});
+
+// Au chargement : réactiver le dernier onglet utilisé, sinon garder celui par défaut (Gastronomie)
+try {
+  const dernierOnglet = localStorage.getItem(TAB_STORAGE_KEY);
+  if (dernierOnglet) {
+    activerOnglet(dernierOnglet);
+  }
+} catch (e) {
+  // localStorage indisponible : la page garde l'onglet actif par défaut du HTML
+}
+</script>
+</body>
+</html>

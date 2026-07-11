@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centre-Val de Loire — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-centre-val-de-loire.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">C</span>entre-<br><span style="padding-left: 120px;"><span class="titre-initial">V</span>al de <span class="titre-initial">L</span>oire</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson_centre-val_de_loire.png" alt="Écusson Centre-Val de Loire" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/rillettes-tours.html">Rillettes de Tours IGP</a></li>
+              <li><a href="gastronomie/plats-emblematiques/fressure.html">Fressure tourangelle</a></li>
+              <li><a href="gastronomie/plats-emblematiques/geoduck-amboise.html">Sandre au beurre blanc</a></li>
+              <li><a href="gastronomie/plats-emblematiques/cretons-vendome.html">Fromage de tête de Vendôme</a></li>
+              <li><a href="gastronomie/plats-emblematiques/civelles-loire.html">Civelles de Loire (alevins d'anguille)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/gibier-sologne.html">Gibier de Sologne (cerf, sanglier)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/crottin-chavignol.html">Crottin de Chavignol AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/valencay.html">Valençay AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/selles-sur-cher.html">Selles-sur-Cher AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/sainte-maure-touraine.html">Sainte-Maure-de-Touraine AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/pithiviers.html">Pithiviers au foin (Loiret)</a></li>
+              <li><a href="gastronomie/fromages-terroir/asperge-blanche-val-de-loire.html">Asperge du Val de Loire IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/vouvray-aop.html">Vouvray AOP (Chenin blanc)</a></li>
+              <li><a href="gastronomie/vin-boisson/sancerre-aop.html">Sancerre AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/chinon-aop.html">Chinon AOP (Cabernet Franc)</a></li>
+              <li><a href="gastronomie/vin-boisson/bourgueil-aop.html">Bourgueil AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/pouilly-fume-aop.html">Pouilly-Fumé AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/cremant-de-loire.html">Crémant de Loire AOP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/tarte-tatin.html">Tarte Tatin (Lamotte-Beuvron)</a></li>
+              <li><a href="gastronomie/douceur/nougat-tours.html">Nougat de Tours</a></li>
+              <li><a href="gastronomie/douceur/pithiviers-gateau.html">Pithiviers (gâteau feuilleté aux amandes)</a></li>
+              <li><a href="gastronomie/douceur/cotignac-orleans.html">Cotignac d'Orléans</a></li>
+              <li><a href="gastronomie/douceur/macarons-cormery.html">Macarons de Cormery</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Val de Loire — paysage culturel (634 km)</li>
+              <li>Château de Chambord</li>
+              <li>Château de Chenonceau</li>
+              <li>Château d'Amboise</li>
+              <li>Abbaye de Saint-Benoît-sur-Loire</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux royaux</div>
+            <ul>
+              <li>Château de Chambord (François Ier)</li>
+              <li>Château de Chenonceau (château des Dames)</li>
+              <li>Château de Blois (résidence royale)</li>
+              <li>Château d'Azay-le-Rideau (île sur l'Indre)</li>
+              <li>Château de Cheverny (inspiration Tintin)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée des Beaux-Arts de Tours</li>
+              <li>Musée des Châteaux Royaux de Blois</li>
+              <li>Musée de l'École de Chartres</li>
+              <li>Centre de Création Contemporaine Olivier Debré (Tours)</li>
+              <li>Musée de la Chasse et de la Nature (Gien)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale Notre-Dame de Chartres (UNESCO)</li>
+              <li>Cathédrale Saint-Gatien de Tours</li>
+              <li>Abbaye royale de Fontevraud</li>
+              <li>Basilique Saint-Martin de Tours</li>
+              <li>Cloître de la Psalette (Tours)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Fleuve Loire & vallées</div>
+            <ul>
+              <li>Val de Loire — dernier fleuve sauvage d'Europe</li>
+              <li>Vallée de l'Indre</li>
+              <li>Vallée du Cher</li>
+              <li>Vallée de la Vienne (Chinon)</li>
+              <li>Vallée du Loir (à ne pas confondre avec la Loire)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & plateaux</div>
+            <ul>
+              <li>Forêt de Sologne (landes et étangs)</li>
+              <li>Forêt d'Orléans (plus grande forêt domaniale de France)</li>
+              <li>Forêt de Chinon (Indre-et-Loire)</li>
+              <li>Plateau beauceron (Beauce — grenier à blé de France)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦢</span> Faune & zones humides</div>
+            <ul>
+              <li>Étangs de Sologne (migration des oiseaux)</li>
+              <li>Réserve naturelle du Val de Loire</li>
+              <li>Parc naturel régional Loire-Anjou-Touraine</li>
+              <li>Cigognes blanches (Sologne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Jardins & parcs</div>
+            <ul>
+              <li>Jardins de Villandry (Renaissance)</li>
+              <li>Parc floral de la Source (Orléans)</li>
+              <li>Jardins de Chaumont-sur-Loire (Festival international)</li>
+              <li>Arboretum des Barres (Loiret)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Faïence & céramique</div>
+            <ul>
+              <li>Faïences de Gien (Loiret — 1821)</li>
+              <li>Poteries de La Borne (Cher)</li>
+              <li>Céramique de Vierzon</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪟</span> Vitrail & sculpture</div>
+            <ul>
+              <li>Vitraux de Chartres (tradition millénaire)</li>
+              <li>Sculpture sur tuffeau (pierre blanche de Touraine)</li>
+              <li>Atelier de restauration de vitraux de Tours</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧵</span> Textile & cuir</div>
+            <ul>
+              <li>Soierie de Tours (capitale de la soie au XVe siècle)</li>
+              <li>Ganterie de Saint-Junien (Haute-Vienne, tradition régionale)</li>
+              <li>Maroquinerie du Berry</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & lutherie</div>
+            <ul>
+              <li>Lutherie de Mirecourt (violons, tradition d'Orléans)</li>
+              <li>Marqueterie et ébénisterie tourangelle</li>
+              <li>Vannerie de Villaines-les-Rochers (Indre-et-Loire)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Tourangeau — le « français le plus pur » selon la tradition</li>
+              <li>Berrichon (patois du Berry)</li>
+              <li>Héritage de la cour des rois de France (XVe–XVIe s.)</li>
+              <li>Pays de Rabelais, Balzac et George Sand</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Bourrée berrichonne</li>
+              <li>Festival de Musique de Chambre de Tours</li>
+              <li>Printemps de Bourges (musiques actuelles)</li>
+              <li>Les Imaginaires — festival de contes (Vendôme)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏇</span> Sports & traditions</div>
+            <ul>
+              <li>Chasse à courre en Sologne</li>
+              <li>Paris-Tours (classique cycliste)</li>
+              <li>Équitation et haras du Val de Loire</li>
+              <li>Canoë-kayak sur la Loire et le Cher</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Fêtes Johanniques d'Orléans (mai)</li>
+              <li>Festival International des Jardins de Chaumont</li>
+              <li>Son et Lumière des châteaux de la Loire</li>
+              <li>Foire de Tours (agriculture et artisanat)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Apremont-sur-Allier (Cher)</li>
+              <li>Angles-sur-l'Anglin (Vienne, limitrophe)</li>
+              <li>Lavardin (Loir-et-Cher)</li>
+              <li>Yèvre-le-Châtel (Loiret)</li>
+              <li>Montrésor (Indre-et-Loire)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages troglodytiques</div>
+            <ul>
+              <li>Trôo (Loir-et-Cher — village-falaise)</li>
+              <li>Rochemenier (Maine-et-Loire, limitrophe)</li>
+              <li>Villaines-les-Rochers (tuffeau et vannerie)</li>
+              <li>Turquant (habitations creusées dans le tuffeau)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Loches (Indre-et-Loire — cité royale médiévale)</li>
+              <li>Vendôme (Loir-et-Cher)</li>
+              <li>Sancerre (Cher — vignobles et panoramas)</li>
+              <li>Châteaudun (Eure-et-Loir)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Apremont-sur-Allier</h3>
+            <p>Niché au bord de l'Allier dans le Cher, Apremont-sur-Allier est un village de carte postale dont les maisons fleuries de roses et de glycines semblent surgies d'un conte. Son parc floral, considéré comme l'un des plus beaux jardins privés de France, et son château médiéval en font un joyau discret du Berry. Village classé parmi les plus beaux de France, il attire chaque été des visiteurs venus chercher la paix et la beauté du Val d'Allier.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Cher — Berry</span>
+            <span class="village-star-tag">Parc floral remarquable</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Printemps de Bourges</h4><p>L'un des plus grands festivals de musiques actuelles francophones — six jours de concerts dans toute la ville de Bourges.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fêtes Johanniques d'Orléans</h4><p>La délivrance d'Orléans par Jeanne d'Arc commémorée chaque année avec processions, spectacles équestres et reconstitutions médiévales.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival International des Jardins — Chaumont-sur-Loire</h4><p>Chaque année, une trentaine de jardins éphémères créés par des paysagistes du monde entier investissent le parc du château.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Son et Lumière de Chambord</h4><p>Le château de Chambord s'illumine chaque soir d'été d'un spectacle son et lumière retraçant l'histoire de François Ier et de la Renaissance.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de la Tarte Tatin — Lamotte-Beuvron</h4><p>La ville natale de la célèbre tarte inversée célèbre son dessert emblématique avec concours de pâtissiers et dégustations.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Vendanges en Val de Loire</h4><p>De Vouvray à Sancerre, les caves et domaines ouvrent leurs portes pour faire découvrir les secrets de la vinification ligérienne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Nuit des Châteaux de la Loire</h4><p>Une nuit exceptionnelle où les plus grands châteaux de la Loire ouvrent leurs portes à la tombée du jour avec animations et visites nocturnes.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Foire de Saint-Martin — Tours</h4><p>L'une des plus anciennes foires de France, organisée autour de la Saint-Martin, patron de Tours, avec marchés et animations.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Centre-Val de Loire</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Route des Châteaux de la Loire</h4>
+            <p>Chambord, Chenonceau, Blois, Amboise, Azay-le-Rideau, Villandry — le plus grand ensemble castral d'Europe classé UNESCO.</p>
+            <span class="parcours-item-duree">⏱ 5 à 7 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🚴</span>
+            <h4>La Loire à Vélo</h4>
+            <p>900 km de pistes cyclables longeant le fleuve de Cuffy à Saint-Brevin — le plus beau voyage à vélo de France.</p>
+            <span class="parcours-item-duree">⏱ 7 à 12 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🧀</span>
+            <h4>Route des Fromages de Chèvre</h4>
+            <p>Sancerre, Chavignol, Valençay, Selles-sur-Cher, Sainte-Maure — les capitales ligériennes du fromage de chèvre AOP.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍷</span>
+            <h4>Route des Vins du Val de Loire</h4>
+            <p>Pouilly-Fumé, Sancerre, Vouvray, Chinon, Bourgueil — un arc de vignobles de 300 km entre tuffeau et silex.</p>
+            <span class="parcours-item-duree">⏱ 4 à 6 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌲</span>
+            <h4>Sologne — Forêts & Étangs</h4>
+            <p>Romorantin, Lamotte-Beuvron, Bracieux — entre chasse, pêche et gastronomie sauvage dans la Sologne secrète.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⛪</span>
+            <h4>Chartres & les Cathédrales</h4>
+            <p>La cathédrale Notre-Dame de Chartres et ses vitraux millénaires — un pèlerinage de lumière au cœur de la Beauce.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

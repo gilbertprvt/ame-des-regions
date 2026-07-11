@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charente-Maritime — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Zone centrale hero */
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours — intro & filtres */
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* Parcours — cartes "journée" */
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    /* Parcours (ancien style, conservé pour compatibilité) */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 26px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../nouvelle-aquitaine.html" class="fiche-topbar-btn">↩ Nouvelle-Aquitaine</a>
+          <a href="../../carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">C</span>harente-<br><span style="padding-left: 40px;"><span class="titre-initial">M</span>aritime</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/departement/nouvelle-aquitaine/charente-maritime.png" alt="Écusson Charente-Maritime" />
+        </div>
+
+        <span class="fiche-hero-ancien">🏛️ Préfecture : La Rochelle · Département 17</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦪</span> Spécialités incontournables</div>
+            <ul>
+              <li>Huîtres de Marennes-Oléron (Label Rouge, les meilleures de France)</li>
+              <li>Moules de bouchot de l'Aiguillon</li>
+              <li>Mouclade charentaise (moules à la crème et au Pineau)</li>
+              <li>Chaudrée saintongeaise (soupe de poissons du pertuis)</li>
+              <li>Éclade de moules (cuisson sur aiguilles de pin)</li>
+              <li>Cagouilles à la saintongeaise (escargots au vin blanc)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌾</span> Produits du terroir</div>
+            <ul>
+              <li>Sel de l'île de Ré (fleur de sel AOP)</li>
+              <li>Pommes de terre de l'île de Ré AOP</li>
+              <li>Melon du Haut-Saintonge</li>
+              <li>Beurre des Charentes-Poitou AOP</li>
+              <li>Angélique de la côte saintongeaise</li>
+              <li>Mogettes et haricots du marais charentais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍾</span> Vins & spiritueux</div>
+            <ul>
+              <li>Pineau des Charentes AOP (blanc, rosé, rouge)</li>
+              <li>Cognac AOP (influence des crus de Saintonge)</li>
+              <li>Vins de pays Charentais IGP</li>
+              <li>Coteaux Charentais (blancs secs frais)</li>
+              <li>Muscadet sur lie (influence ligérienne au nord)</li>
+              <li>Bières artisanales des îles (Ré, Oléron)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Galette charentaise (beurre AOP et angélique cristallisée)</li>
+              <li>Tourteau fromager (gâteau au fromage blanc brûlé)</li>
+              <li>Broyé du Poitou (grand biscuit sablé à casser)</li>
+              <li>Chocolats et pralinés au Pineau des Charentes</li>
+              <li>Confiture de melon au Cognac</li>
+              <li>Caramels salés à la fleur de sel de l'île de Ré</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Sites & monuments classés</div>
+            <ul>
+              <li>Tours de La Rochelle (Saint-Nicolas, de la Chaîne, de la Lanterne)</li>
+              <li>Abbaye aux Dames de Saintes (romane)</li>
+              <li>Arc de Germanicus de Saintes (romain)</li>
+              <li>Phare de Chassiron (île d'Oléron)</li>
+              <li>Fort Boyard (forteresse en mer, XIX<sup>e</sup>)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & fortifications</div>
+            <ul>
+              <li>Citadelle de Brouage (Vauban, XVII<sup>e</sup> siècle)</li>
+              <li>Citadelle du Château-d'Oléron (Vauban)</li>
+              <li>Forteresse de la Pointe des Baleines (île de Ré)</li>
+              <li>Fort Louvois (sur pilotis, baie de Bonne Anse)</li>
+              <li>Château de La Roche-Courbon (Belle au Bois Dormant)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices religieux</div>
+            <ul>
+              <li>Abbaye aux Dames de Saintes (façade romane sculptée)</li>
+              <li>Abbaye Saint-Eutrope de Saintes (crypte remarquable)</li>
+              <li>Cathédrale Saint-Pierre de Saintes</li>
+              <li>Église Saint-Louis de La Rochelle</li>
+              <li>Abbaye de Trizay (romane préservée)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée Maritime de La Rochelle (flotte historique)</li>
+              <li>Aquarium de La Rochelle (l'un des plus grands d'Europe)</li>
+              <li>Musée des Beaux-Arts de La Rochelle</li>
+              <li>Musée de l'Ostréiculture de Marennes</li>
+              <li>Musée Gallo-Romain de Saintes (amphithéâtre)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏝️</span> Îles & littoral</div>
+            <ul>
+              <li>Île de Ré (vélo, sel et vignes — « île Blanche »)</li>
+              <li>Île d'Oléron (forêts de pins et huîtres — « île Lumineuse »)</li>
+              <li>Île d'Aix (napoléonienne et sans voiture)</li>
+              <li>Fort Boyard (forteresse légendaire en mer)</li>
+              <li>Pertuis Charentais (eaux calmes entre îles et continent)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Marais & zones humides</div>
+            <ul>
+              <li>Marais de Brouage (ancienne mer intérieure)</li>
+              <li>Marais de l'Île de Ré (salines et faune)</li>
+              <li>Marais de Rochefort (prairies humides)</li>
+              <li>Réserve naturelle de Moëze-Oléron</li>
+              <li>Marais de la Seudre (ostréiculture)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦢</span> Faune & biodiversité</div>
+            <ul>
+              <li>Avocettes et spatules blanches (marais de Brouage)</li>
+              <li>Phoques gris (pertuis d'Antioche)</li>
+              <li>Dauphins communs (large côte charentaise)</li>
+              <li>Cigognes blanches (nidification massive)</li>
+              <li>Esturgeons de la Gironde (caviar d'Aquitaine)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌅</span> Paysages & panoramas</div>
+            <ul>
+              <li>Coucher de soleil sur le pertuis depuis l'île de Ré</li>
+              <li>Vue depuis le phare de Chassiron (île d'Oléron)</li>
+              <li>Marais salants de l'île de Ré au lever du jour</li>
+              <li>Pont de l'île de Ré (viaduc de 3 km)</li>
+              <li>Anse de la Malconche (Fouras) face à l'île d'Aix</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦪</span> Ostréiculture & mariculture</div>
+            <ul>
+              <li>Élevage d'huîtres creuses de Marennes-Oléron</li>
+              <li>Claires et affinage des huîtres (bassin de Claire)</li>
+              <li>Mytiliculture sur bouchots (moules de bouchot)</li>
+              <li>Pêche artisanale à la sardine et au bar</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧂</span> Sel & salines</div>
+            <ul>
+              <li>Paludiers de l'île de Ré (récolte à la main)</li>
+              <li>Fleur de sel de l'île de Ré AOP</li>
+              <li>Sel gris de l'Atlantique (cuisine et bien-être)</li>
+              <li>Visites des marais salants (éco-musée du sel)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛵</span> Marine & construction navale</div>
+            <ul>
+              <li>Construction de pinasses et de barques charentaises</li>
+              <li>Chantiers navals de Rochefort (Hermione reconstituée)</li>
+              <li>Corderie Royale de Rochefort (XVII<sup>e</sup>, 374 m)</li>
+              <li>Fabrication de filets de pêche artisanaux</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Arts & création</div>
+            <ul>
+              <li>Poteries et céramiques marines de Saintonge</li>
+              <li>Peinture marine (École de La Rochelle)</li>
+              <li>Sculptures et installations côtières (île d'Oléron)</li>
+              <li>Bijouterie marine et artisanat des îles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & identité</div>
+            <ul>
+              <li>Saintongeais (dialecte d'oïl du Poitou-Charentes)</li>
+              <li>Identité maritime forte (La Rochelle, port huguenot)</li>
+              <li>Héritage protestant (Saintonge, terre de refuge)</li>
+              <li>Tradition ostréicole familiale des pertuis charentais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Musiques & culture</div>
+            <ul>
+              <li>Festival des Francofolies de La Rochelle (juillet)</li>
+              <li>Festival du Film de La Rochelle (juin)</li>
+              <li>Chants de marins et musiques maritimes</li>
+              <li>Vendée Globe (influence maritime régionale)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚓</span> Traditions maritimes</div>
+            <ul>
+              <li>Fête de la Mer à La Rochelle et Rochefort</li>
+              <li>Traversée de la Charente en bac (tradition)</li>
+              <li>Régates et courses au large depuis La Rochelle</li>
+              <li>Pêche à pied dans les pertuis charentais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Francofolies de La Rochelle (juillet)</li>
+              <li>Les Escales de La Rochelle (musiques du monde)</li>
+              <li>Festival de Saintes (musique ancienne, juillet)</li>
+              <li>Fête de l'Huître à Marennes (août)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏝️</span> Villages des îles</div>
+            <ul>
+              <li>Saint-Martin-de-Ré (citadelle Vauban, île de Ré)</li>
+              <li>Ars-en-Ré (clocher noir et blanc, marais salants)</li>
+              <li>Le Château-d'Oléron (citadelle et port)</li>
+              <li>Saint-Trojan-les-Bains (forêt et plages d'Oléron)</li>
+              <li>Île d'Aix (village sans voiture, napoléonien)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villes & cités historiques</div>
+            <ul>
+              <li>Saintes (capitale de la Saintonge romaine)</li>
+              <li>Rochefort (ville royale de Colbert, Hermione)</li>
+              <li>Brouage (citadelle fantôme, berceau de Champlain)</li>
+              <li>Talmont-sur-Gironde (église sur la falaise)</li>
+              <li>Mornac-sur-Seudre (village ostréicole)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>La Rochelle (vieux port, tours médiévales, aquarium)</li>
+              <li>Royan (architecture des années 50, station balnéaire)</li>
+              <li>Jonzac (thermes et château)</li>
+              <li>Saint-Jean-d'Angély (abbaye royale et marché)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Talmont-sur-Gironde</h3>
+            <p>Perché sur un promontoire calcaire au-dessus de l'estuaire de la Gironde, Talmont-sur-Gironde est l'un des Plus Beaux Villages de France. Son église romane Sainte-Radegonde du XII<sup>e</sup> siècle, accrochée au bord de la falaise dominant le fleuve, est l'une des images les plus photographiées de la côte atlantique. Ses ruelles fleuries de roses trémières, ses maisons blanches et la lumière dorée de l'estuaire en font un village d'une beauté intemporelle.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Estuaire de la Gironde</span>
+            <span class="village-star-tag">Église romane XII<sup>e</sup></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année en Charente-Maritime</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Foire aux Huîtres de Marennes</h4><p>Les ostréiculteurs de la capitale mondiale de l'huître verte ouvrent leurs claires — dégustations, visites de parcs et rencontre avec les éleveurs des pertuis charentais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival du Film de La Rochelle</h4><p>L'un des grands festivals de cinéma français — rétrospectives, avant-premières et rencontres avec les réalisateurs dans les salles de La Rochelle pendant dix jours.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival de Saintes (Musique Ancienne)</h4><p>La capitale de la Saintonge accueille l'un des plus grands festivals de musique baroque et médiévale d'Europe — concerts dans l'abbaye aux Dames et l'amphithéâtre romain.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Francofolies de La Rochelle</h4><p>Le plus grand festival de chanson francophone au monde — artistes confirmés et révélations de toute la francophonie envahissent les scènes et les rues de La Rochelle.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Les Escales de La Rochelle</h4><p>Musiques du monde sur le vieux port — artistes africains, latino-américains et asiatiques se retrouvent pour ce festival métissé et festif au bord de l'Atlantique.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de l'Huître à Marennes-Oléron</h4><p>La fête de l'huître verte de Marennes — dégustations en bord de claire, animations avec les ostréiculteurs et découverte des secrets de l'affinage de l'huître charentaise.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Les Colorés de l'île de Ré</h4><p>Festival de la couleur sur l'île Blanche — expositions d'art, installations colorées dans les villages de l'île et animations autour des arts visuels et de la nature insulaire.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Salon du Nautisme de La Rochelle</h4><p>Le plus grand salon nautique de France sur l'eau — voiliers, catamarans et équipements marins exposés dans le port des Minimes, capitale française de la voile.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">La Charente-Maritime se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre"><span>☀️</span> Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">🍽️ Gourmand</button>
+          <button class="filter-btn" data-filter="culture">🏛️ Culture</button>
+          <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+          <button class="filter-btn" data-filter="famille">👨‍👩‍👧 Famille</button>
+          <button class="filter-btn" data-filter="romantique">💕 Romantique</button>
+          <button class="filter-btn" data-filter="actif">🚴 Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route de l'Huître, Marennes-Oléron</h4>
+                <span class="jour-card-icon">🦪</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Marennes et environs</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un parc à huîtres</strong>, découverte du métier d'ostréiculteur dans les claires de Marennes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée de l'Ostréiculture</strong>, histoire et savoir-faire de l'huître verte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un plateau d'huîtres de Marennes-Oléron Label Rouge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les claires</strong>, bassins d'affinage colorés typiques du paysage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dernière dégustation</strong> d'huîtres au coucher du soleil, verre de vin blanc.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Mouclade et chaudrée saintongeaise</h4>
+                <span class="jour-card-icon">🍲</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle et environs</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un parc mytilicole</strong>, découverte des bouchots de l'Aiguillon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Marché de La Rochelle</strong>, halles couvertes et produits de la mer.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une mouclade charentaise, moules à la crème et au Pineau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte de la chaudrée</strong> saintongeaise, soupe de poissons traditionnelle du pertuis.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour de cagouilles à la saintongeaise, escargots au vin blanc.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Sel et fleur de sel de l'île de Ré</h4>
+                <span class="jour-card-icon">🧂</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un marais salant</strong>, rencontre avec un paludier de l'île de Ré.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Écomusée du sel</strong> à Ars-en-Ré, récolte manuelle de la fleur de sel AOP.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour de pommes de terre de l'île de Ré AOP.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation de caramels salés</strong> à la fleur de sel dans une confiserie locale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Achat direct</strong> de sel gris et fleur de sel avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pineau des Charentes et Cognac</h4>
+                <span class="jour-card-icon">🥃</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Haute-Saintonge</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> viticole de Haute-Saintonge, chais et alambics charentais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de Pineau des Charentes blanc, rosé et rouge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes, accords mets et vins charentais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le vignoble</strong> de Cognac, influence des crus voisins.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de chocolats</strong> au Pineau des Charentes en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Douceurs charentaises, tourteau et galette</h4>
+                <span class="jour-card-icon">🍰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle ou Saintes</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Pâtisserie artisanale</strong>, fabrication du tourteau fromager, gâteau au fromage blanc brûlé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la galette charentaise</strong>, beurre AOP et angélique cristallisée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge charentaise du centre-ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier confiture</strong> de melon au Cognac chez un artisan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de broyé du Poitou</strong> à casser à plusieurs, tradition régionale.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Éclade de moules sur la plage</h4>
+                <span class="jour-card-icon">🔥</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · côte charentaise</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Pêche à pied</strong> dans les pertuis charentais, découverte des moules et coquillages.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Préparation de l'éclade</strong>, cuisson traditionnelle des moules sur aiguilles de pin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour de l'éclade fumante, moment convivial sur la plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade digestive</strong> le long du littoral charentais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de bière artisanale</strong> des îles en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>La Rochelle, tours médiévales et vieux port</h4>
+                <span class="jour-card-icon">🏛️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Tours de La Rochelle</strong>, Saint-Nicolas et de la Chaîne, gardiennes historiques du port.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Tour de la Lanterne</strong>, ancien phare et prison, vue panoramique sur l'Atlantique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> sur le vieux port, ambiance maritime animée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée Maritime</strong>, flotte historique amarrée dans le bassin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade sur les quais</strong> illuminés, ambiance rochelaise nocturne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Rochefort, l'Hermione et la Corderie Royale</h4>
+                <span class="jour-card-icon">⛵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de La Rochelle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de l'Hermione</strong>, reconstitution de la frégate de La Fayette.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Corderie Royale</strong>, 374 mètres de long, chef-d'œuvre industriel du XVII<sup>e</sup> siècle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans la ville royale de Colbert.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les jardins</strong> de la Corderie, au bord de la Charente.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les chantiers navals, lumière dorée sur la Charente.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Saintes, capitale romaine de la Saintonge</h4>
+                <span class="jour-card-icon">🏛️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 70 km de La Rochelle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Amphithéâtre gallo-romain</strong> de Saintes, vestiges antiques exceptionnels.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Arc de Germanicus</strong>, monument romain au bord de la Charente.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique de Saintes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Abbaye aux Dames</strong>, façade romane sculptée parmi les plus belles de Saintonge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade au bord de la Charente</strong>, lumière du soir sur l'ancienne capitale romaine.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Citadelle de Brouage, ville fantôme</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Rochefort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Remparts de Brouage</strong>, citadelle Vauban née de l'assèchement des marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans la ville fantôme</strong>, berceau de Samuel de Champlain, fondateur de Québec.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> à l'intérieur des remparts, ambiance hors du temps.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade sur les remparts</strong>, vue sur le marais et les anciens chenaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le marais de Brouage, moment paisible et suspendu.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Abbaye aux Dames de Saintes</h4>
+                <span class="jour-card-icon">⛪</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Saintes centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Abbaye aux Dames</strong>, façade romane sculptée et cloître préservé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée Gallo-Romain</strong>, collections issues de l'ancienne capitale de l'Aquitaine romaine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Charente, dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Abbaye Saint-Eutrope</strong>, crypte remarquable et histoire religieuse de Saintes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, lumière du soir sur les monuments romans.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Saint-Martin-de-Ré, citadelle Vauban</h4>
+                <span class="jour-card-icon">🏘️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans Saint-Martin-de-Ré</strong>, citadelle Vauban classée UNESCO.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade sur les remparts</strong>, vue sur le port et les bateaux de plaisance.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au port, spécialités de la mer face aux voiliers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les ruelles</strong> pavées, maisons blanches aux volets verts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis les remparts, vue sur le pertuis breton.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marais de Brouage, oiseaux migrateurs</h4>
+                <span class="jour-card-icon">🦢</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Rochefort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans le marais</strong> de Brouage, ancienne mer intérieure transformée en zone humide.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des avocettes</strong> et spatules blanches, espèces emblématiques du marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au calme, au bord des anciens chenaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers la réserve</strong> de Moëze-Oléron, observation ornithologique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le marais, moment paisible et suspendu.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Île de Ré, marais salants et vélo</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans les marais salants</strong> de l'île de Ré, damiers colorés et faune spécifique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des oiseaux</strong> des marais, échasses et avocettes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord des salines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers le phare des Baleines</strong>, pointe sauvage de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le pertuis breton, l'un des plus beaux de la côte.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Île d'Oléron, forêts et plages sauvages</h4>
+                <span class="jour-card-icon">🌲</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île d'Oléron</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans la forêt</strong> de Saint-Trojan, pins maritimes et dunes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade sur la plage sauvage</strong>, côte atlantique de l'île Lumineuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sous les pins, à l'ombre en bordure de plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Montée au phare de Chassiron</strong>, vue panoramique sur l'océan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis le phare, spectacle inoubliable sur l'Atlantique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Réserve naturelle de Moëze-Oléron</h4>
+                <span class="jour-card-icon">🦅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de Rochefort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite guidée</strong> de la réserve naturelle de Moëze-Oléron, vasières et prés-salés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation depuis les postes</strong> d'affût, cigognes et oiseaux migrateurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au calme, dans un cadre naturel préservé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers Fort Louvois</strong>, forteresse sur pilotis accessible à marée basse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la baie de Bonne Anse, moment paisible.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pertuis charentais, phoques et dauphins</h4>
+                <span class="jour-card-icon">🐬</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · au large de La Rochelle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie en bateau</strong> dans le pertuis d'Antioche, à la recherche des phoques gris.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des dauphins</strong> communs, parfois visibles au large de la côte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le bateau, vue sur Fort Boyard.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Passage au large</strong> de Fort Boyard, forteresse légendaire en mer.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour au coucher du soleil</strong>, lumière dorée sur le pertuis.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Estuaire de la Gironde et Talmont-sur-Gironde</h4>
+                <span class="jour-card-icon">🌊</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de Royan</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à Talmont-sur-Gironde</strong>, village perché sur un promontoire calcaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Vue sur l'estuaire</strong> depuis l'église Sainte-Radegonde, panorama exceptionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans les ruelles fleuries de roses trémières.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade le long de l'estuaire</strong>, observation des pêcheries traditionnelles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur l'estuaire, lumière dorée sur la falaise.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Aquarium de La Rochelle en famille</h4>
+                <span class="jour-card-icon">🐠</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de l'aquarium</strong>, l'un des plus grands d'Europe, requins et tortues marines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Bassins tactiles</strong>, découverte ludique de la faune marine pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le vieux port de La Rochelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade sur les tours</strong> médiévales, jeu de piste pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> face au port avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Île de Ré à vélo en famille</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à vélo en famille</strong> sur les pistes cyclables sécurisées de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique d'un marais salant</strong>, découverte du métier de paludier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à Ars-en-Ré, au pied du clocher noir et blanc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade en famille</strong> sur l'une des plages de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> à Saint-Martin-de-Ré avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Découverte de Fort Boyard en bateau</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · au départ de Fouras ou Boyardville</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie en bateau</strong> vers Fort Boyard, moment magique pour les fans de l'émission.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Tour du fort</strong>, explications sur son histoire et sa construction en pleine mer.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur le bateau</strong>, vue unique sur le pertuis d'Antioche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à l'île d'Aix</strong> à proximité, village sans voiture pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour au port</strong>, souvenir inoubliable pour toute la famille.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Plages de l'île d'Oléron en famille</h4>
+                <span class="jour-card-icon">🏖️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île d'Oléron</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Baignade surveillée</strong> sur une plage familiale de l'île d'Oléron.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Jeux de plage</strong>, châteaux de sable et pêche à pied en famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sous les pins, à l'ombre en bordure de plage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au Château-d'Oléron</strong>, citadelle et port pittoresque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Musée Maritime de La Rochelle en famille</h4>
+                <span class="jour-card-icon">⚓</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du Musée Maritime, montée à bord des navires historiques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la vie</strong> à bord d'un bateau de pêche ancien, jeu de rôle pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur les quais du vieux port.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en famille</strong> dans les ruelles animées de La Rochelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> dans le centre-ville avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Écomusée du sel, île de Ré en famille</h4>
+                <span class="jour-card-icon">🧂</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Ars-en-Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de l'écomusée du sel, ateliers adaptés aux enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Initiation à la récolte du sel</strong>, geste ancestral des paludiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord des marais salants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo en famille</strong> vers le phare des Baleines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Talmont-sur-Gironde au coucher du soleil</h4>
+                <span class="jour-card-icon">🌅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de Royan</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans Talmont-sur-Gironde, avant l'affluence, pour profiter du village à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'église</strong> Sainte-Radegonde, accrochée à la falaise dominant l'estuaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, vue sur l'estuaire de la Gironde.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les ruelles fleuries de roses trémières, main dans la main.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur l'estuaire, l'une des images les plus romantiques de la côte.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Île de Ré, escapade à vélo à deux</h4>
+                <span class="jour-card-icon">🚲</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à vélo à deux</strong> sur les pistes cyclables de l'île Blanche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte à Ars-en-Ré</strong>, clocher noir et blanc emblématique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> dans un petit restaurant de village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les vignes</strong> et marais salants de l'île, à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le pertuis breton, moment suspendu à deux.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Saint-Martin-de-Ré, dîner au port</h4>
+                <span class="jour-card-icon">💕</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Île de Ré</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à deux</strong> dans les ruelles pavées de Saint-Martin-de-Ré.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade sur les remparts</strong> Vauban, vue sur le port et les voiliers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong>, terrasse face au port.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans les boutiques et galeries d'art du centre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> au port, ambiance romantique et maritime.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>La Rochelle, balade sur les tours au crépuscule</h4>
+                <span class="jour-card-icon">🌇</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · La Rochelle centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à deux</strong> sur le vieux port, avant l'affluence des visiteurs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Montée dans les tours</strong> médiévales, vue panoramique sur l'Atlantique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, face au bassin des chalutiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les rues à arcades</strong> du centre historique, main dans la main.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis la tour de la Lanterne, spectacle inoubliable.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Dégustation privée de Pineau</h4>
+                <span class="jour-card-icon">🥂</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Haute-Saintonge</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite privée d'un domaine</strong> de Haute-Saintonge, loin des groupes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation intimiste</strong> de Pineau des Charentes dans les chais du domaine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner gastronomique</strong> dans les vignes charentaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans le vignoble, main dans la main.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les vignes, verre de Pineau à la main.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Île d'Aix, tête-à-tête sans voiture</h4>
+                <span class="jour-card-icon">💌</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · au départ de Fouras</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Traversée en bateau</strong> vers l'île d'Aix, unique île sans voiture de la côte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade à vélo à deux</strong>, sur les petites routes tranquilles de l'île napoléonienne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> sur une plage isolée de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le village</strong>, maisons blanches et ruelles calmes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour en bateau au coucher du soleil</strong>, moment suspendu sur l'Atlantique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur l'île de Ré</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> de Saint-Martin-de-Ré, sur les 110 km de pistes cyclables de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Ars-en-Ré</strong>, pause fraîcheur devant le clocher noir et blanc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la piste cyclable.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers le phare des Baleines</strong>, pointe sauvage de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong>, satisfaction d'une belle sortie sur l'île Blanche.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Voile et régates à La Rochelle</h4>
+                <span class="jour-card-icon">⛵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · port des Minimes</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cours d'initiation à la voile</strong> au port des Minimes, capitale française de la voile.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Sortie en mer</strong>, navigation dans le pertuis d'Antioche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le port, récupération après l'effort.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Deuxième sortie</strong> ou perfectionnement technique avec un moniteur.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le port des Minimes, satisfaction d'une belle journée nautique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans le marais de Brouage</h4>
+                <span class="jour-card-icon">🥾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 18 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans le marais</strong> de Brouage, digues et anciens chenaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage par la citadelle</strong>, halte technique et photo.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong>, au bord des marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers la réserve</strong> de Moëze-Oléron, observation de la faune.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et récupération</strong>, verre de Pineau bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak dans les pertuis charentais</h4>
+                <span class="jour-card-icon">🛶</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km en kayak</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> dans les pertuis charentais, entre îles et continent.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage près des parcs à huîtres</strong>, vue unique sur l'ostréiculture depuis l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une plage</strong>, pause bien méritée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Reprise de la navigation</strong>, entre chenaux et bancs de sable.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong>, satisfaction d'une belle sortie dans les pertuis.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur l'île d'Oléron</h4>
+                <span class="jour-card-icon">🚵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> du Château-d'Oléron, sur les pistes cyclables de l'île Lumineuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Saint-Trojan</strong>, traversée de la forêt de pins.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sous les pins de l'île.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers le phare</strong> de Chassiron, paysages côtiers variés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong>, satisfaction d'une belle sortie sur l'île d'Oléron.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée côtière, phare de Chassiron</h4>
+                <span class="jour-card-icon">🧭</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée côtière</strong> le long des falaises de l'île d'Oléron, vers le phare de Chassiron.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ascension du phare</strong>, panorama exceptionnel sur l'océan et les pertuis.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au pied du phare, vue sur l'Atlantique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la randonnée</strong> le long de la côte sauvage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et repos</strong>, coucher de soleil sur l'océan bien mérité.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognac AOP — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3; /* passe toujours au-dessus de l'écusson */
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    /* Zone haute du bandeau (topbar + titre), utilisée comme référence
+       pour positionner l'écusson par rapport à cette seule zone
+       (et non par rapport à tout le bandeau, nav comprise). */
+    .produit-hero-top {
+      position: relative;
+    }
+
+    /* ÉCUSSON : centré HORIZONTALEMENT (left:50% + translateX(-50%)).
+       Position VERTICALE ajustable via la variable --ecusson-top,
+       à définir sur l'élément lui-même dans le HTML de chaque fiche
+       (ex: style="--ecusson-top: 40px"). Valeur par défaut : 30px.
+       pointer-events:none pour ne jamais intercepter les clics
+       destinés aux éléments sous/autour de lui.   */
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;        /* reste sous la topbar et la nav */
+      pointer-events: none; /* purement décoratif : laisse passer les clics */
+    }
+    .fiche-hero-ecusson img {
+       height: 200px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+
+
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      /* Sur mobile, l'écusson passe sous le titre pour ne jamais chevaucher le texte */
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+
+    <!-- 1. TOPBAR + TITRE -->
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../nouvelle-aquitaine.html" class="produit-btn-retour">
+            ← Retour à la fiche Nouvelle-Aquitaine
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>B</em>ordeaux<br>
+          <span style="padding-left: 60px;"><em>A</em>OP</span></h1>
+        </div>
+        <img src="../../../../assets/departement/nouvelle-aquitaine/carte-nouvelle-aquitaine-mini.png"
+             alt="Carte de la Nouvelle-Aquitaine"
+             style="height:220px; width:auto; opacity:0.85;
+                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                    display:block;" />
+      </div>
+    </div>
+
+    <!-- 2. ÉCUSSON -->
+    <div class="fiche-hero-ecusson">
+         <img src="../../../../assets/régions/ecusson-nouvelle-aquitaine.png" alt="Écusson Nouvelle-Aquitaine" />
+    </div>
+
+    <!-- 3. LABEL BAS -->
+    <div class="hero-label-bas">
+      ⟹ Vins & Boissons ⟸
+    </div>
+
+    <!-- 4. BARRE DE NAVIGATION -->
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#appellations">🍷 Appellations</a>
+          <a href="#cepages">🌿 Cépages</a>
+          <a href="#accords">🍽️ Accords mets-vins</a>
+          <a href="#ou-decouvrir">📍 Où découvrir</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Le vignoble bordelais est l'un des plus anciens et des plus prestigieux du monde. Implanté sur les rives de la Garonne, de la Dordogne et de l'estuaire de la Gironde, il s'étend sur plus de 110 000 hectares et regroupe quelque 60 appellations d'origine protégée — un système de classification unique qui a inspiré tous les grands vignobles du monde.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 380px;">
+               <img src="../../../../assets/departement/nouvelle-aquitaine/photos/vignes-bordeaux.jpg"
+                     alt="Vignes de Bordeaux en automne" />
+                <figcaption>Vignes du Saint-Émilion en automne</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p>La vigne est introduite dans la région bordelaise au Ier siècle de notre ère par les Romains, qui apprécient rapidement la qualité des terroirs girondins. Au Moyen Âge, le mariage d'Aliénor d'Aquitaine avec le roi d'Angleterre Henri II Plantagenêt en 1152 ouvre les marchés anglais aux vins de Bordeaux — un partenariat commercial qui va façonner l'identité et la réputation mondiale du vignoble pour des siècles.</p>
+
+              <div class="citation-bloc">
+                <p>« Le claret de Bordeaux est le premier vin du monde — nul autre ne saurait lui disputer cette couronne. »</p>
+                <cite>— Samuel Pepys, Journal, 10 avril 1663</cite>
+              </div>
+
+              <p>Le XVIIIe siècle voit l'essor des grandes maisons de négoce bordelaises, qui organisent le commerce du vin vers l'Angleterre, les Pays-Bas et les pays nordiques. Le fameux classement de 1855, commandé par Napoléon III pour l'Exposition Universelle de Paris, classe pour la première fois les grands châteaux du Médoc et de Sauternes en cinq catégories — une hiérarchie qui, à quelques exceptions près, reste en vigueur aujourd'hui.</p>
+
+              <p>Bordeaux produit aujourd'hui près de 700 millions de bouteilles par an, faisant de lui le premier vignoble AOP de France en volume. Ses vins s'exportent dans plus de 170 pays et représentent un chiffre d'affaires annuel de plus de 3 milliards d'euros — une puissance économique et culturelle sans équivalent dans le monde vitivinicole.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 380px;">
+            <img src="../../../../assets/departement/nouvelle-aquitaine/photos/chateau-bordeaux.jpg"
+                     alt="Château viticole bordelais" />
+                <figcaption>Architecture typique d'un château viticole du Médoc</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p>Au-delà des grands crus classés qui font la renommée mondiale de la région, Bordeaux abrite aussi des milliers de petits producteurs et des appellations moins connues — Blaye, Bourg, Fronsac, Castillon — qui offrent des vins de caractère à des prix accessibles et constituent le vrai visage de la diversité bordelaise.</p>
+            </div>
+          </section>
+
+          <!-- APPELLATIONS -->
+          <section class="section" id="appellations">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Les grandes appellations
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Surface totale</div>
+                  <div class="recette-meta-val">110 000 hectares</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏷️</div>
+                <div>
+                  <div class="recette-meta-label">Appellations AOP</div>
+                  <div class="recette-meta-val">60 appellations</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🍾</div>
+                <div>
+                  <div class="recette-meta-label">Production annuelle</div>
+                  <div class="recette-meta-val">~ 700 millions de bouteilles</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🌍</div>
+                <div>
+                  <div class="recette-meta-label">Exportation</div>
+                  <div class="recette-meta-val">+ de 170 pays</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les appellations emblématiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Saint-Émilion</span> Merlot dominant, rondeur et élégance</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Pomerol</span> Merlot pur, onctuosité et truffe</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Pauillac</span> Cabernet Sauvignon, tanins et puissance</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Saint-Julien</span> Finesse et équilibre parfait</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Margaux</span> Délicatesse, bouquet et féminité</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Graves</span> Rouges et blancs secs de caractère</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Sauternes</span> Liquoreux d'exception, botrytis</div>
+                <div class="ingredient-item"><span class="ingredient-qte">🍷 Fronsac</span> Merlot et Cabernet Franc, fruité</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Saint-Émilion & Pomerol — la rive droite</div>
+                  <div class="etape-texte">Sur la rive droite de la Dordogne, les terroirs argilo-calcaires et les sols à forte teneur en argile bleue favorisent le Merlot, cépage dominant. Les vins de Saint-Émilion et Pomerol sont réputés pour leur rondeur, leur fruité généreux et leur profondeur aromatique — notes de fruits noirs, de cacao, de truffe et de sous-bois. Pomerol, appellation sans classement officiel, abrite le légendaire Pétrus, considéré comme l'un des vins les plus chers du monde.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Médoc — la rive gauche des grands crus</div>
+                  <div class="etape-texte">Sur la rive gauche de la Gironde, les graves profondes et bien drainées donnent naissance aux vins les plus tanniques et les plus structurés du Bordelais. Le Cabernet Sauvignon domine et confère aux vins du Médoc leur longueur, leur aptitude au vieillissement et leurs arômes caractéristiques de cassis, de cèdre et de graphite. Les appellations Pauillac, Saint-Julien, Saint-Estèphe et Margaux concentrent la plupart des premiers grands crus classés.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Graves & Pessac-Léognan — la polyvalence</div>
+                  <div class="etape-texte">Au sud de Bordeaux, les Graves sont la seule appellation bordelaise à produire des rouges et des blancs de même réputation. Les blancs secs de Pessac-Léognan — à base de Sauvignon Blanc et Sémillon — sont considérés parmi les meilleurs vins blancs secs du monde, avec leur minéralité fumée, leurs arômes d'agrumes et leur capacité de vieillissement remarquable.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Sauternes & Barsac — l'or liquide</div>
+                  <div class="etape-texte">Au confluent de la Garonne et du Ciron, les matins brumeux favorisent le développement du Botrytis cinerea — la « pourriture noble » — qui concentre le sucre et les arômes dans les grains de Sémillon, Sauvignon Blanc et Muscadelle. Les vins liquoreux de Sauternes, récoltés grain par grain à plusieurs passages successifs, sont parmi les plus complexes et les plus aptes au vieillissement du monde entier.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Entre-Deux-Mers & appellations satellites</div>
+                  <div class="etape-texte">Entre Garonne et Dordogne, l'Entre-Deux-Mers produit des blancs secs vifs et aromatiques à base de Sauvignon Blanc — idéaux pour l'apéritif et les fruits de mer. Les appellations satellites de Saint-Émilion — Lussac, Montagne, Puisseguin, Saint-Georges — offrent des vins de style voisin à des prix nettement plus accessibles. Fronsac et Canon-Fronsac, à l'ouest de Libourne, sont deux appellations montantes à suivre de près.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le classement de 1855 — une hiérarchie légendaire</div>
+                  <div class="etape-texte">Commandé par Napoléon III pour l'Exposition Universelle de Paris, ce classement hiérarchise 61 châteaux du Médoc et le Château Haut-Brion des Graves en cinq catégories. En 1855, Sauternes et Barsac sont également classés. Mouton Rothschild, initialement deuxième cru, est promu premier cru en 1973 — la seule modification en 170 ans. Le classement de Saint-Émilion, lui, est révisé régulièrement et fait l'objet de contestations juridiques répétées.</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- CÉPAGES -->
+          <section class="section" id="cepages">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌿</div>
+              Les cépages bordelais
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🍇</div>
+                <div>
+                  <div class="vin-nom">Merlot (rouge)</div>
+                  <div class="vin-desc">Le cépage le plus planté à Bordeaux. Donne des vins ronds, charnus, aux arômes de prune, cerise noire et chocolat. Dominant en rive droite (Saint-Émilion, Pomerol).</div>
+                </div>
+                <div class="vin-badge">1er cépage rouge</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍇</div>
+                <div>
+                  <div class="vin-nom">Cabernet Sauvignon (rouge)</div>
+                  <div class="vin-desc">Le grand cépage structurant du Médoc. Tanins fermes, arômes de cassis, cèdre et graphite. Confère aux vins leur aptitude exceptionnelle au vieillissement.</div>
+                </div>
+                <div class="vin-badge">Rive gauche</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍇</div>
+                <div>
+                  <div class="vin-nom">Cabernet Franc (rouge)</div>
+                  <div class="vin-desc">Cépage d'assemblage apportant finesse et arômes floraux (violette, poivron rouge). Joue un rôle majeur à Saint-Émilion, notamment dans le célèbre Cheval Blanc.</div>
+                </div>
+                <div class="vin-badge">Assemblage</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍇</div>
+                <div>
+                  <div class="vin-nom">Sauvignon Blanc & Sémillon (blancs)</div>
+                  <div class="vin-desc">Le duo des vins blancs bordelais. Le Sauvignon apporte vivacité et arômes d'agrumes ; le Sémillon donne corps, gras et aptitude au vieillissement. Ensemble, ils créent les grands blancs de Pessac-Léognan et les liquoreux de Sauternes.</div>
+                </div>
+                <div class="vin-badge">Vins blancs</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ACCORDS METS-VINS -->
+          <section class="section" id="accords">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍽️</div>
+              Accords mets-vins
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Saint-Émilion Grand Cru & Pomerol :</strong> leur rondeur et leur fruité en font les vins idéaux pour les viandes rouges en sauce, le magret de canard, la côte de bœuf et les fromages à pâte molle comme le Brie ou le Camembert. Un Saint-Émilion millésimé accompagne à merveille l'entrecôte à la bordelaise.</p>
+
+              <p><strong>Pauillac & Saint-Julien :</strong> la puissance tannique des grands Médocs appelle des viandes rouges corsées — gigot d'agneau de Pauillac, gibier à plume, côte de bœuf maturée. Ces vins se révèlent pleinement après 10 à 20 ans de garde en cave.</p>
+
+              <p><strong>Margaux :</strong> l'appellation la plus féminine du Médoc, avec ses tanins soyeux et son bouquet complexe, s'accorde parfaitement avec le canard, la pintade rôtie, les champignons et les fromages affinés à pâte pressée.</p>
+
+              <p><strong>Graves & Pessac-Léognan blancs :</strong> les grands blancs secs bordelais sont les compagnons parfaits des huîtres du Bassin d'Arcachon, des coquilles Saint-Jacques, des poissons nobles et des crustacés. Leur minéralité et leur fraîcheur subliment les saveurs iodées.</p>
+
+              <p><strong>Sauternes & Barsac :</strong> au-delà de l'accord classique avec le foie gras, les liquoreux de Sauternes surprennent avec les fromages persillés (Roquefort), les desserts aux fruits jaunes, la crème brûlée et même — pour les audacieux — le homard à la vanille.</p>
+
+              <p><strong>Entre-Deux-Mers blanc :</strong> vif, aromatique et accessible, il est le compagnon idéal de l'apéritif, des plateaux de fruits de mer et des salades estivales. Un plaisir simple et authentique à partager sans cérémonie.</p>
+            </div>
+          </section>
+
+          <!-- OÙ DÉCOUVRIR -->
+          <section class="section" id="ou-decouvrir">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où découvrir les vins de Bordeaux ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Le vignoble bordelais est l'un des plus accessibles au monde pour l'œnotourisme — des milliers de châteaux ouvrent leurs portes aux visiteurs pour des dégustations, des visites de chai et des séjours au cœur des vignes.</p>
+              <p><strong>La Cité du Vin (Bordeaux)</strong> — Musée vivant du vin inauguré en 2016, avec ses expositions interactives, ses dégustations commentées et son belvédère panoramique sur les quais de Bordeaux. L'incontournable pour initier son voyage dans le monde des vins de Bordeaux.</p>
+              <p><strong>Saint-Émilion</strong> — Village médiéval classé au Patrimoine mondial de l'UNESCO, entouré de vignes à perte de vue. Ses ruelles pavées accueillent des dizaines de maisons de vin et de caves où déguster les grands Saint-Émilion directement chez les producteurs.</p>
+              <p><strong>La Route des Châteaux du Médoc</strong> — De Bordeaux jusqu'à Pointe de Grave, cette route mythique longe l'estuaire de la Gironde en traversant Margaux, Saint-Julien, Pauillac et Saint-Estèphe. La plupart des grands châteaux organisent des visites sur rendez-vous.</p>
+              <p><strong>Pomerol & Fronsac</strong> — Ces deux appellations de la rive droite, plus confidentielles que Saint-Émilion, permettent de découvrir des vins d'exception dans une atmosphère plus intimiste et des prix souvent plus raisonnables.</p>
+              <p><strong>Sauternes et son château d'Yquem</strong> — Le Château d'Yquem, seul premier cru supérieur du classement de 1855, ouvre ses portes aux visiteurs sur réservation. Une expérience unique au cœur de la capitale mondiale du vin liquoreux.</p>
+            </div>
+          </section>
+
+        </div>
+        <!-- fin colonne principale -->
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Nouvelle-Aquitaine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Gironde · Bordeaux et environs</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Vins rouges · Blancs secs · Liquoreux</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Surface</span>
+                <span class="aside-val">110 000 hectares</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Appellations</span>
+                <span class="aside-val">60 AOP</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Cépages rouges</span>
+                <span class="aside-val">Merlot · Cabernet Sauvignon · Cabernet Franc</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Cépages blancs</span>
+                <span class="aside-val">Sauvignon Blanc · Sémillon · Muscadelle</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Classement</span>
+                <span class="aside-val">Classement de 1855 (Médoc & Sauternes)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-label-aop">
+            <div class="aside-aop-logo">🍷</div>
+            <div class="aside-aop-titre">1er vignoble AOP de France</div>
+            <div class="aside-aop-desc">60 appellations, 110 000 hectares, ~700 millions de bouteilles par an. Exportation dans plus de 170 pays. Classement de 1855 toujours en vigueur.</div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="#" class="aside-lien">🥩 Entrecôte à la Bordelaise<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🦆 Foie gras du Périgord IGP<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🐟 Lamproie à la Bordelaise<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🐚 Huîtres du Bassin d'Arcachon<span class="aside-lien-arrow">›</span></a>
+                <a href="nouvelle-aquitaine.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région<span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="nouvelle-aquitaine.html" class="btn-retour-fixe" id="btnRetour">
+    ← Nouvelle-Aquitaine
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="nouvelle-aquitaine.html">Nouvelle-Aquitaine</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

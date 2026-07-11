@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grand Est — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-grand-est.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">G</span>rand <span class="titre-initial">E</span>st</h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-grand-est.jpg" alt="Écusson Grand Est" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/choucroute-garnie.html">Choucroute garnie alsacienne</a></li>
+              <li><a href="gastronomie/plats-emblematiques/baeckeoffe.html">Baeckeoffe alsacien</a></li>
+              <li><a href="gastronomie/plats-emblematiques/quiche-lorraine.html">Quiche lorraine</a></li>
+              <li><a href="gastronomie/plats-emblematiques/flammekueche.html">Flammekueche (tarte flambée)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/potee-lorraine.html">Potée lorraine</a></li>
+              <li><a href="gastronomie/plats-emblematiques/fleischnaka.html">Fleischnaka (pâté en croûte alsacien)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/munster.html">Munster AOP (Alsace)</a></li>
+              <li><a href="gastronomie/fromages-terroir/langres.html">Langres AOP (Haute-Marne)</a></li>
+              <li><a href="gastronomie/fromages-terroir/brie-meaux.html">Brie de Meaux AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/mirabelle-lorraine.html">Mirabelle de Lorraine IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/foie-gras-alsace.html">Foie gras d'Alsace IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/lentille-verte-puy.html">Lentille verte du Berry IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/riesling-alsace.html">Riesling d'Alsace AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/gewurztraminer.html">Gewurztraminer AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/pinot-gris-alsace.html">Pinot Gris d'Alsace AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/cremant-alsace.html">Crémant d'Alsace AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/biere-alsace.html">Bières d'Alsace (Kronenbourg, Fischer…)</a></li>
+              <li><a href="gastronomie/vin-boisson/eau-de-vie-alsace.html">Eaux-de-vie d'Alsace (mirabelle, quetsche)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/kougelhopf.html">Kougelhopf alsacien</a></li>
+              <li><a href="gastronomie/douceur/madeleine-commercy.html">Madeleine de Commercy</a></li>
+              <li><a href="gastronomie/douceur/macaron-nancy.html">Macaron de Nancy</a></li>
+              <li><a href="gastronomie/douceur/pain-epices-reims.html">Pain d'épices de Reims</a></li>
+              <li><a href="gastronomie/douceur/bergamote-nancy.html">Bergamote de Nancy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Place Stanislas de Nancy</li>
+              <li>Cathédrale Notre-Dame de Strasbourg</li>
+              <li>Cathédrale de Reims (sacre des rois de France)</li>
+              <li>Grande Île de Strasbourg</li>
+              <li>Sites de mémoire de la Grande Guerre (Meuse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Palais du Rhin (Strasbourg)</li>
+              <li>Château du Haut-Kœnigsbourg (Alsace)</li>
+              <li>Abbaye de Murbach (Alsace)</li>
+              <li>Basilique de l'Épine (Marne)</li>
+              <li>Château de Lunéville (Versailles lorrain)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée d'Unterlinden (Colmar — retable d'Issenheim)</li>
+              <li>Musée de l'École de Nancy (Art nouveau)</li>
+              <li>Musée des Beaux-Arts de Reims</li>
+              <li>Parlement Européen (Strasbourg)</li>
+              <li>Mémorial de Verdun (Meuse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚔️</span> Mémoire & histoire</div>
+            <ul>
+              <li>Verdun — champs de bataille (14-18)</li>
+              <li>Ossuaire de Douaumont</li>
+              <li>Ligne Maginot (fortifications)</li>
+              <li>Camp de concentration du Struthof (Bas-Rhin)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & massifs</div>
+            <ul>
+              <li>Forêt des Vosges (parc naturel régional)</li>
+              <li>Forêt d'Argonne (Ardennes)</li>
+              <li>Forêt de Haguenau (plus grande d'Alsace)</li>
+              <li>Massif des Vosges (chaume et chalets)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Reliefs & panoramas</div>
+            <ul>
+              <li>Grand Ballon (1 424 m — point culminant des Vosges)</li>
+              <li>Champ du Feu (plateau vosgien)</li>
+              <li>Route des Crêtes (Alsace — panorama sur la plaine du Rhin)</li>
+              <li>Lac Blanc et Lac Noir (Vosges)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💧</span> Lacs & rivières</div>
+            <ul>
+              <li>Lacs des Vosges (Gérardmer, Longemer)</li>
+              <li>Fleuve Rhin (frontière naturelle avec l'Allemagne)</li>
+              <li>Rivière Moselle</li>
+              <li>Étangs de la Woëvre (Meuse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Parcs & réserves</div>
+            <ul>
+              <li>Parc naturel régional des Vosges du Nord</li>
+              <li>Parc naturel régional des Ballons des Vosges</li>
+              <li>Réserve naturelle du Rohrschollen (Alsace)</li>
+              <li>Forêt rhénane et zones humides du Ried</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🔮</span> Cristal & verrerie</div>
+            <ul>
+              <li>Cristallerie de Baccarat (Meurthe-et-Moselle)</li>
+              <li>Cristallerie de Saint-Louis (Moselle)</li>
+              <li>Soufflage de verre de la forêt vosgienne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Art nouveau & faïence</div>
+            <ul>
+              <li>École de Nancy — Art nouveau (Gallé, Daum, Majorelle)</li>
+              <li>Faïences de Sarreguemines</li>
+              <li>Poteries d'Alsace (Soufflenheim, Betschdorf)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪡</span> Textile & broderie</div>
+            <ul>
+              <li>Broderie d'Alsace (point de croix traditionnel)</li>
+              <li>Tissage des Vosges (toiles et draps)</li>
+              <li>Dentelle de Mirecourt (Vosges)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & jouets</div>
+            <ul>
+              <li>Jouets et décors de Noël en bois (Alsace)</li>
+              <li>Lutherie de Mirecourt (violons)</li>
+              <li>Sculpture sur bois vosgienne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Alsacien (dialecte germanique)</li>
+              <li>Lorrain (patois roman)</li>
+              <li>Champenois (langue d'oïl)</li>
+              <li>Culture rhénane et germanophone d'Alsace</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Danse alsacienne (Schuhplattler)</li>
+              <li>Musique de cuivres et fanfares lorraines</li>
+              <li>Festival Musica (musique contemporaine, Strasbourg)</li>
+              <li>Les Eurockéennes de Belfort</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎿</span> Sports & traditions</div>
+            <ul>
+              <li>Ski alpin et nordique dans les Vosges</li>
+              <li>Viticulture alsacienne (vendanges)</li>
+              <li>Pêche dans les lacs vosgiens</li>
+              <li>Football (RC Strasbourg, FC Metz)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Marchés de Noël d'Alsace (les plus anciens de France)</li>
+              <li>Fête de la Mirabelle — Metz (août)</li>
+              <li>Fête du Houblon — Geispolsheim (Alsace)</li>
+              <li>Cavalcade de Sainte-Odile (Alsace)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Eguisheim (Haut-Rhin)</li>
+              <li>Riquewihr (Haut-Rhin)</li>
+              <li>Hunspach (Bas-Rhin)</li>
+              <li>Obernai (Bas-Rhin)</li>
+              <li>Bergheim (Haut-Rhin)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages à colombages</div>
+            <ul>
+              <li>Kaysersberg (Haut-Rhin)</li>
+              <li>Turckheim (Haut-Rhin)</li>
+              <li>Mittelbergheim (Bas-Rhin)</li>
+              <li>Rosheim (Bas-Rhin)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Colmar (la petite Venise d'Alsace)</li>
+              <li>Épernay (capitale du Champagne)</li>
+              <li>Provins (cité médiévale, Seine-et-Marne)</li>
+              <li>Wissembourg (Bas-Rhin)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Eguisheim</h3>
+            <p>Considéré comme l'un des plus beaux villages de France, Eguisheim est un joyau médiéval du Haut-Rhin organisé en cercles concentriques autour de son château octogonal du VIIIe siècle. Ses ruelles fleuries de géraniums, ses maisons à colombages multicolores et ses fontaines en font un tableau vivant de l'Alsace éternelle. Berceau du pape saint Léon IX, il est aussi le point de départ idéal de la Route des Vins d'Alsace.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Route des Vins d'Alsace</span>
+            <span class="village-star-tag">Haut-Rhin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Foire aux Vins de Colmar (hiver)</h4><p>La grande foire alsacienne des vins ouvre ses portes en janvier avec dégustations, producteurs et animations gastronomiques.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Fête de la Tulipe — Hésingue (Haut-Rhin)</h4><p>Des milliers de tulipes en fleurs célèbrent l'arrivée du printemps dans ce village alsacien réputé pour ses jardins.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête de Jeanne d'Arc — Orléans / Vaucouleurs</h4><p>Vaucouleurs (Meuse), village de départ de la Pucelle, commémore avec faste l'épopée de Jeanne d'Arc.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Les Eurockéennes — Belfort</h4><p>L'un des plus grands festivals de musiques actuelles de France, au bord du lac de Malsaucy, au pied du Lion de Belfort.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de la Mirabelle — Metz</h4><p>La capitale lorraine célèbre son fruit emblématique avec corso fleuri, marchés et dégustations de confitures et eaux-de-vie.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Foire Européenne de Strasbourg</h4><p>La grande foire internationale de Strasbourg réunit des exposants de toute l'Europe dans la capitale alsacienne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Fête des Vendanges — Route des Vins</h4><p>Dans chaque village alsacien, les vendanges sont fêtées avec bals, pressoirs ouverts et dégustations de vins nouveaux.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marchés de Noël d'Alsace</h4><p>Les plus anciens de France — Strasbourg, Colmar, Obernai, Kaysersberg — illuminent l'Alsace depuis le XIVe siècle.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés dans le Grand Est</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍷</span>
+            <h4>Route des Vins d'Alsace</h4>
+            <p>De Marlenheim à Thann, 170 km de vignobles entre Vosges et plaine du Rhin — Riesling, Gewurztraminer et villages fleuris.</p>
+            <span class="parcours-item-duree">⏱ 4 à 6 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🥂</span>
+            <h4>Route du Champagne — Épernay</h4>
+            <p>Reims, Épernay, Hautvillers — caves de Moët & Chandon, Veuve Clicquot et vignobles de la Côte des Blancs.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🔮</span>
+            <h4>Route du Cristal — Vosges</h4>
+            <p>Baccarat, Saint-Louis-lès-Bitche, Meisenthal — les cristalleries des forêts vosgiennes et leur savoir-faire verrier unique.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⚔️</span>
+            <h4>Chemins de Mémoire — Verdun</h4>
+            <p>Verdun, l'Ossuaire de Douaumont, la Voie Sacrée et les champs de bataille — un devoir de mémoire bouleversant.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🎄</span>
+            <h4>L'Alsace de Noël</h4>
+            <p>Strasbourg, Colmar, Kaysersberg, Riquewihr — les marchés de Noël les plus anciens et féeriques de France en décembre.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌲</span>
+            <h4>Crêtes des Vosges</h4>
+            <p>La Route des Crêtes de Cernay à Wangenbourg — chaumes, lacs, chalets et panoramas sur la plaine d'Alsace et les Alpes.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grottes ornées de la Vézère (Lascaux) — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3; /* passe toujours au-dessus de l'écusson */
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    /* Zone haute du bandeau (topbar + titre), utilisée comme référence
+       pour positionner l'écusson par rapport à cette seule zone
+       (et non par rapport à tout le bandeau, nav comprise). */
+    .produit-hero-top {
+      position: relative;
+    }
+
+    /* ÉCUSSON : centré HORIZONTALEMENT (left:50% + translateX(-50%)).
+       Position VERTICALE ajustable via la variable --ecusson-top,
+       à définir sur l'élément lui-même dans le HTML de chaque fiche
+       (ex: style="--ecusson-top: 40px"). Valeur par défaut : 30px.
+       pointer-events:none pour ne jamais intercepter les clics
+       destinés aux éléments sous/autour de lui.   */
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;        /* reste sous la topbar et la nav */
+      pointer-events: none; /* purement décoratif : laisse passer les clics */
+    }
+    .fiche-hero-ecusson img {
+       height: 200px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+
+
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      /* Sur mobile, l'écusson passe sous le titre pour ne jamais chevaucher le texte */
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../nouvelle-aquitaine.html" class="produit-btn-retour">
+            ← Retour à la fiche Nouvelle-Aquitaine
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+
+
+          <h1><em>G</em>rottes ornées <br><span style="padding-left: 60px;"> de la <em>V</em>ézère </span></h1>
+
+        </div>
+      <img src="../../../../assets/departement/nouvelle-aquitaine/carte-nouvelle-aquitaine-mini.png"
+               alt="Carte de la Nouvelle-Aquitaine"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/régions/ecusson-nouvelle-aquitaine.png" alt="Écusson Nouvelle-Aquitaine" />
+        </div>
+
+
+
+    <!-- 3. LABEL BAS — indépendant, entre écusson et nav -->
+    <div class="hero-label-bas">
+    ⟹ Patrimoine Mondial UNESCO ⟸
+    </div>
+
+
+
+
+
+
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#parcours"             >🚶 Parcours de visite</a>
+          <a href="#variantes"            >🔀 Variantes de visite</a>
+          <a href="#ou-manger"            >📍 Où prolonger la visite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>La vallée de la Vézère, en Dordogne, concentre l'une des plus exceptionnelles concentrations de sites préhistoriques au monde. Sur quelques kilomètres seulement, plus de 150 gisements et une quinzaine de grottes ornées témoignent de plusieurs dizaines de millénaires d'occupation humaine, du Paléolithique moyen à la fin du Paléolithique supérieur.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 450px;">
+                   <img src="../../../../assets/departement/nouvelle-aquitaine/photos/lascaux-salle-taureaux.jpg"
+                        alt="Fac-similé de la salle des Taureaux à Lascaux" />
+                    <figcaption>La salle des Taureaux, reconstituée à Lascaux IV</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>C'est le 12 septembre 1940 que quatre adolescents, guidés par leur chien Robot, découvrent par hasard l'entrée de la grotte de Lascaux, en explorant les environs de Montignac. Ils y révèlent un ensemble de peintures et de gravures d'une qualité artistique exceptionnelle, vieilles d'environ 17 000 ans : chevaux, aurochs, cerfs et le célèbre panneau des taureaux, surnommé plus tard « la chapelle Sixtine de la préhistoire ».</p>
+
+              <p>En 1979, l'UNESCO inscrit l'ensemble des « Grottes ornées de la vallée de la Vézère » au patrimoine mondial, l'un des tout premiers sites français distingués. Ce classement englobe non seulement Lascaux, mais aussi Font-de-Gaume, les Combarelles, Rouffignac, Cap Blanc et de nombreux autres gisements et abris ornés de la vallée.</p>
+
+              <p>Ouverte au public dès 1948, la grotte de Lascaux dut être fermée en 1963 : le dioxyde de carbone exhalé par les visiteurs et la chaleur des éclairages avaient favorisé le développement de moisissures menaçant irrémédiablement les œuvres. Depuis, l'original reste inaccessible et fait l'objet d'une surveillance scientifique constante.</p>
+
+              <p>Pour permettre au public de découvrir ce chef-d'œuvre sans mettre en péril l'original, un premier fac-similé, <strong>Lascaux II</strong>, ouvre en 1983 à proximité de la grotte véritable. En 2016, <strong>Lascaux IV — Centre international de l'art pariétal</strong> voit le jour à Montignac : une reconstitution intégrale et immersive de la grotte, complétée par un parcours muséographique consacré à l'art préhistorique dans le monde.</p>
+            </div>
+          </section>
+
+
+            <figure class="photo-bloc photo-centre" style="max-width: 450px;">
+            <img src="../../../../assets/departement/nouvelle-aquitaine/photos/vallee-vezere.jpg"
+                  alt="Falaises de la vallée de la Vézère" />
+              <figcaption>Les falaises calcaires de la vallée de la Vézère</figcaption>
+            </figure>
+
+            <div class="clearfix"></div>
+
+
+
+
+
+
+
+
+
+          <!-- PARCOURS DE VISITE -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours traditionnel
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">1 à 2 jours</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Étendue</div>
+                  <div class="recette-meta-val">Vallée de la Vézère, env. 15 km</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Départ</div>
+                  <div class="recette-meta-val">Lascaux IV, Montignac</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile · réservation conseillée</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Sites incontournables</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Site 1</span> Lascaux IV & Centre international de l'art pariétal</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Site 2</span> Grotte de Font-de-Gaume</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Site 3</span> Grotte des Combarelles</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Site 4</span> Grotte de Rouffignac, dite « aux cent mammouths »</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Site 5</span> Abri sculpté du Cap Blanc<div>
+              </div>
+            </div>
+</div>
+
+
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Débuter par Lascaux IV</div>
+                  <div class="etape-texte">Commencez la visite à Montignac par le fac-similé intégral de la grotte, reconstitué à l'identique grâce à des relevés numériques de haute précision. Une visite guidée immersive plonge le visiteur dans l'atmosphère de la grotte originale.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Découvrir une grotte authentique</div>
+                  <div class="etape-texte">Poursuivez avec la grotte de Font-de-Gaume, l'une des dernières grottes ornées polychromes encore ouvertes au public, où subsiste une remarquable frise de bisons peints.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Observer les gravures</div>
+                  <div class="etape-texte">À la grotte des Combarelles, admirez plusieurs centaines de gravures fines représentant chevaux, rennes et figures animales, réparties le long d'un long couloir souterrain.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Explorer en petit train</div>
+                  <div class="etape-texte">À Rouffignac, un petit train électrique conduit les visiteurs au cœur du réseau souterrain, jusqu'aux célèbres représentations de mammouths gravées et peintes.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Admirer la sculpture</div>
+                  <div class="etape-texte">Terminez à l'abri du Cap Blanc, où une frise de chevaux sculptés en haut-relief dans la roche compte parmi les rares œuvres pariétales de ce type conservées en France.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Prolonger par le musée</div>
+                  <div class="etape-texte">Achevez le séjour par le Musée national de Préhistoire des Eyzies, qui replace l'ensemble des découvertes de la vallée dans leur contexte scientifique et chronologique.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes de visite
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Visite en famille :</strong> Lascaux IV propose des ateliers pédagogiques et des parcours adaptés aux enfants, avec initiation à l'art pariétal et à la fabrication de pigments.</p>
+              <p><strong>Parcours immersif et numérique :</strong> le Centre international de l'art pariétal complète la visite de la grotte par une expérience en réalité virtuelle et des reconstitutions 3D d'autres grottes ornées du monde.</p>
+              <p><strong>Randonnée dans la vallée :</strong> les sentiers longeant la Vézère permettent de relier plusieurs sites à pied ou à vélo, entre falaises calcaires, villages troglodytiques et bords de rivière.</p>
+            </div>
+          </section>
+
+
+
+          <!-- OÙ PROLONGER LA VISITE -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où prolonger la visite ?
+            </h2>
+            <div class="histoire-texte">
+              <p>La vallée de la Vézère invite à prendre le temps, entre villages de pierre blonde, sites troglodytiques et capitale mondiale de la préhistoire.</p>
+
+              <p><strong>Les Eyzies-de-Tayac</strong> considérée comme la capitale mondiale de la préhistoire, elle abrite le Musée national de Préhistoire et plusieurs abris troglodytiques remarquables.</p>
+
+              <p><strong>Montignac-Lascaux</strong> village pittoresque au bord de la Vézère, point de départ idéal pour la visite de Lascaux IV, avec ses maisons à colombages et ses berges aménagées.</p>
+
+              <p><strong>La Roque Saint-Christophe</strong> impressionnante falaise habitée depuis la préhistoire, aménagée en village troglodytique sur plusieurs niveaux.</p>
+
+             <p><strong>Sarlat-la-Canéda</strong> à proximité, capitale du Périgord Noir, avec son centre historique médiéval et son marché renommé.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Nouvelle-Aquitaine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Dordogne · Vallée de la Vézère</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Patrimoine préhistorique et artistique</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Toute l'année · réservation conseillée l'été</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Visite culturelle · Découverte en famille</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Patrimoine mondial de l'UNESCO (1979)</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">UNESCO · Ministère de la Culture</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Label -->
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="nouvelle-aquitaine.html" class="btn-retour-fixe" id="btnRetour">
+    ← Nouvelle-Aquitaine
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="nouvelle-aquitaine.html">Nouvelle-Aquitaine</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation interne active
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    // Navigation interne scroll doux
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Bouton retour flottant
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

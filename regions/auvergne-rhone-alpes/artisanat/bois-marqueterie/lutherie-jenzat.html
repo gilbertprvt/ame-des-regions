@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutherie de Jenzat — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../auvergne-rhone-alpes.html" class="produit-btn-retour">
+            ← Retour à la fiche Auvergne-Rhône-Alpes
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+
+          <h1><em>L</em>utherie <br><span style="padding-left: 60px;"> <em>d</em>e Jenzat </span></h1>
+
+        </div>
+      <img src="../../../../assets/departement/auvergne-rhone-alpes/carte-auvergne-rhone-alpes-mini.png"
+               alt="Carte de l'Auvergne-Rhône-Alpes"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/régions/ecusson-auvergne-rhone-alpes.png" alt="Écusson Auvergne-Rhône-Alpes" />
+        </div>
+
+    <!-- 3. LABEL BAS — indépendant, entre écusson et nav -->
+    <div class="hero-label-bas">
+    ⟹ La Capitale Mondiale de la Vielle ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#parcours"             >🚶 Parcours de visite</a>
+          <a href="#variantes"            >🔀 Variantes de visite</a>
+          <a href="#ou-manger"            >📍 Où prolonger la visite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Sur les bords de la Sioule, au cœur du Bourbonnais, le petit village de <strong>Jenzat</strong>, dans l'Allier, s'est forgé depuis plus de deux siècles une réputation extraordinaire : celle de capitale mondiale de la fabrication des vielles à roue. Tout commence en 1795, quand un jeune homme du village, Jean Pajot, emprunte à son oncle le curé Pierre Roux une vielle alto datée de 1763, prêtée par ce dernier à son neveu. Jean Pajot se prend de passion pour l'instrument et se met à en fabriquer à son tour. De ce prêt fortuit naît toute une lignée de facteurs.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/vielle-a-roue-atelier-jenzat-allier.jpg"
+                        alt="Vielle à roue traditionnelle fabriquée dans un atelier de Jenzat" />
+                    <figcaption>Une vielle à roue traditionnelle, instrument emblématique de la lutherie jenzatoise</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>La vielle à roue connaissait alors un engouement considérable jusqu'à la cour de Versailles : la reine Marie Leszczyńska, épouse de Louis XV, en jouait, tout comme sa fille Adélaïde de France. Cette mode aristocratique du XVIIIe siècle irrigua durablement la production populaire, et Jenzat devint, au fil des générations, le foyer d'une impressionnante dynastie de luthiers : les Pajot, sur plusieurs générations, mais aussi les Tixier, Pimpart, Decante et Nigout. En 1924, l'un des Pajot, facteur chevronné depuis plus de quarante ans, fut reconnu Meilleur Ouvrier de France, l'année même de la création de ce titre.</p>
+
+              <div class="citation-bloc">
+                <p>« Par le nombre de luthiers et par la qualité de leur production, Jenzat est la capitale mondiale de la fabrication des vielles à roue. »</p>
+                <cite>— Maison du luthier, musée de Jenzat</cite>
+              </div>
+
+              <p>Les luthiers de Jenzat ne se limitaient pas à la vielle : facteurs de cornemuses, réparateurs d'accordéons, de saxophones, de flûtes et de tambours, marchands de clarinettes, de violons et de mandolines, ils faisaient du village un carrefour instrumental complet, animé d'un véritable « quartier des facteurs de vielles ». Aujourd'hui, la <strong>Maison du luthier</strong>, musée fondé en 1986 dans l'ancienne demeure du facteur Jacques-Antoine Pajot, conserve et fait revivre cette mémoire exceptionnelle, tandis que Jean-Claude Boudet et son fils Claude-Emmanuel perpétuent, dans leur atelier, la fabrication et la restauration de vielles vendues aujourd'hui dans le monde entier.</p>
+            </div>
+          </section>
+
+            <figure class="photo-bloc photo-centre" style="max-width: 450px;">
+            <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/village-jenzat-allier-sioule.jpg"
+                  alt="Le village de Jenzat en bordure de la Sioule, dans l'Allier" />
+              <figcaption>Le village de Jenzat, niché en bordure de la Sioule, berceau de la lutherie française</figcaption>
+            </figure>
+
+            <div class="clearfix"></div>
+
+          <!-- PARCOURS DE VISITE -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours traditionnel
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Demi-journée</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎻</div>
+                <div>
+                  <div class="recette-meta-label">Instruments</div>
+                  <div class="recette-meta-val">Vielles à roue, cornemuses</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Départ</div>
+                  <div class="recette-meta-val">Maison du luthier, Jenzat</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile · accessible</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Éléments de la vielle à roue</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">1</span> Roue en bois actionnée par manivelle</div>
+                <div class="ingredient-item"><span class="ingredient-qte">2</span> Clavier à sautereaux</div>
+                <div class="ingredient-item"><span class="ingredient-qte">3</span> Cordes mélodiques et bourdons</div>
+                <div class="ingredient-item"><span class="ingredient-qte">4</span> Caisse ronde ou plate</div>
+                <div class="ingredient-item"><span class="ingredient-qte">5</span> Table en épicéa, corps en érable</div>
+              </div>
+            </div>
+
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Débuter à la Maison du luthier</div>
+                  <div class="etape-texte">Installé dans l'ancienne maison Pajot Jeune, ce musée présente vielles, cornemuses et outils des grandes dynasties de facteurs : Pajot, Tixier, Pimpart, Decante et Nigout.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Admirer la vielle fondatrice de 1763</div>
+                  <div class="etape-texte">Découvrez la vielle alto signée Charotte, prêtée par le curé Pierre Roux à son neveu Jean Pajot en 1795 — l'instrument à l'origine de toute la lutherie jenzatoise.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Parcourir le quartier des facteurs</div>
+                  <div class="etape-texte">Flânez dans les ruelles du village, en bordure de la Sioule, où se sont succédé pendant plus de deux siècles les ateliers des grandes familles de luthiers.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Visiter un atelier en activité</div>
+                  <div class="etape-texte">Jean-Claude et Claude-Emmanuel Boudet perpétuent aujourd'hui la fabrication et la restauration de vielles, vendues dans le monde entier depuis leur atelier jenzatois.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Écouter le répertoire bourbonnais</div>
+                  <div class="etape-texte">En saison, des musiciens font résonner vielles, cornemuses Béchonnet et accordéons dans l'auditorium du musée, sur les répertoires traditionnels d'Auvergne et du Bourbonnais.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Longer les gorges de la Sioule</div>
+                  <div class="etape-texte">Rejoignez à pied le moulin Parot par le GR 300, chemin de Saint-Jacques, pour prolonger la visite d'une balade au fil de l'eau jusqu'au pont de Jenzat.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes de visite
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Nuit européenne des musées :</strong> chaque printemps, la Maison du luthier propose des visites guidées nocturnes autour d'une exposition temporaire renouvelée chaque année.</p>
+              <p><strong>Journées européennes du patrimoine :</strong> en septembre, animations et démonstrations mettent à l'honneur la facture instrumentale et les répertoires de musique traditionnelle.</p>
+              <p><strong>Randonnée et lutherie :</strong> le chemin de Saint-Martin traverse le village, tandis que le GR 300 permet de relier Jenzat aux gorges de la Sioule, entre patrimoine bâti et patrimoine naturel.</p>
+            </div>
+          </section>
+
+          <!-- OÙ PROLONGER LA VISITE -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où prolonger la visite ?
+            </h2>
+            <div class="histoire-texte">
+              <p>La découverte de la lutherie jenzatoise s'inscrit naturellement dans une exploration plus large du Bourbonnais.</p>
+
+              <p><strong>Charroux</strong>, classé parmi les plus beaux villages de France, à environ 3 km de Jenzat par les gorges de la Sioule.</p>
+
+              <p><strong>Vichy</strong>, dont la célèbre salle des ventes est réputée dans le monde entier pour les instruments de musique anciens.</p>
+
+              <p><strong>Gorges de la Sioule</strong>, pour prolonger la promenade entre moulins historiques et paysages préservés du Val de Sioule.</p>
+
+              <p><strong>Musées bourbonnais</strong> qui, à travers tout le département de l'Allier, valorisent ce patrimoine instrumental et musical unique en France.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Auvergne-Rhône-Alpes</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Allier · Val de Sioule</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Facture instrumentale & lutherie traditionnelle</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Mai à octobre (musée)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Visite culturelle · Découverte musicale</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Fabrication attestée depuis 1795</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Maison du luthier / Musée · Musées bourbonnais</span>
+              </div>
+
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="auvergne-rhone-alpes.html" class="btn-retour-fixe" id="btnRetour">
+    ← Auvergne-Rhône-Alpes
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="auvergne-rhone-alpes.html">Auvergne-Rhône-Alpes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

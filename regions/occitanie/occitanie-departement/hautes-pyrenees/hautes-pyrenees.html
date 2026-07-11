@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hautes-Pyrénées — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 170px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../occitanie.html" class="fiche-topbar-btn">Occitanie</a>
+          <a href="../../carte-occitanie.html" class="fiche-topbar-btn">Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 40px;"><span class="titre-initial">H</span>autes-</span><br><span style="padding-left: 120px;"></span><span class="titre-initial">P</span>yrénées</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/occitanie/hautes-pyrenees.png" alt="Écusson Hautes-Pyrénées" />
+        </div>
+
+        <span class="fiche-hero-ancien">Préfecture : Tarbes · Département 65</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">Traditions</button>
+          <button class="fiche-tab" data-panel="villages">Villages</button>
+          <button class="fiche-tab" data-panel="agenda">Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+            <ul>
+              <li>Garbure (soupe paysanne pyrénéenne)</li>
+              <li>Haricot tarbais, star des potées locales</li>
+              <li>Porc Noir de Bigorre AOP</li>
+              <li>Fromage de brebis des Pyrénées</li>
+              <li>Gâteau à la broche</li>
+              <li>Truite des lacs pyrénéens</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+            <ul>
+              <li>Haricot tarbais IGP</li>
+              <li>Porc Noir de Bigorre AOP (jambon noir)</li>
+              <li>Fromage de brebis d'estive</li>
+              <li>Miel de montagne des Pyrénées</li>
+              <li>Agneau de lait des Pyrénées</li>
+              <li>Champignons des forêts pyrénéennes</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Vin</span> Vins & boissons</div>
+            <ul>
+              <li>Madiran AOP (vin rouge de caractère)</li>
+              <li>Pacherenc du Vic-Bilh AOP</li>
+              <li>Eaux thermales de Lourdes et Cauterets</li>
+              <li>Génépi et liqueurs de montagne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Dessert</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Gâteau à la broche pyrénéen</li>
+              <li>Croustade aux pommes</li>
+              <li>Sablés pyrénéens</li>
+              <li>Confiture de myrtilles sauvages</li>
+              <li>Miel et pain d'épices artisanal</li>
+              <li>Nougat de montagne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Eglise</span> Sites religieux & pèlerinage</div>
+            <ul>
+              <li>Sanctuaire Notre-Dame de Lourdes</li>
+              <li>Grotte de Massabielle</li>
+              <li>Basilique du Rosaire et basilique souterraine Saint-Pie X</li>
+              <li>Château fort de Lourdes, Musée Pyrénéen</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Site</span> Sites UNESCO & naturels classés</div>
+            <ul>
+              <li>Cirque de Gavarnie (UNESCO)</li>
+              <li>Parc national des Pyrénées</li>
+              <li>Pic du Midi de Bigorre et son observatoire</li>
+              <li>Col du Tourmalet</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Grotte</span> Sites préhistoriques</div>
+            <ul>
+              <li>Grottes de Gargas (grotte des mains)</li>
+              <li>Grotte de Médous</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
+            <ul>
+              <li>Musée Massey (Tarbes)</li>
+              <li>Musée Pyrénéen (château de Lourdes)</li>
+              <li>Haras National de Tarbes</li>
+              <li>Observatoire du Pic du Midi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Montagne</span> Cirques & sommets</div>
+            <ul>
+              <li>Cirque de Gavarnie</li>
+              <li>Cirque de Troumouse</li>
+              <li>Cirque d'Estaubé</li>
+              <li>Pic du Midi de Bigorre</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Col</span> Cols & vallées</div>
+            <ul>
+              <li>Col du Tourmalet</li>
+              <li>Vallée d'Aure</li>
+              <li>Vallée de Cauterets</li>
+              <li>Vallée d'Ossoue</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Faune</span> Faune & biodiversité</div>
+            <ul>
+              <li>Isards et marmottes du parc national</li>
+              <li>Gypaètes barbus et aigles royaux</li>
+              <li>Desmans des Pyrénées</li>
+              <li>Réserve naturelle du Néouvielle</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Paysage</span> Paysages & panoramas</div>
+            <ul>
+              <li>Grande cascade de Gavarnie</li>
+              <li>Lac de Gaube</li>
+              <li>Pont d'Espagne (Cauterets)</li>
+              <li>Panorama depuis le Pic du Midi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Elevage</span> Élevage & transformation</div>
+            <ul>
+              <li>Élevage du Porc Noir de Bigorre</li>
+              <li>Fabrication du fromage de brebis d'estive</li>
+              <li>Élevage de la race chevaline Tarbaise (Haras National)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bois</span> Textile & bois</div>
+            <ul>
+              <li>Tissage de la laine pyrénéenne</li>
+              <li>Sculpture sur bois de montagne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Thermal</span> Thermalisme</div>
+            <ul>
+              <li>Savoir-faire thermal de Cauterets et Bagnères-de-Bigorre</li>
+              <li>Production d'eaux thermales et cosmétiques</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Conserve</span> Produits artisanaux</div>
+            <ul>
+              <li>Confection de la garbure traditionnelle</li>
+              <li>Transformation du haricot tarbais</li>
+              <li>Miel et pain d'épices artisanal</li>
+              <li>Charcuterie de montagne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Langue</span> Langue & identité</div>
+            <ul>
+              <li>Occitan gascon et bigourdan</li>
+              <li>Culture pastorale pyrénéenne</li>
+              <li>Tradition du pèlerinage marial de Lourdes</li>
+              <li>Toponymie pyrénéenne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cheval</span> Élevage & pastoralisme</div>
+            <ul>
+              <li>Transhumance en vallée d'Aure</li>
+              <li>Estives du Néouvielle et du Tourmalet</li>
+              <li>Élevage ovin et fabrication fromagère</li>
+              <li>Haras National de Tarbes et race Tarbaise</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Fete</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Grande fête de l'Assomption à Lourdes (15 août)</li>
+              <li>Carnaval des vallées pyrénéennes</li>
+              <li>Fête du Cheval à Tarbes</li>
+              <li>Fête de la Transhumance en vallée d'Aure</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+            <ul>
+              <li>Confection de la garbure paysanne</li>
+              <li>Culture et récolte du haricot tarbais</li>
+              <li>Élevage et salaison du Porc Noir de Bigorre</li>
+              <li>Fabrication du gâteau à la broche</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Arreau (Plus Beau Village de France)</li>
+              <li>Saint-Savin</li>
+              <li>Luz-Saint-Sauveur</li>
+              <li>Gavarnie</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Montagne</span> Villages de montagne</div>
+            <ul>
+              <li>Barèges (station thermale et de ski)</li>
+              <li>Cauterets (cité thermale)</li>
+              <li>Saint-Lary-Soulan (vallée d'Aure)</li>
+              <li>Bagnères-de-Bigorre (thermes)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>Bourg</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Tarbes (préfecture, Haras National)</li>
+              <li>Lourdes (cité mariale)</li>
+              <li>Vic-en-Bigorre</li>
+              <li>Argelès-Gazost</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">Etoile</div>
+          <div>
+            <h3>Village à l'honneur : Arreau</h3>
+            <p>Niché au confluent des vallées d'Aure et du Louron, ce village médiéval aux maisons à colombages et toits d'ardoise a conservé son cachet pyrénéen intact. Ses halles du XVIe siècle, sa vieille tour et ses ruelles pavées en font une étape incontournable entre plaine et haute montagne.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Vallée d'Aure</span>
+            <span class="village-star-tag">Architecture pyrénéenne</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>Calendrier</span> Fêtes & événements de l'année dans les Hautes-Pyrénées</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Février</div>
+                <div><h4>Carnaval des vallées pyrénéennes</h4><p>Défilés costumés et traditions carnavalesques dans les vallées de Bigorre, d'Aure et du Louron.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête du Haricot Tarbais</h4><p>Célébration du haricot emblématique de Tarbes, marchés et dégustations traditionnelles.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Fête du Fromage de brebis des Pyrénées</h4><p>Producteurs et éleveurs se rassemblent à Bagnères-de-Bigorre pour célébrer ce fromage d'estive.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Grande fête de l'Assomption à Lourdes</h4><p>Le 15 août, immense rassemblement de pèlerins venus du monde entier pour la fête mariale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête du Cheval au Haras National de Tarbes</h4><p>Démonstrations équestres et célébration de la race chevaline Tarbaise.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Foire au Porc Noir de Bigorre</h4><p>Grande foire dédiée à cette race porcine rare et à sa charcuterie renommée.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Fête de la Transhumance en vallée d'Aure</h4><p>Redescente des troupeaux des estives, célébrée en musique et en costumes traditionnels.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël de Tarbes</h4><p>Chalets et animations dans le centre-ville pour la période des fêtes.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Les Hautes-Pyrénées se découvrent le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">Gourmand</button>
+          <button class="filter-btn" data-filter="culture">Culture</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="famille">Famille</button>
+          <button class="filter-btn" data-filter="romantique">Romantique</button>
+          <button class="filter-btn" data-filter="actif">Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Haricot Tarbais et de la Garbure</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Tarbes</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un producteur</strong> de haricot tarbais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la garbure</strong> chez un restaurateur traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une authentique garbure pyrénéenne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Marché de Tarbes</strong>, produits locaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin de Madiran.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Porc Noir de Bigorre et jambon de montagne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bigorre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un élevage</strong> de Porc Noir de Bigorre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du séchage</strong> et de l'affinage du jambon noir.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une assiette de charcuterie de Bigorre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne bigourdane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de fromage de brebis et de Pacherenc du Vic-Bilh.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fromages de brebis et estives pyrénéennes</h4>
+              </div>
+              <span class="jour-duree">Journée complète · estives</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un troupeau</strong> en estive et d'une bergerie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la fabrication</strong> du fromage de brebis.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un plateau de fromages d'estive.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les pâturages de montagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de miel de montagne et de pain d'épices.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vins de Madiran et Pacherenc du Vic-Bilh</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vic-Bilh</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine viticole</strong> de Madiran.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de Madiran et Pacherenc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble du Vic-Bilh.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un gâteau à la broche.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lourdes, cité mariale et pèlerinage</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Lourdes</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du Sanctuaire</strong> Notre-Dame de Lourdes et de la grotte de Massabielle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Basilique du Rosaire</strong> et basilique souterraine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre de Lourdes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Château fort et Musée Pyrénéen</strong>, panorama sur la ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Procession aux flambeaux</strong> en soirée, en saison.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pic du Midi de Bigorre, entre ciel et Pyrénées</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Pic du Midi</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée en téléphérique</strong> vers le Pic du Midi de Bigorre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'observatoire</strong> et de la terrasse panoramique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner au sommet</strong> avec vue à 360 degrés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> de l'exposition sur l'astronomie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis le sommet, spectacle inoubliable.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cirque de Gavarnie, chef-d'œuvre classé UNESCO</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gavarnie</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> vers le cirque de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la grande cascade</strong>, l'une des plus hautes d'Europe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au village de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers l'hôtellerie du cirque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, lumière dorée sur les parois du cirque.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Tarbes, cité du Haras National</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Tarbes centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du Haras National</strong> de Tarbes, découverte de la race Tarbaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le jardin Massey.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique de Tarbes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée Massey</strong>, collections variées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade</strong> dans les rues du vieux Tarbes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ascension du Col du Tourmalet</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Col du Tourmalet</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée</strong> vers le col du Tourmalet, mythique ascension cycliste.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Panorama</strong> depuis le sommet du col.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les hauts sommets pyrénéens.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers le Pic du Midi depuis le col.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée de Campan.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lac de Gaube et Pont d'Espagne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cauterets</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> vers le Pont d'Espagne, cascades et forêts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Montée</strong> vers le lac de Gaube en télécabine ou à pied.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du lac, vue sur le Vignemale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> autour du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Cauterets.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cirques de Troumouse et d'Estaubé</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gavarnie</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Découverte du cirque de Troumouse</strong>, immense amphithéâtre naturel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> vers le cirque d'Estaubé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> face aux parois vertigineuses.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Observation</strong> des isards et marmottes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée de Gavarnie.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Réserve naturelle du Néouvielle</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée d'Aure</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la réserve naturelle du Néouvielle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des lacs d'altitude et forêts de pins à crochets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord d'un lac de montagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Observation</strong> de la faune pyrénéenne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée d'Aure.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pic du Midi en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Pic du Midi</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée en téléphérique</strong> vers le Pic du Midi.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers pédagogiques</strong> sur l'astronomie pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> ou déjeuner au sommet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> de l'exposition scientifique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> en téléphérique.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cirque de Gavarnie en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gavarnie</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à dos d'âne</strong> ou à pied vers le cirque de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> de la grande cascade.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> face au cirque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le village de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Haras National de Tarbes en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Tarbes</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du Haras National, découverte des chevaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Démonstration équestre</strong> pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc du haras.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le jardin Massey.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> à Tarbes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Grottes de Gargas en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Grottes de Gargas</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite des grottes de Gargas</strong>, mystérieuses mains préhistoriques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers pédagogiques</strong> sur la préhistoire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> aux abords de la grotte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la vallée environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Tarbes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Pic du Midi au coucher du soleil</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Pic du Midi</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée tranquille</strong> vers le Pic du Midi en téléphérique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'observatoire</strong> en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner au sommet</strong> avec vue sur les Pyrénées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur la terrasse panoramique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> puis observation des étoiles depuis le sommet.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cirque de Gavarnie en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gavarnie</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée romantique</strong> vers le cirque de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> face à la grande cascade.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> vers l'hôtellerie du cirque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les parois du cirque.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Lac de Gaube, romance en altitude</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cauterets</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Montée romantique</strong> vers le lac de Gaube.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> autour du lac, vue sur le Vignemale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie tranquille</strong> dans la forêt environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par le Pont d'Espagne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bagnères-de-Bigorre, escapade thermale</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bagnères-de-Bigorre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans la cité thermale de Bagnères-de-Bigorre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Moment détente</strong> aux thermes en amoureux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans le parc thermal.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans un restaurant de charme.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo au Col du Tourmalet</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Col du Tourmalet</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Ascension à vélo</strong> du mythique col du Tourmalet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les lacets historiques du Tour de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au sommet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente</strong> vers la vallée de Campan.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération bien méritée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée aux cirques de Gavarnie et Estaubé</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gavarnie</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée matinale</strong> vers le cirque de Gavarnie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> vers le cirque d'Estaubé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> face aux parois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par un sentier différent.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération au village.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans la vallée d'Aure</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 35 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> dans la vallée d'Aure.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les villages typiques de la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en montagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les crêtes surplombant la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et fromage de brebis bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Escalade et via ferrata dans les Pyrénées</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Hautes-Pyrénées</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Via ferrata</strong> dans un site des Hautes-Pyrénées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Escalade</strong> sur les parois rocheuses environnantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong>.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée retour</strong> vers la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération et détente</strong> en fin de journée.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

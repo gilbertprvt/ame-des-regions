@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charente — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Zone centrale hero */
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../nouvelle-aquitaine.html" class="fiche-topbar-btn">↩ Nouvelle-Aquitaine</a>
+          <a href="../../carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">L</span>a<br><span style="padding-left: 40px;"><span class="titre-initial">C</span>harente</span></h1>
+        </div>
+
+
+        <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/departement/nouvelle-aquitaine/charente.png" alt="Écusson Charente" />
+        </div>
+
+        <span class="fiche-hero-ancien">🏛️ Préfecture : Angoulême · Département 16</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥃</span> Spécialités incontournables</div>
+            <ul>
+              <li>Cognac AOP (eau-de-vie la plus célèbre au monde)</li>
+              <li>Pineau des Charentes AOP (apéritif doux)</li>
+              <li>Foie gras du Sud-Ouest IGP</li>
+              <li>Cagouilles à la charentaise (escargots au cognac)</li>
+              <li>Mouclade charentaise (moules à la crème et au pineau)</li>
+              <li>Chaudrée charentaise (soupe de poissons)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌾</span> Produits du terroir</div>
+            <ul>
+              <li>Melon du Haut-Poitou (tradition charentaise)</li>
+              <li>Beurre des Charentes-Poitou AOP</li>
+              <li>Angélique de Niort (confite et cristallisée)</li>
+              <li>Mogettes de Vendée (haricots blancs)</li>
+              <li>Cèpes et girolles des forêts charentaises</li>
+              <li>Miel de forêt et de châtaignier de Charente</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍾</span> Vins & spiritueux</div>
+            <ul>
+              <li>Cognac AOP (6 crus : Grande Champagne, Petite Champagne…)</li>
+              <li>Pineau des Charentes AOP (blanc, rosé, rouge)</li>
+              <li>Vins de pays Charentais IGP</li>
+              <li>Coteaux Charentais (vins tranquilles locaux)</li>
+              <li>Floc de Gascogne (influence gasconne au sud)</li>
+              <li>Brandy charentais et spiritueux artisanaux</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Galette charentaise (beurre AOP et angélique)</li>
+              <li>Cornuelle d'Angoulême (gâteau de Carnaval)</li>
+              <li>Croissants d'Angoulême (feuilletés au beurre)</li>
+              <li>Chocolats et pralinés au Cognac</li>
+              <li>Nougat blanc de Cognac</li>
+              <li>Confiture de melon au Pineau des Charentes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Sites & monuments classés</div>
+            <ul>
+              <li>Cathédrale Saint-Pierre d'Angoulême (romane, façade sculptée)</li>
+              <li>Abbaye de Saint-Amant-de-Boixe (romane)</li>
+              <li>Château de La Rochefoucauld (Renaissance)</li>
+              <li>Abbaye de Bassac (bénédictine)</li>
+              <li>Tour de Cognac (résidence royale médiévale)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & sites remarquables</div>
+            <ul>
+              <li>Château de La Rochefoucauld (l'un des plus beaux de France)</li>
+              <li>Château de Cognac (berceau de François I<sup>er</sup>)</li>
+              <li>Château d'Aubeterre-sur-Dronne</li>
+              <li>Château de Verteuil-sur-Charente (La Rochefoucauld)</li>
+              <li>Château de Bouteville (ruines romantiques)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices religieux</div>
+            <ul>
+              <li>Cathédrale Saint-Pierre d'Angoulême (façade romane unique)</li>
+              <li>Église monolithe d'Aubeterre-sur-Dronne (rupestre)</li>
+              <li>Abbaye de Saint-Amant-de-Boixe (romane préservée)</li>
+              <li>Abbaye de Bassac (bénédictins)</li>
+              <li>Église Saint-Léger de Cognac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée de la Bande Dessinée d'Angoulême (CNBDI)</li>
+              <li>Musée du Cognac (histoire de l'eau-de-vie)</li>
+              <li>Musée des Beaux-Arts d'Angoulême</li>
+              <li>Musée de l'Imprimerie d'Angoulême</li>
+              <li>Musée des Métiers du Cognac (chais et alambics)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏞️</span> Vallées & rivières</div>
+            <ul>
+              <li>Vallée de la Charente (fleuve royal, de Confolens à Saintes)</li>
+              <li>Vallée de la Dronne (Aubeterre, villages romans)</li>
+              <li>Vallée de la Tardoire (gorges et moulins)</li>
+              <li>Vallée du Bandiat (Nontron, Périgord vert)</li>
+              <li>Marais de la Charente (zones humides du bas-fleuve)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & bocage</div>
+            <ul>
+              <li>Forêt de la Braconne (forêt domaniale, 7 000 ha)</li>
+              <li>Bocage du Confolentais (haies et prairies)</li>
+              <li>Vignobles des Charentes (paysages de cognac)</li>
+              <li>Forêt de Touvre (résurgences et sources)</li>
+              <li>Pinèdes et bois du sud charentais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦦</span> Faune & biodiversité</div>
+            <ul>
+              <li>Loutres de la Charente (population importante)</li>
+              <li>Visons d'Europe (espèce protégée, marais)</li>
+              <li>Cigognes blanches (nidification en Charente)</li>
+              <li>Castors réintroduits sur la Charente</li>
+              <li>Chauves-souris des grottes et caves à cognac</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Paysages & panoramas</div>
+            <ul>
+              <li>Vallée de la Charente vue depuis Angoulême</li>
+              <li>Vignes de Grande Champagne en automne</li>
+              <li>Village d'Aubeterre-sur-Dronne dans sa falaise</li>
+              <li>Sources de la Touvre (résurgences calcaires)</li>
+              <li>Moulin de Fleurac sur la Charente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥃</span> Distillation & tonnellerie</div>
+            <ul>
+              <li>Alambics charentais (distillation à la repasse)</li>
+              <li>Tonnellerie charentaise (fûts de chêne du Limousin)</li>
+              <li>Grandes maisons de Cognac (Hennessy, Martell, Rémy Martin)</li>
+              <li>Chais de vieillissement (champignons noirs du cognac)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>📖</span> Imprimerie & bande dessinée</div>
+            <ul>
+              <li>Tradition imprimerie d'Angoulême (depuis le XV<sup>e</sup>)</li>
+              <li>Capitale mondiale de la Bande Dessinée</li>
+              <li>Ateliers de sérigraphie et d'impression artisanale</li>
+              <li>Studios de création graphique et de BD</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪨</span> Pierre & architecture</div>
+            <ul>
+              <li>Taille de pierre calcaire charentaise (pierre dorée)</li>
+              <li>Sculpture romane (façades d'églises charentaises)</li>
+              <li>Restauration du patrimoine roman charentais</li>
+              <li>Maçonnerie en moellons calcaires du Cognaçais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Arts & création</div>
+            <ul>
+              <li>École de Bande Dessinée d'Angoulême (ÉESI)</li>
+              <li>Ateliers de poterie et de céramique charentaise</li>
+              <li>Cristallerie et verrerie artisanale du Cognaçais</li>
+              <li>Peinture sur soie et arts textiles de la Charente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & identité</div>
+            <ul>
+              <li>Saintongeais (dialecte d'oïl du Poitou-Charentes)</li>
+              <li>Poitevin-saintongeais (parlers locaux vivaces)</li>
+              <li>Identité charentaise — douceur de vivre et art du cognac</li>
+              <li>Héritage royaliste et protestants du Cognaçais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Musiques & culture</div>
+            <ul>
+              <li>Festival International de la Bande Dessinée (FIBD)</li>
+              <li>Circuit des Remparts d'Angoulême (voitures anciennes)</li>
+              <li>Festival Musiques Métisses d'Angoulême</li>
+              <li>Galoubet et musiques traditionnelles charentaises</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🐌</span> Traditions culinaires</div>
+            <ul>
+              <li>Fête des cagouilles (escargots charentais)</li>
+              <li>Vendanges des vignobles de Cognac (octobre)</li>
+              <li>Distillation du Cognac (novembre à mars)</li>
+              <li>Marchés au gras et foie gras du Cognaçais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Festival International BD d'Angoulême (janvier)</li>
+              <li>Circuit des Remparts d'Angoulême (septembre)</li>
+              <li>Fêtes du Cognac (été, Cognac)</li>
+              <li>Carnaval d'Angoulême (cornuelles et déguisements)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages & sites</div>
+            <ul>
+              <li>Aubeterre-sur-Dronne (falaise et église monolithe)</li>
+              <li>La Rochefoucauld (château et bourg médiéval)</li>
+              <li>Verteuil-sur-Charente (château des La Rochefoucauld)</li>
+              <li>Mouthiers-sur-Boëme (gorges et moulins)</li>
+              <li>Confolens (pont médiéval et festival)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥃</span> Villages du Cognaçais</div>
+            <ul>
+              <li>Cognac (capitale mondiale de l'eau-de-vie)</li>
+              <li>Jarnac (maisons de négoce et berceau Mitterrand)</li>
+              <li>Segonzac (cœur de la Grande Champagne)</li>
+              <li>Barbezieux-Saint-Hilaire (cœur de la Petite Champagne)</li>
+              <li>Châteaubernard (chais et distilleries)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Angoulême (capitale de la BD, remparts et cathédrale)</li>
+              <li>Confolens (festival folklorique international)</li>
+              <li>Ruffec (carrefour du nord charentais)</li>
+              <li>Barbezieux (entre Charente et Périgord)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Aubeterre-sur-Dronne</h3>
+            <p>Classée parmi les Plus Beaux Villages de France, Aubeterre-sur-Dronne est un bijou de la Charente. Ses maisons à colombages blancs s'étagent sur une falaise calcaire dominant la Dronne, couronnées par son église monolithe Saint-Jean — creusée entièrement dans le roc au XII<sup>e</sup> siècle, l'une des plus grandes d'Europe. La douceur du climat charentais, les vignes alentour et la rivière paisible en font un village hors du temps, à la frontière du Périgord.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Église monolithe XII<sup>e</sup></span>
+            <span class="village-star-tag">Vallée de la Dronne</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année en Charente</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janvier</div>
+                <div><h4>Festival International de la Bande Dessinée</h4><p>Le plus grand festival mondial de BD — auteurs, éditeurs et lecteurs du monde entier envahissent Angoulême pour quatre jours de passion graphique et narrative.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Février</div>
+                <div><h4>Carnaval d'Angoulême</h4><p>La tradition des cornuelles — gâteaux en forme de triangle distribués aux enfants — accompagne chars fleuris et déguisements dans les rues de la capitale charentaise.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Salon des Vins & Spiritueux de Cognac</h4><p>Les maisons de Cognac et les vignerons charentais ouvrent leurs chais — dégustations de Cognac, Pineau des Charentes et vins du terroir dans la ville de l'or brun.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival Musiques Métisses d'Angoulême</h4><p>Musiques du monde, afrobeat, reggae et world music envahissent les scènes d'Angoulême — l'un des festivals les plus métissés et festifs du Sud-Ouest.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Festival Folklorique de Confolens</h4><p>Danses et musiques traditionnelles du monde entier — troupes folkloriques de cinquante pays se retrouvent à Confolens pour ce rendez-vous international unique.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fêtes du Cognac</h4><p>La ville du Cognac célèbre son eau-de-vie — dégustations, visites de chais, concerts sur les quais de la Charente et animations pour tous autour du précieux nectar charentais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Circuit des Remparts d'Angoulême</h4><p>Voitures de course et véhicules de collection vrombissent dans les rues d'Angoulême — l'un des plus beaux circuits urbains de France sur les remparts de la vieille ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Vendanges du Cognaçais</h4><p>La récolte des raisins destinés au Cognac — ugni blanc à perte de vue, vendanges mécaniques et manuelles, et début de la distillation dans les chais du Cognaçais.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Charente</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🥃</span>
+            <h4>Route du Cognac</h4>
+            <p>Cognac, Jarnac, Segonzac, Châteaubernard — les chais des grandes maisons, les alambics en cuivre et les vignes de Grande Champagne au fil de la Charente dorée.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏛️</span>
+            <h4>Angoulême — ville d'art & de BD</h4>
+            <p>Cathédrale romane, remparts, Musée de la BD, circuit des remparts — la capitale charentaise et son art de vivre entre patrimoine roman exceptionnel et culture graphique mondiale.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🚣</span>
+            <h4>Vallée de la Charente en canoë</h4>
+            <p>D'Angoulême à Cognac, descendez la Charente en canoë — châteaux, moulins, villages calcaires et chais de vieillissement se succèdent sur ce fleuve royal et paisible.</p>
+            <span class="parcours-item-duree">⏱ 2 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⛪</span>
+            <h4>Route Romane de Charente</h4>
+            <p>Angoulême, Saint-Amant-de-Boixe, Bassac, Aubeterre — les plus belles façades romanes de France jalonnent cette route entre calcaire blanc et sculptures médiévales.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Châteaux de la Charente</h4>
+            <p>La Rochefoucauld, Verteuil, Cognac, Bouteville — les châteaux Renaissance et médiévaux de Charente, entre grandes familles nobles et histoire de France.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌿</span>
+            <h4>Vallée de la Dronne & Périgord vert</h4>
+            <p>Aubeterre, Ribérac, La Roche-Chalais — la douce vallée de la Dronne à la frontière de la Charente et du Périgord, entre villages calcaires et bocage verdoyant.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Musée des Beaux-Arts de Lyon — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <div class="produit-hero">
+
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../auvergne-rhone-alpes.html" class="produit-btn-retour">
+            ← Retour à la fiche Auvergne-Rhône-Alpes
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><span style="padding-left: 30px;"><em>M</em>usée des</span><br><span style="padding-left: 100px;"><em>B</em>eaux-<em>A</em>rts</span></h1>
+        </div>
+        <img src="../../../../assets/departement/auvergne-rhone-alpes/carte-auvergne-rhone-alpes-mini.png"
+             alt="Carte de Auvergne-Rhône-Alpes"
+             style="height:220px; width:auto; opacity:0.85;
+                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                    display:block;" />
+      </div>
+    </div>
+
+    <div class="fiche-hero-ecusson">
+         <img src="../../../../assets/régions/ecusson-auvergne-rhone-alpes.png" alt="Écusson Auvergne-Rhône-Alpes" />
+    </div>
+
+    <div class="hero-label-bas">
+    ⟹ Musées & Collections ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#visite">🖼️ Collections</a>
+          <a href="#patrimoine">🏆 Distinctions</a>
+          <a href="#environs">🔀 À proximité</a>
+          <a href="#pratique">📍 Infos pratiques</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Deuxième musée de France après le Louvre par l'ampleur de ses collections, le musée des Beaux-Arts de Lyon occupe le Palais Saint-Pierre, ancienne abbaye bénédictine féminine dont l'existence est attestée dès le IXᵉ siècle. Voulu par les élites lyonnaises dès le XVIIIᵉ siècle, le musée est formalisé pendant la Révolution française par l'arrêté Chaptal du 1er septembre 1801.</p>
+              <p>Une première salle ouvre au public le 23 novembre 1803, dans l'ancien chauffoir de l'abbaye. Le musée partage alors ses locaux avec l'École des beaux-arts de Lyon et un « Salon des fleurs » destiné à former les dessinateurs de la puissante industrie lyonnaise de la soie, avant de privilégier longtemps l'acquisition d'œuvres d'artistes locaux.</p>
+              <p>Le XXᵉ siècle transforme profondément l'institution : en 1969, les collections gallo-romaines rejoignent le nouveau musée de Fourvière, tandis que les fouilles égyptologiques du musée Guimet viennent enrichir le département des Antiquités. En 1984, une section d'art contemporain voit le jour, avant de devenir autonome et de donner naissance au Musée d'art contemporain de Lyon.</p>
+              <p>Une décennie de grands travaux, menés dans les années 1990 par les architectes Jean-Philippe Dubois et Jean-Michel Wilmotte, redonne au Palais Saint-Pierre toute son ampleur : sculptures dans la chapelle et le cloître, peintures sous verrière zénithale, escalier monumental orné par Puvis de Chavannes. Le musée rouvre entièrement rénové en 1998.</p>
+            </div>
+          </section>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+            <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/musee-beaux-arts-lyon.jpg" alt="Le Palais Saint-Pierre, siège du musée des Beaux-Arts de Lyon, place des Terreaux" />
+            <figcaption>Le Palais Saint-Pierre, place des Terreaux, siège du musée depuis 1803</figcaption>
+          </figure>
+          <div class="clearfix"></div>
+
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🖼️</div>
+              Visiter le musée
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée conseillée</div>
+                  <div class="recette-meta-val">2h30 à 3 heures</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏛️</div>
+                <div>
+                  <div class="recette-meta-label">Surface</div>
+                  <div class="recette-meta-val">Environ 7 000 m² · 70 salles</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🖼️</div>
+                <div>
+                  <div class="recette-meta-label">Période couverte</div>
+                  <div class="recette-meta-val">5 000 ans d'histoire de l'art</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🗓️</div>
+                <div>
+                  <div class="recette-meta-label">Meilleure période</div>
+                  <div class="recette-meta-val">Toute l'année, fermé le mardi</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le cloître et le jardin</div>
+                  <div class="etape-texte">Flânez dans l'ancien cloître de l'abbaye, transformé en jardin de sculptures ombragé de tilleuls, orné de bronzes de Rodin.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Département des Antiquités</div>
+                  <div class="etape-texte">Explorez 3 000 ans d'histoire du Bassin méditerranéen, de l'Égypte pharaonique à la Grèce et à l'Italie antiques.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La salle des monnaies et médailles</div>
+                  <div class="etape-texte">Découvrez la deuxième collection numismatique de France, dont le trésor des Terreaux enfoui pendant la guerre de Cent Ans.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'escalier Puvis de Chavannes</div>
+                  <div class="etape-texte">Admirez cet escalier monumental, l'un des espaces les plus spectaculaires du palais, avant de rejoindre les galeries de peinture.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La galerie des peintures</div>
+                  <div class="etape-texte">Des primitifs italiens à l'art moderne : Rembrandt, Rubens, Delacroix, Gauguin, Monet, Matisse et Picasso se succèdent sous la verrière zénithale.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La chapelle des sculptures</div>
+                  <div class="etape-texte">Terminez par cet espace baroque, où les statues du XIXᵉ siècle répondent à l'architecture religieuse d'origine.</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Patrimoine & reconnaissance
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🖼️</div>
+                <div>
+                  <div class="vin-nom">Deuxième musée de France</div>
+                  <div class="vin-desc">Après le Louvre, par la richesse et la diversité de ses collections encyclopédiques réparties en cinq départements.</div>
+                </div>
+                <div class="vin-badge">⭐ Distinction majeure</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Le Palais Saint-Pierre</div>
+                  <div class="vin-desc">Classé monument historique, l'ancienne abbaye témoigne de huit siècles d'histoire architecturale lyonnaise.</div>
+                </div>
+                <div class="vin-badge">Patrimoine classé</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🪙</div>
+                <div>
+                  <div class="vin-nom">Médaillier lyonnais</div>
+                  <div class="vin-desc">Une collection de près de 50 000 monnaies et médailles, la deuxième de France après la Bibliothèque nationale.</div>
+                </div>
+                <div class="vin-badge">Fonds numismatique majeur</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="environs">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              À proximité
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Place des Terreaux :</strong> juste devant le musée, la fontaine Bartholdi et l'Hôtel de Ville composent l'un des ensembles urbains les plus emblématiques de Lyon.</p>
+              <p><strong>Vieux-Lyon & Fourvière :</strong> à quelques minutes à pied, le quartier Renaissance et la colline prolongent la découverte du patrimoine lyonnais.</p>
+              <p><strong>Musée d'art contemporain de Lyon :</strong> héritier de la section contemporaine autrefois hébergée au Palais Saint-Pierre, aujourd'hui installé quai Achille-Lignon.</p>
+              <p><strong>Croix-Rousse :</strong> la colline des canuts, toute proche, complète la visite par son patrimoine industriel et ses traboules.</p>
+            </div>
+          </section>
+
+          <section class="section" id="pratique">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Informations pratiques
+            </h2>
+            <div class="histoire-texte">
+              <p>Le musée se situe 20 place des Terreaux, 69001 Lyon, en plein cœur de la Presqu'île, aisément accessible à pied ou en métro (station Hôtel de Ville).</p>
+              <p><strong>Horaires</strong> — Ouvert tous les jours sauf le mardi et les jours fériés, de 10h à 18h.</p>
+              <p><strong>Audioguide</strong> — Inclus dans le prix du billet, il permet d'approfondir la visite des collections permanentes.</p>
+              <p><strong>Carte Musées</strong> — Un abonnement annuel donne accès aux six musées municipaux de Lyon, dont le musée des Beaux-Arts.</p>
+              <p><strong>Fraîcheur estivale</strong> — Le jardin du musée fait partie des lieux frais recensés par la Ville de Lyon lors des épisodes de forte chaleur.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Auvergne-Rhône-Alpes</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Ville de Lyon</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Musée des beaux-arts encyclopédique</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Fondation</span>
+                <span class="aside-val">1801 · ouvert en 1803</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Bâtiment</span>
+                <span class="aside-val">Palais Saint-Pierre (XVIIᵉ s.)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Élément emblématique</span>
+                <span class="aside-val">La Lapidation de saint Étienne, Rembrandt</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="#" class="aside-lien">🏘️ Vieux-Lyon & Fourvière<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🏛️ Lugdunum, musée gallo-romain<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🔬 Musée des Confluences<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🖼️ Musée de Grenoble<span class="aside-lien-arrow">›</span></a>
+                <a href="../../auvergne-rhone-alpes.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région<span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="../../auvergne-rhone-alpes.html" class="btn-retour-fixe" id="btnRetour">
+    ← Auvergne-Rhône-Alpes
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="../../auvergne-rhone-alpes.html">Auvergne-Rhône-Alpes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

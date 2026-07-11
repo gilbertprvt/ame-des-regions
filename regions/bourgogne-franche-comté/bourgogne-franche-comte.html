@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bourgogne-Franche-Comté — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+<!--<h1><span class="titre-initial">N</span>ouvelle-<br><span style="padding-left: 60px;"><span class="titre-initial">A</span>quitaine</span></h1>-->
+  <div class="fiche-hero">
+    <div class="container">
+      <!-- VILLAGES -->
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+       <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+  <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+  <a href="carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+</div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">B</span>ourgogne-<br><span style="padding-left: 120px;"><span class="titre-initial">F</span>ranche-<span class="titre-initial">C</span>omté</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-bourgogne-franche-comte.png" alt="Écusson Bourgogne-Franche-Comte" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/boeuf-bourguignon.html">Bœuf bourguignon</a></li>
+              <li><a href="gastronomie/plats-emblematiques/coq-au-vin.html">Coq au vin de Bourgogne</a></li>
+              <li><a href="gastronomie/plats-emblematiques/escargots-bourgogne.html">Escargots de Bourgogne</a></li>
+              <li><a href="gastronomie/plats-emblematiques/jambon-persille.html">Jambon persillé de Bourgogne</a></li>
+              <li><a href="gastronomie/plats-emblematiques/fondue-comtoise.html">Fondue comtoise</a></li>
+              <li><a href="gastronomie/plats-emblematiques/poulet-bresse.html">Poulet de Bresse AOP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/comté.html">Comté AOP (1er fromage de France)</a></li>
+              <li><a href="gastronomie/fromages-terroir/epoisses.html">Époisses AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/morbier.html">Morbier AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/mont-dor.html">Mont d'Or AOP (saisonnier)</a></li>
+              <li><a href="gastronomie/fromages-terroir/chaource.html">Chaource AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/moutarde-dijon.html">Moutarde de Dijon IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/romanee-conti.html">Romanée-Conti AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/chablis-aop.html">Chablis AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/gevrey-chambertin.html">Gevrey-Chambertin AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/meursault-aop.html">Meursault AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/crement-bourgogne.html">Crémant de Bourgogne AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/marc-bourgogne.html">Marc de Bourgogne IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/pain-epices-dijon.html">Pain d'épices de Dijon IGP</a></li>
+              <li><a href="gastronomie/douceur/gougere-bourguignonne.html">Gougère bourguignonne</a></li>
+              <li><a href="gastronomie/douceur/cassis-dijon.html">Cassis de Dijon (crème de cassis)</a></li>
+              <li><a href="gastronomie/douceur/gateau-auxerre.html">Gâteau d'Auxerre</a></li>
+              <li><a href="gastronomie/douceur/tuile-amandes.html">Tuile aux amandes de Beaune</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Climats du vignoble de Bourgogne</li>
+              <li>Abbaye de Cluny (la plus grande d'Occident)</li>
+              <li>Saline royale d'Arc-et-Senans</li>
+              <li>Cathédrale de Vézelay</li>
+              <li>Chemin de Saint-Jacques (Via Burgundica)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Palais des Ducs de Bourgogne (Dijon)</li>
+              <li>Hôtel-Dieu de Beaune (tuiles vernissées)</li>
+              <li>Cathédrale Saint-Bénigne de Dijon</li>
+              <li>Citadelle Vauban de Besançon</li>
+              <li>Abbaye de Fontenay (cistercienne, UNESCO)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée des Beaux-Arts de Dijon</li>
+              <li>Musée du Temps de Besançon</li>
+              <li>Musée Rolin (Autun)</li>
+              <li>Musée de la Résistance et de la Déportation (Besançon)</li>
+              <li>Écomusée de la Bresse bourguignonne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚔️</span> Châteaux & abbayes</div>
+            <ul>
+              <li>Château de Guédelon (chantier médiéval vivant)</li>
+              <li>Château de Châteauneuf-en-Auxois</li>
+              <li>Abbaye de Tournus (Saint-Philibert)</li>
+              <li>Château de Germolles (résidence ducale)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍇</span> Vignobles & paysages</div>
+            <ul>
+              <li>Côte de Nuits (Gevrey, Nuits-Saint-Georges)</li>
+              <li>Côte de Beaune (Meursault, Pommard)</li>
+              <li>Mâconnais et vignobles du Chalonnais</li>
+              <li>Vignoble du Jura (Arbois, Château-Chalon)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & massifs</div>
+            <ul>
+              <li>Forêt de Cîteaux (Côte-d'Or)</li>
+              <li>Massif du Morvan (Parc naturel régional)</li>
+              <li>Forêt de Chaux (Jura — 2e forêt domaniale de France)</li>
+              <li>Plateau des Mille Étangs (Haute-Saône)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💧</span> Lacs, rivières & cascades</div>
+            <ul>
+              <li>Lac de Vouglans (Jura)</li>
+              <li>Cascades du Hérisson (Jura)</li>
+              <li>Rivière Doubs et ses gorges</li>
+              <li>Source de la Loire (mont Gerbier-de-Jonc)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Relief & espaces naturels</div>
+            <ul>
+              <li>Parc naturel régional du Morvan</li>
+              <li>Parc naturel régional du Haut-Jura</li>
+              <li>Reculées jurassiennes (cirques naturels)</li>
+              <li>Crêt de la Neige — point culminant du Jura (1 720 m)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>⌚</span> Horlogerie & lunetterie</div>
+            <ul>
+              <li>Horlogerie de Besançon (capitale française)</li>
+              <li>Lunetterie de Morez (Jura)</li>
+              <li>Microtechniques du Doubs</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Tonnellerie & vigne</div>
+            <ul>
+              <li>Tonnellerie de Bourgogne (fûts de chêne)</li>
+              <li>Fabrication du tire-bouchon (Laguiole/Jura)</li>
+              <li>Coutellerie de Nontron (tradition comtoise)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Céramique & verrerie</div>
+            <ul>
+              <li>Faïences de Nevers (capitale de la faïence)</li>
+              <li>Poteries de La Borne (Cher, tradition régionale)</li>
+              <li>Verrerie soufflée du Morvan</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & sculpture</div>
+            <ul>
+              <li>Sculpture sur bois du Morvan</li>
+              <li>Ébénisterie comtoise</li>
+              <li>Jouets en bois de Moirans-en-Montagne (Jura)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Bourguignon-morvandiau (patois)</li>
+              <li>Franc-comtois (dialecte régional)</li>
+              <li>Héritage des Ducs de Bourgogne</li>
+              <li>Culture cistercienne (Cîteaux, Clairvaux)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Musique traditionnelle du Morvan (cornemuse)</li>
+              <li>Festival Musiques en voûtes (abbayes)</li>
+              <li>Jazz en Bourgogne (festivals estivaux)</li>
+              <li>Chœurs polyphoniques comtois</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏇</span> Sports & traditions</div>
+            <ul>
+              <li>Course de la Percée du vin jaune (Jura)</li>
+              <li>Randonnée dans le Morvan</li>
+              <li>Ski nordique dans le Haut-Jura</li>
+              <li>Joutes nautiques sur la Saône</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Paulée de Meursault (fête des vendanges)</li>
+              <li>Vente des Hospices de Beaune (novembre)</li>
+              <li>Percée du Vin Jaune (Jura, février)</li>
+              <li>Fête de la Saint-Vincent Tournante (villages vignerons)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Châteauneuf-en-Auxois (Côte-d'Or)</li>
+              <li>Flavigny-sur-Ozerain (Côte-d'Or)</li>
+              <li>Noyers-sur-Serein (Yonne)</li>
+              <li>Semur-en-Brionnais (Saône-et-Loire)</li>
+              <li>Baume-les-Messieurs (Jura)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages vignerons</div>
+            <ul>
+              <li>Gevrey-Chambertin (Côte de Nuits)</li>
+              <li>Meursault (Côte de Beaune)</li>
+              <li>Château-Chalon (Jura — vin jaune)</li>
+              <li>Santenay (fin de la Côte d'Or)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Vézelay (colline éternelle)</li>
+              <li>Auxerre (cathédrale gothique et canaux)</li>
+              <li>Ornans (Doubs — reflets dans la Loue)</li>
+              <li>Arbois (Jura — patrie de Pasteur)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Vézelay</h3>
+            <p>Perchée sur sa « colline éternelle » en Bourgogne, Vézelay abrite la basilique Sainte-Marie-Madeleine, chef-d'œuvre de l'art roman bourguignon classé au patrimoine mondial de l'UNESCO. Point de départ historique des croisades et de la via Lemovicensis vers Saint-Jacques-de-Compostelle, ce village de quelques centaines d'habitants rayonne bien au-delà de sa taille, attirant pèlerins, marcheurs et amateurs d'art du monde entier.</p>
+            <span class="village-star-tag">Patrimoine mondial UNESCO</span>
+            <span class="village-star-tag">Chemin de Saint-Jacques</span>
+            <span class="village-star-tag">Yonne</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Saint-Vincent Tournante</h4><p>Chaque année dans un village différent de la Côte d'Or, les vignerons bourguignons célèbrent leur saint patron avec procession et dégustations.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Percée du Vin Jaune — Jura</h4><p>La fête du vin jaune du Jura dans un village différent chaque année — ouverture des clavelinss au son des cuivres et des chœurs.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival Jazz à Nuits-Saint-Georges</h4><p>Trois jours de jazz et de blues dans les caves et rues du village vigneron de la Côte de Nuits.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Festival de Laroquebrou — Morvan</h4><p>Musiques et arts de rue au cœur du Morvan — festival familial au bord des lacs et des forêts.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fêtes Médiévales de Guédelon</h4><p>Le chantier médiéval de Guédelon anime ses tours et douves de joutes, jongleurs et artisans d'antan.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Paulée de Meursault</h4><p>La célèbre fête des vendanges réunit vignerons et amateurs de vins blancs de Bourgogne autour d'un repas mémorable.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Vente des Hospices de Beaune</h4><p>La plus célèbre vente aux enchères de vins au monde — une référence pour les cours des grands crus bourguignons depuis 1859.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël de Dijon</h4><p>L'un des plus anciens marchés de Noël de France dans les rues médiévales de Dijon — pain d'épices, cassis et vin chaud.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Bourgogne-Franche-Comté</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍷</span>
+            <h4>Route des Grands Crus de Bourgogne</h4>
+            <p>De Dijon à Santenay, la D974 longe les plus grands vignobles du monde — Chambertin, Romanée-Conti, Meursault.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🧀</span>
+            <h4>Route du Comté — Jura</h4>
+            <p>D'Arbois à Poligny, visitez les fruitières d'affinage du Comté AOP et les caves à vin jaune du Jura.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🚴</span>
+            <h4>La Voie Bleue — Canal de Bourgogne</h4>
+            <p>À vélo le long du canal de Bourgogne entre Dijon et Auxerre — écluses, villages et vignobles en toute douceur.</p>
+            <span class="parcours-item-duree">⏱ 5 à 7 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⛪</span>
+            <h4>Route des Abbayes Cisterciennes</h4>
+            <p>Cîteaux, Fontenay, Cluny, Pontigny — les quatre filles de Cîteaux et l'âme spirituelle de la Bourgogne médiévale.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">💧</span>
+            <h4>Cascades & Reculées du Jura</h4>
+            <p>Cascades du Hérisson, reculée de Baume-les-Messieurs, cirque de Ladoye — les merveilles géologiques du Jura.</p>
+            <span class="parcours-item-duree">⏱ 2 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⌚</span>
+            <h4>Besançon & la Citadelle Vauban</h4>
+            <p>La capitale comtoise classée UNESCO, son horloge astronomique, sa citadelle et ses musées au bord du Doubs.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

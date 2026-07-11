@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognac AOP — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3; /* passe toujours au-dessus de l'écusson */
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+       margin-top: 40px;      /* ecart entre 2 titre */
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    /* Zone haute du bandeau (topbar + titre), utilisée comme référence
+       pour positionner l'écusson par rapport à cette seule zone
+       (et non par rapport à tout le bandeau, nav comprise). */
+    .produit-hero-top {
+      position: relative;
+    }
+
+    /* ÉCUSSON : centré HORIZONTALEMENT (left:50% + translateX(-50%)).
+       Position VERTICALE ajustable via la variable --ecusson-top,
+       à définir sur l'élément lui-même dans le HTML de chaque fiche
+       (ex: style="--ecusson-top: 40px"). Valeur par défaut : 30px.
+       pointer-events:none pour ne jamais intercepter les clics
+       destinés aux éléments sous/autour de lui.   */
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;        /* reste sous la topbar et la nav */
+      pointer-events: none; /* purement décoratif : laisse passer les clics */
+    }
+    .fiche-hero-ecusson img {
+       height: 200px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+
+
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      /* Sur mobile, l'écusson passe sous le titre pour ne jamais chevaucher le texte */
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../nouvelle-aquitaine.html" class="produit-btn-retour">
+            ← Retour à la fiche Nouvelle-Aquitaine
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>H</em>uitres du <br> <span style="padding-left: 60px;">  <em>B</em>assin <br>d' <em>A</em>rcachon</span></h1>
+          
+        </div>   
+      <img src="../../../../assets/departement/nouvelle-aquitaine/carte-nouvelle-aquitaine-mini.png"
+               alt="Carte de la Nouvelle-Aquitaine"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/régions/ecusson-nouvelle-aquitaine.png" alt="Écusson Nouvelle-Aquitaine" />
+        </div>
+
+      
+        
+    <!-- 3. LABEL BAS — indépendant, entre écusson et nav -->
+    <div class="hero-label-bas">
+    ⟹ Plats Emblématiques ⟸
+    </div>
+
+
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#recette"              >👨‍🍳 La dégustation traditionnelle/a>
+          <a href="#vins"                 >🍷 Accords vins</a>
+          <a href="#variantes"            >🔀 Variantes</a>
+          <a href="#ou-manger"            >📍 Où déguster</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Les huîtres du Bassin d'Arcachon occupent une place privilégiée dans le patrimoine gastronomique de la côte atlantique. Depuis plus d'un siècle, elles participent à l'identité culturelle et économique de ce territoire unique, où l'ostréiculture rythme la vie des ports, des villages et des cabanes traditionnelles.</p>
+
+
+              <figure class="photo-bloc photo-centre"  style="max-width: 280px;">
+                   <img src="../../../../assets/departement/nouvelle-aquitaine/photos/cabanes-ostreicoles.jpg"
+                        alt="cabanes-ostreicoles" />
+                    <figcaption>Cabanes ostréicoles</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+
+              <p>Bien avant l'apparition des techniques d'élevage modernes, les habitants du Bassin récoltaient déjà les huîtres présentes naturellement dans les eaux locales. Au cours du XIXᵉ siècle, la diminution progressive des bancs sauvages pousse les producteurs à développer de nouvelles méthodes de culture. Cette évolution marque le début de l'ostréiculture moderne dans la région.</p>
+
+              <p> L'essor de la profession repose notamment sur l'utilisation de supports spécialement conçus pour capter les jeunes huîtres, permettant ainsi de maîtriser leur élevage dès les premiers stades de développement. Grâce à ces innovations, le Bassin d'Arcachon devient progressivement l'un des principaux centres ostréicoles français.</p>
+
+              <p> Les producteurs locaux bénéficient d'un environnement particulièrement favorable. Les marées, l'apport des eaux océaniques et la richesse naturelle du Bassin créent des conditions idéales pour la croissance des coquillages. Cette combinaison donne naissance à des huîtres reconnues pour leur fraîcheur, leur texture charnue et leur équilibre gustatif. </p>
+
+              <figure class="photo-bloc photo-centre"  style="max-width: 280px;">
+                  <img src="../../../../assets/departement/nouvelle-aquitaine/photos/parc-huitres.jpg"
+                        alt="Parc-huitres" />
+                    <figcaption>Parc à huitres</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+
+
+
+              <p> Aujourd'hui encore, l'ostréiculture demeure une activité emblématique du Bassin d'Arcachon. Les exploitations familiales perpétuent un savoir-faire transmis de génération en génération, tout en s'adaptant aux exigences contemporaines de qualité et de préservation de l'environnement.</p>
+
+              <p> Les huîtres du Bassin séduisent par leur caractère authentique. Leur chair généreuse révèle des saveurs marines délicates, accompagnées selon les zones de production de nuances végétales, minérales ou légèrement sucrées. Cette diversité aromatique contribue à leur réputation auprès des amateurs de fruits de mer.</p>
+
+              <p>Cette tradition ostréicole fait aujourd'hui partie intégrante de l'identité du Bassin d'Arcachon, où la culture de l'huître demeure l'un des symboles les plus forts du patrimoine maritime de la Gironde.</p>
+
+
+            </div>
+          </section>
+
+              
+            <figure class="photo-bloc photo-centre"   style="max-width: 280px;">
+              <img src="../../../../assets/regions/nouvelle-aquitaine/photos/degustation-huitre.jpg"
+                  alt="huitre" />
+              <figcaption>Plateau de dégustation</figcaption>
+            </figure>
+
+            <div class="clearfix"></div>
+
+          <!-- RECETTE -->
+          <section class="section" id="recette">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👨‍🍳</div>
+              La dégustation traditionnelle
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Préparation</div>
+                  <div class="recette-meta-val">15 min</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🔥</div>
+                <div>
+                  <div class="recette-meta-label">Cuisson</div>
+                  <div class="recette-meta-val">Aucune</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">👥</div>
+                <div>
+                  <div class="recette-meta-label">Pour</div>
+                  <div class="recette-meta-val">6 personnes</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">4</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Ingrédients</div>
+              <div class="ingredients-liste">
+
+
+                <div class="ingredient-item"><span class="ingredient-qte">24</span> huîtres du Bassin d'Arcachon</div>
+                <div class="ingredient-item"><span class="ingredient-qte">1</span> citron jaune</div>
+                <div class="ingredient-item"><span class="ingredient-qte">1</span> Pain de seigle ou pain de campagne</div>
+                <div class="ingredient-item"><span class="ingredient-qte">1 </span> Beurre demi-sel (facultatif)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">1 </span> Quelques échalotes</div>
+              </div>
+            </div>
+
+
+
+           <div class="etapes-liste">     
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Ouvrir les huitres</div>
+                  <div class="etape-texte">Ouvrez délicatement les huîtres à l'aide d'un couteau adapté en conservant leur eau naturelle.</div>
+                </div>
+              </div>
+
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Verifier la fraîcheur</div>
+                  <div class="etape-texte">Une huître fraîche doit être bien vivante et se rétracter légèrement au contact de la lame.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Préparer l'accompagnement/div>
+                  <div class="etape-texte">Coupez le citron en quartiers et émincez finement les échalotes.
+                </div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Sercir sur glace</div>
+                  <div class="etape-texte">Disposez les huîtres sur un lit de glace pilée ou de gros sel afin de les maintenir stables.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Assaisonner</div>
+                  <div class="etape-texte">Ajoutez quelques gouttes de citron ou dégustez-les nature pour apprécier pleinement leurs arômes.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Déguster</div>
+                  <div class="etape-texte">Savourez-les accompagnées de pain de seigle et d'un verre de vin blanc sec.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- ACCORDS VINS -->
+          <section class="section" id="vins">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Accords vins
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Entre-Deux-Mers</div>
+                  <div class="vin-desc">Vin blanc sec et vif aux notes d'agrumes.</div>
+                </div>
+                <div class="vin-badge">⭐ Accord idéal</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Graves Blanc</div>
+                  <div class="vin-desc">Structure généreuse et belle longueur en bouche.Belle minéralité et fraîcheur.
+                <div class="vin-badge">Recommandé</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Pessac-Léognan Blanc</div>
+                  <div class="vin-desc">Arômes complexes et élégants parfaitement adaptés aux fruits de mer.</div>
+                </div>
+                <div class="vin-badge">Recommandé</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes régionales
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Huîtres du Cap Ferret :</strong> délicates et équilibrées, avec des notes végétales et d'agrumes.</p>
+              <p><strong>Huîtres de l'Île aux Oiseaux :</strong> caractère plus affirmé avec une forte expression marine.</p>
+</p>
+              <p><strong>Huîtres du Banc d'Arguin :</strong> saveurs douces et légèrement lactées.</p>
+              <p><strong>Huîtres chaudes gratinées :</strong> préparées au four avec une légère persillade ou une sauce au vin blanc.</p>
+            </div>
+          </section>
+
+
+
+          <!-- OÙ DÉGUSTER -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où déguster dans le Bassin d'Arcachon ?
+            </h2>
+            <div class="histoire-texte">
+              <p>L'expérience des huîtres d'Arcachon se vit au plus près des cabanes ostréicoles et des ports traditionnels.</p>
+
+              <p><strong>Gujan-Mestras</strong> Considérée comme la capitale de l'ostréiculture du Bassin avec ses sept ports ostréicoles et sa célèbre Maison de l'Huître.</p>
+
+              <p><strong>Arcachon</strong> Ville historique du Bassin où les huîtres sont présentes sur toutes les cartes de fruits de mer.
+</p>
+
+              <p><strong>Lège-Cap-Ferret</strong> Réputée pour ses villages ostréicoles authentiques et ses dégustations face aux parcs à huîtres.</p>
+
+             <p><strong>Andernos-les-Bains</strong> Important centre ostréicole offrant de nombreuses dégustations en bord de Bassin.</p>     
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Nouvelle-Aquitaine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Gironde · Bassin d'Arcachon</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Produit de la mer · Spécialité ostréicole/span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">TToute l'année (traditionnellement très consommées de septembre à avril)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Repas de fête · Fruits de mer · Gastronomie littorale</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Production</span>
+                <span class="aside-val">Ostréiculture traditionnelle en parcs marins</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Recnnu par:</span>
+                <span class="aside-val">Profession ostréicole du Bassin d'Arcachon · Patrimoine gastronomique du littoral atlantique</span>
+              </div>
+
+
+            </div>
+          </div>
+
+          <!-- Label -->
+         
+
+          <!-- Liens connexes -->
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="#" class="aside-lien">
+                  🦐 Crevettes blanches du Bassin d'Arcachon
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="#" class="aside-lien">
+                  🐟 Caviar d'Aquitaine
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="#" class="aside-lien">
+                  🍷 Entre-Deux-Mers
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="#" class="aside-lien">
+                  🦆 Magret de canard
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                  
+
+                <a href="nouvelle-aquitaine.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="nouvelle-aquitaine.html" class="btn-retour-fixe" id="btnRetour">
+    ← Nouvelle-Aquitaine
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="nouvelle-aquitaine.html">Nouvelle-Aquitaine</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation interne active
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    // Navigation interne scroll doux
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Bouton retour flottant
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

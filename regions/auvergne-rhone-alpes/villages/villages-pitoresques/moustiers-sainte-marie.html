@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moustiers-Sainte-Marie — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .produit-page { background: var(--ivoire); }
+
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+       Note : Moustiers-Sainte-Marie appartient administrativement à la région
+       Provence-Alpes-Côte d'Azur (Alpes-de-Haute-Provence), et non à l'Auvergne-Rhône-Alpes.
+       Les liens ci-dessous pointent donc vers une fiche régionale « provence-alpes-cote-d-azur »
+       à adapter selon l'arborescence réelle du site.
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../provence-alpes-cote-d-azur.html" class="produit-btn-retour">
+            ← Retour à la fiche Provence-Alpes-Côte d'Azur
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          <h1><em>M</em>oustiers-<br>Sainte-Marie</h1>
+        </div>
+      <img src="../../../../assets/departement/provence-alpes-cote-d-azur/carte-provence-alpes-cote-d-azur-mini.png"
+               alt="Carte de la Provence-Alpes-Côte d'Azur"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/régions/ecusson-provence-alpes-cote-d-azur.png" alt="Écusson Provence-Alpes-Côte d'Azur" />
+        </div>
+
+    <div class="hero-label-bas">
+    ⟹ Plus Beaux Villages de France ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#parcours"             >🚶 Parcours de visite</a>
+          <a href="#variantes"            >🔀 Variantes de visite</a>
+          <a href="#ou-manger"            >📍 Où prolonger la visite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Serré entre deux hautes falaises calcaires aux portes des Gorges du Verdon, Moustiers-Sainte-Marie doit son nom aux « monastères » : dès le Vᵉ siècle, des moines venus des îles de Lérins s'abritent dans les cavités creusées à même le tuf et fondent ici un établissement religieux. Le torrent de l'Adou, qui traverse encore aujourd'hui le cœur du village, fournit dès le Moyen Âge l'énergie hydraulique de plusieurs moulins, moteurs d'une activité artisanale florissante — meunerie, papeterie, teinture, travail du cuir.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+                   <img src="../../../../assets/departement/provence-alpes-cote-d-azur/photos/moustiers-etoile-falaises-village.jpg"
+                        alt="Le village de Moustiers-Sainte-Marie et son étoile suspendue entre les falaises" />
+                    <figcaption>L'étoile suspendue à 227 mètres au-dessus du village</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>Au cœur du village, l'<strong>église Notre-Dame de l'Assomption</strong> déploie son clocher lombard du XIIᵉ siècle au-dessus des toits de tuiles roses ; son autel, sculpté dans un sarcophage du Vᵉ siècle, témoigne de plus de quinze siècles d'histoire provençale. Un chemin escarpé de 262 marches, ponctué des quatorze stations d'un chemin de croix orné de carreaux de faïence par l'artiste Simone Garnier, conduit à la <strong>chapelle Notre-Dame de Beauvoir</strong>, des XIIᵉ et XVIᵉ siècles, d'où la vue embrasse tout le village et le lac de Sainte-Croix.</p>
+
+              <p>Suspendue entre les deux pitons rocheux qui dominent Moustiers, une <strong>étoile dorée à cinq branches</strong> fascine les visiteurs depuis des siècles. Selon la légende rapportée par Frédéric Mistral, le chevalier de Blacas, fait prisonnier lors des croisades en 1210, aurait fait le vœu de suspendre une étoile et sa chaîne s'il revenait vivant dans son village natal.</p>
+
+              <p>Mais c'est la <strong>faïence</strong> qui a fait entrer Moustiers dans la légende. L'art arrive d'Italie en 1668, par l'intermédiaire d'un moine de l'ordre des Servites, Lazzaro Porri, qui transmet le secret de l'émail blanc au potier Pierre Clérissy. Sa famille en garde le monopole près de cinquante ans avant que d'autres ateliers ne s'installent à leur tour. Au XVIIIᵉ siècle, la faïence de Moustiers, réputée la plus fine du royaume, orne les tables de Louis XIV et des cours d'Europe. Le déclin viendra au siècle suivant avec l'essor de la porcelaine de Limoges, jusqu'à la fermeture du dernier atelier en 1874 — avant qu'une renaissance, un demi-siècle plus tard, ne redonne vie à cet artisanat, aujourd'hui perpétué par une dizaine d'ateliers. Classé parmi les <strong>Plus Beaux Villages de France</strong> depuis 1981, Moustiers-Sainte-Marie conserve également remparts médiévaux, aqueduc, lavoirs et fontaines.</p>
+            </div>
+          </section>
+
+            <figure class="photo-bloc photo-centre" style="max-width: 450px;">
+            <img src="../../../../assets/departement/provence-alpes-cote-d-azur/photos/moustiers-atelier-faience-artisan.jpg"
+                  alt="Un artisan faïencier dans son atelier à Moustiers-Sainte-Marie" />
+              <figcaption>Un atelier de faïence, artisanat emblématique du village depuis le XVIIᵉ siècle</figcaption>
+            </figure>
+
+            <div class="clearfix"></div>
+
+          <!-- PARCOURS DE VISITE -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours traditionnel
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">2h à 3h</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⛪</div>
+                <div>
+                  <div class="recette-meta-label">Chapelle Notre-Dame de Beauvoir</div>
+                  <div class="recette-meta-val">262 marches, panorama sur le village</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Départ</div>
+                  <div class="recette-meta-val">Place Montelupo</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Modérée · escaliers pour la chapelle</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Incontournables du village</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">1</span> Étoile suspendue entre les falaises</div>
+                <div class="ingredient-item"><span class="ingredient-qte">2</span> Église Notre-Dame de l'Assomption</div>
+                <div class="ingredient-item"><span class="ingredient-qte">3</span> Musée de la Faïence</div>
+                <div class="ingredient-item"><span class="ingredient-qte">4</span> Chapelle Notre-Dame de Beauvoir</div>
+                <div class="ingredient-item"><span class="ingredient-qte">5</span> Ateliers de faïenciers de la Grande Rue</div>
+              </div>
+            </div>
+
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Place Montelupo et le musée de la Faïence</div>
+                  <div class="etape-texte">Débutez la visite sur cette place animée le vendredi matin par le marché, puis entrez au musée pour découvrir plus de 300 pièces retraçant trois siècles de faïence.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'église Notre-Dame de l'Assomption</div>
+                  <div class="etape-texte">Admirez son clocher lombard du XIIᵉ siècle et son autel sculpté dans un sarcophage paléochrétien du Vᵉ siècle.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Flâner le long de l'Adou</div>
+                  <div class="etape-texte">Suivez le torrent qui traverse le village, enjambé de petits ponts fleuris, entre fontaines anciennes et façades provençales.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Grimper à Notre-Dame de Beauvoir</div>
+                  <div class="etape-texte">Gravissez les 262 marches ponctuées des stations du chemin de croix en faïence pour rejoindre cette chapelle romane perchée.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Contempler l'étoile suspendue</div>
+                  <div class="etape-texte">Depuis le chemin de la chapelle, levez les yeux vers l'étoile dorée accrochée à sa chaîne de 135 mètres entre les deux pitons rocheux.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les ateliers de faïenciers</div>
+                  <div class="etape-texte">Terminez par la Grande Rue et ses boutiques, où les artisans perpétuent encore aujourd'hui les gestes de la faïence de Moustiers.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes de visite
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Lac de Sainte-Croix :</strong> à quelques minutes du village, ses eaux turquoise se prêtent au canoë, au pédalo et à la baignade, à l'entrée des Gorges du Verdon.</p>
+              <p><strong>Parapente au-dessus du Verdon :</strong> pour un point de vue aérien sur les falaises, les champs de lavande et les sommets alpins environnants.</p>
+              <p><strong>Marché du vendredi matin :</strong> olives, fromages, miel et céramiques se retrouvent place Montelupo, complétés en été par un marché artisanal et un marché nocturne.</p>
+              <p><strong>Stages de poterie :</strong> plusieurs ateliers proposent une initiation aux techniques de la faïence, dans la tradition transmise depuis le XVIIᵉ siècle.</p>
+            </div>
+          </section>
+
+          <!-- OÙ PROLONGER LA VISITE -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où prolonger la visite ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Moustiers-Sainte-Marie se trouve au carrefour de plusieurs sites naturels majeurs de Haute-Provence.</p>
+
+              <p><strong>Gorges du Verdon</strong> l'un des plus grands canyons d'Europe, à l'entrée du village.</p>
+
+              <p><strong>Plateau de Valensole</strong> ses champs de lavande à perte de vue, en saison estivale.</p>
+
+              <p><strong>Aiguines</strong> village voisin dominant le lac de Sainte-Croix, réputé pour ses boules en bois.</p>
+
+              <p><strong>Route des Crêtes</strong> panorama spectaculaire sur le Grand Canyon du Verdon.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Provence-Alpes-Côte d'Azur</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Alpes-de-Haute-Provence · Verdon</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Village provençal & cité de la faïence</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Toute l'année · marché le vendredi matin</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Visite artisanale · Randonnée · Activités nautiques</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Plus Beaux Villages de France (1981) · Villages et Cités de Caractère</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Association Les Plus Beaux Villages de France</span>
+              </div>
+
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="provence-alpes-cote-d-azur.html" class="btn-retour-fixe" id="btnRetour">
+    ← Provence-Alpes-Côte d'Azur
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="provence-alpes-cote-d-azur.html">Provence-Alpes-Côte d'Azur</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

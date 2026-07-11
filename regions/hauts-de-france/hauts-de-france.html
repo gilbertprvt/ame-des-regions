@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hauts-de-France — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-hauts-de-france.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">H</span>auts-de-<br><span style="padding-left: 120px;"><span class="titre-initial">F</span>rance</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-haut-de-france.png" alt="Écusson Hauts-de-France" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/carbonnade-flamande.html">Carbonnade flamande (bœuf à la bière)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/potjevleesch.html">Potjevleesch (terrine de viandes en gelée)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/waterzooi.html">Waterzoï de poisson (héritage flamand)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/ficelle-picarde.html">Ficelle picarde (crêpe gratinée)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/moules-frites.html">Moules-frites (tradition côtière)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/welsh-nord.html">Welsh (cheddar fondu à la bière, Lille)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/maroilles.html">Maroilles AOP (le plus fort du Nord)</a></li>
+              <li><a href="gastronomie/fromages-terroir/mimolette.html">Mimolette (Lille)</a></li>
+              <li><a href="gastronomie/fromages-terroir/vieux-boulogne.html">Vieux-Boulogne (Pas-de-Calais)</a></li>
+              <li><a href="gastronomie/fromages-terroir/endive-nord.html">Endive du Nord IGP (chicon)</a></li>
+              <li><a href="gastronomie/fromages-terroir/hareng-boulogne.html">Hareng fumé de Boulogne-sur-Mer</a></li>
+              <li><a href="gastronomie/fromages-terroir/genièvre-nord.html">Genièvre du Nord IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍺</span> Bières & boissons</div>
+            <ul>
+              <li><a href="gastronomie/boisson/bieres-artisanales-nord.html">Bières artisanales du Nord (Ch'ti, Jenlain…)</a></li>
+              <li><a href="gastronomie/boisson/biere-garde.html">Bière de garde (spécialité régionale)</a></li>
+              <li><a href="gastronomie/boisson/genièvre-houlle.html">Genièvre de Houlle (Pas-de-Calais)</a></li>
+              <li><a href="gastronomie/boisson/cidre-picard.html">Cidre picard (Aisne, Oise)</a></li>
+              <li><a href="gastronomie/boisson/chicorée-williot.html">Chicorée du Nord (Williot, Leroux)</a></li>
+              <li><a href="gastronomie/boisson/eau-source-Rozoy.html">Eaux minérales du Ternois</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/gaufre-flamande.html">Gaufre flamande (à la vergeoise)</a></li>
+              <li><a href="gastronomie/douceur/speculoos.html">Spéculoos (biscuit épicé flamand)</a></li>
+              <li><a href="gastronomie/douceur/merveilleux-nord.html">Le Merveilleux de Lille (meringue et crème)</a></li>
+              <li><a href="gastronomie/douceur/tarte-au-sucre.html">Tarte au sucre (vergeoise brune)</a></li>
+              <li><a href="gastronomie/douceur/pain-d-amandes.html">Pain d'amandes de Cambrai</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Beffrois de Belgique et de France (23 beffrois)</li>
+              <li>Bassin minier du Nord-Pas-de-Calais</li>
+              <li>Sites de mémoire de la Grande Guerre</li>
+              <li>Cathédrale Notre-Dame d'Amiens</li>
+              <li>Villa Cavrois de Mallet-Stevens (Croix)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale d'Amiens (plus grande de France)</li>
+              <li>Palais des Beaux-Arts de Lille</li>
+              <li>Citadelle de Lille (Vauban)</li>
+              <li>Château de Pierrefonds (Oise)</li>
+              <li>Cathédrale de Laon (Aisne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Palais des Beaux-Arts de Lille (2e de France)</li>
+              <li>LaM — Villeneuve-d'Ascq (art moderne)</li>
+              <li>Louvre-Lens (antenne du Louvre)</li>
+              <li>Musée de l'Armistice (Compiègne)</li>
+              <li>Musée Matisse du Cateau-Cambrésis</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚔️</span> Mémoire & Grande Guerre</div>
+            <ul>
+              <li>Anneau de la Mémoire (Notre-Dame-de-Lorette)</li>
+              <li>Cimetière militaire de Vimy (Canada)</li>
+              <li>Chemin des Dames (Aisne)</li>
+              <li>Mémorial de la Bataille de la Somme (Péronne)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Littoral & côtes</div>
+            <ul>
+              <li>Côte d'Opale (caps Blanc-Nez et Gris-Nez)</li>
+              <li>Baie de la Somme (phoques et oiseaux migrateurs)</li>
+              <li>Dunes de Flandre (Bray-Dunes)</li>
+              <li>Boulogne-sur-Mer (premier port de pêche de France)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Parcs & marais</div>
+            <ul>
+              <li>Parc naturel régional Caps et Marais d'Opale</li>
+              <li>Parc naturel régional de l'Avesnois</li>
+              <li>Marais audomarois (Saint-Omer — maraîchage flottant)</li>
+              <li>Marais de la Sensée (Nord)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & bocage</div>
+            <ul>
+              <li>Forêt de Compiègne (Oise — armistice 1918)</li>
+              <li>Forêt de Saint-Gobain (Aisne)</li>
+              <li>Bocage de l'Avesnois (Thiérache)</li>
+              <li>Forêt de Mormal (plus grande du Nord)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦭</span> Faune & zones protégées</div>
+            <ul>
+              <li>Phoques veaux marins (Baie de Somme)</li>
+              <li>Oies cendrées (réserve du Marquenterre)</li>
+              <li>Réserve naturelle du Platier d'Oye</li>
+              <li>Parc du Marquenterre (ornithologie)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪡</span> Dentelle & textile</div>
+            <ul>
+              <li>Dentelle de Calais (capitale mondiale de la dentelle)</li>
+              <li>Dentelle de Caudry (Dentelle Valentines)</li>
+              <li>Tissage de Roubaix (capitale du textile)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Céramique & verre</div>
+            <ul>
+              <li>Faïences de Desvres (Pas-de-Calais)</li>
+              <li>Verrerie d'Arques (Arcoroc — leader mondial)</li>
+              <li>Poteries de Bourbourg (Nord)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛏️</span> Patrimoine minier</div>
+            <ul>
+              <li>Chevalements et terrils du bassin minier (UNESCO)</li>
+              <li>Centre Historique Minier de Lewarde</li>
+              <li>Artisanat de la mine (lampes, outils, céramiques)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & lutherie</div>
+            <ul>
+              <li>Ébénisterie picarde</li>
+              <li>Fabrication d'accordéons (tradition du Nord)</li>
+              <li>Sculpture sur bois des Ardennes (limitrophe)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Ch'ti / Chti (dialecte picard du Nord)</li>
+              <li>Picard (langue d'oïl de Picardie)</li>
+              <li>Flamand occidental (Flandre française)</li>
+              <li>Culture ch'ti — convivialité et humour populaire</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎺</span> Fanfares & géants</div>
+            <ul>
+              <li>Fanfares et harmonies du Nord</li>
+              <li>Géants de procession (Gayant de Douai, Reuze de Cassel)</li>
+              <li>Ducasse (fête patronale flamande)</li>
+              <li>Festival de musique de Flandre</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🚴</span> Sports & traditions</div>
+            <ul>
+              <li>Paris-Roubaix (l'Enfer du Nord — cyclisme)</li>
+              <li>Lancer de hareng (Boulogne-sur-Mer)</li>
+              <li>Football (LOSC Lille, RC Lens)</li>
+              <li>Kitesurf et char à voile (Côte d'Opale)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Carnaval de Dunkerque (le plus long de France)</li>
+              <li>Ducasse de Mons (géants et procession)</li>
+              <li>Fête des Géants (Douai — UNESCO)</li>
+              <li>Braderie de Lille (premier week-end de septembre)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Gerberoy (Oise — village de roses)</li>
+              <li>Longpont (Aisne)</li>
+              <li>Vez (Oise)</li>
+              <li>Parfondeval (Aisne — village fortifié)</li>
+              <li>Septmonts (Aisne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villes & cités historiques</div>
+            <ul>
+              <li>Lille (capitale des Flandres)</li>
+              <li>Arras (Grand-Place baroque)</li>
+              <li>Amiens (cathédrale gothique)</li>
+              <li>Compiègne (palais impérial et forêt)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Cassel (Mont-Cassel — panorama sur la plaine flamande)</li>
+              <li>Saint-Valery-sur-Somme (Baie de la Somme)</li>
+              <li>Le Crotoy (Baie de la Somme)</li>
+              <li>Gerberoy (jardins de roses — Oise)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Gerberoy</h3>
+            <p>Niché dans le Pays de Bray à la frontière de la Normandie, Gerberoy est un village hors du temps dont les ruelles pavées débordent de roses grimpantes chaque mois de juin. Ce minuscule bourg de l'Oise doit sa renaissance au peintre Henri Le Sidaner, qui au tournant du XXe siècle en fit son atelier à ciel ouvert et y planta les premières rosiers. Ses maisons à colombages fleuries, ses jardins secrets et sa collégiale médiévale en font l'un des Plus Beaux Villages de France les plus attachants.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Oise — Pays de Bray</span>
+            <span class="village-star-tag">Village des roses</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Carnaval de Dunkerque</h4><p>Le plus long carnaval de France — de janvier à mars, les Dunkerquois défilent en bande serrée sous une pluie de harengs fumés et de confettis.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Fête des Géants — Douai</h4><p>La famille Gayant, géants emblématiques de Douai classés au patrimoine immatériel de l'UNESCO, défile chaque année dans les rues de la ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Paris-Roubaix — L'Enfer du Nord</h4><p>La plus célèbre classique cycliste sur pavés relie Paris aux vélodrome de Roubaix chaque printemps — un monument du cyclisme mondial.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête de la Rose — Gerberoy</h4><p>Le village de Gerberoy célèbre ses roses en pleine floraison — concours, expositions florales et portes ouvertes dans les jardins privés.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Grand Prix de Pâques — Roubaix</h4><p>Les grandes compétitions cyclistes et les festivités sportives animent le vélodrome mythique de Roubaix tout au long de l'été.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête des Mouettes — Boulogne-sur-Mer</h4><p>Le premier port de pêche de France célèbre la mer, le hareng et ses marins avec une grande fête populaire sur le front de mer.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Braderie de Lille</h4><p>Le premier week-end de septembre, Lille devient le plus grand marché aux puces d'Europe — 200 km de stands et des montagnes de moules-frites.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Commémoration de l'Armistice — Compiègne</h4><p>La clairière de Rethondes, où fut signé l'Armistice du 11 novembre 1918, accueille chaque année une cérémonie internationale de mémoire.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés dans les Hauts-de-France</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⚔️</span>
+            <h4>Chemins de Mémoire — Grande Guerre</h4>
+            <p>Vimy, Chemin des Dames, Péronne, Notre-Dame-de-Lorette — les lieux de mémoire de la Première Guerre mondiale entre Somme et Aisne.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌊</span>
+            <h4>Côte d'Opale</h4>
+            <p>Cap Blanc-Nez, Cap Gris-Nez, Wimereux, Boulogne-sur-Mer — les falaises crayeuses et les dunes sauvages face aux côtes anglaises.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🦭</span>
+            <h4>Baie de la Somme</h4>
+            <p>Saint-Valery-sur-Somme, Le Crotoy, Parc du Marquenterre — phoques, oies et lumières nordiques dans la plus belle baie du nord de la France.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍺</span>
+            <h4>Route des Beffrois & Brasseries</h4>
+            <p>Lille, Arras, Douai, Cambrai — les beffrois UNESCO et les brasseries artisanales du Nord autour d'une bière de garde et d'un Maroilles.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⛏️</span>
+            <h4>Bassin Minier — UNESCO</h4>
+            <p>Lewarde, Lens (Louvre-Lens), terrils et chevalements — l'héritage humain et architectural du bassin houiller classé au patrimoine mondial.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Compiègne & Pierrefonds</h4>
+            <p>Le palais impérial de Compiègne, la forêt mythique et le château néogothique de Pierrefonds — l'Oise royale et romantique.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

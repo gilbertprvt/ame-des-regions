@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provence-Alpes-Côte d'Azur — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Titre + écusson */
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner {
+      position: relative;
+    }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-provence-alpes-cote-d-azur.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">P</span>rovence<br><span style="padding-left: 90px;"><span class="titre-initial">A</span>lpes</span> <br> <span style="padding-left: 120px;"><span class="titre-initial">C</span>ôte d'<span class="titre-initial">A</span>zur</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-paca.png" alt="Écusson Provence-Alpes-Côte d'Azur" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/bouillabaisse.html">Bouillabaisse marseillaise</a></li>
+              <li><a href="gastronomie/plats-emblematiques/ratatouille.html">Ratatouille provençale</a></li>
+              <li><a href="gastronomie/plats-emblematiques/daube-provencale.html">Daube provençale</a></li>
+              <li><a href="gastronomie/plats-emblematiques/soupe-au-pistou.html">Soupe au pistou</a></li>
+              <li><a href="gastronomie/plats-emblematiques/socca-nicoise.html">Socca niçoise</a></li>
+              <li><a href="gastronomie/plats-emblematiques/pan-bagnat.html">Pan bagnat</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/banon.html">Banon AOP (chèvre des Alpes de Haute-Provence)</a></li>
+              <li><a href="gastronomie/fromages-terroir/huile-olive-provence.html">Huile d'olive de Provence AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/truffe-provence.html">Truffe noire du Var</a></li>
+              <li><a href="gastronomie/fromages-terroir/lavande-provence.html">Miel de lavande de Provence IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/agneau-sisteron.html">Agneau de Sisteron IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/ail-rose-lautrec.html">Riz de Camargue IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/cotes-de-provence-aop.html">Côtes de Provence AOP (rosé)</a></li>
+              <li><a href="gastronomie/vin-boisson/bandol-aop.html">Bandol AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/cassis-aop.html">Cassis AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/chateauneuf-du-pape.html">Châteauneuf-du-Pape AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/gigondas-aop.html">Gigondas AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/pastis-marseille.html">Pastis de Marseille</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/calisson-aix.html">Calisson d'Aix-en-Provence IGP</a></li>
+              <li><a href="gastronomie/douceur/navette-marseille.html">Navette de Marseille</a></li>
+              <li><a href="gastronomie/douceur/tarte-tropezienne.html">Tarte tropézienne (Saint-Tropez)</a></li>
+              <li><a href="gastronomie/douceur/fruits-confits-apt.html">Fruits confits d'Apt</a></li>
+              <li><a href="gastronomie/douceur/berlingot-carpentras.html">Berlingot de Carpentras</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+              <li>Arles — Monuments romains et romans</li>
+              <li>Orange — Théâtre antique et arc de triomphe</li>
+              <li>Avignon — Palais des Papes et pont Saint-Bénézet</li>
+              <li>Camargue — Réserve de biosphère</li>
+              <li>Grotte Chauvet-Pont d'Arc (Ardèche)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Palais des Papes d'Avignon</li>
+              <li>Abbaye de Sénanque (Vaucluse)</li>
+              <li>Cathédrale de la Major (Marseille)</li>
+              <li>Fort de Brégançon (résidence présidentielle)</li>
+              <li>Villa Kérylos (Beaulieu-sur-Mer)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée d'Art Moderne et d'Art Contemporain (Nice)</li>
+              <li>Musée Picasso (Antibes)</li>
+              <li>Fondation Maeght (Saint-Paul-de-Vence)</li>
+              <li>Musée Granet (Aix-en-Provence)</li>
+              <li>MuCEM — Musée des civilisations (Marseille)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗿</span> Antiquité romaine</div>
+            <ul>
+              <li>Les Arènes de Nîmes (Gard)</li>
+              <li>Pont du Gard (aqueduc romain)</li>
+              <li>Site archéologique de Glanum (Saint-Rémy)</li>
+              <li>Trophée d'Auguste (La Turbie)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Littoral méditerranéen</div>
+            <ul>
+              <li>Côte d'Azur (Nice, Cannes, Antibes)</li>
+              <li>Calanques de Marseille (Parc national)</li>
+              <li>Presqu'île de Saint-Tropez</li>
+              <li>Îles d'Hyères (Porquerolles, Port-Cros)</li>
+              <li>Camargue — delta du Rhône</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Alpes & arrière-pays</div>
+            <ul>
+              <li>Parc national du Mercantour</li>
+              <li>Parc national des Écrins (Hautes-Alpes)</li>
+              <li>Mont Ventoux (1 912 m)</li>
+              <li>Massif des Maures et de l'Estérel</li>
+              <li>Gorges du Verdon (Grand Canyon d'Europe)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💐</span> Plaines & plateaux</div>
+            <ul>
+              <li>Plateau de Valensole (lavande)</li>
+              <li>Alpilles (Bouches-du-Rhône)</li>
+              <li>Plaine de la Crau (steppe unique)</li>
+              <li>Luberon (Parc naturel régional)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦩</span> Faune & zones protégées</div>
+            <ul>
+              <li>Flamants roses de Camargue</li>
+              <li>Loup du Mercantour</li>
+              <li>Réserve naturelle de Scandola (Corse)</li>
+              <li>Port-Cros — 1er parc marin de France</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Céramique & faïence</div>
+            <ul>
+              <li>Faïences de Moustiers-Sainte-Marie</li>
+              <li>Poteries de Vallauris (Picasso)</li>
+              <li>Céramique de Aubagne</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Parfumerie & savonnerie</div>
+            <ul>
+              <li>Parfums de Grasse (capitale mondiale)</li>
+              <li>Savon de Marseille (tradition séculaire)</li>
+              <li>Essences de lavande du plateau de Valensole</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Arts décoratifs</div>
+            <ul>
+              <li>Santons de Provence (Marseille, Aubagne)</li>
+              <li>Indiennes de Provence (tissus imprimés)</li>
+              <li>Vannerie de Cadenet (Vaucluse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & marqueterie</div>
+            <ul>
+              <li>Lutherie de Nice</li>
+              <li>Marqueterie d'oliviers (Manosque)</li>
+              <li>Tabletterie de l'Ubaye</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Provençal (occitan maritime)</li>
+              <li>Niçart (dialecte nissart)</li>
+              <li>Culture des troubadours médiévaux</li>
+              <li>École de peinture de Cézanne (Aix)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Farandole provençale</li>
+              <li>Tambourin et galoubet</li>
+              <li>Festival de Cannes (cinéma)</li>
+              <li>Chorégies d'Orange (opéra en plein air)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛵</span> Sports & traditions</div>
+            <ul>
+              <li>Pétanque (inventée à La Ciotat)</li>
+              <li>Voile et régates (Marseille, Bandol)</li>
+              <li>Joutes provençales</li>
+              <li>Ski alpin (Vars, Isola 2000, Auron)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Fête de la Tarasque (Tarascon, juin)</li>
+              <li>Foire aux santons de Marseille (décembre)</li>
+              <li>Carnaval de Nice (février)</li>
+              <li>Fête de la Lavande — Valensole (juillet)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Les Baux-de-Provence (Alpilles)</li>
+              <li>Gordes (Luberon)</li>
+              <li>Roussillon (Vaucluse — ocres)</li>
+              <li>Moustiers-Sainte-Marie (Alpes-de-H.-P.)</li>
+              <li>Entrevaux (Alpes-Maritimes)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages perchés</div>
+            <ul>
+              <li>Les Baux-de-Provence (forteresse des Alpilles)</li>
+              <li>Èze (Alpes-Maritimes — surplombant la mer)</li>
+              <li>Gourdon (Alpes-Maritimes)</li>
+              <li>Séguret (Vaucluse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Saint-Paul-de-Vence (Alpes-Maritimes)</li>
+              <li>Lourmarin (Luberon)</li>
+              <li>Ménerbes (Vaucluse)</li>
+              <li>Ramatuelle (Var)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Gordes</h3>
+            <p>Perché sur un éperon rocheux du Luberon, Gordes est souvent désigné comme l'un des plus beaux villages de France. Ses maisons de pierre ocre dorée s'étagent en amphithéâtre face aux plaines du Vaucluse, et ses ruelles escarpées mènent à un château Renaissance du XVIe siècle. À quelques kilomètres, l'abbaye cistercienne de Sénanque, noyée dans un champ de lavande, en fait l'un des sites les plus photographiés de Provence.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Luberon</span>
+            <span class="village-star-tag">Vaucluse</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Carnaval de Nice</h4><p>L'un des plus grands carnavals du monde — corso fleuri, batailles de fleurs et chars géants sur la Promenade des Anglais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Foire aux Santons — Marseille</h4><p>La plus grande foire aux santons de Provence se tient à Marseille, perpétuant un art figuratif né au XVIIIe siècle.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Festival de Cannes</h4><p>Le plus prestigieux festival de cinéma du monde déploie son tapis rouge sur la Croisette depuis 1946.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête de la Tarasque — Tarascon</h4><p>Procession médiévale autour de la légendaire créature domptée par Sainte Marthe — fête inscrite au patrimoine de l'UNESCO.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Chorégies d'Orange</h4><p>Festival d'opéra en plein air dans le théâtre antique d'Orange — l'acoustique millénaire au service des plus grandes voix lyriques.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Fête de la Lavande — Valensole</h4><p>Le plateau de Valensole en fleur célèbre la lavande avec marchés, démonstrations de distillation et pique-niques entre les rangs violets.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Rencontres Photographiques d'Arles</h4><p>Le festival international de photographie le plus important du monde — expositions dans les monuments romains et les palais d'Arles.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Marché à la Truffe — Aups (Var)</h4><p>La capitale de la truffe du Var ouvre sa saison avec son marché traditionnel — la précieuse truffe noire à l'honneur.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Provence-Alpes-Côte d'Azur</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">💐</span>
+            <h4>Route de la Lavande</h4>
+            <p>Valensole, Forcalquier, Sault, Apt — de juin à août, les plateaux de Haute-Provence se parent de violet à perte de vue.</p>
+            <span class="parcours-item-duree">⏱ 3 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏖️</span>
+            <h4>Côte d'Azur — De Nice à Cassis</h4>
+            <p>Nice, Antibes, Cannes, Saint-Tropez, Hyères, Cassis — le grand arc méditerranéen entre calanques et corniche.</p>
+            <span class="parcours-item-duree">⏱ 6 à 8 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏞️</span>
+            <h4>Gorges du Verdon</h4>
+            <p>Le Grand Canyon d'Europe à pied, en kayak ou en voiture — falaises de 700 m de haut au-dessus d'eaux turquoise.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🍷</span>
+            <h4>Route des Vins de Provence</h4>
+            <p>Bandol, Cassis, Côtes de Provence, Châteauneuf-du-Pape — rosés et rouges au fil des mas et des caves provençales.</p>
+            <span class="parcours-item-duree">⏱ 4 à 6 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏛️</span>
+            <h4>La Provence Romaine</h4>
+            <p>Arles, Orange, Nîmes, Glanum — le plus grand musée romain à ciel ouvert d'Europe, entre arènes et aqueducs.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🎨</span>
+            <h4>Sur les pas de Cézanne & Van Gogh</h4>
+            <p>Aix-en-Provence, la Sainte-Victoire, Arles, Saint-Rémy — les paysages qui ont inspiré les plus grands peintres impressionnistes.</p>
+            <span class="parcours-item-duree">⏱ 4 à 5 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

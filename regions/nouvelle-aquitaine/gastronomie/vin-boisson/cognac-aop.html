@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognac AOP — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3; /* passe toujours au-dessus de l'écusson */
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    /* Zone haute du bandeau (topbar + titre), utilisée comme référence
+       pour positionner l'écusson par rapport à cette seule zone
+       (et non par rapport à tout le bandeau, nav comprise). */
+    .produit-hero-top {
+      position: relative;
+    }
+
+    /* ÉCUSSON : centré HORIZONTALEMENT (left:50% + translateX(-50%)).
+       Position VERTICALE ajustable via la variable --ecusson-top,
+       à définir sur l'élément lui-même dans le HTML de chaque fiche
+       (ex: style="--ecusson-top: 40px"). Valeur par défaut : 30px.
+       pointer-events:none pour ne jamais intercepter les clics
+       destinés aux éléments sous/autour de lui.   */
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;        /* reste sous la topbar et la nav */
+      pointer-events: none; /* purement décoratif : laisse passer les clics */
+    }
+    .fiche-hero-ecusson img {
+       height: 200px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+
+
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      /* Sur mobile, l'écusson passe sous le titre pour ne jamais chevaucher le texte */
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+
+    <!-- 1. TOPBAR + TITRE -->
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../nouvelle-aquitaine.html" class="produit-btn-retour">
+            ← Retour à la fiche Nouvelle-Aquitaine
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>C</em>ognac<br>
+          <span style="padding-left: 60px;"><em>A</em>OP</span></h1>
+        </div>
+        <img src="../../../../assets/departement/nouvelle-aquitaine/carte-nouvelle-aquitaine-mini.png"
+             alt="Carte de la Nouvelle-Aquitaine"
+             style="height:220px; width:auto; opacity:0.85;
+                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                    display:block;" />
+      </div>
+    </div>
+
+    <!-- 2. ÉCUSSON -->
+    <div class="fiche-hero-ecusson">
+      <img src="../../../../assets/régions/ecusson-nouvelle-aquitaine.png" alt="Écusson Nouvelle-Aquitaine" />
+    </div>
+
+
+    
+    <!-- 3. LABEL BAS -->
+    <div class="hero-label-bas">
+      ⟹ Vins & Boissons ⟸
+    </div>
+
+    <!-- 4. BARRE DE NAVIGATION -->
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#fabrication">🔥 Fabrication</a>
+          <a href="#crus">🗺️ Les 6 Crus</a>
+          <a href="#degustation">🥃 Dégustation & Accords</a>
+          <a href="#ou-decouvrir">📍 Où découvrir</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Le Cognac est l'eau-de-vie la plus célèbre du monde. Produit dans la région charentaise depuis le XVIIe siècle, ce spiritueux d'exception doit son nom à la ville de Cognac, au cœur de la Charente. Sa renommée mondiale tient à une combinaison unique et irremplaçable : un terroir calcaire exceptionnel, un cépage blanc particulier, une double distillation en alambic charentois et un vieillissement lent en fûts de chêne du Limousin.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 360px;">
+                <img src="../../../../assets/departement/nouvelle-aquitaine/photos/cognac-alambic.jpg"
+                     alt="Alambic charentois" />
+                <figcaption>Alambic charentois en cuivre, cœur de la distillation du Cognac</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p>L'histoire du Cognac commence véritablement au XVIIe siècle, lorsque les marchands hollandais, grands acheteurs de vins charentais, commencent à distiller les vins locaux pour faciliter leur transport en mer. Ils découvrent alors qu'en distillant deux fois ce vin blanc acide, ils obtiennent une eau-de-vie d'une qualité et d'une finesse remarquables. C'est la naissance du Cognac tel que nous le connaissons.</p>
+
+              <div class="citation-bloc">
+                <p>« Le Cognac est la quintessence du vin — il en est l'âme la plus pure, concentrée et sublimée par le feu et le temps. »</p>
+                <cite>— Victor Hugo, lettre à un ami charentais, 1843</cite>
+              </div>
+
+              <p>Le XVIIIe siècle voit la naissance des grandes maisons qui font encore aujourd'hui la réputation mondiale du Cognac : Martell en 1715, Rémy Martin en 1724, Hennessy en 1765, Courvoisier en 1809. Ces maisons, fondées souvent par des négociants étrangers attirés par la qualité des eaux-de-vie charentaises, développent les techniques d'assemblage et de vieillissement qui permettent d'obtenir une qualité constante d'une année sur l'autre.</p>
+
+              <p>L'Appellation d'Origine Contrôlée, obtenue en 1909 et transformée en AOP européenne, délimite strictement l'aire de production et codifie chaque étape de l'élaboration — du choix des cépages à la distillation, du vieillissement en fût à l'assemblage final. Aujourd'hui, le Cognac est exporté dans plus de 160 pays et représente le premier produit agroalimentaire français à l'export en valeur.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 380px;">
+                <img src="../../../../assets/departement/nouvelle-aquitaine/photos/chais-cognac.jpg"
+                     alt="Chais de vieillissement du Cognac" />
+                <figcaption>Chais de vieillissement — les fûts de chêne noircis par la « part des anges »</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p>Un phénomène mystérieux et poétique accompagne le vieillissement du Cognac dans les chais : chaque année, environ 3 % du volume des fûts s'évapore à travers les douelles de chêne. Ce volume évaporé, appelé la <strong>« part des anges »</strong>, nourrit un champignon noir — la <em>Torula compniacensis</em> — qui tapisse les murs des chais d'un voile sombre caractéristique, signe que le Cognac vieillit bien.</p>
+            </div>
+          </section>
+
+          <!-- FABRICATION -->
+          <section class="section" id="fabrication">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔥</div>
+              La fabrication — un art séculaire
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🍇</div>
+                <div>
+                  <div class="recette-meta-label">Cépage principal</div>
+                  <div class="recette-meta-val">Ugni Blanc</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🔥</div>
+                <div>
+                  <div class="recette-meta-label">Distillation</div>
+                  <div class="recette-meta-val">Double · Alambic charentois</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🪵</div>
+                <div>
+                  <div class="recette-meta-label">Vieillissement</div>
+                  <div class="recette-meta-val">Fûts de chêne du Limousin</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏳</div>
+                <div>
+                  <div class="recette-meta-label">Durée minimum</div>
+                  <div class="recette-meta-val">2 ans (jusqu'à 50 ans et +)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les catégories officielles par âge</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">VS</span> Very Special — 2 ans minimum en fût</div>
+                <div class="ingredient-item"><span class="ingredient-qte">VSOP</span> Very Superior Old Pale — 4 ans min.</div>
+                <div class="ingredient-item"><span class="ingredient-qte">XO</span> Extra Old — 10 ans minimum en fût</div>
+                <div class="ingredient-item"><span class="ingredient-qte">XXO</span> Extra Extra Old — 14 ans minimum</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Napoléon</span> Entre VSOP et XO — 6 ans min.</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Hors d'âge</span> Au-delà de XO, âge exceptionnel</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La vendange et la vinification</div>
+                  <div class="etape-texte">Le Cognac est élaboré principalement à partir de l'Ugni Blanc (90 % du vignoble), un cépage blanc qui donne un vin naturellement acide, peu alcoolisé (7 à 9°) et peu aromatique — des caractéristiques paradoxalement idéales pour la distillation. La vendange se fait en octobre, et la vinification produit un vin blanc sec sans soufre ajouté, destiné exclusivement à la distillation.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La double distillation en alambic charentois</div>
+                  <div class="etape-texte">C'est la technique fondatrice du Cognac, inchangée depuis le XVIIe siècle. Le vin est chauffé dans un alambic en cuivre à feu nu. La première distillation produit le « brouillis » à environ 30°. Ce brouillis est redistillé une seconde fois pour donner la « bonne chauffe » — une eau-de-vie à 70° environ, riche en arômes complexes. La distillation doit impérativement être achevée avant le 31 mars suivant la vendange.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le vieillissement en fûts de chêne</div>
+                  <div class="etape-texte">L'eau-de-vie fraîchement distillée, transparente et agressive, est placée dans des fûts de chêne de 270 à 450 litres — exclusivement du chêne du Tronçais ou du Limousin. Pendant des années, voire des décennies, le Cognac se transforme au contact du bois : il se colore progressivement en ambre doré, s'arrondit, gagne en complexité aromatique et développe des notes de vanille, de caramel, de fruits secs et d'épices.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La « part des anges »</div>
+                  <div class="etape-texte">Chaque année, environ 3 % du volume de chaque fût s'évapore à travers les pores du bois — c'est la fameuse « part des anges ». Sur 50 ans de vieillissement, un fût peut perdre les deux tiers de son contenu initial. Cette évaporation concentre les arômes restants et participe à la complexité exceptionnelle des très vieux Cognacs. Les chais sont recouverts d'un champignon noir — la Torula compniacensis — nourri par ces vapeurs alcoolisées.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'assemblage — l'art du maître de chai</div>
+                  <div class="etape-texte">Le Cognac final est presque toujours un assemblage de plusieurs eaux-de-vie d'âges, de crus et parfois de millésimes différents. Le maître de chai, gardien de la mémoire olfactive de la maison, travaille chaque lot pour obtenir un produit cohérent avec le style de la maison d'une année sur l'autre. Certaines maisons conservent des « paradis » — des réserves d'eaux-de-vie centenaires utilisées pour enrichir leurs assemblages.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La mise à degré et l'embouteillage</div>
+                  <div class="etape-texte">Avant embouteillage, le Cognac est progressivement ramené à 40° minimum par addition d'eau distillée — un processus qui peut prendre plusieurs mois pour ne pas choquer les arômes. Une légère quantité de caramel peut être ajoutée pour harmoniser la couleur d'un lot à l'autre. Le Cognac est ensuite mis en bouteille et peut se conserver indéfiniment — contrairement au vin, il ne continue pas d'évoluer une fois en verre.</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- LES 6 CRUS -->
+          <section class="section" id="crus">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Les 6 crus de l'appellation
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">👑</div>
+                <div>
+                  <div class="vin-nom">Grande Champagne</div>
+                  <div class="vin-desc">Le cru le plus prestigieux, au sud de Cognac. Sols calcaires très purs donnant les eaux-de-vie les plus fines, les plus florales et les plus aptes au vieillissement exceptionnel. Les XO et Hors d'âge de Grande Champagne sont les Cognacs les plus recherchés.</div>
+                </div>
+                <div class="vin-badge">⭐ Premier cru</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🥈</div>
+                <div>
+                  <div class="vin-nom">Petite Champagne</div>
+                  <div class="vin-desc">Entoure la Grande Champagne avec des terroirs similaires mais légèrement moins calcaires. Eaux-de-vie très fines, florales et aptes au long vieillissement. Le label « Fine Champagne » désigne un assemblage d'au moins 50 % de Grande Champagne complété par de la Petite Champagne.</div>
+                </div>
+                <div class="vin-badge">2e cru</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌿</div>
+                <div>
+                  <div class="vin-nom">Borderies</div>
+                  <div class="vin-desc">Le plus petit cru de l'appellation, à l'ouest de Cognac. Sols argilo-calcaires à silex donnant des eaux-de-vie rondes, florales (violette, iris) et vineuses qui se révèlent plus rapidement que la Champagne. Très apprécié des assembleurs pour sa typicité.</div>
+                </div>
+                <div class="vin-badge">3e cru</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌳</div>
+                <div>
+                  <div class="vin-nom">Fins Bois</div>
+                  <div class="vin-desc">Le plus grand cru en superficie, entourant les précédents. Eaux-de-vie rondes, fruitées et légèrement plus rustiques, qui vieillissent rapidement. Constituent souvent la base des assemblages VS et VSOP des grandes maisons.</div>
+                </div>
+                <div class="vin-badge">4e cru</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌲</div>
+                <div>
+                  <div class="vin-nom">Bons Bois & Bois Ordinaires</div>
+                  <div class="vin-desc">Les deux crus périphériques de l'appellation, sur des terroirs plus variés incluant zones côtières et sols sableux. Eaux-de-vie à vieillissement rapide, plus légères et fruitées. Utilisées principalement dans les entrées de gamme et le Pineau des Charentes.</div>
+                </div>
+                <div class="vin-badge">5e et 6e crus</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- DÉGUSTATION & ACCORDS -->
+          <section class="section" id="degustation">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥃</div>
+              Dégustation & Accords
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Le Cognac en digestif :</strong> la façon la plus traditionnelle de le déguster. Servi dans un verre tulipe légèrement chauffé par la paume de la main, à température ambiante (18-20°C). Un XO ou un Hors d'âge de Grande Champagne se déguste lentement, en savourant les arômes qui se libèrent progressivement — fruits secs, vanille, épices, cuir, tabac blond.</p>
+
+              <p><strong>Le Cognac VS en cocktail :</strong> le Sidecar (Cognac, Cointreau, citron), le Cognac Sour ou le French 75 sont des cocktails classiques qui mettent en valeur la fraîcheur et le fruité d'un jeune Cognac VS ou VSOP. Le Cognac se marie aussi très bien avec le ginger ale ou le ginger beer pour une version longue et rafraîchissante.</p>
+
+              <p><strong>Accord avec le foie gras :</strong> un VSOP ou un Napoléon accompagne à merveille le foie gras du Périgord mi-cuit — la douceur vanillée et la rondeur du Cognac épousent la richesse du foie gras dans un accord terra-spiritueux d'exception.</p>
+
+              <p><strong>Accord avec le chocolat noir :</strong> les arômes de fruits secs, de caramel et de café d'un vieux XO dialoguent magnifiquement avec un chocolat noir à 70 % de cacao. Un accord inattendu mais révélé par les plus grands maîtres chocolatiers.</p>
+
+              <p><strong>Le Cognac en cuisine :</strong> flambé sur les crêpes Suzette, intégré dans une sauce au poivre, utilisé pour flamber un magret ou déglacer une poêle de Saint-Jacques — le Cognac est un ingrédient culinaire d'exception qui apporte profondeur et complexité à de nombreuses préparations.</p>
+            </div>
+          </section>
+
+          <!-- OÙ DÉCOUVRIR -->
+          <section class="section" id="ou-decouvrir">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où découvrir le Cognac ?
+            </h2>
+            <div class="histoire-texte">
+              <p>La région cognaçaise est l'une des destinations œnotouristiques les plus riches de France, avec ses grandes maisons historiques, ses petits producteurs artisanaux et ses musées consacrés à l'eau-de-vie.</p>
+              <p><strong>Hennessy (Cognac)</strong> — La plus grande maison de Cognac au monde ouvre ses chais aux visiteurs avec une visite spectaculaire en bateau sur la Charente, suivie d'une dégustation commentée dans des chais historiques. Un incontournable.</p>
+              <p><strong>Rémy Martin (Cognac)</strong> — Visite des vignes et des chais à bord d'un petit train. La maison propose des expériences de dégustation approfondies permettant de comprendre l'art de l'assemblage et les différences entre crus.</p>
+              <p><strong>Martell (Cognac)</strong> — La plus ancienne grande maison de Cognac (1715) propose des visites guidées de ses chais historiques classés, avec une collection de fûts centenaires impressionnante.</p>
+              <p><strong>Les bouilleurs de cru artisanaux</strong> — Autour de Segonzac, au cœur de la Grande Champagne, de nombreux vignerons-distillateurs indépendants accueillent les visiteurs pour des dégustations directement dans leurs chais. Une expérience plus intime et authentique que les grandes maisons.</p>
+              <p><strong>Le musée des Arts du Cognac (Cognac)</strong> — Retrace l'histoire complète de l'eau-de-vie charentaise, du vignoble médiéval aux grandes maisons internationales d'aujourd'hui. Collections d'alambics, de bouteilles anciennes et d'affiches publicitaires historiques.</p>
+            </div>
+          </section>
+
+        </div>
+        <!-- fin colonne principale -->
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Nouvelle-Aquitaine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Charente · Charente-Maritime</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Eau-de-vie · Spiritueux</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Label</span>
+                <span class="aside-val">AOP depuis 1909</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Cépage</span>
+                <span class="aside-val">Ugni Blanc (90 %)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Distillation</span>
+                <span class="aside-val">Double · Alambic charentois</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Vieillissement</span>
+                <span class="aside-val">Chêne du Limousin · 2 à 50 ans+</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Export</span>
+                <span class="aside-val">160+ pays · 1er export agroalimentaire français</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-label-aop">
+            <div class="aside-aop-logo">🥃</div>
+            <div class="aside-aop-titre">AOP depuis 1909</div>
+            <div class="aside-aop-desc">6 crus délimités. Double distillation obligatoire en alambic charentois. Vieillissement minimum 2 ans en fûts de chêne. Premier produit agroalimentaire français à l'export.</div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="#" class="aside-lien">🍷 Pineau des Charentes<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🧈 Beurre Charentes-Poitou AOP<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🧂 Sel de l'île de Ré IGP<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🍷 Vins de Bordeaux AOP<span class="aside-lien-arrow">›</span></a>
+                <a href="nouvelle-aquitaine.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région<span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="nouvelle-aquitaine.html" class="btn-retour-fixe" id="btnRetour">
+    ← Nouvelle-Aquitaine
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="nouvelle-aquitaine.html">Nouvelle-Aquitaine</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

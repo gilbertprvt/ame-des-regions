@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corrèze — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Zone centrale hero */
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours — intro & filtres */
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* Parcours — cartes "journée" */
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    /* Parcours (ancien style, conservé pour compatibilité) */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../nouvelle-aquitaine.html" class="fiche-topbar-btn">↩ Nouvelle-Aquitaine</a>
+          <a href="../../carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">L</span>a<br><span style="padding-left: 40px;"><span class="titre-initial">C</span>orrèze</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+          <img src="../../../../assets/departement/nouvelle-aquitaine/correze.png" alt="Écusson Corrèze" />
+        </div>
+
+        <span class="fiche-hero-ancien">🏛️ Préfecture : Tulle · Département 19</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥩</span> Spécialités incontournables</div>
+            <ul>
+              <li>Veau de Corrèze Label Rouge (élevage sous la mère)</li>
+              <li>Bœuf de Corrèze (race limousine)</li>
+              <li>Confit de canard du Périgord-Corrèze</li>
+              <li>Farci corrézien (chou farci à la viande)</li>
+              <li>Tourtou (galette de sarrasin corrézienne)</li>
+              <li>Fromage de chèvre des causses corréziens</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌰</span> Produits du terroir</div>
+            <ul>
+              <li>Châtaignes et marrons de Corrèze (AOP en cours)</li>
+              <li>Noix du Périgord AOP (nord du département)</li>
+              <li>Cèpes et girolles des sous-bois corréziens</li>
+              <li>Fraises de Beaulieu-sur-Dordogne</li>
+              <li>Miel de châtaignier de Corrèze</li>
+              <li>Pommes et poires des vergers du plateau</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li>Eaux-de-vie de prune et de poire corrézienne</li>
+              <li>Bières artisanales des Brasseries de Corrèze</li>
+              <li>Liqueur de châtaigne du Limousin</li>
+              <li>Cidre artisanal des vergers du plateau</li>
+              <li>Vins de Cahors (influence du Lot voisin)</li>
+              <li>Hydromel des ruches corrézienness</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Clafoutis aux cerises noires (originaire de Corrèze)</li>
+              <li>Millard (variante corrézienne du clafoutis)</li>
+              <li>Tarte aux noix du Périgord-Corrèze</li>
+              <li>Confiture de châtaignes et crème de marrons</li>
+              <li>Gâteau aux noix de Brive</li>
+              <li>Chocolats et pralinés de Brive-la-Gaillarde</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Sites & monuments classés</div>
+            <ul>
+              <li>Collégiale Saint-Martin de Brive-la-Gaillarde</li>
+              <li>Château de Ventadour (ruines romantiques)</li>
+              <li>Site préhistorique de Laugerie-Basse</li>
+              <li>Viaduc de Garabit (Gustave Eiffel, Cantal voisin)</li>
+              <li>Tours de Merle (forteresse médiévale)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & forteresses</div>
+            <ul>
+              <li>Château de Val (noyé dans le lac de Bort)</li>
+              <li>Château de Sédières (Renaissance, parc)</li>
+              <li>Tours de Merle (cité féodale en ruines)</li>
+              <li>Château de Ventadour (troubadour Bernard de Ventadour)</li>
+              <li>Château de Turenne (vicomté indépendante)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices religieux</div>
+            <ul>
+              <li>Cathédrale Notre-Dame de Tulle (cloître gothique)</li>
+              <li>Abbaye d'Aubazine (cistercienne, XII<sup>e</sup> siècle)</li>
+              <li>Collégiale Saint-Martin de Brive</li>
+              <li>Église de Beaulieu-sur-Dordogne (tympan roman)</li>
+              <li>Chapelle des Pénitents de Collonges-la-Rouge</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée Labenche d'Art et d'Histoire (Brive)</li>
+              <li>Musée de la Résistance et de la Déportation (Tulle)</li>
+              <li>Musée du Château de Val</li>
+              <li>Musée archéologique de Brive</li>
+              <li>Mémorial de Tulle (massacre de juin 1944)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏞️</span> Gorges & rivières</div>
+            <ul>
+              <li>Gorges de la Dordogne (lacs de barrage spectaculaires)</li>
+              <li>Gorges de la Truyère (lac de Sarrans)</li>
+              <li>Vallée de la Vézère (préhistoire et nature)</li>
+              <li>Gorges du Chavanon (sauvages et préservées)</li>
+              <li>Rivière Corrèze (du plateau au bassin de Brive)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & plateaux</div>
+            <ul>
+              <li>Plateau de Millevaches (tourbières et landes)</li>
+              <li>Forêt de châtaigniers (sud du département)</li>
+              <li>Massif des Monédières (landes et myrtilles)</li>
+              <li>Parc Naturel Régional de Millevaches en Limousin</li>
+              <li>Forêts de hêtres et de sapins du plateau</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦅</span> Faune & biodiversité</div>
+            <ul>
+              <li>Loutres de la Dordogne et de la Vézère</li>
+              <li>Balbuzards pêcheurs (lacs de barrage)</li>
+              <li>Cerfs et sangliers des forêts corrézienness</li>
+              <li>Truites farios des gaves et ruisseaux</li>
+              <li>Papillons rares des tourbières de Millevaches</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Paysages & panoramas</div>
+            <ul>
+              <li>Château de Val reflété dans le lac de Bort</li>
+              <li>Vue depuis le Puy Bessolles (Monédières)</li>
+              <li>Beaulieu-sur-Dordogne et ses plages de galets</li>
+              <li>Coucher de soleil sur les gorges de la Dordogne</li>
+              <li>Collonges-la-Rouge au cœur des châtaigneraies</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪗</span> Accordéon & lutherie</div>
+            <ul>
+              <li>Accordéon diatonique de Tulle (tradition ouvrière)</li>
+              <li>Lutherie artisanale du Limousin</li>
+              <li>Fabrication de chabrettes (cornemuse limousine)</li>
+              <li>Ateliers de réparation et restauration d'instruments</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪡</span> Dentelle & textile</div>
+            <ul>
+              <li>Dentelle de Tulle (tulle et point de Tulle)</li>
+              <li>Tissage de laine des moutons corréziens</li>
+              <li>Broderie et tapisserie du Limousin</li>
+              <li>Confection de costumes traditionnels limousins</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪨</span> Pierre & grès rouge</div>
+            <ul>
+              <li>Taille du grès rouge de Collonges (pierre emblématique)</li>
+              <li>Sculpture sur granit du plateau de Millevaches</li>
+              <li>Maçonnerie en pierre sèche corrézienne</li>
+              <li>Restauration du patrimoine en grès rouge</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥫</span> Conserveries & gastronomie</div>
+            <ul>
+              <li>Conserveries de veau et bœuf corrézien</li>
+              <li>Crème et confiture de marrons artisanales</li>
+              <li>Confitures de cerises noires et de myrtilles</li>
+              <li>Charcuteries et saucissons secs corréziens</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & identité</div>
+            <ul>
+              <li>Occitan limousin (dialecte du Limousin)</li>
+              <li>Patois corrézien (variante locale vivace)</li>
+              <li>Identité limousine forte et attachement à la terre</li>
+              <li>Tradition républicaine et radicale (terre de présidents)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Musiques & danses</div>
+            <ul>
+              <li>Bourrée limousine (danse traditionnelle à deux temps)</li>
+              <li>Festival de l'Accordéon de Tulle (Rio Loco)</li>
+              <li>Chants occitans limousins</li>
+              <li>Fest-noz et bals folk (plateau de Millevaches)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌰</span> Traditions rurales</div>
+            <ul>
+              <li>Ramassage des châtaignes (octobre, tradition familiale)</li>
+              <li>Foires aux bestiaux (race limousine)</li>
+              <li>Cueillette des cèpes et des myrtilles</li>
+              <li>Pêche à la truite dans les gaves corréziens</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Festival de la Vézère (musique classique, juillet)</li>
+              <li>Foire du Livre de Brive (novembre)</li>
+              <li>Festival Chantefable (contes et musiques, Tulle)</li>
+              <li>Fête de la Châtaigne à Beynat (octobre)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Collonges-la-Rouge (village entièrement en grès rouge)</li>
+              <li>Turenne (vicomté médiévale perchée)</li>
+              <li>Curemonte (triple château et village fortifié)</li>
+              <li>Beaulieu-sur-Dordogne (abbaye et plage de galets)</li>
+              <li>Ségur-le-Château (boucle de la Auvézère)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Villages du plateau</div>
+            <ul>
+              <li>Meymac (abbaye et musée d'art contemporain)</li>
+              <li>Treignac (gorges de la Vézère et lac)</li>
+              <li>Uzerche (perle du Limousin, sur la Vézère)</li>
+              <li>Argentat-sur-Dordogne (gabarriers et quais)</li>
+              <li>Eygurande (plateau de Millevaches)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Brive-la-Gaillarde (capitale économique du Bas-Limousin)</li>
+              <li>Tulle (dentelle et accordéon, préfecture)</li>
+              <li>Ussel (carrefour du plateau limousin)</li>
+              <li>Objat (terre de présidents et de fraises)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Collonges-la-Rouge</h3>
+            <p>Entièrement construit en grès rouge, Collonges-la-Rouge est l'un des villages les plus singuliers et les plus photographiés de France. Ses maisons médiévales couleur sang, ses tours rondes coiffées d'ardoise, sa halle aux grains et son église aux deux clochers forment un ensemble architectural d'une cohérence saisissante. Niché au cœur des châtaigneraies corrézienness, ce village fut le premier à rejoindre l'association des Plus Beaux Villages de France en 1982.</p>
+            <span class="village-star-tag">1er Plus Beau Village de France (1982)</span>
+            <span class="village-star-tag">Grès rouge du Limousin</span>
+            <span class="village-star-tag">Pays de Brive</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année en Corrèze</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Foire de Printemps de Brive</h4><p>La grande foire agricole et artisanale du Bas-Limousin — race limousine, produits du terroir et artisanat local dans la capitale corrézienne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival de la Vézère</h4><p>Musique classique dans les plus beaux sites de la Corrèze — concerts dans les abbayes, châteaux et villages de la vallée de la Vézère corrézienne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Nuits de Nacre — Festival de l'Accordéon</h4><p>Le grand festival de l'accordéon diatonique à Tulle — musiques du monde, bal folk et concerts dans les rues de la ville de la dentelle.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Estivales de Beaulieu-sur-Dordogne</h4><p>Animations estivales dans l'un des plus beaux villages de Corrèze — marché médiéval, concerts, expositions et animations sur les rives de la Dordogne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête Médiévale de Turenne</h4><p>La vicomté de Turenne revit — chevaliers en armure, troubadours, artisans d'art et banquet médiéval dans ce village perché parmi les plus beaux de France.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Fête de la Châtaigne de Beynat</h4><p>La châtaigne corrézienne à l'honneur — récolte, grillades, crème de marrons et producteurs locaux célèbrent le fruit emblématique des sous-bois limousins.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Foire du Livre de Brive</h4><p>L'un des plus grands salons du livre de France — auteurs, éditeurs et lecteurs se retrouvent à Brive pour ce rendez-vous littéraire incontournable du Sud-Ouest.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Marché de Noël de Collonges-la-Rouge</h4><p>Le village rouge se pare de lumières — artisans d'art, producteurs locaux et ambiance médiévale pour un marché de Noël unique dans un écrin de grès rouge.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">La Corrèze se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre"><span>☀️</span> Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">🍽️ Gourmand</button>
+          <button class="filter-btn" data-filter="culture">🏛️ Culture</button>
+          <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+          <button class="filter-btn" data-filter="famille">👨‍👩‍👧 Famille</button>
+          <button class="filter-btn" data-filter="romantique">💕 Romantique</button>
+          <button class="filter-btn" data-filter="actif">🚴 Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Sur la route du Bœuf et du Veau de Corrèze</h4>
+                <span class="jour-card-icon">🥩</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km autour de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un élevage</strong> de race limousine, découverte de l'élevage du veau sous la mère.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Marché de Brive-la-Gaillarde</strong>, l'un des plus réputés du Sud-Ouest, étals de producteurs locaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un farci corrézien ou d'un veau Label Rouge, dans un bistrot du centre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une conserverie artisanale</strong>, secrets de fabrication des confits et terrines corréziennes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner de terroir</strong> autour d'un bœuf de Corrèze grillé, accompagné d'un vin de Cahors voisin.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Châtaignes et marrons du Limousin</h4>
+                <span class="jour-card-icon">🌰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en octobre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Ramassage de châtaignes</strong> dans une châtaigneraie du sud corrézien, autour de Beynat.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'un atelier</strong> de transformation, crème de marrons et confitures artisanales.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour de châtaignes grillées et d'un tourtou de sarrasin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation de liqueur de châtaigne</strong> chez un producteur local du Limousin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Millard ou clafoutis</strong> aux cerises noires en dessert, spécialité corrézienne incontournable.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Noix et vergers du Périgord-Corrèze</h4>
+                <span class="jour-card-icon">🌳</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · nord de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une noyeraie</strong> AOP Périgord-Corrèze, explication de la récolte et du séchage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation d'huile de noix</strong> pressée à froid dans un moulin traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une salade aux noix et d'un confit de canard du Périgord-Corrèze.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier pâtisserie</strong>, confection d'une tarte aux noix maison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de gâteau aux noix</strong> de Brive et de chocolats artisanaux en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fromages de chèvre des causses corréziens</h4>
+                <span class="jour-card-icon">🐐</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · plateau corrézien</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme caprine</strong>, découverte de la traite et de l'affinage des fromages.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de plusieurs fromages de chèvre selon leur affinage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique fermier</strong>, pain de campagne, fromage frais et miel de châtaignier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les pâturages</strong> du plateau, entre murets de pierre sèche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Achat direct</strong> à la ferme avant de repartir, plateau de fromages pour la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fraises et douceurs d'Objat</h4>
+                <span class="jour-card-icon">🍓</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en mai-juin</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cueillette de fraises</strong> à Objat ou Beaulieu-sur-Dordogne, en pleine saison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'une exploitation fruitière</strong>, pommes et poires du plateau corrézien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner léger</strong> en terrasse, salade de fraises et fromage frais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Chocolaterie artisanale</strong> de Brive-la-Gaillarde, pralinés et chocolats fourrés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de gâteau aux noix</strong> et confiture de fraises maison pour clore la journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marché et bouchons de Tulle</h4>
+                <span class="jour-card-icon">🧺</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Tulle centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Tulle</strong>, produits fermiers et spécialités du plateau limousin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'une épicerie fine</strong> proposant les meilleurs produits corréziens.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner dans un bouchon corrézien</strong>, ambiance conviviale et cuisine généreuse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation d'eaux-de-vie</strong> de prune et de poire chez un artisan distillateur.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Bière artisanale corrézienne</strong> en terrasse, au bord de la rivière Corrèze.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Collonges-la-Rouge, village de grès rouge</h4>
+                <span class="jour-card-icon">🔴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans Collonges-la-Rouge</strong>, maisons en grès rouge, tours et halle aux grains.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'église</strong> aux deux clochers et de la chapelle des Pénitents.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, face aux façades couleur sang du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Ateliers d'artisans d'art</strong> installés dans le village, poterie et peinture.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Lumière du soir</strong> sur le grès rouge, moment photographique incontournable.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Turenne, la vicomté perchée</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Turenne</strong>, ancienne vicomté indépendante, tour de César et vue panoramique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans le village perché</strong>, ruelles pavées et maisons de notables.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge du village, vue sur la campagne corrézienne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Grottes de Lacave ou de Presque</strong> à proximité, curiosités souterraines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis les remparts, vue dégagée sur le Bas-Limousin.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Tulle, dentelle et mémoire</h4>
+                <span class="jour-card-icon">🪡</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Tulle centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cathédrale Notre-Dame de Tulle</strong> et son cloître gothique, cœur historique de la préfecture.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée de la Résistance et de la Déportation</strong>, mémoire du massacre de juin 1944.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Corrèze, dans le centre-ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier de dentelle</strong> ou démonstration de fabrication du point de Tulle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Démonstration d'accordéon diatonique</strong>, tradition musicale emblématique de la ville.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Abbaye d'Aubazine, sérénité cistercienne</h4>
+                <span class="jour-card-icon">⛪</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Abbaye d'Aubazine</strong>, édifice cistercien du XII<sup>e</sup> siècle, dépouillement et pureté architecturale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Canal des moines</strong>, prouesse d'ingénierie médiévale creusée dans la roche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village d'Aubazine, cadre paisible et verdoyant.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade sur le plateau</strong> surplombant les gorges du Coiroux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Moment de calme</strong> dans le cloître, ambiance recueillie en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Tours de Merle, cité féodale</h4>
+                <span class="jour-card-icon">🗼</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Tours de Merle</strong>, spectaculaire cité féodale en ruines perchée au-dessus de la Maronne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite guidée</strong> des sept châteaux médiévaux qui composent le site.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les ruines et la vallée encaissée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Démonstrations médiévales</strong> en saison estivale, tir à l'arc et artisanat d'époque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade au bord de la Maronne</strong>, calme retrouvé après la visite du site.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Brive-la-Gaillarde, entre histoire et art</h4>
+                <span class="jour-card-icon">🏛️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Brive centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Collégiale Saint-Martin</strong> de Brive, joyau architectural du centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée Labenche</strong>, riche collection d'art et d'histoire dans un hôtel Renaissance.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les halles couvertes du centre-ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée archéologique</strong> de Brive, collections préhistoriques et gallo-romaines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade dans les ruelles</strong> piétonnes du centre-ville, animées en soirée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Val et lac de Bort-les-Orgues</h4>
+                <span class="jour-card-icon">🏞️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 70 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Val</strong>, silhouette féerique se reflétant dans les eaux du lac de Bort.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade sur les rives</strong> du lac de barrage, vue sur les gorges de la Dordogne noyées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique au bord de l'eau</strong>, face au château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Croisière ou balade en barque</strong> sur le lac, découverte du site sous un autre angle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le lac, lumière dorée sur les tourelles du château.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Plateau de Millevaches, landes et tourbières</h4>
+                <span class="jour-card-icon">🌾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 60 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée sur le plateau</strong> de Millevaches, landes à perte de vue et sources innombrables.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte d'une tourbière</strong>, écosystème rare et papillons protégés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au grand air, silence et espace du plateau limousin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de Meymac</strong>, abbaye et musée d'art contemporain au cœur du plateau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Ciel étoilé</strong>, l'un des meilleurs sites d'observation de la région, loin de la pollution lumineuse.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Vézère, nature et préhistoire</h4>
+                <span class="jour-card-icon">🦴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 40 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long de la Vézère</strong>, entre Uzerche et Treignac, eaux calmes et forêts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Site préhistorique</strong> à proximité, traces des premiers habitants de la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique au bord de la rivière</strong>, ombre des grands arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Observation des loutres</strong> et de la faune aquatique, discrète mais présente.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade à Uzerche</strong>, la perle du Limousin, dominant la vallée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Massif des Monédières et myrtilles</h4>
+                <span class="jour-card-icon">🫐</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en juillet-août</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée vers le Puy Bessolles</strong>, sommet du massif des Monédières.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Cueillette de myrtilles sauvages</strong> dans les landes, en pleine saison estivale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique panoramique</strong>, vue à 360° sur le Limousin et le Massif Central.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente par les crêtes</strong>, landes de bruyère et bouleaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Tarte aux myrtilles maison</strong>, avec la cueillette du jour, en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gorges sauvages du Chavanon</h4>
+                <span class="jour-card-icon">🌲</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 55 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans les gorges</strong> du Chavanon, l'une des vallées les plus sauvages de Corrèze.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant d'anciens moulins</strong> abandonnés, témoins du passé rural.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique au bord de l'eau</strong>, fraîcheur garantie même en été.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la randonnée</strong> vers les points de vue sur les gorges encaissées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, silence retrouvé de cette vallée peu fréquentée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Rivière Corrèze, du plateau au bassin de Brive</h4>
+                <span class="jour-card-icon">🦦</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Tulle à Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade au fil de la rivière Corrèze</strong> à Tulle, entre ponts anciens et quais aménagés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation de la faune</strong>, loutres et balbuzards pêcheurs selon la saison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une berge ombragée, en aval de Tulle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente vers le bassin de Brive</strong>, paysages qui s'adoucissent progressivement.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la rivière, aux portes de Brive-la-Gaillarde.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Collonges-la-Rouge en famille</h4>
+                <span class="jour-card-icon">👨‍👩‍👧</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> dans les ruelles de Collonges-la-Rouge, à la recherche des détails cachés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique de la halle</strong> aux grains et des tours du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à l'ombre des châtaigniers, en périphérie du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier initiation</strong> à la taille de pierre ou à la poterie pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> avant de reprendre la route, dans le village rouge.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Baignade et jeux au lac de Bort</h4>
+                <span class="jour-card-icon">🏊</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 70 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château de Val</strong>, aventure féerique pour les enfants au bord du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Base de loisirs</strong> du lac de Bort, jeux nautiques et aires de jeux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur la plage aménagée du lac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade surveillée</strong> et activités nautiques en famille, pédalo ou paddle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> face au château de Val, avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fête et château à Turenne</h4>
+                <span class="jour-card-icon">⚔️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique du château</strong> de Turenne, donjon et remparts à explorer.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Animation médiévale</strong> en saison estivale, initiation au tir à l'arc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sous les remparts, vue sur la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en calèche</strong> ou petit train touristique selon les animations du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> dans le village avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Plage de galets à Beaulieu-sur-Dordogne</h4>
+                <span class="jour-card-icon">🏖️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de l'abbatiale</strong> de Beaulieu et de son tympan roman sculpté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans le village</strong>, ruelles médiévales au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur la plage de galets</strong>, au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade en rivière</strong> et jeux sur les galets, surveillance recommandée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> face à la Dordogne avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Art contemporain et jeux à Meymac</h4>
+                <span class="jour-card-icon">🎨</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · plateau de Millevaches</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Musée d'art contemporain</strong> de Meymac, visite adaptée aux familles avec livret-jeu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans l'ancienne abbaye</strong>, architecture et histoire du plateau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans un parc ombragé du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Accrobranche ou jeux en forêt</strong> sur le plateau de Millevaches.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> à base de myrtilles avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Uzerche et les bords de la Vézère</h4>
+                <span class="jour-card-icon">🌉</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 35 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans Uzerche</strong>, la perle du Limousin, tours et maisons anciennes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Descente vers la Vézère</strong>, jeux au bord de l'eau et pêche en famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une berge aménagée de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Baignade</strong> dans une zone calme de la Vézère, surveillance recommandée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> dans le centre-ville d'Uzerche pour clore la journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Curemonte, le triple château</h4>
+                <span class="jour-card-icon">💕</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à Curemonte</strong>, village fortifié dominé par trois châteaux médiévaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite des extérieurs</strong> des châteaux, ruelles calmes et discrètes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> dans une auberge de charme du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie main dans la main</strong> dans la campagne environnante, entre prés et bois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les toits de lauze du village, moment suspendu.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Ségur-le-Château au fil de l'Auvézère</h4>
+                <span class="jour-card-icon">🕊️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 40 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à Ségur-le-Château</strong>, niché dans une boucle de l'Auvézère.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des ruines du château</strong>, ancien siège de la vicomté du Limousin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, au bord de la rivière tranquille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade le long de l'Auvézère</strong>, entre moulins et prairies verdoyantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation d'une eau-de-vie</strong> de prune corrézienne, au calme du village.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Beaulieu-sur-Dordogne, coucher de soleil</h4>
+                <span class="jour-card-icon">🌅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de l'abbatiale</strong> et de son tympan roman, en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Flânerie dans les ruelles</strong> médiévales du village, échoppes d'artisans.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner au bord de la Dordogne</strong>, terrasse ombragée face à la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en gabare</strong> traditionnelle sur la Dordogne, à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les eaux calmes de la Dordogne, moment romantique par excellence.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Sédières et son parc</h4>
+                <span class="jour-card-icon">🌹</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château de Sédières</strong>, élégante demeure Renaissance nichée dans son parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans le parc</strong> arboré, essences rares et allées ombragées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> au bord de l'étang du domaine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Exposition ou concert</strong> selon la programmation culturelle du château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans une auberge voisine, ambiance intimiste.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Argentat-sur-Dordogne, quais et gabarriers</h4>
+                <span class="jour-card-icon">⛵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km de Tulle</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade sur les quais</strong> d'Argentat, façades colorées reflétées dans la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'histoire des gabarriers</strong>, ces bateliers qui descendaient la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, face à la rivière et aux vieux ponts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en canoë tranquille</strong>, à deux, sur les eaux calmes de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Verre en terrasse</strong> au coucher du soleil, ambiance paisible des quais.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Collonges-la-Rouge à la tombée de la nuit</h4>
+                <span class="jour-card-icon">🕯️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de Brive</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Arrivée tranquille</strong> à Collonges-la-Rouge, avant l'affluence, pour profiter du village à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans les ruelles</strong> désertes, lumière douce sur le grès rouge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, face à l'église aux deux clochers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une échoppe d'artisan</strong>, souvenir à deux d'un métier d'art local.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> alors que le village rouge s'embrase sous la lumière du soir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canoë dans les gorges de la Dordogne</h4>
+                <span class="jour-card-icon">🚣</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km en canoë</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> sur la Dordogne, entre Argentat et Beaulieu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage de rapides légers</strong> et découverte des falaises calcaires depuis l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une plage de galets</strong>, pause bien méritée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Reprise de la descente</strong>, villages et ponts anciens défilent sur les rives.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements au bord de l'eau</strong>, satisfaction d'une belle descente.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur le plateau de Millevaches</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie vélo</strong> sur les routes tranquilles du plateau, entre landes et forêts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Meymac</strong>, pause fraîcheur avant de repartir.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord d'un étang du plateau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Treignac</strong>, entre sources et petites vallées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Baignade récupératrice</strong> dans le lac des Bariousses avant de rentrer.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans le massif des Monédières</h4>
+                <span class="jour-card-icon">🥾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 18 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Ascension du Puy Bessolles</strong>, point culminant du massif des Monédières.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée des crêtes</strong>, landes de bruyère et vue à 360°.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique en altitude</strong>, panorama sur le Limousin et le Massif Central.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente technique</strong> par les sentiers forestiers du versant sud.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et repos</strong>, verre d'eau-de-vie de poire bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak et sensations sur la Vézère</h4>
+                <span class="jour-card-icon">🛶</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 12 km en kayak</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> sur la Vézère, entre Uzerche et Treignac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage de petits rapides</strong>, rythme soutenu sur cette rivière vive.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une berge</strong>, ombragée par les forêts du plateau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Reprise de la descente</strong>, entre gorges boisées et villages discrets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau, satisfaction d'une belle journée sportive.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans les gorges du Chavanon</h4>
+                <span class="jour-card-icon">🚵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 35 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> dans les gorges du Chavanon, sentiers techniques et dénivelé soutenu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage devant d'anciens moulins</strong>, halte technique et photo.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les crêtes surplombant les gorges.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et bière artisanale corrézienne bien méritée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée vers les Tours de Merle</h4>
+                <span class="jour-card-icon">🧭</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 16 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée le long de la Maronne</strong>, en direction des Tours de Merle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Montée technique</strong> vers le site féodal perché sur son éperon rocheux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les ruines et la vallée encaissée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les sentiers de crête, panoramas sur le Bas-Limousin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Détente au bord de la Maronne</strong>, avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

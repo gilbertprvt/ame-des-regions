@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roquefort AOP — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────── */
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille meta */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Accords */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* ─── COLONNE DROITE ─────────────────────────── */
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* ─── BOUTON RETOUR FLOTTANT ─────────────────── */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../occitanie.html" class="produit-btn-retour">
+            ← Retour à la fiche Occitanie
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+
+          <h1><em>R</em>oquefort<br><span style="padding-left: 60px;">  <em>A</em>OP</span></h1>
+
+        </div>
+         <img src="../../../../assets/departement/occitanie/carte-occitanie-mini.png"
+               alt="Carte de l'Occitanie"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+        </div>
+
+    <!-- 3. LABEL BAS — indépendant, entre écusson et nav -->
+    <div class="hero-label-bas">
+    ⟹ Fromages & Terroirs ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#fabrication"          >🧀 Fabrication</a>
+          <a href="#vins"                 >🍷 Accords vins</a>
+          <a href="#variantes"            >🔀 Variantes</a>
+          <a href="#ou-manger"            >📍 Où déguster</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Le Roquefort AOP est le doyen des fromages français protégés : dès 1925, un décret lui accordait la toute première appellation d'origine reconnue en France, près de trente ans avant la création officielle du système des AOC. Sa légende remonte pourtant bien plus loin, à un berger qui, ayant oublié dans une grotte du Combalou son repas de pain et de fromage de brebis, l'y retrouva quelques semaines plus tard transformé par des moisissures bleutées — et le trouva délicieux.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+                <img src="../../../../assets/departement/occitanie/photos/roquefort.jpg"
+                     alt="Roquefort AOP" />
+                <figcaption>Meule de Roquefort à la coupe</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p>Le village de Roquefort-sur-Soulzon, adossé au plateau calcaire du Combalou en Aveyron, doit son fromage à un phénomène géologique unique : les <strong>fleurines</strong>, ces fissures naturelles de la roche qui font circuler un air frais et humide chargé de spores de <em>Penicillium roqueforti</em>. C'est cet air, et lui seul, qui permet le développement du fameux persillage bleu-vert au cœur de la pâte.</p>
+
+              <p>Le cahier des charges de l'AOP impose un lait cru de brebis, très majoritairement de race Lacaune, collecté dans une aire géographique précisément délimitée autour de l'Aveyron. L'affinage, d'une durée minimale de 90 jours, doit obligatoirement se dérouler dans les caves naturelles du Combalou, où température et hygrométrie restent d'une remarquable stabilité toute l'année.</p>
+
+              <p>Déjà cité par Pline l'Ancien dans l'Antiquité et apprécié, dit-on, par Charlemagne, le Roquefort s'est imposé au fil des siècles comme l'un des plus grands fromages du monde : une pâte ivoire, souple et fondante, sillonnée de veines bleu-vert, au goût franc, salé et légèrement piquant.</p>
+            </div>
+          </section>
+
+          <!-- FABRICATION -->
+          <section class="section" id="fabrication">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧀</div>
+              L'affinage traditionnel
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Affinage</div>
+                  <div class="recette-meta-val">90 jours minimum</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🌡️</div>
+                <div>
+                  <div class="recette-meta-label">Température cave</div>
+                  <div class="recette-meta-val">8 à 10 °C</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🐑</div>
+                <div>
+                  <div class="recette-meta-label">Lait</div>
+                  <div class="recette-meta-val">Brebis Lacaune, cru</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Origine</div>
+                  <div class="recette-meta-val">Aveyron · Combalou</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Composition</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">100 %</span> Lait cru entier de brebis</div>
+                <div class="ingredient-item"><span class="ingredient-qte">—</span> Ferments <em>Penicillium roqueforti</em></div>
+                <div class="ingredient-item"><span class="ingredient-qte">—</span> Présure</div>
+                <div class="ingredient-item"><span class="ingredient-qte">—</span> Sel de salage à sec</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Caillage</div>
+                  <div class="etape-texte">Le lait de brebis cru est emprésuré puis ensemencé avec les spores de <em>Penicillium roqueforti</em> avant le caillage.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Moulage</div>
+                  <div class="etape-texte">Le caillé est délicatement mis en moule, sans pressage, afin de conserver les alvéoles nécessaires au développement du bleu.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Salage</div>
+                  <div class="etape-texte">Les fromages sont salés à sec sur toutes leurs faces, étape essentielle à la conservation et à l'équilibre du goût.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Piquage</div>
+                  <div class="etape-texte">Le fromage est piqué à l'aide de longues aiguilles afin de créer des cheminées d'aération favorisant le développement du persillage.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Affinage en cave naturelle</div>
+                  <div class="etape-texte">Les meules descendent dans les caves du Combalou, ventilées par les fleurines, pour un affinage minimum de 90 jours.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Enveloppage et contrôle</div>
+                  <div class="etape-texte">Chaque meule est enveloppée d'une feuille d'étain et contrôlée avant de recevoir la marque de la brebis rouge, garantie de l'AOP.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ACCORDS VINS -->
+          <section class="section" id="vins">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Accords vins
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Sauternes</div>
+                  <div class="vin-desc">Le grand classique : la liqueur dorée et miellée épouse parfaitement le sel et le piquant du bleu.</div>
+                </div>
+                <div class="vin-badge">⭐ Accord idéal</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Banyuls</div>
+                  <div class="vin-desc">Vin doux naturel aux notes de fruits noirs et de cacao, en écho à la puissance du fromage.</div>
+                </div>
+                <div class="vin-badge">Recommandé</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🍷</div>
+                <div>
+                  <div class="vin-nom">Porto Tawny</div>
+                  <div class="vin-desc">Notes de fruits secs et d'épices douces qui contrastent avec le caractère salin du Roquefort.</div>
+                </div>
+                <div class="vin-badge">Recommandé</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VARIANTES -->
+          <section class="section" id="variantes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              Variantes régionales
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Roquefort jeune :</strong> affiné au plus près des 90 jours réglementaires, il présente une pâte plus souple et un goût encore délicat.</p>
+              <p><strong>Vieux Roquefort :</strong> affiné plusieurs mois supplémentaires, il développe une pâte plus sèche et des arômes puissants, très recherchés des amateurs.</p>
+              <p><strong>Roquefort des différentes maisons affineuses :</strong> chaque cave du Combalou (Société, Papillon, Carles, Vernières…) affine selon des méthodes qui lui sont propres, donnant des nuances de goût reconnaissables.</p>
+            </div>
+          </section>
+
+          <!-- OÙ DÉGUSTER -->
+          <section class="section" id="ou-manger">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Où déguster en Aveyron ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Le véritable Roquefort se découvre au plus près de son lieu de naissance, dans les caves mêmes du Combalou.</p>
+
+              <p><strong>Roquefort-sur-Soulzon</strong> les caves d'affinage se visitent et proposent dégustations et vente directe au cœur du rocher.</p>
+
+              <p><strong>Millau</strong> ville marché de l'Aveyron, où l'on trouve fromagers et produits du terroir aveyronnais.</p>
+
+              <p><strong>Les fermes de brebis Lacaune</strong> réparties sur les causses environnants, certaines ouvrent leurs portes lors de visites organisées.</p>
+
+              <p><strong>Toulouse</strong> les grands marchés couverts, comme celui de Victor-Hugo, proposent une belle sélection de Roquefort affiné.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Aveyron · Combalou</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Fromage AOP · Pâte persillée</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Toute l'année</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Plateau de fromages · Apéritif · Cuisine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">AOP (première AOC française, 1925)</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Institut national de l'origine et de la qualité · Commission européenne</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Liens connexes -->
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="pelardon.html" class="aside-lien">
+                  🐐 Pélardon AOP
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="cabecou.html" class="aside-lien">
+                  🧀 Cabécou du Périgord
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="foie-gras-gers.html" class="aside-lien">
+                  🦆 Foie gras du Gers IGP
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="safran-quercy.html" class="aside-lien">
+                  🌸 Safran du Quercy
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+                <a href="../../occitanie.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région
+                  <span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../../../index.html">Accueil</a>
+        <a href="../../occitanie.html">Occitanie</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation interne active
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    // Navigation interne scroll doux
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Bouton retour flottant
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

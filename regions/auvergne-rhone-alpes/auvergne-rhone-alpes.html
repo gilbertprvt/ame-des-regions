@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auvergne-Rhône-Alpes — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Titre + écusson */
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner {
+      position: relative;
+    }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-auvergne-rhone-alpes.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">A</span>uvergne-<br>
+     <span style="padding-left:30px;"><span class="titre-initial">R</span>hône-</span><span class="titre-initial">A</span>lpes</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-auvergne-rhone-alpes.png" alt="Écusson Auvergne-Rhône-Alpes" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/fondue-savoyarde.html">Fondue savoyarde</a></li>
+              <li><a href="gastronomie/plats-emblematiques/tartiflette.html">Tartiflette au Reblochon</a></li>
+              <li><a href="gastronomie/plats-emblematiques/quenelle-lyonnaise.html">Quenelle de brochet lyonnaise</a></li>
+              <li><a href="gastronomie/plats-emblematiques/gratin-dauphinois.html">Gratin dauphinois</a></li>
+              <li><a href="gastronomie/plats-emblematiques/potee-auvergnate.html">Potée auvergnate</a></li>
+              <li><a href="gastronomie/plats-emblematiques/truffade.html">Truffade du Cantal</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroirs/reblochon.html">Reblochon AOP (Haute-Savoie)</a></li>
+              <li><a href="gastronomie/fromages-terroirs/cantal.html">Cantal AOP</a></li>
+              <li><a href="gastronomie/fromages-terroirs/saint-nectaire.html">Saint-Nectaire AOP</a></li>
+              <li><a href="gastronomie/fromages-terroirs/beaufort.html">Beaufort AOP</a></li>
+              <li><a href="gastronomie/fromages-terroirs/fourme-ambert.html">Fourme d'Ambert AOP</a></li>
+              <li><a href="gastronomie/fromages-terroirs/bleu-auvergne.html">Bleu d'Auvergne AOP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/cotes-du-rhone.html">Côtes du Rhône AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/crozes-hermitage.html">Crozes-Hermitage AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/saint-joseph.html">Saint-Joseph AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/beaujolais.html">Beaujolais AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/chartreuse.html">Chartreuse (liqueur des Chartreux)</a></li>
+              <li><a href="gastronomie/vin-boisson/volvic.html">Eau minérale de Volvic</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceurs/praline-rose-lyon.html">Praline rose de Lyon</a></li>
+              <li><a href="gastronomie/douceurs/tarte-myrtilles-savoie.html">Tarte aux myrtilles de Savoie</a></li>
+              <li><a href="gastronomie/douceurs/bugnes-lyonnaises.html">Bugnes lyonnaises</a></li>
+              <li><a href="gastronomie/douceurs/nougat-montelimar.html">Nougat de Montélimar IGP</a></li>
+              <li><a href="gastronomie/douceurs/biscuit-savoie.html">Biscuit de Savoie</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine UNESCO</div>
+            <ul>
+             <li><a href="patrimoine/patrimoine-unesco/lyon-vieux-lyon-fourviere.html">Lyon — Site historique (Vieux-Lyon, Fourvière)</a></li>
+             <li><a href="patrimoine/patrimoine-unesco/massif-mont-blanc.html">Massif du Mont-Blanc (site naturel exceptionnel)</a></li>
+             <li><a href="patrimoine/patrimoine-unesco/grotte-chauvet.html">Grotte ornée du Pont d'Arc (grotte Chauvet)</a></li>
+            <li><a href="patrimoine/patrimoine-unesco/sites-palafittiques-prehistoriques.html">Sites palafittiques préhistoriques autour des Alpes</a></li>
+            
+            
+            
+             
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+
+               <li><a href="patrimoine/edifice-remarquables/abbaye-hautecombe.html">Abbaye de Hautecombe (Savoie)</a></li>
+               <li><a href="patrimoine/edifice-remarquables/basilique-fourviere.html">Basilique Fourvière</a></li>
+               <li><a href="patrimoine/edifice-remarquables/cathedrale-clermont-ferrand.html">Cathédrale Notre-Damede Clermont-Ferrand</a></li>
+               <li><a href="patrimoine/edifice-remarquables/theatres-romains-lyon.html">Théâtres romains de Lyon (Lugdunum)</a></li>
+               <li><a href="patrimoine/edifice-remarquables/chateau-tournon-sur-rhone.html">Château de Tournon-sur-Rhône</a></li>
+          
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+
+               <li><a href="patrimoine/musees-culture/lyon-musee-confluences.html">Musée des Confluences (Lyon)</a></li>
+               <li><a href="patrimoine/musees-culture/lyon-musee-lugdunum.html">Musée de Fourvière — Lugdunum</a></li>
+               <li><a href="patrimoine/musees-culture/clermont-ferrand-musee-bargoin.html">Musée Bargoin (Clermont-Ferrand)</a></li>
+               <li><a href="patrimoine/musees-culture/grenoble-musee-grenoble.html">Musée de Grenoble (art modern)</a></li>
+              <li><a href="patrimoine/musees-culture/lyon-musee-beaux-arts.html">Musée des Beaux-Arts de Lyon</a></li>             
+          
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌋</span> Volcans & géologie</div>
+            <ul>
+
+            <li><a href="patrimoine/volcans-geologie/parc-volcans-auvergne.html">Parc des volcans d'Auvergne</a></li>  
+            <li><a href="patrimoine/volcans-geologie/puy-de-dome.html">Puy de Dôme (1 465 m)</a></li> 
+            <li><a href="patrimoine/volcans-geologie/chaine-des-puys.html">Chaîne des Puys — UNESCO</a></li> 
+            <li><a href="patrimoine/volcans-geologie/lac-pavin.html">Lac Pavin (maar volcanique)</a></li> 
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Alpes & haute montagne</div>
+            <ul>
+
+            <li><a href="nature/alpes-haute-montagne/mont-blanc.html">Mont-Blanc (4 808 m, toit de l'Europe)</a></li> 
+            <li><a href="nature/alpes-haute-montagne/vanoise.html">Massif de la Vanoise (Parc national)</a></li> 
+             <li><a href="nature/alpes-haute-montagne/ecrins.html">Écrins (Parc national)</a></li> 
+             <li><a href="nature/alpes-haute-montagne/belledonne-chartreuse-vercors.html">Belledonne, Chartreuse, Vercors</a></li> 
+            <li><a href="nature/alpes-haute-montagne/mer-de-glace.html">Mer de Glace (Chamonix)</a></li> 
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌋</span> Volcans & Auvergne</div>
+            <ul>
+              <li><a href="nature/volcans-auvergne/parc-volcans-auvergne.html">Parc naturel régional des Volcans d'Auvergne</a></li>
+              <li><a href="nature/volcans-auvergne/chaine-des-puys.html">Chaîne des Puys (UNESCO)</a></li>
+              <li><a href="nature/volcans-auvergne/gorges-allier-truyere.html">Gorges de l'Allier et de la Truyère</a></li>
+              <li><a href="nature/volcans-auvergne/massif-du-sancy.html">Massif du Sancy</a></li>
+              <li><a href="nature/volcans-auvergne/reserve-naturelle-vallee-chaudefour.html">Réserve naturelle de la Vallée de Chaudefour</a></li>
+              <li><a href="nature/volcans-auvergne/tourbieres-godivelle.html">Tourbières de la Godivelle</a></li>
+
+
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💧</span> Lacs & rivières</div>
+            <ul>
+              <li><a href="nature/lacs-rivieres/lac-annecy.html">Lac d'Annecy (plus pur d'Europe)</a></li>
+              <li><a href="nature/lacs-rivieres/lac-du-bourget.html">Lac du Bourget (plus grand lac naturel de France)</a></li>
+              <li><a href="nature/lacs-rivieres/lac-de-nantua.html">Lac de Nantua (Ain)</a></li>
+              <li><a href="nature/lacs-rivieres/fleuve-rhone.html">Fleuve Rhône</a></li>
+              <li><a href="nature/lacs-rivieres/gorges-ardeche.html"> Gorges de l'Ardèche</a></li>
+              <li><a href="nature/lacs-rivieres/cascades-vallee-chaudefour.html"> Cascades de la Vallée de Chaudefour</a></li>
+              <li><a href="nature/lacs-rivieres/grande-cascade-mont-dore.html"> Grande Cascadedu Mont-Dore</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Parcs & réserves</div>
+            <ul>
+              <li><a href="nature/parcs-reserve/parc-naturel-regional-vercors.html">Parc naturel régional du Vercors</a></li>
+              <li><a href="nature/parcs-reserve/parc-naturel-regional-pilat.html">Parc naturel régional du Pilat</a></li>
+              <li><a href="nature/parcs-reserve/reserve-hauts-plateaux-vercors.html">Réserve naturelle des Hauts-Plateaux du Vercors</a></li>
+              <li><a href="nature/parcs-reserve/foret-de-saou.html">Forêt de Saou (Drôme)</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Soierie & textile</div>
+            <ul>
+
+            <li><a href="artisanat/soirie-textile/soierie-lyonnaise.html">Soierie de Lyon (capitale mondiale)</a></li>
+            <li><a href="artisanat/soirie-textile/tissage-croix-rousse.html">Tissage de la Croix-Rousse</a></li>
+            <li><a href="artisanat/soirie-textile/dentelle-puy-en-velay.html">Dentelle du Puy-en-Velay</a></li>
+
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🔪</span> Coutellerie & forge</div>
+            <ul>
+              <li><a href="artisanat/coutellerie-forge/coutellerie-de-thiers.html">Coutellerie de Thiers (Puy-de-Dôme)</a></li>
+              <li><a href="artisanat/coutellerie-forge/forge-armurerie-de-la-loire.html">Forge et armurerie de la Loire</a></li>
+              <li><a href="artisanat/coutellerie-forge/ferronnerie-art-lyonnaise.html">Ferronnerie d'art lyonnaise</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧊</span> Cristal & verrerie</div>
+            <ul>
+           
+              <li><a href="artisanat/cristal-verrerie/verrerie-de-givors.html">Verrerie de Givors (Rhône)</a></li>
+              <li><a href="artisanat/cristal-verrerie/artisanat-verre-de-biot.html">Artisanat du verre de Biot</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & marqueterie</div>
+            <ul>
+              <li><a href="artisanat/bois-marqueterie/lutherie-jenzat.html">Lutherie de Jenzat</a></li>
+              <li><a href="artisanat/bois-marqueterie/marqueterie-paille-alby-chambery.html">Marqueterie de Paille-Alby (Chambery, Haute-Savoie)</a></li>
+              <li><a href="artisanat/bois-marqueterie/sculpture-bois-bessans.html">Sculpture sur bois de Bessans</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+  
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li><a href="villages/plus-beaux-villages/yvoire.html">Yvoire (Haute-Savoie)</a></li>
+              <li><a href="villages/plus-beaux-villages/perouges.html">Pérouges (Ain)</a></li>
+              <li><a href="villages/plus-beaux-villages/blesle.html">Blesle (Haute-Loire)</a></li>
+              <li><a href="villages/plus-beaux-villages/salers.html">Salers (Cantal)</a></li>
+              <li><a href="villages/plus-beaux-villages/usson.html">Usson (Puy-de-Dôme)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages médiévaux</div>
+            <ul>
+              <li><a href="villages/villages-medievaux/perouges.html">Pérouges (cité médiévale intacte, Ain)</a></li>
+              <li><a href="villages/villages-medievaux/chateauneuf.html">Chateauneuf (Côte-d'Or, limitrophe)</a></li>
+              <li><a href="villages/villages-medievaux/la-chaise-dieu.html">La Chaise-Dieu (Haute-Loire)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li><a href="villages/villages-pitoresques/yvoire.html">Yvoire (bord du lac Léman)</a></li>
+              <li><a href="villages/villages-pitoresques/talloires.html">Talloires (Lac d'Annecy)</a></li>
+              <li><a href="villages/villages-pitoresques/le-puy-en-velay.html">Le Puy-en-Velay (Haute-Loire)</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Pérouges</h3>
+            <p>Perché sur sa colline à l'est de Lyon, Pérouges est l'une des cités médiévales les mieux conservées de France. Ses ruelles pavées de galets, ses maisons à encorbellement du XVe siècle et sa place centrale ombragée en font un décor si authentique qu'il a servi de cadre à de nombreux films historiques. La galette de Pérouges, généreuse brioche beurrée au sucre, en est le symbole gourmand.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Cité médiévale classée</span>
+            <span class="village-star-tag">Ain — Bugey</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Rallye Monte-Carlo — Gap / Monaco</h4><p>Le légendaire rallye automobile hivernal traverse les routes enneigées des Alpes du Sud en conditions extrêmes.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Foire Internationale de Lyon</h4><p>L'un des plus grands salons professionnels et grand public d'Europe, vitrine de l'économie régionale et internationale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Jazz à Vienne</h4><p>Festival de jazz de renommée mondiale dans le théâtre antique de Vienne — dix jours de concerts sous les étoiles.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Festival de Labeaume en Musiques (Ardèche)</h4><p>Festival de musique de chambre en plein air dans le cadre des gorges de la Beaume, entre falaises et rivière.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Nuits de Fourvière — Lyon</h4><p>Théâtre, danse, musique du monde dans les théâtres romains de Lyon — le rendez-vous culturel de l'été rhodanien.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Beaujolais Nouveau — Villages du Beaujolais</h4><p>Le troisième jeudi de novembre, les caves ouvrent leurs portes pour fêter le premier vin de l'année.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Biennale de Lyon (art contemporain)</h4><p>L'une des plus importantes biennales d'art contemporain du monde, répartie dans toute la métropole lyonnaise.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Fête des Lumières — Lyon</h4><p>Quatre nuits magiques où Lyon illumine ses façades et ses places grâce à des installations lumineuses spectaculaires.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+ <script src="../../script.js"></script>
+ <script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'occitanie-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pays de la Loire — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-pays-de-la-loire.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">P</span>ays de<br><span style="padding-left: 120px;">la <span class="titre-initial">L</span>oire</span></h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-pays-de-la-loire.png" alt="Écusson Pays de la Loire" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/mogette-vendee.html">Mogette de Vendée (haricot blanc IGP)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/brochet-beurre-blanc.html">Brochet au beurre blanc nantais</a></li>
+              <li><a href="gastronomie/plats-emblematiques/jambon-vendeen.html">Jambon vendéen (préparé au sel)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/chaudrée-vendée.html">Chaudrée vendéenne (soupe de poissons)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/rillauds-anjou.html">Rillauds d'Anjou</a></li>
+              <li><a href="gastronomie/plats-emblematiques/maraichine-vendee.html">Poule maraîchine (race vendéenne)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/curé-nantais.html">Curé Nantais (fromage lavé)</a></li>
+              <li><a href="gastronomie/fromages-terroir/sel-guerande.html">Sel de Guérande IGP (fleur de sel)</a></li>
+              <li><a href="gastronomie/fromages-terroir/canard-challans.html">Canard de Challans IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/volaille-vendee.html">Volaille de Vendée IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/muscadet-levure.html">Muscadet sur lie AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/beurre-charentes.html">Beurre des Charentes-Poitou AOP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/muscadet-aop.html">Muscadet AOP (Sèvre et Maine)</a></li>
+              <li><a href="gastronomie/vin-boisson/anjou-aop.html">Anjou AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/saumur-champigny.html">Saumur-Champigny AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/coteaux-layon.html">Coteaux du Layon AOP (moelleux)</a></li>
+              <li><a href="gastronomie/vin-boisson/fiefs-vendeens.html">Fiefs vendéens AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/cidre-vendee.html">Cidre et Pommeau du Pays Nantais</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/brioche-vendee.html">Brioche vendéenne IGP</a></li>
+              <li><a href="gastronomie/douceur/berlingot-nantes.html">Berlingot nantais</a></li>
+              <li><a href="gastronomie/douceur/gateau-nantais.html">Gâteau nantais (rhum et amandes)</a></li>
+              <li><a href="gastronomie/douceur/poire-belle-angevine.html">Poire Belle Angevine</a></li>
+              <li><a href="gastronomie/douceur/quernon-ardoise.html">Quernon d'ardoise d'Angers</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine majeur</div>
+            <ul>
+              <li>Château des ducs de Bretagne (Nantes)</li>
+              <li>Abbaye royale de Fontevraud (Maine-et-Loire)</li>
+              <li>Château d'Angers (tapisserie de l'Apocalypse)</li>
+              <li>Puy du Fou (parc historique mondial)</li>
+              <li>Passage Pommeraye (Nantes, 1843)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale Saint-Pierre-et-Saint-Paul de Nantes</li>
+              <li>Cathédrale Saint-Maurice d'Angers</li>
+              <li>Abbaye de Solesmes (chant grégorien)</li>
+              <li>Château de Saumur (balcon de l'Anjou)</li>
+              <li>Basilique Saint-Nicolas de Nantes</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée d'Arts de Nantes</li>
+              <li>Les Machines de l'Île (Nantes)</li>
+              <li>Musée des Beaux-Arts d'Angers</li>
+              <li>Mémorial de Vendée (Luçon)</li>
+              <li>Musée Jules Verne (Nantes)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎨</span> Art contemporain</div>
+            <ul>
+              <li>Le Voyage à Nantes (parcours d'art urbain)</li>
+              <li>Estuaire Nantes — Saint-Nazaire (art in situ)</li>
+              <li>FRAC Pays de la Loire</li>
+              <li>Le Lieu Unique (Nantes — ancienne biscuiterie LU)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Littoral atlantique</div>
+            <ul>
+              <li>Côte de Jade (Pornic, Saint-Brévin)</li>
+              <li>Île de Noirmoutier (passage du Gois)</li>
+              <li>Île d'Yeu (Vendée)</li>
+              <li>Les Sables-d'Olonne (plage et remblai)</li>
+              <li>Baie de l'Aiguillon (Charente-Maritime, limitrophe)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Marais & zones humides</div>
+            <ul>
+              <li>Marais salants de Guérande (presqu'île)</li>
+              <li>Marais breton vendéen</li>
+              <li>Marais poitevin (Vendée — Venise verte)</li>
+              <li>Lac de Grand-Lieu (plus grand lac naturel en hiver)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Forêts & bocage</div>
+            <ul>
+              <li>Forêt de Mervent-Vouvant (Vendée)</li>
+              <li>Bocage vendéen (haies et vallons)</li>
+              <li>Forêt de Bercé (Sarthe — futaie de chênes)</li>
+              <li>Vallée de la Sarthe</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Jardins & paysages</div>
+            <ul>
+              <li>Terrasses d'Anjou (vignobles et falaises de tuffeau)</li>
+              <li>Vignoble nantais (Muscadet)</li>
+              <li>Jardins de la Fosse (Maine-et-Loire)</li>
+              <li>Parc naturel régional du Perche</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>⚓</span> Construction navale & marine</div>
+            <ul>
+              <li>Chantiers navals de Saint-Nazaire (plus grands d'Europe)</li>
+              <li>Construction de bateaux en bois (Noirmoutier)</li>
+              <li>Corderie artisanale de l'estuaire</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Céramique & poterie</div>
+            <ul>
+              <li>Faïences de Malicorne-sur-Sarthe</li>
+              <li>Poteries d'Anjou (Saint-Jean-de-la-Croix)</li>
+              <li>Grès du Perche (Sarthe)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧵</span> Textile & dentelle</div>
+            <ul>
+              <li>Dentelle au fuseau du Puy (tradition sarthoise)</li>
+              <li>Tissage de lin du Maine</li>
+              <li>Broderie vendéenne (costumes traditionnels)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & mobilier</div>
+            <ul>
+              <li>Ébénisterie d'Angers</li>
+              <li>Saboterie du bocage vendéen</li>
+              <li>Marqueterie et lutherie du Maine</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Gallo (langue d'oïl de Haute-Bretagne)</li>
+              <li>Saintongeais (Vendée méridionale)</li>
+              <li>Héritage Jules Verne (Nantes, ville natale)</li>
+              <li>Culture ligérienne et angevine</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>💃</span> Danses & musiques</div>
+            <ul>
+              <li>Fest-noz (héritage breton en Loire-Atlantique)</li>
+              <li>Danse vendéenne (branle et bourrée)</li>
+              <li>Festival Scopitone (musiques numériques, Nantes)</li>
+              <li>Hellfest (Clisson — festival de metal)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏄</span> Sports & traditions</div>
+            <ul>
+              <li>Vendée Globe (tour du monde à la voile, Les Sables)</li>
+              <li>24 Heures du Mans (Sarthe)</li>
+              <li>Surf et voile (côte atlantique vendéenne)</li>
+              <li>Rugby (Stade Rochelais, RCT…)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Carnaval de Nantes (février)</li>
+              <li>Fête de la Brioche vendéenne (Pâques)</li>
+              <li>Foire de la Sainte-Croix (Fontenay-le-Comte)</li>
+              <li>Fête des Trois Continents (Nantes — cinéma)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Vouvant (Vendée)</li>
+              <li>Clisson (Loire-Atlantique — architecture italianisante)</li>
+              <li>Asnières-sur-Vègre (Sarthe)</li>
+              <li>Sainte-Suzanne (Mayenne)</li>
+              <li>Montsoreau (Maine-et-Loire)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages & cités de caractère</div>
+            <ul>
+              <li>Saumur (balcon de l'Anjou)</li>
+              <li>Le Mans (cité Plantagenêt — vieille ville)</li>
+              <li>La Flèche (Sarthe)</li>
+              <li>Fontenay-le-Comte (Renaissance vendéenne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Noirmoutier-en-l'Île (île de lumière)</li>
+              <li>Saint-Florent-le-Vieil (Maine-et-Loire)</li>
+              <li>Clisson (vallée de la Sèvre)</li>
+              <li>Asnières-sur-Vègre (fresques romanes)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Montsoreau</h3>
+            <p>Posé à la confluence de la Loire et de la Vienne, Montsoreau est l'unique village de France à être construit au bord de la Loire. Son château Renaissance du XVe siècle, aujourd'hui musée d'art contemporain, domine un bourg aux maisons de tuffeau blanc classées parmi les plus beaux villages de France. Alexandre Dumas lui consacra un roman, La Dame de Monsoreau, qui en fit un lieu de mémoire littéraire et historique.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Maine-et-Loire</span>
+            <span class="village-star-tag">Val de Loire UNESCO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Carnaval de Nantes</h4><p>Le grand défilé de chars et de costumes envahit les rues de Nantes — l'une des fêtes populaires les plus animées du Grand Ouest.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Fête de la Brioche Vendéenne</h4><p>Les boulangers et artisans vendéens célèbrent leur brioche IGP autour de concours de tressage et de dégustations festives.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Hellfest — Clisson</h4><p>Le plus grand festival de metal en France, au bord de la Sèvre nantaise dans le cadre Renaissance du village de Clisson.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>24 Heures du Mans</h4><p>La course d'endurance automobile la plus célèbre du monde, sur le circuit de la Sarthe depuis 1923 — 24 heures de légende.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Le Voyage à Nantes</h4><p>Tout l'été, la ligne verte guide les promeneurs à travers les œuvres d'art urbain et installations temporaires dans toute la ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Spectacles du Puy du Fou</h4><p>La Cinéscénie — le plus grand spectacle nocturne du monde — réunit chaque soir 12 000 spectateurs dans un décor de château médiéval.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Fête des Trois Continents — Nantes</h4><p>Festival international du cinéma des pays d'Afrique, d'Asie et d'Amérique latine — une fenêtre unique sur les cinémas du monde.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Vendée Globe — Les Sables-d'Olonne</h4><p>Tous les quatre ans, les skippers s'élancent pour un tour du monde en solitaire, sans escale et sans assistance — départ et arrivée aux Sables.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Pays de la Loire</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🚴</span>
+            <h4>La Loire à Vélo</h4>
+            <p>De Saint-Nazaire à Orléans, 900 km de pistes le long du dernier fleuve sauvage d'Europe — étape incontournable entre Nantes et Angers.</p>
+            <span class="parcours-item-duree">⏱ 5 à 8 jours (étape ligérienne)</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🧂</span>
+            <h4>Presqu'île de Guérande</h4>
+            <p>Les marais salants, La Baule, Le Croisic et Guérande médiévale — sel, mer et gastronomie atlantique sur la côte de jade.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Châteaux d'Anjou & Saumurois</h4>
+            <p>Angers, Saumur, Fontevraud, Montsoreau — falaises de tuffeau, caves troglodytiques et vignobles du Val d'Anjou.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⚓</span>
+            <h4>Estuaire de la Loire</h4>
+            <p>De Nantes à Saint-Nazaire, le parcours d'art contemporain Estuaire jalonne les rives de sculptures monumentales in situ.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏄</span>
+            <h4>Côte Vendéenne & Îles</h4>
+            <p>Les Sables-d'Olonne, Noirmoutier, Île d'Yeu — surf, marais salants et villages blancs de la côte de Lumière.</p>
+            <span class="parcours-item-duree">⏱ 4 à 6 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏎️</span>
+            <h4>Circuit des 24 Heures du Mans</h4>
+            <p>Le Mans médiéval, le circuit automobile, le musée des 24 Heures — une plongée dans la légende de l'endurance automobile.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

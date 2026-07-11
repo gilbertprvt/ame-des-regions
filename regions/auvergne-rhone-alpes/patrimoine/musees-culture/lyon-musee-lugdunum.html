@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lugdunum — Musée et théâtres romains — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-top: 40px;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <div class="produit-hero">
+
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../auvergne-rhone-alpes.html" class="produit-btn-retour">
+            ← Retour à la fiche Auvergne-Rhône-Alpes
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><span style="padding-left: 20px;">  <em>L</em>ugdunum</span><br><span style="padding-left: 60px;">  <em>M</em>usée & </span><br> <span style="padding-left: 100px;"> <em>T</em>héâtres romains</span></h1>
+        </div>
+        <img src="../../../../assets/departement/auvergne-rhone-alpes/carte-auvergne-rhone-alpes-mini.png"
+             alt="Carte de Auvergne-Rhône-Alpes"
+             style="height:220px; width:auto; opacity:0.85;
+                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                    display:block;" />
+      </div>
+    </div>
+
+    <div class="fiche-hero-ecusson">
+         <img src="../../../../assets/régions/ecusson-auvergne-rhone-alpes.png" alt="Écusson Auvergne-Rhône-Alpes" />
+    </div>
+
+    <div class="hero-label-bas">
+    ⟹ Musées & Collections ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#visite">🖼️ Collections</a>
+          <a href="#patrimoine">🏆 Distinctions</a>
+          <a href="#environs">🔀 À proximité</a>
+          <a href="#pratique">📍 Infos pratiques</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Sur les pentes de la colline de Fourvière, à l'endroit même où fut fondée Lugdunum en 43 avant J.-C., le musée gallo-romain raconte deux mille ans d'histoire lyonnaise. L'idée d'un musée dédié à la ville romaine remonte aux années 1930, lorsque débutent les grandes fouilles archéologiques de la colline, mais il faut attendre les années 1960 pour que le projet prenne réellement forme.</p>
+              <p>La construction est confiée à l'architecte Bernard Zehrfuss, Grand Prix de Rome et figure du mouvement moderne, auteur par ailleurs du CNIT à la Défense et du siège de l'UNESCO à Paris. Sa volonté est claire : enterrer le bâtiment dans la colline plutôt que d'imposer une façade concurrençant les vestiges antiques.</p>
+              <p>Construit en béton brut de décoffrage, le musée s'enfonce aux quatre cinquièmes dans le sol, ne laissant émerger que deux grandes baies vitrées, surnommées les « canons à lumière », qui ouvrent sur le site archéologique. Inauguré le 15 novembre 1975 par le maire Louis Pradel, l'édifice épouse un parcours en spirale descendante, comme une remontée dans le temps.</p>
+              <p>Renommé Lugdunum en 2017, le musée intègre depuis lors la gestion du site des théâtres antiques attenant : un grand théâtre de 10 000 places et un odéon, parmi les plus anciens vestiges de ce type en Gaule, toujours utilisés aujourd'hui pour le festival des Nuits de Fourvière.</p>
+            </div>
+          </section>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+            <img src="../../../../assets/departement/auvergne-rhone-alpes/photos/musee-lugdunum.jpg" alt="Le musée Lugdunum enchâssé dans la colline de Fourvière" />
+            <figcaption>Le musée gallo-romain, enterré dans la colline au-dessus des théâtres antiques</figcaption>
+          </figure>
+          <div class="clearfix"></div>
+
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🖼️</div>
+              Visiter le musée
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée conseillée</div>
+                  <div class="recette-meta-val">2 à 3 heures</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏺</div>
+                <div>
+                  <div class="recette-meta-label">Surface d'exposition</div>
+                  <div class="recette-meta-val">4 000 m²</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏛️</div>
+                <div>
+                  <div class="recette-meta-label">Théâtre antique</div>
+                  <div class="recette-meta-val">10 000 places</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🗓️</div>
+                <div>
+                  <div class="recette-meta-label">Meilleure période</div>
+                  <div class="recette-meta-val">Printemps · Été (Nuits de Fourvière)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La descente en spirale</div>
+                  <div class="etape-texte">Entrez par le sommet du musée et laissez le parcours architectural vous conduire progressivement vers les niveaux les plus anciens.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La Table claudienne</div>
+                  <div class="etape-texte">Admirez cette monumentale plaque de bronze gravée du discours prononcé par l'empereur Claude, natif de Lyon, en faveur des Gaulois.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les mosaïques</div>
+                  <div class="etape-texte">Découvrez l'une des plus belles collections de mosaïques romaines de France, dont celle des jeux du cirque.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Vie quotidienne et religions</div>
+                  <div class="etape-texte">Bijoux, monnaies, céramiques sigillées et objets votifs retracent la vie publique et privée des premiers Lyonnais.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les canons à lumière</div>
+                  <div class="etape-texte">Faites une pause à ces ouvertures spectaculaires qui offrent une vue plongeante sur le site des théâtres antiques.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le site des théâtres</div>
+                  <div class="etape-texte">Prolongez la visite en extérieur, dans le grand théâtre et l'odéon, inscrits au patrimoine mondial de l'UNESCO.</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Patrimoine & reconnaissance
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Patrimoine mondial UNESCO</div>
+                  <div class="vin-desc">Le site des théâtres antiques fait partie du secteur historique de Lyon inscrit en 1998.</div>
+                </div>
+                <div class="vin-badge">⭐ Distinction majeure</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏗️</div>
+                <div>
+                  <div class="vin-nom">Architecture de Bernard Zehrfuss</div>
+                  <div class="vin-desc">Une référence du mouvement moderne, saluée pour son dialogue respectueux avec le site archéologique.</div>
+                </div>
+                <div class="vin-badge">Repère architectural</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎭</div>
+                <div>
+                  <div class="vin-nom">Nuits de Fourvière</div>
+                  <div class="vin-desc">Chaque été, le théâtre antique retrouve sa vocation de scène vivante pour un grand festival pluridisciplinaire.</div>
+                </div>
+                <div class="vin-badge">Tradition vivante</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="environs">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              À proximité
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Basilique Notre-Dame de Fourvière :</strong> à quelques pas, la silhouette néo-byzantine domine la ville et offre un panorama sur les Alpes par temps clair.</p>
+              <p><strong>Vieux-Lyon :</strong> accessible par le funiculaire, le quartier Renaissance et ses traboules prolongent la découverte du Lyon historique.</p>
+              <p><strong>Musée des Beaux-Arts de Lyon :</strong> pour retrouver d'autres pièces archéologiques lyonnaises exposées avant la création de Lugdunum.</p>
+              <p><strong>Jardin du Rosaire :</strong> un parcours de promenade ombragé qui relie la colline de Fourvière au Vieux-Lyon.</p>
+            </div>
+          </section>
+
+          <section class="section" id="pratique">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Informations pratiques
+            </h2>
+            <div class="histoire-texte">
+              <p>Le musée se trouve au 17 rue Cléberg, dans le 5ᵉ arrondissement de Lyon, accessible par le funiculaire depuis la place Saint-Jean.</p>
+              <p><strong>Horaires</strong> — Ouvert du mardi au vendredi et le week-end ; les horaires peuvent être adaptés en cas de forte chaleur, il est conseillé de vérifier avant la visite.</p>
+              <p><strong>Expositions temporaires</strong> — Une grande exposition thématique est proposée chaque année sur un aspect de la vie antique.</p>
+              <p><strong>Familles</strong> — Un espace ludique et des ateliers costumés permettent aux enfants de découvrir la vie romaine de façon immersive.</p>
+              <p><strong>Réalité virtuelle</strong> — Un dispositif immersif permet de visualiser la restitution des monuments romains disparus.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Auvergne-Rhône-Alpes</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Métropole de Lyon</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Musée archéologique · Patrimoine mondial UNESCO</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Ouverture</span>
+                <span class="aside-val">1975 · renommé en 2017</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Architecte</span>
+                <span class="aside-val">Bernard Zehrfuss</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Élément emblématique</span>
+                <span class="aside-val">La Table claudienne</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À explorer aussi</div>
+            <div class="aside-card-body" style="padding:12px">
+              <div class="aside-liens">
+                <a href="#" class="aside-lien">🏘️ Vieux-Lyon & Fourvière<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🔬 Musée des Confluences<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🖼️ Musée des Beaux-Arts de Lyon<span class="aside-lien-arrow">›</span></a>
+                <a href="#" class="aside-lien">🍷 Vins du Beaujolais<span class="aside-lien-arrow">›</span></a>
+                <a href="../../auvergne-rhone-alpes.html" class="aside-lien" style="border-top:1px solid #E0DACE; margin-top:4px; padding-top:14px">
+                  ← Retour à la fiche région<span class="aside-lien-arrow">›</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="../../auvergne-rhone-alpes.html" class="btn-retour-fixe" id="btnRetour">
+    ← Auvergne-Rhône-Alpes
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="../../auvergne-rhone-alpes.html">Auvergne-Rhône-Alpes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corse — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-corse.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">C</span>orse</h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-corse.png" alt="Écusson Corse" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/stufatu.html">Stufatu (ragoût corse au brocciu)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/tripes-corses.html">Tripette à la mode corse</a></li>
+              <li><a href="gastronomie/plats-emblematiques/aziminu.html">Aziminu (bouillabaisse corse)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/pulenta.html">Pulenta (polenta à la farine de châtaigne)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/agneau-corse.html">Agneau de lait corse (Paoli)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/sanglier-corse.html">Civet de sanglier de maquis</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/brocciu.html">Brocciu AOP (fromage frais de brebis)</a></li>
+              <li><a href="gastronomie/fromages-terroir/charcuterie-corse.html">Charcuterie corse IGP (coppa, lonzu, figatellu)</a></li>
+              <li><a href="gastronomie/fromages-terroir/farine-chataigne.html">Farine de châtaigne de Corse IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/huile-olive-corse.html">Huile d'olive de Corse AOP</a></li>
+              <li><a href="gastronomie/fromages-terroir/miel-corse.html">Miel de Corse AOP (six variétés)</a></li>
+              <li><a href="gastronomie/fromages-terroir/clementine-corse.html">Clémentine de Corse IGP</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li><a href="gastronomie/vin-boisson/patrimonio-aop.html">Patrimonio AOP (plus vieux vignoble de Corse)</a></li>
+              <li><a href="gastronomie/vin-boisson/ajaccio-aop.html">Ajaccio AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/muscat-cap-corse.html">Muscat du Cap Corse AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/corse-calvi.html">Corse-Calvi AOP</a></li>
+              <li><a href="gastronomie/vin-boisson/eau-de-vie-corse.html">Eau-de-vie de châtaigne (liqueur de myrte)</a></li>
+              <li><a href="gastronomie/vin-boisson/biere-pietra.html">Bière Pietra (à la farine de châtaigne)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/fiadone.html">Fiadone (gâteau au brocciu et citron)</a></li>
+              <li><a href="gastronomie/douceur/canistrelli.html">Canistrelli (biscuits anisés)</a></li>
+              <li><a href="gastronomie/douceur/chestnut-cake.html">Gâteau à la farine de châtaigne</a></li>
+              <li><a href="gastronomie/douceur/amandines-corses.html">Amandines corses</a></li>
+              <li><a href="gastronomie/douceur/confiture-figues.html">Confitures de figues et de cédrat</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine majeur</div>
+            <ul>
+              <li>Réserve naturelle de Scandola (UNESCO)</li>
+              <li>Sites préhistoriques de Filitosa (statues-menhirs)</li>
+              <li>Citadelle de Bonifacio (falaises de calcaire)</li>
+              <li>Citadelle de Corte (capitale historique)</li>
+              <li>Tour génoise (plus de 90 tours côtières)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale d'Ajaccio (baptême de Napoléon)</li>
+              <li>Église San Michele de Murato (roman pisan)</li>
+              <li>Couvent Saint-François de Bonifacio</li>
+              <li>Chapelle romane de la Trinité (Aregno)</li>
+              <li>Maison Bonaparte — Ajaccio (musée national)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée Fesch d'Ajaccio (2e collection d'Italie en France)</li>
+              <li>Musée de la Corse (Corte)</li>
+              <li>Site archéologique de Filitosa</li>
+              <li>Musée du Capitellu (Ajaccio)</li>
+              <li>Maison Napoléon Bonaparte (Ajaccio)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗿</span> Préhistoire & archéologie</div>
+            <ul>
+              <li>Filitosa — statues-menhirs (3 500 av. J.-C.)</li>
+              <li>Alignements de Cauria (menhirs de Sartène)</li>
+              <li>Castellu d'Araghju (âge du bronze)</li>
+              <li>Nuraghes et tafoni (formations rocheuses)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Littoral & criques</div>
+            <ul>
+              <li>Golfe de Porto (UNESCO — eaux turquoise)</li>
+              <li>Plage de Palombaggia (Porto-Vecchio)</li>
+              <li>Calanques de Piana (roches de porphyre rouge)</li>
+              <li>Golfe de Girolata (accès uniquement à pied ou par mer)</li>
+              <li>Désert des Agriates (côte sauvage du Nord)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏔️</span> Montagne & haute Corse</div>
+            <ul>
+              <li>Monte Cinto (2 706 m — point culminant)</li>
+              <li>Gorges de la Restonica (Corte)</li>
+              <li>Gorges du Tavignano</li>
+              <li>Lac de Nino (bergeries de pailliers)</li>
+              <li>Aiguilles de Bavella</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Maquis & forêts</div>
+            <ul>
+              <li>Maquis corse (arômes de ciste, lavande, myrte)</li>
+              <li>Forêt de Vizzavona (pins laricio centenaires)</li>
+              <li>Forêt d'Aïtone (épicéas géants)</li>
+              <li>Parc naturel régional de Corse (40 % de l'île)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦅</span> Faune & espaces protégés</div>
+            <ul>
+              <li>Gypaète barbu (vautour — espèce protégée)</li>
+              <li>Mouflon de Corse (endémique)</li>
+              <li>Tortue d'Hermann (espèce protégée)</li>
+              <li>Réserve naturelle de Scandola (dauphins, mérou)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🔪</span> Coutellerie & forge</div>
+            <ul>
+              <li>Couteau corse (le vendetta — lame traditionnelle)</li>
+              <li>Forge artisanale du maquis</li>
+              <li>Bijouterie en corail rouge de Méditerranée</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Céramique & poterie</div>
+            <ul>
+              <li>Poteries de Lucciana (Haute-Corse)</li>
+              <li>Céramique de Sartène</li>
+              <li>Sculpture sur pierre de tuf et granit corse</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧵</span> Textile & vannerie</div>
+            <ul>
+              <li>Tissage traditionnel corse (laine de brebis)</li>
+              <li>Vannerie en châtaignier et roseau</li>
+              <li>Broderie et dentelle aux fuseaux (Cap Corse)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & lutherie</div>
+            <ul>
+              <li>Sculpture sur bois de châtaignier</li>
+              <li>Fabrication de pièces en bois de myrte</li>
+              <li>Lutherie artisanale (cetera — instrument corse)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Corse (lingua corsa — langue romane)</li>
+              <li>Identité insulaire forte et culture de l'honneur</li>
+              <li>Île de Napoléon Bonaparte (Ajaccio, 1769)</li>
+              <li>Pascal Paoli — père de la nation corse</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Chants & musiques</div>
+            <ul>
+              <li>Polyphonie corse (paghjella — UNESCO)</li>
+              <li>Chants de la vendetta et lamenti</li>
+              <li>Cetera (guitare corse traditionnelle)</li>
+              <li>Festival Nuits de la Guitare (Patrimonio)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏊</span> Sports & traditions</div>
+            <ul>
+              <li>Pêche artisanale (thon, mérou, langouste)</li>
+              <li>Randonnée et alpinisme (GR 20)</li>
+              <li>Tir à l'arbalète (tradition médiévale)</li>
+              <li>Tour de Corse automobile (rallye légendaire)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Processions de la Semaine Sainte (Sartène — Catenacciu)</li>
+              <li>Fêtes de l'Assomption (15 août — villages)</li>
+              <li>Foire du Niolu (Casamaccioli — septembre)</li>
+              <li>Fête de la Châtaigne (Bocognano — novembre)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Sant'Antonino (Haute-Corse — village perché)</li>
+              <li>Piana (Corse-du-Sud — Calanques)</li>
+              <li>Olargues (village de caractère)</li>
+              <li>Belgodère (Haute-Corse)</li>
+              <li>Speloncato (Balagne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Villages perchés</div>
+            <ul>
+              <li>Bonifacio (falaises calcaires face à la Sardaigne)</li>
+              <li>Corte (citadelle et gorges)</li>
+              <li>Sartène (la plus corse des villes corses)</li>
+              <li>Sant'Antonino (plus haut village de Balagne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Calvi (citadelle génoise et plage)</li>
+              <li>Porto-Vecchio (golfe et maquis)</li>
+              <li>L'Île-Rousse (place Paoli et marché)</li>
+              <li>Pino (Cap Corse — falaises et tours génoises)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Sant'Antonino</h3>
+            <p>Perché à 500 mètres d'altitude sur un éperon rocheux de la Balagne, Sant'Antonino est considéré comme l'un des plus beaux villages de France et l'un des plus anciens de Corse — ses origines remontent au IXe siècle. Ses ruelles escarpées pavées de galets, ses maisons de granit ocre et ses panoramas à 360° sur la mer Tyrrhénienne, les montagnes de Corse et les oliviers de la Balagne en font un belvédère exceptionnel. Le village est aussi réputé pour son huile d'olive et son artisanat local.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Balagne — Haute-Corse</span>
+            <span class="village-star-tag">Village médiéval du IXe siècle</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Catenacciu — Procession de Sartène</h4><p>Le Vendredi Saint, un pénitent enchaîné porte la croix à travers les ruelles de Sartène — l'une des processions religieuses les plus impressionnantes de France.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Tour de Corse Automobile</h4><p>L'une des épreuves les plus redoutées du calendrier des rallyes — les routes sinueuses de l'île offrent un cadre spectaculaire aux pilotes du monde entier.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Festival de Musique de Calvi</h4><p>La citadelle génoise de Calvi accueille chaque été un festival de jazz et de musiques du monde avec des artistes internationaux.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Nuits de la Guitare — Patrimonio</h4><p>Festival international de guitare dans le vignoble de Patrimonio — concerts en plein air entre les vignes et la mer, sous les étoiles corses.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fêtes Napoléoniennes — Ajaccio</h4><p>La ville natale de Napoléon célèbre son illustre fils avec reconstitutions historiques, bals et cortèges costumés en habits d'Empire.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Foire du Niolu — Casamaccioli</h4><p>La plus grande foire rurale de Corse rassemble bergers, artisans et chanteurs de paghjella au cœur des montagnes du Niolu.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Festiventu — Festival du Vent (Calvi)</h4><p>Festival dédié au vent sous toutes ses formes — cerfs-volants géants, sports nautiques et concerts sur la plage de Calvi.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Fête de la Châtaigne — Bocognano</h4><p>Le village de Bocognano célèbre la châtaigne corse — dégustations de pulenta, de farine et de bière Pietra dans les forêts de la Gravona.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Corse</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🥾</span>
+            <h4>GR 20 — La Grande Traversée</h4>
+            <p>Le trek le plus difficile et le plus célèbre d'Europe — 180 km du nord au sud de l'île entre Calenzana et Conca, par les crêtes et les lacs alpins.</p>
+            <span class="parcours-item-duree">⏱ 15 à 20 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">⛵</span>
+            <h4>Tour de Corse en Voilier</h4>
+            <p>Contourner l'île à la voile — Calvi, Girolata, Scandola, Bonifacio, Porto-Vecchio — les plus beaux mouillages de Méditerranée.</p>
+            <span class="parcours-item-duree">⏱ 10 à 15 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌿</span>
+            <h4>Route des Villages de Balagne</h4>
+            <p>Sant'Antonino, Speloncato, Belgodère, L'Île-Rousse — les villages perchés et les oliveraies de la Balagne, jardin de la Corse.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🗿</span>
+            <h4>Corse Préhistorique</h4>
+            <p>Filitosa, Cauria, Palaggiu — les statues-menhirs et alignements mégalithiques du sud de l'île, parmi les plus anciens d'Europe.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏔️</span>
+            <h4>Gorges de la Restonica & Lac de Nino</h4>
+            <p>Au départ de Corte, remontez les gorges de la Restonica jusqu'aux lacs glaciaires de Melo et Capitello — la Corse alpine.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Bonifacio & l'Extrême-Sud</h4>
+            <p>Bonifacio sur ses falaises, les îles Lavezzi, Porto-Vecchio et les plages de l'Alta Rocca — le bout du monde corse face à la Sardaigne.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

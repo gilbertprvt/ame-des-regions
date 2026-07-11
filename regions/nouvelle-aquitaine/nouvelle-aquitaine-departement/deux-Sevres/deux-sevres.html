@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deux-Sèvres — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    /* ===== EN-TÊTE BLEU ===== */
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Logo + boutons */
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Zone centrale hero */
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: -40px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    /* ===== ONGLETS ===== */
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* ===== CONTENU ===== */
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    /* Agenda */
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    /* Parcours — intro & filtres */
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    /* Parcours — cartes "journée" */
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    /* Parcours (ancien style, conservé pour compatibilité) */
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Village star */
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    /* ─── PHOTOS CONTENU ─────────────────────── */
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens">
+          <a href="../../nouvelle-aquitaine.html" class="fiche-topbar-btn">↩ Nouvelle-Aquitaine</a>
+          <a href="../../carte-nouvelle-aquitaine.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span class="titre-initial">D</span>eux-<br><span style="padding-left: 40px;"><span class="titre-initial">S</span>èvres</span></h1>
+        </div>
+
+        <div class="fiche-hero-ecusson">
+           <img src="../../../../assets/departement/nouvelle-aquitaine/deux-sevres.png" alt="Écusson Deux-Sèvres" />
+        </div>
+
+        <span class="fiche-hero-ancien">🏛️ Préfecture : Niort · Département 79</span>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours d'une journée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Spécialités incontournables</div>
+            <ul>
+              <li>Chabichou du Poitou AOP (fromage de chèvre emblématique)</li>
+              <li>Mogettes de Vendée (haricots blancs mijotés)</li>
+              <li>Farci poitevin (chou farci aux herbes et lard)</li>
+              <li>Mouclade poitevine (moules à la crème et au curry)</li>
+              <li>Chevreau de lait du Poitou</li>
+              <li>Jambon du Poitou (fumé au bois de hêtre)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Produits du terroir</div>
+            <ul>
+              <li>Melon du Haut-Poitou (tradition maraîchère)</li>
+              <li>Beurre des Charentes-Poitou AOP</li>
+              <li>Angélique de Niort (confite et cristallisée)</li>
+              <li>Mogettes et haricots du marais poitevin</li>
+              <li>Ail de Thouarsais (tradition ancestrale)</li>
+              <li>Miel de tilleul et d'acacia du bocage</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍷</span> Vins & boissons</div>
+            <ul>
+              <li>Vins du Haut-Poitou IGP (blancs, rouges, rosés)</li>
+              <li>Pineau des Charentes AOP (influence charentaise)</li>
+              <li>Muscadet sur lie (influence ligérienne au nord)</li>
+              <li>Bières artisanales des Deux-Sèvres</li>
+              <li>Eau-de-vie de prune du Poitou</li>
+              <li>Liqueur d'angélique de Niort</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs & pâtisseries</div>
+            <ul>
+              <li>Broyé du Poitou (grand sablé à casser en famille)</li>
+              <li>Tourteau fromager (gâteau au fromage blanc brûlé)</li>
+              <li>Galette de Bressuire (brioche feuilletée)</li>
+              <li>Confits d'angélique de Niort</li>
+              <li>Macarons de Niort (tradition locale)</li>
+              <li>Caramels et nougats du bocage deux-sévrien</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Sites & monuments classés</div>
+            <ul>
+              <li>Abbaye de Fontevraud (Plantagenêts, necropole royale)</li>
+              <li>Abbaye de Saint-Jouin-de-Marnes (romane)</li>
+              <li>Château de Oiron (Renaissance, collections royales)</li>
+              <li>Donjon de Niort (Plantagenêt, XII<sup>e</sup> siècle)</li>
+              <li>Abbaye de Airvault (romane poitevine)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Châteaux & forteresses</div>
+            <ul>
+              <li>Donjon de Niort (Richard Cœur de Lion)</li>
+              <li>Château de Oiron (Gouffier, Renaissance)</li>
+              <li>Château de Bressuire (ruines médiévales)</li>
+              <li>Château de La Durbelière (guerres de Vendée)</li>
+              <li>Château de Maulévrier (parc oriental)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices religieux</div>
+            <ul>
+              <li>Abbaye de Saint-Jouin-de-Marnes (façade romane sculptée)</li>
+              <li>Abbaye royale d'Airvault (romane poitevine)</li>
+              <li>Église Saint-Hilaire de Melle (romane, chemin de Compostelle)</li>
+              <li>Abbatiale Saint-Pierre de Parthenay-le-Vieux</li>
+              <li>Église Notre-Dame de Niort</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée Bernard d'Agesci de Niort (beaux-arts et histoire naturelle)</li>
+              <li>Musée du Donjon de Niort (Plantagenêts)</li>
+              <li>Musée de la Chemiserie d'Argenton (textile)</li>
+              <li>Mines d'argent de Melle (carolingiennes, uniques en Europe)</li>
+              <li>Musée du Marais Poitevin de Coulon</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Marais Poitevin</div>
+            <ul>
+              <li>Marais Poitevin (2<sup>e</sup> zone humide de France, « Venise Verte »)</li>
+              <li>Canaux et conches du marais mouillé</li>
+              <li>Marais desséché (polders et bocage)</li>
+              <li>Parc Naturel Régional du Marais Poitevin</li>
+              <li>Coulon, capitale du marais (barques plates)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌲</span> Bocage & vallées</div>
+            <ul>
+              <li>Bocage bressuirais (haies centenaires, prairies)</li>
+              <li>Vallée de la Sèvre Niortaise (de Niort au marais)</li>
+              <li>Vallée du Thouet (châteaux et vignes)</li>
+              <li>Forêt de Chizé (cerf et chevreuil)</li>
+              <li>Vallée de la Boutonne (moulins et abbaye)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦦</span> Faune & biodiversité</div>
+            <ul>
+              <li>Loutres de la Sèvre Niortaise</li>
+              <li>Hérons cendrés et aigrettes du marais</li>
+              <li>Cerfs et chevreuils de la forêt de Chizé</li>
+              <li>Cigognes blanches (nidification)</li>
+              <li>Visons d'Europe (marais protégé)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Paysages & panoramas</div>
+            <ul>
+              <li>Canaux du marais mouillé au printemps (lentilles d'eau)</li>
+              <li>Vue depuis le donjon de Niort sur la Sèvre</li>
+              <li>Bocage bressuirais fleuri en mai</li>
+              <li>Coucher de soleil sur les marais de Coulon</li>
+              <li>Vallée du Thouet et ses châteaux médiévaux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧥</span> Cuir & ganterie</div>
+            <ul>
+              <li>Ganterie de Niort (capitale française de la ganterie)</li>
+              <li>Maroquinerie et cuirs du Poitou</li>
+              <li>Sellerie artisanale deux-sévrienne</li>
+              <li>Tannerie traditionnelle de Niort (patrimoine industriel)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Poterie & céramique</div>
+            <ul>
+              <li>Poteries du marais poitevin</li>
+              <li>Céramiques de Saint-Maixent-l'École</li>
+              <li>Faïences et grès du bocage deux-sévrien</li>
+              <li>Ateliers de sculpture sur pierre calcaire</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & vannerie</div>
+            <ul>
+              <li>Vannerie de jonc des marais poitevins</li>
+              <li>Fabrication de barques plates du marais</li>
+              <li>Ébénisterie et menuiserie du bocage</li>
+              <li>Sculpture sur bois de chêne et de noyer</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromagerie & gastronomie</div>
+            <ul>
+              <li>Fromageries de chabichou du Poitou AOP</li>
+              <li>Élevage caprin du bocage deux-sévrien</li>
+              <li>Conserveries de mogettes et légumes du marais</li>
+              <li>Confiseries d'angélique de Niort</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & identité</div>
+            <ul>
+              <li>Poitevin-saintongeais (dialecte d'oïl du Poitou)</li>
+              <li>Patois du bocage bressuirais (vivace)</li>
+              <li>Identité poitevine — entre Loire et Charente</li>
+              <li>Héritage protestant (guerres de Vendée, mémoire vive)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎵</span> Musiques & danses</div>
+            <ul>
+              <li>Branle et bourrée du Poitou</li>
+              <li>Biniou et cornemuse poitevine (chabrette)</li>
+              <li>Festival du Chant de Marin de Parthenay</li>
+              <li>Bals folk et fest-noz du bocage</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🐐</span> Traditions rurales</div>
+            <ul>
+              <li>Élevage caprin (Deux-Sèvres, 1<sup>er</sup> département fromager de chèvre)</li>
+              <li>Foires aux bestiaux du bocage bressuirais</li>
+              <li>Navigation en barque plate dans le marais</li>
+              <li>Pêche à l'anguille dans les canaux du marais</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions locales</div>
+            <ul>
+              <li>Festival de Parthenay (musiques du monde, juillet)</li>
+              <li>Fête du Chabichou à Parthenay (printemps)</li>
+              <li>Carnaval de Niort (animations et déguisements)</li>
+              <li>Foires médiévales de Parthenay (été)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages & sites</div>
+            <ul>
+              <li>Coulon (capitale du Marais Poitevin, barques vertes)</li>
+              <li>Saint-Loup-Lamairé (château et jardins remarquables)</li>
+              <li>Airvault (abbaye romane et bourg médiéval)</li>
+              <li>Melle (trois églises romanes, mines carolingiennes)</li>
+              <li>Parthenay (cité médiévale, chemin de Compostelle)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Villages du marais</div>
+            <ul>
+              <li>Coulon (barques plates et canaux verdoyants)</li>
+              <li>Arçais (village lacustre du marais mouillé)</li>
+              <li>Saint-Hilaire-la-Palud (réserve ornithologique)</li>
+              <li>La Garette (port du marais poitevin)</li>
+              <li>Sansais (village au cœur des conches)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Bourgs & cités de caractère</div>
+            <ul>
+              <li>Niort (capitale des mutuelles et de l'angélique)</li>
+              <li>Parthenay (cité médiévale et festival)</li>
+              <li>Bressuire (bocage et château en ruines)</li>
+              <li>Thouars (château des ducs de la Trémoille)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Coulon</h3>
+            <p>Surnommée la capitale du Marais Poitevin, Coulon est le point de départ idéal pour explorer la « Venise Verte » en barque plate. Ses maisons blanches aux volets verts, son port animé de batelers et ses canaux bordés de frênes têtards forment un tableau bucolique unique en France. Deuxième zone humide de France après la Camargue, le Marais Poitevin déploie ici toute sa magie — une nature luxuriante, silencieuse et hors du temps.</p>
+            <span class="village-star-tag">Venise Verte</span>
+            <span class="village-star-tag">Marais Poitevin</span>
+            <span class="village-star-tag">Parc Naturel Régional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année dans les Deux-Sèvres</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Fête du Chabichou à Parthenay</h4><p>Le fromage de chèvre AOP à l'honneur — producteurs du bocage, dégustations et animations autour du fleuron fromager des Deux-Sèvres et du Poitou.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Printemps du Marais Poitevin</h4><p>La saison idéale pour explorer le marais mouillé — sorties en barque, observations ornithologiques et animations nature dans la Venise Verte deux-sévrienne.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Foires Médiévales de Parthenay</h4><p>La cité médiévale de Parthenay replonge dans le Moyen Âge — artisans en costumes d'époque, joutes, troubadours et marché médiéval dans les ruelles de la vieille ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Festival de Parthenay — Musiques du Monde</h4><p>L'un des grands festivals de musiques du monde du Grand Ouest — artistes des cinq continents, bals folk et concerts dans les rues et places de la cité médiévale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Festival du Marais Poitevin</h4><p>Spectacles, concerts et animations flottantes dans les canaux du marais — la culture et la nature se rejoignent pour une programmation estivale unique dans la Venise Verte.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête de l'Angélique de Niort</h4><p>L'angélique confite, spécialité de Niort depuis le XVI<sup>e</sup> siècle, est célébrée — producteurs, confiseurs et amateurs se retrouvent pour honorer cette plante emblématique du marais.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Journées du Patrimoine — Mines de Melle</h4><p>Les mines d'argent carolingiennes de Melle, uniques en Europe, ouvrent leurs galeries pour des visites guidées exceptionnelles lors des Journées Européennes du Patrimoine.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Foire Agricole de Niort</h4><p>La grande foire agricole de la préfecture — élevage caprin, race limousine, produits du terroir deux-sévrien et artisanat du bocage réunis pour ce rendez-vous automnal incontournable.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+
+        <p class="parcours-intro">Les Deux-Sèvres se découvrent le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+
+        <div class="parcours-section-titre"><span>☀️</span> Programmes d'une journée — pour tous les goûts</div>
+
+        <div class="parcours-filters">
+          <button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+          <button class="filter-btn" data-filter="gourmand">🍽️ Gourmand</button>
+          <button class="filter-btn" data-filter="culture">🏛️ Culture</button>
+          <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+          <button class="filter-btn" data-filter="famille">👨‍👩‍👧 Famille</button>
+          <button class="filter-btn" data-filter="romantique">💕 Romantique</button>
+          <button class="filter-btn" data-filter="actif">🚴 Actif</button>
+        </div>
+
+        <div class="jours-grid">
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Chabichou du Poitou</h4>
+                <span class="jour-card-icon">🐐</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · bocage bressuirais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une ferme caprine</strong> du bocage bressuirais, premier département fromager de chèvre de France.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de chabichou du Poitou AOP à différents stades d'affinage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un farci poitevin et d'un plateau de fromages fermiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le bocage</strong>, haies centenaires et prairies où paissent les troupeaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Achat direct</strong> à la ferme, chabichou frais pour la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Angélique de Niort, confiserie légendaire</h4>
+                <span class="jour-card-icon">🍬</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une confiserie artisanale</strong> de Niort, secrets de la confiture d'angélique depuis le XVI<sup>e</sup> siècle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans les halles</strong> de Niort, marché couvert et produits locaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une mouclade poitevine, spécialité locale à la crème et au curry.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation de macarons de Niort</strong> et de confits d'angélique dans une pâtisserie du centre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Verre de liqueur d'angélique</strong> en terrasse, au pied du donjon de Niort.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Mogettes et farci poitevin au marché</h4>
+                <span class="jour-card-icon">🫘</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort et marais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Niort</strong>, mogettes, légumes du marais et jambon du Poitou fumé au bois de hêtre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'un producteur</strong> de mogettes dans les cultures du marais desséché.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un farci poitevin traditionnel, chou farci aux herbes et au lard.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier cuisine</strong>, confection de mogettes mijotées à l'ancienne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de chevreau de lait</strong> du Poitou en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Melon du Haut-Poitou et vergers</h4>
+                <span class="jour-card-icon">🍈</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en été</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cueillette de melons</strong> du Haut-Poitou chez un producteur, tradition maraîchère locale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'un rucher</strong> voisin, miel de tilleul et d'acacia du bocage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner léger</strong> autour d'une salade de melon et de chabichou frais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'une exploitation d'ail</strong> de Thouarsais, tradition ancestrale du Poitou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de melon confit au Pineau</strong> pour clore la journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Douceurs du Poitou, broyé et tourteau fromager</h4>
+                <span class="jour-card-icon">🍰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort ou Parthenay</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Pâtisserie artisanale</strong>, fabrication du broyé du Poitou, grand sablé traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du tourteau fromager</strong>, gâteau au fromage blanc brûlé emblématique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge poitevine, spécialités locales maison.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier pâtisserie</strong>, confection d'une galette de Bressuire, brioche feuilletée traditionnelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Rituel du broyé</strong> à casser à plusieurs, comme le veut la tradition poitevine.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Jambon et charcuterie du Poitou à Parthenay</h4>
+                <span class="jour-card-icon">🥓</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Parthenay centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🍽️ Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Parthenay</strong>, jambon du Poitou fumé au bois de hêtre et charcuteries artisanales.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'une fumaison traditionnelle</strong>, secrets de fabrication transmis de génération en génération.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans la cité médiévale, planche de charcuteries et vin du Haut-Poitou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation de vins</strong> du Haut-Poitou IGP chez un vigneron local.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'une eau-de-vie de prune du Poitou en digestif.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Niort, le donjon des Plantagenêts</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Donjon de Niort</strong>, forteresse Plantagenêt du XII<sup>e</sup> siècle, édifiée sous Richard Cœur de Lion.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée du Donjon</strong>, collections sur l'histoire médiévale de la ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique, au bord de la Sèvre Niortaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée Bernard d'Agesci</strong>, beaux-arts et histoire naturelle dans un ancien lycée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade sur les quais</strong> de la Sèvre, vue sur le donjon illuminé.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Melle, mines d'argent et trois églises romanes</h4>
+                <span class="jour-card-icon">⛏️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Mines d'argent de Melle</strong>, seules mines carolingiennes ouvertes au public en Europe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Église Saint-Hilaire</strong>, joyau roman sur le chemin de Compostelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique de Melle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte des deux autres églises romanes</strong> de la ville, particularité unique de Melle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans les ruelles médiévales à la tombée du jour.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parthenay, cité médiévale de Compostelle</h4>
+                <span class="jour-card-icon">🏛️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Parthenay centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans la cité médiévale</strong> de Parthenay, remparts et pont fortifié sur le Thouet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Abbatiale Saint-Pierre</strong> de Parthenay-le-Vieux, étape historique du chemin de Compostelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les ruelles pavées de la vieille ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les échoppes</strong> d'artisans installées dans les maisons médiévales.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Vue sur le Thouet</strong> depuis le pont fortifié, lumière dorée du soir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château d'Oiron, Renaissance et collections royales</h4>
+                <span class="jour-card-icon">🖼️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 40 km de Thouars</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château d'Oiron</strong>, chef-d'œuvre Renaissance construit par la famille Gouffier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Galerie des collections</strong> royales et œuvres d'art contemporain installées dans le château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village d'Oiron, ambiance paisible et rurale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les jardins</strong> à la française du château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les petites routes du Thouarsais.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Thouars, cité des ducs de la Trémoille</h4>
+                <span class="jour-card-icon">🏯</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Thouars centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château des ducs de la Trémoille</strong>, dominant la vallée du Thouet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans la vieille ville</strong>, maisons Renaissance et remparts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, vue sur le Thouet et ses méandres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de l'abbaye</strong> d'Airvault à proximité, art roman poitevin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la vallée du Thouet depuis les remparts.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Abbaye de Saint-Jouin-de-Marnes, art roman poitevin</h4>
+                <span class="jour-card-icon">⛪</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Thouars</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🏛️ Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Abbaye de Saint-Jouin-de-Marnes</strong>, façade romane sculptée parmi les plus belles du Poitou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite guidée</strong> de l'intérieur de l'abbatiale, architecture et sculptures détaillées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village, ambiance calme et rurale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade sur la route romane</strong> du Poitou, direction Airvault et ses maisons anciennes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> à travers le bocage poitevin.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marais Poitevin en barque, la Venise Verte</h4>
+                <span class="jour-card-icon">🚣</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Coulon, env. 12 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en barque plate</strong> depuis Coulon, sous les frênes têtards du marais mouillé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des conches</strong>, canaux verts couverts de lentilles d'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur les berges d'un canal, à l'ombre des grands arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Observation de la faune</strong> du marais, hérons cendrés et aigrettes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les canaux, ambiance silencieuse et hors du temps.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Forêt de Chizé, cerfs et biodiversité</h4>
+                <span class="jour-card-icon">🦌</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée en forêt de Chizé</strong>, l'un des plus grands massifs forestiers du Poitou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation discrète</strong> des cerfs et chevreuils dans leur habitat naturel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en sous-bois, fraîcheur garantie même en été.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la balade</strong> vers les zones de recherche scientifique du CNRS installées dans la forêt.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong>, silence de la forêt à la tombée du jour.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Sèvre Niortaise</h4>
+                <span class="jour-card-icon">🏞️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort au marais</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long de la Sèvre Niortaise</strong>, depuis les quais de Niort.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des loutres</strong>, discrètes mais présentes sur la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une berge aménagée de la Sèvre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente progressive</strong> vers le marais, paysages qui s'adoucissent peu à peu.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la rivière, aux portes du marais poitevin.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Réserve ornithologique de Saint-Hilaire-la-Palud</h4>
+                <span class="jour-card-icon">🦩</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la réserve ornithologique</strong> de Saint-Hilaire-la-Palud, cigognes et oiseaux d'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation guidée</strong> depuis les postes d'affût aménagés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au calme, au bord des zones humides.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers les villages du marais mouillé</strong>, Arçais et La Garette.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les canaux, moment paisible et suspendu.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée du Thouet, châteaux et vignes</h4>
+                <span class="jour-card-icon">🍇</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Thouars à Parthenay</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long du Thouet</strong>, entre méandres et vignes du Haut-Poitou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Point de vue</strong> sur la vallée depuis les hauteurs de Thouars.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la rivière, vue sur les châteaux médiévaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente vers Parthenay</strong>, paysages de bocage et de vignoble.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la vallée, lumière dorée sur les vignes.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Bocage bressuirais en fleurs</h4>
+                <span class="jour-card-icon">🌸</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · idéal en mai</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🌿 Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans le bocage bressuirais</strong> au printemps, haies fleuries et prairies verdoyantes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation de la faune</strong> des haies, oiseaux et papillons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans un pré fleuri, au calme de la campagne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade vers le château de Bressuire</strong>, ruines médiévales nichées dans la verdure.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les petites routes de campagne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Coulon en famille, balade en barque</h4>
+                <span class="jour-card-icon">👨‍👩‍👧</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 12 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en barque plate</strong> à Coulon, les enfants s'initient à la pagaie sous les frênes têtards.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée du Marais Poitevin</strong>, visite ludique adaptée aux familles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord d'un canal, à l'ombre des grands arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo en famille</strong> le long des chemins de halage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace en terrasse</strong> à Coulon avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Donjon de Niort, aventure ludique</h4>
+                <span class="jour-card-icon">🏰</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Niort centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> dans le donjon de Niort, à la recherche des trésors des Plantagenêts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique du musée</strong>, livret-jeu adapté aux enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la Sèvre Niortaise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans les halles</strong> et dégustation de macarons de Niort en famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> dans le centre-ville avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Mines d'argent de Melle en famille</h4>
+                <span class="jour-card-icon">⛏️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique des mines d'argent</strong> de Melle, plongée dans le VIII<sup>e</sup> siècle pour toute la famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Atelier découverte</strong> de la fabrication des monnaies carolingiennes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans un parc du centre-ville de Melle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade ludique</strong> à la découverte des trois églises romanes de la ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route vers Niort.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Forêt de Chizé, à la rencontre des animaux</h4>
+                <span class="jour-card-icon">🦊</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 25 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un parc animalier</strong> installé dans la forêt de Chizé, découverte de la faune locale.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Sentier pédagogique</strong> en forêt, panneaux ludiques sur la biodiversité.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en forêt, à l'ombre des grands arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Jeux en plein air</strong> et observation des animaux dans leurs enclos.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter forestier</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château d'Oiron en famille</h4>
+                <span class="jour-card-icon">🎨</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 40 km de Thouars</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique du château</strong> d'Oiron, livret-jeu et anecdotes pour les enfants.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des œuvres d'art contemporain</strong>, surprenantes pour petits et grands.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans les jardins du château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Jeux en plein air</strong> dans le parc du domaine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> dans le village d'Oiron avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parthenay en famille, cité médiévale ludique</h4>
+                <span class="jour-card-icon">🛡️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Parthenay centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">👨‍👩‍👧 Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste médiéval</strong> dans les ruelles de Parthenay, à la recherche des indices cachés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade sur le pont fortifié</strong>, dominant le Thouet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du Thouet, sous les remparts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Animation médiévale</strong> en saison estivale, initiation au tir à l'arc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Crêperie</strong> dans la cité médiévale avant de repartir.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Balade romantique en barque dans le marais</h4>
+                <span class="jour-card-icon">🌅</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Coulon, env. 12 km de Niort</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en barque à deux</strong>, glissant silencieusement sous les frênes têtards.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte dans une conche</strong> isolée, calme absolu du marais mouillé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> sur une terrasse au bord de l'eau, à Coulon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade main dans la main</strong> le long des chemins de halage du marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil en barque</strong>, moment suspendu sur les canaux verts.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Saint-Loup-Lamairé et ses jardins</h4>
+                <span class="jour-card-icon">🌹</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de Parthenay</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château</strong> de Saint-Loup-Lamairé et de ses jardins remarquables.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans les jardins</strong> à la française, roseraie et pièces d'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> dans une auberge de charme du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans le village classé, ruelles calmes et fleuries.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner aux chandelles</strong> dans un restaurant gastronomique proche.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Thouars au fil du Thouet, escapade à deux</h4>
+                <span class="jour-card-icon">💌</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · Thouars centre</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade dans la vieille ville</strong> de Thouars, maisons Renaissance en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Point de vue sur le Thouet</strong>, méandres et vignes en contrebas.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, vue sur la vallée et le château des la Trémoille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au bord de la rivière</strong>, calme et verdure à deux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis les remparts, vue sur la vallée du Thouet.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Airvault, abbaye romane et bourg médiéval</h4>
+                <span class="jour-card-icon">🕊️</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de Thouars</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à Airvault</strong>, bourg médiéval paisible autour de son abbaye romane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de l'abbaye royale</strong>, architecture romane poitevine préservée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge discrète du bourg.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans la campagne</strong> environnante, entre bocage et petites collines.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation d'un verre de vin du Haut-Poitou</strong> au coucher du soleil.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Maulévrier et son parc oriental</h4>
+                <span class="jour-card-icon">🎋</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · nord des Deux-Sèvres</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du parc oriental</strong> de Maulévrier, l'un des plus grands jardins japonais d'Europe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade au bord des étangs</strong>, ponts rouges et érables japonais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique romantique</strong> à l'ombre des arbres du parc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le château</strong> et ses extérieurs, ambiance paisible.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les étangs du parc, reflets dorés sur l'eau.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Boutonne, moulins et abbaye</h4>
+                <span class="jour-card-icon">🌾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · sud des Deux-Sèvres</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">💕 Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade le long de la Boutonne</strong>, rivière calme bordée de moulins anciens.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'un moulin restauré</strong>, mécanismes anciens et roue à aubes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong>, au bord de la rivière tranquille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à deux</strong> vers une petite abbaye discrète de la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation d'une eau-de-vie de prune</strong>, au calme de la campagne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Véloroute du Marais Poitevin</h4>
+                <span class="jour-card-icon">🚴</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 45 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> de Niort, en suivant la Sèvre Niortaise vers le marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage par Coulon</strong>, halte fraîcheur au bord des canaux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la voie verte.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Arçais</strong>, entre canaux, écluses et villages blancs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau, satisfaction d'une belle sortie.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans la forêt de Chizé</h4>
+                <span class="jour-card-icon">🥾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 18 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans la forêt de Chizé</strong>, sentiers balisés et sous-bois dense.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage par les zones de recherche</strong> du CNRS, forêt scientifique unique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en sous-bois, pause bien méritée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par les chemins forestiers les moins fréquentés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et repos</strong>, satisfaction d'une belle randonnée forestière.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canoë sur la Sèvre Niortaise</h4>
+                <span class="jour-card-icon">🛶</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 15 km en canoë</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> sur la Sèvre Niortaise, depuis Niort vers le marais.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage des écluses</strong>, technique et découverte du fonctionnement du fleuve.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique sur une berge</strong>, ombragée par les frênes têtards.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Entrée dans le marais mouillé</strong>, canaux étroits et navigation technique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Arrivée à Coulon</strong>, satisfaction d'une belle descente.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vélo sur la route des châteaux du Thouarsais</h4>
+                <span class="jour-card-icon">🚵</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 50 km à vélo</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> de Thouars, direction le château d'Oiron.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Étape à Airvault</strong>, pause fraîcheur devant l'abbaye romane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> au bord de la route, entre bocage et vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Saint-Loup-Lamairé</strong>, châteaux et jardins classés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour à Thouars</strong>, satisfaction d'une belle boucle à vélo.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée dans le bocage bressuirais</h4>
+                <span class="jour-card-icon">🧭</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 20 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée dans le bocage</strong> bressuirais, haies centenaires et chemins creux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage par le château</strong> de Bressuire, ruines médiévales dans la verdure.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au calme, dans un pré du bocage.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la randonnée</strong> à travers prairies et petits bois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements et repos</strong>, verre de cidre du bocage bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Chemin de Compostelle, étape Melle-Parthenay</h4>
+                <span class="jour-card-icon">🥾</span>
+              </div>
+              <span class="jour-duree">⏱ Journée complète · env. 30 km de marche</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">🚴 Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ de Melle</strong> sur le chemin de Compostelle, halte à l'église Saint-Hilaire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée du bocage</strong>, sentiers balisés et villages traditionnels.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> de randonneur, en pleine campagne poitevine.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite vers Parthenay</strong>, étape historique du chemin vers Compostelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Arrivée à Parthenay</strong>, satisfaction d'une belle étape sur les pas des pèlerins.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        jourCards.forEach(card => {
+          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bretagne — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      position: relative;
+      top: -30px;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      top: 15px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+      position: relative;
+      z-index: 10; 
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      left: 460px;
+      top: -56px;
+    }
+    .fiche-hero-ecusson img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      padding-left: 0px;
+      margin-top: -50px;
+    }
+    .titre-initial { color: #C8843A; }
+    .fiche-hero-droite {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      padding-top: 0;
+      position: relative;
+      top: -75px;
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+      margin-top: 20px;
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .fiche-hero-inner { position: relative; }
+
+    @media (max-width: 680px) {
+      .fiche-hero-inner { flex-direction: column; position: relative; }
+      .fiche-hero-titre h1 { padding-left: 0; font-size: 34px; }
+      .fiche-hero-droite { align-items: flex-start; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="fiche-hero">
+    <div class="container">
+      <div class="fiche-topbar">
+        <a href="../../index.html" class="fiche-logo">L'<span>Âme</span> des Régions</a>
+        <div class="fiche-topbar-liens" style="flex-direction: column; align-items: flex-start;">
+          <a href="../../index.html" class="fiche-topbar-btn">← Accueil</a>
+          <a href="carte-bretagne.html" class="fiche-topbar-btn">🗺️ Carte des départements</a>
+        </div>
+      </div>
+
+      <div class="fiche-hero-inner">
+        <div class="fiche-hero-titre">
+          <h1><span style="padding-left: 60px;"></span><span class="titre-initial">B</span>retagne</h1>
+        </div>
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-bretagne.png" alt="Écusson Bretagne" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fiche-tabs-wrap">
+      <div class="container">
+        <div class="fiche-tabs">
+          <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
+          <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
+          <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
+          <button class="fiche-tab" data-panel="artisanat">🪵 Artisanat</button>
+          <button class="fiche-tab" data-panel="traditions">🎭 Traditions</button>
+          <button class="fiche-tab" data-panel="villages">🏘️ Villages</button>
+          <button class="fiche-tab" data-panel="agenda">📅 Agenda</button>
+          <button class="fiche-tab" data-panel="parcours">🗺️ Parcours</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="fiche-body">
+    <div class="container">
+
+      <!-- GASTRONOMIE -->
+      <div class="fiche-panel active" id="panel-gastro">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🥘</span> Plats emblématiques</div>
+            <ul>
+              <li><a href="gastronomie/plats-emblematiques/galette-sarrasin.html">Galette de sarrasin (blé noir)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/homard-breton.html">Homard breton à l'armoricaine</a></li>
+              <li><a href="gastronomie/plats-emblematiques/cotriade.html">Cotriade (soupe de poissons bretonne)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/kig-ha-farz.html">Kig ha farz (pot-au-feu breton)</a></li>
+              <li><a href="gastronomie/plats-emblematiques/huitres-cancale.html">Huîtres de Cancale</a></li>
+              <li><a href="gastronomie/plats-emblematiques/coquilles-saint-jacques.html">Coquilles Saint-Jacques de la baie de Saint-Brieuc</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧀</span> Fromages & Terroirs</div>
+            <ul>
+              <li><a href="gastronomie/fromages-terroir/beurre-bordier.html">Beurre salé de Bretagne (beurre Bordier)</a></li>
+              <li><a href="gastronomie/fromages-terroir/sel-paludiers.html">Sel de mer et fleur de sel (Guérande, Noirmoutier)</a></li>
+              <li><a href="gastronomie/fromages-terroir/artichaut-bretagne.html">Artichaut de Bretagne IGP</a></li>
+              <li><a href="gastronomie/fromages-terroir/chou-fleur-bretagne.html">Chou-fleur de Bretagne (1er producteur français)</a></li>
+              <li><a href="gastronomie/fromages-terroir/agneau-pre-sale.html">Agneau de pré-salé du Mont-Saint-Michel</a></li>
+              <li><a href="gastronomie/fromages-terroir/sardine-douarnenez.html">Sardine de Douarnenez (conserves)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍺</span> Boissons & cidres</div>
+            <ul>
+              <li><a href="gastronomie/boisson/cidre-breton.html">Cidre breton IGP</a></li>
+              <li><a href="gastronomie/boisson/chouchen.html">Chouchen (hydromel breton)</a></li>
+              <li><a href="gastronomie/boisson/biere-coreff.html">Bières artisanales bretonnes (Coreff, Lancelot…)</a></li>
+              <li><a href="gastronomie/boisson/lambig.html">Lambig (eau-de-vie de cidre)</a></li>
+              <li><a href="gastronomie/boisson/pommeau-bretagne.html">Pommeau de Bretagne IGP</a></li>
+              <li><a href="gastronomie/boisson/whisky-warenghem.html">Whisky breton (Distillerie Warenghem)</a></li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🍰</span> Douceurs</div>
+            <ul>
+              <li><a href="gastronomie/douceur/kouign-amann.html">Kouign-amann (Douarnenez)</a></li>
+              <li><a href="gastronomie/douceur/far-breton.html">Far breton aux pruneaux</a></li>
+              <li><a href="gastronomie/douceur/gateau-breton.html">Gâteau breton (sablé au beurre)</a></li>
+              <li><a href="gastronomie/douceur/crepe-dentelle.html">Crêpe dentelle de Quimper (Gavottes)</a></li>
+              <li><a href="gastronomie/douceur/caramel-beurre-sale.html">Caramel au beurre salé</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATRIMOINE -->
+      <div class="fiche-panel" id="panel-patrimoine">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏛️</span> Patrimoine majeur</div>
+            <ul>
+              <li>Mont-Saint-Michel (UNESCO — Normandie/Bretagne)</li>
+              <li>Alignements de Carnac (mégalithes préhistoriques)</li>
+              <li>Remparts de Saint-Malo</li>
+              <li>Château de Fougères</li>
+              <li>Presqu'île de Crozon (site naturel classé)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛪</span> Édifices remarquables</div>
+            <ul>
+              <li>Cathédrale Saint-Corentin de Quimper</li>
+              <li>Cathédrale Saint-Tugdual de Tréguier</li>
+              <li>Abbaye du Mont-Saint-Michel</li>
+              <li>Château de Josselin (Morbihan)</li>
+              <li>Enclos paroissiaux du Finistère (Guimiliau, Saint-Thégonnec)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Musées & culture</div>
+            <ul>
+              <li>Musée de Bretagne (Rennes)</li>
+              <li>Musée des Beaux-Arts de Quimper</li>
+              <li>Musée de la Préhistoire de Carnac</li>
+              <li>Musée de la Mer de Paimpol</li>
+              <li>Écomusée des Monts d'Arrée</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗿</span> Mégalithes & préhistoire</div>
+            <ul>
+              <li>Alignements de Carnac (3 000 menhirs)</li>
+              <li>Cairn de Gavrinis (Morbihan)</li>
+              <li>Dolmen de Bagneux (Maine-et-Loire, limitrophe)</li>
+              <li>Île aux Moines — tumulus préhistoriques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="fiche-panel" id="panel-nature">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌊</span> Côtes & littoral</div>
+            <ul>
+              <li>Côte de Granit Rose (Ploumanac'h)</li>
+              <li>Pointe du Raz (Finistère — cap Sizun)</li>
+              <li>Côte Sauvage de Quiberon</li>
+              <li>Golfe du Morbihan (mer intérieure)</li>
+              <li>Belle-Île-en-Mer (plus grande île bretonne)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏝️</span> Îles & archipels</div>
+            <ul>
+              <li>Île de Bréhat (archipel des Sept-Îles)</li>
+              <li>Île d'Ouessant (phares et moutons)</li>
+              <li>Îles de Glénan (lagon turquoise)</li>
+              <li>Île de Groix (Morbihan)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌿</span> Landes & forêts intérieures</div>
+            <ul>
+              <li>Forêt de Brocéliande (Paimpont — légendes arthuriennes)</li>
+              <li>Monts d'Arrée (Finistère — landes et tourbières)</li>
+              <li>Parc naturel régional d'Armorique</li>
+              <li>Landes de Lanvaux (Morbihan)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🦅</span> Faune & espaces protégés</div>
+            <ul>
+              <li>Réserve naturelle des Sept-Îles (fous de Bassan)</li>
+              <li>Parc marin d'Iroise (dauphins, phoques)</li>
+              <li>Réserve de biosphère de Crozon</li>
+              <li>Zones humides de la baie du Mont-Saint-Michel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISANAT -->
+      <div class="fiche-panel" id="panel-artisanat">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏺</span> Faïence & céramique</div>
+            <ul>
+              <li>Faïences de Quimper (HB Henriot — depuis 1690)</li>
+              <li>Poteries de Landujan (Ille-et-Vilaine)</li>
+              <li>Grès de Betschdorf (tradition céltique)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛵</span> Construction navale & marine</div>
+            <ul>
+              <li>Charpenterie de marine (Douarnenez)</li>
+              <li>Fabrication de filets et cordages (Concarneau)</li>
+              <li>Armement et pêche artisanale (Saint-Malo)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🧵</span> Textile & broderie</div>
+            <ul>
+              <li>Broderie bretonne (coiffe et costume traditionnel)</li>
+              <li>Tissu marin rayé (marinière bretonne)</li>
+              <li>Dentelle au fuseau (pays bigouden)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🪵</span> Bois & lutherie</div>
+            <ul>
+              <li>Fabrication de biniou et bombarde (instruments celtiques)</li>
+              <li>Sculpture sur bois des enclos paroissiaux</li>
+              <li>Lutherie celtique (harpe irlandaise, vielle)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONS -->
+      <div class="fiche-panel" id="panel-traditions">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🗣️</span> Langue & culture</div>
+            <ul>
+              <li>Breton (langue celtique — 200 000 locuteurs)</li>
+              <li>Gallo (langue d'oïl de Haute-Bretagne)</li>
+              <li>Légendes arthuriennes (Brocéliande, Merlin, la fée Viviane)</li>
+              <li>Culture celtique et identité bretonne affirmée</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎶</span> Danses & musiques</div>
+            <ul>
+              <li>Fest-noz (fête de nuit — UNESCO)</li>
+              <li>Biniou et bombarde (couple d'instruments bretons)</li>
+              <li>Kan ha diskan (chant à répondre)</li>
+              <li>Festival Interceltique de Lorient</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>⛵</span> Sports & traditions</div>
+            <ul>
+              <li>Voile et régates (La Solitaire du Figaro, Transat)</li>
+              <li>Surf (côte atlantique du Finistère)</li>
+              <li>Lutte bretonne (gouren)</li>
+              <li>Pêche sportive et plaisance (tous les ports)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🎭</span> Fêtes & traditions</div>
+            <ul>
+              <li>Pardons bretons (pèlerinages paroissiaux)</li>
+              <li>Fête de la Cornouaille (Quimper — juillet)</li>
+              <li>Festival Interceltique de Lorient (août)</li>
+              <li>Fête des Filets Bleus (Concarneau — août)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VILLAGES -->
+      <div class="fiche-panel" id="panel-villages">
+        <div class="blocs-grid">
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏘️</span> Plus Beaux Villages</div>
+            <ul>
+              <li>Rochefort-en-Terre (Morbihan)</li>
+              <li>Locronan (Finistère)</li>
+              <li>Moncontour (Côtes-d'Armor)</li>
+              <li>Dinan (Côtes-d'Armor — cité médiévale)</li>
+              <li>Begard (Côtes-d'Armor)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🏰</span> Cités médiévales</div>
+            <ul>
+              <li>Dinan (remparts et vieille ville)</li>
+              <li>Vitré (château et remparts)</li>
+              <li>Fougères (château médiéval)</li>
+              <li>Josselin (château des Rohan)</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <div class="bloc-titre"><span>🌸</span> Villages pittoresques</div>
+            <ul>
+              <li>Cancale (Ille-et-Vilaine — huîtres et baie du Mont-Saint-Michel)</li>
+              <li>Pont-Aven (Finistère — École de Gauguin)</li>
+              <li>Concarneau (ville close)</li>
+              <li>Le Faou (Finistère — estuaire de l'Aulne)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="village-star">
+          <div class="village-star-icon">✨</div>
+          <div>
+            <h3>Village à l'honneur : Locronan</h3>
+            <p>Posé sur une colline du Finistère, Locronan est l'un des villages les mieux préservés de Bretagne. Ses maisons de granite du XVIe et XVIIe siècles, construites par les marchands de toile à voiles enrichis par le commerce maritime, forment un ensemble architectural exceptionnel. La grande place, intacte depuis la Renaissance, a servi de décor à de nombreux films historiques. Chaque été, la Troménie — procession rituelle autour de la montagne sacrée — perpétue une tradition celtique millénaire.</p>
+            <span class="village-star-tag">Plus Beau Village de France</span>
+            <span class="village-star-tag">Finistère</span>
+            <span class="village-star-tag">Troménie — tradition celtique</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="fiche-panel" id="panel-agenda">
+        <div class="blocs-grid">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>📅</span> Fêtes & événements de l'année</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-mois">Fév.</div>
+                <div><h4>Fête de la Chandeleur — Crêpes bretonnes</h4><p>Toute la Bretagne célèbre la Chandeleur autour des crêpières et des galettes de sarrasin — fête populaire et gourmande par excellence.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Solitaire du Figaro — départ</h4><p>La grande course à la voile en solitaire part chaque printemps d'un port breton pour un tour des côtes françaises et atlantiques.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Fête de la Cornouaille — Quimper</h4><p>Le plus grand festival de culture bretonne — costumes, danses, musiques traditionnelles et fest-noz dans les rues de Quimper.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juil.</div>
+                <div><h4>Troménie de Locronan</h4><p>La Grande Troménie — procession rituelle autour de la montagne sacrée de Locronan — n'a lieu que tous les six ans, attirant des milliers de pèlerins.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Festival Interceltique de Lorient</h4><p>Le plus grand rassemblement des peuples celtes du monde — dix jours de musiques, danses et traditions venues d'Irlande, d'Écosse, du Pays de Galles et de Galice.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête des Filets Bleus — Concarneau</h4><p>L'une des plus anciennes fêtes de Bretagne célèbre la mer et les marins depuis 1905 dans la ville close de Concarneau.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Ouverture de la saison des huîtres — Cancale</h textarea><p>Les parqueurs de Cancale ouvrent leurs parcs à huîtres pour les dégustations d'automne sur le port, face à la baie du Mont-Saint-Michel.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Transat Jacques Vabre — Le Havre / Martinique</h4><p>La grande course transatlantique en double part tous les deux ans du Havre et associe les ports bretons à l'aventure océanique.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARCOURS -->
+      <div class="fiche-panel" id="panel-parcours">
+        <div class="blocs-grid" style="margin-bottom:20px">
+          <div class="bloc bloc-full">
+            <div class="bloc-titre"><span>🗺️</span> Itinéraires conseillés en Bretagne</div>
+          </div>
+        </div>
+        <div class="parcours-list">
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌊</span>
+            <h4>GR 34 — Sentier des Douaniers</h4>
+            <p>2 000 km de sentier longeant l'intégralité du littoral breton — falaises, criques, phares et ports de pêche de Saint-Malo à Saint-Nazaire.</p>
+            <span class="parcours-item-duree">⏱ 45 à 60 jours (intégral)</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🗿</span>
+            <h4>Mégalithes du Morbihan</h4>
+            <p>Carnac, Locmariaquer, Gavrinis, Golfe du Morbihan — la plus grande concentration de mégalithes du monde entre mer et landes.</p>
+            <span class="parcours-item-duree">⏱ 3 à 4 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏰</span>
+            <h4>Route des Enclos Paroissiaux</h4>
+            <p>Saint-Thégonnec, Guimiliau, Lampaul-Guimiliau — les chefs-d'œuvre de la sculpture bretonne du XVIe siècle au cœur du Finistère.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🌿</span>
+            <h4>Forêt de Brocéliande</h4>
+            <p>Paimpont, Val sans Retour, Fontaine de Barenton — les légendes arthuriennes de Merlin et de la fée Viviane au cœur de la forêt enchantée.</p>
+            <span class="parcours-item-duree">⏱ 1 à 2 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🏝️</span>
+            <h4>Île de Belle-Île & Morbihan</h4>
+            <p>Belle-Île, l'Île aux Moines, le Golfe du Morbihan en voilier — la mer intérieure et ses îles entre landes fleuries et villages de granite.</p>
+            <span class="parcours-item-duree">⏱ 4 à 5 jours</span>
+          </div>
+          <div class="parcours-item">
+            <span class="parcours-item-icon">🎨</span>
+            <h4>Sur les pas de Gauguin — Pont-Aven</h4>
+            <p>Pont-Aven, Concarneau, Quimper — l'École de Pont-Aven et les paysages qui inspirèrent Gauguin, Sérusier et les Nabis.</p>
+            <span class="parcours-item-duree">⏱ 2 à 3 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+        <a href="#">Contribuer</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script>
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
