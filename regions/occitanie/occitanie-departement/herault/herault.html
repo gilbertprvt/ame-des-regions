@@ -449,7 +449,6 @@
 
 
 
-              <li><a href="../../departement/herault-info/gastronomie/terroir/pelardon-haut-languedoc.html">Pélardon du Haut-Languedoc</a></li>
               <li><a href="../../departement/herault-info/gastronomie/terroir/huile-olive--vallee-herault.html">Huile d'olive de la vallée de l'Hérault</a></li>
               <li><a href="../../departement/herault-info/gastronomie/terroir/huitres-moules--bouzigues.html">Huîtres et moules de Bouzigues</a></li>
               <li><a href="../../departement/herault-info/gastronomie/terroir/oignon-doux-cevennes.html">Oignons doux des Cévennes</a></li>
@@ -493,37 +492,39 @@
           <div class="bloc">
             <div class="bloc-titre"><span>Site</span> Sites UNESCO & classés</div>
             <ul>
-              <li>Abbaye de Gellone et village de Saint-Guilhem-le-Désert (UNESCO)</li>
-              <li>Pont du Diable (UNESCO)</li>
-              <li>Chemins de Saint-Jacques-de-Compostelle en Hérault</li>
-              <li>Cirque de Navacelles (Grand Site de France)</li>
+               
+              <li><a href="../../departement/herault-info/patrimoine/unesco/pont-du-diable.html">Pont du Diable (UNESCO)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/unesco/cirque-de-navacelles.html">Cirque de Navacelles (Grand Site de France)</a></li>
             </ul>
           </div>
           <div class="bloc">
             <div class="bloc-titre"><span>Chateau</span> Châteaux & folies montpelliéraines</div>
             <ul>
-              <li>Château de Flaugergues (Montpellier)</li>
-              <li>Château de la Mogère</li>
-              <li>Château de Castries et son aqueduc</li>
-              <li>Château de Pézenas (vestiges princiers)</li>
+              
+              <li><a href="../../departement/herault-info/patrimoine/chateau/chateau-de-flaugergues.html">Château de Flaugergues (Montpellier)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/chateau/chateau-de-la-mogere.html">Château de la Mogère</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/chateau/chateau-de-castries.html">Château de Castries et son aqueduc</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/chateau/chateau-de-pezenas.html">Château de Pézenas (vestiges princiers)</a></li>
             </ul>
           </div>
           <div class="bloc">
             <div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
             <ul>
-              <li>Cathédrale Saint-Pierre de Montpellier</li>
-              <li>Abbaye de Gellone (Saint-Guilhem-le-Désert)</li>
-              <li>Cathédrale Saint-Nazaire de Béziers</li>
-              <li>Église fortifiée Saint-Étienne d'Agde (basalte noir)</li>
+              
+              <li><a href="../../departement/herault-info/patrimoine/eglise/cathedrale-saint-pierre-montpellier.html">Cathédrale Saint-Pierre de Montpellier</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/eglise/abbaye-de-gellone.html">Abbaye de Gellone (Saint-Guilhem-le-Désert)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/eglise/cathedrale-saint-nazaire-beziers.html">Cathédrale Saint-Nazaire de Béziers</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/eglise/eglise-saint-etienne-agde.html">Église fortifiée Saint-Étienne d'Agde (basalte noir)</a></li>
             </ul>
           </div>
           <div class="bloc">
             <div class="bloc-titre"><span>Musee</span> Musées & culture</div>
             <ul>
-              <li>Musée Fabre (Montpellier)</li>
-              <li>Musée Paul Valéry (Sète)</li>
-              <li>Musée international des arts modestes, MIAM (Sète)</li>
-              <li>Musée agathois (Agde)</li>
+             
+              <li><a href="../../departement/herault-info/patrimoine/musee/musee-fabre.html">Musée Fabre (Montpellier)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/musee/musee-paul-valery.html">Musée Paul Valéry (Sète)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/musee/miam.html">Musée international des arts modestes, MIAM (Sète)</a></li>
+              <li><a href="../../departement/herault-info/patrimoine/musee/musee-agathois.html">Musée agathois (Agde)</a></li>
             </ul>
           </div>
         </div>
@@ -1176,31 +1177,36 @@
   </footer>
 
   <script src="../../script.js"></script>
-  <script>
+ <script>
+    // Onglets
     const tabs   = document.querySelectorAll('.fiche-tab');
     const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'occitanie-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
     tabs.forEach(tab => {
       tab.addEventListener('click', function() {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
       });
     });
 
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const jourCards   = document.querySelectorAll('.jour-card');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        const filter = this.dataset.filter;
-        jourCards.forEach(card => {
-          card.style.display = (filter === 'tous' || card.dataset.profil === filter) ? 'flex' : 'none';
-        });
-      });
-    });
-  </script>
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+</script>
 
 </body>
 </html>
