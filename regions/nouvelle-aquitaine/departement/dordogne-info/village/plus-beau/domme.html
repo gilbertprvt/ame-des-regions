@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domme — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .produit-page { background: var(--ivoire); }
+
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top { position: relative; }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+         <div class="produit-topbar-btns">
+          <a href="../../../../nouvelle-aquitaine-departement/dordogne/dordogne.html" class="produit-btn-retour">
+            ← Retour à la fiche Dordogne
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+
+          <h1><em>D</em>omme</h1>
+
+        </div>
+         <img src="../../../../../../assets/departement/nouvelle-aquitaine/carte-dordogne.png"
+               alt="Carte de la Nouvelle-Aquitaine"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/nouvelle-aquitaine/dordogne.jpg" alt="Écusson Dordogne" />
+        </div>
+
+
+
+    <div class="hero-label-bas">
+    ⟹ La bastide royale perchée au-dessus de la Dordogne ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#particularite"        >🏛️ Bastide royale</a>
+          <a href="#anecdotes"            >💡 Anecdotes</a>
+          <a href="#alentours"            >🔀 Alentours</a>
+          <a href="#infos-pratiques"      >📍 Infos pratiques</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Fondée en 1281 par le roi de France Philippe III le Hardi, Domme est l'une des dernières grandes bastides royales édifiées en Périgord, conçue pour asseoir l'autorité du roi face aux possessions anglaises voisines pendant la période qui précède la guerre de Cent Ans.</p>
+              <p>Bâtie sur un plan en damier caractéristique des bastides, la ville haute occupe un promontoire rocheux dominant la vallée de la Dordogne de plus de 150 mètres, offrant une position défensive exceptionnelle.</p>
+              <figure class="photo-bloc photo-centre" style="max-width: 400px;">
+                   <img src="../../../../../../assets/departement/nouvelle-aquitaine/photo/dordogne/belvedere.jpg"
+                        alt="Vue panoramique depuis la bastide de Domme sur la vallée de la Dordogne" />
+                    <figcaption>Le belvédère de la Barre, vue sur la vallée de la Dordogne</figcaption>
+                  </figure>
+              <p>Pendant la guerre de Cent Ans puis les guerres de Religion, Domme change plusieurs fois de mains, notamment prise par les huguenots à la fin du XVIe siècle. La ville conserve encore aujourd'hui ses portes fortifiées et une partie de ses remparts.</p>
+              <p>Sous les halles du XVIIe siècle, un réseau de grottes servit de refuge à la population, avant d'accueillir, en 1307, des chevaliers du Temple emprisonnés lors de l'arrestation de l'ordre, qui y ont laissé des graffitis encore visibles aujourd'hui.</p>
+            </div>
+          </section>
+
+          <!-- PARTICULARITE -->
+          <section class="section" id="particularite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏛️</div>
+              Bastide royale
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🧭</div>
+                <div>
+                  <div class="recette-meta-label">Situation</div>
+                  <div class="recette-meta-val">Promontoire au-dessus de la Dordogne</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">👑</div>
+                <div>
+                  <div class="recette-meta-label">Fondation</div>
+                  <div class="recette-meta-val">1281, par Philippe III le Hardi</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏛️</div>
+                <div>
+                  <div class="recette-meta-label">Type</div>
+                  <div class="recette-meta-val">Bastide royale</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏘️</div>
+                <div>
+                  <div class="recette-meta-label">Distinction</div>
+                  <div class="recette-meta-val">Plus Beaux Villages de France</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les portes fortifiées</div>
+                  <div class="etape-texte">La Porte des Tours, où furent détenus des Templiers, et la Porte del Bos comptent parmi les vestiges les mieux conservés des remparts.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La place de la Halle</div>
+                  <div class="etape-texte">Cœur de la bastide, elle abrite une halle du XVIIe siècle bâtie sur d'anciennes halles médiévales.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les grottes de Domme</div>
+                  <div class="etape-texte">Un réseau de cavités naturelles sous la ville, aménagé au fil des siècles comme refuge et lieu de stockage.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le belvédère de la Barre</div>
+                  <div class="etape-texte">Un des plus beaux panoramas du Périgord, embrassant toute la vallée de la Dordogne et ses villages.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le plan en damier</div>
+                  <div class="etape-texte">Caractéristique des bastides médiévales, il organise encore aujourd'hui les rues et la place centrale du village.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Anecdotes & curiosités
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">⚔️</div>
+                <div>
+                  <div class="vin-nom">Des graffitis de Templiers</div>
+                  <div class="vin-desc">Emprisonnés dans les tours de la bastide après l'arrestation de l'ordre du Temple en 1307, plusieurs chevaliers ont gravé des inscriptions encore lisibles sur les murs.</div>
+                </div>
+                <div class="vin-badge">Histoire</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🕳️</div>
+                <div>
+                  <div class="vin-nom">Une ville-refuge souterraine</div>
+                  <div class="vin-desc">Le sous-sol de Domme est creusé de grottes qui ont servi d'abri à la population lors des conflits et des épidémies.</div>
+                </div>
+                <div class="vin-badge">Patrimoine</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌅</div>
+                <div>
+                  <div class="vin-nom">Un panorama sur cinq villages</div>
+                  <div class="vin-desc">Depuis le belvédère de la Barre, le regard porte sur plusieurs villages de la vallée, dont La Roque-Gageac et Beynac par temps clair.</div>
+                </div>
+                <div class="vin-badge">Paysage</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔀</div>
+              À voir aux alentours
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>La Roque-Gageac :</strong> village troglodyte au bord de la Dordogne, visible depuis les hauteurs de Domme.</p>
+              <p><strong>Château de Castelnaud :</strong> forteresse et musée de la guerre au Moyen Âge, à proximité.</p>
+              <p><strong>Sarlat-la-Canéda :</strong> capitale historique du Périgord noir, à une vingtaine de minutes.</p>
+            </div>
+          </section>
+
+          <!-- INFOS PRATIQUES -->
+          <section class="section" id="infos-pratiques">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Infos pratiques
+            </h2>
+            <div class="histoire-texte">
+              <p>La visite des grottes se fait dans le cadre de visites guidées organisées au départ de la place de la Halle.</p>
+              <p><strong>Marché</strong> traditionnel le jeudi matin sur la place de la bastide.</p>
+              <p><strong>Meilleur moment</strong> pour profiter du panorama : fin d'après-midi, quand la lumière rase la vallée.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Nouvelle-Aquitaine</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Dordogne · Périgord noir</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Bastide royale</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Fondation</span>
+                <span class="aside-val">1281</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Distinction</span>
+                <span class="aside-val">Plus Beaux Villages de France</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Climat</span>
+                <span class="aside-val">Océanique à influences méditerranéennes locales</span>
+              </div>
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+ <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+
+    </div>
+  </footer>
+
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>
