@@ -25,7 +25,7 @@
     .legende-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-family: var(--font-corps); color: #555; }
     .legende-swatch { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); background: #2D5A7A; }
 
-    .carte-main { display: grid; grid-template-columns: 1fr 320px; gap: 28px; padding: 32px 0 60px; align-items: start; max-width: 1300px; margin: 0 auto; }
+    .carte-main { display: grid; grid-template-columns: 1fr; gap: 28px; padding: 32px 0 60px; align-items: start; max-width: 1300px; margin: 0 auto; }
 
     .carte-svg-wrap { background: #F0EAD6; border: 1px solid #C8B88A; border-radius: 14px; padding: 20px; position: relative; box-shadow: inset 0 0 40px rgba(139,115,85,0.08); }
     .carte-svg-wrap::before { content:''; position:absolute; inset:0; border-radius:14px; pointer-events:none; background:repeating-linear-gradient(0deg,rgba(139,115,85,0.04) 0px,rgba(139,115,85,0.04) 1px,transparent 1px,transparent 28px),repeating-linear-gradient(90deg,rgba(139,115,85,0.04) 0px,rgba(139,115,85,0.04) 1px,transparent 1px,transparent 28px); }
@@ -126,38 +126,6 @@
         <p class="carte-hint">Survolez pour voir le nom · Cliquez pour découvrir le département</p>
       </div>
 
-      <div class="carte-panel">
-        <div class="panel-idle" id="panelIdle">
-          <div class="idle-icon">🌊</div>
-          <p>Cliquez sur un département pour découvrir ses spécialités, son chef-lieu et ses trésors cachés.</p>
-        </div>
-        <div class="panel-dept" id="panelDept">
-          <div class="pd-card">
-            <div class="pd-header" id="pdHeader">
-              <div class="pd-num" id="pdNum">—</div>
-              <h2 id="pdNom">—</h2>
-              <div class="pd-chef" id="pdChef">—</div>
-            </div>
-            <div class="pd-body">
-              <div class="pd-region-badge">Bretagne</div>
-              <div class="pd-stat-row">
-                <div class="pd-stat"><span class="pd-stat-val" id="pdPop">—</span><span class="pd-stat-lab">habitants</span></div>
-                <div class="pd-stat"><span class="pd-stat-val" id="pdSup">—</span><span class="pd-stat-lab">km²</span></div>
-              </div>
-              <div class="pd-section-titre">✦ Spécialités & trésors</div>
-              <div class="pd-tags" id="pdTags"></div>
-              <div class="pd-section-titre">📍 À ne pas manquer</div>
-              <p class="pd-info" id="pdInfo">—</p>
-              <a href="#" id="pdBtn" class="pd-btn">Découvrir ce département →</a>
-            </div>
-          </div>
-        </div>
-        <div class="legende-bas">
-          <h3>Légende</h3>
-          <div class="leg-row"><div class="leg-sw" style="background:#2D5A7A"></div> Département</div>
-          <div class="leg-row"><div class="leg-sw" style="background:#112535"></div> Sélectionné</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -227,23 +195,11 @@
       const info = DEPTS[code];
       if (!info) return;
 
-      svg.selectAll("path.dept").classed("active", false);
-      d3.select(this).classed("active", true);
-
-      document.getElementById("pdNum").textContent  = `Département ${code}`;
-      document.getElementById("pdNom").textContent  = info.nom;
-      document.getElementById("pdChef").textContent = `Chef-lieu : ${info.chef}`;
-      document.getElementById("pdPop").textContent  = info.pop;
-      document.getElementById("pdSup").textContent  = info.sup;
-      document.getElementById("pdTags").innerHTML   = info.tags.map(t => `<span class="pd-tag">${t}</span>`).join("");
-      document.getElementById("pdInfo").textContent = info.info;
-
       const slugs = { "22":"cotes-d-armor","29":"finistere","35":"ille-et-vilaine","56":"morbihan" };
-      document.getElementById("pdBtn").href = slugs[code]
-        ? `bretagne-departement/${slugs[code]}/${slugs[code]}.html` : "#";
 
-      document.getElementById("panelIdle").style.display = "none";
-      document.getElementById("panelDept").classList.add("visible");
+      if (slugs[code]) {
+        window.location.href = `bretagne-departement/${slugs[code]}/${slugs[code]}.html`;
+      }
     });
 
   const shortNames = { "22":"Côtes-d'Armor","29":"Finistère","35":"Ille-et-Vilaine","56":"Morbihan" };

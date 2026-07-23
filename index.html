@@ -125,7 +125,7 @@
             </svg>
           </div>
         </div>
-        <p class="carte-hint">Survolez pour voir le nom · Cliquez pour ouvrir la fiche région</p>
+        <p class="carte-hint">Survolez pour voir le nom · Cliquez pour explorer la région</p>
       </div>
 
       <!-- PANNEAU LATÉRAL -->
@@ -186,19 +186,19 @@
 
     // ===== DONNÉES DES RÉGIONS =====
     const regionsData = {
-      "Auvergne-Rhône-Alpes":        { ancien: "Auvergne + Rhône-Alpes",                  chef: "Lyon",       tags: ["Gastronomie lyonnaise","Alpes","Volcans","Mont Blanc"],    url: "regions/auvergne-rhone-alpes/auvergne-rhone-alpes.html" },
-      "Bourgogne-Franche-Comté":     { ancien: "Bourgogne + Franche-Comté",               chef: "Dijon",      tags: ["Vins de Bourgogne","Comté AOP","Gastronomie dijonnaise"],  url: "regions/bourgogne-franche-comté/bourgogne-franche-comte.html" },
-      "Bretagne":                    { ancien: "Ancienne région unifiée",                  chef: "Rennes",     tags: ["Crêpes","Menhirs","Côtes sauvages","Fest Noz"],           url: "regions/bretagne/bretagne.html" },
-      "Centre-Val de Loire":         { ancien: "Ancienne région unifiée",                  chef: "Orléans",    tags: ["Châteaux","Vignobles","Chartres","Sologne"],              url: "regions/centre-val-de-loire/centre-val-de-loire.html" },
-      "Corse":                       { ancien: "Haute-Corse + Corse-du-Sud",               chef: "Ajaccio",    tags: ["Maquis","Charcuterie corse","Napoléon"],                  url: "regions/corse/corse.html" },
-      "Grand Est":                   { ancien: "Alsace + Champagne-Ardenne + Lorraine",    chef: "Strasbourg", tags: ["Vins d'Alsace","Champagne","Strasbourg"],                 url: "regions/grand-est/grand-est.html" },
-      "Hauts-de-France":             { ancien: "Nord-Pas-de-Calais + Picardie",            chef: "Lille",      tags: ["Beffrois","Bières","Ch'ti","Mémoire 14-18"],              url: "regions/hauts-de-france/hauts-de-france.html" },
-      "Île-de-France":               { ancien: "Ancienne région unifiée",                  chef: "Paris",      tags: ["Paris","Versailles","Musées","Gastronomie"],              url: "regions/ile-de-france/ile-de-france.html" },
-      "Normandie":                   { ancien: "Haute-Normandie + Basse-Normandie",        chef: "Rouen",      tags: ["Plages du Débarquement","Cidre","Camembert"],             url: "regions/normandie/normandie.html" },
-      "Nouvelle-Aquitaine":          { ancien: "Aquitaine + Limousin + Poitou-Charentes",  chef: "Bordeaux",   tags: ["Vins de Bordeaux","Cognac","Dordogne","Foie gras"],       url: "regions/nouvelle-aquitaine/nouvelle-aquitaine.html" },
-      "Occitanie":                   { ancien: "Languedoc-Roussillon + Midi-Pyrénées",     chef: "Toulouse",   tags: ["Cassoulet","Carcassonne","Pyrénées","Canal du Midi"],     url: "regions/occitanie/occitanie.html" },
-      "Pays de la Loire":            { ancien: "Ancienne région unifiée",                  chef: "Nantes",     tags: ["Châteaux de la Loire","Muscadet","Puy du Fou"],           url: "regions/pays-de-la-loire/pays-de-la-loire.html" },
-      "Provence-Alpes-Côte d'Azur":  { ancien: "Ancienne région unifiée",                  chef: "Marseille",  tags: ["Lavande","Côte d'Azur","Camargue","Bouillabaisse"],       url: "regions/provence-alpes-cote-d-azur/provence-alpes-cote-azur.html" }
+      "Auvergne-Rhône-Alpes":        {  url: "regions/auvergne-rhone-alpes/carte-auvergne-rhone-alpes.html" },
+      "Bourgogne-Franche-Comté":     {  url: "regions/bourgogne-franche-comté/carte-bourgogne-franche-comte.html" },
+      "Bretagne":                    {  url: "regions/bretagne/carte-bretagne.html" },
+      "Centre-Val de Loire":         {  url: "regions/centre-val-de-loire/carte-centre-val-de-loire.html" },
+      "Corse":                       {  url: "regions/corse/carte-corse.html" },
+      "Grand Est":                   {  url: "regions/grand-est/carte-grand-est.html" },
+      "Hauts-de-France":             {  url: "regions/hauts-de-france/carte-hauts-de-france.html" },
+      "Île-de-France":               {  url: "regions/ile-de-france/carte-ile-de-france.html" },
+      "Normandie":                   {  url: "regions/normandie/carte-normandie.html" },
+      "Nouvelle-Aquitaine":          {  url: "regions/nouvelle-aquitaine/carte-nouvelle-aquitaine.html" },
+      "Occitanie":                   {  url: "regions/occitanie/carte-occitanie.html" },
+      "Pays de la Loire":            {  url: "regions/pays-de-la-loire/carte-pays-de-la-loire.html" },
+      "Provence-Alpes-Côte d'Azur":  {  url: "regions/provence-alpes-cote-d-azur/carte-provence-alpes-cote-d-azur.html" }
     };
 
     // ===== INITIALISATION D3 =====
@@ -244,19 +244,10 @@
       })
       .on("click", function(event, d) {
         const nom  = d.properties.nom;
-        const info = regionsData[nom] || { ancien: "—", chef: "—", tags: [], url: "#" };
-
-        svg.selectAll("path").classed("active", false);
-        d3.select(this).classed("active", true);
-
-        prNom.textContent    = nom;
-        prChef.textContent   = "Chef-lieu : " + info.chef;
-        prAncien.textContent = info.ancien;
-        prTags.innerHTML     = info.tags.map(t => `<span class="pr-tag">${t}</span>`).join("");
-        prBtn.href           = info.url;
-
-        panelIdle.style.display = "none";
-        panelRegion.classList.add("visible");
+        const info = regionsData[nom];
+        if (info && info.url && info.url !== "#") {
+          window.location.href = info.url;
+        }
       });
 
     // Étiquette bas de carte
