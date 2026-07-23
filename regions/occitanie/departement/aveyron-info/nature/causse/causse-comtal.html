@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Causse Comtal — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/aveyron/aveyron.html" class="produit-btn-retour">
+            ← Retour à la fiche Aveyron
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>C</em>ausse<br><span style="padding-left: 60px;"><em>C</em>omtal</span></h1>
+          
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-aveyron.png"
+               alt="Carte du Aveyron"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/aveyron.png" alt="Écusson Aveyron" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Grands Causses & Terroir ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#presentation"   class="active">📖 Présentation</a>
+          <a href="#geologie"                 >🪨 Géologie & Paysage</a>
+          <a href="#randonnees"               >🥾 Randonnées</a>
+          <a href="#a-voir"                   >📍 À voir</a>
+          <a href="#faune-flore"              >🌿 Faune & flore</a>
+          <a href="#infos"                    >🧭 Infos pratiques</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- PRÉSENTATION -->
+          <section class="section" id="presentation">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Présentation
+            </h2>
+            <div class="histoire-texte">
+              <p>Le Causse Comtal est un plateau calcaire situé au nord de Rodez, dans le triangle formé par Rodez, Bozouls et Marcillac-Vallon, jusqu'à Muret-le-Château qui en marque la limite nord. Sous-ensemble des Grands Causses, il forme une sorte de pont sédimentaire entre les Causses du Quercy à l'ouest et les Grands Causses à l'est.</p>
+              <p>Son nom lui vient des comtes de Rodez qui y cultivaient autrefois le blé, lui valant le surnom de « grenier à blé » du comté. À la différence des Grands Causses voisins, le Causse Comtal ne donne pas cette impression de grands espaces désertiques : l'alternance entre causse sec et avant-causses, entre marnes et calcaires, y dessine des terroirs plus variés et plus habités.</p>
+              <p>Traversé par le Dourdou, il est entouré au nord par le Rougier de Marcillac et la vallée du Lot, à l'ouest par la dépression de Clairvaux et les reliefs du Ségala, au sud par la vallée de l'Aveyron et les monts du Lévezou.</p>
+              <figure class="photo-bloc photo-centre" style="max-width: 460px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/aveyron/causse-comtal.jpg"
+                        alt="Paysage du Causse Comtal" />
+                    <figcaption>Le Causse Comtal, plateau calcaire aux portes de Rodez</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+            </div>
+          </section>
+
+          <!-- GÉOLOGIE -->
+          <section class="section" id="geologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🪨</div>
+              Géologie & formation du paysage
+            </h2>
+            <div class="histoire-texte">
+              <p>Le plateau repose sur des formations calcaires du Jurassique inférieur et moyen, séparées par une couche de marnes qui conditionne deux niveaux aquifères distincts. Ces couches recouvrent un socle paléozoïque de grès, d'argilites carbonifères et permiennes et de roches cristallines.</p>
+              <p>Le relief karstique est structuré par un jeu de failles inverses est-ouest, héritées de la compression pyrénéenne. Ces failles favorisent l'apparition de points d'eau en surface et conditionnent, depuis toujours, l'implantation des villages et hameaux du causse.</p>
+              <p>Le phénomène géologique le plus spectaculaire du secteur reste le Trou de Bozouls : un canyon en forme de fer à cheval, creusé dans le calcaire par le Dourdou, dont les falaises tombent à environ 100 mètres au-dessus de la rivière. Un tel creusement dans le calcaire nécessite l'apport d'eau constant d'une rivière exogène, ce qui en fait une curiosité géologique remarquable dans le paysage caussenard.</p>
+            </div>
+          </section>
+
+          <!-- RANDONNÉES -->
+          <section class="section" id="randonnees">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥾</div>
+              Randonnée signature — Lo Camin de las Cazèlas
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📏</div>
+                <div>
+                  <div class="recette-meta-label">Distance</div>
+                  <div class="recette-meta-val">5,5 km</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">1h30</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile · Familial</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🧭</div>
+                <div>
+                  <div class="recette-meta-label">Balisage</div>
+                  <div class="recette-meta-val">Circuit local</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Autres itinéraires sur le site</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">12 km</span> Boucle Concourès – Bezonnes (3h30, balisage jaune)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">9 km</span> Boucle du canyon de Bozouls, autour du Trou de Bozouls</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Var.</span> Circuits vélo sur les petites routes du causse</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Libre</span> Sentiers caussenards entre Rodelle et Bézonnes</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Départ de Bezonnes</div>
+                  <div class="etape-texte">Au monument aux morts du village, à la croisée des routes vers Marcillac et Villecomtal, prendre la direction de Marcillac sur quelques dizaines de mètres avant de bifurquer sur les sentiers caussenards.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Pelouses sèches et genévriers</div>
+                  <div class="etape-texte">Le chemin traverse les pelouses sèches typiques du plateau calcaire, bordées de genévriers rase odorants, marque incontestable du paysage du Causse Comtal.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les cazelles</div>
+                  <div class="etape-texte">Tout au long du circuit se découvrent les cazelles, ces abris de pierres sèches construits autrefois par les bergers et aujourd'hui préservés grâce aux associations locales.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Points de vue</div>
+                  <div class="etape-texte">De très beaux points de vue s'ouvrent sur le causse et, par temps clair, jusqu'aux plateaux de l'Aubrac et parfois au Plomb du Cantal.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Retour à Bezonnes</div>
+                  <div class="etape-texte">La boucle revient vers le village de départ, après avoir longé les chemins bordés de murets de pierre caractéristiques du causse.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- À VOIR -->
+          <section class="section" id="a-voir">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Points d'intérêt à ne pas manquer
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🕳️</div>
+                <div>
+                  <div class="vin-nom">Trou de Bozouls</div>
+                  <div class="vin-desc">Canyon naturel en fer à cheval creusé par le Dourdou, falaises de 100 m, sentiers du village médiéval jusqu'au fond des gorges.</div>
+                </div>
+                <div class="vin-badge">⭐ Incontournable</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🪨</div>
+                <div>
+                  <div class="vin-nom">Les cazelles</div>
+                  <div class="vin-desc">Abris de pierres sèches bâtis par les bergers, témoins de l'habitat pastoral caussenard traditionnel.</div>
+                </div>
+                <div class="vin-badge">Patrimoine</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏰</div>
+                <div>
+                  <div class="vin-nom">La Vayssière</div>
+                  <div class="vin-desc">Ancien grenier-donjon et petit patrimoine médiéval disséminé sur le plateau.</div>
+                </div>
+                <div class="vin-badge">À voir</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">⛪</div>
+                <div>
+                  <div class="vin-nom">Village de Rodelle</div>
+                  <div class="vin-desc">Village perché aveyronnais avec son église, point de départ de plusieurs randonnées caussenardes.</div>
+                </div>
+                <div class="vin-badge">Village</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAUNE & FLORE -->
+          <section class="section" id="faune-flore">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌿</div>
+              Faune & flore
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Pelouses sèches et genévriers :</strong> la végétation du causse « sec », au centre du plateau, est aujourd'hui occupée par des landes de genévriers rases, typiques des sols calcaires peu profonds.</p>
+              <p><strong>Élevage ovin :</strong> les troupeaux de brebis pâturent encore une grande partie du plateau, entretenant les pelouses sèches caractéristiques du paysage caussenard.</p>
+              <p><strong>Espaces naturels sensibles :</strong> une partie du Causse Comtal est inscrite aux Espaces Naturels Sensibles de l'Aveyron, préservant ce patrimoine paysager et écologique.</p>
+            </div>
+          </section>
+
+          <!-- INFOS PRATIQUES -->
+          <section class="section" id="infos">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧭</div>
+              Infos pratiques
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Accès :</strong> depuis Rodez, prendre la D988 en direction de Sébazac-Concourès puis Bezonnes, à environ 6,5 km.</p>
+              <p><strong>Meilleure période :</strong> le causse se parcourt toute l'année ; les randonnées hivernales y sont particulièrement appréciées pour la douceur du relief.</p>
+              <p><strong>Villages-portes :</strong> Bezonnes, Sébazac-Concourès, Muret-le-Château, Salles-la-Source et Bozouls, célèbre pour son canyon.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Nord de Rodez · Aveyron</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Plateau calcaire karstique · Grand Causse</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Superficie</span>
+                <span class="aside-val">≈ 265 km²</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Cours d'eau</span>
+                <span class="aside-val">Le Dourdou</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Point remarquable</span>
+                <span class="aside-val">Trou de Bozouls (canyon, falaises de 100 m)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Protection</span>
+                <span class="aside-val">Espaces Naturels Sensibles de l'Aveyron</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Meilleure saison</span>
+                <span class="aside-val">Toute l'année</span>
+              </div>
+            </div>
+          </div>
+
+         
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      <nav class="footer-nav">
+        <a href="../../index.html">Accueil</a>
+        <a href="../../occitanie.html">Occitanie</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+
+  </script>
+
+</body>
+</html>
