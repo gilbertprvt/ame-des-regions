@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eure-et-Loir — L'Âme des Régions</title>
+<link href="../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+<style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* Visites Guidées */
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+</style>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
+<body class="fiche-page">
+<div class="fiche-hero">
+<div class="container">
+<div class="fiche-topbar">
+<a class="fiche-logo" href="../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens">
+<a class="fiche-topbar-btn" href="../../centre-val-de-loire.html">Centre-Val de Loire</a>
+<a class="fiche-topbar-btn" href="../../carte-centre-val-de-loire.html">Carte des départements</a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1> <span style="padding-left: 40px;">L&#8217;<span class="titre-initial">E</span>ure-et-Loir</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Eure-et-Loir" src="../../../../assets/departement/centre-val-de-loire/eure-et-loir.png"/>
+</div>
+<span class="fiche-hero-ancien">Préfecture : Chartres · Département 28</span>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">Nature</button>
+<button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+<button class="fiche-tab" data-panel="traditions">Traditions</button>
+<button class="fiche-tab" data-panel="villages">Villages</button>
+<button class="fiche-tab" data-panel="agenda">Agenda</button>
+<button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+<button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/plats/pate-de-chartres.html">Pâté de Chartres (gibier et foie gras en croûte)</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/plats/boeuf-chartrain.html">Bœuf chartrain, race bovine locale</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/plats/poule-au-pot-beauceronne.html">Poule au pot beauceronne</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/plats/gibier-foret-de-senonches.html">Gibier de la forêt de Senonches</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/terroir/bles-de-beauce.html">Blés de Beauce, grenier à blé de la France</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/terroir/fromage-de-chevre-vallee-de-l-eure.html">Fromage de chèvre de la vallée de l'Eure</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/terroir/cidre-et-poire-du-perche.html">Cidre et poiré du Perche</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/terroir/sables-de-beauce.html">Sablés de Beauce, farine de tradition</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/terroir/safran-du-gatinais-chartrain.html">Safran du Gâtinais chartrain</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Bières &amp; boissons</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/vin/biere-la-chartraine.html">La Chartraine, bière artisanale de Chartres</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/vin/biere-l-eurelienne.html">L'Eurélienne, bière brassée à Sours</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/vin/cidre-percheron.html">Cidre percheron</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Dessert</span> Douceurs &amp; pâtisseries</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/dessert/mentchikoff.html">Mentchikoff, bonbon chocolat-praliné de Chartres</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/dessert/madeleines-illiers-combray.html">Madeleines d'Illiers-Combray, hommage à Marcel Proust</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/dessert/cochelin.html">Cochelin, pâtisserie feuilletée de la Saint-Sylvestre</a></li>
+<li><a href="../../departement/eure-et-loir-info/gastronomie/dessert/sables-de-nogent-le-rotrou.html">Sablés de Nogent-le-Rotrou</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Site</span> Sites UNESCO &amp; classés</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/unesco/cathedrale-notre-dame-de-chartres.html">Cathédrale Notre-Dame de Chartres (UNESCO)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chateau</span> Châteaux &amp; demeures</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/chateau/chateau-de-maintenon.html">Château de Maintenon et son aqueduc inachevé</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/chateau/chateau-d-anet.html">Château d'Anet, chef-d'œuvre de Philibert Delorme</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/chateau/chateau-de-chateaudun.html">Château de Châteaudun, médiéval et Renaissance</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/chateau/chateau-saint-jean-nogent-le-rotrou.html">Château Saint-Jean de Nogent-le-Rotrou</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/eglise/cathedrale-de-chartres-vitraux.html">Cathédrale Notre-Dame de Chartres et ses vitraux</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/eglise/collegiale-de-chateaudun.html">Collégiale Saint-Jean-Baptiste de Châteaudun</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/eglise/abbaye-de-thiron-gardais.html">Abbaye Notre-Dame de Thiron-Gardais</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musee</span> Musées &amp; culture</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/musee/centre-international-du-vitrail.html">Centre International du Vitrail, Chartres</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/musee/musee-des-beaux-arts-de-chartres.html">Musée des Beaux-Arts de Chartres</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/musee/maison-de-tante-leonie.html">Maison de tante Léonie, musée Marcel Proust, Illiers-Combray</a></li>
+<li><a href="../../departement/eure-et-loir-info/patrimoine/musee/musee-de-chateaudun.html">Musée de Châteaudun</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plaine</span> Beauce &amp; Perche</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/nature/plaine/la-beauce.html">La Beauce, immense plaine céréalière à l'horizon infini</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/plaine/le-perche.html">Le Perche, collines, bocages et forêts</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/plaine/foret-domaniale-de-senonches.html">Forêt domaniale de Senonches</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Riviere</span> Vallées &amp; rivières</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/nature/riviere/vallee-de-l-eure.html">Vallée de l'Eure</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/riviere/vallee-du-loir-chartrain.html">Vallée du Loir chartrain</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/riviere/etangs-du-perche.html">Étangs du Perche</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Faune</span> Faune &amp; biodiversité</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/nature/faune/cheval-percheron.html">Cheval percheron, race de trait emblématique</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/faune/grande-faune-foret-de-senonches.html">Grande faune de la forêt de Senonches</a></li>
+<li><a href="../../departement/eure-et-loir-info/nature/faune/oiseaux-de-plaine-beauce.html">Oiseaux de plaine de la Beauce (busards, outardes)</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Vitrail</span> Vitrail &amp; arts du verre</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/artisanat/vitrail/ateliers-de-vitrail-de-chartres.html">Ateliers de vitrail de Chartres, tradition vivante</a></li>
+<li><a href="../../departement/eure-et-loir-info/artisanat/vitrail/transmission-savoir-faire-vitrail.html">Centre International du Vitrail, transmission des savoir-faire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Meunerie</span> Meunerie &amp; blé de Beauce</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/artisanat/meunerie/minoteries-de-beauce.html">Minoteries de Beauce, farine de tradition</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cheval</span> Élevage &amp; cheval percheron</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/artisanat/cheval/haras-du-cheval-percheron.html">Haras et élevage du cheval percheron</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Charcuterie</span> Charcuterie &amp; pâté en croûte</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/artisanat/charcuterie/fabrication-du-pate-de-chartres.html">Fabrication artisanale du pâté de Chartres</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-traditions">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Langue</span> Langue &amp; identité</div>
+<ul>
+<li>Identité chartraine autour de la cathédrale</li>
+<li>Parler beauceron et percheron</li>
+<li>Mémoire du pèlerinage marial vers Chartres</li>
+<li>Héritage de Marcel Proust à Illiers-Combray</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musique</span> Musiques &amp; jeux traditionnels</div>
+<ul>
+<li>Chants de pèlerinage sur la route de Chartres</li>
+<li>Fanfares beauceronnes lors des moissons</li>
+<li>Concours et présentations du cheval percheron</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fete</span> Fêtes &amp; traditions locales</div>
+<ul>
+<li>Chartres en Lumières, monuments illuminés d'avril à janvier</li>
+<li>Pèlerinage de Chartres, marche Paris-Chartres</li>
+<li>Festival du Cheval Percheron à Nogent-le-Rotrou</li>
+<li>Fêtes des moissons en Beauce</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+<ul>
+<li>Confection du pâté de Chartres en période de chasse</li>
+<li>Fabrication artisanale des sablés de Beauce</li>
+<li>Production de cidre et de poiré dans le Perche</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Village</span> Villages remarquables</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/village/remarquable/illiers-combray.html">Illiers-Combray, le Combray de Marcel Proust</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/remarquable/yevres.html">Yèvres et les petites cités beauceronnes</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Perche</span> Villages du Perche</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/village/perche/nogent-le-rotrou.html">Nogent-le-Rotrou, capitale du Perche eurélien</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/perche/thiron-gardais.html">Thiron-Gardais, cité de l'abbaye</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/perche/senonches.html">Senonches, au cœur de la forêt</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Bourg</span> Bourgs &amp; cités de caractère</div>
+<ul>
+<li><a href="../../departement/eure-et-loir-info/village/bourg/chartres.html">Chartres, cité de la cathédrale</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/bourg/chateaudun.html">Châteaudun, ville médiévale et Renaissance</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/bourg/maintenon.html">Maintenon, entre château et aqueduc royal</a></li>
+<li><a href="../../departement/eure-et-loir-info/village/bourg/anet.html">Anet, cité de Diane de Poitiers</a></li>
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">Etoile</div>
+<div>
+<h3>Village à l'honneur : Illiers-Combray</h3>
+<p>Ce paisible bourg beauceron doit sa renommée mondiale à Marcel Proust, qui y passa ses vacances d'enfance et en fit le « Combray » d'À la recherche du temps perdu. La maison de tante Léonie, devenue musée, et le jardin du Pré Catelan font revivre l'univers de la madeleine et du temps retrouvé.</p>
+<span class="village-star-tag">Village littéraire</span>
+<span class="village-star-tag">Musée Marcel Proust</span>
+<span class="village-star-tag">Beauce</span>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>Calendrier</span> Fêtes &amp; événements de l'année</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Fév.</div>
+<div><h4>Salon du livre et de la gastronomie chartraine</h4><p>Rencontres autour des spécialités locales et de la littérature régionale.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Ouverture de Chartres en Lumières</h4><p>Les monuments et façades du centre historique s'animent de projections nocturnes jusqu'en janvier.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Rendez-vous aux Jardins</h4><p>Ouverture exceptionnelle des jardins du château de Maintenon.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai-Juin</div>
+<div><h4>Pèlerinage de Chartres</h4><p>Marche traditionnelle reliant Paris à la cathédrale de Chartres, rassemblant des milliers de pèlerins.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Fête de la Beauce et des moissons</h4><p>Démonstrations de matériel agricole ancien et animations autour des blés beaucerons.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Festival international du cheval percheron</h4><p>À Nogent-le-Rotrou, présentations et concours autour de la race chevaline emblématique du Perche.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>Concerts d'été dans la cathédrale de Chartres</h4><p>Programmation musicale exceptionnelle sous les voûtes gothiques.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Fête médiévale du château de Châteaudun</h4><p>Reconstitutions et animations dans la forteresse dominant le Loir.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Journées Européennes du Patrimoine</h4><p>Ouverture de nombreux monuments, dont le château d'Anet et l'abbaye de Thiron-Gardais.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.-Oct.</div>
+<div><h4>Marché fermier et fête du terroir eurélien</h4><p>Producteurs locaux réunis autour du pâté de Chartres et des sablés de Beauce.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.</div>
+<div><h4>Salon du vitrail contemporain</h4><p>Le Centre International du Vitrail de Chartres accueille créateurs et ateliers d'exception.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Nov.</div>
+<div><h4>Foire aux dindes et à la volaille de Beauce</h4><p>Marché agricole traditionnel dans les communes de la plaine beauceronne.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Déc.</div>
+<div><h4>Marché de Noël de Chartres</h4><p>Chalets illuminés au pied de la cathédrale, dans le prolongement de Chartres en Lumières.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-parcours">
+<p class="parcours-intro">L'Eure-et-Loir se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici des programmes prêts à l'emploi, détaillés heure par heure, entre cathédrale de Chartres, Beauce et Perche.</p>
+<div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+<div class="parcours-filters">
+<button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+<button class="filter-btn" data-filter="gourmand">Gourmand</button>
+<button class="filter-btn" data-filter="culture">Culture</button>
+<button class="filter-btn" data-filter="nature">Nature</button>
+<button class="filter-btn" data-filter="famille">Famille</button>
+<button class="filter-btn" data-filter="romantique">Romantique</button>
+<button class="filter-btn" data-filter="actif">Actif</button>
+</div>
+<div class="jours-grid">
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Chartres gourmande, pâté et mentchikoff</h4>
+</div>
+<span class="jour-duree">Journée complète · Chartres</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché couvert de Chartres</strong>, produits fermiers de Beauce.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du pâté de Chartres</strong> chez un charcutier artisanal.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le vieux Chartres, quartier Saint-André.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation de mentchikoff</strong> chez un chocolatier historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'une bière La Chartraine et de sablés de Beauce.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Route du Perche, cidre et sablés</h4>
+</div>
+<span class="jour-duree">Journée complète · Nogent-le-Rotrou</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une cidrerie</strong> percheronne, vergers traditionnels.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de cidre et de poiré du Perche.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un plat mijoté au cidre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Atelier sablés</strong> chez un artisan de Nogent-le-Rotrou.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> chez le producteur, fromages de chèvre du Perche.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Chartres, la cathédrale et le vitrail</h4>
+</div>
+<span class="jour-duree">Journée complète · Chartres</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cathédrale Notre-Dame de Chartres</strong>, vitraux et labyrinthe.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Centre International du Vitrail</strong>, initiation à l'art du verre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de l'Eure, quartier Saint-Hilaire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée des Beaux-Arts</strong>, dans l'ancien palais épiscopal.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Chartres en Lumières</strong>, projections nocturnes sur les monuments, en saison.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Illiers-Combray, sur les pas de Marcel Proust</h4>
+</div>
+<span class="jour-duree">Journée complète · Illiers-Combray</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Maison de tante Léonie</strong>, musée dédié à Marcel Proust.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Jardin du Pré Catelan</strong>, inspiration du parc de Combray.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> et dégustation d'une véritable madeleine proustienne.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le bourg beauceron devenu lieu littéraire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> à travers la plaine de Beauce.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Châteaudun, forteresse entre Moyen Âge et Renaissance</h4>
+</div>
+<span class="jour-duree">Journée complète · Châteaudun</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Châteaudun</strong>, donjon médiéval et logis Renaissance.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Collégiale Saint-Jean-Baptiste</strong>, dominant la vallée du Loir.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les jardins suspendus surplombant le Loir.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par la vallée du Loir chartrain.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Perche, forêts et bocages</h4>
+</div>
+<span class="jour-duree">Journée complète · Senonches</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la forêt domaniale de Senonches.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation de la grande faune</strong>, cerfs et chevreuils du Perche.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en forêt.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le bocage percheron, entre haies et étangs.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les villages du Perche.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Château d'Anet, sur les pas de Diane de Poitiers</h4>
+</div>
+<span class="jour-duree">Journée complète · Anet</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château d'Anet</strong>, chef-d'œuvre Renaissance élevé pour Diane de Poitiers.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Chapelle funéraire</strong> et jardins à la française.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village d'Anet.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Château de Maintenon</strong> et son aqueduc royal inachevé.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade romantique</strong> le long de l'Eure, au pied du château.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Vallée de l'Eure à vélo, de Maintenon à Chartres</h4>
+</div>
+<span class="jour-duree">Journée complète · Vallée de l'Eure</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> du château de Maintenon le long de la rivière.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage sous l'aqueduc royal</strong>, vestige du grand projet de Louis XIV.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'Eure.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> jusqu'à Chartres par les chemins de la vallée.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Arrivée</strong> face aux flèches de la cathédrale, illuminée en saison.</div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- VISITES GUIDÉES -->
+<div class="fiche-panel" id="panel-guides">
+<p class="guide-intro">Suivez le guide ! Ces circuits commentés, pédestres au cœur de Chartres et de ses cités historiques ou en voiture entre Beauce et Perche, vous emmènent pas à pas — ou virage après virage — à la découverte de l'histoire, des anecdotes et des petits secrets de l'Eure-et-Loir.</p>
+<div class="parcours-filters">
+<button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+</div>
+<div class="guides-grid">
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Chartres, de la cathédrale au vieux quartier</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 2h</span>
+<span class="guide-badge">Centre historique</span>
+</div>
+</div>
+<p class="guide-chapeau">« Visible à des kilomètres à la ronde au-dessus de la plaine de Beauce, la cathédrale de Chartres a traversé huit siècles sans jamais perdre ses vitraux d'origine, un miracle presque unique en Europe. »</p><div class="guide-map" id="map-eure-et-loir-0"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>La cathédrale Notre-Dame</h5>
+<p>Reconstruite en un temps record après l'incendie de 1194, elle conserve l'essentiel de ses 176 verrières médiévales, dont le célèbre bleu de Chartres, jamais égalé.</p>
+<div class="guide-anecdote">Le labyrinthe de pierre tracé au sol de la nef, parcouru à genoux par les pèlerins, mesure exactement 294,5 mètres une fois déroulé — la distance symbolique jusqu'à Jérusalem.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Le quartier Saint-André et les bords de l'Eure</h5>
+<p>En contrebas de la cathédrale, ce quartier de tanneurs et de meuniers a gardé ses maisons à pans de bois et ses lavoirs sur la rivière.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Le Centre International du Vitrail</h5>
+<p>Installé dans une ancienne grange dîmière du XIIIe siècle, ce centre perpétue et transmet l'art du vitrail dont Chartres reste l'une des capitales mondiales.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>La place Billard et ses maisons anciennes</h5>
+<p>Cette place pittoresque, bordée de maisons à colombages, illustre la richesse marchande de la cité épiscopale au Moyen Âge.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">5</div>
+<div class="guide-etape-corps">
+<h5>Les escaliers et jardins de l'Évêché</h5>
+<p>Dernière étape offrant un panorama sur la ville basse et la vallée de l'Eure, depuis les jardins de l'ancien palais épiscopal.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Illiers-Combray, dans les jardins de Marcel Proust</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 1h30</span>
+<span class="guide-badge">Village littéraire</span>
+</div>
+</div>
+<p class="guide-chapeau">« Ce village de Beauce, où l'écrivain passait ses vacances d'enfance chez sa tante, s'est vu rebaptisé « Combray » en 1971 en hommage à celui qui en fit le décor immortel de son œuvre. »</p><div class="guide-map" id="map-eure-et-loir-1"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>La maison de tante Léonie</h5>
+<p>Devenue musée, cette maison bourgeoise a conservé la chambre de tante Léonie et la cuisine où Françoise préparait la fameuse madeleine.</p>
+<div class="guide-anecdote">C'est en trempant une madeleine dans une infusion de tilleul que le narrateur de l'œuvre de Proust voit ressurgir tous les souvenirs de son enfance à Combray.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'église Saint-Jacques</h5>
+<p>Modèle de l'église de Combray décrite dans le roman, elle conserve un clocher effilé caractéristique des églises beauceronnes.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Le jardin du Pré Catelan</h5>
+<p>Ce parc paysager, aménagé par l'oncle de l'écrivain, aurait inspiré certains passages du « côté de chez Swann ».</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Les rues de la Beauce proustienne</h5>
+<p>Dernière étape à travers les ruelles calmes du village, entre maisons de pierre calcaire et jardins clos typiques de la région.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route de la vallée de l'Eure, Maintenon et Anet</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 45 km</span>
+<span class="guide-badge">Demi-journée</span>
+</div>
+</div>
+<p class="guide-chapeau">« Cette route suit la paisible rivière Eure, de l'aqueduc inachevé de Louis XIV jusqu'au château élevé pour la plus célèbre favorite de la Renaissance française. »</p><div class="guide-map" id="map-eure-et-loir-2"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ du château de Maintenon</h5>
+<p>Ce château, où vécut Madame de Maintenon, épouse secrète de Louis XIV, est associé à l'un des plus grands échecs architecturaux du Roi-Soleil.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'aqueduc inachevé de Maintenon</h5>
+<p>Ces arches monumentales, restées incomplètes, devaient acheminer les eaux de l'Eure jusqu'aux fontaines de Versailles, à trente kilomètres de là.</p>
+<div class="guide-anecdote">Le chantier de l'aqueduc, qui employa jusqu'à 30 000 soldats, fut abandonné en 1688 en raison de la guerre de la Ligue d'Augsbourg et du coût exorbitant des travaux.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Nogent-le-Roi et la vallée de l'Eure</h5>
+<p>La route traverse ce village de la vallée, réputé pour son marché et ses maisons anciennes en pierre de Beauce.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Le château d'Anet</h5>
+<p>Chef-d'œuvre de l'architecte Philibert Delorme, ce château fut construit pour Diane de Poitiers, favorite d'Henri II, dans un raffinement Renaissance inégalé.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route du Perche, entre bocages et cheval percheron</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 40 km</span>
+<span class="guide-badge">Journée complète</span>
+</div>
+</div>
+<p class="guide-chapeau">« À l'ouest du département, le Perche change radicalement de visage : collines boisées, haies bocagères et manoirs de grès roux remplacent les horizons infinis de la Beauce. »</p><div class="guide-map" id="map-eure-et-loir-3"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ de Châteaudun</h5>
+<p>La route quitte la vallée du Loir et grimpe doucement vers les premiers reliefs du Perche.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Thiron-Gardais et son abbaye</h5>
+<p>Ce village accueille une abbaye royale fondée au XIIe siècle, aujourd'hui restaurée et animée de rencontres culturelles.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>La forêt domaniale de Senonches</h5>
+<p>Cette vaste forêt percheronne, giboyeuse et vallonnée, abrite cerfs et chevreuils au cœur d'un paysage de collines et d'étangs.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Nogent-le-Rotrou, capitale du Perche eurélien</h5>
+<p>Dominée par son château Saint-Jean, cette ville accueille chaque année le grand rassemblement dédié au cheval percheron, robuste cheval de trait originaire de la région.</p>
+<div class="guide-anecdote">Le cheval percheron doit son nom à la région du Perche et fut longtemps exporté jusqu'aux États-Unis pour tirer tramways et attelages agricoles.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'eure-et-loir-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.filter;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        jourCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.profil === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('.guide-card');
+
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        guideCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.type === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+(function() {
+  var guideMapsData = {"map-eure-et-loir-0": [{"lat": 48.4474, "lng": 1.489, "label": "La cathédrale Notre-Dame"}, {"lat": 48.446, "lng": 1.486, "label": "Le quartier Saint-André et les bords de l'Eure"}, {"lat": 48.4478, "lng": 1.4895, "label": "Le Centre International du Vitrail"}, {"lat": 48.4485, "lng": 1.488, "label": "La place Billard et ses maisons anciennes"}, {"lat": 48.447, "lng": 1.49, "label": "Les escaliers et jardins de l'Évêché"}], "map-eure-et-loir-1": [{"lat": 48.314, "lng": 1.238, "label": "La maison de tante Léonie"}, {"lat": 48.3135, "lng": 1.239, "label": "L'église Saint-Jacques"}, {"lat": 48.312, "lng": 1.237, "label": "Le jardin du Pré Catelan"}, {"lat": 48.3145, "lng": 1.24, "label": "Les rues de la Beauce proustienne"}], "map-eure-et-loir-2": [{"lat": 48.592, "lng": 1.581, "label": "Départ du château de Maintenon"}, {"lat": 48.594, "lng": 1.585, "label": "L'aqueduc inachevé de Maintenon"}, {"lat": 48.648, "lng": 1.529, "label": "Nogent-le-Roi et la vallée de l'Eure"}, {"lat": 48.687, "lng": 1.435, "label": "Le château d'Anet"}], "map-eure-et-loir-3": [{"lat": 48.073, "lng": 1.332, "label": "Départ de Châteaudun"}, {"lat": 48.279, "lng": 1.062, "label": "Thiron-Gardais et son abbaye"}, {"lat": 48.555, "lng": 1.033, "label": "La forêt domaniale de Senonches"}, {"lat": 48.321, "lng": 0.825, "label": "Nogent-le-Rotrou, capitale du Perche eurélien"}]};
+  var guideMapInstances = {};
+
+  function initGuideMap(id) {
+    if (guideMapInstances[id]) return;
+    var data = guideMapsData[id];
+    var el = document.getElementById(id);
+    if (!data || !el || typeof L === 'undefined') return;
+    var map = L.map(id, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var latlngs = [];
+    data.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: 'guide-map-marker-wrap',
+        html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+        .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+      map.fitBounds(latlngs, { padding: [26, 26] });
+    } else if (latlngs.length === 1) {
+      map.setView(latlngs[0], 13);
+    }
+    guideMapInstances[id] = map;
+  }
+
+  function initVisibleGuideMaps() {
+    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+      initGuideMap(el.id);
+      if (guideMapInstances[el.id]) {
+        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
+    if (guidesTab) {
+      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
+    }
+    var panelGuides = document.getElementById('panel-guides');
+    if (panelGuides && panelGuides.classList.contains('active')) {
+      setTimeout(initVisibleGuideMaps, 250);
+    }
+  });
+})();
+</script>
+</body>
+</html>

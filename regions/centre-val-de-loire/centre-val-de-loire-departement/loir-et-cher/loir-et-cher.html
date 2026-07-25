@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Loir-et-Cher — L'Âme des Régions</title>
+<link href="../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+<style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* Visites Guidées */
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+</style>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
+<body class="fiche-page">
+<div class="fiche-hero">
+<div class="container">
+<div class="fiche-topbar">
+<a class="fiche-logo" href="../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens">
+<a class="fiche-topbar-btn" href="../../centre-val-de-loire.html">Centre-Val de Loire</a>
+<a class="fiche-topbar-btn" href="../../carte-centre-val-de-loire.html">Carte des départements</a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1> <span style="padding-left: 40px;">Le <span class="titre-initial">L</span>oir-et-Cher</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Loir-et-Cher" src="../../../../assets/departement/centre-val-de-loire/loir-et-cher.png"/>
+</div>
+<span class="fiche-hero-ancien">Préfecture : Blois · Département 41</span>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">Nature</button>
+<button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+<button class="fiche-tab" data-panel="traditions">Traditions</button>
+<button class="fiche-tab" data-panel="villages">Villages</button>
+<button class="fiche-tab" data-panel="agenda">Agenda</button>
+<button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+<button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/plats/matelote-d-anguille.html">Matelote d'anguille des bords de Loire</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/plats/gibier-de-sologne.html">Gibier de Sologne (civet de sanglier, chevreuil)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/plats/rillettes-de-romorantin.html">Rillettes de Romorantin</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/plats/pate-de-paques-berrichon.html">Pâté de Pâques berrichon</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/plats/friture-de-loire.html">Friture de Loire (jeunes ablettes)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/terroir/asperges-de-sologne.html">Asperges de Sologne</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/terroir/fraises-de-sologne.html">Fraises de Sologne</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/terroir/selles-sur-cher.html">Fromage de Selles-sur-Cher (AOP)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/terroir/sainte-maure-de-touraine.html">Fromage de Sainte-Maure-de-Touraine</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/terroir/champignons-et-gibier-sologne.html">Champignons et gibier de la forêt solognote</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; boissons</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/vin/cheverny.html">cheverny</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/vin/cour-cheverny.html">cour-cheverny</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/vin/touraine.html">touraine</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/vin/coteaux-du-vendomois.html">coteaux-du-vendomois</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/vin/valencay.html">valencay</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Dessert</span> Douceurs &amp; pâtisseries</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/dessert/tarte-tatin-lamotte-beuvron.html">Tarte Tatin de Lamotte-Beuvron (recette originale)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/dessert/palets-solognots.html">Palets solognots (biscuits raisins-rhum)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/dessert/paves-de-blois.html">Pavés de Blois (praliné et nougatine)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/dessert/malices-du-loup.html">Malices du Loup (Blois)</a></li>
+<li><a href="../../departement/loir-et-cher-info/gastronomie/dessert/poires-tapees.html">Poires tapées</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Site</span> Sites UNESCO &amp; classés</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/unesco/val-de-loire-unesco.html">Val de Loire, paysage culturel (UNESCO)</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/unesco/domaine-national-de-chambord.html">Domaine national de Chambord</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chateau</span> Châteaux de la Loire</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-de-chambord.html">Château de Chambord</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-royal-de-blois.html">Château royal de Blois</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-de-cheverny.html">Château de Cheverny</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-de-chaumont-sur-loire.html">Château de Chaumont-sur-Loire</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-de-fougeres-sur-bievre.html">Château de Fougères-sur-Bièvre</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/chateau/chateau-de-talcy.html">Château de Talcy</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/eglise/basilique-de-la-trinite-vendome.html">Basilique Notre-Dame-de-la-Trinité de Vendôme</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/eglise/cathedrale-saint-louis-blois.html">Cathédrale Saint-Louis de Blois</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/eglise/eglise-madeleine-montoire.html">Église de la Madeleine de Montoire (fresques romanes)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musee</span> Musées &amp; culture</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/musee/musee-chateau-blois.html">Musée du Château royal de Blois</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/musee/maison-de-la-magie.html">Maison de la Magie Robert-Houdin (Blois)</a></li>
+<li><a href="../../departement/loir-et-cher-info/patrimoine/musee/musee-de-vendome.html">Musée de Vendôme</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Foret</span> Forêts &amp; étangs</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/nature/foret/foret-et-etangs-de-sologne.html">Forêt et étangs de Sologne</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/foret/foret-de-boulogne.html">Forêt domaniale de Boulogne (Chambord)</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/foret/reserve-de-chambord.html">Réserve nationale de chasse et de faune sauvage de Chambord</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Riviere</span> Vallées &amp; rivières</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/nature/riviere/vallee-de-la-loire.html">Vallée de la Loire</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/riviere/vallee-du-loir.html">Vallée du Loir et ses troglodytes</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/riviere/vallee-du-cher.html">Vallée du Cher</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Faune</span> Faune &amp; biodiversité</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/nature/faune/cerfs-et-sangliers-de-sologne.html">Cerfs et sangliers de Sologne</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/faune/zooparc-de-beauval.html">ZooParc de Beauval (Saint-Aignan)</a></li>
+<li><a href="../../departement/loir-et-cher-info/nature/faune/oiseaux-des-etangs-solognots.html">Oiseaux migrateurs des étangs solognots</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Horlogerie</span> Horlogerie &amp; mécanique</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/artisanat/horlogerie/horlogerie-de-vendome.html">Horlogerie de Vendôme, tradition manufacturière</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vannerie</span> Vannerie &amp; bois</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/artisanat/vannerie/vannerie-de-sologne.html">Vannerie de Sologne, osier et étangs</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chasse</span> Traditions cynégétiques</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/artisanat/chasse/chasse-a-courre-sologne.html">Chasse à courre en forêt de Sologne</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vin &amp; caves troglodytiques</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/artisanat/vin/caves-troglodytiques-touraine.html">Caves troglodytiques du vignoble tourangeau</a></li>
+<li><a href="../../departement/loir-et-cher-info/artisanat/vin/tonnellerie-montrichard.html">Tonnellerie et arts de la cave à Montrichard</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-traditions">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Langue</span> Langue &amp; identité</div>
+<ul>
+<li>Accent et parler tourangeau-berrichon du Val de Loire</li>
+<li>Identité solognote, terre de chasse et d'étangs</li>
+<li>Toponymie ligérienne héritée du fleuve royal</li>
+<li>Héritage des rois de France, résidents des châteaux blésois</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musique</span> Musiques &amp; jeux traditionnels</div>
+<ul>
+<li>Jeu de boules de fort, jeu de quilles tourangeau</li>
+<li>Fanfares et bals populaires de villages</li>
+<li>Sonneries de trompe de chasse en Sologne</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fete</span> Fêtes &amp; traditions locales</div>
+<ul>
+<li>Rendez-vous de l'Histoire à Blois (grand festival national)</li>
+<li>Festival International des Jardins de Chaumont-sur-Loire</li>
+<li>Fête de la Tarte Tatin à Lamotte-Beuvron</li>
+<li>Ronde des Montres, fête de l'horlogerie à Vendôme</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+<ul>
+<li>Confection de la tarte Tatin renversée à la poêle</li>
+<li>Cuisine du gibier et des champignons en Sologne</li>
+<li>Vendanges dans le vignoble de Cheverny et du Vendômois</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Village</span> Plus Beau Village de France</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/village/plus-beau/lavardin.html">Lavardin, unique village labellisé du département</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Troglodyte</span> Vallée du Loir &amp; troglodytes</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/village/troglodyte/montoire-sur-le-loir.html">Montoire-sur-le-Loir</a></li>
+<li><a href="../../departement/loir-et-cher-info/village/troglodyte/troo.html">Trôo, village troglodytique en spirale</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Bourg</span> Cités de caractère</div>
+<ul>
+<li><a href="../../departement/loir-et-cher-info/village/bourg/vendome.html">Vendôme, ville-jardin entre les bras du Loir</a></li>
+<li><a href="../../departement/loir-et-cher-info/village/bourg/montrichard.html">Montrichard Val de Cher, cité médiévale</a></li>
+<li><a href="../../departement/loir-et-cher-info/village/bourg/saint-aignan.html">Saint-Aignan, cité royale sur le Cher</a></li>
+<li><a href="../../departement/loir-et-cher-info/village/bourg/romorantin-lanthenay.html">Romorantin-Lanthenay, capitale de la Sologne</a></li>
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">Etoile</div>
+<div>
+<h3>Village à l'honneur : Lavardin</h3>
+<p>Blotti au creux de la vallée du Loir, ce village médiéval, seul « Plus Beau Village de France » du Loir-et-Cher, s'organise autour des vestiges d'un imposant château fort qui résista à Richard Cœur de Lion. Ses maisons troglodytiques creusées dans le coteau, son pont gothique et son église aux fresques romanes en font une étape hors du temps.</p>
+<span class="village-star-tag">Plus Beau Village de France</span>
+<span class="village-star-tag">Vallée du Loir</span>
+<span class="village-star-tag">Village troglodytique</span>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>Calendrier</span> Fêtes &amp; événements de l'année</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Fév.</div>
+<div><h4>Carnaval de Blois</h4><p>Défilés et animations costumées dans les rues du centre historique blésois.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Ouverture du Festival International des Jardins</h4><p>Chaumont-sur-Loire dévoile ses créations paysagères contemporaines, jusqu'en novembre.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Foire aux Asperges de Sologne</h4><p>Marchés et dégustations célèbrent l'asperge blanche, star du printemps solognot.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai-Juin</div>
+<div><h4>Rendez-vous aux Jardins</h4><p>Week-end national ouvrant les parcs et jardins des châteaux de Cheverny et de Chaumont.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Grandes Eaux musicales du domaine de Chambord</h4><p>Fontaines et mise en musique du parc du château dans le cadre des animations estivales.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Ronde des Montres à Vendôme</h4><p>Fête de l'horlogerie, en mémoire de la tradition manufacturière vendômoise.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>Un Château, une Histoire à Blois</h4><p>Spectacle nocturne son et lumière projeté sur la façade du château royal.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>Feux au château de Cheverny</h4><p>Illuminations et animations nocturnes dans les jardins à la française.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Fête de la Sologne à Romorantin</h4><p>Marché de producteurs, expositions et démonstrations autour des savoir-faire solognots.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Journées Européennes du Patrimoine</h4><p>Ouverture exceptionnelle de nombreux châteaux et monuments du département.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Vendanges en Cheverny et Vendômois</h4><p>Les domaines viticoles ouvrent leurs portes pour célébrer les vendanges.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.</div>
+<div><h4>Rendez-vous de l'Histoire</h4><p>Grand festival national d'histoire à Blois : conférences, débats et rencontres avec historiens.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.-Nov.</div>
+<div><h4>Journées Gastronomiques de Sologne</h4><p>À Romorantin-Lanthenay, la gastronomie solognote et le gibier sont à l'honneur.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Nov.</div>
+<div><h4>Fête de la Tarte Tatin</h4><p>Lamotte-Beuvron célèbre sa tarte emblématique, ateliers et concours de dégustation.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Déc.</div>
+<div><h4>Marché de Noël de Blois</h4><p>Chalets et illuminations au pied du château royal pour la période des fêtes.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-parcours">
+<p class="parcours-intro">Le Loir-et-Cher se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici des programmes prêts à l'emploi, détaillés heure par heure, entre châteaux royaux et douceur de la vallée du Loir.</p>
+<div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+<div class="parcours-filters">
+<button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+<button class="filter-btn" data-filter="gourmand">Gourmand</button>
+<button class="filter-btn" data-filter="culture">Culture</button>
+<button class="filter-btn" data-filter="nature">Nature</button>
+<button class="filter-btn" data-filter="famille">Famille</button>
+<button class="filter-btn" data-filter="romantique">Romantique</button>
+<button class="filter-btn" data-filter="actif">Actif</button>
+</div>
+<div class="jours-grid">
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Route des vins de Cheverny et Cour-Cheverny</h4>
+</div>
+<span class="jour-duree">Journée complète · Cheverny</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> de l'appellation Cheverny, sur les coteaux de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de Cheverny blanc et de Cour-Cheverny, cépage romorantin unique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> chez un vigneron, produits du terroir solognot.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade dans le vignoble</strong>, vue sur le château de Cheverny.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un gibier de Sologne et d'un verre de Cheverny rouge.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Sologne gourmande, tarte Tatin et gibier</h4>
+</div>
+<span class="jour-duree">Journée complète · Lamotte-Beuvron</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de producteurs</strong> à Lamotte-Beuvron, berceau de la tarte Tatin.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Atelier tarte Tatin</strong> chez un pâtissier local, recette originale.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un civet de gibier de Sologne.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Cueillette d'asperges ou de fraises</strong> selon la saison, dans une exploitation solognote.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de tarte Tatin tiède et de palets solognots.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Chambord, le château de la démesure</h4>
+</div>
+<span class="jour-duree">Journée complète · Chambord</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Découverte du château de Chambord</strong> et de son célèbre escalier à double révolution.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Montée sur les terrasses</strong>, forêt de cheminées et panorama sur le domaine.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans une auberge du domaine national.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en calèche ou à vélo</strong> dans le parc forestier clos de murs.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Spectacle équestre</strong> aux Écuries du Maréchal de Saxe, en saison.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Blois, cité des rois de France</h4>
+</div>
+<span class="jour-duree">Journée complète · Blois</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château royal de Blois</strong>, quatre siècles d'architecture française.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles pentues du vieux Blois.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en terrasse face à la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Maison de la Magie Robert-Houdin</strong>, spectacles et automates.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Spectacle son et lumière</strong> sur la façade du château en été.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Vendôme, ville-jardin entre les bras du Loir</h4>
+</div>
+<span class="jour-duree">Journée complète · Vendôme</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Abbatiale de la Trinité</strong>, joyau gothique flamboyant.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> le long des canaux et des vieux ponts du Loir.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée de Vendôme</strong> et parc Ronsard.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Promenade</strong> au pied des ruines du château, vue sur la ville.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Étangs et forêts de Sologne</h4>
+</div>
+<span class="jour-duree">Journée complète · Sologne</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> autour des étangs de Sologne, entre bruyères et pins.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des oiseaux migrateurs</strong> depuis un observatoire discret.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en forêt domaniale.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> sur les petites routes solognotes.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> au coucher du soleil sur les étangs.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Vallée du Loir, troglodytes et rivière</h4>
+</div>
+<span class="jour-duree">Journée complète · Montoire-Trôo</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Canoë</strong> sur le Loir, entre Montoire et Lavardin.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du village de Trôo</strong> et de ses habitations troglodytiques.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la rivière.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> sur les coteaux dominant la vallée.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les villages du Loir.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>ZooParc de Beauval en famille</h4>
+</div>
+<span class="jour-duree">Journée complète · Saint-Aignan</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du ZooParc de Beauval</strong>, pandas géants et espèces rares.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Spectacles animaliers</strong> et parcours pédagogiques pour les enfants.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique ou restauration</strong> sur place.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite de la visite</strong>, serres tropicales et vivarium.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vieux Saint-Aignan, au bord du Cher.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Chaumont-sur-Loire, jardins et art contemporain</h4>
+</div>
+<span class="jour-duree">Journée complète · Chaumont-sur-Loire</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Chaumont-sur-Loire</strong>, résidence de Catherine de Médicis.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Festival International des Jardins</strong>, promenade parmi les créations paysagères.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les écuries du domaine.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le parc à l'anglaise surplombant la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le fleuve, vue depuis les terrasses du château.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>La Loire à Vélo, de Chambord à Blois</h4>
+</div>
+<span class="jour-duree">Journée complète · Val de Loire</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> du domaine de Chambord sur l'itinéraire de la Loire à Vélo.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> des villages de bord de Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une halte aménagée face au fleuve.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> jusqu'à Blois le long des levées.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> en terrasse, vue sur le château royal.</div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- VISITES GUIDÉES -->
+<div class="fiche-panel" id="panel-guides">
+<p class="guide-intro">Suivez le guide ! Ces circuits commentés, pédestres au cœur des villes royales ou en voiture à travers châteaux et vignobles, vous emmènent pas à pas — ou virage après virage — à la découverte de l'histoire, des anecdotes et des petits secrets du Loir-et-Cher.</p>
+<div class="parcours-filters">
+<button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+</div>
+<div class="guides-grid">
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Blois, de la cité royale aux bords de Loire</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 2h</span>
+<span class="guide-badge">Centre historique</span>
+</div>
+</div>
+<p class="guide-chapeau">« Blois n'a jamais été qu'un simple relais entre Orléans et Tours : elle fut, quatre siècles durant, l'un des foyers du pouvoir royal français, avant de devenir la ville des escaliers et des façades tournées vers le fleuve. »</p><div class="guide-map" id="map-loir-et-cher-0"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Le château royal de Blois</h5>
+<p>Quatre ailes, quatre siècles, quatre styles : gothique, Louis XII, François Ier et classique se répondent autour d'une même cour, résumant à elles seules l'histoire de l'architecture française.</p>
+<div class="guide-anecdote">C'est dans ce château que le duc de Guise fut assassiné sur ordre d'Henri III en 1588, un épisode sanglant qui marqua durablement les guerres de Religion.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'escalier François Ier</h5>
+<p>Cet escalier à vis sculpté en encorbellement, ouvert sur la cour, est considéré comme l'un des chefs-d'œuvre de la Renaissance française.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>La cathédrale Saint-Louis</h5>
+<p>Reconstruite après l'effondrement de sa voûte en 1678, elle domine la vieille ville de son clocher élancé, visible depuis les quais de Loire.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Les ruelles pentues du vieux Blois</h5>
+<p>Escaliers et venelles dévalent la colline jusqu'à la Loire, bordés de maisons à pans de bois qui ont échappé aux bombardements de 1940.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">5</div>
+<div class="guide-etape-corps">
+<h5>Les bords de Loire</h5>
+<p>Dernière étape sur les quais, face au pont Jacques-Gabriel, d'où la silhouette du château se reflète dans les eaux du fleuve royal.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Chambord, dans les pas de François Ier</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 1h30</span>
+<span class="guide-badge">Domaine national</span>
+</div>
+</div>
+<p class="guide-chapeau">« Bâti en pleine forêt solognote sur la lubie d'un jeune roi conquérant, Chambord reste le plus vaste et le plus énigmatique des châteaux de la Loire, jamais vraiment habité mais jamais égalé. »</p><div class="guide-map" id="map-loir-et-cher-1"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>La façade nord et son horizon de tours</h5>
+<p>Avec ses 440 pièces et ses 365 cheminées, Chambord déploie une skyline de dômes et de lanternons unique en Europe, mêlant tradition médiévale et inventivité Renaissance.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'escalier à double révolution</h5>
+<p>Deux volées de marches s'enroulent l'une autour de l'autre sans jamais se croiser, permettant à deux personnes de monter et descendre sans se voir.</p>
+<div class="guide-anecdote">La tradition attribue sa conception à Léonard de Vinci, alors hôte du roi à Amboise, mort quelques mois avant le début du chantier de Chambord.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Les terrasses et la forêt de lanternons</h5>
+<p>Depuis les terrasses, la cour royale observait tournois et départs de chasse au milieu d'une véritable forêt de pinacles sculptés.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Le parc forestier clos de murs</h5>
+<p>Avec ses 5 440 hectares ceints du plus long mur de France, le domaine reste une réserve de chasse giboyeuse, peuplée de cerfs et de sangliers.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Vendôme, la ville-jardin du Loir</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 1h30</span>
+<span class="guide-badge">Vallée du Loir</span>
+</div>
+</div>
+<p class="guide-chapeau">« Traversée par plusieurs bras du Loir, Vendôme cultive depuis le Moyen Âge une douceur toute particulière, entre abbatiale gothique et jardins suspendus au fil de l'eau. »</p><div class="guide-map" id="map-loir-et-cher-2"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>L'abbatiale de la Trinité</h5>
+<p>Sa façade flamboyante, ajoutée au XVe siècle, et son clocher roman isolé comptent parmi les plus beaux exemples de l'art gothique tardif en France.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Les canaux et lavoirs du Loir</h5>
+<p>La rivière se divise en plusieurs bras traversant la ville, bordés d'anciens lavoirs et de jardins privés accessibles par de petits ponts.</p>
+<div class="guide-anecdote">Le poète Pierre de Ronsard, né près de Vendôme, évoquait déjà la douceur de ces eaux dans ses vers au XVIe siècle.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Le parc Ronsard</h5>
+<p>Ce jardin public aménagé au pied des remparts porte le nom du poète, natif du Vendômois, et offre une pause verdoyante en plein centre-ville.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Les ruines du château</h5>
+<p>Perché sur son promontoire, l'ancien château féodal domine la ville et le Loir, offrant un large panorama sur les toits d'ardoise.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route des châteaux, de Chambord à Chaumont</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 60 km</span>
+<span class="guide-badge">Journée complète</span>
+</div>
+</div>
+<p class="guide-chapeau">« Cette route relie trois visages différents de la Renaissance ligérienne : la démesure royale de Chambord, l'élégance féminine de Chenonceau voisin, et la retenue de Chaumont, dominant la Loire de son promontoire. »</p><div class="guide-map" id="map-loir-et-cher-3"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ du château de Chambord</h5>
+<p>La route quitte la forêt de Boulogne et longe les premiers coteaux viticoles du Blésois.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Le château de Cheverny</h5>
+<p>Cette demeure classique, restée dans la même famille depuis plus de six siècles, inspire par ses proportions harmonieuses le manoir de Moulinsart des aventures de Tintin.</p>
+<div class="guide-anecdote">Hergé s'est directement inspiré de Cheverny pour dessiner le château de Moulinsart, résidence du capitaine Haddock.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Le château royal de Blois</h5>
+<p>Halte dans la ville royale, avant de longer la Loire vers l'ouest.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Le château de Chaumont-sur-Loire</h5>
+<p>Perché sur son éperon rocheux, ce château accueille chaque année le Festival International des Jardins, entre tradition et création contemporaine.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Vallée du Loir, de Vendôme à Trôo</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 40 km</span>
+<span class="guide-badge">Demi-journée</span>
+</div>
+</div>
+<p class="guide-chapeau">« Moins connue que la Loire, la vallée du Loir cache l'un des plus beaux visages secrets du département : villages troglodytiques, coteaux calcaires et rivière paisible bordée de peupliers. »</p><div class="guide-map" id="map-loir-et-cher-4"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ de Vendôme</h5>
+<p>La route suit le cours du Loir vers l'ouest, entre coteaux et prairies humides.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Lavardin, Plus Beau Village de France</h5>
+<p>Halte dans ce village médiéval dominé par les vestiges de son château fort, où troglodytes et maisons Renaissance se côtoient.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Montoire-sur-le-Loir</h5>
+<p>L'église de la Madeleine y conserve d'exceptionnelles fresques romanes, parmi les mieux conservées de la région.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Trôo, le village en colimaçon</h5>
+<p>Dernière étape dans ce village troglodytique organisé en spirale à flanc de coteau, dont les habitations creusées dans le tuffeau se superposent sur cinq niveaux.</p>
+<div class="guide-anecdote">Certaines maisons troglodytiques de Trôo sont toujours habitées aujourd'hui, avec l'électricité et l'eau courante.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'loir-et-cher-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.filter;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        jourCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.profil === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('.guide-card');
+
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        guideCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.type === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+(function() {
+  var guideMapsData = {"map-loir-et-cher-0": [{"lat": 47.5872, "lng": 1.3309, "label": "Le château royal de Blois"}, {"lat": 47.5874, "lng": 1.3305, "label": "L'escalier François Ier"}, {"lat": 47.5852, "lng": 1.3357, "label": "La cathédrale Saint-Louis"}, {"lat": 47.5865, "lng": 1.333, "label": "Les ruelles pentues du vieux Blois"}, {"lat": 47.5885, "lng": 1.3345, "label": "Les bords de Loire"}], "map-loir-et-cher-1": [{"lat": 47.6161, "lng": 1.517, "label": "La façade nord et son horizon de tours"}, {"lat": 47.616, "lng": 1.5172, "label": "L'escalier à double révolution"}, {"lat": 47.6159, "lng": 1.5168, "label": "Les terrasses et la forêt de lanternons"}, {"lat": 47.62, "lng": 1.525, "label": "Le parc forestier clos de murs"}], "map-loir-et-cher-2": [{"lat": 47.793, "lng": 1.066, "label": "L'abbatiale de la Trinité"}, {"lat": 47.7938, "lng": 1.0645, "label": "Les canaux et lavoirs du Loir"}, {"lat": 47.792, "lng": 1.067, "label": "Le parc Ronsard"}, {"lat": 47.7945, "lng": 1.0685, "label": "Les ruines du château"}], "map-loir-et-cher-3": [{"lat": 47.6161, "lng": 1.517, "label": "Départ du château de Chambord"}, {"lat": 47.5006, "lng": 1.459, "label": "Le château de Cheverny"}, {"lat": 47.5872, "lng": 1.3309, "label": "Le château royal de Blois"}, {"lat": 47.479, "lng": 1.181, "label": "Le château de Chaumont-sur-Loire"}], "map-loir-et-cher-4": [{"lat": 47.793, "lng": 1.066, "label": "Départ de Vendôme"}, {"lat": 47.7568, "lng": 0.943, "label": "Lavardin, Plus Beau Village de France"}, {"lat": 47.746, "lng": 0.859, "label": "Montoire-sur-le-Loir"}, {"lat": 47.771, "lng": 0.787, "label": "Trôo, le village en colimaçon"}]};
+  var guideMapInstances = {};
+
+  function initGuideMap(id) {
+    if (guideMapInstances[id]) return;
+    var data = guideMapsData[id];
+    var el = document.getElementById(id);
+    if (!data || !el || typeof L === 'undefined') return;
+    var map = L.map(id, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var latlngs = [];
+    data.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: 'guide-map-marker-wrap',
+        html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+        .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+      map.fitBounds(latlngs, { padding: [26, 26] });
+    } else if (latlngs.length === 1) {
+      map.setView(latlngs[0], 13);
+    }
+    guideMapInstances[id] = map;
+  }
+
+  function initVisibleGuideMaps() {
+    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+      initGuideMap(el.id);
+      if (guideMapInstances[el.id]) {
+        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
+    if (guidesTab) {
+      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
+    }
+    var panelGuides = document.getElementById('panel-guides');
+    if (panelGuides && panelGuides.classList.contains('active')) {
+      setTimeout(initVisibleGuideMaps, 250);
+    }
+  });
+})();
+</script>
+</body>
+</html>

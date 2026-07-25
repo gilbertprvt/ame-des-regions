@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Occitan Rouergat — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    .produit-page { background: var(--ivoire); }
+
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+
+    .produit-body { padding: 48px 0 80px; }
+
+    .intro-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .sujets-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .sujet-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .sujet-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(44,74,124,0.16);
+    }
+    .sujet-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sujet-card-icon { font-size: 26px; }
+    .sujet-card-titre {
+      font-family: var(--font-titre);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .sujet-card-body {
+      padding: 18px 22px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .sujet-card-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .sujet-card-lien {
+      align-self: flex-start;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #C8843A;
+      font-family: var(--font-corps);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-retour-fixe {
+      display: none; position: fixed; bottom: 28px; left: 28px; z-index: 100;
+      background: #2C4A7C; color: white; border: none; border-radius: 24px; padding: 11px 20px;
+      font-family: var(--font-titre); font-style: italic; font-size: 14px; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); text-decoration: none; transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    @media (max-width: 680px) {
+      .sujets-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/aveyron/aveyron.html" class="produit-btn-retour">
+            ← Retour à la fiche Aveyron
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          <h1><em>L</em>'Occitan<br><span style="padding-left: 60px;"><em>R</em>ouergat</span></h1>
+        </div>
+         <img src="../../../../../../assets/departement/occitanie/carte-aveyron.png"
+               alt="Carte de l'Aveyron"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/aveyron.png" alt="Écusson Aveyron" />
+        </div>
+
+    <div class="hero-label-bas">
+    ⟹ Langue, chemins et mémoire du Rouergue ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="histoire-origines-occitan-rouergat.html">📖 Histoire & origines</a>
+          <a href="culture-pastorale-transhumante.html">🐑 Culture pastorale</a>
+          <a href="chemins-saint-jacques-compostelle.html">🥾 Chemins de Compostelle</a>
+          <a href="toponymie-occitane-celtique.html">🗺️ Toponymie</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+
+      <p class="intro-texte">
+        Le Rouergue, c'est une langue, un paysage et une mémoire. L'occitan rouergat s'est façonné au fil des siècles
+        au contact de la terre, des troupeaux et des chemins de pèlerinage qui traversent l'Aveyron. Quatre entrées
+        pour découvrir ce patrimoine vivant, chacune développée dans sa propre fiche.
+      </p>
+
+      <div class="sujets-grid">
+
+        <a href="histoire-origines-occitan-rouergat.html" class="sujet-card">
+          <div class="sujet-card-header">
+            <div class="sujet-card-icon">📖</div>
+            <div class="sujet-card-titre">Histoire & origines</div>
+          </div>
+          <div class="sujet-card-body">
+            <p class="sujet-card-desc">Des troubadours du XIIe siècle à la renaissance occitane du XIXe et à la transmission d'aujourd'hui : les origines et l'histoire de la langue d'oc en Rouergue.</p>
+            <span class="sujet-card-lien">Découvrir la fiche →</span>
+          </div>
+        </a>
+
+        <a href="culture-pastorale-transhumante.html" class="sujet-card">
+          <div class="sujet-card-header">
+            <div class="sujet-card-icon">🐑</div>
+            <div class="sujet-card-titre">Culture pastorale et transhumante</div>
+          </div>
+          <div class="sujet-card-body">
+            <p class="sujet-card-desc">Drailles, burons et estives de l'Aubrac : le cycle de la transhumance, son vocabulaire occitan et les fêtes qui la célèbrent encore.</p>
+            <span class="sujet-card-lien">Découvrir la fiche →</span>
+          </div>
+        </a>
+
+        <a href="chemins-saint-jacques-compostelle.html" class="sujet-card">
+          <div class="sujet-card-header">
+            <div class="sujet-card-icon">🥾</div>
+            <div class="sujet-card-titre">Mémoire des chemins de Saint-Jacques-de-Compostelle</div>
+          </div>
+          <div class="sujet-card-body">
+            <p class="sujet-card-desc">La Via Podiensis en Rouergue, de la dômerie d'Aubrac à Conques : étapes, patrimoine bâti et vie du chemin aujourd'hui.</p>
+            <span class="sujet-card-lien">Découvrir la fiche →</span>
+          </div>
+        </a>
+
+        <a href="toponymie-occitane-celtique.html" class="sujet-card">
+          <div class="sujet-card-header">
+            <div class="sujet-card-icon">🗺️</div>
+            <div class="sujet-card-titre">Toponymie occitane et celtique</div>
+          </div>
+          <div class="sujet-card-body">
+            <p class="sujet-card-desc">Rodez, puech, combe, aven : comment lire dans les noms de lieux du Rouergue les strates celtique, gallo-romaine et occitane du territoire.</p>
+            <span class="sujet-card-lien">Découvrir la fiche →</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      
+      
+    </div>
+  </footer>
+
+  <script>
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

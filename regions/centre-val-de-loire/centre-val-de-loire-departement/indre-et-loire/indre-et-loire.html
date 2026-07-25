@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Indre-et-Loire — L'Âme des Régions</title>
+<link href="../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* Visites Guidées */
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+</style>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
+<body class="fiche-page">
+<div class="fiche-hero">
+<div class="container">
+<div class="fiche-topbar">
+<a class="fiche-logo" href="../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens">
+<a class="fiche-topbar-btn" href="../../centre-val-de-loire.html">Centre-Val de Loire</a>
+<a class="fiche-topbar-btn" href="../../carte-centre-val-de-loire.html">Carte des départements</a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1> <span style="padding-left: 40px;">L' <span class="titre-initial">I</span>ndre-et-Loire</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Indre-et-Loire" src="../../../../assets/departement/centre-val-de-loire/indre-et-loire.png"/>
+</div>
+<span class="fiche-hero-ancien">Préfecture : Tours · Département 37</span>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">Nature</button>
+<button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+<button class="fiche-tab" data-panel="traditions">Traditions</button>
+<button class="fiche-tab" data-panel="villages">Villages</button>
+<button class="fiche-tab" data-panel="agenda">Agenda</button>
+<button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+<button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/plats/rillettes-de-tours.html">Rillettes de Tours (IGP)</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/plats/rillons-de-touraine.html">Rillons de Touraine</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/plats/andouillette-au-vouvray.html">Andouillette au Vouvray</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/plats/fouees.html">Fouées, garnies de rillettes ou de fromage de chèvre</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/plats/geline-de-touraine.html">Géline de Touraine, poule noire locale</a></li>
+</ul>
+</div>
+<!-- TERROIR-->
+<div class="bloc">
+<div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/terroir/safran-de-touraine.html">Safran de Touraine</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/terroir/asperges-blanches.html">Asperges blanches de Touraine</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/terroir/truffe-du-sud-tourangeau.html">Truffe du sud tourangeau</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/terroir/champignons-de-paris-troglodytes.html">Champignons de Paris des caves troglodytiques</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fromage</span> Fromage AOP</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/fromage/sainte-maure-de-touraine.html">Sainte-Maure de Touraine AOP</a> (bûche traversée d'une paille de seigle)</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; boissons</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/chinon.html">chinon</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/vouvray.html">vouvray</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/bourgueil.html">bourgueil</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/saint-nicolas-de-bourgueil.html">saint-nicolas-de-bourgueil</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/montlouis-sur-loire.html">montlouis-sur-loire</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/vin/touraine.html">touraine</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Dessert</span> Douceurs &amp; pâtisseries</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/dessert/nougat-de-tours.html">Nougat de Tours</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/dessert/macarons-de-cormery.html">Macarons de Cormery</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/dessert/fouace.html">Fouace</a></li>
+<li><a href="../../departement/indre-et-loire-info/gastronomie/dessert/poire-tapee.html">Poire tapée de Touraine</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- PATRIMOINE -->
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Site</span> Sites UNESCO &amp; classés</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/unesco/val-de-loire.html">Val de Loire (UNESCO), entre Chinon et Tours</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/unesco/candes-saint-martin.html">Candes-Saint-Martin (Plus Beau Village de France)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chateau</span> Châteaux de la Loire</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/chateau-de-chenonceau.html">Château de Chenonceau, enjambant le Cher</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/chateau-royal-d-amboise.html">Château royal d'Amboise</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/chateau-d-azay-le-rideau.html">Château d'Azay-le-Rideau</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/chateau-de-villandry.html">Château de Villandry et ses jardins</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/chateau-de-langeais.html">Château de Langeais</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/forteresse-royale-de-chinon.html">Forteresse royale de Chinon</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/cite-royale-de-loches.html">Cité royale de Loches</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/chateau/clos-luce-amboise.html">Le Clos Lucé (dernière demeure de Léonard de Vinci)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/eglise/cathedrale-saint-gatien-tours.html">Cathédrale Saint-Gatien de Tours</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/eglise/basilique-saint-martin-tours.html">Basilique Saint-Martin de Tours</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/eglise/collegiale-saint-martin-candes.html">Collégiale Saint-Martin de Candes-Saint-Martin</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musee</span> Musées &amp; culture</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/musee/musee-des-beaux-arts-tours.html">Musée des Beaux-Arts de Tours</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/musee/chateau-de-tours.html">Le Château de Tours et le Centre de Création Contemporaine Olivier Debré</a></li>
+<li><a href="../../departement/indre-et-loire-info/patrimoine/musee/maison-de-la-magie-loches.html">Musée du compagnonnage (Tours)</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- NATURE -->
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Foret</span> Forêts &amp; collines</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/nature/foret/foret-de-chinon.html">Forêt de Chinon</a></li>
+<li><a href="../../departement/indre-et-loire-info/nature/foret/foret-d-amboise.html">Forêt d'Amboise</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Riviere</span> Loire, Cher, Indre &amp; Vienne</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/nature/riviere/val-de-loire-a-velo.html">La Loire à vélo, itinéraire cyclable classique</a></li>
+<li><a href="../../departement/indre-et-loire-info/nature/riviere/confluence-loire-vienne.html">Confluence de la Loire et de la Vienne (Candes-Saint-Martin)</a></li>
+<li><a href="../../departement/indre-et-loire-info/nature/riviere/vallee-de-l-indre.html">Vallée de l'Indre</a></li>
+<li><a href="../../departement/indre-et-loire-info/nature/riviere/vallee-du-cher.html">Vallée du Cher</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Faune</span> Faune &amp; biodiversité</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/nature/faune/sternes-de-loire.html">Sternes et oiseaux des grèves de Loire</a></li>
+<li><a href="../../departement/indre-et-loire-info/nature/faune/chauves-souris-troglodytes.html">Chauves-souris des caves troglodytiques</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Troglodyte</span> Habitat troglodytique &amp; champignonnières</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/artisanat/troglodyte/caves-troglodytiques-de-touraine.html">Caves troglodytiques de Touraine</a></li>
+<li><a href="../../departement/indre-et-loire-info/artisanat/troglodyte/champignonnieres.html">Champignonnières en anciennes carrières de tuffeau</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Pierre</span> Tuffeau &amp; taille de pierre</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/artisanat/pierre/carrieres-de-tuffeau.html">Carrières de tuffeau, pierre blanche des châteaux de la Loire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fromagerie</span> Fromagerie &amp; élevage caprin</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/artisanat/fromagerie/affinage-sainte-maure-de-touraine.html">Affinage du Sainte-Maure de Touraine AOP</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; caves</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/artisanat/vin/caves-de-vouvray.html">Caves troglodytiques du vignoble de Vouvray</a></li>
+<li><a href="../../departement/indre-et-loire-info/artisanat/vin/caves-de-chinon.html">Caves du vignoble de Chinon</a></li>
+<li><a href="../../departement/indre-et-loire-info/artisanat/vin/caves-de-bourgueil.html">Caves du vignoble de Bourgueil</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- TRADITIONS -->
+<div class="fiche-panel" id="panel-traditions">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Langue</span> Langue &amp; identité</div>
+<ul>
+<li>Le « français de Touraine », longtemps considéré comme le français le plus pur</li>
+<li>Héritage rabelaisien (François Rabelais, né près de Chinon)</li>
+<li>Mémoire de Léonard de Vinci, installé à Amboise à la fin de sa vie</li>
+<li>Culture des Rois de France en Val de Loire</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musique</span> Musiques &amp; spectacles</div>
+<ul>
+<li>Sons et lumières des châteaux de la Loire</li>
+<li>La Scénoféerie de Semblançay, grand spectacle nocturne</li>
+<li>Concerts sous les étoiles au château de Chenonceau</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fete</span> Fêtes &amp; traditions locales</div>
+<ul>
+<li>Tuffolies, foire aux vins de Vouvray</li>
+<li>Médiévales de Loches</li>
+<li>Marché à l'ancienne de Chinon</li>
+<li>Fête historique du château de Gizeux (15 août)</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+<ul>
+<li>Cuisson des fouées au feu de bois</li>
+<li>Confection des rillettes et rillons de Touraine</li>
+<li>Culture du safran en Touraine</li>
+<li>Vendanges dans le vignoble tourangeau</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/village/plus-beau/candes-saint-martin.html">Candes-Saint-Martin</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/plus-beau/crissay-sur-manse.html">Crissay-sur-Manse</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/plus-beau/montresor.html">Montrésor</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Troglodyte</span> Villages troglodytiques</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/village/troglodyte/rochemenier.html">Rochemenier</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/troglodyte/vallee-de-la-loire-troglodytes.html">Habitations troglodytiques de la vallée de la Loire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Bourg</span> Bourgs &amp; cités de caractère</div>
+<ul>
+<li><a href="../../departement/indre-et-loire-info/village/bourg/tours.html">Tours (capitale de la Touraine)</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/bourg/amboise.html">Amboise (cité royale)</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/bourg/chinon.html">Chinon (cité médiévale et viticole)</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/bourg/loches.html">Loches (cité royale du sud Touraine)</a></li>
+<li><a href="../../departement/indre-et-loire-info/village/bourg/azay-le-rideau.html">Azay-le-Rideau</a></li>
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">Etoile</div>
+<div>
+<h3>Village à l'honneur : Candes-Saint-Martin</h3>
+<p>Bâti à la pointe du confluent entre la Loire et la Vienne, ce village doit son nom à Saint Martin, évêque de Tours, qui y mourut en 397. Sa collégiale fortifiée, ses ruelles de tuffeau blanc et le point de vue panoramique du belvédère, embrassant les deux rivières, en font l'un des villages les plus admirés du Val de Loire.</p>
+<span class="village-star-tag">Plus Beau Village de France</span>
+<span class="village-star-tag">Val de Loire UNESCO</span>
+<span class="village-star-tag">Confluence Loire-Vienne</span>
+</div>
+</div>
+</div>
+<!-- AGENDA -->
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>Calendrier</span> Fêtes &amp; événements de l'année en Indre-et-Loire</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Festival Léonard de Vinci au Clos Lucé</h4><p>Un festival « science et spectacle » inspiré de l'univers du génie toscan, à Amboise : ateliers, expériences et démonstrations.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Grand rendez-vous du printemps à Amboise</h4><p>Univers thématiques, stands et animations pour un séjour familial.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Salon des vins à Amboise</h4><p>Rendez-vous œnologique avec les vignerons de Touraine, dégustations et découvertes des appellations.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Festival Aucard de Tours</h4><p>L'un des plus grands festivals de musiques alternatives de la ville : techno, rock, ska et métal.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>The Open, Amboise</h4><p>Concerts et compétition de brass bands, tradition britannique des orchestres de cuivres.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin-Juillet</div>
+<div><h4>Festival Les Courants</h4><p>Musiques actuelles et festival de bande dessinée au Clos Lucé, à cheval entre juin et juillet.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Japan Tours Festival</h4><p>Trois jours dédiés à la culture japonaise dans la ville de Tours.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>La Scénoféerie de Semblançay</h4><p>Grand spectacle nocturne de Touraine, quatorze représentations entre le 4 juillet et le 15 août.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>Nuits sous les étoiles au château de Chenonceau</h4><p>Promenades nocturnes dans les jardins illuminés, en musique.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Été</div>
+<div><h4>Baroque Festival Estival, église Saint-Denis</h4><p>Concerts de musique baroque tout au long de l'été.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Été</div>
+<div><h4>Médiévales de Loches</h4><p>Reconstitutions, marché médiéval et animations costumées dans la cité royale.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Tuffolies, foire aux vins de Vouvray</h4><p>Foire aux vins dans les caves troglodytiques de Vouvray.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Fête historique du château de Gizeux</h4><p>Animations costumées et reconstitutions pour le 15 août.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Festival Excentrique à Tours</h4><p>Spectacles de rue, cirque et clowns dans tout le centre-ville.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Journées Européennes du Patrimoine</h4><p>Visites libres et guidées des châteaux, musées et monuments de Tours, Amboise et Chinon.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Festival de cirque et arts forains</h4><p>Trois jours consacrés au cirque sous toutes ses formes, entre tradition et arts forains.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Déc.</div>
+<div><h4>Marché de Noël du boulevard Heurteloup à Tours</h4><p>Chalets, illuminations et animations au cœur de la ville.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PARCOURS D'UNE JOURNEE -->
+<div class="fiche-panel" id="panel-parcours">
+<p class="parcours-intro">L'Indre-et-Loire se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+<div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+<div class="parcours-filters">
+<button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+<button class="filter-btn" data-filter="gourmand">Gourmand</button>
+<button class="filter-btn" data-filter="culture">Culture</button>
+<button class="filter-btn" data-filter="nature">Nature</button>
+<button class="filter-btn" data-filter="famille">Famille</button>
+<button class="filter-btn" data-filter="romantique">Romantique</button>
+<button class="filter-btn" data-filter="actif">Actif</button>
+</div>
+<div class="jours-grid">
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Chinon, entre rillons et vignoble</h4></div>
+<span class="jour-duree">Journée complète · Chinon</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché à l'ancienne</strong> de Chinon.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite des caves painctes</strong>, taillées dans le tuffeau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour de rillons et d'un verre de Chinon rouge.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> du vignoble de Chinon.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> face à la forteresse illuminée.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Vouvray, la route des caves troglodytiques</h4></div>
+<span class="jour-duree">Journée complète · Vouvray</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une cave troglodytique</strong> creusée dans le tuffeau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de Vouvray sec, demi-sec et pétillant.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une andouillette au Vouvray.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les vignes en terrasses.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un Vouvray pétillant.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Sainte-Maure-de-Touraine, sur la route du fromage</h4></div>
+<span class="jour-duree">Journée complète · Sainte-Maure-de-Touraine</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une chèvrerie</strong> près de Sainte-Maure.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de la bûche cendrée traversée de sa paille de seigle.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> à la ferme.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Échappée belle</strong> dans une ferme caprine voisine, à Sepmes.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un plateau de fromages tourangeaux.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Tours gourmande, rillettes et nougat</h4></div>
+<span class="jour-duree">Journée complète · Tours</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché</strong> dans le Vieux Tours.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des rillettes de Tours</strong> chez un charcutier traditionnel.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une fouée garnie.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation</strong> de nougat de Tours et de macarons de Cormery.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> gastronomique dans une table étoilée de la préfecture.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Bourgueil, vignoble et fouées</h4></div>
+<span class="jour-duree">Journée complète · Bourgueil</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> de l'appellation Bourgueil.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de Bourgueil et Saint-Nicolas-de-Bourgueil.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner de fouées</strong> cuites au feu de bois.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble et ses buttes sableuses.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un verre de Bourgueil rouge.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Chenonceau, le château des dames</h4></div>
+<span class="jour-duree">Journée complète · Chenonceau</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château</strong>, enjambant le Cher sur ses arches.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Promenade</strong> dans les jardins de Diane de Poitiers et de Catherine de Médicis.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le parc du domaine.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de la galerie</strong> au-dessus de la rivière.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Promenade nocturne</strong> dans le parc illuminé.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Amboise, sur les pas de Léonard de Vinci</h4></div>
+<span class="jour-duree">Journée complète · Amboise</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château royal d'Amboise</strong>, où repose Léonard de Vinci.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Panorama</strong> depuis les terrasses du château sur la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du Clos Lucé</strong>, dernière demeure du génie toscan.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> face au château illuminé.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Chinon, forteresse et cité médiévale</h4></div>
+<span class="jour-duree">Journée complète · Chinon</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la forteresse royale</strong> où Jeanne d'Arc rencontra Charles VII.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Promenade</strong> dans les ruelles médiévales de la ville basse.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Vienne.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Spectacle vivant « Une reine à Chinon »</strong> (selon calendrier).</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> dans le centre historique.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Azay-le-Rideau et Villandry, châteaux et jardins</h4></div>
+<span class="jour-duree">Journée complète · Azay-le-Rideau</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château d'Azay-le-Rideau</strong>, posé sur l'Indre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le parc romantique du château.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le village.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du château de Villandry</strong> et de ses jardins à la française.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> avec vue sur le potager décoratif.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Tours, de la cathédrale au Vieux Tours</h4></div>
+<span class="jour-duree">Journée complète · Tours</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la cathédrale Saint-Gatien</strong>.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le quartier du Vieux Tours et la place Plumereau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier médiéval.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de la basilique Saint-Martin</strong> et du musée des Beaux-Arts.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> en terrasse au bord de la Loire.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Confluence de la Loire et de la Vienne</h4></div>
+<span class="jour-duree">Journée complète · Candes-Saint-Martin</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> jusqu'au belvédère de Candes-Saint-Martin.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation</strong> de la confluence entre Loire et Vienne.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur les grèves de sable.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite de la collégiale fortifiée</strong> du village.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>La Loire à vélo, d'Amboise à Tours</h4></div>
+<span class="jour-duree">Journée complète · Amboise - Tours</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> depuis Amboise le long de la levée de Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte</strong> face aux grèves sauvages du fleuve.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Arrivée à Tours</strong>, en longeant le fleuve royal.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Forêt de Chinon, entre chênes et ruisseaux</h4></div>
+<span class="jour-duree">Journée complète · Forêt de Chinon</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la forêt domaniale de Chinon.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte</strong> à la fontaine du Bon Puits.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en sous-bois.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par les vignes du Chinonais.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Clos Lucé en famille</h4></div>
+<span class="jour-duree">Journée complète · Amboise</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du Clos Lucé</strong> et de son parc aux machines de Léonard de Vinci.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers</strong> pour enfants autour des inventions.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du château royal d'Amboise.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour</strong> avec un carnet de croquis d'inventeur.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Villandry en famille</h4></div>
+<span class="jour-duree">Journée complète · Villandry</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> dans les jardins à la française.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du potager décoratif</strong> et de ses légumes en damier.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du château</strong> et de son labyrinthe végétal.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Caves troglodytiques en famille</h4></div>
+<span class="jour-duree">Journée complète · Vallée de la Loire</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une champignonnière</strong> en cave troglodytique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> d'une habitation troglodytique aménagée.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> de fouées cuites devant les enfants.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les coteaux du tuffeau.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Chenonceau au coucher du soleil</h4></div>
+<span class="jour-duree">Journée complète · Chenonceau</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château</strong> et de ses galeries sur le Cher.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Promenade</strong> dans les jardins de Diane de Poitiers.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en amoureux dans le parc.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Dégustation sous les étoiles</strong> (selon calendrier).</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Promenade nocturne</strong> dans les allées illuminées.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Candes-Saint-Martin à deux</h4></div>
+<span class="jour-duree">Journée complète · Candes-Saint-Martin</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles de tuffeau blanc.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la collégiale fortifiée</strong>.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur la confluence.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Montée au belvédère</strong>, panorama sur la Loire et la Vienne.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur les deux rivières.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>La Loire à vélo, étape tourangelle</h4></div>
+<span class="jour-duree">Journée complète · Amboise - Villandry</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> depuis Amboise.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte</strong> à Tours pour une pause fraîcheur.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du fleuve.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Arrivée à Villandry</strong>, jardins et château.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Canoë sur le Cher</h4></div>
+<span class="jour-duree">Journée complète · Vallée du Cher</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> depuis Bléré.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage sous les arches</strong> du château de Chenonceau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur une berge du Cher.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Fin de la descente</strong>, retour en minibus.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Randonnée dans la forêt d'Amboise</h4></div>
+<span class="jour-duree">Journée complète · Forêt d'Amboise</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> à travers la forêt domaniale.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Pause</strong> au pavillon de chasse historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> tiré du sac.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par les coteaux viticoles.</div></div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- VISITES GUIDEES -->
+<div class="fiche-panel" id="panel-guides">
+<p class="guide-intro">Des visites pas à pas, conçues comme de véritables promenades commentées, pour explorer les villes et paysages emblématiques de l'Indre-et-Loire à votre rythme.</p>
+<div class="parcours-filters">
+<button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+</div>
+<div class="guides-grid">
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Tours, du Vieux Tours à la cathédrale Saint-Gatien</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">Centre historique</span></div>
+</div>
+<p class="guide-chapeau">Une balade dans la capitale de la Touraine, entre maisons à pans de bois et flèches gothiques.</p>
+<div class="guide-map" id="map-idl-0"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La place Plumereau</h5><p>Cœur du Vieux Tours, bordée de maisons à pans de bois du XVe siècle.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La basilique Saint-Martin</h5><p>Édifiée sur le tombeau de saint Martin, haut lieu de pèlerinage médiéval.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>La cathédrale Saint-Gatien</h5><p>Chef-d'œuvre gothique aux vitraux remarquables, achevée à la Renaissance.</p><div class="guide-anecdote">Sa construction s'est étalée sur près de trois siècles, ce qui explique la coexistence de styles gothique et Renaissance sur ses tours.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Le Château de Tours et les bords de Loire</h5><p>Dernière étape, face au fleuve royal.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Amboise, du château royal au Clos Lucé</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">Ville royale</span></div>
+</div>
+<p class="guide-chapeau">Une promenade royale, des terrasses dominant la Loire jusqu'à la demeure de Léonard de Vinci.</p>
+<div class="guide-map" id="map-idl-1"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le château royal d'Amboise</h5><p>Résidence favorite de Charles VIII et François Ier, où repose Léonard de Vinci.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La chapelle Saint-Hubert</h5><p>Petit bijou gothique flamboyant abritant le tombeau présumé de Léonard de Vinci.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Les ruelles du centre historique</h5><p>Maisons à colombages et boutiques d'artisans.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Le Clos Lucé</h5><p>Dernière demeure de Léonard de Vinci, où il passa ses trois dernières années sous la protection de François Ier.</p><div class="guide-anecdote">Selon la légende, un souterrain aurait relié directement le château au Clos Lucé, permettant à François Ier de rendre visite à Léonard de Vinci en toute discrétion.</div></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Chinon, de la forteresse à la ville basse</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">Cité médiévale</span></div>
+</div>
+<p class="guide-chapeau">Sur les traces de Jeanne d'Arc, entre forteresse royale et ruelles médiévales au bord de la Vienne.</p>
+<div class="guide-map" id="map-idl-2"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La forteresse royale de Chinon</h5><p>C'est ici que Jeanne d'Arc reconnut le dauphin Charles VII parmi sa cour, en 1429.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La rue Voltaire</h5><p>Artère médiévale bordée de maisons à colombages et d'hôtels particuliers.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Les caves painctes</h5><p>Anciennes carrières de tuffeau, mentionnées par Rabelais dans Gargantua.</p><div class="guide-anecdote">François Rabelais, né près de Chinon, situe une partie de son œuvre dans ces mêmes caves, qui accueillent aujourd'hui encore des confréries viticoles.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Les quais de la Vienne</h5><p>Promenade au fil de l'eau, vue sur la forteresse depuis la rive opposée.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Candes-Saint-Martin, village de la confluence</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h</span><span class="guide-badge">Village</span></div>
+</div>
+<p class="guide-chapeau">Un des Plus Beaux Villages de France, au point exact où la Vienne rejoint la Loire.</p>
+<div class="guide-map" id="map-idl-3"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La collégiale Saint-Martin</h5><p>Édifice fortifié construit sur le lieu de mort de saint Martin, évêque de Tours, en 397.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Les ruelles de tuffeau</h5><p>Maisons blanches typiques du Val de Loire.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le belvédère de la confluence</h5><p>Panorama exceptionnel sur la rencontre de la Loire et de la Vienne.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Loches, la cité royale</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">Ville</span></div>
+</div>
+<p class="guide-chapeau">Une balade dans l'une des cités royales les mieux conservées de France, entre donjon et logis royal.</p>
+<div class="guide-map" id="map-idl-4"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le donjon de Loches</h5><p>Imposant donjon roman, transformé en prison d'État sous Louis XI.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le logis royal</h5><p>Résidence où Jeanne d'Arc vint convaincre Charles VII de se faire sacrer à Reims.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>La collégiale Saint-Ours</h5><p>Église remarquable par ses pyramides octogonales.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>La cité médiévale</h5><p>Ruelles pavées et remparts, jusqu'à la porte des Cordeliers.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route des châteaux, de Chambord... à Villandry</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un parcours à travers les plus célèbres châteaux du Val de Loire tourangeau.</p>
+<div class="guide-map" id="map-idl-5"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le château d'Amboise</h5><p>Premier arrêt, résidence des rois de France à la Renaissance.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le château de Chenonceau</h5><p>Le « château des dames », enjambant le Cher.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le château d'Azay-le-Rideau</h5><p>Chef-d'œuvre Renaissance posé sur les eaux de l'Indre.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Le château de Villandry</h5><p>Dernière étape, célèbre pour ses jardins en damier.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route des vins de Touraine, Vouvray à Bourgueil</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un parcours viticole sur les deux rives de la Loire, entre coteaux de tuffeau et sols sableux.</p>
+<div class="guide-map" id="map-idl-6"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Vouvray et ses caves troglodytiques</h5><p>Premier arrêt pour une dégustation de Chenin blanc.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Montlouis-sur-Loire</h5><p>Rive gauche de la Loire, appellation voisine de Vouvray.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Chinon</h5><p>Terre du cabernet franc, dégustation dans une cave du centre-ville.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Bourgueil et Saint-Nicolas-de-Bourgueil</h5><p>Dernière étape, sur les buttes sableuses du vignoble.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Sur les traces de Rabelais et Vinci</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un circuit littéraire et artistique, entre le pays natal de Rabelais et la dernière demeure de Léonard de Vinci.</p>
+<div class="guide-map" id="map-idl-7"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La Devinière, près de Chinon</h5><p>Ferme natale présumée de François Rabelais, aujourd'hui musée.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Chinon et ses caves painctes</h5><p>Décor de plusieurs scènes de Gargantua.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le Clos Lucé, à Amboise</h5><p>Dernière demeure de Léonard de Vinci, invité par François Ier.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Villages troglodytiques et vallée de l'Indre</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Demi-journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Une échappée insolite dans les carrières de tuffeau reconverties en habitations et champignonnières.</p>
+<div class="guide-map" id="map-idl-8"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le château d'Azay-le-Rideau</h5><p>Départ au bord de l'Indre, dans son écrin de verdure.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Une champignonnière troglodytique</h5><p>Visite d'une ancienne carrière reconvertie en culture de champignons de Paris.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Un village troglodytique</h5><p>Découverte d'habitations et de commerces creusés dans le coteau.</p></div></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'centre-val-de-loire-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.filter;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        jourCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.profil === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('.guide-card');
+
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        guideCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.type === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+(function() {
+  var guideMapsData = {
+    "map-idl-0": [{"lat": 47.3941, "lng": 0.6848, "label": "La place Plumereau"}, {"lat": 47.3958, "lng": 0.6870, "label": "La basilique Saint-Martin"}, {"lat": 47.3947, "lng": 0.6910, "label": "La cathédrale Saint-Gatien"}, {"lat": 47.3970, "lng": 0.6895, "label": "Le Château de Tours et les bords de Loire"}],
+    "map-idl-1": [{"lat": 47.4133, "lng": 0.9833, "label": "Le château royal d'Amboise"}, {"lat": 47.4128, "lng": 0.9840, "label": "La chapelle Saint-Hubert"}, {"lat": 47.4140, "lng": 0.9820, "label": "Les ruelles du centre historique"}, {"lat": 47.4150, "lng": 0.9790, "label": "Le Clos Lucé"}],
+    "map-idl-2": [{"lat": 47.1667, "lng": 0.2400, "label": "La forteresse royale de Chinon"}, {"lat": 47.1660, "lng": 0.2410, "label": "La rue Voltaire"}, {"lat": 47.1655, "lng": 0.2420, "label": "Les caves painctes"}, {"lat": 47.1645, "lng": 0.2430, "label": "Les quais de la Vienne"}],
+    "map-idl-3": [{"lat": 47.2167, "lng": 0.1500, "label": "La collégiale Saint-Martin"}, {"lat": 47.2170, "lng": 0.1495, "label": "Les ruelles de tuffeau"}, {"lat": 47.2175, "lng": 0.1510, "label": "Le belvédère de la confluence"}],
+    "map-idl-4": [{"lat": 47.1258, "lng": 0.9950, "label": "Le donjon de Loches"}, {"lat": 47.1265, "lng": 0.9958, "label": "Le logis royal"}, {"lat": 47.1270, "lng": 0.9945, "label": "La collégiale Saint-Ours"}, {"lat": 47.1280, "lng": 0.9930, "label": "La cité médiévale"}],
+    "map-idl-5": [{"lat": 47.4133, "lng": 0.9833, "label": "Le château d'Amboise"}, {"lat": 47.3242, "lng": 1.0703, "label": "Le château de Chenonceau"}, {"lat": 47.2600, "lng": 0.4667, "label": "Le château d'Azay-le-Rideau"}, {"lat": 47.3400, "lng": 0.5150, "label": "Le château de Villandry"}],
+    "map-idl-6": [{"lat": 47.4167, "lng": 0.8000, "label": "Vouvray et ses caves troglodytiques"}, {"lat": 47.3917, "lng": 0.8417, "label": "Montlouis-sur-Loire"}, {"lat": 47.1667, "lng": 0.2400, "label": "Chinon"}, {"lat": 47.2833, "lng": 0.1667, "label": "Bourgueil et Saint-Nicolas-de-Bourgueil"}],
+    "map-idl-7": [{"lat": 47.1400, "lng": 0.1800, "label": "La Devinière, près de Chinon"}, {"lat": 47.1667, "lng": 0.2400, "label": "Chinon et ses caves painctes"}, {"lat": 47.4150, "lng": 0.9790, "label": "Le Clos Lucé, à Amboise"}],
+    "map-idl-8": [{"lat": 47.2600, "lng": 0.4667, "label": "Le château d'Azay-le-Rideau"}, {"lat": 47.2500, "lng": 0.4200, "label": "Une champignonnière troglodytique"}, {"lat": 47.2300, "lng": 0.3800, "label": "Un village troglodytique"}]
+  };
+  var guideMapInstances = {};
+
+  function initGuideMap(id) {
+    if (guideMapInstances[id]) return;
+    var data = guideMapsData[id];
+    var el = document.getElementById(id);
+    if (!data || !el || typeof L === 'undefined') return;
+    var map = L.map(id, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var latlngs = [];
+    data.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: 'guide-map-marker-wrap',
+        html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+        .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+      map.fitBounds(latlngs, { padding: [26, 26] });
+    } else if (latlngs.length === 1) {
+      map.setView(latlngs[0], 13);
+    }
+    guideMapInstances[id] = map;
+  }
+
+  function initVisibleGuideMaps() {
+    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+      initGuideMap(el.id);
+      if (guideMapInstances[el.id]) {
+        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
+    if (guidesTab) {
+      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
+    }
+    var panelGuides = document.getElementById('panel-guides');
+    if (panelGuides && panelGuides.classList.contains('active')) {
+      setTimeout(initVisibleGuideMaps, 250);
+    }
+  });
+})();
+</script>
+</body>
+</html>

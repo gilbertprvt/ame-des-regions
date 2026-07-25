@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Loiret — L'Âme des Régions</title>
+<link href="../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+<style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* Visites Guidées */
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+</style>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
+<body class="fiche-page">
+<div class="fiche-hero">
+<div class="container">
+<div class="fiche-topbar">
+<a class="fiche-logo" href="../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens">
+<a class="fiche-topbar-btn" href="../../centre-val-de-loire.html">Centre-Val de Loire</a>
+<a class="fiche-topbar-btn" href="../../carte-centre-val-de-loire.html">Carte des départements</a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1> <span style="padding-left: 40px;">Le <span class="titre-initial">L</span>oiret</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Loiret" src="../../../../assets/departement/centre-val-de-loire/loiret.png"/>
+</div>
+<span class="fiche-hero-ancien">Préfecture : Orléans · Département 45</span>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">Nature</button>
+<button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+<button class="fiche-tab" data-panel="traditions">Traditions</button>
+<button class="fiche-tab" data-panel="villages">Villages</button>
+<button class="fiche-tab" data-panel="agenda">Agenda</button>
+<button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+<button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+<ul>
+<li><a href="../../departement/loiret-info/gastronomie/plats/poularde-au-safran.html">Poularde au safran du Gâtinais</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/plats/andouille-de-jargeau.html">Andouille de Jargeau</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/plats/matelote-d-anguille-de-loire.html">Matelote d'anguille de Loire</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/plats/gibier-foret-orleans.html">Gibier de la forêt d'Orléans</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/plats/friture-de-loire.html">Friture de Loire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+<ul>
+<li><a href="../../departement/loiret-info/gastronomie/terroir/vinaigre-d-orleans.html">Vinaigre d'Orléans, méthode traditionnelle</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/terroir/safran-du-gatinais.html">Safran du Gâtinais</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/terroir/miel-du-gatinais.html">Miel du Gâtinais, réputé depuis l'Antiquité</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/terroir/poires-et-pommes-val-de-loire.html">Poires et pommes du Val de Loire</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/terroir/cotignac-d-orleans.html">Cotignac d'Orléans (pâte de coing)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; boissons</div>
+<ul>
+<li><a href="../../departement/loiret-info/gastronomie/vin/orleans.html">orleans</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/vin/orleans-clery.html">orleans-clery</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/vin/gris-meunier.html">gris-meunier</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Dessert</span> Douceurs &amp; pâtisseries</div>
+<ul>
+<li><a href="../../departement/loiret-info/gastronomie/dessert/pithiviers.html">Pithiviers, gâteau feuilleté à la frangipane</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/dessert/praslines-de-montargis.html">Praslines de Montargis (amandes caramélisées)</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/dessert/cotignac-d-orleans-dessert.html">Cotignac d'Orléans</a></li>
+<li><a href="../../departement/loiret-info/gastronomie/dessert/sucre-d-orge-de-gien.html">Sucre d'orge de Gien</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Site</span> Sites UNESCO &amp; classés</div>
+<ul>
+<li><a href="../../departement/loiret-info/patrimoine/unesco/val-de-loire-unesco.html">Val de Loire, paysage culturel (UNESCO)</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/unesco/basilique-de-clery-saint-andre.html">Basilique de Cléry-Saint-André, nécropole royale</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chateau</span> Châteaux &amp; demeures</div>
+<ul>
+<li><a href="../../departement/loiret-info/patrimoine/chateau/chateau-de-sully-sur-loire.html">Château de Sully-sur-Loire</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/chateau/chateau-de-chamerolles.html">Château de Chamerolles et ses jardins Renaissance</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/chateau/chateau-de-gien.html">Château de Gien et son musée de la chasse</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/chateau/chateau-de-la-bussiere.html">Château de la Bussière, château des pêcheurs</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/chateau/chateau-de-meung-sur-loire.html">Château de Meung-sur-Loire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
+<ul>
+<li><a href="../../departement/loiret-info/patrimoine/eglise/cathedrale-sainte-croix-orleans.html">Cathédrale Sainte-Croix d'Orléans</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/eglise/abbatiale-de-fleury.html">Abbatiale de Saint-Benoît-sur-Loire (Fleury)</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/eglise/basilique-clery-tombeau-louis-xi.html">Basilique de Cléry-Saint-André, tombeau de Louis XI</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musee</span> Musées &amp; culture</div>
+<ul>
+<li><a href="../../departement/loiret-info/patrimoine/musee/musee-des-beaux-arts-orleans.html">Musée des Beaux-Arts d'Orléans</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/musee/maison-de-jeanne-d-arc.html">Maison de Jeanne d'Arc, Orléans</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/musee/musee-de-la-faiencerie-de-gien.html">Musée de la Faïencerie de Gien</a></li>
+<li><a href="../../departement/loiret-info/patrimoine/musee/musee-de-la-chasse-gien.html">Musée-château de Gien, musée de la chasse</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Foret</span> Forêts &amp; espaces naturels</div>
+<ul>
+<li><a href="../../departement/loiret-info/nature/foret/foret-domaniale-d-orleans.html">Forêt domaniale d'Orléans, la plus vaste de France</a></li>
+<li><a href="../../departement/loiret-info/nature/foret/sologne-orleanaise.html">Sologne orléanaise, étangs et bruyères</a></li>
+<li><a href="../../departement/loiret-info/nature/foret/foret-de-montargis.html">Forêt de Montargis et canaux du Gâtinais</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Riviere</span> Loire, Loiret &amp; canaux</div>
+<ul>
+<li><a href="../../departement/loiret-info/nature/riviere/vallee-de-la-loire.html">Vallée de la Loire</a></li>
+<li><a href="../../departement/loiret-info/nature/riviere/source-du-loiret.html">Le Loiret, source à Olivet, l'une des plus courtes rivières de France</a></li>
+<li><a href="../../departement/loiret-info/nature/riviere/canal-d-orleans-et-de-briare.html">Canal d'Orléans et canal de Briare</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Faune</span> Faune &amp; biodiversité</div>
+<ul>
+<li><a href="../../departement/loiret-info/nature/faune/parc-floral-de-la-source.html">Parc floral de la Source, oiseaux et flamants roses</a></li>
+<li><a href="../../departement/loiret-info/nature/faune/poissons-de-loire.html">Poissons de Loire (sandre, brochet, alose)</a></li>
+<li><a href="../../departement/loiret-info/nature/faune/cerfs-et-sangliers-foret-orleans.html">Cerfs et sangliers de la forêt d'Orléans</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Faience</span> Faïence &amp; céramique</div>
+<ul>
+<li><a href="../../departement/loiret-info/artisanat/faience/faiencerie-de-gien.html">Faïencerie de Gien, manufacture depuis 1821</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vinaigre</span> Vinaigrerie traditionnelle</div>
+<ul>
+<li><a href="../../departement/loiret-info/artisanat/vinaigre/vinaigrerie-martin-pouret.html">Vinaigrerie Martin Pouret, méthode d'Orléans</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Confiserie</span> Confiserie &amp; douceurs</div>
+<ul>
+<li><a href="../../departement/loiret-info/artisanat/confiserie/praslines-mazet-montargis.html">Praslines de Montargis, maison Mazet depuis 1903</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Safran</span> Safran &amp; épices</div>
+<ul>
+<li><a href="../../departement/loiret-info/artisanat/safran/safranieres-du-gatinais.html">Safranières du Gâtinais, renaissance d'une culture ancienne</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-traditions">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Langue</span> Langue &amp; identité</div>
+<ul>
+<li>Identité johannique, héritage de Jeanne d'Arc à Orléans</li>
+<li>Parler du Gâtinais et de la Beauce orléanaise</li>
+<li>Toponymie ligérienne et mariniers de Loire</li>
+<li>Mémoire des mariniers et gabariers de la Loire royale</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musique</span> Musiques &amp; jeux traditionnels</div>
+<ul>
+<li>Chants de mariniers de Loire</li>
+<li>Fanfares et bandas lors des fêtes johanniques</li>
+<li>Joutes nautiques sur la Loire à Orléans</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fete</span> Fêtes &amp; traditions locales</div>
+<ul>
+<li>Fêtes johanniques d'Orléans, commémoration de la libération de 1429</li>
+<li>Festival de Loire, grand rassemblement biennal de bateaux traditionnels</li>
+<li>Fête du safran à Boynes, capitale historique du safran du Gâtinais</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+<ul>
+<li>Fabrication du vinaigre selon la méthode d'Orléans</li>
+<li>Confection des praslines à Montargis</li>
+<li>Cuisine au safran du Gâtinais</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Village</span> Villages &amp; cités remarquables</div>
+<ul>
+<li><a href="../../departement/loiret-info/village/remarquable/yevre-le-chatel.html">Yèvre-le-Châtel, cité médiévale fortifiée</a></li>
+<li><a href="../../departement/loiret-info/village/remarquable/ferrieres-en-gatinais.html">Ferrières-en-Gâtinais, petite cité de caractère</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Loire</span> Villages de bord de Loire</div>
+<ul>
+<li><a href="../../departement/loiret-info/village/loire/beaugency.html">Beaugency, cité médiévale sur la Loire</a></li>
+<li><a href="../../departement/loiret-info/village/loire/germigny-des-pres.html">Germigny-des-Prés, oratoire carolingien</a></li>
+<li><a href="../../departement/loiret-info/village/loire/meung-sur-loire.html">Meung-sur-Loire</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Bourg</span> Bourgs &amp; cités de caractère</div>
+<ul>
+<li><a href="../../departement/loiret-info/village/bourg/orleans.html">Orléans, cité johannique et capitale du Loiret</a></li>
+<li><a href="../../departement/loiret-info/village/bourg/montargis.html">Montargis, la Venise du Gâtinais</a></li>
+<li><a href="../../departement/loiret-info/village/bourg/gien.html">Gien, ville de la faïence</a></li>
+<li><a href="../../departement/loiret-info/village/bourg/sully-sur-loire.html">Sully-sur-Loire</a></li>
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">Etoile</div>
+<div>
+<h3>Village à l'honneur : Yèvre-le-Châtel</h3>
+<p>Perché sur son promontoire du Gâtinais, ce village fortifié conserve les vestiges impressionnants d'un château royal du XIIe siècle et deux églises médiévales. Classé parmi les plus beaux villages de la région, il a longtemps sommeillé avant d'être restauré et redécouvert, offrant aujourd'hui l'une des plus belles vues du Gâtinais orléanais.</p>
+<span class="village-star-tag">Petite Cité de Caractère</span>
+<span class="village-star-tag">Château médiéval</span>
+<span class="village-star-tag">Gâtinais</span>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>Calendrier</span> Fêtes &amp; événements de l'année</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Fév.</div>
+<div><h4>Fête du safran de Boynes</h4><p>Marché et animations autour de la récolte du safran du Gâtinais, dans son fief historique.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Printemps de Bourges en région</h4><p>Concerts et animations culturelles dans plusieurs communes du Loiret.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Fêtes johanniques d'Orléans</h4><p>Grande commémoration de la libération d'Orléans par Jeanne d'Arc en 1429 : reconstitutions, défilé et cérémonies place du Martroi.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Rendez-vous aux Jardins</h4><p>Ouverture exceptionnelle des jardins Renaissance du château de Chamerolles.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Fête de la faïence à Gien</h4><p>Célébration du savoir-faire manufacturier de la faïencerie, ouverte au public depuis deux siècles.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Festival de Loire (années impaires)</h4><p>Grand rassemblement biennal de bateaux traditionnels de Loire sur les quais d'Orléans.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet-Août</div>
+<div><h4>Nuits de Sully, festival de musique classique</h4><p>Concerts en plein air dans le parc et la cour du château de Sully-sur-Loire.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Fête médiévale de Yèvre-le-Châtel</h4><p>Reconstitutions et animations dans le cadre exceptionnel de la forteresse royale.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Journées Européennes du Patrimoine</h4><p>Ouverture de nombreux châteaux et monuments, dont Sully et Chamerolles.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Foire aux Sorciers de Cléry-Saint-André</h4><p>Marché artisanal et animations autour de la basilique et du tombeau de Louis XI.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.</div>
+<div><h4>Fête du safran et des saveurs d'automne</h4><p>Marchés de producteurs autour du safran, du gibier et des champignons du Gâtinais.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.-Nov.</div>
+<div><h4>Salon du chocolat et de la praline</h4><p>À Montargis, hommage à la praline, née dans la ville au XVIIe siècle.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Déc.</div>
+<div><h4>Marché de Noël d'Orléans</h4><p>Chalets et illuminations place du Martroi, au pied de la statue de Jeanne d'Arc.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-parcours">
+<p class="parcours-intro">Le Loiret se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici des programmes prêts à l'emploi, détaillés heure par heure, entre Loire royale, Sologne et Gâtinais.</p>
+<div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+<div class="parcours-filters">
+<button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+<button class="filter-btn" data-filter="gourmand">Gourmand</button>
+<button class="filter-btn" data-filter="culture">Culture</button>
+<button class="filter-btn" data-filter="nature">Nature</button>
+<button class="filter-btn" data-filter="famille">Famille</button>
+<button class="filter-btn" data-filter="romantique">Romantique</button>
+<button class="filter-btn" data-filter="actif">Actif</button>
+</div>
+<div class="jours-grid">
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Route du safran et des saveurs du Gâtinais</h4>
+</div>
+<span class="jour-duree">Journée complète · Boynes</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une safranière</strong> à Boynes, capitale historique du safran du Gâtinais.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de miel du Gâtinais et de produits au safran.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une poularde au safran.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la campagne gâtinaise et ses vergers.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> chez un producteur, cuisine du terroir orléanais.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Orléans gourmande, vinaigre et cotignac</h4>
+</div>
+<span class="jour-duree">Journée complète · Orléans</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la vinaigrerie Martin Pouret</strong>, dernière à produire selon la méthode d'Orléans.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Marché couvert</strong> et dégustation de cotignac.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le vieil Orléans, quartier des Halles.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Découverte</strong> des vignobles d'Orléans-Cléry sur la rive gauche de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un verre de gris meunier et d'une andouille de Jargeau.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Orléans, cité de Jeanne d'Arc</h4>
+</div>
+<span class="jour-duree">Journée complète · Orléans</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Cathédrale Sainte-Croix</strong>, chef-d'œuvre gothique reconstruit après les guerres de Religion.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Maison de Jeanne d'Arc</strong>, sur les traces de la libération de la ville en 1429.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> place du Martroi.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Musée des Beaux-Arts</strong>, riches collections de peinture française.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Balade</strong> sur les quais de Loire, vue sur le pont George-V.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Sully-sur-Loire, château de Sully et du bon roi</h4>
+</div>
+<span class="jour-duree">Journée complète · Sully-sur-Loire</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Sully-sur-Loire</strong>, forteresse médiévale entourée de douves.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le parc du château, le long de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Abbatiale de Saint-Benoît-sur-Loire</strong>, l'un des plus beaux édifices romans de France.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les levées de la Loire.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Gien et sa faïence, entre Loire et forêt</h4>
+</div>
+<span class="jour-duree">Journée complète · Gien</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Château de Gien</strong>, musée international de la Chasse et de la Nature.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la faïencerie de Gien</strong>, manufacture bicentenaire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> sur les bords de Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles du centre historique reconstruit après-guerre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le pont et la Loire.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Forêt d'Orléans, la plus vaste de France</h4>
+</div>
+<span class="jour-duree">Journée complète · Forêt d'Orléans</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la forêt domaniale d'Orléans, plus de 34 000 hectares.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation de la faune</strong>, cerfs et sangliers en lisière.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en forêt.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à vélo</strong> le long du canal d'Orléans.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les villages de la Sologne orléanaise.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Parc floral de la Source en famille</h4>
+</div>
+<span class="jour-duree">Journée complète · Orléans</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du parc floral de la Source</strong>, à la source du Loiret.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation des flamants roses</strong> et volières à papillons.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans le parc ombragé.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en petit train</strong> et jeux pour enfants.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Glace</strong> avant de reprendre la route.</div></div>
+</div>
+</div>
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top">
+<h4>Canal d'Orléans à vélo, de Combleux à Chécy</h4>
+</div>
+<span class="jour-duree">Journée complète · Canal d'Orléans</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> le long du canal d'Orléans, halage ombragé.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> des écluses et des villages de mariniers.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du canal.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers les rives de la Loire à vélo.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les chemins de halage.</div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- VISITES GUIDÉES -->
+<div class="fiche-panel" id="panel-guides">
+<p class="guide-intro">Suivez le guide ! Ces circuits commentés, pédestres au cœur des villes johanniques ou en voiture entre Loire royale et Gâtinais, vous emmènent pas à pas — ou virage après virage — à la découverte de l'histoire, des anecdotes et des petits secrets du Loiret.</p>
+<div class="parcours-filters">
+<button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+</div>
+<div class="guides-grid">
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Orléans, sur les pas de Jeanne d'Arc</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 2h</span>
+<span class="guide-badge">Centre historique</span>
+</div>
+</div>
+<p class="guide-chapeau">« En 1429, une jeune paysanne lorraine libéra en quelques jours une ville assiégée depuis des mois, changeant le cours de la guerre de Cent Ans. Six siècles plus tard, Orléans n'a rien oublié de cet épisode fondateur. »</p><div class="guide-map" id="map-loiret-0"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>La cathédrale Sainte-Croix</h5>
+<p>Détruite en grande partie par les protestants en 1568, elle fut entièrement reconstruite dans le style gothique sur ordre d'Henri IV, un geste de réconciliation nationale.</p>
+<div class="guide-anecdote">Ses vitraux du XIXe siècle racontent en dix-neuf tableaux l'épopée de Jeanne d'Arc, de sa naissance à son procès.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>La maison de Jeanne d'Arc</h5>
+<p>Reconstruite à l'identique après les bombardements de 1940, elle occupe l'emplacement de la demeure où logea la Pucelle durant le siège de la ville.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>La place du Martroi</h5>
+<p>Cette vaste place, cœur de la vie orléanaise, est dominée par la statue équestre de Jeanne d'Arc érigée au XIXe siècle.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>L'Hôtel Groslot</h5>
+<p>Cette élégante mairie Renaissance en brique et pierre accueillit plusieurs rois de France, dont François II qui y mourut en 1560.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">5</div>
+<div class="guide-etape-corps">
+<h5>Les quais de Loire</h5>
+<p>Dernière étape sur les bords du fleuve, d'où partaient autrefois les gabares chargées de marchandises vers Nantes et l'Atlantique.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Beaugency, cité médiévale sur la Loire</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">À pied</span>
+<span class="guide-badge">Env. 1h30</span>
+<span class="guide-badge">Bord de Loire</span>
+</div>
+</div>
+<p class="guide-chapeau">« Avec son donjon roman, son vieux pont à vingt-trois arches et ses ruelles fleuries, Beaugency est restée l'une des étapes les plus attachantes du Val de Loire, à l'écart des grands châteaux. »</p><div class="guide-map" id="map-loiret-1"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Le donjon de César</h5>
+<p>Ce puissant donjon roman du XIe siècle, l'un des plus anciens de France, domine encore la ville malgré huit siècles d'histoire mouvementée.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'église Notre-Dame</h5>
+<p>C'est dans cette abbatiale romane que fut prononcée, en 1152, l'annulation du mariage d'Aliénor d'Aquitaine et de Louis VII, un événement qui bouleversa la géopolitique médiévale.</p>
+<div class="guide-anecdote">Le divorce prononcé à Beaugency permit à Aliénor d'épouser Henri Plantagenêt, futur roi d'Angleterre, offrant à la couronne anglaise la moitié du royaume de France.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Le vieux pont</h5>
+<p>Ce pont médiéval de vingt-trois arches, plusieurs fois remanié, fut longtemps le seul franchissement de la Loire entre Orléans et Blois.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>La tour de l'Horloge</h5>
+<p>Vestige des anciennes fortifications, cette tour marque l'entrée du centre historique et de ses maisons à pans de bois.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route de la Loire royale, de Sully à Germigny</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 30 km</span>
+<span class="guide-badge">Demi-journée</span>
+</div>
+</div>
+<p class="guide-chapeau">« Cette courte route longe l'un des tronçons les plus paisibles de la Loire, entre forteresse médiévale, abbaye romane majeure et l'un des plus anciens édifices religieux d'Occident encore debout. »</p><div class="guide-map" id="map-loiret-2"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ du château de Sully-sur-Loire</h5>
+<p>Cette forteresse entourée de douves fut la résidence de Maximilien de Béthune, ministre d'Henri IV, avant d'accueillir Voltaire en exil.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>L'abbatiale de Saint-Benoît-sur-Loire</h5>
+<p>Ce joyau de l'art roman abrite les reliques de saint Benoît, fondateur du monachisme occidental, rapportées d'Italie au VIIIe siècle.</p>
+<div class="guide-anecdote">Le clocher-porche, avec ses chapiteaux historiés, est considéré comme l'un des plus beaux exemples de sculpture romane de la vallée de la Loire.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Germigny-des-Prés</h5>
+<p>Ce minuscule oratoire carolingien du IXe siècle, l'un des plus anciens édifices religieux conservés en France, surprend par sa mosaïque byzantine restée intacte.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Retour par les levées de la Loire</h5>
+<p>La route longe les digues du fleuve, offrant de larges panoramas sur le Val de Loire classé au patrimoine mondial.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route du Gâtinais, safran et faïence</h4>
+<div class="guide-card-meta">
+<span class="guide-badge">En voiture</span>
+<span class="guide-badge">Env. 55 km</span>
+<span class="guide-badge">Journée complète</span>
+</div>
+</div>
+<p class="guide-chapeau">« Loin des châteaux de la Loire, le Gâtinais orléanais cultive une identité plus discrète, entre champs de safran, canaux tranquilles et manufactures séculaires. »</p><div class="guide-map" id="map-loiret-3"></div>
+<div class="guide-etapes">
+<div class="guide-etape">
+<div class="guide-etape-num">1</div>
+<div class="guide-etape-corps">
+<h5>Départ de Montargis, la Venise du Gâtinais</h5>
+<p>Sillonnée par sept canaux et cent trente ponts, cette ville doit son surnom à son réseau hydraulique hérité du canal de Briare, le plus ancien canal à bief de partage d'Europe.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">2</div>
+<div class="guide-etape-corps">
+<h5>Ferrières-en-Gâtinais</h5>
+<p>Cette petite cité de caractère conserve une abbatiale gothique et des halles médiévales témoignant de son riche passé monastique.</p>
+
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">3</div>
+<div class="guide-etape-corps">
+<h5>Les safranières de Boynes</h5>
+<p>Au XIXe siècle, Boynes produisait l'essentiel du safran français. La culture, abandonnée puis relancée, retrouve aujourd'hui ses lettres de noblesse.</p>
+<div class="guide-anecdote">Il faut environ 150 000 fleurs de crocus, cueillies à la main en une poignée de jours d'automne, pour produire un seul kilo de safran séché.</div>
+</div>
+</div>
+<div class="guide-etape">
+<div class="guide-etape-num">4</div>
+<div class="guide-etape-corps">
+<h5>Retour par Gien et sa faïencerie</h5>
+<p>Dernière étape dans cette manufacture fondée en 1821, dont les émaux colorés ornent les tables françaises depuis deux siècles.</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'loiret-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.filter;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        jourCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.profil === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('.guide-card');
+
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        guideCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.type === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+(function() {
+  var guideMapsData = {"map-loiret-0": [{"lat": 47.9025, "lng": 1.9107, "label": "La cathédrale Sainte-Croix"}, {"lat": 47.9035, "lng": 1.908, "label": "La maison de Jeanne d'Arc"}, {"lat": 47.9022, "lng": 1.9047, "label": "La place du Martroi"}, {"lat": 47.903, "lng": 1.904, "label": "L'Hôtel Groslot"}, {"lat": 47.9048, "lng": 1.906, "label": "Les quais de Loire"}], "map-loiret-1": [{"lat": 47.781, "lng": 1.628, "label": "Le donjon de César"}, {"lat": 47.7808, "lng": 1.6275, "label": "L'église Notre-Dame"}, {"lat": 47.7795, "lng": 1.629, "label": "Le vieux pont"}, {"lat": 47.7818, "lng": 1.627, "label": "La tour de l'Horloge"}], "map-loiret-2": [{"lat": 47.768, "lng": 2.376, "label": "Départ du château de Sully-sur-Loire"}, {"lat": 47.794, "lng": 2.296, "label": "L'abbatiale de Saint-Benoît-sur-Loire"}, {"lat": 47.828, "lng": 2.251, "label": "Germigny-des-Prés"}, {"lat": 47.85, "lng": 2.15, "label": "Retour par les levées de la Loire"}], "map-loiret-3": [{"lat": 47.997, "lng": 2.737, "label": "Départ de Montargis, la Venise du Gâtinais"}, {"lat": 48.087, "lng": 2.783, "label": "Ferrières-en-Gâtinais"}, {"lat": 48.042, "lng": 2.362, "label": "Les safranières de Boynes"}, {"lat": 47.693, "lng": 2.628, "label": "Retour par Gien et sa faïencerie"}]};
+  var guideMapInstances = {};
+
+  function initGuideMap(id) {
+    if (guideMapInstances[id]) return;
+    var data = guideMapsData[id];
+    var el = document.getElementById(id);
+    if (!data || !el || typeof L === 'undefined') return;
+    var map = L.map(id, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var latlngs = [];
+    data.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: 'guide-map-marker-wrap',
+        html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+        .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+      map.fitBounds(latlngs, { padding: [26, 26] });
+    } else if (latlngs.length === 1) {
+      map.setView(latlngs[0], 13);
+    }
+    guideMapInstances[id] = map;
+  }
+
+  function initVisibleGuideMaps() {
+    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+      initGuideMap(el.id);
+      if (guideMapInstances[el.id]) {
+        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
+    if (guidesTab) {
+      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
+    }
+    var panelGuides = document.getElementById('panel-guides');
+    if (panelGuides && panelGuides.classList.contains('active')) {
+      setTimeout(initVisibleGuideMaps, 250);
+    }
+  });
+})();
+</script>
+</body>
+</html>

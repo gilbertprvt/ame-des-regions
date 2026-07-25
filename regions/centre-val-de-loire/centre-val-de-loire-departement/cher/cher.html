@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cher — L'Âme des Régions</title>
+<link href="../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    .fiche-page { background: var(--ivoire); }
+
+    .fiche-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 20px 0 0;
+      position: relative;
+      overflow: visible;
+    }
+    .fiche-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    .fiche-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .fiche-logo {
+      font-family: var(--font-titre);
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .fiche-logo span { color: #C8843A; }
+    .fiche-topbar-liens {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .fiche-topbar-btn {
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .fiche-topbar-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .fiche-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .fiche-hero-titre h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0px;
+    }
+    .titre-initial { color: #C8843A; }
+
+    .fiche-hero-ecusson {
+      position: absolute;
+      left: 50%;
+      top: -90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 150px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      display: block;
+    }
+
+    .fiche-hero-ancien {
+      color: white;
+      font-size: 16px;
+      font-family: var(--font-corps);
+    }
+
+    .fiche-tabs-wrap {
+      background: white;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--bordure);
+    }
+    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--bordure);
+      background: white;
+      color: var(--texte-doux);
+      font-family: var(--font-corps);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .fiche-body { padding: 40px 0 60px; }
+    .fiche-panel { display: none; }
+    .fiche-panel.active { display: block; }
+
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .bloc {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      padding: 20px 22px;
+    }
+    .bloc-full { grid-column: 1 / -1; }
+    .bloc-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ocre);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bloc-titre span { font-size: 16px; }
+    .bloc ul { padding-left: 16px; list-style: disc; }
+    .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
+    .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
+
+    .agenda-list { display: flex; flex-direction: column; gap: 10px; }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ivoire);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+    }
+    .agenda-mois {
+      text-align: center;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      color: var(--bleu-profond);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
+    .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
+
+    .parcours-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+    .parcours-section-titre {
+      font-family: var(--font-titre);
+      font-size: 19px;
+      color: var(--bleu-profond);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parcours-section-titre:first-of-type { margin-top: 8px; }
+    .parcours-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      background: white;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--texte-doux);
+      transition: all 0.18s;
+    }
+    .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
+    .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .jour-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .jour-card-header {
+      background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .jour-card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .jour-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .jour-card-icon { font-size: 24px; line-height: 1; }
+    .jour-duree {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .jour-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 20px 0;
+    }
+    .profil-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bleu-clair);
+      color: var(--bleu-profond);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .jour-timeline {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jour-etape {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+    }
+    .jour-etape-moment {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ocre);
+      font-weight: 700;
+      padding-top: 2px;
+    }
+    .jour-etape-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--texte);
+    }
+    .jour-etape-desc strong { color: var(--bleu-profond); }
+
+    .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .parcours-item {
+      background: var(--bleu-clair);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--rayon-lg);
+      padding: 18px;
+    }
+    .parcours-item-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .parcours-item h4 { font-family: var(--font-titre); font-size: 15px; color: var(--bleu-profond); margin-bottom: 6px; }
+    .parcours-item p { font-size: 13px; color: var(--texte-doux); line-height: 1.5; }
+    .parcours-item-duree {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--bleu-profond);
+      background: rgba(44,74,124,0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .village-star {
+      background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
+      border: 1px solid #F0C878;
+      border-radius: var(--rayon-lg);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .village-star-icon { font-size: 48px; }
+    .village-star h3 { font-family: var(--font-titre); font-size: 18px; color: #8B5E0A; margin-bottom: 6px; }
+    .village-star p { font-size: 14px; color: #6B4A0A; line-height: 1.6; }
+    .village-star-tag {
+      display: inline-block;
+      background: rgba(139,94,10,0.12);
+      color: #8B5E0A;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { display: block; margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* Visites Guidées */
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+</style>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
+<body class="fiche-page">
+<div class="fiche-hero">
+<div class="container">
+<div class="fiche-topbar">
+<a class="fiche-logo" href="../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="fiche-topbar-liens">
+<a class="fiche-topbar-btn" href="../../centre-val-de-loire.html">Centre-Val de Loire</a>
+<a class="fiche-topbar-btn" href="../../carte-centre-val-de-loire.html">Carte des départements</a>
+</div>
+</div>
+<div class="fiche-hero-inner">
+<div class="fiche-hero-titre">
+<h1> <span style="padding-left: 40px;">Le <span class="titre-initial">C</span>her</span></h1>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Cher" src="../../../../assets/departement/centre-val-de-loire/cher.png"/>
+</div>
+<span class="fiche-hero-ancien">Préfecture : Bourges · Département 18</span>
+</div>
+</div>
+<div class="fiche-tabs-wrap">
+<div class="container">
+<div class="fiche-tabs">
+<button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
+<button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
+<button class="fiche-tab" data-panel="nature">Nature</button>
+<button class="fiche-tab" data-panel="artisanat">Artisanat</button>
+<button class="fiche-tab" data-panel="traditions">Traditions</button>
+<button class="fiche-tab" data-panel="villages">Villages</button>
+<button class="fiche-tab" data-panel="agenda">Agenda</button>
+<button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+<button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+</div>
+</div>
+</div>
+</div>
+<main class="fiche-body">
+<div class="container">
+<!-- GASTRONOMIE -->
+<div class="fiche-panel active" id="panel-gastro">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Plat</span> Spécialités incontournables</div>
+<ul>
+<li><a href="../../departement/cher-info/gastronomie/plats/pate-berrichon.html">Pâté berrichon</a></li>
+<li><a href="../../departement/cher-info/gastronomie/plats/galette-pommes-de-terre.html">Galette aux pommes de terre</a></li>
+<li><a href="../../departement/cher-info/gastronomie/plats/boudin-noir-de-lignieres.html">Boudin noir de Lignières</a></li>
+<li><a href="../../departement/cher-info/gastronomie/plats/tarte-au-crottin-de-chavignol.html">Tarte au Crottin de Chavignol</a></li>
+<li><a href="../../departement/cher-info/gastronomie/plats/omelette-au-crottin.html">Omelette au crottin de Chavignol</a></li>
+</ul>
+</div>
+<!-- TERROIR-->
+<div class="bloc">
+<div class="bloc-titre"><span>Terroir</span> Produits du terroir</div>
+<ul>
+<li><a href="../../departement/cher-info/gastronomie/terroir/lentille-verte-du-berry.html">Lentille verte du Berry</a></li>
+<li><a href="../../departement/cher-info/gastronomie/terroir/poire-tapee.html">Poire tapée du Berry</a></li>
+<li><a href="../../departement/cher-info/gastronomie/terroir/miel-du-sancerrois.html">Miel du Sancerrois</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fromage</span> Fromage AOP</div>
+<ul>
+<li><a href="../../departement/cher-info/gastronomie/fromage/crottin-de-chavignol.html">Crottin de Chavignol AOP</a> (né dans les collines du Sancerrois)</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; boissons</div>
+<ul>
+<li><a href="../../departement/cher-info/gastronomie/vin/sancerre.html">sancerre</a></li>
+<li><a href="../../departement/cher-info/gastronomie/vin/menetou-salon.html">menetou-salon</a></li>
+<li><a href="../../departement/cher-info/gastronomie/vin/quincy.html">quincy</a></li>
+<li><a href="../../departement/cher-info/gastronomie/vin/chateaumeillant.html">chateaumeillant</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Dessert</span> Douceurs &amp; pâtisseries</div>
+<ul>
+<li><a href="../../departement/cher-info/gastronomie/dessert/forestines-de-bourges.html">Forestines de Bourges</a> (bonbons créés à la fin du XIXe siècle)</li>
+<li><a href="../../departement/cher-info/gastronomie/dessert/sables-de-nancay.html">Sablés de Nançay</a></li>
+<li><a href="../../departement/cher-info/gastronomie/dessert/croquets-de-charost.html">Croquets de Charost</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- PATRIMOINE -->
+<div class="fiche-panel" id="panel-patrimoine">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Site</span> Sites UNESCO &amp; classés</div>
+<ul>
+<li><a href="../../departement/cher-info/patrimoine/unesco/cathedrale-saint-etienne-bourges.html">Cathédrale Saint-Étienne de Bourges (UNESCO)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/unesco/apremont-sur-allier.html">Apremont-sur-Allier (Plus Beau Village de France)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/unesco/marais-de-bourges.html">Marais de Bourges</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Chateau</span> Châteaux de la route Jacques Cœur</div>
+<ul>
+<li><a href="../../departement/cher-info/patrimoine/chateau/palais-jacques-coeur.html">Palais Jacques Cœur (Bourges)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/chateau/chateau-de-meillant.html">Château de Meillant</a></li>
+<li><a href="../../departement/cher-info/patrimoine/chateau/chateau-d-ainay-le-vieil.html">Château d'Ainay-le-Vieil</a></li>
+<li><a href="../../departement/cher-info/patrimoine/chateau/chateau-de-la-verrerie.html">Château de la Verrerie (Aubigny-sur-Nère)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/chateau/chateau-de-menetou-salon.html">Château de Menetou-Salon</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Eglise</span> Édifices religieux</div>
+<ul>
+<li><a href="../../departement/cher-info/patrimoine/eglise/cathedrale-saint-etienne-bourges.html">Cathédrale Saint-Étienne de Bourges</a></li>
+<li><a href="../../departement/cher-info/patrimoine/eglise/abbaye-de-noirlac.html">Abbaye de Noirlac (Bruère-Allichamps)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/eglise/cathedrale-de-jean-linard.html">Cathédrale de Jean Linard (Neuvy-Deux-Clochers)</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musee</span> Musées &amp; culture</div>
+<ul>
+<li><a href="../../departement/cher-info/patrimoine/musee/musee-du-berry.html">Musée du Berry (Bourges)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/musee/musee-estevez.html">Musée Estève (Bourges)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/musee/hotel-lallemant.html">Hôtel Lallemant, joyau Renaissance (Bourges)</a></li>
+<li><a href="../../departement/cher-info/patrimoine/musee/maison-de-la-culture-de-bourges.html">Maison de la Culture de Bourges (première maison de la culture de France)</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- NATURE -->
+<div class="fiche-panel" id="panel-nature">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Colline</span> Collines &amp; vignoble</div>
+<ul>
+<li><a href="../../departement/cher-info/nature/colline/collines-du-sancerrois.html">Collines du Sancerrois</a></li>
+<li><a href="../../departement/cher-info/nature/colline/pays-fort.html">Pays Fort</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Riviere</span> Rivières, marais &amp; canal</div>
+<ul>
+<li><a href="../../departement/cher-info/nature/riviere/marais-de-bourges.html">Marais de Bourges, en plein cœur de ville</a></li>
+<li><a href="../../departement/cher-info/nature/riviere/bec-d-allier.html">Bec d'Allier, confluence avec la Loire</a></li>
+<li><a href="../../departement/cher-info/nature/riviere/canal-du-berry.html">Canal du Berry, de Vierzon à Saint-Amand-Montrond</a></li>
+<li><a href="../../departement/cher-info/nature/riviere/vallee-du-cher.html">Vallée du Cher</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Faune</span> Faune &amp; biodiversité</div>
+<ul>
+<li><a href="../../departement/cher-info/nature/faune/reserve-naturelle-val-de-loire.html">Réserve naturelle du Val de Loire, au Bec d'Allier</a></li>
+<li><a href="../../departement/cher-info/nature/faune/oiseaux-des-marais-de-bourges.html">Oiseaux des marais de Bourges</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ARTISANAT -->
+<div class="fiche-panel" id="panel-artisanat">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Poterie</span> Poterie &amp; céramique</div>
+<ul>
+<li><a href="../../departement/cher-info/artisanat/poterie/poterie-de-la-borne.html">Poterie de La Borne, grès et ateliers de céramistes</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Industrie</span> Industrie &amp; savoir-faire</div>
+<ul>
+<li><a href="../../departement/cher-info/artisanat/industrie/vierzon-locomotives-tracteurs.html">Vierzon, cité industrielle des locomotives et tracteurs</a></li>
+<li><a href="../../departement/cher-info/artisanat/industrie/confiserie-forestines-bourges.html">Confiserie des Forestines à Bourges</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fromagerie</span> Fromagerie &amp; élevage caprin</div>
+<ul>
+<li><a href="../../departement/cher-info/artisanat/fromagerie/affinage-crottin-de-chavignol.html">Affinage du Crottin de Chavignol AOP</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Vin</span> Vins &amp; caves</div>
+<ul>
+<li><a href="../../departement/cher-info/artisanat/vin/caves-de-sancerre.html">Caves du vignoble de Sancerre</a></li>
+<li><a href="../../departement/cher-info/artisanat/vin/caves-de-menetou-salon.html">Caves du vignoble de Menetou-Salon</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- TRADITIONS -->
+<div class="fiche-panel" id="panel-traditions">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Langue</span> Langue &amp; identité</div>
+<ul>
+<li>Patois berrichon</li>
+<li>Identité viticole du Sancerrois</li>
+<li>Héritage des Stuarts à Aubigny-sur-Nère</li>
+<li>Mémoire de Jacques Cœur, argentier du roi Charles VII</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Musique</span> Musiques &amp; scène berrichonne</div>
+<ul>
+<li>Vielle à roue et cornemuse berrichonnes</li>
+<li>Le Printemps de Bourges, cinquante ans de musiques actuelles</li>
+<li>Un Été à Bourges, concerts classiques gratuits</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Fete</span> Fêtes &amp; traditions locales</div>
+<ul>
+<li>Foires Jacques Cœur à Bourges, mi-juin à mi-juillet</li>
+<li>Nuits Lumière, projections nocturnes sur les monuments de Bourges</li>
+<li>Vendanges du Sancerrois</li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Cuisine</span> Traditions culinaires</div>
+<ul>
+<li>Confection de l'omelette au crottin de Chavignol</li>
+<li>Moulage traditionnel du Crottin de Chavignol dans des faisselles</li>
+<li>Fabrication artisanale des Forestines de Bourges</li>
+<li>Vendanges et dégustations chez les vignerons du Sancerrois</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- VILLAGES -->
+<div class="fiche-panel" id="panel-villages">
+<div class="blocs-grid">
+<div class="bloc">
+<div class="bloc-titre"><span>Village</span> Plus Beaux Villages</div>
+<ul>
+<li><a href="../../departement/cher-info/village/plus-beau/apremont-sur-allier.html">Apremont-sur-Allier</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Sancerrois</span> Villages du vignoble</div>
+<ul>
+<li><a href="../../departement/cher-info/village/sancerrois/sancerre.html">Sancerre</a></li>
+<li><a href="../../departement/cher-info/village/sancerrois/chavignol.html">Chavignol</a></li>
+<li><a href="../../departement/cher-info/village/sancerrois/menetou-salon.html">Menetou-Salon</a></li>
+</ul>
+</div>
+<div class="bloc">
+<div class="bloc-titre"><span>Bourg</span> Bourgs &amp; cités de caractère</div>
+<ul>
+<li><a href="../../departement/cher-info/village/bourg/bourges.html">Bourges (capitale historique du Berry)</a></li>
+<li><a href="../../departement/cher-info/village/bourg/aubigny-sur-nere.html">Aubigny-sur-Nère (cité des Stuarts)</a></li>
+<li><a href="../../departement/cher-info/village/bourg/saint-amand-montrond.html">Saint-Amand-Montrond</a></li>
+<li><a href="../../departement/cher-info/village/bourg/mehun-sur-yevre.html">Mehun-sur-Yèvre (cité de Jean de Berry)</a></li>
+<li><a href="../../departement/cher-info/village/bourg/vierzon.html">Vierzon</a></li>
+</ul>
+</div>
+</div>
+<div class="village-star">
+<div class="village-star-icon">Etoile</div>
+<div>
+<h3>Village à l'honneur : Apremont-sur-Allier</h3>
+<p>Au bord de l'Allier, ce village d'à peine une centaine d'habitants a été entièrement restauré au XXe siècle par une famille de mécènes, qui en a fait un ensemble architectural d'une remarquable homogénéité. Maisons à colombages et toits de tuiles brunes, château dominant la rivière et surtout un extraordinaire parc floral classé Jardin Remarquable en font l'un des villages les plus photogéniques de France.</p>
+<span class="village-star-tag">Plus Beau Village de France</span>
+<span class="village-star-tag">Jardin Remarquable</span>
+<span class="village-star-tag">Vallée de l'Allier</span>
+</div>
+</div>
+</div>
+<!-- AGENDA -->
+<div class="fiche-panel" id="panel-agenda">
+<div class="blocs-grid">
+<div class="bloc bloc-full">
+<div class="bloc-titre"><span>Calendrier</span> Fêtes &amp; événements de l'année dans le Cher</div>
+<div class="agenda-list">
+<div class="agenda-item">
+<div class="agenda-mois">Avril</div>
+<div><h4>Le Printemps de Bourges</h4><p>Depuis 1977, ce grand rendez-vous musical international ouvre la saison des festivals français et lance de nombreux jeunes talents.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai</div>
+<div><h4>Salon international d'art au Château d'Eau</h4><p>Expositions de jeunes artistes locaux et d'invités reconnus, dans l'ancien château d'eau de Bourges.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mai-Sept.</div>
+<div><h4>Les Nuits Lumière de Bourges</h4><p>Parcours-spectacle nocturne et gratuit : projections vidéo scénographiées sur six sites patrimoniaux du centre historique.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Festival Natur'Art à Bourges</h4><p>Trois jours dédiés à l'art et à la nature dans la ville.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Fête foraine de Bourges</h4><p>Attractions et manèges installés au cœur de la ville.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Festival à La Rue à Menetou-Salon</h4><p>Arts de la rue au cœur du village viticole, organisé par l'association Le Carroi.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin</div>
+<div><h4>Festiv'Arcandiers à Vailly-sur-Sauldre</h4><p>Journée festive et musicale dans le Pays Fort.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Mi-juin à mi-juillet</div>
+<div><h4>Foires Jacques Cœur à Bourges</h4><p>Plus de 80 attractions foraines réunies dans la ville pendant un mois.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juin-Sept.</div>
+<div><h4>Un Été à Bourges</h4><p>Concerts de musique classique gratuits, dans ou devant les édifices majeurs de la ville.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Les Cabanes de Noirlac à Bruère-Allichamps</h4><p>Trois jours de spectacles et d'installations artistiques dans le cadre cistercien de l'abbaye.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Juillet</div>
+<div><h4>Festival Contes et Légendes au Château de Villemenard</h4><p>Un week-end sous le signe de l'imaginaire, à Saint-Germain-du-Puy.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>Rencontres Musicales du Château d'Ainay-le-Vieil</h4><p>Concerts de musique classique dans la cour du château médiéval.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Août</div>
+<div><h4>3 jours en Coust</h4><p>Festival de musique dans le village de Coust, au sud du département.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Journées Européennes du Patrimoine</h4><p>Visites libres et guidées des châteaux, abbayes et musées de tout le département.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Sept.</div>
+<div><h4>Vendanges du Sancerrois</h4><p>Les domaines viticoles ouvrent leurs portes pour célébrer les vendanges sur les coteaux de Sancerre.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.</div>
+<div><h4>Marathon du Cher</h4><p>Course à pied au cœur du Berry, avec plusieurs distances proposées.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Oct.</div>
+<div><h4>Halloween à Bourges</h4><p>Le centre-ville historique et ses ruelles se transforment pour l'occasion.</p></div>
+</div>
+<div class="agenda-item">
+<div class="agenda-mois">Déc.</div>
+<div><h4>Marché de Noël de Bourges</h4><p>Chalets, illuminations et animations dans le centre-ville.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PARCOURS D'UNE JOURNEE -->
+<div class="fiche-panel" id="panel-parcours">
+<p class="parcours-intro">Le Cher se découvre le temps d'une journée, selon vos envies : gourmandes, culturelles, nature, familiales, romantiques ou sportives. Voici de nombreux programmes prêts à l'emploi, détaillés heure par heure, à picorer selon votre humeur du jour.</p>
+<div class="parcours-section-titre">Programmes d'une journée — pour tous les goûts</div>
+<div class="parcours-filters">
+<button class="filter-btn active" data-filter="tous">Tous les programmes</button>
+<button class="filter-btn" data-filter="gourmand">Gourmand</button>
+<button class="filter-btn" data-filter="culture">Culture</button>
+<button class="filter-btn" data-filter="nature">Nature</button>
+<button class="filter-btn" data-filter="famille">Famille</button>
+<button class="filter-btn" data-filter="romantique">Romantique</button>
+<button class="filter-btn" data-filter="actif">Actif</button>
+</div>
+<div class="jours-grid">
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Chavignol, la route du crottin</h4></div>
+<span class="jour-duree">Journée complète · Chavignol</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une chèvrerie</strong> du hameau de Chavignol.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> de crottins à différents stades d'affinage.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> chez un producteur, omelette au crottin.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Montée à Sancerre</strong>, visite d'une cave.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un verre de Sancerre blanc.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Sancerre, vignoble et panorama</h4></div>
+<span class="jour-duree">Journée complète · Sancerre</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la Maison des Vins</strong> de Sancerre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade dans le vignoble</strong>, panorama sur la vallée de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> à la Taverne du Connétable et ses ravioles réputées.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite d'un domaine</strong> familial du Sancerrois.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un plateau de fromages et d'un Sancerre rouge.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Bourges gourmande, marché et forestines</h4></div>
+<span class="jour-duree">Journée complète · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Bourges</strong>, produits fermiers du Berry.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la confiserie</strong> des Forestines, née à la fin du XIXe siècle.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le quartier des Marais.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en barque</strong> dans les Marais de Bourges.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un boudin noir de Lignières.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Menetou-Salon, route des vins</h4></div>
+<span class="jour-duree">Journée complète · Menetou-Salon</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château de Menetou-Salon</strong>.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> dans un domaine de l'appellation.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> chez un vigneron.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur les marnes kimméridgiennes du vignoble.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un Menetou-Salon rouge.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="gourmand">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Croquets de Charost et douceurs du Berry</h4></div>
+<span class="jour-duree">Journée complète · Charost</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du village</strong> de Charost, réputé pour ses croquets.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation</strong> chez un artisan pâtissier.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> berrichon traditionnel.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Route vers Nançay</strong>, dégustation des sablés locaux.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> autour d'un poirat ou d'une poire tapée.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Bourges, cathédrale et Palais Jacques Cœur</h4></div>
+<span class="jour-duree">Journée complète · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de la cathédrale Saint-Étienne</strong>, chef-d'œuvre gothique classé à l'UNESCO.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Montée à la tour</strong> pour un panorama sur la ville.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du Palais Jacques Cœur</strong>, joyau du gothique civil.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Nuits Lumière</strong>, projections nocturnes sur les monuments.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Route Jacques Cœur, châteaux du Berry</h4></div>
+<span class="jour-duree">Journée complète · Sud du Cher</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château de Meillant</strong>, puits médiéval et salons Renaissance.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Route vers Ainay-le-Vieil</strong>.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> à Saint-Amand-Montrond.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du château d'Ainay-le-Vieil</strong> et ses jardins médiévaux reconstitués.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour</strong> par les paysages du Boischaut.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Aubigny-sur-Nère, cité des Stuarts</h4></div>
+<span class="jour-duree">Journée complète · Aubigny-sur-Nère</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans la vieille ville à colombages.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du château de la Verrerie</strong>, ancienne demeure des Stuart d'Écosse.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Promenade</strong> le long de la Nère.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> dans une auberge de la cité écossaise du Berry.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Abbaye de Noirlac, silence cistercien</h4></div>
+<span class="jour-duree">Journée complète · Bruère-Allichamps</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite guidée de l'abbaye de Noirlac</strong>, fondée au XIIe siècle.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Parcours sonore Résonance</strong> dans le cloître.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le bocage environnant.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le bocage de l'abbaye.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour</strong> par Saint-Amand-Montrond.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="culture">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Apremont-sur-Allier, village jardin</h4></div>
+<span class="jour-duree">Journée complète · Apremont-sur-Allier</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles à colombages du village.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite du parc floral</strong>, classé Jardin Remarquable.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> face au château.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade au bord de l'Allier</strong>, jusqu'au Bec d'Allier.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour</strong>, dernière lumière sur le village.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Marais de Bourges en barque</h4></div>
+<span class="jour-duree">Demi-journée · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade en barque</strong> à travers les parcelles maraîchères des Marais.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la faune</strong> des canaux, hérons et martins-pêcheurs.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Apéro-barque</strong>, produits locaux et vue sur la cathédrale.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade à pied</strong> le long des berges.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Bec d'Allier et confluence</h4></div>
+<span class="jour-duree">Journée complète · Apremont-sur-Allier</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> jusqu'au Bec d'Allier, confluence entre Allier et Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation</strong> des oiseaux de la réserve naturelle du Val de Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur les grèves de sable.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par Apremont-sur-Allier.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Collines du Sancerrois à pied</h4></div>
+<span class="jour-duree">Journée complète · Sancerrois</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> à travers le vignoble en terrasses.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Point de vue</strong> sur la vallée de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> parmi les vignes.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente vers Chavignol</strong>, halte fromagère.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="nature">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Canal du Berry à vélo</h4></div>
+<span class="jour-duree">Journée complète · Vierzon - Saint-Amand-Montrond</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> le long du canal du Berry, depuis Vierzon.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Halte</strong> aux écluses et anciens ponts-canal.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Suite du parcours</strong> vers Saint-Amand-Montrond.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Palais Jacques Cœur en famille</h4></div>
+<span class="jour-duree">Journée complète · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du Palais Jacques Cœur avec livret-jeu.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles à pans de bois du centre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> dans les jardins de l'Archevêché.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade en barque</strong> dans les Marais de Bourges.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour</strong> avec un sachet de Forestines à partager.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Abbaye de Noirlac en famille</h4></div>
+<span class="jour-duree">Journée complète · Bruère-Allichamps</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite en famille</strong> de l'abbaye, ateliers pour les enfants.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> dans le bocage environnant.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du Cher.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Route vers Apremont-sur-Allier</strong> et son parc floral.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="famille">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Marais de Bourges en famille</h4></div>
+<span class="jour-duree">Demi-journée · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade à pied</strong> le long des canaux et jardins maraîchers.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Location d'une barque</strong> à rames pour explorer les parcelles.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par le centre historique de Bourges.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Sancerre au coucher du soleil</h4></div>
+<span class="jour-duree">Journée complète · Sancerre</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les remparts et ruelles de Sancerre.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation à deux</strong> dans une cave du village.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en terrasse, vue sur la vallée de la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans le vignoble.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> depuis la tour des Fiefs.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="romantique">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Nuits Lumière de Bourges à deux</h4></div>
+<span class="jour-duree">Soirée · Bourges</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Fin d'après-midi</div><div class="jour-etape-desc"><strong>Apéritif</strong> dans le centre historique.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dîner</strong> aux abords de la cathédrale.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Nuit</div><div class="jour-etape-desc"><strong>Parcours des Nuits Lumière</strong>, projections vidéo sur les monuments emblématiques.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Vélo sur le canal du Berry</h4></div>
+<span class="jour-duree">Journée complète · Vierzon</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ à vélo</strong> le long du chemin de halage.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Franchissement</strong> de plusieurs écluses historiques.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord du canal.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Retour</strong> par un itinéraire boisé.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Randonnée dans les collines du Sancerrois</h4></div>
+<span class="jour-duree">Journée complète · Sancerrois</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> à travers les coteaux du vignoble.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Pause</strong> au sommet, panorama sur la Loire.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> tiré du sac.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Deuxième boucle</strong> vers Chavignol.</div></div>
+</div>
+</div>
+
+<div class="jour-card" data-profil="actif">
+<div class="jour-card-header">
+<div class="jour-card-header-top"><h4>Canoë sur le Cher</h4></div>
+<span class="jour-duree">Journée complète · Vallée du Cher</span>
+</div>
+<div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+<div class="jour-timeline">
+<div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en canoë</strong> sur la rivière du Cher.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Pause baignade</strong> sur une berge.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au fil de l'eau.</div></div>
+<div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Fin de la descente</strong>, retour en minibus.</div></div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- VISITES GUIDEES -->
+<div class="fiche-panel" id="panel-guides">
+<p class="guide-intro">Des visites pas à pas, conçues comme de véritables promenades commentées, pour explorer les villes et paysages emblématiques du Cher à votre rythme.</p>
+<div class="parcours-filters">
+<button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+<button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+</div>
+<div class="guides-grid">
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Bourges, de la cathédrale au Palais Jacques Cœur</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h30</span><span class="guide-badge">Centre historique</span></div>
+</div>
+<p class="guide-chapeau">Un parcours au cœur du Bourges médiéval, entre chef-d'œuvre gothique et hôtels particuliers marchands.</p>
+<div class="guide-map" id="map-cher-0"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La cathédrale Saint-Étienne</h5><p>Chef-d'œuvre de l'art gothique, classée au patrimoine mondial de l'UNESCO depuis 1992, remarquable par sa façade à cinq portails et l'absence de transept.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>L'Hôtel Lallemant</h5><p>Demeure Renaissance d'un riche marchand, aujourd'hui musée des arts décoratifs.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le Palais Jacques Cœur</h5><p>Construit en 1443 par l'argentier du roi Charles VII, ce palais est l'un des plus somptueux édifices civils du gothique flamboyant.</p><div class="guide-anecdote">Jacques Cœur ne vécut jamais dans ce palais : accusé de malversations et emprisonné en 1451, il fut contraint de fuir la France avant même son achèvement complet.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Les Marais de Bourges</h5><p>Zone naturelle classée en plein cœur de ville, ancien terrain maraîcher traversé de canaux.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Sancerre, remparts et panorama sur la Loire</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">Vignoble</span></div>
+</div>
+<p class="guide-chapeau">Une balade sur le piton rocheux de Sancerre, entre ruelles vigneronnes et panorama sur le Val de Loire.</p>
+<div class="guide-map" id="map-cher-1"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La tour des Fiefs</h5><p>Dernier vestige du château féodal des comtes de Sancerre, offrant un panorama sur tout le vignoble.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La Nouvelle Place</h5><p>Cœur commerçant de la ville, où se tient le marché.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>La Maison des Vins</h5><p>Présentation des terroirs de l'appellation, silex, terres blanches et caillottes.</p><div class="guide-anecdote">Les trois types de sols de l'appellation Sancerre donnent des vins très différents : puissants sur silex, ronds sur caillottes, minéraux sur terres blanches.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Le hameau de Chavignol</h5><p>De l'autre côté de la colline, berceau du célèbre fromage de chèvre.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Aubigny-sur-Nère, cité des Stuarts</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">Ville</span></div>
+</div>
+<p class="guide-chapeau">Une déambulation dans une cité berrichonne à l'accent écossais, héritage de la famille Stuart.</p>
+<div class="guide-map" id="map-cher-2"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Les maisons à pans de bois</h5><p>Rue de l'ancien hôtel de ville, ensemble remarquable d'habitations médiévales et Renaissance.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le château François Ier</h5><p>Ancienne résidence des ducs de Stuart, qui reçurent le duché d'Aubigny en récompense de leur fidélité à la couronne de France.</p><div class="guide-anecdote">Les Stuart d'Aubigny, alliés des rois de France pendant plus de trois siècles, ont laissé une empreinte durable : la ville célèbre encore aujourd'hui ses racines écossaises.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Les bords de la Nère</h5><p>Promenade au fil de l'eau, autour des anciens remparts.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Apremont-sur-Allier, le village jardin</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">Village</span></div>
+</div>
+<p class="guide-chapeau">Un des Plus Beaux Villages de France, restauré au XXe siècle en un ensemble architectural d'une remarquable unité.</p>
+<div class="guide-map" id="map-cher-3"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le château d'Apremont</h5><p>Forteresse médiévale dominant l'Allier, à l'origine du village.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Les ruelles à colombages</h5><p>Maisons restaurées avec un soin d'orfèvre par la famille Schneider au XXe siècle.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le Parc Floral</h5><p>Jardin remarquable de plusieurs hectares, aménagé autour de bassins et de kiosques.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Les bords de l'Allier</h5><p>Vue sur les grèves de sable de la rivière, l'une des dernières sauvages de France.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Chavignol, hameau du crottin</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h</span><span class="guide-badge">Village</span></div>
+</div>
+<p class="guide-chapeau">Une courte balade dans le hameau qui a donné son nom au plus célèbre des crottins de chèvre.</p>
+<div class="guide-map" id="map-cher-4"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La Côte des Monts Damnés</h5><p>Coteau escarpé, l'une des parcelles les plus réputées du vignoble de Sancerre.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Une ferme fromagère</h5><p>Visite d'un producteur de crottin de Chavignol, du caillage au démoulage.</p><div class="guide-anecdote">Le nom « crottin » viendrait du mot berrichon « crot », qui désignait les trous au bord des rivières où les femmes lavaient leur linge.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le hameau et ses caves</h5><p>Petites maisons de vignerons, souvent creusées à même la roche.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="pied">
+<div class="guide-card-header">
+<h4>Mehun-sur-Yèvre, cité de Jean de Berry</h4>
+<div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">Ville</span></div>
+</div>
+<p class="guide-chapeau">Sur les rives de l'Yèvre, une ville marquée par le souvenir du duc Jean de Berry, grand mécène du Moyen Âge.</p>
+<div class="guide-map" id="map-cher-5"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Les vestiges du château ducal</h5><p>Ancienne résidence favorite de Jean de Berry, immortalisée dans les Très Riches Heures du duc de Berry.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>L'église Saint-Vic</h5><p>Édifice gothique du centre-ville.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Les bords de l'Yèvre</h5><p>Promenade le long de la rivière, halte de la Route Jacques Cœur.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route Jacques Cœur, châteaux du Berry</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">La plus ancienne route touristique historique de France, à travers les châteaux du sud du Berry.</p>
+<div class="guide-map" id="map-cher-6"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Départ de Bourges</h5><p>Le Palais Jacques Cœur, point de départ symbolique de la route.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le château de Meillant</h5><p>Forteresse médiévale transformée en élégante demeure Renaissance.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le château d'Ainay-le-Vieil</h5><p>Architecture du XIIe siècle et jardins médiévaux reconstitués.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Saint-Amand-Montrond</h5><p>Ville-étape au cœur du Berry Saint-Amandois.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Abbaye de Noirlac et le pays de Bruère-Allichamps</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Demi-journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un circuit tranquille au fil du Cher, jusqu'à l'une des abbayes cisterciennes les mieux conservées de France.</p>
+<div class="guide-map" id="map-cher-7"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>L'abbaye de Noirlac</h5><p>Fondée au XIIe siècle, remarquable pour son église et son cloître gothique.</p><div class="guide-anecdote">Bruère-Allichamps revendique le titre de « centre géographique de la France », marqué par une borne romaine réutilisée à cet effet.</div></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le bocage environnant</h5><p>Paysage de prairies et de haies typique du Berry méridional.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Saint-Amand-Montrond</h5><p>Sous-préfecture au bord du canal du Berry.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Route des vins, Sancerre et Menetou-Salon</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un parcours à travers les deux grandes appellations du vignoble berrichon, entre marnes et silex.</p>
+<div class="guide-map" id="map-cher-8"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Départ de Sancerre</h5><p>Visite de la Maison des Vins et d'un domaine du village.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le Pays Fort</h5><p>Traversée de collines boisées entre Sancerre et Menetou-Salon.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Menetou-Salon</h5><p>Dégustation dans l'appellation surnommée la « petite sœur » de Sancerre.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Le château de Menetou-Salon</h5><p>Dernière étape, au cœur du village viticole.</p></div></div>
+</div>
+</div>
+
+<div class="guide-card" data-type="voiture">
+<div class="guide-card-header">
+<h4>Canal du Berry, de Vierzon à Saint-Amand-Montrond</h4>
+<div class="guide-card-meta"><span class="guide-badge">En voiture</span><span class="guide-badge">Journée</span><span class="guide-badge">Itinéraire</span></div>
+</div>
+<p class="guide-chapeau">Un fil d'eau à travers le Berry industriel et rural, le long de l'ancien canal du Berry.</p>
+<div class="guide-map" id="map-cher-9"></div>
+<div class="guide-etapes">
+<div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Vierzon, cité industrielle</h5><p>Ancienne capitale française de la locomotive et du tracteur agricole.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Saint-Florent-sur-Cher</h5><p>Halte au bord du Cher, sur le tracé de l'ancien canal.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Bourges et ses faubourgs</h5><p>Traversée du bassin berruyer, entre canal et rivières.</p></div></div>
+<div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Saint-Amand-Montrond</h5><p>Arrivée au terminus historique du canal du Berry.</p></div></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script src="../../script.js"></script>
+<script>
+    // Onglets
+    const tabs   = document.querySelectorAll('.fiche-tab');
+    const panels = document.querySelectorAll('.fiche-panel');
+    const STORAGE_KEY = 'centre-val-de-loire-active-tab';
+
+    function activerOnglet(nomPanel) {
+      const tabCorrespondant = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        activerOnglet(this.dataset.panel);
+        localStorage.setItem(STORAGE_KEY, this.dataset.panel);
+      });
+    });
+
+    // Au chargement de la page, on restaure le dernier onglet actif (s'il existe)
+    const dernierOnglet = localStorage.getItem(STORAGE_KEY);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet);
+    }
+
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const jourCards   = document.querySelectorAll('.jour-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.filter;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        jourCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.profil === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('.guide-card');
+
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        guideCards.forEach(card => {
+          if (filtre === 'tous' || card.dataset.type === filtre) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+(function() {
+  var guideMapsData = {
+    "map-cher-0": [{"lat": 47.0810, "lng": 2.3988, "label": "La cathédrale Saint-Étienne"}, {"lat": 47.0825, "lng": 2.3970, "label": "L'Hôtel Lallemant"}, {"lat": 47.0838, "lng": 2.4008, "label": "Le Palais Jacques Cœur"}, {"lat": 47.0780, "lng": 2.4050, "label": "Les Marais de Bourges"}],
+    "map-cher-1": [{"lat": 47.3308, "lng": 2.8383, "label": "La tour des Fiefs"}, {"lat": 47.3312, "lng": 2.8375, "label": "La Nouvelle Place"}, {"lat": 47.3300, "lng": 2.8360, "label": "La Maison des Vins"}, {"lat": 47.3350, "lng": 2.8100, "label": "Le hameau de Chavignol"}],
+    "map-cher-2": [{"lat": 47.4864, "lng": 2.4406, "label": "Les maisons à pans de bois"}, {"lat": 47.4870, "lng": 2.4415, "label": "Le château François Ier"}, {"lat": 47.4855, "lng": 2.4395, "label": "Les bords de la Nère"}],
+    "map-cher-3": [{"lat": 46.9058, "lng": 3.0511, "label": "Le château d'Apremont"}, {"lat": 46.9065, "lng": 3.0505, "label": "Les ruelles à colombages"}, {"lat": 46.9070, "lng": 3.0490, "label": "Le Parc Floral"}, {"lat": 46.9040, "lng": 3.0530, "label": "Les bords de l'Allier"}],
+    "map-cher-4": [{"lat": 47.3355, "lng": 2.8090, "label": "La Côte des Monts Damnés"}, {"lat": 47.3345, "lng": 2.8105, "label": "Une ferme fromagère"}, {"lat": 47.3350, "lng": 2.8120, "label": "Le hameau et ses caves"}],
+    "map-cher-5": [{"lat": 47.1417, "lng": 2.2333, "label": "Les vestiges du château ducal"}, {"lat": 47.1425, "lng": 2.2340, "label": "L'église Saint-Vic"}, {"lat": 47.1410, "lng": 2.2320, "label": "Les bords de l'Yèvre"}],
+    "map-cher-6": [{"lat": 47.0810, "lng": 2.3988, "label": "Départ de Bourges"}, {"lat": 46.8333, "lng": 2.4833, "label": "Le château de Meillant"}, {"lat": 46.7000, "lng": 2.4667, "label": "Le château d'Ainay-le-Vieil"}, {"lat": 46.7167, "lng": 2.5000, "label": "Saint-Amand-Montrond"}],
+    "map-cher-7": [{"lat": 46.7333, "lng": 2.4333, "label": "L'abbaye de Noirlac"}, {"lat": 46.7300, "lng": 2.4400, "label": "Le bocage environnant"}, {"lat": 46.7167, "lng": 2.5000, "label": "Saint-Amand-Montrond"}],
+    "map-cher-8": [{"lat": 47.3308, "lng": 2.8383, "label": "Départ de Sancerre"}, {"lat": 47.4200, "lng": 2.6500, "label": "Le Pays Fort"}, {"lat": 47.1667, "lng": 2.4833, "label": "Menetou-Salon"}, {"lat": 47.1670, "lng": 2.4820, "label": "Le château de Menetou-Salon"}],
+    "map-cher-9": [{"lat": 47.2167, "lng": 2.0667, "label": "Vierzon, cité industrielle"}, {"lat": 47.1500, "lng": 2.2500, "label": "Saint-Florent-sur-Cher"}, {"lat": 47.0810, "lng": 2.3988, "label": "Bourges et ses faubourgs"}, {"lat": 46.7167, "lng": 2.5000, "label": "Saint-Amand-Montrond"}]
+  };
+  var guideMapInstances = {};
+
+  function initGuideMap(id) {
+    if (guideMapInstances[id]) return;
+    var data = guideMapsData[id];
+    var el = document.getElementById(id);
+    if (!data || !el || typeof L === 'undefined') return;
+    var map = L.map(id, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var latlngs = [];
+    data.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: 'guide-map-marker-wrap',
+        html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+        .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+      map.fitBounds(latlngs, { padding: [26, 26] });
+    } else if (latlngs.length === 1) {
+      map.setView(latlngs[0], 13);
+    }
+    guideMapInstances[id] = map;
+  }
+
+  function initVisibleGuideMaps() {
+    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+      initGuideMap(el.id);
+      if (guideMapInstances[el.id]) {
+        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
+    if (guidesTab) {
+      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
+    }
+    var panelGuides = document.getElementById('panel-guides');
+    if (panelGuides && panelGuides.classList.contains('active')) {
+      setTimeout(initVisibleGuideMaps, 250);
+    }
+  });
+})();
+</script>
+</body>
+</html>
