@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="../../../../style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
+<style>
 
-    .fiche-page { background: var(--ivoire); }
+    .fiche-page { background: var(--ivoire); overflow-x: hidden; }
 
     .fiche-hero {
       background: #2C4A7C;
@@ -76,19 +76,22 @@
       font-size: clamp(36px, 5.5vw, 62px);
       font-weight: 700;
       line-height: 1;
-      margin-top: -20px;
+      margin-top: 10px;
     }
     .titre-initial { color: #C8843A; }
 
+
+
+    
     .fiche-hero-ecusson {
       position: absolute;
       left: 50%;
-      top: -110px;
+      top: -70px;
       transform: translateX(-50%);
       pointer-events: none;
     }
     .fiche-hero-ecusson img {
-      height: 150px;
+      height: 160px;
       width: auto;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
       display: block;
@@ -105,7 +108,7 @@
       padding: 20px 0;
       border-bottom: 1px solid var(--bordure);
     }
-    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
     .fiche-tab {
       display: inline-flex;
       align-items: center;
@@ -124,6 +127,7 @@
     }
     .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
     .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+    .fiche-tab-lien { text-decoration: none; }
 
     .fiche-body { padding: 40px 0 60px; }
     .fiche-panel { display: none; }
@@ -232,6 +236,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .jour-card-header {
       background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
@@ -387,6 +392,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .guide-card-header {
       background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
@@ -465,6 +471,14 @@
       border-radius: 4px;
     }
 
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+      .fiche-hero-titre h1 { font-size: 34px; }
+      .fiche-hero-ecusson { top: -10px; }
+      .fiche-hero-ecusson img { height: 90px; }
+      .village-star { grid-template-columns: 1fr; text-align: center; }
+    }
+  
     /* Cartes des circuits */
     .guide-map {
       height: 220px;
@@ -493,15 +507,7 @@
     }
     .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
     .leaflet-popup-content strong { color: #2C4A7C; }
-
-    @media (max-width: 680px) {
-      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
-      .fiche-hero-titre h1 { font-size: 34px; }
-      .fiche-hero-ecusson { top: -10px; }
-      .fiche-hero-ecusson img { height: 90px; }
-      .village-star { grid-template-columns: 1fr; text-align: center; }
-    }
-  </style>
+</style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -535,6 +541,7 @@
     <div class="fiche-tabs-wrap">
       <div class="container">
         <div class="fiche-tabs">
+           <a class="fiche-tab fiche-tab-lien" href="identite-1.html">Identité</a>
           <button class="fiche-tab active" data-panel="gastro">Gastronomie</button>
           <button class="fiche-tab" data-panel="patrimoine">Patrimoine</button>
           <button class="fiche-tab" data-panel="nature">Nature</button>
@@ -2366,11 +2373,7 @@
     <div class="container footer-inner">
       <div class="footer-logo">L'<span>Âme</span> des Régions</div>
       <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
-      <nav class="footer-nav">
-        <a href="#">Mentions légales</a>
-        <a href="#">Contact</a>
-        <a href="#">Contribuer</a>
-      </nav>
+     
     </div>
   </footer>
 

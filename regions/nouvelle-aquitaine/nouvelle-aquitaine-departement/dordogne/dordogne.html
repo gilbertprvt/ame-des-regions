@@ -11,9 +11,7 @@
 <style>
 
     .fiche-page { background: var(--ivoire); overflow-x: hidden; }
-    body.fiche-page { margin: 0; }
 
-    /* ===== EN-TÊTE BLEU ===== */
     .fiche-hero {
       background: #2C4A7C;
       color: white;
@@ -28,7 +26,6 @@
       pointer-events: none;
     }
 
-    /* Logo + boutons */
     .fiche-topbar {
       display: flex;
       justify-content: space-between;
@@ -66,34 +63,36 @@
       color: white;
       border-color: rgba(255,255,255,0.7);
     }
- 
-    /* Zone centrale hero : titre + écusson (centré absolu) + badge */
+
     .fiche-hero-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
       padding-bottom: 20px;
-      position: relative;   /* référence pour l'écusson en absolu */
+      position: relative;
     }
     .fiche-hero-titre h1 {
       font-family: var(--font-titre);
       font-size: clamp(36px, 5.5vw, 62px);
       font-weight: 700;
       line-height: 1;
-      margin-top: -40px;        /* remonte le nom du département — */
+      margin-top: 10px;
     }
     .titre-initial { color: #C8843A; }
 
+
+
+    
     .fiche-hero-ecusson {
       position: absolute;
       left: 50%;
-      top: -90px;           /* remonte l'écusson — ajustez cette valeur à votre goût */
+      top: -70px;
       transform: translateX(-50%);
-      pointer-events: none; /* le titre et le badge restent cliquables dessous */
+      pointer-events: none;
     }
     .fiche-hero-ecusson img {
-      height: 150px;
+      height: 160px;
       width: auto;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
       display: block;
@@ -105,13 +104,12 @@
       font-family: var(--font-corps);
     }
 
-    /* ===== ONGLETS ===== */
     .fiche-tabs-wrap {
       background: white;
       padding: 20px 0;
       border-bottom: 1px solid var(--bordure);
     }
-    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
     .fiche-tab {
       display: inline-flex;
       align-items: center;
@@ -130,8 +128,8 @@
     }
     .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
     .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+    .fiche-tab-lien { text-decoration: none; }
 
-    /* ===== CONTENU ===== */
     .fiche-body { padding: 40px 0 60px; }
     .fiche-panel { display: none; }
     .fiche-panel.active { display: block; }
@@ -165,7 +163,6 @@
     .bloc ul li { font-size: 14px; line-height: 1.9; color: var(--texte); }
     .bloc p { font-size: 14px; line-height: 1.7; color: var(--texte); }
 
-    /* Agenda */
     .agenda-list { display: flex; flex-direction: column; gap: 10px; }
     .agenda-item {
       display: grid;
@@ -189,7 +186,6 @@
     .agenda-item h4 { font-size: 14px; font-weight: 600; color: var(--texte); margin-bottom: 2px; }
     .agenda-item p { font-size: 12px; color: var(--texte-doux); margin: 0; }
 
-    /* Parcours — intro & filtres */
     .parcours-intro {
       font-size: 14px;
       color: var(--texte-doux);
@@ -228,7 +224,6 @@
     .filter-btn:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
     .filter-btn.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
 
-    /* Parcours — cartes "journée" */
     .jours-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -242,6 +237,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .jour-card-header {
       background: linear-gradient(135deg, #2C4A7C 0%, #3E619C 100%);
@@ -310,7 +306,6 @@
     }
     .jour-etape-desc strong { color: var(--bleu-profond); }
 
-    /* Parcours (ancien style, conservé pour compatibilité) */
     .parcours-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
     .parcours-item {
       background: var(--bleu-clair);
@@ -331,7 +326,6 @@
       border-radius: 20px;
     }
 
-    /* Village star */
     .village-star {
       background: linear-gradient(135deg, #FDF0DC 0%, #FAE8C8 100%);
       border: 1px solid #F0C878;
@@ -357,7 +351,6 @@
       margin-right: 4px;
     }
 
-    /* ─── PHOTOS CONTENU ─────────────────────── */
     .photo-bloc { margin: 24px 0; }
     .photo-bloc img {
       width: 100%;
@@ -380,7 +373,7 @@
     .photo-centre img { max-width: 700px; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
-    /* ===== VISITES GUIDÉES ===== */
+    /* Visites Guidées */
     .guide-intro {
       font-size: 14px;
       color: var(--texte-doux);
@@ -400,6 +393,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .guide-card-header {
       background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
@@ -478,16 +472,7 @@
       border-radius: 4px;
     }
 
-    /* Espace latéral pour éviter que le contenu ne colle aux bords de la page */
-    .fiche-page .container {
-      padding-left: 24px !important;
-      padding-right: 24px !important;
-      box-sizing: border-box !important;
-    }
-
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 680px) {
-      .fiche-page .container { padding-left: 16px !important; padding-right: 16px !important; }
       .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
       .fiche-hero-titre h1 { font-size: 34px; }
       .fiche-hero-ecusson { top: -10px; }
@@ -548,6 +533,7 @@
 <div class="fiche-tabs-wrap">
 <div class="container">
 <div class="fiche-tabs">
+  <a class="fiche-tab fiche-tab-lien" href="identite-1.html">Identité</a>
 <button class="fiche-tab active" data-panel="gastro">🍽️ Gastronomie</button>
 <button class="fiche-tab" data-panel="patrimoine">🏛️ Patrimoine</button>
 <button class="fiche-tab" data-panel="nature">🌿 Nature</button>
@@ -2324,11 +2310,7 @@
 <div class="container footer-inner">
 <div class="footer-logo">L'<span>Âme</span> des Régions</div>
 <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
-<nav class="footer-nav">
-<a href="#">Mentions légales</a>
-<a href="#">Contact</a>
-<a href="#">Contribuer</a>
-</nav>
+
 </div>
 </footer>
 <script src="../../script.js"></script>
