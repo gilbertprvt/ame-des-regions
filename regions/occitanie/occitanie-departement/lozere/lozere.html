@@ -2381,14 +2381,32 @@
   <script>
     const tabs   = document.querySelectorAll('.fiche-tab');
     const panels = document.querySelectorAll('.fiche-panel');
+    const TAB_STORAGE_KEY = 'lozere-active-tab';
+
+    function activateTab(tab) {
+      if (!tab) return;
+      const panel = document.getElementById('panel-' + tab.dataset.panel);
+      if (!panel) return;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      panel.classList.add('active');
+    }
+
     tabs.forEach(tab => {
       tab.addEventListener('click', function() {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+        activateTab(this);
+        localStorage.setItem(TAB_STORAGE_KEY, this.dataset.panel);
       });
     });
+
+    // Au chargement de la page, restaurer l'onglet actif mémorisé (sinon on garde celui par défaut du HTML)
+    (function restoreActiveTab() {
+      const saved = localStorage.getItem(TAB_STORAGE_KEY);
+      if (!saved) return;
+      const savedTab = document.querySelector('.fiche-tab[data-panel="' + saved + '"]');
+      if (savedTab) activateTab(savedTab);
+    })();
 
     const filterBtns = document.querySelectorAll('.filter-btn:not(.guide-filter-btn)');
     const jourCards   = document.querySelectorAll('.jour-card');
