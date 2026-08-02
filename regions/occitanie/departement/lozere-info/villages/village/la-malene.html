@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Malène, Petite Cité de Caractère — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/lozere/lozere.html" class="produit-btn-retour">
+            ← Retour à la fiche Lozère
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>L</em>a <em>M</em>alène<br><span style="padding-left: 30px;"><em>P</em>etite <em>C</em>ité </span><br><span style="padding-left: 60px;"></span>de <em>C</em>aractère<span class="sous-titre">Le manoir de Montesquiou, les bateliers du Tarn et les Détroits des gorges</span></h1>
+          >
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-lozere.png"
+               alt="Carte de la Lozère"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/la-malene.png" alt="Écusson La Malène" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Village de Bateliers & Gorges du Tarn ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🚣 Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🛶 Les bateliers du Tarn</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Son nom occitan, souvent traduit par « mauvais trou », dit assez la position resserrée de La Malène, au point de jonction des routes traversant les causses de Sauveterre et Méjean. Ce carrefour naturel, au cœur des gorges du Tarn, en a fait de tout temps un lieu de passage obligé, comme en témoignent les nombreux vestiges gallo-romains et préhistoriques retrouvés aux alentours, notamment sur le site de Cauquenas.</p>
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/la-malene-1.jpg"
+                        alt="Le village de La Malène et le manoir de Montesquiou dans les gorges du Tarn" />
+                    <figcaption>La Malène et son manoir, blotti au creux des gorges du Tarn</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+              <p>L’histoire du village se confond avec celle de la famille de Montesquiou, dont le manoir des XVe et XVIe siècles domine encore les toits du bourg. Sous le règne de Louis XIII, alors que le pouvoir royal ordonne de raser les forteresses rebelles, Pierre de Montesquiou obtient que son château soit épargné. La Révolution est en revanche funeste au village : le 31 octobre 1793, le château et une soixantaine de maisons sont livrés aux flammes, laissant sur le rocher de la Barre des traces de suie encore visibles aujourd’hui.</p>
+              <p>Reconstruit et transformé en hostellerie, le manoir de Montesquiou veille toujours sur La Malène, aujourd’hui distinguée « Petite Cité de Caractère ». Mais c’est surtout la batellerie traditionnelle, héritée du transport des voyageurs et des marchandises sur le Tarn, qui a fait la renommée du village : les barques à fond plat des bateliers demeurent, aujourd’hui encore, le meilleur moyen de découvrir les fameux Détroits des gorges.</p>
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚣</div>
+              Visite pratique
+            </h2>
+
+            <figure class="photo-bloc photo-droite">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/la-malene-2.jpg"
+                        alt="Barques traditionnelles des bateliers sur le Tarn à La Malène" />
+                    <figcaption>Les barques des bateliers, embarcation traditionnelle des gorges du Tarn</figcaption>
+                  </figure>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Environ 1h de visite du village, 1h à 1h30 pour la descente en barque des Détroits</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile, village de plain-pied au bord du Tarn</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">Cœur des gorges du Tarn, sur la D907bis, entre Sainte-Enimie et Les Vignes</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Tarif</div>
+                  <div class="recette-meta-val">Village en accès libre, descente en barque payante (embarcadère des bateliers)</div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Manoir de Montesquiou</span> Demeure seigneuriale des XVe-XVIe siècles, aujourd’hui hôtel-restaurant, liée aux seigneurs du même nom</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Église Saint-Jean-Baptiste</span> Édifice roman du XIIe siècle, classé Monument historique depuis 1928</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Castel Merlet</span> Vestiges présentés comme le plus ancien château connu de France, sur les hauteurs du village</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Embarcadère des bateliers</span> Point de départ des descentes traditionnelles en barque vers les Détroits du Tarn</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Rocher de la Barre</span> Paroi encore noircie, témoin des incendies de la Révolution de 1793</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Roc des Hourtous</span> Panorama emblématique sur le Cirque des Baumes, accessible par sentier depuis le village</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Descente en canoë-kayak</span> La Malène est aussi un point de départ apprécié pour la pagaie libre dans les gorges</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Fête de La Malène</span> Concours de pétanque, course de côte automobile et feu d’artifice, en juin-juillet</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le manoir de Montesquiou</div>
+                  <div class="etape-texte">Demeure seigneuriale du XVe siècle, épargnée sous Louis XIII grâce aux services rendus par la famille de Montesquiou, aujourd’hui hostellerie réputée.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La descente en barque des Détroits</div>
+                  <div class="etape-texte">Embarquement traditionnel avec un batelier pour explorer le passage le plus resserré des gorges du Tarn, entre parois calcaires vertigineuses.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L’église Saint-Jean-Baptiste</div>
+                  <div class="etape-texte">Édifice roman du XIIe siècle classé Monument historique, conservant le souvenir des victimes malénoises de la Révolution.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le rocher de la Barre</div>
+                  <div class="etape-texte">Paroi rocheuse noircie par les incendies de 1793, mémoire vive des heures les plus sombres du village.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le belvédère du Roc des Hourtous</div>
+                  <div class="etape-texte">Sentier de découverte menant à l’un des plus beaux panoramas sur le Cirque des Baumes et le canyon du Tarn.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏅</div>
+                <div>
+                  <div class="vin-nom">Petite Cité de Caractère</div>
+                  <div class="vin-desc">La Malène est labellisée « Petite Cité de Caractère » pour la qualité de son patrimoine bâti préservé au cœur des gorges du Tarn.</div>
+                </div>
+                <div class="vin-badge">⭐ Label PCC</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">⛪</div>
+                <div>
+                  <div class="vin-nom">Église classée Monument historique</div>
+                  <div class="vin-desc">L’église romane Saint-Jean-Baptiste, propriété communale, est classée Monument historique depuis le 18 août 1928.</div>
+                </div>
+                <div class="vin-badge">MH depuis 1928</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏞️</div>
+                <div>
+                  <div class="vin-nom">Grand Site de France</div>
+                  <div class="vin-desc">Le village fait partie du Grand Site de France des gorges du Tarn, de la Jonte et des Causses.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌍</div>
+                <div>
+                  <div class="vin-nom">Réserve de biosphère des Cévennes</div>
+                  <div class="vin-desc">La Malène s’inscrit dans la Réserve de biosphère des Cévennes, reconnue par l’UNESCO.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LEGENDES / SAVOIR-FAIRE -->
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🛶</div>
+              Les bateliers, gardiens de la tradition des Détroits
+            </h2>
+            <div class="histoire-texte">
+              <p>La tradition des bateliers de La Malène remonte à l’exploitation ancienne du Tarn comme voie de passage et de transport, dans un défilé si étroit qu’il fut longtemps impossible de le franchir autrement qu’en barque. Les longues embarcations à fond plat, manœuvrées à la perche, permettaient de relier La Malène aux Détroits puis au Cirque des Baumes, à travers les passages les plus resserrés du canyon.</p>
+              <div class="citation-bloc">
+                <p>Les Gorges furent dévastées par les invasions des Sarrasins, des Albigeois et des Anglais ; le manoir de Montesquiou lui-même fut brûlé par les Sans-Culottes en 1793.</p>
+                <cite>— Chronique locale des gorges du Tarn</cite>
+              </div>
+              <p>Ce métier de batelier, transmis de génération en génération, s’est perpétué jusqu’à aujourd’hui sous forme touristique : les descendants des passeurs traditionnels font encore découvrir aux visiteurs les défilés du canyon, en particulier les fameux « Détroits », passage le plus resserré des gorges du Tarn où les parois calcaires semblent se refermer sur l’eau turquoise de la rivière.</p>
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes malénoises
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">👑</div>
+                <div>
+                  <div class="vin-nom">Le gigot du prince</div>
+                  <div class="vin-desc">Une légende locale raconte qu’un cuisinier maladroit ayant laissé tomber un gigot dans la cendre le servit tel quel à un prince de passage, qui s’en régala sans rien soupçonner !</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏰</div>
+                <div>
+                  <div class="vin-nom">Le plus vieux château de France ?</div>
+                  <div class="vin-desc">Les ruines du Castel Merlet, sur les hauteurs du village, sont parfois présentées par la tradition locale comme les vestiges du plus ancien château connu de France.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🔥</div>
+                <div>
+                  <div class="vin-nom">La pierre noircie de la Révolution</div>
+                  <div class="vin-desc">Le rocher de la Barre, qui domine le village, porte encore les stigmates sombres — en réalité teintés au brou de noix — des incendies révolutionnaires de 1793.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🚣</div>
+                <div>
+                  <div class="vin-nom">Une population divisée par cinq</div>
+                  <div class="vin-desc">La Malène comptait plus de 700 habitants au début du XXe siècle ; elle n’en compte plus qu’environ 130 aujourd’hui, tout en restant l’un des villages les plus visités des gorges.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Sainte-Enimie</strong> Plus Beau Village de France voisin, à une dizaine de kilomètres en amont du Tarn.</p>
+              <p><strong>Les Détroits et le Cirque des Baumes</strong> passage le plus spectaculaire des gorges, accessible en barque depuis l’embarcadère du village.</p>
+              <p><strong>Roc des Hourtous et Point Sublime</strong> célèbres belvédères surplombant le canyon, accessibles par le causse Méjean.</p>
+              <p><strong>Causse Méjean</strong> vaste plateau calcaire voisin, domaine des vautours fauves et des chaos de la Cham des Bondons.</p>
+              <p><strong>Château de la Caze</strong> manoir du XVe siècle transformé en hôtel de charme, à quelques kilomètres en aval du Tarn.</p>
+              <p><strong>Meyrueis</strong> petite ville-porte du causse Méjean et de l’Aigoual, à environ 45 minutes de route.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Lozère (cœur des gorges du Tarn, entre causse de Sauveterre et causse Méjean)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Petite Cité de Caractère · Village de bateliers · Grand Site de France</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Population</span>
+                <span class="aside-val">Environ 130 habitants</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Site de passage attesté dès l’Antiquité · Manoir des seigneurs de Montesquiou, XVe-XVIe siècle</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Petite Cité de Caractère · Site classé Grand Site de France gorges du Tarn · Église classée MH (1928)</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Association Petites Cités de Caractère d’Occitanie · Parc national des Cévennes · Réserve de biosphère des Cévennes (UNESCO)</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Rozier, Porte des Gorges — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/lozere/lozere.html" class="produit-btn-retour">
+            ← Retour à la fiche Lozère
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>L</em>e <em>R</em>ozier<br><span style="padding-left: 30px;"><em>P</em>orte des </span><br><span style="padding-left: 60px;"></span><em>G</em>orges du <em>T</em>arn<span class="sous-titre">Le confluent du Tarn et de la Jonte, les moines rosiéristes et le royaume des vautours</span></h1>
+          >
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-lozere.png"
+               alt="Carte de la Lozère"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/le-rozier.png" alt="Écusson Le Rozier" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Confluent des Gorges & Village des Vautours ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🦅 Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🦅 Le retour des vautours</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Bâti au confluent du Tarn et de la Jonte, à l’endroit précis où les deux rivières se rejoignent, Le Rozier portait autrefois le nom d’Entr’aygues, littéralement « entre les eaux ». Le site est connu dès l’époque gallo-romaine pour ses ateliers de poterie, avant de connaître un essor religieux au XIe siècle.</p>
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/le-rozier-1.jpg"
+                        alt="Le confluent du Tarn et de la Jonte au Rozier" />
+                    <figcaption>Le Rozier, au confluent du Tarn et de la Jonte, face à Peyreleau</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+              <p>En 1075, des moines venus de l’abbaye d’Aniane, dans l’Hérault, fondent un prieuré sur le site et y développent la culture de rosiers importés d’Italie, cultivés tout autour du monastère. Ce lieu prend alors le nom de Campus Rosarium — le « champ de roses » — devenu en occitan Lou Rousiò, puis Le Rozier. Les moines font bâtir l’église Saint-Sauveur, reconstruite en 1705, seul vestige aujourd’hui visible de l’ancien monastère.</p>
+              <p>Porte d’entrée des gorges du Tarn et de la Jonte, Le Rozier fait face, de l’autre côté de la rivière, au village aveyronnais de Peyreleau et à sa tour carrée du XVIIe siècle, les deux villages n’étant séparés que par un pont. Aujourd’hui carrefour touristique majeur, le village est aussi devenu un haut lieu de la réintroduction du vautour fauve, disparu des Grands Causses au XIXe siècle et revenu peupler les falaises environnantes depuis les années 1980.</p>
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🦅</div>
+              Visite pratique
+            </h2>
+
+            <figure class="photo-bloc photo-droite">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/le-rozier-2.jpg"
+                        alt="Vautours fauves survolant les gorges de la Jonte près du Rozier" />
+                    <figcaption>Les vautours fauves, réintroduits dans les gorges de la Jonte, planent au-dessus du village</figcaption>
+                  </figure>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Environ 1h à 1h30 de visite, davantage avec la randonnée du rocher de Capluc</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile dans le village, montée soutenue vers le belvédère de Capluc (625 m)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">Confluent du Tarn et de la Jonte, à la limite Lozère/Aveyron, sur la D907</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Tarif</div>
+                  <div class="recette-meta-val">Village en accès libre, Maison des Vautours et sentiers payants ou libres selon les sites</div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Église Saint-Sauveur</span> Reconstruite en 1705, seul vestige de l’ancien prieuré fondé par les moines d’Aniane en 1075</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Rocher de Capluc</span> Piton rocheux (625 m) aménagé en fort au XIIe siècle, belvédère et chapelle romane</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Maison des Vautours</span> Centre d’observation et d’interprétation dédié aux vautours fauves des gorges de la Jonte, au Truel</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Pont vers Peyreleau</span> Passage historique reliant Le Rozier au village aveyronnais voisin, dominé par sa tour carrée</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Corniches du Tarn et de la Jonte</span> Sentiers panoramiques vers le Vase de Sèvres, le Cinglegros ou le cirque de Madasse</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ermitages Saint-Michel et Saint-Pons</span> Sites troglodytiques accessibles par sentier depuis le village</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Escalade et via ferrata</span> Falaises du causse Méjean et de la Jonte, hauts lieux de l’escalade dans le Grand Sud</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Descente en canoë-kayak</span> Point de sortie ou de départ classique pour explorer les gorges du Tarn ou de la Jonte</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le confluent Tarn-Jonte</div>
+                  <div class="etape-texte">Point de rencontre spectaculaire des deux rivières, qui donne au village son ancien nom d’Entr’aygues et sa position de porte d’entrée des gorges.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L’église Saint-Sauveur</div>
+                  <div class="etape-texte">Reconstruite en 1705 sur les fondations du prieuré fondé en 1075 par les moines rosiéristes de l’abbaye d’Aniane.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le rocher et le hameau de Capluc</div>
+                  <div class="etape-texte">Piton fortifié au XIIe siècle dominant le village, dont l’ascension mène à une chapelle romane et un panorama sur le confluent.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La Maison des Vautours</div>
+                  <div class="etape-texte">Centre d’observation dédié au vautour fauve, réintroduit avec succès dans les gorges de la Jonte depuis les années 1980.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Peyreleau et sa tour carrée</div>
+                  <div class="etape-texte">De l’autre côté du pont, le village aveyronnais dominé par sa tour de l’horloge édifiée en 1617, offrant une vue plongeante sur les deux confluents.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏞️</div>
+                <div>
+                  <div class="vin-nom">Grand Site de France</div>
+                  <div class="vin-desc">Le Rozier se situe au cœur du Grand Site de France des gorges du Tarn, de la Jonte et des Causses.</div>
+                </div>
+                <div class="vin-badge">Grand Site</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌍</div>
+                <div>
+                  <div class="vin-nom">Site Natura 2000</div>
+                  <div class="vin-desc">Les gorges du Tarn et de la Jonte forment une Zone de Protection Spéciale de plus de 41 000 hectares, l’un des principaux refuges français du vautour fauve.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">⛪</div>
+                <div>
+                  <div class="vin-nom">Église Saint-Sauveur</div>
+                  <div class="vin-desc">Dernier témoin de l’ancien prieuré fondé en 1075 par les moines de l’abbaye d’Aniane.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌲</div>
+                <div>
+                  <div class="vin-nom">Parc national des Cévennes</div>
+                  <div class="vin-desc">Le Rozier adhère à l’aire d’adhésion du Parc national des Cévennes et à la Réserve de biosphère UNESCO.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LEGENDES / SAVOIR-FAIRE -->
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🦅</div>
+              Le retour des vautours dans les gorges de la Jonte
+            </h2>
+            <div class="histoire-texte">
+              <p>Le vautour fauve avait totalement disparu des Grands Causses au début du XXe siècle, victime de la raréfaction du pastoralisme et des persécutions directes. C’est dans les gorges de la Jonte, au pied du Rozier, que débute en 1981 l’un des tout premiers programmes de réintroduction du rapace en France, porté par la Ligue pour la Protection des Oiseaux.</p>
+              <div class="citation-bloc">
+                <p>Les gorges du Tarn et de la Jonte englobent aujourd’hui près des trois quarts de la population de vautours fauves des Grands Causses, l’un des principaux sites français de réintroduction de l’espèce.</p>
+                <cite>— Zone de Protection Spéciale Natura 2000, gorges du Tarn et de la Jonte</cite>
+              </div>
+              <p>Depuis, la population a prospéré au point de recoloniser naturellement d’autres massifs du sud de la France. La Maison des Vautours, installée au hameau du Truel entre Le Rozier et Meyrueis, permet d’observer en direct les rapaces nichant sur les falaises voisines grâce à des caméras et longues-vues, faisant du village l’un des meilleurs lieux d’Europe pour l’observation de ce grand planeur aux ailes pouvant dépasser 2,60 mètres d’envergure.</p>
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes du confluent
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🌹</div>
+                <div>
+                  <div class="vin-nom">Un village né des roses</div>
+                  <div class="vin-desc">Le nom du Rozier vient bien des rosiers plantés par les moines d’Aniane autour de leur prieuré, importés d’Italie dès le XIe siècle.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">💧</div>
+                <div>
+                  <div class="vin-nom">Le village « entre les eaux »</div>
+                  <div class="vin-desc">Le Rozier s’appelait autrefois Entr’aygues, un nom occitan qui décrit exactement sa position au confluent du Tarn et de la Jonte.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🦅</div>
+                <div>
+                  <div class="vin-nom">Une envergure de plus de 2,50 m</div>
+                  <div class="vin-desc">Les vautours fauves des gorges de la Jonte comptent parmi les plus grands rapaces d’Europe, capables de planer des heures sans un battement d’aile.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏺</div>
+                <div>
+                  <div class="vin-nom">Des potiers gallo-romains</div>
+                  <div class="vin-desc">Bien avant les moines, le site était déjà connu à l’époque gallo-romaine pour ses ateliers de fabrication de poteries.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Peyreleau</strong> village aveyronnais séparé du Rozier par un simple pont, dominé par sa tour carrée du XVIIe siècle.</p>
+              <p><strong>Gorges de la Jonte</strong> canyon parallèle au Tarn, haut lieu d’observation des vautours et de l’escalade.</p>
+              <p><strong>Montpellier-le-Vieux</strong> chaos ruiniforme spectaculaire du causse Noir, à une vingtaine de minutes de route.</p>
+              <p><strong>Aven Armand</strong> grotte ornée d’une exceptionnelle forêt de stalagmites, sur le causse Méjean.</p>
+              <p><strong>Meyrueis</strong> commune la plus méridionale de la Lozère, porte d’entrée du massif de l’Aigoual.</p>
+              <p><strong>Rocher de Capluc</strong> belvédère naturel surplombant directement le village, aménagé en fort dès le XIIe siècle.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Lozère (confluent du Tarn et de la Jonte, limitrophe de l’Aveyron)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Village-porte des gorges · Site Natura 2000 · Parc national des Cévennes</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Population</span>
+                <span class="aside-val">Environ 130 habitants</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Poterie gallo-romaine attestée · Prieuré fondé en 1075 par les moines d’Aniane</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Grand Site de France gorges du Tarn et de la Jonte · Site Natura 2000 (41 801 ha)</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Parc national des Cévennes · Réserve de biosphère des Cévennes (UNESCO) · Ligue pour la Protection des Oiseaux</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sainte-Enimie, Plus Beau Village de France — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/lozere/lozere.html" class="produit-btn-retour">
+            ← Retour à la fiche Lozère
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>S</em>ainte-<em>E</em>nimie<br><span style="padding-left: 30px;"><em>P</em>lus <em>B</em>eau </span><br><span style="padding-left: 60px;"></span><em>V</em>illage de <em>F</em>rance<span class="sous-titre">La source de Burle, la légende de la princesse guérie et le grand méandre des gorges du Tarn</span></h1>
+          >
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-lozere.png"
+               alt="Carte de la Lozère"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/sainte-enimie.png" alt="Écusson Sainte-Enimie" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Cité Médiévale & Légende de la Princesse ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🏞️ Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >💧 Légende & source de Burle</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              <p>Fondé dès l’époque gallo-romaine sous le nom de Burlatis, le site occupe un méandre spectaculaire des gorges du Tarn, encadré par le causse Méjean et le causse de Sauveterre. Le haut Moyen Âge voit l’arrivée d’une princesse mérovingienne, Enimie, sœur du roi Dagobert selon la tradition : atteinte de lèpre, elle aurait obtenu sa guérison en se baignant dans la source de Burle, au pied du village, avant d’y fonder un monastère en signe de reconnaissance.</p>
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/sainte-enimie-1.jpg"
+                        alt="Vue du village de Sainte-Enimie dans son méandre des gorges du Tarn" />
+                    <figcaption>Sainte-Enimie, accroché au flanc du canyon au-dessus du Tarn</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+              <p>Le bourg médiéval prend véritablement son essor en 951, lorsque l’évêque de Mende Étienne restaure le monastère bénédictin, dont subsistent aujourd’hui une chapelle et une salle capitulaire. Autour de l’abbaye se développent des ruelles pavées de galets du Tarn, des escaliers taillés dans le roc et des maisons de calcaire aux toits de lauzes, formant un dédale médiéval remarquablement conservé. À la Révolution, les moines quittent les lieux et le village est un temps rebaptisé Puy-Roc, avant que les habitants ne lui rendent son nom.</p>
+              <p>L’ouverture de la route des gorges en 1905 désenclave la région et marque le début du tourisme. Aujourd’hui intégré à la commune nouvelle de Gorges du Tarn Causses depuis 2017, Sainte-Enimie demeure le carrefour incontournable des gorges, classé parmi « Les Plus Beaux Villages de France » et distingué Village préféré des Français en 2014.</p>
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏞️</div>
+              Visite pratique
+            </h2>
+
+            <figure class="photo-bloc photo-droite">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lozere/sainte-enimie-2.jpg"
+                        alt="Ruelles pavées de galets et maisons de calcaire à Sainte-Enimie" />
+                    <figcaption>Le village étagé sur le flanc du canyon, au-dessus du Tarn</figcaption>
+                  </figure>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Environ 1h30 à 2h de visite, davantage avec la randonnée vers l’Ermitage</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Modérée à soutenue, ruelles et escaliers en pente, dénivelé marqué vers l’Ermitage de la Roche</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">Cœur des gorges du Tarn, entre causse Méjean et causse de Sauveterre, D907bis</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Tarif</div>
+                  <div class="recette-meta-val">Village en accès libre, visites guidées et musée payants</div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Source de Burle</span> Résurgence karstique légendaire au pied du village, point de départ de la légende d’Enimie</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ermitage de la Roche</span> Chapelle troglodytique accessible par un chemin de croix, belvédère sur le village</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ancien monastère</span> Chapelle et salle capitulaire du XIIe siècle, vestiges du prieuré bénédictin</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Pont sur le Tarn</span> Ouvrage du XVIIe siècle enjambant la rivière au cœur du village</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Halle et mesure à grains</span> Témoins de l’activité marchande médiévale du bourg</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Musée des Vautours & du Tarn</span> Exposition sur la faune et le patrimoine des gorges</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Descente en canoë-kayak</span> Départ classique pour explorer les gorges du Tarn en pagayant</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Festival Bulles de Burle</span> Festival de bande dessinée, premier week-end de juillet</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La source de Burle</div>
+                  <div class="etape-texte">Résurgence vauclusienne aux pieds du village, associée à la guérison miraculeuse de la princesse Enimie ; un lieu de fraîcheur apprécié été comme hiver.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les ruelles et escaliers de galets</div>
+                  <div class="etape-texte">Passages voûtés, maisons de calcaire et escaliers taillés dans la roche composent un labyrinthe médiéval qui grimpe depuis le Tarn jusqu’aux hauteurs du bourg.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L’ancien monastère bénédictin</div>
+                  <div class="etape-texte">Chapelle et salle capitulaire du prieuré fondé au VIIe siècle et restauré en 951, aujourd’hui intégrées au collège du village.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L’Ermitage de la Roche</div>
+                  <div class="etape-texte">Chemin de croix menant à la grotte où la princesse Enimie aurait terminé ses jours, offrant un panorama sur le méandre du Tarn.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le pont du XVIIe siècle</div>
+                  <div class="etape-texte">Franchissement historique du Tarn, point de vue privilégié sur les façades étagées du village et le canyon.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏅</div>
+                <div>
+                  <div class="vin-nom">Plus Beaux Villages de France</div>
+                  <div class="vin-desc">Sainte-Enimie est labellisée parmi « Les Plus Beaux Villages de France » pour son patrimoine médiéval exceptionnellement conservé au cœur des gorges du Tarn.</div>
+                </div>
+                <div class="vin-badge">⭐ Label PBVF</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏆</div>
+                <div>
+                  <div class="vin-nom">Village préféré des Français</div>
+                  <div class="vin-desc">En 2014, Sainte-Enimie s’est classée 18e sur 22 villages finalistes de l’émission « Le Village préféré des Français ».</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏞️</div>
+                <div>
+                  <div class="vin-nom">Grand Site de France</div>
+                  <div class="vin-desc">Le village se situe au cœur du Grand Site de France des gorges du Tarn, de la Jonte et des Causses, l’un des plus vastes de France.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌍</div>
+                <div>
+                  <div class="vin-nom">Réserve de biosphère & Parc national des Cévennes</div>
+                  <div class="vin-desc">Sainte-Enimie s’inscrit dans la zone centrale de la Réserve de biosphère des Cévennes (UNESCO) et adhère au Parc national des Cévennes depuis 1970.</div>
+                </div>
+                <div class="vin-badge">UNESCO</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LEGENDES / SAVOIR-FAIRE -->
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💧</div>
+              La légende d’Enimie et la source miraculeuse de Burle
+            </h2>
+            <div class="histoire-texte">
+              <p>La légende raconte qu’Enimie, princesse mérovingienne réputée pour sa beauté et sœur du roi Dagobert, refusa le mariage que son père voulait lui imposer. Pour échapper à cette union, elle implora Dieu de la délivrer de sa beauté : sa prière fut exaucée par une terrible lèpre qui la défigura et l’isola.</p>
+              <div class="citation-bloc">
+                <p>Un ange lui ordonna d’aller se baigner en Gévaudan, dans la fontaine de Burle. La princesse s’y glissa et son mal disparut aussitôt.</p>
+                <cite>— Tradition locale de la légende d’Enimie</cite>
+              </div>
+              <p>Mais chaque fois qu’Enimie reprenait le chemin du retour vers la cour, la lèpre réapparaissait. Comprenant que Dieu l’appelait à demeurer en ce lieu, elle s’installa à Burlatis et entreprit d’évangéliser la région, fondant le monastère qui donna naissance au village actuel. Elle aurait fini ses jours recluse dans une grotte surplombant le bourg, aujourd’hui appelée l’Ermitage de la Roche, et se serait mesurée au Drac, créature maléfique associée aux eaux du Tarn selon les récits locaux. Une dérivation de la source de Burle coule encore aujourd’hui près de l’autel de l’ermitage, où l’on venait autrefois baigner les enfants souffrant de maladies de peau.</p>
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes énimiennes
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">👑</div>
+                <div>
+                  <div class="vin-nom">Une princesse devenue sainte</div>
+                  <div class="vin-desc">Fille du roi Clotaire II selon la tradition, Enimie fut canonisée par l’Église catholique ; son culte est toujours vivace dans les gorges du Tarn.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏘️</div>
+                <div>
+                  <div class="vin-nom">Un nom effacé puis retrouvé</div>
+                  <div class="vin-desc">À la Révolution, le village fut un temps rebaptisé Puy-Roc après le départ des moines, avant que les habitants ne lui rendent son nom d’origine.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🛶</div>
+                <div>
+                  <div class="vin-nom">Point de départ des gorges</div>
+                  <div class="vin-desc">Sainte-Enimie est aujourd’hui l’un des principaux points de mise à l’eau pour les descentes en canoë-kayak des gorges du Tarn.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">📖</div>
+                <div>
+                  <div class="vin-nom">Une BD à l’honneur</div>
+                  <div class="vin-desc">Chaque premier week-end de juillet, le festival « Bulles de Burle » réunit dessinateurs et amateurs de bande dessinée dans les ruelles du village.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>La Malène</strong> village de bateliers à quelques kilomètres en aval, point de départ des barques dans les Détroits du Tarn.</p>
+              <p><strong>Castelbouc</strong> hameau troglodytique dominé par les ruines d’un château perché, accessible à pied depuis les gorges.</p>
+              <p><strong>Le Point Sublime</strong> l’un des plus célèbres belvédères sur le Tarn, offrant une vue plongeante sur le Cirque des Baumes.</p>
+              <p><strong>Causse de Sauveterre et causse Méjean</strong> vastes plateaux calcaires ponctués de burons et de dolmens, terrain de randonnée et d’observation des vautours.</p>
+              <p><strong>Florac</strong> sous-préfecture de la Lozère et siège du Parc national des Cévennes, à une vingtaine de kilomètres.</p>
+              <p><strong>Grotte de l’Aven Armand</strong> cavité exceptionnelle du causse Méjean, célèbre pour sa « forêt vierge » de stalagmites.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Lozère (gorges du Tarn, commune de Gorges du Tarn Causses)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Cité médiévale · Village-étape · Grand Site de France</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Population</span>
+                <span class="aside-val">Environ 500 habitants</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Bourg gallo-romain (Burlatis) · Monastère fondé au VIIe siècle, restauré en 951</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Plus Beaux Villages de France · Village préféré des Français 2014 (18e) · Grand Site de France</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Association Les Plus Beaux Villages de France · Parc national des Cévennes · Réserve de biosphère des Cévennes (UNESCO)</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

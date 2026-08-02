@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -508,6 +509,107 @@
     }
     .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
     .leaflet-popup-content strong { color: #2C4A7C; }
+
+    /* Ligne badges + bouton télécharger dans le cartouche du circuit */
+    .guide-card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .guide-card-meta-row .guide-card-meta { margin-top: 0; }
+    .guide-download-btn-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 20px;
+      color: rgba(255,255,255,0.92);
+      font-family: var(--font-corps);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .guide-download-btn-inline:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: #fff;
+      color: #fff;
+    }
+    .guide-download-btn-inline svg { flex-shrink: 0; }
+
+    /* Variante "Randonnée paisible" : même structure que les Visites Guidées, teinte verte */
+    .guide-card.rando-card .guide-card-header {
+      background: linear-gradient(135deg, #3E6B3A 0%, #5C8A4E 100%);
+    }
+    .guide-card.rando-card .guide-etape-num {
+      background: #E3EEDD;
+      color: #3E6B3A;
+    }
+    .guide-card.rando-card .guide-anecdote {
+      color: #3E6B3A;
+      background: #EEF5EA;
+      border-left-color: #7BA968;
+    }
+
+    /* Zone dédiée à l'impression de la fiche circuit (hors écran, révélée uniquement à l'impression) */
+    .fiche-print-container {
+      position: fixed;
+      top: 0;
+      left: -99999px;
+      width: 297mm;
+      height: 210mm;
+      background: #fff;
+      z-index: 99999;
+      display: flex;
+      align-items: stretch;
+      gap: 10mm;
+      padding: 10mm;
+      box-sizing: border-box;
+      font-family: Georgia, serif;
+      color: #2b2b2b;
+      min-height: 0;
+    }
+    /* Deux colonnes, chacune prend toute la hauteur de la page */
+    .fiche-print-container .p-col { flex: 1 1 50%; min-width: 0; min-height: 0; height: 100%; display: flex; flex-direction: column; }
+    .fiche-print-container .p-info {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 18px 22px;
+    }
+    .fiche-print-container .p-info h1 { font-family: Georgia, serif; font-size: 36px; line-height: 1.2; color: #2C4A7C; margin: 0 0 14px; }
+    .fiche-print-container .p-badges { margin-bottom: 16px; }
+    .fiche-print-container .p-badge { display: inline-block; font-size: 15px; background: #FAE8C8; color: #8B5E0A; padding: 5px 14px; border-radius: 14px; margin-right: 7px; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-chapeau { font-style: italic; font-size: 21px; color: #555; line-height: 1.6; margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px dashed #ccc; }
+    .fiche-print-container .p-etape { display: grid; grid-template-columns: 32px 1fr; gap: 13px; margin-bottom: 18px; }
+    .fiche-print-container .p-etape-num { width: 30px; height: 30px; border-radius: 50%; background: #FAE8C8; color: #8B5E0A; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps h5 { font-size: 21px; font-weight: 600; color: #2C4A7C; margin: 0 0 5px; font-family: var(--font-corps), Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps p { font-size: 18px; line-height: 1.5; margin: 0; }
+    .fiche-print-container .p-anecdote { margin-top: 7px; font-size: 16.5px; line-height: 1.45; color: #6B4A0A; background: #FDF0DC; border-left: 2px solid #E0A952; padding: 8px 13px; border-radius: 3px; }
+    .fiche-print-container .p-map-wrap { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 100%; position: relative; }
+    .fiche-print-container .p-map { width: 100%; height: 100%; }
+    .fiche-print-container .p-map-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.9); font-size: 10px; padding: 3px 8px; font-family: Arial, sans-serif; color: #555; }
+
+    @media print {
+      body > *:not(.fiche-print-container) { display: none !important; }
+      .fiche-print-container {
+        position: static !important;
+        left: 0 !important;
+        top: 0 !important;
+        /* On conserve volontairement les mêmes dimensions (297mm x 210mm) qu'à l'écran :
+           si la taille du conteneur change entre le calcul du cadrage de la carte et
+           l'impression, la carte se retrouve redimensionnée sans être recentrée et
+           certains repères sortent du cadre. */
+      }
+      @page { size: A4 landscape; margin: 0; }
+    }
+
 </style>
 <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
 <body class="fiche-page">
@@ -543,6 +645,7 @@
 <button class="fiche-tab" data-panel="agenda">Agenda</button> 
 <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
 <button class="fiche-tab" data-panel="guides">Visites Guidées</button>
+<button class="fiche-tab" data-panel="randos">Randonnée paisible</button>
 </div>
 </div>
 </div>
@@ -1800,11 +1903,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Albi, sur les pas de Toulouse-Lautrec</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 2h30</span>
 <span class="guide-badge">Cité épiscopale</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Bienvenue à Albi, la ville rouge. Ici, tout n'est que brique, du sol aux flèches de la cathédrale : c'est elle qui donne à la lumière du soir cette teinte si particulière que les Albigeois appellent l'heure rose. »</p><div class="guide-map" id="map-tarn-0"></div>
 <div class="guide-etapes">
@@ -1850,11 +1953,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Cordes-sur-Ciel, la cité dans les nuages</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 2h</span>
 <span class="guide-badge">Bastide médiévale</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Accrochez-vous, la montée commence ! Cordes-sur-Ciel se mérite : c'est en gravissant ses ruelles pentues que l'on comprend pourquoi ce village fut, dès sa fondation, un véritable nid d'aigle imprenable. »</p><div class="guide-map" id="map-tarn-1"></div>
 <div class="guide-etapes">
@@ -1899,11 +2002,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Castres, entre Agout et mémoire ouvrière</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Centre historique</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Castres a deux visages : celui, pittoresque, des maisons de tanneurs suspendues au-dessus de l'Agout, et celui, plus grave, de la mémoire de Jean Jaurès, enfant du pays devenu la voix des ouvriers de France. »</p><div class="guide-map" id="map-tarn-2"></div>
 <div class="guide-etapes">
@@ -1941,11 +2044,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des bastides et villages perchés</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 60 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Prenez le volant : cette route serpente entre vignes et forêts, de bastide en village perché, sur les traces des comtes de Toulouse qui fondèrent ces cités neuves au sortir de la croisade albigeoise. »</p><div class="guide-map" id="map-tarn-3"></div>
 <div class="guide-etapes">
@@ -1990,11 +2093,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Le Sidobre en voiture, sur la route du granit</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 40 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Ici, la pierre est reine. Cette route à travers le Sidobre vous fera croiser des rochers hauts comme des maisons, façonnés par des millions d'années d'érosion — et par la main de l'homme depuis trois siècles. »</p><div class="guide-map" id="map-tarn-4"></div>
 <div class="guide-etapes">
@@ -2039,11 +2142,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Gaillac, sur la route des vins millénaires</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Centre historique</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Gaillac n'est pas seulement un vin, c'est d'abord une ville. Et cette ville, bâtie au bord du Tarn par les moines bénédictins, cultive la vigne depuis si longtemps qu'elle en a fait son âme et son identité. »</p><div class="guide-map" id="map-tarn-5"></div>
 <div class="guide-etapes">
@@ -2088,11 +2191,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Lautrec, la balade de l'ail rose</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h15</span>
 <span class="guide-badge">Village de caractère</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Ici, tout tourne autour d'une gousse : l'ail rose de Lautrec, reconnu par une IGP, parfume les étals, les recettes et même les conversations. Laissez-vous guider dans ce village juché sur sa colline, l'un des Plus Beaux Villages de France. »</p><div class="guide-map" id="map-tarn-6"></div>
 <div class="guide-etapes">
@@ -2137,11 +2240,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Puycelsi, la sentinelle imprenable</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Village fortifié</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Puycelsi n'a jamais été pris. Pas une fois, en huit siècles d'histoire, malgré les sièges, les épidémies et les guerres. Suivez ses remparts et vous comprendrez pourquoi ce village fut toujours du côté des vainqueurs. »</p><div class="guide-map" id="map-tarn-7"></div>
 <div class="guide-etapes">
@@ -2186,11 +2289,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Mazamet, la cité de la laine</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Ville industrielle</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Mazamet a longtemps senti la laine mouillée. Pendant plus d'un siècle, cette ville fut la capitale mondiale du délainage, retraitant les peaux de moutons venues des cinq continents. Suivez-en les traces, du canal aux belles demeures industrielles. »</p><div class="guide-map" id="map-tarn-8"></div>
 <div class="guide-etapes">
@@ -2235,11 +2338,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Gorges de l'Aveyron, sur la route des villages troglodytes</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 45 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Accrochez-vous aux virages : entre Bruniquel et Penne, la route surplombe des gorges creusées par l'Aveyron depuis des millions d'années, où des villages entiers semblent avoir poussé à même la roche. »</p><div class="guide-map" id="map-tarn-9"></div>
 <div class="guide-etapes">
@@ -2277,11 +2380,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Monts de Lacaune, la route du fromage et des estives</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 70 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Ici, la route grimpe et l'air change : nous entrons dans le Tarn d'altitude, celui des brebis, des pâturages d'estive et des charcuteries qui ont fait la renommée de Lacaune bien au-delà du département. »</p><div class="guide-map" id="map-tarn-10"></div>
 <div class="guide-etapes">
@@ -2326,11 +2429,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route du safran et des jardins secrets</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 35 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Loin des grands sites, cette route de campagne révèle un Tarn plus secret : celui des safranières discrètes, des jardins de curé et des petits châteaux qui ne figurent sur aucune carte postale, mais qui valent pourtant le détour. »</p><div class="guide-map" id="map-tarn-11"></div>
 <div class="guide-etapes">
@@ -2368,11 +2471,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Réalmont, la bastide royale au plan de damier</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h15</span>
 <span class="guide-badge">Bastide royale</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Réalmont ne ressemble à aucun autre village du Tarn : ici, tout est droit. Rues perpendiculaires, place carrée, îlots réguliers — la marque des bastides, ces villes neuves nées de la volonté des seigneurs médiévaux. »</p><div class="guide-map" id="map-tarn-12"></div>
 <div class="guide-etapes">
@@ -2410,11 +2513,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Rabastens, la cité gothique au bord du Tarn</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h</span>
 <span class="guide-badge">Bord du Tarn</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Rabastens cache, derrière ses façades modestes, l'un des plus beaux ensembles de peintures murales gothiques du Sud-Ouest. Une cité discrète, mais qui mérite qu'on lève les yeux. »</p><div class="guide-map" id="map-tarn-13"></div>
 <div class="guide-etapes">
@@ -2452,11 +2555,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Lisle-sur-Tarn, la bastide aux platanes</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h</span>
 <span class="guide-badge">Bastide viticole</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Lisle-sur-Tarn s'endort à l'ombre de ses platanes centenaires, sur une place qui compte parmi les plus harmonieuses des bastides du Sud-Ouest. Ici, le temps suit le rythme des saisons de la vigne. »</p><div class="guide-map" id="map-tarn-14"></div>
 <div class="guide-etapes">
@@ -2494,11 +2597,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Graulhet, la cité du cuir</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Ville industrielle</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Graulhet a longtemps habillé les pieds du monde entier. Cette ville tapie dans la vallée du Dadou fut, avec Mazamet, l'un des grands centres du cuir et de la mégisserie en France. »</p><div class="guide-map" id="map-tarn-15"></div>
 <div class="guide-etapes">
@@ -2536,11 +2639,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Sorèze, l'abbaye-école au pied de la Montagne Noire</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h15</span>
 <span class="guide-badge">Abbaye-école</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Sorèze doit sa renommée à son abbaye-école, l'une des plus prestigieuses institutions d'enseignement de l'Ancien Régime, qui forma des générations de fils de familles nobles venus de toute l'Europe. »</p><div class="guide-map" id="map-tarn-16"></div>
 <div class="guide-etapes">
@@ -2578,11 +2681,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Giroussens, le village des potiers</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h</span>
 <span class="guide-badge">Village de céramistes</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Giroussens travaille l'argile depuis le Moyen Âge. Perché au-dessus de la vallée de l'Agout, ce village a su transformer une tradition potière séculaire en un pôle vivant de céramique contemporaine. »</p><div class="guide-map" id="map-tarn-17"></div>
 <div class="guide-etapes">
@@ -2620,11 +2723,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Carmaux et le bassin minier, sur les pas de Jean Jaurès</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 50 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route mène au Tarn industriel, celui du charbon et du verre, où les luttes ouvrières de la fin du XIXe siècle forgèrent la carrière d'un jeune député nommé Jean Jaurès. »</p><div class="guide-map" id="map-tarn-18"></div>
 <div class="guide-etapes">
@@ -2669,11 +2772,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Les dolmens de Vaour et la commanderie templière</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 40 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route mène aux confins du Tarn, sur un causse balayé par le vent où les hommes du Néolithique dressèrent des pierres, et où les Templiers bâtirent, des millénaires plus tard, l'une de leurs commanderies. »</p><div class="guide-map" id="map-tarn-19"></div>
 <div class="guide-etapes">
@@ -2711,11 +2814,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>La vallée du Dadou et le lac de la Razisse</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 45 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Une route paisible qui suit le fil de l'eau, de moulin en moulin, jusqu'au grand miroir bleu du lac de la Razisse — un Tarn discret, loin des sites les plus courus. »</p><div class="guide-map" id="map-tarn-20"></div>
 <div class="guide-etapes">
@@ -2753,11 +2856,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Circuit des trois bastides royales</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 55 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Réalmont, Lisle-sur-Tarn, Rabastens : trois bastides nées d'une même volonté médiévale d'organiser le territoire, mais chacune avec son caractère propre — place carrée, quais fluviaux ou fresques gothiques. »</p><div class="guide-map" id="map-tarn-21"></div>
 <div class="guide-etapes">
@@ -2802,11 +2905,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Monestiés, le trésor caché du Cérou</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Nord du Tarn</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Entre Albi et Cordes-sur-Ciel, un petit village au bord du Cérou cache, derrière une façade des plus modestes, l'un des plus beaux ensembles de sculptures gothiques de toute la France. Suivez-moi, la surprise est de taille. »</p><div class="guide-map" id="map-tarn-22"></div>
 <div class="guide-etapes">
@@ -2851,11 +2954,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Milhars, le village des remparts en fer à cheval</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h</span>
 <span class="guide-badge">Nord du Tarn</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Aux confins du Quercy, du Rouergue et de l'Albigeois, Milhars se love en escargot autour de son promontoire. On le surnomme le village des Murs : vous allez vite comprendre pourquoi. »</p><div class="guide-map" id="map-tarn-23"></div>
 <div class="guide-etapes">
@@ -2900,11 +3003,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route du Ségala et du viaduc du Viaur</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 90 km</span>
 <span class="guide-badge">Nord-Est du Tarn</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Direction le Ségala, ce pays de collines douces aux confins de l'Aveyron, où un ingénieur nommé Paul Bodin a jeté, au-dessus d'une vallée profonde, l'une des plus audacieuses dentelles de métal de France. »</p><div class="guide-map" id="map-tarn-24"></div>
 <div class="guide-etapes">
@@ -2949,11 +3052,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route de la vallée du Cérou, de Cordes à Monestiés</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 55 km</span>
 <span class="guide-badge">Nord du Tarn</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route discrète suit le fil du Cérou, de la cité perchée de Cordes-sur-Ciel jusqu'aux portes du bassin minier, en passant par des villages fortifiés que peu de visiteurs prennent le temps de découvrir. »</p><div class="guide-map" id="map-tarn-25"></div>
 <div class="guide-etapes">
@@ -2997,11 +3100,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Lavaur, la cité gothique au bord de l'Agout</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Centre historique</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Lavaur fut, en 1211, l'une des places fortes cathares les plus âprement disputées de la croisade albigeoise. Huit siècles plus tard, la ville a pansé ses plaies et cultive aujourd'hui un autre visage, celui d'une cité gothique paisible au bord de l'Agout. »</p><div class="guide-map" id="map-tarn-26"></div>
 <div class="guide-etapes">
@@ -3047,11 +3150,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des villages de la Montagne Noire</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 55 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Aux confins sud du département, la Montagne Noire dresse ses premiers contreforts boisés. Cette route relie une bastide au beffroi de bois à un lac artificiel né de l'un des plus grands chantiers hydrauliques du Grand Siècle. »</p><div class="guide-map" id="map-tarn-27"></div>
 <div class="guide-etapes">
@@ -3094,6 +3197,21 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="fiche-panel" id="panel-randos">
+<p class="guide-intro">Envie de prendre l'air sans se fixer de défi sportif ? Ces circuits en boucle, tous accessibles en famille, vous emmènent pour une à quatre heures de marche tranquille : sentiers ombragés, bords de rivière, petits causses ou étangs paisibles, loin des routes et sans dénivelé marqué. De quoi respirer le Tarn au rythme des pas.</p>
+<div class="guides-grid">
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle du Sidobre — chaos de granit et rivières claires</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">6 km</span><span class="guide-badge">+90 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Ici, le granit du Sidobre s'est sculpté lui-même au fil des millénaires, en boules énormes en équilibre sur presque rien. Le sentier serpente entre rochers moussus et petits ruisseaux — une balade fraîche même en plein été. »</p><div class="guide-map" id="map-rando-0"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le Peyro Clabado</h5><p>Ce chaos de granit haut de six mètres, en équilibre précaire, donne le ton de la balade : ici la roche façonnée par l'érosion prend des allures presque sculptées. Le sentier débute juste à côté, à l'ombre des châtaigniers.</p><div class="guide-anecdote">Le nom occitan « Peyro Clabado » signifie « pierre clouée » — tant elle semble fichée en terre malgré son équilibre improbable.</div></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Sous-bois et ruisseaux</h5><p>Le chemin plat serpente entre fougères et rochers moussus, longeant par endroits un petit ruisseau. C'est l'un des passages les plus ombragés du circuit, idéal pour souffler.</p></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le Saut de la Truite</h5><p>Une petite cascade se jette dans un bassin naturel entouré de blocs de granit polis. Beaucoup de familles s'y arrêtent pour pique-niquer en été.</p><div class="guide-anecdote">L'eau y est si limpide qu'on aperçoit parfois de vraies truites remonter le courant.</div></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour par le chemin des rochers</h5><p>Le sentier revient en boucle douce vers le point de départ, offrant une dernière vue sur les chaos granitiques disséminés dans la forêt.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle des gorges de l'Aveyron, au pied de Bruniquel</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h30</span><span class="guide-badge">7 km</span><span class="guide-badge">+110 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Sous le double château de Bruniquel, la rivière Aveyron a creusé des gorges boisées où le sentier alterne entre berges tranquilles et petits promontoires rocheux. »</p><div class="guide-map" id="map-rando-1"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Départ du village</h5><p>Le sentier s'élance depuis les ruelles médiévales de Bruniquel, sous le regard du double château perché sur son éperon rocheux.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le long de la rivière</h5><p>Le chemin longe l'Aveyron sur un tronçon plat et ombragé, entre saules et peupliers. Les eaux calmes reflètent la falaise en face.</p><div class="guide-anecdote">Les gorges de l'Aveyron abritent une faune discrète : hérons cendrés et martins-pêcheurs s'y observent facilement au petit matin.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le belvédère naturel</h5><p>Une légère montée mène à un promontoire rocheux d'où l'on domine le méandre de la rivière et la vallée boisée.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour vers le château</h5><p>La boucle redescend doucement vers Bruniquel, avec une dernière vue sur les tours du château qui domine le village.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle du lac de la Razisse, au fil du Dadou</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">5 km</span><span class="guide-badge">+40 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Un plan d'eau paisible niché dans la vallée du Dadou, entouré de prairies et de bois clairs — la balade familiale par excellence, sans la moindre difficulté. »</p><div class="guide-map" id="map-rando-2"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le barrage de la Razisse</h5><p>La balade démarre au pied de ce petit barrage qui retient les eaux du Dadou, créant un lac apprécié des pêcheurs et des promeneurs.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La rive sud</h5><p>Le sentier plat longe les roselières où nichent foulques et grèbes. Quelques bancs invitent à l'observation des oiseaux.</p><div class="guide-anecdote">Le lac de la Razisse est un site reconnu pour l'observation ornithologique, notamment en période de migration.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le belvédère</h5><p>Un petit promontoire offre une vue dégagée sur l'ensemble du plan d'eau et les collines boisées alentour.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour par la digue</h5><p>Le circuit se referme en traversant la digue, avec une dernière vue sur le miroir d'eau avant de rejoindre le parking.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle des dolmens, forêt de Grésigne depuis Vaour</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 3h</span><span class="guide-badge">9 km</span><span class="guide-badge">+140 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« La forêt de Grésigne, l'un des plus grands massifs de chênes du sud-ouest, cache sur le causse de Vaour une dizaine de dolmens millénaires, reliés par un sentier ombragé et facile. »</p><div class="guide-map" id="map-rando-3"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>La commanderie templière</h5><p>Le départ se fait aux abords de l'ancienne commanderie des Templiers de Vaour, point de repère historique du causse.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Sur le causse</h5><p>Le sentier traverse une lande sèche typique du causse, avant de rejoindre le premier dolmen, bien conservé malgré les siècles.</p><div class="guide-anecdote">Le causse de Vaour compte une vingtaine de dolmens, parmi les plus nombreux du département.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>La lisière de la Grésigne</h5><p>Le chemin plonge sous le couvert des chênes centenaires de la forêt de Grésigne, offrant une fraîcheur bienvenue.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour vers le village</h5><p>La boucle redescend en pente douce vers Vaour, entre murets de pierre sèche et petits vergers.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle des berges du Tarn à Rabastens</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">5 km</span><span class="guide-badge">+20 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Un chemin de halage plat le long du Tarn, entre peupliers et vignes de Gaillac — une randonnée sans dénivelé, parfaite pour une fin d'après-midi. »</p><div class="guide-map" id="map-rando-4"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le pont sur le Tarn</h5><p>La balade débute au pied du pont, avec une belle vue sur la collégiale Notre-Dame-du-Bourg qui domine la rivière.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le chemin de halage</h5><p>Le sentier suit les berges du Tarn, ombragé par les peupliers, sur un terrain parfaitement plat.</p><div class="guide-anecdote">Ce tronçon fait partie de l'ancien chemin de halage utilisé autrefois pour tirer les gabarres remontant le fleuve.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>À travers les vignes</h5><p>Le circuit s'élève légèrement dans les premiers coteaux du vignoble de Gaillac, avec une vue dégagée sur la vallée.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour au village</h5><p>La boucle redescend vers les ruelles marchandes de Rabastens pour clore la balade.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle du lac de Saint-Ferréol, en Montagne Noire</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">7 km</span><span class="guide-badge">+60 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Ce grand lac artificiel du XVIIe siècle, conçu pour alimenter le Canal du Midi, se découvre par un sentier ombragé qui en fait presque tout le tour. »</p><div class="guide-map" id="map-rando-5"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le barrage historique</h5><p>Construit pour Pierre-Paul Riquet, ce barrage alimente encore aujourd'hui le Canal du Midi en contrebas.</p><div class="guide-anecdote">Long de près de 800 mètres, le barrage de Saint-Ferréol fut l'un des plus grands ouvrages hydrauliques d'Europe à sa construction.</div></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>La rive boisée</h5><p>Le sentier plat longe la rive est sous une belle pinède, avec des vues régulières sur le plan d'eau.</p></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le point de vue sur la digue</h5><p>Une légère hauteur permet d'admirer l'ensemble de la retenue et les jeux d'eau du parc attenant.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour au barrage</h5><p>La boucle revient vers le point de départ en longeant les jardins qui bordent le lac.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle de la vallée du Gijou, près de Lacaune</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h30</span><span class="guide-badge">8 km</span><span class="guide-badge">+130 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Entre prairies d'altitude et sous-bois de hêtres, cette boucle suit le cours naissant du Gijou dans les Monts de Lacaune, loin de l'agitation. »</p><div class="guide-map" id="map-rando-6"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Lacaune-les-Bains</h5><p>Le départ se fait depuis la station thermale, réputée pour ses eaux et sa charcuterie de montagne.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le cours du Gijou</h5><p>Le sentier suit la rivière naissante à travers de vertes prairies, encore fraîches même en été.</p><div class="guide-anecdote">Le Gijou prend sa source dans les Monts de Lacaune avant de rejoindre l'Agout plus en aval.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>La hêtraie</h5><p>Le chemin s'enfonce sous une belle hêtraie typique du Haut Languedoc, avec quelques pentes douces.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour vers Lacaune</h5><p>La boucle redescend tranquillement vers la station, avec une vue d'ensemble sur les Monts de Lacaune.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle des Puechs, autour de Cordes-sur-Ciel</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">6 km</span><span class="guide-badge">+100 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« En contrebas de la cité perchée, un sentier de crête relie petits « puechs » (collines) et parcelles de vigne, avec la silhouette de Cordes toujours en ligne de mire. »</p><div class="guide-map" id="map-rando-7"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le pied de la cité</h5><p>La balade démarre aux abords de la ville basse, avant de rejoindre le sentier de crête qui contourne le rocher de Cordes.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le sentier des Puechs</h5><p>Le chemin ondule doucement entre petites collines (« puechs » en occitan) et parcelles de vignes, sans grande difficulté.</p><div class="guide-anecdote">Le mot « puech » désigne, en occitan, une colline arrondie — le paysage tarnais en est parsemé.</div></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le point de vue</h5><p>Un promontoire naturel offre l'une des plus belles vues sur la silhouette de Cordes-sur-Ciel, perchée sur son piton rocheux.</p></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour vers la cité</h5><p>Le sentier redescend doucement vers le point de départ, longeant quelques vergers en fin de parcours.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle de l'étang du Merle, près de Lautrec</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 1h30</span><span class="guide-badge">4,5 km</span><span class="guide-badge">+30 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Un petit plan d'eau niché dans la campagne du Pays de Cocagne, entre champs d'ail rose et bois de chênes — une boucle très facile, idéale en famille. »</p><div class="guide-map" id="map-rando-8"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Départ de Lautrec</h5><p>Le sentier quitte les ruelles du village, classé parmi les Plus Beaux Villages de France, en direction de la campagne environnante.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>L'étang du Merle</h5><p>Le chemin plat longe ce petit plan d'eau apprécié des pêcheurs et des oiseaux d'eau.</p></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Les champs d'ail rose</h5><p>Le sentier traverse les cultures typiques du Lautrécois, où l'on reconnaît en saison les rangs d'ail rose, spécialité AOP du secteur.</p><div class="guide-anecdote">L'ail rose de Lautrec bénéficie d'une AOP depuis 1996, l'une des rares reconnaissances pour ce type de production en France.</div></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour au village</h5><p>La boucle revient vers Lautrec, avec en ligne de mire le moulin à vent qui domine la colline.</p></div></div></div></div>
+<div class="guide-card rando-card" data-type="pied"><div class="guide-card-header"><h4>La boucle du causse de Caucalières, en Montagne Noire</h4><div class="guide-card-meta-row"><div class="guide-card-meta"><span class="guide-badge">À pied</span><span class="guide-badge">Env. 2h</span><span class="guide-badge">6 km</span><span class="guide-badge">+95 m</span></div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div></div><p class="guide-chapeau">« Un causse discret aux portes de Labruguière, où buis et genévriers parfument un sentier facile ouvert sur les premiers contreforts de la Montagne Noire. »</p><div class="guide-map" id="map-rando-9"></div><div class="guide-etapes"><div class="guide-etape"><div class="guide-etape-num">1</div><div class="guide-etape-corps"><h5>Le village de Caucalières</h5><p>Le départ se fait depuis ce petit village qui garde encore les traces de son passé viticole et pastoral.</p></div></div><div class="guide-etape"><div class="guide-etape-num">2</div><div class="guide-etape-corps"><h5>Le sentier du causse</h5><p>Le chemin, sec et facile, traverse une végétation typique de garrigue : buis, genévriers et chênes verts.</p></div></div><div class="guide-etape"><div class="guide-etape-num">3</div><div class="guide-etape-corps"><h5>Le point de vue</h5><p>Une légère élévation permet d'apercevoir les premiers contreforts boisés de la Montagne Noire, tout proches.</p><div class="guide-anecdote">Ce petit causse forme la transition entre la plaine du Tarn et les premiers reliefs de la Montagne Noire, avec une flore adaptée à la sécheresse.</div></div></div><div class="guide-etape"><div class="guide-etape-num">4</div><div class="guide-etape-corps"><h5>Retour vers le village</h5><p>La boucle redescend doucement vers Caucalières pour clore la randonnée.</p></div></div></div></div>
 </div>
 </div>
 </main>
@@ -3159,7 +3277,7 @@
  
     // Filtres "Visites Guidées"
     const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
-    const guideCards = document.querySelectorAll('.guide-card');
+    const guideCards = document.querySelectorAll('#panel-guides .guide-card');
 
     guideFilterBtns.forEach(btn => {
       btn.addEventListener('click', function() {
@@ -3182,8 +3300,9 @@
 
 <script>
 (function() {
-  var guideMapsData = {"map-tarn-0": [{"lat": 43.9298, "lng": 2.148, "label": "Place Sainte-Cécile — la cathédrale forteresse"}, {"lat": 43.9271, "lng": 2.1478, "label": "Le Palais de la Berbie et ses jardins"}, {"lat": 43.9256, "lng": 2.1466, "label": "Le Pont Vieux"}, {"lat": 43.9285, "lng": 2.1489, "label": "La maison natale de Toulouse-Lautrec"}, {"lat": 43.9273, "lng": 2.1462, "label": "Les ruelles marchandes du vieil Albi"}], "map-tarn-1": [{"lat": 44.0631, "lng": 1.9524, "label": "La Porte de la Jane"}, {"lat": 44.0636, "lng": 1.9519, "label": "La Grand-Rue et ses maisons gothiques"}, {"lat": 44.0641, "lng": 1.9515, "label": "L'église Saint-Michel et son point de vue"}, {"lat": 44.0633, "lng": 1.9521, "label": "Les ateliers d'artisans d'art"}, {"lat": 44.0625, "lng": 1.9528, "label": "Redescente par les jardins en terrasses"}], "map-tarn-2": [{"lat": 43.6045, "lng": 2.2402, "label": "Les jardins de l'Évêché"}, {"lat": 43.6055, "lng": 2.2398, "label": "Les quais de l'Agout et les maisons de tanneurs"}, {"lat": 43.6043, "lng": 2.2405, "label": "Le musée Goya, hôtel de ville"}, {"lat": 43.6037, "lng": 2.2416, "label": "Le musée Jean Jaurès"}], "map-tarn-3": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Cahuzac-sur-Vère"}, {"lat": 43.9633, "lng": 1.833, "label": "Castelnau-de-Montmiral, halte sur la place à couverts"}, {"lat": 43.9705, "lng": 1.7981, "label": "Puycelsi, sentinelle de la Grésigne"}, {"lat": 43.9012, "lng": 1.8977, "label": "Traversée du vignoble jusqu'à Gaillac"}, {"lat": 43.8317, "lng": 1.7267, "label": "Retour par Rabastens et les rives du Tarn"}], "map-tarn-4": [{"lat": 43.6045, "lng": 2.2402, "label": "Départ de Castres vers le Sidobre"}, {"lat": 43.6167, "lng": 2.3567, "label": "Le Peyro Clabado"}, {"lat": 43.6244, "lng": 2.3702, "label": "Les Sept Faux et le Saut de la Truite"}, {"lat": 43.61, "lng": 2.35, "label": "Un atelier de taille de pierre"}, {"lat": 43.6045, "lng": 2.2402, "label": "Retour vers Castres par la vallée de l'Agout"}], "map-tarn-5": [{"lat": 43.9021, "lng": 1.8967, "label": "L'abbaye Saint-Michel"}, {"lat": 43.9005, "lng": 1.8975, "label": "Les quais du Port fluvial"}, {"lat": 43.9014, "lng": 1.8981, "label": "La rue de l'Égalité et les hôtels de marchands"}, {"lat": 43.9018, "lng": 1.8988, "label": "L'église Saint-Pierre et son clocher fortifié"}, {"lat": 43.9012, "lng": 1.8977, "label": "Dégustation de clôture"}], "map-tarn-6": [{"lat": 43.7048, "lng": 2.1519, "label": "La place centrale et sa halle"}, {"lat": 43.705, "lng": 2.1522, "label": "La collégiale Saint-Rémy"}, {"lat": 43.7044, "lng": 2.1512, "label": "La Porte de la Caussade et les vestiges des remparts"}, {"lat": 43.7062, "lng": 2.1543, "label": "Le moulin à vent de la Salette"}, {"lat": 43.7046, "lng": 2.1517, "label": "La maison natale du peintre Deshays"}], "map-tarn-7": [{"lat": 43.9701, "lng": 1.7973, "label": "La Porte de l'Aiguière"}, {"lat": 43.9706, "lng": 1.798, "label": "Le chemin de ronde et les remparts"}, {"lat": 43.9704, "lng": 1.7984, "label": "L'église Saint-Corneille"}, {"lat": 43.9702, "lng": 1.7978, "label": "Les ruelles et maisons à pans de bois"}, {"lat": 43.971, "lng": 1.7965, "label": "Le point de vue sur la Grésigne"}], "map-tarn-8": [{"lat": 43.4922, "lng": 2.3757, "label": "Les anciennes usines de délainage"}, {"lat": 43.493, "lng": 2.375, "label": "Le canal des Usines"}, {"lat": 43.4945, "lng": 2.3765, "label": "Les villas patronales"}, {"lat": 43.49, "lng": 2.42, "label": "Le Rocher de Payrol et l'entrée des gorges"}, {"lat": 43.487, "lng": 2.384, "label": "Hautpoul, le village perché au-dessus de Mazamet"}], "map-tarn-9": [{"lat": 44.0533, "lng": 1.6642, "label": "Bruniquel et son double château"}, {"lat": 44.065, "lng": 1.68, "label": "La Corniche des gorges"}, {"lat": 44.081, "lng": 1.746, "label": "Penne et son château en équilibre"}, {"lat": 44.07, "lng": 1.71, "label": "Le belvédère du Roc d'Anglars"}], "map-tarn-10": [{"lat": 43.68, "lng": 2.52, "label": "Départ vers les premiers contreforts"}, {"lat": 43.706, "lng": 2.689, "label": "Lacaune-les-Bains, station thermale et gourmande"}, {"lat": 43.656, "lng": 2.769, "label": "La route des estives vers Murat-sur-Vèbre"}, {"lat": 43.63, "lng": 2.7, "label": "Point de vue sur le Haut-Languedoc"}, {"lat": 43.67, "lng": 2.58, "label": "Retour par la vallée du Gijou"}], "map-tarn-11": [{"lat": 43.72, "lng": 2.1, "label": "Une safranière tarnaise"}, {"lat": 43.7524, "lng": 1.8156, "label": "Les Jardins des Martels"}, {"lat": 43.987, "lng": 2.254, "label": "Le petit château de Combefa"}, {"lat": 43.9, "lng": 2.15, "label": "Retour par les petites routes de campagne"}], "map-tarn-12": [{"lat": 43.7787, "lng": 2.1783, "label": "La Grand'Place et sa halle de bois"}, {"lat": 43.779, "lng": 2.1779, "label": "Le plan en damier"}, {"lat": 43.7784, "lng": 2.1786, "label": "L'église Notre-Dame-du-Taur"}, {"lat": 43.7793, "lng": 2.1775, "label": "Le tour des anciens fossés"}], "map-tarn-13": [{"lat": 43.8317, "lng": 1.7267, "label": "L'église Notre-Dame-du-Bourg"}, {"lat": 43.8321, "lng": 1.7263, "label": "Les ruelles marchandes"}, {"lat": 43.831, "lng": 1.7259, "label": "Les quais et le pont sur le Tarn"}, {"lat": 43.8319, "lng": 1.7271, "label": "Le musée du Pays Rabastinois"}], "map-tarn-14": [{"lat": 43.8497, "lng": 1.8058, "label": "La place Paul-Saissac et ses couverts"}, {"lat": 43.8501, "lng": 1.8054, "label": "La collégiale Notre-Dame-de-la-Jonquière"}, {"lat": 43.8489, "lng": 1.8049, "label": "Le port et les berges du Tarn"}, {"lat": 43.8493, "lng": 1.8062, "label": "Le musée Raymond-Lafage"}], "map-tarn-15": [{"lat": 43.7614, "lng": 1.9925, "label": "Les anciennes mégisseries du quartier de la Madeleine"}, {"lat": 43.762, "lng": 1.9931, "label": "Le pont-vieux sur le Dadou"}, {"lat": 43.7609, "lng": 1.9918, "label": "La Maison des Métiers du Cuir"}, {"lat": 43.7625, "lng": 1.994, "label": "Le centre-ville et ses maisons de négociants"}], "map-tarn-16": [{"lat": 43.4514, "lng": 2.0669, "label": "Le clocher-donjon de l'abbaye"}, {"lat": 43.4518, "lng": 2.0665, "label": "Les cours et bâtiments de l'École Royale Militaire"}, {"lat": 43.4511, "lng": 2.0673, "label": "Le musée Dom Robert et la tapisserie du XXe siècle"}, {"lat": 43.4522, "lng": 2.066, "label": "Les ruelles du village et la vue sur la Montagne Noire"}], "map-tarn-17": [{"lat": 43.7524, "lng": 1.8756, "label": "Le belvédère sur la vallée de l'Agout"}, {"lat": 43.7529, "lng": 1.8751, "label": "Les ateliers de céramistes"}, {"lat": 43.7519, "lng": 1.876, "label": "L'église fortifiée"}, {"lat": 43.7524, "lng": 1.8156, "label": "La descente vers les Jardins des Martels"}], "map-tarn-18": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Carmaux"}, {"lat": 44.0522, "lng": 2.1614, "label": "Le musée-mine de Cagnac-les-Mines"}, {"lat": 44.0556, "lng": 2.1567, "label": "Le centre de Carmaux et la mémoire ouvrière"}, {"lat": 44.0489, "lng": 2.1523, "label": "Le lac de la découverte"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi par la vallée du Cérou"}], "map-tarn-19": [{"lat": 44.1, "lng": 1.83, "label": "Départ vers le causse de Vaour"}, {"lat": 44.1058, "lng": 1.7972, "label": "Les dolmens du causse"}, {"lat": 44.107, "lng": 1.7965, "label": "La commanderie templière de Vaour"}, {"lat": 44.06, "lng": 1.72, "label": "Retour par les gorges de l'Aveyron"}], "map-tarn-20": [{"lat": 43.77, "lng": 2.05, "label": "Départ le long du Dadou"}, {"lat": 43.69, "lng": 2.1, "label": "Les anciens moulins de la vallée"}, {"lat": 43.6167, "lng": 2.1667, "label": "Le lac de la Razisse"}, {"lat": 43.6, "lng": 2.22, "label": "Retour par les coteaux du Dadou"}], "map-tarn-21": [{"lat": 43.7787, "lng": 2.1783, "label": "Réalmont et sa place à couverts"}, {"lat": 43.81, "lng": 1.99, "label": "Traversée de la campagne du Dadou"}, {"lat": 43.8497, "lng": 1.8058, "label": "Lisle-sur-Tarn, halte sous les platanes"}, {"lat": 43.8317, "lng": 1.7267, "label": "Rabastens et ses fresques gothiques"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi le long du Tarn"}], "map-tarn-22": [{"lat": 44.0361, "lng": 2.1152, "label": "La Porte de Candèze et les remparts"}, {"lat": 44.0355, "lng": 2.1147, "label": "Le pont médiéval et la place du Foirail"}, {"lat": 44.0358, "lng": 2.1143, "label": "La chapelle Saint-Jacques, ancien hôpital de pèlerins"}, {"lat": 44.0359, "lng": 2.1144, "label": "La Mise au Tombeau, chef-d'œuvre du XVe siècle"}, {"lat": 44.0353, "lng": 2.1138, "label": "Le musée Bajèn-Vega et les ruelles du village"}], "map-tarn-23": [{"lat": 44.1183, "lng": 1.8459, "label": "La Porte du Ravelin"}, {"lat": 44.118, "lng": 1.8455, "label": "Les remparts en fer à cheval"}, {"lat": 44.1186, "lng": 1.8462, "label": "Le château féodal"}, {"lat": 44.1178, "lng": 1.845, "label": "Les maisons à plumes et la route des Pigeonniers"}, {"lat": 44.117, "lng": 1.8445, "label": "Les berges du Cérou"}], "map-tarn-24": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Valence-d'Albigeois"}, {"lat": 44.1332, "lng": 2.313, "label": "Tanus et le viaduc du Viaur"}, {"lat": 44.142, "lng": 2.3213, "label": "Les belvédères du Viaur"}, {"lat": 44.1926, "lng": 2.3132, "label": "Pampelonne et les vestiges du château de Thuriès"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi par le Ségala"}], "map-tarn-25": [{"lat": 44.0631, "lng": 1.9524, "label": "Départ de Cordes-sur-Ciel"}, {"lat": 44.1183, "lng": 1.8459, "label": "Milhars, le village des remparts en fer à cheval"}, {"lat": 44.05, "lng": 2.0, "label": "Traversée du Ségala tarnais"}, {"lat": 44.0357, "lng": 2.1147, "label": "Monestiés et sa Mise au Tombeau"}, {"lat": 44.0556, "lng": 2.1567, "label": "Retour vers Carmaux par Blaye-les-Mines"}], "map-tarn-26": [{"lat": 43.6967, "lng": 1.8167, "label": "La cathédrale Saint-Alain et son Jacquemart"}, {"lat": 43.6959, "lng": 1.8172, "label": "Le pont sur l'Agout et le vieux moulin"}, {"lat": 43.6972, "lng": 1.8161, "label": "Le jardin de l'Évêché, belvédère sur la ville"}, {"lat": 43.6963, "lng": 1.8175, "label": "Le musée du Pays Vaurais"}, {"lat": 43.697, "lng": 1.8165, "label": "Les ruelles du centre historique"}], "map-tarn-27": [{"lat": 43.4514, "lng": 2.0669, "label": "Départ de Sorèze vers Revel"}, {"lat": 43.4636, "lng": 2.0011, "label": "Revel, la bastide au beffroi de bois"}, {"lat": 43.4189, "lng": 2.0329, "label": "Le lac de Saint-Ferréol"}, {"lat": 43.5636, "lng": 2.2214, "label": "Le village de Saix, au bord de l'Agout"}, {"lat": 43.6045, "lng": 2.2402, "label": "Retour vers Castres par la vallée de l'Agout"}]};
+  var guideMapsData = {"map-tarn-0": [{"lat": 43.9298, "lng": 2.148, "label": "Place Sainte-Cécile — la cathédrale forteresse"}, {"lat": 43.9271, "lng": 2.1478, "label": "Le Palais de la Berbie et ses jardins"}, {"lat": 43.9256, "lng": 2.1466, "label": "Le Pont Vieux"}, {"lat": 43.9285, "lng": 2.1489, "label": "La maison natale de Toulouse-Lautrec"}, {"lat": 43.9273, "lng": 2.1462, "label": "Les ruelles marchandes du vieil Albi"}], "map-tarn-1": [{"lat": 44.0631, "lng": 1.9524, "label": "La Porte de la Jane"}, {"lat": 44.0636, "lng": 1.9519, "label": "La Grand-Rue et ses maisons gothiques"}, {"lat": 44.0641, "lng": 1.9515, "label": "L'église Saint-Michel et son point de vue"}, {"lat": 44.0633, "lng": 1.9521, "label": "Les ateliers d'artisans d'art"}, {"lat": 44.0625, "lng": 1.9528, "label": "Redescente par les jardins en terrasses"}], "map-tarn-2": [{"lat": 43.6045, "lng": 2.2402, "label": "Les jardins de l'Évêché"}, {"lat": 43.6055, "lng": 2.2398, "label": "Les quais de l'Agout et les maisons de tanneurs"}, {"lat": 43.6043, "lng": 2.2405, "label": "Le musée Goya, hôtel de ville"}, {"lat": 43.6037, "lng": 2.2416, "label": "Le musée Jean Jaurès"}], "map-tarn-3": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Cahuzac-sur-Vère"}, {"lat": 43.9633, "lng": 1.833, "label": "Castelnau-de-Montmiral, halte sur la place à couverts"}, {"lat": 43.9705, "lng": 1.7981, "label": "Puycelsi, sentinelle de la Grésigne"}, {"lat": 43.9012, "lng": 1.8977, "label": "Traversée du vignoble jusqu'à Gaillac"}, {"lat": 43.8317, "lng": 1.7267, "label": "Retour par Rabastens et les rives du Tarn"}], "map-tarn-4": [{"lat": 43.6045, "lng": 2.2402, "label": "Départ de Castres vers le Sidobre"}, {"lat": 43.6601, "lng": 2.3648, "label": "Le Peyro Clabado"}, {"lat": 43.6334, "lng": 2.3167, "label": "Les Sept Faux et le Saut de la Truite"}, {"lat": 43.6531, "lng": 2.3395, "label": "Un atelier de taille de pierre"}, {"lat": 43.6045, "lng": 2.2402, "label": "Retour vers Castres par la vallée de l'Agout"}], "map-tarn-5": [{"lat": 43.9021, "lng": 1.8967, "label": "L'abbaye Saint-Michel"}, {"lat": 43.9005, "lng": 1.8975, "label": "Les quais du Port fluvial"}, {"lat": 43.9014, "lng": 1.8981, "label": "La rue de l'Égalité et les hôtels de marchands"}, {"lat": 43.9018, "lng": 1.8988, "label": "L'église Saint-Pierre et son clocher fortifié"}, {"lat": 43.9012, "lng": 1.8977, "label": "Dégustation de clôture"}], "map-tarn-6": [{"lat": 43.7048, "lng": 2.1519, "label": "La place centrale et sa halle"}, {"lat": 43.705, "lng": 2.1522, "label": "La collégiale Saint-Rémy"}, {"lat": 43.7044, "lng": 2.1512, "label": "La Porte de la Caussade et les vestiges des remparts"}, {"lat": 43.7062, "lng": 2.1543, "label": "Le moulin à vent de la Salette"}, {"lat": 43.7046, "lng": 2.1517, "label": "La maison natale du peintre Deshays"}], "map-tarn-7": [{"lat": 43.9701, "lng": 1.7973, "label": "La Porte de l'Aiguière"}, {"lat": 43.9706, "lng": 1.798, "label": "Le chemin de ronde et les remparts"}, {"lat": 43.9704, "lng": 1.7984, "label": "L'église Saint-Corneille"}, {"lat": 43.9702, "lng": 1.7978, "label": "Les ruelles et maisons à pans de bois"}, {"lat": 43.971, "lng": 1.7965, "label": "Le point de vue sur la Grésigne"}], "map-tarn-8": [{"lat": 43.4922, "lng": 2.3757, "label": "Les anciennes usines de délainage"}, {"lat": 43.493, "lng": 2.375, "label": "Le canal des Usines"}, {"lat": 43.4945, "lng": 2.3765, "label": "Les villas patronales"}, {"lat": 43.488, "lng": 2.379, "label": "Le Rocher de Payrol et l'entrée des gorges"}, {"lat": 43.487, "lng": 2.384, "label": "Hautpoul, le village perché au-dessus de Mazamet"}], "map-tarn-9": [{"lat": 44.0533, "lng": 1.6642, "label": "Bruniquel et son double château"}, {"lat": 44.065, "lng": 1.68, "label": "La Corniche des gorges"}, {"lat": 44.081, "lng": 1.746, "label": "Penne et son château en équilibre"}, {"lat": 44.07, "lng": 1.71, "label": "Le belvédère du Roc d'Anglars"}], "map-tarn-10": [{"lat": 43.68, "lng": 2.52, "label": "Départ vers les premiers contreforts"}, {"lat": 43.706, "lng": 2.689, "label": "Lacaune-les-Bains, station thermale et gourmande"}, {"lat": 43.656, "lng": 2.769, "label": "La route des estives vers Murat-sur-Vèbre"}, {"lat": 43.63, "lng": 2.7, "label": "Point de vue sur le Haut-Languedoc"}, {"lat": 43.67, "lng": 2.58, "label": "Retour par la vallée du Gijou"}], "map-tarn-11": [{"lat": 43.72, "lng": 2.1, "label": "Une safranière tarnaise"}, {"lat": 43.7524, "lng": 1.8156, "label": "Les Jardins des Martels"}, {"lat": 44.0532, "lng": 2.0888, "label": "Le petit château de Combefa"}, {"lat": 43.9, "lng": 2.15, "label": "Retour par les petites routes de campagne"}], "map-tarn-12": [{"lat": 43.7787, "lng": 2.1783, "label": "La Grand'Place et sa halle de bois"}, {"lat": 43.779, "lng": 2.1779, "label": "Le plan en damier"}, {"lat": 43.7784, "lng": 2.1786, "label": "L'église Notre-Dame-du-Taur"}, {"lat": 43.7793, "lng": 2.1775, "label": "Le tour des anciens fossés"}], "map-tarn-13": [{"lat": 43.8317, "lng": 1.7267, "label": "L'église Notre-Dame-du-Bourg"}, {"lat": 43.8321, "lng": 1.7263, "label": "Les ruelles marchandes"}, {"lat": 43.831, "lng": 1.7259, "label": "Les quais et le pont sur le Tarn"}, {"lat": 43.8319, "lng": 1.7271, "label": "Le musée du Pays Rabastinois"}], "map-tarn-14": [{"lat": 43.8497, "lng": 1.8058, "label": "La place Paul-Saissac et ses couverts"}, {"lat": 43.8501, "lng": 1.8054, "label": "La collégiale Notre-Dame-de-la-Jonquière"}, {"lat": 43.8489, "lng": 1.8049, "label": "Le port et les berges du Tarn"}, {"lat": 43.8493, "lng": 1.8062, "label": "Le musée Raymond-Lafage"}], "map-tarn-15": [{"lat": 43.7614, "lng": 1.9925, "label": "Les anciennes mégisseries du quartier de la Madeleine"}, {"lat": 43.762, "lng": 1.9931, "label": "Le pont-vieux sur le Dadou"}, {"lat": 43.7609, "lng": 1.9918, "label": "La Maison des Métiers du Cuir"}, {"lat": 43.7625, "lng": 1.994, "label": "Le centre-ville et ses maisons de négociants"}], "map-tarn-16": [{"lat": 43.4514, "lng": 2.0669, "label": "Le clocher-donjon de l'abbaye"}, {"lat": 43.4518, "lng": 2.0665, "label": "Les cours et bâtiments de l'École Royale Militaire"}, {"lat": 43.4511, "lng": 2.0673, "label": "Le musée Dom Robert et la tapisserie du XXe siècle"}, {"lat": 43.4522, "lng": 2.066, "label": "Les ruelles du village et la vue sur la Montagne Noire"}], "map-tarn-17": [{"lat": 43.7524, "lng": 1.8756, "label": "Le belvédère sur la vallée de l'Agout"}, {"lat": 43.7529, "lng": 1.8751, "label": "Les ateliers de céramistes"}, {"lat": 43.7519, "lng": 1.876, "label": "L'église fortifiée"}, {"lat": 43.7524, "lng": 1.8156, "label": "La descente vers les Jardins des Martels"}], "map-tarn-18": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Carmaux"}, {"lat": 44.0522, "lng": 2.1614, "label": "Le musée-mine de Cagnac-les-Mines"}, {"lat": 44.0556, "lng": 2.1567, "label": "Le centre de Carmaux et la mémoire ouvrière"}, {"lat": 44.0489, "lng": 2.1523, "label": "Le lac de la découverte"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi par la vallée du Cérou"}], "map-tarn-19": [{"lat": 44.1, "lng": 1.83, "label": "Départ vers le causse de Vaour"}, {"lat": 44.1058, "lng": 1.7972, "label": "Les dolmens du causse"}, {"lat": 44.107, "lng": 1.7965, "label": "La commanderie templière de Vaour"}, {"lat": 44.06, "lng": 1.72, "label": "Retour par les gorges de l'Aveyron"}], "map-tarn-20": [{"lat": 43.77, "lng": 2.05, "label": "Départ le long du Dadou"}, {"lat": 43.69, "lng": 2.1, "label": "Les anciens moulins de la vallée"}, {"lat": 43.6167, "lng": 2.1667, "label": "Le lac de la Razisse"}, {"lat": 43.6, "lng": 2.22, "label": "Retour par les coteaux du Dadou"}], "map-tarn-21": [{"lat": 43.7787, "lng": 2.1783, "label": "Réalmont et sa place à couverts"}, {"lat": 43.81, "lng": 1.99, "label": "Traversée de la campagne du Dadou"}, {"lat": 43.8497, "lng": 1.8058, "label": "Lisle-sur-Tarn, halte sous les platanes"}, {"lat": 43.8317, "lng": 1.7267, "label": "Rabastens et ses fresques gothiques"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi le long du Tarn"}], "map-tarn-22": [{"lat": 44.0361, "lng": 2.1152, "label": "La Porte de Candèze et les remparts"}, {"lat": 44.0355, "lng": 2.1147, "label": "Le pont médiéval et la place du Foirail"}, {"lat": 44.0358, "lng": 2.1143, "label": "La chapelle Saint-Jacques, ancien hôpital de pèlerins"}, {"lat": 44.0359, "lng": 2.1144, "label": "La Mise au Tombeau, chef-d'œuvre du XVe siècle"}, {"lat": 44.0353, "lng": 2.1138, "label": "Le musée Bajèn-Vega et les ruelles du village"}], "map-tarn-23": [{"lat": 44.1183, "lng": 1.8459, "label": "La Porte du Ravelin"}, {"lat": 44.118, "lng": 1.8455, "label": "Les remparts en fer à cheval"}, {"lat": 44.1186, "lng": 1.8462, "label": "Le château féodal"}, {"lat": 44.1178, "lng": 1.845, "label": "Les maisons à plumes et la route des Pigeonniers"}, {"lat": 44.117, "lng": 1.8445, "label": "Les berges du Cérou"}], "map-tarn-24": [{"lat": 43.9298, "lng": 2.148, "label": "Départ d'Albi vers Valence-d'Albigeois"}, {"lat": 44.1332, "lng": 2.313, "label": "Tanus et le viaduc du Viaur"}, {"lat": 44.142, "lng": 2.3213, "label": "Les belvédères du Viaur"}, {"lat": 44.1926, "lng": 2.3132, "label": "Pampelonne et les vestiges du château de Thuriès"}, {"lat": 43.9298, "lng": 2.148, "label": "Retour vers Albi par le Ségala"}], "map-tarn-25": [{"lat": 44.0631, "lng": 1.9524, "label": "Départ de Cordes-sur-Ciel"}, {"lat": 44.1183, "lng": 1.8459, "label": "Milhars, le village des remparts en fer à cheval"}, {"lat": 44.05, "lng": 2.0, "label": "Traversée du Ségala tarnais"}, {"lat": 44.0357, "lng": 2.1147, "label": "Monestiés et sa Mise au Tombeau"}, {"lat": 44.0556, "lng": 2.1567, "label": "Retour vers Carmaux par Blaye-les-Mines"}], "map-tarn-26": [{"lat": 43.6967, "lng": 1.8167, "label": "La cathédrale Saint-Alain et son Jacquemart"}, {"lat": 43.6959, "lng": 1.8172, "label": "Le pont sur l'Agout et le vieux moulin"}, {"lat": 43.6972, "lng": 1.8161, "label": "Le jardin de l'Évêché, belvédère sur la ville"}, {"lat": 43.6963, "lng": 1.8175, "label": "Le musée du Pays Vaurais"}, {"lat": 43.697, "lng": 1.8165, "label": "Les ruelles du centre historique"}], "map-tarn-27": [{"lat": 43.4514, "lng": 2.0669, "label": "Départ de Sorèze vers Revel"}, {"lat": 43.4636, "lng": 2.0011, "label": "Revel, la bastide au beffroi de bois"}, {"lat": 43.4189, "lng": 2.0329, "label": "Le lac de Saint-Ferréol"}, {"lat": 43.5636, "lng": 2.2214, "label": "Le village de Saix, au bord de l'Agout"}, {"lat": 43.6045, "lng": 2.2402, "label": "Retour vers Castres par la vallée de l'Agout"}], "map-rando-0": [{"lat": 43.6614, "lng": 2.3652, "label": "Départ du parking du Peyro Clabado"}, {"lat": 43.6588, "lng": 2.3701, "label": "Sentier sous la châtaigneraie"}, {"lat": 43.6531, "lng": 2.3395, "label": "Le Saut de la Truite, halte au bord de l'eau"}, {"lat": 43.6601, "lng": 2.3648, "label": "Retour par le chemin des rochers"}], "map-rando-1": [{"lat": 44.0522, "lng": 1.6635, "label": "Départ du village de Bruniquel"}, {"lat": 44.0498, "lng": 1.6701, "label": "Chemin de halage le long de l'Aveyron"}, {"lat": 44.0465, "lng": 1.6752, "label": "Point de vue sur les gorges"}, {"lat": 44.0533, "lng": 1.6642, "label": "Retour au pied du château"}], "map-rando-2": [{"lat": 43.6167, "lng": 2.1667, "label": "Départ du barrage de la Razisse"}, {"lat": 43.6145, "lng": 2.1701, "label": "Rive sud et roselières"}, {"lat": 43.6178, "lng": 2.1725, "label": "Belvédère sur le lac"}, {"lat": 43.6167, "lng": 2.1667, "label": "Retour par la digue"}], "map-rando-3": [{"lat": 44.107, "lng": 1.7965, "label": "Départ de la commanderie de Vaour"}, {"lat": 44.1102, "lng": 1.7898, "label": "Premier dolmen du causse"}, {"lat": 44.1135, "lng": 1.784, "label": "Lisière de la forêt de Grésigne"}, {"lat": 44.1071, "lng": 1.797, "label": "Retour vers Vaour"}], "map-rando-4": [{"lat": 43.8317, "lng": 1.7267, "label": "Départ du pont de Rabastens"}, {"lat": 43.8298, "lng": 1.7195, "label": "Chemin de halage vers l'aval"}, {"lat": 43.8341, "lng": 1.7301, "label": "Vignes en coteau"}, {"lat": 43.8319, "lng": 1.7271, "label": "Retour vers le village"}], "map-rando-5": [{"lat": 43.4189, "lng": 2.0329, "label": "Départ du barrage de Saint-Ferréol"}, {"lat": 43.4155, "lng": 2.0398, "label": "Rive est et pinède"}, {"lat": 43.4221, "lng": 2.0412, "label": "Point de vue sur la digue"}, {"lat": 43.4192, "lng": 2.0335, "label": "Retour vers le barrage"}], "map-rando-6": [{"lat": 43.706, "lng": 2.689, "label": "Départ de Lacaune-les-Bains"}, {"lat": 43.7002, "lng": 2.6951, "label": "Le long du Gijou"}, {"lat": 43.6978, "lng": 2.7012, "label": "Traversée de la hêtraie"}, {"lat": 43.7063, "lng": 2.6895, "label": "Retour vers Lacaune"}], "map-rando-7": [{"lat": 44.0631, "lng": 1.9524, "label": "Départ du pied de Cordes-sur-Ciel"}, {"lat": 44.0598, "lng": 1.9451, "label": "Sentier des Puechs"}, {"lat": 44.057, "lng": 1.9398, "label": "Point de vue sur la cité"}, {"lat": 44.0605, "lng": 1.9498, "label": "Retour vers Cordes"}], "map-rando-8": [{"lat": 43.696, "lng": 2.157, "label": "Départ de Lautrec"}, {"lat": 43.6928, "lng": 2.1642, "label": "Rive de l'étang du Merle"}, {"lat": 43.6975, "lng": 2.1698, "label": "Chemin à travers champs"}, {"lat": 43.6967, "lng": 2.1601, "label": "Retour vers Lautrec"}], "map-rando-9": [{"lat": 43.53, "lng": 2.28, "label": "Départ de Caucalières"}, {"lat": 43.5265, "lng": 2.2865, "label": "Sentier du causse"}, {"lat": 43.524, "lng": 2.2921, "label": "Point de vue sur la Montagne Noire"}, {"lat": 43.5292, "lng": 2.2831, "label": "Retour vers Caucalières"}]};
   var guideMapInstances = {};
+  window.guideMapsData = guideMapsData;
 
   function initGuideMap(id) {
     if (guideMapInstances[id]) return;
@@ -3209,33 +3328,185 @@
     });
     if (latlngs.length > 1) {
       L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
-      map.fitBounds(latlngs, { padding: [26, 26] });
+      map._ficheBounds = L.latLngBounds(latlngs);
+      map.fitBounds(map._ficheBounds, { padding: [30, 30] });
     } else if (latlngs.length === 1) {
+      map._ficheBounds = null;
       map.setView(latlngs[0], 13);
     }
     guideMapInstances[id] = map;
   }
 
-  function initVisibleGuideMaps() {
-    document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
+  function initVisibleGuideMaps(panelId) {
+    document.querySelectorAll('#' + panelId + ' .guide-map').forEach(function(el) {
       initGuideMap(el.id);
-      if (guideMapInstances[el.id]) {
-        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      var map = guideMapInstances[el.id];
+      if (map) {
+        setTimeout(function() {
+          map.invalidateSize();
+          if (map._ficheBounds) {
+            map.fitBounds(map._ficheBounds, { padding: [30, 30] });
+          }
+        }, 120);
       }
     });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var guidesTab = document.querySelector('.fiche-tab[data-panel="guides"]');
-    if (guidesTab) {
-      guidesTab.addEventListener('click', function() { setTimeout(initVisibleGuideMaps, 90); });
-    }
-    var panelGuides = document.getElementById('panel-guides');
-    if (panelGuides && panelGuides.classList.contains('active')) {
-      setTimeout(initVisibleGuideMaps, 250);
-    }
+    ['guides', 'randos'].forEach(function(panelName) {
+      var tab = document.querySelector('.fiche-tab[data-panel="' + panelName + '"]');
+      if (tab) {
+        tab.addEventListener('click', function() { setTimeout(function() { initVisibleGuideMaps('panel-' + panelName); }, 90); });
+      }
+      var panel = document.getElementById('panel-' + panelName);
+      if (panel && panel.classList.contains('active')) {
+        setTimeout(function() { initVisibleGuideMaps('panel-' + panelName); }, 250);
+      }
+    });
   });
 })();
+</script>
+<script>
+// Téléchargement d'une fiche circuit : construit une zone imprimable (infos + carte)
+// et déclenche l'impression du navigateur (choisir "Enregistrer au format PDF").
+// Aucune fenêtre pop-up n'est utilisée, ce qui évite les blocages navigateur.
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+var ficheImpressionMap = null;
+
+function telechargerFicheCircuit(btn) {
+  var card = btn.closest('.guide-card');
+  if (!card) return;
+
+  var titre = card.querySelector('.guide-card-header h4').textContent.trim();
+  var badges = Array.prototype.map.call(card.querySelectorAll('.guide-badge'), function(b) {
+    return b.textContent.trim();
+  });
+  var chapeauEl = card.querySelector('.guide-chapeau');
+  var chapeau = chapeauEl ? chapeauEl.textContent.trim() : '';
+  var mapEl = card.querySelector('.guide-map');
+  var mapId = mapEl ? mapEl.id : null;
+  var points = (mapId && window.guideMapsData && window.guideMapsData[mapId]) ? window.guideMapsData[mapId] : [];
+
+  var etapes = Array.prototype.map.call(card.querySelectorAll('.guide-etape'), function(et) {
+    var num = et.querySelector('.guide-etape-num').textContent.trim();
+    var h5 = et.querySelector('.guide-etape-corps h5');
+    var p = et.querySelector('.guide-etape-corps > p');
+    var anecdote = et.querySelector('.guide-anecdote');
+    return {
+      num: num,
+      titre: h5 ? h5.textContent.trim() : '',
+      texte: p ? p.textContent.trim() : '',
+      anecdote: anecdote ? anecdote.textContent.trim() : ''
+    };
+  });
+
+  // Nettoyage d'une éventuelle zone d'impression précédente
+  var old = document.getElementById('fiche-print-container');
+  if (old) old.remove();
+  if (ficheImpressionMap) {
+    try { ficheImpressionMap.remove(); } catch (e) {}
+    ficheImpressionMap = null;
+  }
+
+  var etapesHtml = etapes.map(function(e) {
+    return '<div class="p-etape">' +
+      '<div class="p-etape-num">' + esc(e.num) + '</div>' +
+      '<div class="p-etape-corps">' +
+        '<h5>' + esc(e.titre) + '</h5>' +
+        '<p>' + esc(e.texte) + '</p>' +
+        (e.anecdote ? '<div class="p-anecdote">' + esc(e.anecdote) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var badgesHtml = badges.map(function(b) { return '<span class="p-badge">' + esc(b) + '</span>'; }).join('');
+
+  var container = document.createElement('div');
+  container.id = 'fiche-print-container';
+  container.className = 'fiche-print-container';
+  container.innerHTML =
+    '<div class="p-col"><div class="p-info">' +
+      '<h1>' + esc(titre) + '</h1>' +
+      '<div class="p-badges">' + badgesHtml + '</div>' +
+      (chapeau ? '<p class="p-chapeau">' + esc(chapeau) + '</p>' : '') +
+      etapesHtml +
+    '</div></div>' +
+    '<div class="p-col"><div class="p-map-wrap">' +
+      '<div class="p-map" id="fiche-print-map"></div>' +
+      '<div class="p-map-caption">Fond de carte © OpenStreetMap contributors</div>' +
+    '</div></div>';
+
+  document.body.appendChild(container);
+
+  if (typeof L === 'undefined') {
+    // Leaflet n'a pas pu charger : on imprime quand même la partie infos
+    window.print();
+    return;
+  }
+
+  ficheImpressionMap = L.map('fiche-print-map', { zoomControl: false, attributionControl: false, scrollWheelZoom: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(ficheImpressionMap);
+
+  var latlngs = [];
+  points.forEach(function(pt, i) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div style="background:#8B5E0A;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);">' + (i + 1) + '</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
+    });
+    L.marker([pt.lat, pt.lng], { icon: icon }).addTo(ficheImpressionMap);
+    latlngs.push([pt.lat, pt.lng]);
+  });
+  var ficheBounds = null;
+  if (latlngs.length > 1) {
+    L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.8 }).addTo(ficheImpressionMap);
+    ficheBounds = L.latLngBounds(latlngs);
+    ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+  } else if (latlngs.length === 1) {
+    ficheImpressionMap.setView(latlngs[0], 13);
+  }
+
+  function recadrerFicheMap() {
+    ficheImpressionMap.invalidateSize();
+    if (ficheBounds) {
+      ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+    }
+  }
+
+  function lancerImpression() {
+    recadrerFicheMap();
+    setTimeout(function() {
+      window.print();
+    }, 300);
+  }
+
+  // On laisse un court délai pour que les tuiles de la carte se chargent avant impression
+  setTimeout(lancerImpression, 600);
+
+  // Filet de sécurité : au cas où la mise en page changerait juste avant l'impression
+  // (certains navigateurs recalculent la mise en page à cet instant), on recadre une
+  // dernière fois pour être certain qu'aucun repère ne soit coupé.
+  function avantImpression() {
+    if (ficheImpressionMap) { recadrerFicheMap(); }
+  }
+  window.addEventListener('beforeprint', avantImpression);
+
+  function nettoyerApresImpression() {
+    var c = document.getElementById('fiche-print-container');
+    if (c) c.remove();
+    if (ficheImpressionMap) {
+      try { ficheImpressionMap.remove(); } catch (e) {}
+      ficheImpressionMap = null;
+    }
+    window.removeEventListener('afterprint', nettoyerApresImpression);
+    window.removeEventListener('beforeprint', avantImpression);
+  }
+  window.addEventListener('afterprint', nettoyerApresImpression);
+}
 </script>
 </body>
 </html>

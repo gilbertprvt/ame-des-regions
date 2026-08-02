@@ -508,6 +508,92 @@
     }
     .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
     .leaflet-popup-content strong { color: #2C4A7C; }
+
+    /* Ligne badges + bouton Imprimer dans le cartouche du circuit */
+    .guide-card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .guide-card-meta-row .guide-card-meta { margin-top: 0; }
+    .guide-download-btn-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 20px;
+      color: rgba(255,255,255,0.92);
+      font-family: var(--font-corps);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .guide-download-btn-inline:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: #fff;
+      color: #fff;
+    }
+    .guide-download-btn-inline svg { flex-shrink: 0; }
+
+    /* Zone dédiée à l'impression de la fiche circuit (hors écran, révélée uniquement à l'impression) */
+    .fiche-print-container {
+      position: fixed;
+      top: 0;
+      left: -99999px;
+      width: 297mm;
+      height: 210mm;
+      background: #fff;
+      z-index: 99999;
+      display: flex;
+      align-items: stretch;
+      gap: 10mm;
+      padding: 10mm;
+      box-sizing: border-box;
+      font-family: Georgia, serif;
+      color: #2b2b2b;
+      min-height: 0;
+    }
+    /* Deux colonnes, chacune prend toute la hauteur de la page */
+    .fiche-print-container .p-col { flex: 1 1 50%; min-width: 0; min-height: 0; height: 100%; display: flex; flex-direction: column; }
+    .fiche-print-container .p-info {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 18px 22px;
+    }
+    .fiche-print-container .p-info h1 { font-family: Georgia, serif; font-size: 36px; line-height: 1.2; color: #2C4A7C; margin: 0 0 14px; }
+    .fiche-print-container .p-badges { margin-bottom: 16px; }
+    .fiche-print-container .p-badge { display: inline-block; font-size: 15px; background: #FAE8C8; color: #8B5E0A; padding: 5px 14px; border-radius: 14px; margin-right: 7px; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-chapeau { font-style: italic; font-size: 21px; color: #555; line-height: 1.6; margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px dashed #ccc; }
+    .fiche-print-container .p-etape { display: grid; grid-template-columns: 32px 1fr; gap: 13px; margin-bottom: 18px; }
+    .fiche-print-container .p-etape-num { width: 30px; height: 30px; border-radius: 50%; background: #FAE8C8; color: #8B5E0A; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps h5 { font-size: 21px; font-weight: 600; color: #2C4A7C; margin: 0 0 5px; font-family: var(--font-corps), Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps p { font-size: 18px; line-height: 1.5; margin: 0; }
+    .fiche-print-container .p-anecdote { margin-top: 7px; font-size: 16.5px; line-height: 1.45; color: #6B4A0A; background: #FDF0DC; border-left: 2px solid #E0A952; padding: 8px 13px; border-radius: 3px; }
+    .fiche-print-container .p-map-wrap { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 100%; position: relative; }
+    .fiche-print-container .p-map { width: 100%; height: 100%; }
+    .fiche-print-container .p-map-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.9); font-size: 10px; padding: 3px 8px; font-family: Arial, sans-serif; color: #555; }
+
+    @media print {
+      body > *:not(.fiche-print-container) { display: none !important; }
+      .fiche-print-container {
+        position: static !important;
+        left: 0 !important;
+        top: 0 !important;
+        /* On conserve volontairement les mêmes dimensions (297mm x 210mm) qu'à l'écran :
+           si la taille du conteneur change entre le calcul du cadrage de la carte et
+           l'impression, la carte se retrouve redimensionnée sans être recentrée et
+           certains repères sortent du cadre. */
+      }
+      @page { size: A4 landscape; margin: 0; }
+    }
 </style>
 <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
 <body class="fiche-page">
@@ -1597,11 +1683,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Montpellier, de l'Écusson à Antigone</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 2h</span>
 <span class="guide-badge">Centre historique</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Montpellier n'a jamais eu de fleuve ni de rempart antique pour la fonder : elle est née, au XIe siècle, d'un simple carrefour de routes commerciales. Depuis, la ville n'a cessé de se réinventer — jusqu'à ce quartier de béton et de colonnes que nous découvrirons en fin de parcours. »</p><div class="guide-map" id="map-herault-0"></div>
 <div class="guide-etapes">
@@ -1646,11 +1732,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Sète, entre canaux et Mont Saint-Clair</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 2h</span>
 <span class="guide-badge">Île singulière</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Sète n'est pas une ville comme les autres : c'est une île reliée à la terre par des cordons de sable, cernée d'étangs et de canaux. Georges Brassens, enfant du pays, disait qu'on y naît "avec la mer sous les pieds". »</p><div class="guide-map" id="map-herault-1"></div>
 <div class="guide-etapes">
@@ -1695,11 +1781,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Pézenas, sur les pas de Molière</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Ville d'art et d'histoire</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Pézenas fut, au XVIIe siècle, l'une des villes les plus brillantes du Languedoc — les états de la province s'y réunissaient régulièrement. C'est ici qu'un jeune comédien nommé Molière trouva ses premiers publics et, dit-on, l'inspiration de plusieurs de ses personnages. »</p><div class="guide-map" id="map-herault-2"></div>
 <div class="guide-etapes">
@@ -1744,11 +1830,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Béziers, entre arènes et canal du Midi</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 2h</span>
 <span class="guide-badge">Centre-ville et Fonséranes</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer<</button></div>
 </div>
 <p class="guide-chapeau">« Béziers domine l'Orb du haut de son promontoire depuis l'Antiquité. La ville, capitale du vin languedocien, garde la mémoire d'un tragique épisode de la croisade contre les Cathares autant que celle du génie qui donna naissance au canal du Midi. »</p><div class="guide-map" id="map-herault-3"></div>
 <div class="guide-etapes">
@@ -1793,11 +1879,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Saint-Guilhem-le-Désert, cité de l'abbaye de Gellone</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Étape de Compostelle</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer<</button></div>
 </div>
 <p class="guide-chapeau">« Ici, au fond des gorges, un compagnon de Charlemagne choisit de se retirer du monde pour fonder une abbaye. Neuf siècles de pèlerinage vers Compostelle ont fait de ce village replié sur lui-même l'un des plus attachants du Languedoc. »</p><div class="guide-map" id="map-herault-4"></div>
 <div class="guide-etapes">
@@ -1842,11 +1928,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Agde, la cité noire au bord de l'Hérault</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Cité antique</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer<</button></div>
 </div>
 <p class="guide-chapeau">« Fondée par des marins grecs il y a près de 2 600 ans, Agde est l'une des plus vieilles villes de France. Bâtie en basalte noir venu du volcan voisin du Mont Saint-Loup, elle offre une silhouette sombre et minérale unique sur tout le littoral languedocien. »</p><div class="guide-map" id="map-herault-5"></div>
 <div class="guide-etapes">
@@ -1891,11 +1977,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des vins, Pic Saint-Loup et Terrasses du Larzac</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 50 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route grimpe des portes de Montpellier jusqu'aux contreforts des Cévennes, à travers deux des appellations les plus courues du Languedoc, sous le regard minéral du Pic Saint-Loup. »</p><div class="guide-map" id="map-herault-6"></div>
 <div class="guide-etapes">
@@ -1940,11 +2026,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Cirque de Navacelles et Causses du Larzac</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 90 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route grimpe des gorges de l'Hérault jusqu'aux vastes étendues du Causse du Larzac, avant de plonger vers l'un des paysages les plus vertigineux de France : un méandre de rivière abandonné, figé dans la roche depuis des millénaires. »</p><div class="guide-map" id="map-herault-7"></div>
 <div class="guide-etapes">
@@ -1989,11 +2075,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Haut-Languedoc, gorges d'Héric et Caroux-Espinouse</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 60 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Loin de la côte méditerranéenne, cette route dévoile un Hérault de montagne, forestier et sauvage, royaume des vautours et des rivières de granit, aux confins du parc naturel régional du Haut-Languedoc. »</p><div class="guide-map" id="map-herault-8"></div>
 <div class="guide-etapes">
@@ -2038,11 +2124,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des étangs, Sète à Agde par Bouzigues et Marseillan</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 35 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route côtière longe l'un des plus grands étangs de la Méditerranée française, entre villages ostréicoles, cabanes conchylicoles et petits ports pittoresques. »</p><div class="guide-map" id="map-herault-9"></div>
 <div class="guide-etapes">
@@ -2087,11 +2173,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Lac du Salagou et cirque de Mourèze</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 40 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Ce petit circuit dévoile deux paysages géologiques parmi les plus étonnants de l'Hérault : des terres rouges volcaniques nées d'une catastrophe naturelle, et un chaos rocheux qui semble tout droit sorti d'un rêve. »</p><div class="guide-map" id="map-herault-10"></div>
 <div class="guide-etapes">
@@ -2136,11 +2222,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Gorges de l'Hérault, de Saint-Guilhem à Ganges</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 30 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route longe le fleuve Hérault depuis sa sortie des gorges profondes jusqu'à la ville de la soierie, entre grottes ornées, pierres millénaires et rivière aux eaux turquoise. »</p><div class="guide-map" id="map-herault-11"></div>
 <div class="guide-etapes">
@@ -2185,11 +2271,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Minerve, la cité du bûcher cathare</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Village classé</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Minerve occupe un promontoire vertigineux, encerclé par les gorges creusées par deux rivières. En 1210, la cité résista six semaines aux troupes de Simon de Montfort avant de connaître l'un des épisodes les plus tragiques de la croisade albigeoise. »</p><div class="guide-map" id="map-herault-12"></div>
 <div class="guide-etapes">
@@ -2234,11 +2320,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des villages cathares, Minerve et Olargues</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 90 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Cette route traverse le Minervois et le Haut-Languedoc, deux territoires marqués par la croisade albigeoise et façonnés depuis par la vigne et le châtaignier, entre village assiégé et cité perchée au-dessus du Jaur. »</p><div class="guide-map" id="map-herault-13"></div>
 <div class="guide-etapes">
@@ -2282,11 +2368,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route des vignobles de Saint-Chinian et du canal du Midi</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 70 km</span>
 <span class="guide-badge">Journée complète</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>TImprimer</button></div>
 </div>
 <p class="guide-chapeau">« À l'ouest de Béziers, cette route relie deux visages du terroir héraultais : les coteaux de schiste et de calcaire de Saint-Chinian, et le canal du Midi qui, depuis trois siècles, irrigue et relie ces villages viticoles entre eux. »</p><div class="guide-map" id="map-herault-14"></div>
 <div class="guide-etapes">
@@ -2331,11 +2417,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Boucle des plages et lagunes, de Palavas à Frontignan</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 45 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Aux portes de Montpellier, cette route côtière longe cordons de sable, étangs et lagunes, entre station balnéaire historique, cathédrale isolée sur son île et vignoble de muscat qui plonge les pieds dans la mer. »</p><div class="guide-map" id="map-herault-15"></div>
 <div class="guide-etapes">
@@ -2380,11 +2466,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Lodève, cité de laine et de marbre</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h30</span>
 <span class="guide-badge">Ville d'art et d'histoire</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Lodève a longtemps vécu de deux matières premières : la laine, qui habillait les soldats du roi, et le marbre rose, qui orna l'Opéra Garnier. Entre cathédrale-forteresse et ruelles ouvrières, la ville garde la mémoire de ce double artisanat. »</p><div class="guide-map" id="map-herault-16"></div>
 <div class="guide-etapes">
@@ -2429,11 +2515,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Villeneuvette, le village-usine utopique</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 45 min</span>
 <span class="guide-badge">Village-manufacture</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Franchissez la porte close et entrez dans un autre siècle : Villeneuvette est un village entièrement construit autour d'une manufacture de draps, pensé comme une petite cité idéale où logis ouvriers, église et usine formaient un tout clos sur lui-même. »</p><div class="guide-map" id="map-herault-17"></div>
 <div class="guide-etapes">
@@ -2471,11 +2557,11 @@
 <div class="guide-card" data-type="pied">
 <div class="guide-card-header">
 <h4>Roquebrun, le jardin méditerranéen sur l'Orb</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">À pied</span>
 <span class="guide-badge">Env. 1h15</span>
 <span class="guide-badge">Microclimat méditerranéen</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Surnommé le petit Nice héraultais, Roquebrun bénéficie d'un microclimat si doux que mimosas, citronniers et cactus y poussent en pleine terre. Un village accroché à son rocher, les pieds dans l'Orb, la tête dans les agrumes. »</p><div class="guide-map" id="map-herault-18"></div>
 <div class="guide-etapes">
@@ -2513,11 +2599,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route du piémont biterrois, Faugères et Cabrières</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 50 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Entre Béziers et les premiers contreforts du Haut-Languedoc, cette route traverse un piémont façonné à la fois par la vigne et par l'une des plus anciennes activités minières d'Europe, remontant à l'âge du cuivre. »</p><div class="guide-map" id="map-herault-19"></div>
 <div class="guide-etapes">
@@ -2562,11 +2648,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route de l'oppidum d'Ensérune et du tunnel du Malpas</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 30 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« Aux portes de Béziers, cette courte route réunit trois prouesses d'époques radicalement différentes : un village gaulois perché depuis l'âge du fer, un étang asséché en forme de soleil, et un tunnel que Riquet perça sous la colline malgré l'avis du ministre Colbert. »</p><div class="guide-map" id="map-herault-20"></div>
 <div class="guide-etapes">
@@ -2611,11 +2697,11 @@
 <div class="guide-card" data-type="voiture">
 <div class="guide-card-header">
 <h4>Route de la Grande-Motte et de la Petite Camargue héraultaise</h4>
-<div class="guide-card-meta">
+<div class="guide-card-meta-row"><div class="guide-card-meta">
 <span class="guide-badge">En voiture</span>
 <span class="guide-badge">Env. 40 km</span>
 <span class="guide-badge">Demi-journée</span>
-</div>
+</div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
 </div>
 <p class="guide-chapeau">« À l'est de Montpellier s'étend une Camargue miniature, où étangs saumâtres et flamants roses côtoient l'une des expériences architecturales les plus audacieuses du littoral français : une station balnéaire tout entière bâtie en pyramides de béton. »</p><div class="guide-map" id="map-herault-21"></div>
 <div class="guide-etapes">
@@ -2743,7 +2829,8 @@
 
 <script>
 (function() {
-  var guideMapsData = {"map-herault-0": [{"lat": 43.6081, "lng": 3.8794, "label": "La place de la Comédie"}, {"lat": 43.6114, "lng": 3.8767, "label": "L'Écusson et ses ruelles marchandes"}, {"lat": 43.6135, "lng": 3.8698, "label": "La cathédrale Saint-Pierre et la faculté de médecine"}, {"lat": 43.6117, "lng": 3.8677, "label": "La promenade du Peyrou"}, {"lat": 43.6068, "lng": 3.889, "label": "Le quartier Antigone"}], "map-herault-1": [{"lat": 43.4034, "lng": 3.6903, "label": "Le quartier de la Pointe Courte"}, {"lat": 43.4055, "lng": 3.696, "label": "Les canaux et le pont de la Savonnerie"}, {"lat": 43.396, "lng": 3.694, "label": "Le cimetière marin et Paul Valéry"}, {"lat": 43.395, "lng": 3.699, "label": "L'ascension du Mont Saint-Clair"}, {"lat": 43.398, "lng": 3.693, "label": "Le môle Saint-Louis"}], "map-herault-2": [{"lat": 43.4593, "lng": 3.4234, "label": "La place Gambetta et la maison consulaire"}, {"lat": 43.4598, "lng": 3.4238, "label": "Les hôtels particuliers de la rue Alfred Sabatier"}, {"lat": 43.459, "lng": 3.423, "label": "Le quartier des artisans d'art"}, {"lat": 43.4596, "lng": 3.424, "label": "Le théâtre municipal"}, {"lat": 43.46, "lng": 3.4245, "label": "Le musée Vulliod-Saint-Germain"}], "map-herault-3": [{"lat": 43.3442, "lng": 3.2158, "label": "La cathédrale Saint-Nazaire"}, {"lat": 43.341, "lng": 3.2145, "label": "Les allées Paul-Riquet"}, {"lat": 43.339, "lng": 3.22, "label": "Les arènes et le plateau des Poètes"}, {"lat": 43.3425, "lng": 3.216, "label": "Le marché couvert des Halles"}, {"lat": 43.332, "lng": 3.201, "label": "Les neuf écluses de Fonséranes"}], "map-herault-4": [{"lat": 43.7439, "lng": 3.5514, "label": "La place de la Liberté et son platane"}, {"lat": 43.7442, "lng": 3.551, "label": "L'abbaye de Gellone"}, {"lat": 43.7437, "lng": 3.5518, "label": "Les ruelles médiévales"}, {"lat": 43.7278, "lng": 3.5658, "label": "Le Pont du Diable"}, {"lat": 43.728, "lng": 3.565, "label": "Les rives de l'Hérault"}], "map-herault-5": [{"lat": 43.3106, "lng": 3.4756, "label": "L'église Saint-Étienne, forteresse de basalte"}, {"lat": 43.3095, "lng": 3.474, "label": "Les quais de l'Hérault"}, {"lat": 43.311, "lng": 3.476, "label": "Le musée agathois"}, {"lat": 43.3103, "lng": 3.475, "label": "Les ruelles du centre historique"}, {"lat": 43.287, "lng": 3.47, "label": "Le port de plaisance et l'embouchure"}], "map-herault-6": [{"lat": 43.7607, "lng": 3.85, "label": "Départ vers Saint-Mathieu-de-Tréviers"}, {"lat": 43.7847, "lng": 3.8177, "label": "Le Pic Saint-Loup"}, {"lat": 43.77, "lng": 3.83, "label": "Un domaine viticole de l'appellation"}, {"lat": 43.74, "lng": 3.59, "label": "Traversée vers les Terrasses du Larzac"}, {"lat": 43.75, "lng": 3.7, "label": "Retour par les villages viticoles"}], "map-herault-7": [{"lat": 43.9337, "lng": 3.7053, "label": "Départ vers Ganges, ville de la soierie"}, {"lat": 43.9, "lng": 3.65, "label": "La montée vers le Causse du Larzac"}, {"lat": 43.8858, "lng": 3.5069, "label": "Le belvédère du cirque de Navacelles"}, {"lat": 43.8843, "lng": 3.5063, "label": "La descente vers le village et le moulin"}, {"lat": 43.9, "lng": 3.6, "label": "Retour par les Causses"}], "map-herault-8": [{"lat": 43.6017, "lng": 3.09, "label": "Départ vers Lamalou-les-Bains"}, {"lat": 43.575, "lng": 3.033, "label": "Les gorges d'Héric"}, {"lat": 43.66, "lng": 2.92, "label": "Le col de l'Espinouse"}, {"lat": 43.4919, "lng": 2.7614, "label": "Saint-Pons-de-Thomières"}, {"lat": 43.5497, "lng": 2.9967, "label": "Retour par Olargues"}], "map-herault-9": [{"lat": 43.395, "lng": 3.699, "label": "Départ de Sète et le Mont Saint-Clair"}, {"lat": 43.453, "lng": 3.654, "label": "Bouzigues, village de l'huître"}, {"lat": 43.4256, "lng": 3.607, "label": "Mèze et son port de pêche"}, {"lat": 43.3603, "lng": 3.5453, "label": "Marseillan et les caves Noilly Prat"}, {"lat": 43.3106, "lng": 3.4756, "label": "Arrivée à Agde par le canal du Midi"}], "map-herault-10": [{"lat": 43.6297, "lng": 3.4318, "label": "Départ vers Clermont-l'Hérault"}, {"lat": 43.6544, "lng": 3.3814, "label": "Le lac du Salagou"}, {"lat": 43.6613, "lng": 3.345, "label": "Le village d'Octon"}, {"lat": 43.6394, "lng": 3.3623, "label": "Le cirque de Mourèze"}, {"lat": 43.64, "lng": 3.4, "label": "Retour par les villages viticoles"}], "map-herault-11": [{"lat": 43.7439, "lng": 3.5514, "label": "Départ de Saint-Guilhem-le-Désert"}, {"lat": 43.7311, "lng": 3.5599, "label": "La grotte de Clamouse"}, {"lat": 43.7217, "lng": 3.568, "label": "Saint-Jean-de-Fos et ses potiers"}, {"lat": 43.9236, "lng": 3.7057, "label": "La grotte des Demoiselles"}, {"lat": 43.9337, "lng": 3.7053, "label": "Ganges, la ville de la soierie"}], "map-herault-12": [{"lat": 43.3543, "lng": 2.7468, "label": "Le pont naturel de la Cesse"}, {"lat": 43.3547, "lng": 2.7472, "label": "Les ruelles du village classé"}, {"lat": 43.355, "lng": 2.7475, "label": "La Candela, vestige du château"}, {"lat": 43.3552, "lng": 2.7478, "label": "L'église Saint-Étienne et sa table d'autel paléochrétienne"}, {"lat": 43.3545, "lng": 2.747, "label": "Le musée Hurepel, mémoire du siège"}], "map-herault-13": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers le Minervois"}, {"lat": 43.3547, "lng": 2.7472, "label": "Minerve, la cité assiégée"}, {"lat": 43.3717, "lng": 2.7717, "label": "La Caunette, petit village de vignerons"}, {"lat": 43.45, "lng": 2.85, "label": "Traversée du Haut-Languedoc"}, {"lat": 43.5497, "lng": 2.9967, "label": "Olargues, le pont du Diable sur le Jaur"}], "map-herault-14": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Saint-Chinian"}, {"lat": 43.4181, "lng": 2.9463, "label": "Le vignoble de Saint-Chinian, entre schiste et calcaire"}, {"lat": 43.5528, "lng": 3.2242, "label": "Roquessels, sentinelle viticole du Rougier"}, {"lat": 43.3325, "lng": 3.0333, "label": "Capestang, la collégiale inachevée et le canal du Midi"}, {"lat": 43.332, "lng": 3.201, "label": "Retour par le canal du Midi vers Béziers"}], "map-herault-15": [{"lat": 43.6081, "lng": 3.8794, "label": "Départ de Montpellier vers Palavas-les-Flots"}, {"lat": 43.5286, "lng": 3.9308, "label": "Palavas-les-Flots, la station des Montpelliérains"}, {"lat": 43.522, "lng": 3.897, "label": "La cathédrale de Maguelone, isolée entre étang et mer"}, {"lat": 43.4453, "lng": 3.7564, "label": "Frontignan et la route du Muscat"}, {"lat": 43.55, "lng": 3.95, "label": "Retour par l'étang de l'Or"}], "map-herault-16": [{"lat": 43.7275, "lng": 3.3197, "label": "La cathédrale Saint-Fulcran"}, {"lat": 43.7278, "lng": 3.32, "label": "Le musée de Lodève"}, {"lat": 43.7271, "lng": 3.3193, "label": "Les ruelles de la manufacture royale de draps"}, {"lat": 43.7255, "lng": 3.3175, "label": "Le pont de Montifort sur la Lergue"}, {"lat": 43.7273, "lng": 3.3198, "label": "Le souvenir du marbre rose"}], "map-herault-17": [{"lat": 43.6111, "lng": 3.4003, "label": "La porte d'entrée et l'inscription « Honneur au Travail »"}, {"lat": 43.6113, "lng": 3.4006, "label": "La manufacture royale de draps"}, {"lat": 43.6109, "lng": 3.4001, "label": "Les logis ouvriers et la place centrale"}, {"lat": 43.6115, "lng": 3.4008, "label": "L'église et le silence retrouvé du village"}], "map-herault-18": [{"lat": 43.4967, "lng": 3.0989, "label": "Le vieux village et ses ruelles en calades"}, {"lat": 43.497, "lng": 3.0985, "label": "La tour de guet, vestige du château médiéval"}, {"lat": 43.4963, "lng": 3.0992, "label": "Le jardin méditerranéen"}, {"lat": 43.4958, "lng": 3.0978, "label": "Les rives de l'Orb et la plage fluviale"}], "map-herault-19": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Faugères"}, {"lat": 43.5325, "lng": 3.1758, "label": "Le vignoble de Faugères, terroir de schiste"}, {"lat": 43.5794, "lng": 3.3417, "label": "Les mines de cuivre de Cabrières"}, {"lat": 43.578, "lng": 3.34, "label": "Le village de Cabrières et sa faille géologique"}, {"lat": 43.45, "lng": 3.27, "label": "Retour vers Béziers par le piémont"}], "map-herault-20": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Nissan-lez-Ensérune"}, {"lat": 43.3106, "lng": 3.1594, "label": "L'oppidum d'Ensérune"}, {"lat": 43.3125, "lng": 3.165, "label": "L'étang asséché de Montady, le soleil de terre"}, {"lat": 43.2975, "lng": 3.2075, "label": "Le tunnel du Malpas sur le canal du Midi"}, {"lat": 43.3067, "lng": 3.2144, "label": "Retour par Colombiers et le canal du Midi"}], "map-herault-21": [{"lat": 43.6081, "lng": 3.8794, "label": "Départ de Montpellier vers Lattes"}, {"lat": 43.5714, "lng": 3.9139, "label": "Lattes et le site archéologique de Lattara"}, {"lat": 43.6156, "lng": 4.0086, "label": "Mauguio et l'étang de l'Or"}, {"lat": 43.5619, "lng": 4.0794, "label": "La Grande-Motte, l'utopie balnéaire des pyramides"}, {"lat": 43.58, "lng": 4.02, "label": "Retour par les marais et les flamants roses"}]};
+  var guideMapsData = {"map-herault-0": [{"lat": 43.6081, "lng": 3.8794, "label": "La place de la Comédie"}, {"lat": 43.6114, "lng": 3.8767, "label": "L'Écusson et ses ruelles marchandes"}, {"lat": 43.6135, "lng": 3.8698, "label": "La cathédrale Saint-Pierre et la faculté de médecine"}, {"lat": 43.6117, "lng": 3.8677, "label": "La promenade du Peyrou"}, {"lat": 43.6068, "lng": 3.889, "label": "Le quartier Antigone"}], "map-herault-1": [{"lat": 43.413, "lng": 3.6922, "label": "Le quartier de la Pointe Courte"}, {"lat": 43.4055, "lng": 3.696, "label": "Les canaux et le pont de la Savonnerie"}, {"lat": 43.3945, "lng": 3.6935, "label": "Le cimetière marin et Paul Valéry"}, {"lat": 43.3985, "lng": 3.6891, "label": "L'ascension du Mont Saint-Clair"}, {"lat": 43.3956, "lng": 3.6992, "label": "Le môle Saint-Louis"}], "map-herault-2": [{"lat": 43.4593, "lng": 3.4234, "label": "La place Gambetta et la maison consulaire"}, {"lat": 43.4598, "lng": 3.4238, "label": "Les hôtels particuliers de la rue Alfred Sabatier"}, {"lat": 43.459, "lng": 3.423, "label": "Le quartier des artisans d'art"}, {"lat": 43.4596, "lng": 3.424, "label": "Le théâtre municipal"}, {"lat": 43.46, "lng": 3.4245, "label": "Le musée Vulliod-Saint-Germain"}], "map-herault-3": [{"lat": 43.3442, "lng": 3.2158, "label": "La cathédrale Saint-Nazaire"}, {"lat": 43.341, "lng": 3.2145, "label": "Les allées Paul-Riquet"}, {"lat": 43.339, "lng": 3.22, "label": "Les arènes et le plateau des Poètes"}, {"lat": 43.3425, "lng": 3.216, "label": "Le marché couvert des Halles"}, {"lat": 43.332, "lng": 3.201, "label": "Les neuf écluses de Fonséranes"}], "map-herault-4": [{"lat": 43.7439, "lng": 3.5514, "label": "La place de la Liberté et son platane"}, {"lat": 43.7442, "lng": 3.551, "label": "L'abbaye de Gellone"}, {"lat": 43.7437, "lng": 3.5518, "label": "Les ruelles médiévales"}, {"lat": 43.7278, "lng": 3.5658, "label": "Le Pont du Diable"}, {"lat": 43.728, "lng": 3.565, "label": "Les rives de l'Hérault"}], "map-herault-5": [{"lat": 43.3106, "lng": 3.4756, "label": "L'église Saint-Étienne, forteresse de basalte"}, {"lat": 43.3095, "lng": 3.474, "label": "Les quais de l'Hérault"}, {"lat": 43.311, "lng": 3.476, "label": "Le musée agathois"}, {"lat": 43.3103, "lng": 3.475, "label": "Les ruelles du centre historique"}, {"lat": 43.287, "lng": 3.47, "label": "Le port de plaisance et l'embouchure"}], "map-herault-6": [{"lat": 43.7607, "lng": 3.85, "label": "Départ vers Saint-Mathieu-de-Tréviers"}, {"lat": 43.7847, "lng": 3.8177, "label": "Le Pic Saint-Loup"}, {"lat": 43.77, "lng": 3.83, "label": "Un domaine viticole de l'appellation"}, {"lat": 43.74, "lng": 3.59, "label": "Traversée vers les Terrasses du Larzac"}, {"lat": 43.75, "lng": 3.7, "label": "Retour par les villages viticoles"}], "map-herault-7": [{"lat": 43.9337, "lng": 3.7053, "label": "Départ vers Ganges, ville de la soierie"}, {"lat": 43.9, "lng": 3.65, "label": "La montée vers le Causse du Larzac"}, {"lat": 43.8858, "lng": 3.5069, "label": "Le belvédère du cirque de Navacelles"}, {"lat": 43.8843, "lng": 3.5063, "label": "La descente vers le village et le moulin"}, {"lat": 43.9, "lng": 3.6, "label": "Retour par les Causses"}], "map-herault-8": [{"lat": 43.6017, "lng": 3.09, "label": "Départ vers Lamalou-les-Bains"}, {"lat": 43.575, "lng": 3.033, "label": "Les gorges d'Héric"}, {"lat": 43.66, "lng": 2.92, "label": "Le col de l'Espinouse"}, {"lat": 43.4919, "lng": 2.7614, "label": "Saint-Pons-de-Thomières"}, {"lat": 43.5497, "lng": 2.9967, "label": "Retour par Olargues"}], "map-herault-9": [{"lat": 43.395, "lng": 3.699, "label": "Départ de Sète et le Mont Saint-Clair"}, {"lat": 43.453, "lng": 3.654, "label": "Bouzigues, village de l'huître"}, {"lat": 43.4256, "lng": 3.607, "label": "Mèze et son port de pêche"}, {"lat": 43.3603, "lng": 3.5453, "label": "Marseillan et les caves Noilly Prat"}, {"lat": 43.3106, "lng": 3.4756, "label": "Arrivée à Agde par le canal du Midi"}], "map-herault-10": [{"lat": 43.6297, "lng": 3.4318, "label": "Départ vers Clermont-l'Hérault"}, {"lat": 43.6544, "lng": 3.3814, "label": "Le lac du Salagou"}, {"lat": 43.6613, "lng": 3.345, "label": "Le village d'Octon"}, {"lat": 43.6394, "lng": 3.3623, "label": "Le cirque de Mourèze"}, {"lat": 43.64, "lng": 3.4, "label": "Retour par les villages viticoles"}], "map-herault-11": [{"lat": 43.7439, "lng": 3.5514, "label": "Départ de Saint-Guilhem-le-Désert"}, {"lat": 43.7311, "lng": 3.5599, "label": "La grotte de Clamouse"}, {"lat": 43.7217, "lng": 3.568, "label": "Saint-Jean-de-Fos et ses potiers"}, {"lat": 43.9236, "lng": 3.7057, "label": "La grotte des Demoiselles"}, {"lat": 43.9337, "lng": 3.7053, "label": "Ganges, la ville de la soierie"}], "map-herault-12": [{"lat": 43.3543, "lng": 2.7468, "label": "Le pont naturel de la Cesse"}, {"lat": 43.3547, "lng": 2.7472, "label": "Les ruelles du village classé"}, {"lat": 43.355, "lng": 2.7475, "label": "La Candela, vestige du château"}, {"lat": 43.3552, "lng": 2.7478, "label": "L'église Saint-Étienne et sa table d'autel paléochrétienne"}, {"lat": 43.3545, "lng": 2.747, "label": "Le musée Hurepel, mémoire du siège"}], "map-herault-13": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers le Minervois"}, {"lat": 43.3547, "lng": 2.7472, "label": "Minerve, la cité assiégée"}, {"lat": 43.3717, "lng": 2.7717, "label": "La Caunette, petit village de vignerons"}, {"lat": 43.45, "lng": 2.85, "label": "Traversée du Haut-Languedoc"}, {"lat": 43.5497, "lng": 2.9967, "label": "Olargues, le pont du Diable sur le Jaur"}], "map-herault-14": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Saint-Chinian"}, {"lat": 43.4181, "lng": 2.9463, "label": "Le vignoble de Saint-Chinian, entre schiste et calcaire"}, {"lat": 43.5528, "lng": 3.2242, "label": "Roquessels, sentinelle viticole du Rougier"}, {"lat": 43.3325, "lng": 3.0333, "label": "Capestang, la collégiale inachevée et le canal du Midi"}, {"lat": 43.332, "lng": 3.201, "label": "Retour par le canal du Midi vers Béziers"}], "map-herault-15": [{"lat": 43.6081, "lng": 3.8794, "label": "Départ de Montpellier vers Palavas-les-Flots"}, {"lat": 43.5286, "lng": 3.9308, "label": "Palavas-les-Flots, la station des Montpelliérains"}, {"lat": 43.522, "lng": 3.897, "label": "La cathédrale de Maguelone, isolée entre étang et mer"}, {"lat": 43.4453, "lng": 3.7564, "label": "Frontignan et la route du Muscat"}, {"lat": 43.55, "lng": 3.95, "label": "Retour par l'étang de l'Or"}], "map-herault-16": [{"lat": 43.7275, "lng": 3.3197, "label": "La cathédrale Saint-Fulcran"}, {"lat": 43.7278, "lng": 3.32, "label": "Le musée de Lodève"}, {"lat": 43.7271, "lng": 3.3193, "label": "Les ruelles de la manufacture royale de draps"}, {"lat": 43.7255, "lng": 3.3175, "label": "Le pont de Montifort sur la Lergue"}, {"lat": 43.7273, "lng": 3.3198, "label": "Le souvenir du marbre rose"}], "map-herault-17": [{"lat": 43.6111, "lng": 3.4003, "label": "La porte d'entrée et l'inscription « Honneur au Travail »"}, {"lat": 43.6113, "lng": 3.4006, "label": "La manufacture royale de draps"}, {"lat": 43.6109, "lng": 3.4001, "label": "Les logis ouvriers et la place centrale"}, {"lat": 43.6115, "lng": 3.4008, "label": "L'église et le silence retrouvé du village"}], "map-herault-18": [{"lat": 43.4967, "lng": 3.0989, "label": "Le vieux village et ses ruelles en calades"}, {"lat": 43.497, "lng": 3.0985, "label": "La tour de guet, vestige du château médiéval"}, {"lat": 43.4963, "lng": 3.0992, "label": "Le jardin méditerranéen"}, {"lat": 43.4958, "lng": 3.0978, "label": "Les rives de l'Orb et la plage fluviale"}], "map-herault-19": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Faugères"}, {"lat": 43.5325, "lng": 3.1758, "label": "Le vignoble de Faugères, terroir de schiste"}, {"lat": 43.5794, "lng": 3.3417, "label": "Les mines de cuivre de Cabrières"}, {"lat": 43.578, "lng": 3.34, "label": "Le village de Cabrières et sa faille géologique"}, {"lat": 43.45, "lng": 3.27, "label": "Retour vers Béziers par le piémont"}], "map-herault-20": [{"lat": 43.3442, "lng": 3.2158, "label": "Départ de Béziers vers Nissan-lez-Ensérune"}, {"lat": 43.3106, "lng": 3.1594, "label": "L'oppidum d'Ensérune"}, {"lat": 43.3125, "lng": 3.165, "label": "L'étang asséché de Montady, le soleil de terre"}, {"lat": 43.2975, "lng": 3.2075, "label": "Le tunnel du Malpas sur le canal du Midi"}, {"lat": 43.3067, "lng": 3.2144, "label": "Retour par Colombiers et le canal du Midi"}], "map-herault-21": [{"lat": 43.6081, "lng": 3.8794, "label": "Départ de Montpellier vers Lattes"}, {"lat": 43.5714, "lng": 3.9139, "label": "Lattes et le site archéologique de Lattara"}, {"lat": 43.6156, "lng": 4.0086, "label": "Mauguio et l'étang de l'Or"}, {"lat": 43.5619, "lng": 4.0794, "label": "La Grande-Motte, l'utopie balnéaire des pyramides"}, {"lat": 43.58, "lng": 4.02, "label": "Retour par les marais et les flamants roses"}]};
+  window.guideMapsData = guideMapsData;
   var guideMapInstances = {};
 
   function initGuideMap(id) {
@@ -2770,8 +2857,10 @@
     });
     if (latlngs.length > 1) {
       L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
-      map.fitBounds(latlngs, { padding: [26, 26] });
+      map._ficheBounds = L.latLngBounds(latlngs);
+      map.fitBounds(map._ficheBounds, { padding: [30, 30] });
     } else if (latlngs.length === 1) {
+      map._ficheBounds = null;
       map.setView(latlngs[0], 13);
     }
     guideMapInstances[id] = map;
@@ -2780,8 +2869,18 @@
   function initVisibleGuideMaps() {
     document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
       initGuideMap(el.id);
-      if (guideMapInstances[el.id]) {
-        setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+      var map = guideMapInstances[el.id];
+      if (map) {
+        // Le conteneur peut ne pas avoir sa taille définitive au moment de l'init
+        // (onglet/carte tout juste rendus visibles) : on recalcule la taille PUIS
+        // on réapplique le cadrage sur tous les repères pour être sûr qu'aucun
+        // ne reste coupé en bordure de carte.
+        setTimeout(function() {
+          map.invalidateSize();
+          if (map._ficheBounds) {
+            map.fitBounds(map._ficheBounds, { padding: [30, 30] });
+          }
+        }, 120);
       }
     });
   }
@@ -2797,6 +2896,149 @@
     }
   });
 })();
+</script>
+
+<script>
+// Téléchargement d'une fiche circuit : construit une zone imprimable (infos + carte)
+// et déclenche l'impression du navigateur (choisir "Enregistrer au format PDF").
+// Aucune fenêtre pop-up n'est utilisée, ce qui évite les blocages navigateur.
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+var ficheImpressionMap = null;
+
+function telechargerFicheCircuit(btn) {
+  var card = btn.closest('.guide-card');
+  if (!card) return;
+
+  var titre = card.querySelector('.guide-card-header h4').textContent.trim();
+  var badges = Array.prototype.map.call(card.querySelectorAll('.guide-badge'), function(b) {
+    return b.textContent.trim();
+  });
+  var chapeauEl = card.querySelector('.guide-chapeau');
+  var chapeau = chapeauEl ? chapeauEl.textContent.trim() : '';
+  var mapEl = card.querySelector('.guide-map');
+  var mapId = mapEl ? mapEl.id : null;
+  var points = (mapId && window.guideMapsData && window.guideMapsData[mapId]) ? window.guideMapsData[mapId] : [];
+
+  var etapes = Array.prototype.map.call(card.querySelectorAll('.guide-etape'), function(et) {
+    var num = et.querySelector('.guide-etape-num').textContent.trim();
+    var h5 = et.querySelector('.guide-etape-corps h5');
+    var p = et.querySelector('.guide-etape-corps > p');
+    var anecdote = et.querySelector('.guide-anecdote');
+    return {
+      num: num,
+      titre: h5 ? h5.textContent.trim() : '',
+      texte: p ? p.textContent.trim() : '',
+      anecdote: anecdote ? anecdote.textContent.trim() : ''
+    };
+  });
+
+  // Nettoyage d'une éventuelle zone d'impression précédente
+  var old = document.getElementById('fiche-print-container');
+  if (old) old.remove();
+  if (ficheImpressionMap) {
+    try { ficheImpressionMap.remove(); } catch (e) {}
+    ficheImpressionMap = null;
+  }
+
+  var etapesHtml = etapes.map(function(e) {
+    return '<div class="p-etape">' +
+      '<div class="p-etape-num">' + esc(e.num) + '</div>' +
+      '<div class="p-etape-corps">' +
+        '<h5>' + esc(e.titre) + '</h5>' +
+        '<p>' + esc(e.texte) + '</p>' +
+        (e.anecdote ? '<div class="p-anecdote">' + esc(e.anecdote) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var badgesHtml = badges.map(function(b) { return '<span class="p-badge">' + esc(b) + '</span>'; }).join('');
+
+  var container = document.createElement('div');
+  container.id = 'fiche-print-container';
+  container.className = 'fiche-print-container';
+  container.innerHTML =
+    '<div class="p-col"><div class="p-info">' +
+      '<h1>' + esc(titre) + '</h1>' +
+      '<div class="p-badges">' + badgesHtml + '</div>' +
+      (chapeau ? '<p class="p-chapeau">' + esc(chapeau) + '</p>' : '') +
+      etapesHtml +
+    '</div></div>' +
+    '<div class="p-col"><div class="p-map-wrap">' +
+      '<div class="p-map" id="fiche-print-map"></div>' +
+      '<div class="p-map-caption">Fond de carte © OpenStreetMap contributors</div>' +
+    '</div></div>';
+
+  document.body.appendChild(container);
+
+  if (typeof L === 'undefined') {
+    // Leaflet n'a pas pu charger : on imprime quand même la partie infos
+    window.print();
+    return;
+  }
+
+  ficheImpressionMap = L.map('fiche-print-map', { zoomControl: false, attributionControl: false, scrollWheelZoom: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(ficheImpressionMap);
+
+  var latlngs = [];
+  points.forEach(function(pt, i) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div style="background:#8B5E0A;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);">' + (i + 1) + '</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
+    });
+    L.marker([pt.lat, pt.lng], { icon: icon }).addTo(ficheImpressionMap);
+    latlngs.push([pt.lat, pt.lng]);
+  });
+  var ficheBounds = null;
+  if (latlngs.length > 1) {
+    L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.8 }).addTo(ficheImpressionMap);
+    ficheBounds = L.latLngBounds(latlngs);
+    ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+  } else if (latlngs.length === 1) {
+    ficheImpressionMap.setView(latlngs[0], 13);
+  }
+
+  function recadrerFicheMap() {
+    ficheImpressionMap.invalidateSize();
+    if (ficheBounds) {
+      ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+    }
+  }
+
+  function lancerImpression() {
+    recadrerFicheMap();
+    setTimeout(function() {
+      window.print();
+    }, 300);
+  }
+
+  // On laisse un court délai pour que les tuiles de la carte se chargent avant impression
+  setTimeout(lancerImpression, 600);
+
+  // Filet de sécurité : au cas où la mise en page changerait juste avant l'impression
+  // (certains navigateurs recalculent la mise en page à cet instant), on recadre une
+  // dernière fois pour être certain qu'aucun repère ne soit coupé.
+  function avantImpression() {
+    if (ficheImpressionMap) { recadrerFicheMap(); }
+  }
+  window.addEventListener('beforeprint', avantImpression);
+
+  function nettoyerApresImpression() {
+    var c = document.getElementById('fiche-print-container');
+    if (c) c.remove();
+    if (ficheImpressionMap) {
+      try { ficheImpressionMap.remove(); } catch (e) {}
+      ficheImpressionMap = null;
+    }
+    window.removeEventListener('afterprint', nettoyerApresImpression);
+    window.removeEventListener('beforeprint', avantImpression);
+  }
+  window.addEventListener('afterprint', nettoyerApresImpression);
+}
 </script>
 </body>
 </html>

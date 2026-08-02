@@ -508,6 +508,93 @@
     }
     .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
     .leaflet-popup-content strong { color: #2C4A7C; }
+
+    /* Ligne badges + bouton télécharger dans le cartouche du circuit */
+    .guide-card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .guide-card-meta-row .guide-card-meta { margin-top: 0; }
+    .guide-download-btn-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 20px;
+      color: rgba(255,255,255,0.92);
+      font-family: var(--font-corps);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .guide-download-btn-inline:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: #fff;
+      color: #fff;
+    }
+    .guide-download-btn-inline svg { flex-shrink: 0; }
+
+    /* Zone dédiée à l'impression de la fiche circuit (hors écran, révélée uniquement à l'impression) */
+    .fiche-print-container {
+      position: fixed;
+      top: 0;
+      left: -99999px;
+      width: 297mm;
+      height: 210mm;
+      background: #fff;
+      z-index: 99999;
+      display: flex;
+      align-items: stretch;
+      gap: 10mm;
+      padding: 10mm;
+      box-sizing: border-box;
+      font-family: Georgia, serif;
+      color: #2b2b2b;
+      min-height: 0;
+    }
+    /* Deux colonnes, chacune prend toute la hauteur de la page */
+    .fiche-print-container .p-col { flex: 1 1 50%; min-width: 0; min-height: 0; height: 100%; display: flex; flex-direction: column; }
+    .fiche-print-container .p-info {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 18px 22px;
+    }
+    .fiche-print-container .p-info h1 { font-family: Georgia, serif; font-size: 36px; line-height: 1.2; color: #2C4A7C; margin: 0 0 14px; }
+    .fiche-print-container .p-badges { margin-bottom: 16px; }
+    .fiche-print-container .p-badge { display: inline-block; font-size: 15px; background: #FAE8C8; color: #8B5E0A; padding: 5px 14px; border-radius: 14px; margin-right: 7px; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-chapeau { font-style: italic; font-size: 21px; color: #555; line-height: 1.6; margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px dashed #ccc; }
+    .fiche-print-container .p-etape { display: grid; grid-template-columns: 32px 1fr; gap: 13px; margin-bottom: 18px; }
+    .fiche-print-container .p-etape-num { width: 30px; height: 30px; border-radius: 50%; background: #FAE8C8; color: #8B5E0A; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps h5 { font-size: 21px; font-weight: 600; color: #2C4A7C; margin: 0 0 5px; font-family: var(--font-corps), Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps p { font-size: 18px; line-height: 1.5; margin: 0; }
+    .fiche-print-container .p-anecdote { margin-top: 7px; font-size: 16.5px; line-height: 1.45; color: #6B4A0A; background: #FDF0DC; border-left: 2px solid #E0A952; padding: 8px 13px; border-radius: 3px; }
+    .fiche-print-container .p-map-wrap { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 100%; position: relative; }
+    .fiche-print-container .p-map { width: 100%; height: 100%; }
+    .fiche-print-container .p-map-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.9); font-size: 10px; padding: 3px 8px; font-family: Arial, sans-serif; color: #555; }
+
+    @media print {
+      body > *:not(.fiche-print-container) { display: none !important; }
+      .fiche-print-container {
+        position: static !important;
+        left: 0 !important;
+        top: 0 !important;
+        /* On conserve volontairement les mêmes dimensions (297mm x 210mm) qu'à l'écran :
+           si la taille du conteneur change entre le calcul du cadrage de la carte et
+           l'impression, la carte se retrouve redimensionnée sans être recentrée et
+           certains repères sortent du cadre. */
+      }
+      @page { size: A4 landscape; margin: 0; }
+    }
+
 </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1433,11 +1520,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Rodez, sur les pas de Soulages</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 2h</span>
                 <span class="guide-badge">Cité épiscopale</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Bienvenue à Rodez, ville haute perchée sur son puy. Ici, le grès rose de la cathédrale et le noir profond des toiles de Soulages racontent, chacun à sa manière, l'âme d'une cité qui regarde loin. »</p>
             <div class="guide-map" id="map-aveyron-0"></div>
@@ -1485,11 +1572,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Conques, le trésor du pèlerin</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 2h</span>
                 <span class="guide-badge">Village roman</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Depuis mille ans, les pèlerins de Saint-Jacques-de-Compostelle descendent vers ce vallon caché. Suivez leurs pas jusqu'à l'abbatiale, et laissez-vous conter l'étrange et merveilleuse histoire de sainte Foy. »</p>
             <div class="guide-map" id="map-aveyron-1"></div>
@@ -1536,11 +1623,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Millau, sous les arches du viaduc</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h45</span>
                 <span class="guide-badge">Vallée du Tarn</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Millau a deux fiertés : ses gants de peau, portés jadis par les cours d'Europe, et son viaduc, plus haut que la tour Eiffel, qui enjambe la vallée du Tarn comme un trait d'union entre le passé et l'avenir. »</p>
             <div class="guide-map" id="map-aveyron-2"></div>
@@ -1587,11 +1674,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Najac, la forteresse royale</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h30</span>
                 <span class="guide-badge">Village fortifié</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Najac s'étire comme une échine de pierre le long de son éperon rocheux, dominée par une forteresse royale qui surveilla longtemps toute la vallée de l'Aveyron. Suivons la rue unique du village jusqu'au donjon. »</p>
             <div class="guide-map" id="map-aveyron-3"></div>
@@ -1638,11 +1725,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Belcastel, le village retrouvé</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h</span>
                 <span class="guide-badge">Vallée de l'Aveyron</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Il fut un temps où Belcastel tombait en ruine. Puis vint un architecte amoureux du lieu, qui redonna vie pierre après pierre à ce village endormi au bord de l'Aveyron. »</p>
             <div class="guide-map" id="map-aveyron-4"></div>
@@ -1682,11 +1769,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Estaing, sur les rives du Lot</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h15</span>
                 <span class="guide-badge">Vallée du Lot</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Estaing doit son nom à une famille qui a marqué l'histoire de France, des croisades jusqu'à la Révolution. Son château veille toujours sur le village et son pont gothique, étape appréciée des pèlerins de Compostelle. »</p>
             <div class="guide-map" id="map-aveyron-5"></div>
@@ -1733,11 +1820,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Sauveterre-de-Rouergue, la bastide royale</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h</span>
                 <span class="guide-badge">Bastide médiévale</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Fondée d'un seul jet au XIIIe siècle sur un plan géométrique parfait, Sauveterre-de-Rouergue incarne l'art des bastides médiévales : une ville neuve pensée dans ses moindres détails pour attirer des habitants sur des terres alors disputées. »</p>
             <div class="guide-map" id="map-aveyron-6"></div>
@@ -1777,11 +1864,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Villefranche-de-Rouergue, la bastide royale</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h30</span>
                 <span class="guide-badge">Bastide médiévale</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Fondée en 1252 par un frère de Saint Louis pour peupler une vallée dévastée par les guerres, Villefranche est devenue au fil des siècles une puissante cité marchande, avant de conserver, presque intacte, l'une des plus belles chartreuses de France. »</p>
             <div class="guide-map" id="map-aveyron-11"></div>
@@ -1828,11 +1915,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Espalion, entre pont Vieux et château de Calmont</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h15</span>
                 <span class="guide-badge">Vallée du Lot</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Espalion s'étire paisiblement au fil du Lot, entre maisons de tanneurs sur pilotis et vieux pont de pierre. Un village que François Ier lui-même aurait qualifié de plus jolie bourgade du royaume. »</p>
             <div class="guide-map" id="map-aveyron-12"></div>
@@ -1879,11 +1966,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Laguiole, le village du couteau et du fromage</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h</span>
                 <span class="guide-badge">Plateau de l'Aubrac</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Laguiole tient son nom d'un simple couteau devenu légende mondiale. Mais le village vaut aussi pour son fromage, sa foire séculaire et la vue qu'il offre sur les premiers contreforts du plateau de l'Aubrac. »</p>
             <div class="guide-map" id="map-aveyron-13"></div>
@@ -1930,11 +2017,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Marcillac-Vallon, le village du vin des mineurs</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h</span>
                 <span class="guide-badge">Vallon viticole</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Ce vallon encaissé de schiste rouge produit, depuis le Moyen Âge, un vin qui accompagna longtemps les mineurs de fer et de charbon du bassin de Decazeville. Un vignoble sauvé de justesse de l'oubli au XXe siècle. »</p>
             <div class="guide-map" id="map-aveyron-14"></div>
@@ -1974,11 +2061,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Bozouls, le village au bord du Trou</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 1h</span>
                 <span class="guide-badge">Canyon naturel</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Bozouls s'accroche littéralement au rebord d'un gigantesque canyon en fer à cheval, creusé par la rivière Dourdou. Une curiosité géologique unique dans le paysage aveyronnais, à découvrir depuis ses points de vue vertigineux. »</p>
             <div class="guide-map" id="map-aveyron-15"></div>
@@ -2018,11 +2105,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route de l'Aubrac, le plateau des grands espaces</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 55 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Prenez le volant vers le nord : la route grimpe, les arbres se raréfient, et bientôt s'ouvre devant vous l'immensité verte de l'Aubrac, royaume des burons et des vaches à la robe fauve. »</p>
             <div class="guide-map" id="map-aveyron-7"></div>
@@ -2069,11 +2156,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route du Roquefort et des Causses</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 40 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Direction le sud, vers ce plateau calcaire où un fromage né, dit-on, du hasard d'un berger distrait, a fait la renommée mondiale d'un simple village accroché à la falaise du Combalou. »</p>
             <div class="guide-map" id="map-aveyron-8"></div>
@@ -2113,11 +2200,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Gorges du Tarn et de la Jonte, la route des vautours</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 45 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Accrochez-vous aux falaises : cette route en corniche surplombe l'une des plus belles gorges de France, où des vautours à l'envergure impressionnante ont retrouvé, après des décennies d'absence, le ciel de leurs ancêtres. »</p>
             <div class="guide-map" id="map-aveyron-9"></div>
@@ -2157,11 +2244,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route du Larzac et de la Couvertoirade</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 35 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Sur ce plateau balayé par les vents, chevaliers Templiers puis Hospitaliers ont bâti des cités fortifiées pour protéger les troupeaux de moutons. Cette route en garde aujourd'hui la mémoire, gravée dans la pierre du Larzac. »</p>
             <div class="guide-map" id="map-aveyron-10"></div>
@@ -2201,11 +2288,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route des bastides du Rouergue</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 65 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Au sortir des guerres médiévales, rois et seigneurs fondèrent ici des villes neuves pour repeupler et contrôler le territoire. Cette route relie trois de ces bastides, chacune racontant à sa façon l'art de bâtir une cité au cordeau. »</p>
             <div class="guide-map" id="map-aveyron-16"></div>
@@ -2245,11 +2332,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route de la vallée du Lot, d'Espalion à Entraygues</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 30 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Le Lot serpente ici entre collines et villages de schiste, offrant l'une des routes les plus douces de l'Aveyron. Une échappée tranquille au fil de l'eau, entre pont médiéval et confluence rivière. »</p>
             <div class="guide-map" id="map-aveyron-17"></div>
@@ -2289,11 +2376,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route du canyon de Bozouls et du Causse Comtal</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 30 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« À deux pas de Rodez, cette courte route dévoile un des paysages les plus surprenants de l'Aveyron : un canyon calcaire en fer à cheval, niché au cœur d'un causse agricole paisible. »</p>
             <div class="guide-map" id="map-aveyron-18"></div>
@@ -2332,11 +2419,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route des lacs du Lévézou</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 50 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Le Lévézou surprend : ce plateau granitique, longtemps l'un des plus pauvres de l'Aveyron, est aujourd'hui constellé de lacs de barrage aux eaux turquoise, devenus le rendez-vous estival des Aveyronnais. »</p>
             <div class="guide-map" id="map-aveyron-19"></div>
@@ -2383,11 +2470,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route de la vallée du Viaur et de ses viaducs</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 45 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Le Viaur a creusé l'une des vallées les plus sauvages de l'Aveyron, si profonde et si difficile à franchir qu'il fallut, à l'aube du XXe siècle, y construire l'un des viaducs ferroviaires les plus audacieux d'Europe. »</p>
             <div class="guide-map" id="map-aveyron-20"></div>
@@ -2427,11 +2514,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route de Villefranche à Najac par la vallée de l'Aveyron</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 35 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Cette route suit fidèlement les méandres de l'Aveyron, de la grande bastide marchande jusqu'à la forteresse-village perchée, en traversant un paysage de collines douces et de vallons boisés. »</p>
             <div class="guide-map" id="map-aveyron-21"></div>
@@ -2470,11 +2557,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route de Sainte-Eulalie-de-Cernon et des commanderies du Larzac</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 30 km</span>
                 <span class="guide-badge">Demi-journée</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Avant la Couvertoirade, il y avait Sainte-Eulalie, chef-lieu de toutes les possessions templières puis hospitalières du Larzac. Cette route retrace l'organisation méconnue d'un territoire administré depuis huit siècles par des moines-soldats. »</p>
             <div class="guide-map" id="map-aveyron-22"></div>
@@ -2514,11 +2601,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route du Ségala et des confins de l'Aubrac</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 55 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Entre le Ségala transformé par l'agriculture moderne et les premiers contreforts sauvages de l'Aubrac, cette route méconnue traverse un Aveyron rural et authentique, loin des grands sites touristiques. »</p>
             <div class="guide-map" id="map-aveyron-23"></div>
@@ -2557,11 +2644,11 @@
           <div class="guide-card" data-type="pied">
             <div class="guide-card-header">
               <h4>Sainte-Eulalie-d'Olt, la boucle des villages du Lot</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">À pied</span>
                 <span class="guide-badge">Env. 15 km / 5h</span>
                 <span class="guide-badge">Vallée du Lot</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Ici, le Lot ralentit son cours et se love autour de trois villages de caractère. Chaussez de bonnes chaussures : cette boucle relie, au fil des berges et des chemins de crête, l'un des plus beaux villages de France à un château de légende. »</p>
             <div class="guide-map" id="map-aveyron-24"></div>
@@ -2609,11 +2696,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Circuit des Causses et de l'Aven Armand</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 90 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Au sud du département, les Grands Causses déploient leurs étendues calcaires balayées par le vent. Cette route mène des ganteries de Millau jusqu'aux entrailles spectaculaires de l'Aven Armand, en traversant l'un des plateaux les plus vides et les plus chargés d'histoire de France. »</p>
             <div class="guide-map" id="map-aveyron-25"></div>
@@ -2661,11 +2748,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route des Villages Classés du Rougier</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 120 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Au sud de Rodez s'étend le Rougier, pays de grès rouge et de collines douces où se cachent des villages classés que les grands axes touristiques ignorent trop souvent. Une route pour qui aime prendre son temps loin des foules. »</p>
             <div class="guide-map" id="map-aveyron-26"></div>
@@ -2712,11 +2799,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Route des Abbayes du Rouergue</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 140 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Le Rouergue fut, tout au long du Moyen Âge, une terre de moines : bénédictins à Conques, cisterciens à Loc-Dieu, à Bonneval ou à Sylvanès. Cette longue route relie leurs abbayes, entre pierre romane, silence des cloîtres et campagnes préservées. »</p>
             <div class="guide-map" id="map-aveyron-27"></div>
@@ -2763,11 +2850,11 @@
           <div class="guide-card" data-type="voiture">
             <div class="guide-card-header">
               <h4>Circuit des Vignobles et Bastides du Rouergue</h4>
-              <div class="guide-card-meta">
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
                 <span class="guide-badge">En voiture</span>
                 <span class="guide-badge">Env. 130 km</span>
                 <span class="guide-badge">Journée complète</span>
-              </div>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Télécharger</button></div>
             </div>
             <p class="guide-chapeau">« Entre les bastides médiévales bâties au cordeau et les vignes en terrasses accrochées au schiste rouge, cette route traverse un Rouergue rural, agricole et viticole, loin des grands sites classés mais riche de son authenticité. »</p>
             <div class="guide-map" id="map-aveyron-28"></div>
@@ -2891,7 +2978,7 @@
     var guideMapsData = {
       "map-aveyron-0": [
         {"lat": 44.3506, "lng": 2.5734, "label": "La cathédrale Notre-Dame et son grès rose"},
-        {"lat": 44.3502, "lng": 2.5741, "label": "Le musée Soulages"},
+        {"lat": 44.3522, "lng": 2.5677, "label": "Le musée Soulages"},
         {"lat": 44.3497, "lng": 2.5719, "label": "Le musée Fenaille et les statues-menhirs"},
         {"lat": 44.3512, "lng": 2.5726, "label": "Les ruelles de la vieille ville"},
         {"lat": 44.3521, "lng": 2.5751, "label": "Le jardin public et son panorama"}
@@ -3080,6 +3167,7 @@
       ]
     };
     var guideMapInstances = {};
+    window.guideMapsData = guideMapsData;
 
     function initGuideMap(id) {
       if (guideMapInstances[id]) return;
@@ -3105,8 +3193,10 @@
       });
       if (latlngs.length > 1) {
         L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
-        map.fitBounds(latlngs, { padding: [26, 26] });
+        map._ficheBounds = L.latLngBounds(latlngs);
+        map.fitBounds(map._ficheBounds, { padding: [30, 30] });
       } else if (latlngs.length === 1) {
+        map._ficheBounds = null;
         map.setView(latlngs[0], 13);
       }
       guideMapInstances[id] = map;
@@ -3115,8 +3205,14 @@
     function initVisibleGuideMaps() {
       document.querySelectorAll('#panel-guides .guide-map').forEach(function(el) {
         initGuideMap(el.id);
-        if (guideMapInstances[el.id]) {
-          setTimeout(function() { guideMapInstances[el.id].invalidateSize(); }, 60);
+        var map = guideMapInstances[el.id];
+        if (map) {
+          setTimeout(function() {
+            map.invalidateSize();
+            if (map._ficheBounds) {
+              map.fitBounds(map._ficheBounds, { padding: [30, 30] });
+            }
+          }, 120);
         }
       });
     }
@@ -3134,5 +3230,147 @@
   })();
   </script>
 
+<script>
+// Téléchargement d'une fiche circuit : construit une zone imprimable (infos + carte)
+// et déclenche l'impression du navigateur (choisir "Enregistrer au format PDF").
+// Aucune fenêtre pop-up n'est utilisée, ce qui évite les blocages navigateur.
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+var ficheImpressionMap = null;
+
+function telechargerFicheCircuit(btn) {
+  var card = btn.closest('.guide-card');
+  if (!card) return;
+
+  var titre = card.querySelector('.guide-card-header h4').textContent.trim();
+  var badges = Array.prototype.map.call(card.querySelectorAll('.guide-badge'), function(b) {
+    return b.textContent.trim();
+  });
+  var chapeauEl = card.querySelector('.guide-chapeau');
+  var chapeau = chapeauEl ? chapeauEl.textContent.trim() : '';
+  var mapEl = card.querySelector('.guide-map');
+  var mapId = mapEl ? mapEl.id : null;
+  var points = (mapId && window.guideMapsData && window.guideMapsData[mapId]) ? window.guideMapsData[mapId] : [];
+
+  var etapes = Array.prototype.map.call(card.querySelectorAll('.guide-etape'), function(et) {
+    var num = et.querySelector('.guide-etape-num').textContent.trim();
+    var h5 = et.querySelector('.guide-etape-corps h5');
+    var p = et.querySelector('.guide-etape-corps > p');
+    var anecdote = et.querySelector('.guide-anecdote');
+    return {
+      num: num,
+      titre: h5 ? h5.textContent.trim() : '',
+      texte: p ? p.textContent.trim() : '',
+      anecdote: anecdote ? anecdote.textContent.trim() : ''
+    };
+  });
+
+  // Nettoyage d'une éventuelle zone d'impression précédente
+  var old = document.getElementById('fiche-print-container');
+  if (old) old.remove();
+  if (ficheImpressionMap) {
+    try { ficheImpressionMap.remove(); } catch (e) {}
+    ficheImpressionMap = null;
+  }
+
+  var etapesHtml = etapes.map(function(e) {
+    return '<div class="p-etape">' +
+      '<div class="p-etape-num">' + esc(e.num) + '</div>' +
+      '<div class="p-etape-corps">' +
+        '<h5>' + esc(e.titre) + '</h5>' +
+        '<p>' + esc(e.texte) + '</p>' +
+        (e.anecdote ? '<div class="p-anecdote">' + esc(e.anecdote) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var badgesHtml = badges.map(function(b) { return '<span class="p-badge">' + esc(b) + '</span>'; }).join('');
+
+  var container = document.createElement('div');
+  container.id = 'fiche-print-container';
+  container.className = 'fiche-print-container';
+  container.innerHTML =
+    '<div class="p-col"><div class="p-info">' +
+      '<h1>' + esc(titre) + '</h1>' +
+      '<div class="p-badges">' + badgesHtml + '</div>' +
+      (chapeau ? '<p class="p-chapeau">' + esc(chapeau) + '</p>' : '') +
+      etapesHtml +
+    '</div></div>' +
+    '<div class="p-col"><div class="p-map-wrap">' +
+      '<div class="p-map" id="fiche-print-map"></div>' +
+      '<div class="p-map-caption">Fond de carte © OpenStreetMap contributors</div>' +
+    '</div></div>';
+
+  document.body.appendChild(container);
+
+  if (typeof L === 'undefined') {
+    // Leaflet n'a pas pu charger : on imprime quand même la partie infos
+    window.print();
+    return;
+  }
+
+  ficheImpressionMap = L.map('fiche-print-map', { zoomControl: false, attributionControl: false, scrollWheelZoom: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(ficheImpressionMap);
+
+  var latlngs = [];
+  points.forEach(function(pt, i) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div style="background:#8B5E0A;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);">' + (i + 1) + '</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
+    });
+    L.marker([pt.lat, pt.lng], { icon: icon }).addTo(ficheImpressionMap);
+    latlngs.push([pt.lat, pt.lng]);
+  });
+  var ficheBounds = null;
+  if (latlngs.length > 1) {
+    L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.8 }).addTo(ficheImpressionMap);
+    ficheBounds = L.latLngBounds(latlngs);
+    ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+  } else if (latlngs.length === 1) {
+    ficheImpressionMap.setView(latlngs[0], 13);
+  }
+
+  function recadrerFicheMap() {
+    ficheImpressionMap.invalidateSize();
+    if (ficheBounds) {
+      ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+    }
+  }
+
+  function lancerImpression() {
+    recadrerFicheMap();
+    setTimeout(function() {
+      window.print();
+    }, 300);
+  }
+
+  // On laisse un court délai pour que les tuiles de la carte se chargent avant impression
+  setTimeout(lancerImpression, 600);
+
+  // Filet de sécurité : au cas où la mise en page changerait juste avant l'impression
+  // (certains navigateurs recalculent la mise en page à cet instant), on recadre une
+  // dernière fois pour être certain qu'aucun repère ne soit coupé.
+  function avantImpression() {
+    if (ficheImpressionMap) { recadrerFicheMap(); }
+  }
+  window.addEventListener('beforeprint', avantImpression);
+
+  function nettoyerApresImpression() {
+    var c = document.getElementById('fiche-print-container');
+    if (c) c.remove();
+    if (ficheImpressionMap) {
+      try { ficheImpressionMap.remove(); } catch (e) {}
+      ficheImpressionMap = null;
+    }
+    window.removeEventListener('afterprint', nettoyerApresImpression);
+    window.removeEventListener('beforeprint', avantImpression);
+  }
+  window.addEventListener('afterprint', nettoyerApresImpression);
+}
+</script>
 </body>
 </html>
