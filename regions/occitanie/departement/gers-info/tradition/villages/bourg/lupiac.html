@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lupiac, village natal de d'Artagnan — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+    }
+    .btn-retour-fixe {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 50;
+      display: none;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gers/gers.html" class="produit-btn-retour">
+            ← Retour à la fiche Gers
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>L</em>upiac,<br>
+             <span style="padding-left: 60px;">village natal <br></span>
+              <span style="padding-left: 100px;"> de <em>d'</em>Artagnan</span><span class="sous-titre">Sur les traces du plus célèbre des mousquetaires gascons</span></h1>
+          
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-gers.png"
+               alt="Carte du Gers"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/lupiac.png" alt="Écusson Lupiac" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Terre natale du capitaine des Mousquetaires ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🌿 Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >⚔️ De Castelmore à la légende</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+              
+              <p>Niché sur une colline à 243 mètres d'altitude, au cœur de la Gascogne, Lupiac est un castelnau typique : un village fortifié bâti au Moyen Âge autour de son château. C'est dans ce paysage vallonné, entre bois et champs, que naît vers 1611-1615 celui qui deviendra le plus célèbre des Gascons : Charles de Batz de Castelmore, septième enfant de la famille Batz-Castelmore, alliée aux Montesquiou, une lignée descendant des anciens comtes de Fezensac.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 340px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/gers/lupiac.jpg"
+                        alt="Le château de Castelmore près de Lupiac, lieu de naissance de d'Artagnan" />
+                    <figcaption>Le château de Castelmore, berceau familial de d'Artagnan</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>C'est au château de Castelmore, propriété familiale toute proche du bourg, que le jeune Charles grandit avant de partir, vers l'âge de dix-sept ans, tenter sa chance à Paris, comme tant d'autres cadets de familles nobles mais désargentées de la région. Entré au service du roi, il gagne la confiance du cardinal Mazarin durant la Fronde, puis celle de Louis XIV, qui le fait capitaine-lieutenant de la première compagnie des Mousquetaires.</p>
+
+              <p>Charles de Batz de Castelmore meurt au siège de Maastricht le 25 juin 1673. Ce n'est qu'en 1700, avec la publication très romancée des « Mémoires de Monsieur d'Artagnan » par Gatien de Courtilz de Sandras, que sa vie commence à devenir légende, avant qu'Alexandre Dumas n'en fasse, plus d'un siècle plus tard, le héros immortel des « Trois Mousquetaires ».</p>
+
+              <p>Lupiac, qui n'a jamais oublié cet enfant devenu mythe national, cultive aujourd'hui fièrement cette mémoire à travers son musée, ses sentiers thématiques et l'atmosphère de cape et d'épée qui flotte encore sur ses ruelles.</p>
+            
+    
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌿</div>
+              Visite pratique
+            </h2>
+
+            <div class="recette-grid">
+              
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Une demi-journée (village + musée)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile, petit village de campagne</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">35 km au nord-ouest d'Auch</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Musée d'Artagnan</div>
+                  <div class="recette-meta-val">Entrée payante, se renseigner sur les horaires</div>
+                </div>
+              </div>
+    
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                
+                <div class="ingredient-item"><span class="ingredient-qte">Château de Castelmore</span> Propriété privée, lieu de naissance de d'Artagnan, visible depuis l'extérieur</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Musée d'Artagnan</span> Installé dans l'ancienne chapelle Saint-Jacques, également office de tourisme</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Route européenne d'Artagnan</span> Itinéraire de randonnée pédestre, VTT et équestre</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Tour du lac de Lacoste</span> Boucle de promenade familiale autour d'un plan d'eau</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Le castelnau</span> Village fortifié médiéval organisé autour de son château</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ambiance</span> Village « de cape et d'épée », terre des Cadets de Gascogne</div>
+    
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le musée d'Artagnan</div>
+                  <div class="etape-texte">Installé dans l'ancienne chapelle Saint-Jacques, il retrace la véritable histoire de Charles de Batz de Castelmore, entre biographie et légende littéraire.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le château de Castelmore</div>
+                  <div class="etape-texte">Propriété privée non visitable, sa silhouette se devine depuis les chemins alentour : c'est là que d'Artagnan est né et a grandi.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le village fortifié</div>
+                  <div class="etape-texte">Ruelles et pierres anciennes du castelnau, organisé autour de son ancien château, aujourd'hui siège de la mairie.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La route européenne d'Artagnan</div>
+                  <div class="etape-texte">Un itinéraire à parcourir à pied, à vélo ou à cheval, sur les traces du mousquetaire jusqu'à Maastricht.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le lac de Lacoste</div>
+                  <div class="etape-texte">Une boucle de promenade paisible autour du plan d'eau, pour prolonger la visite en famille.</div>
+                </div>
+              </div>
+    
+            </div>
+          </section>
+
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Musée d'Artagnan</div>
+                  <div class="vin-desc">Installé dans l'ancienne chapelle Saint-Jacques, bâtie à la fin du XVe siècle par la famille de Batz de Castelmore elle-même.</div>
+                </div>
+                <div class="vin-badge">Lieu de mémoire</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🗺️</div>
+                <div>
+                  <div class="vin-nom">Route européenne d'Artagnan</div>
+                  <div class="vin-desc">Itinéraire culturel reliant les lieux de vie du mousquetaire, de la Gascogne natale au siège de Maastricht.</div>
+                </div>
+                <div class="vin-badge">Itinéraire culturel</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏰</div>
+                <div>
+                  <div class="vin-nom">Château de Castelmore</div>
+                  <div class="vin-desc">Propriété privée non classée mais indissociable du patrimoine local, symbole de la Gascogne mousquetaire.</div>
+                </div>
+                <div class="vin-badge">Mémoire vive</div>
+              </div>
+            
+    
+            </div>
+          </section>
+
+          <!-- THÉMATIQUE -->
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⚔️</div>
+              D'Artagnan, du château de Castelmore à la légende
+            </h2>
+            <div class="histoire-texte">
+              
+              
+              <p>Derrière le héros de cape et d'épée immortalisé par Alexandre Dumas se cache un authentique Cadet de Gascogne. Charles de Batz de Castelmore, né au château de Castelmore entre 1611 et 1615, appartient à une famille noble mais de fortune modeste, comme il en existait tant dans le Gers du XVIIe siècle, poussant leurs fils cadets vers les armées du roi faute d'héritage suffisant.</p>
+
+              <p>C'est son oncle, Bertrand de Batz de Castelmore, qui fait bâtir près du village la chapelle Saint-Jacques, destinée à accueillir un hospice pour les habitants de Lupiac et les pèlerins en route vers Compostelle. Cette même chapelle abrite aujourd'hui le musée consacré à son neveu le plus illustre.</p>
+
+              <p>La légende littéraire, elle, naît bien après la mort du mousquetaire au siège de Maastricht en 1673 : en 1700, le romancier Gatien de Courtilz de Sandras publie des « Mémoires » très largement romancés, qu'Alexandre Dumas reprendra au XIXe siècle pour façonner le personnage universellement connu des « Trois Mousquetaires ». Entre l'homme de Castelmore et le héros de roman, c'est bien à Lupiac que tout commence.</p>
+            
+    
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes lupiacoises
+            </h2>
+            <div class="vins-liste">
+              
+              <div class="vin-item">
+                <div class="vin-icon">👶</div>
+                <div>
+                  <div class="vin-nom">Une date de naissance incertaine</div>
+                  <div class="vin-desc">Faute d'acte retrouvé, les historiens situent la naissance de Charles de Batz de Castelmore entre 1611 et 1615, sans pouvoir trancher précisément.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">👨‍👩‍👧‍👦</div>
+                <div>
+                  <div class="vin-nom">Le septième enfant de la famille</div>
+                  <div class="vin-desc">D'Artagnan était le septième enfant de la fratrie Batz-Castelmore, ce qui explique en partie son départ précoce chercher fortune à Paris.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">📖</div>
+                <div>
+                  <div class="vin-nom">Un roman avant le roman</div>
+                  <div class="vin-desc">Alexandre Dumas ne s'est jamais rendu à Lupiac : il a construit son personnage à partir des « Mémoires » très romancés publiés en 1700 par Gatien de Courtilz de Sandras.</div>
+                </div>
+              </div>
+    
+            </div>
+          </section>
+
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              
+              
+              <p><strong>Auch</strong> préfecture du Gers, où une statue de d'Artagnan orne l'escalier monumental menant à la cathédrale.</p>
+
+              <p><strong>Vic-Fezensac</strong> bastide gasconne réputée pour ses ferias et sa tradition tauromachique.</p>
+
+              <p><strong>Barran</strong> bastide au clocher tors caractéristique, à quelques kilomètres au nord.</p>
+
+              <p><strong>Route européenne d'Artagnan</strong> pour prolonger le voyage sur les pas du mousquetaire, jusqu'à Maastricht.</p>
+            
+    
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Gers (Armagnac, Balcon nature des Pyrénées)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Castelnau médiéval · Village de mémoire mousquetaire</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Château de Castelmore, naissance de d'Artagnan (v. 1611-1615)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Musée d'Artagnan · Route européenne d'Artagnan</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Office de Tourisme Armagnac Ténarèze · Communauté de communes</span>
+              </div>
+    
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+      
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

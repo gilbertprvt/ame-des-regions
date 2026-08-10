@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marché aux truffes de Lalbenque — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/lot/lot.html" class="produit-btn-retour">
+            ← Retour à la fiche Lot
+          </a>
+        </div>
+      </div>
+ 
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>M</em>arché aux <br><span style="padding-left: 60px;"><em>T</em>ruffes </span><br><span style="padding-left: 120px;"> de <em>L</em>albenque</span></h1>
+          
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-lot.png"
+               alt="Carte du Lot"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/lot.png" alt="Écusson Lot" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Trésor Gourmand du Quercy ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#portrait"             >🍄 Le marché</a>
+          <a href="#ecosysteme"           >🌰 La trufficulture</a>
+          <a href="#protection"           >⚠️ Enjeux</a>
+          <a href="#ou-observer"          >📍 Comment y participer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire d'un rituel devenu légendaire
+            </h2>
+            <div class="histoire-texte">
+              
+              <p>La réputation de Lalbenque comme capitale de la truffe noire du Quercy s'est construite dès la fin du XIXe siècle, portée par l'arrivée de la ligne de chemin de fer Paris-Toulouse vers 1890. Les courtiers pouvaient alors expédier en un jour leurs précieuses cargaisons vers Paris, Toulouse ou Montauban, et le mardi, la petite gare du village se remplissait de sacs de truffes.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/lot/marche-truffes-lalbenque.jpg"
+                        alt="Paniers de truffes noires sur le marché de Lalbenque" />
+                    <figcaption>Paniers de truffes noires du Quercy, recouverts du traditionnel torchon</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>Ce commerce, longtemps informel, s'est institutionnalisé en 1962 avec la mise en place d'un cérémonial codifié qui n'a quasiment pas changé depuis : ouverture du ban à la corde, puis levée du drapeau et coup de sifflet annonçant le début des transactions. Ce protocole, unique en son genre, a forgé la renommée nationale et internationale du village.</p>
+
+              <p>Depuis 1994, Lalbenque est labellisé Site Remarquable du Goût, une reconnaissance qui a contribué au rayonnement de la truffe noire du Quercy, dont la culture est aujourd'hui inscrite au patrimoine culturel immatériel français. Alors que le Lot produisait plus de 200 tonnes de truffes au début du XXe siècle, la production actuelle, bien plus modeste, s'établit entre 3 et 10 tonnes par an — mais Lalbenque en reste le marché le plus important du Sud-Ouest.</p>
+
+              <p>Depuis 2022, les acteurs de la trufficulture locale se sont mobilisés pour redynamiser cette tradition et faire du village une véritable destination touristique autour de son « diamant noir ».</p>
+            
+            </div>
+          </section>
+
+          <!-- PORTRAIT -->
+          <section class="section" id="portrait">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍄</div>
+              Le marché — un cérémonial codifié
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📅</div>
+                <div>
+                  <div class="recette-meta-label">Fréquence</div>
+                  <div class="recette-meta-val">Tous les mardis</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">❄️</div>
+                <div>
+                  <div class="recette-meta-label">Saison</div>
+                  <div class="recette-meta-val">Décembre à mars</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🕐</div>
+                <div>
+                  <div class="recette-meta-label">Ouverture</div>
+                  <div class="recette-meta-val">13h30 — vente de gros</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏅</div>
+                <div>
+                  <div class="recette-meta-label">Statut</div>
+                  <div class="recette-meta-val">Site Remarquable du Goût</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Ce qu'on y trouve</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Produit</span> Truffe noire du Quercy, Tuber melanosporum</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Vendeurs</span> Trufficulteurs et courtiers locaux</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Présentation</span> Paniers recouverts du torchon rouge et blanc</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Signal</span> Corde, drapeau et coup de sifflet</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ambiance</span> Rue principale bondée dès 13h30</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Autour du marché</span> Cavage, déjeuner tout truffe, omelette</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le cavage, à l'aube</div>
+                  <div class="etape-texte">Chez les producteurs, la recherche de la truffe se fait traditionnellement avec un chien dressé, qui débusque le précieux champignon caché sous terre au pied des chênes truffiers.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'exposition des paniers</div>
+                  <div class="etape-texte">Dès le début d'après-midi, les producteurs disposent leurs paniers en enfilade sur des bancs de bois, le long de la rue principale, sans que la vente ne soit encore autorisée.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le temps de la corde</div>
+                  <div class="etape-texte">Une corde sépare vendeurs et acheteurs le temps que chacun observe la production ; toute transaction est alors formellement interdite.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'ouverture du ban</div>
+                  <div class="etape-texte">Le sifflet retentit et le drapeau se lève à 13h30 : la corde tombe, et les négociants de gros se pressent pour évaluer et négocier les lots.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La vente au détail</div>
+                  <div class="etape-texte">Vers 14h30, une cloche annonce l'ouverture du marché au détail, accessible cette fois aux particuliers venus dénicher leur diamant noir pour la table.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">6</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La dégustation</div>
+                  <div class="etape-texte">Dans les restaurants du village, l'incontournable omelette aux truffes clôture souvent la journée, dans une ambiance conviviale et animée.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- ÉCOSYSTÈME -->
+          <section class="section" id="ecosysteme">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌰</div>
+              De la truffière à la table
+            </h2>
+            <div class="histoire-texte">
+
+              <p>La truffe noire du Quercy est le fruit d'un champignon souterrain vivant en symbiose avec les racines d'arbres truffiers, le plus souvent des chênes. Cette association, appelée mycorhize, se repère à l'œil nu grâce au « brûlé », une zone dénuée d'herbe qui se forme autour du tronc.</p>
+
+              <p>Le trufficulteur plante ses arbres mycorhizés en hiver, à raison de 200 à 400 plants par hectare, puis les entretient patiemment pendant cinq à vingt ans avant d'espérer une première récolte. Un travail de longue haleine, largement tributaire du climat et de la nature du sol.</p>
+
+              <p>La récolte elle-même se pratique exclusivement à l'aide d'un chien dressé au cavage, seul capable de repérer avec précision l'emplacement exact du champignon sans endommager la truffière, garantissant ainsi des récoltes futures.</p>
+
+            </div>
+          </section>
+
+          <!-- PROTECTION -->
+          <section class="section" id="protection">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⚠️</div>
+              Une production fragile à préserver
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>Une production en chute :</strong> le Lot ne produit plus aujourd'hui que 3 à 10 tonnes de truffes par an, contre plus de 200 tonnes au début du XXe siècle, du fait de l'exode rural et du recul des truffières traditionnelles.</p>
+              <p><strong>Un savoir-faire exigeant :</strong> la culture truffière demande de longues années avant toute récolte, ce qui freine le renouvellement des plantations face aux aléas climatiques.</p>
+              <p><strong>La fraude et l'origine :</strong> la notoriété du produit expose le marché à des tentatives de confusion avec des truffes importées, d'où l'importance de la vente en circuit direct sur les bancs de Lalbenque.</p>
+              <p><strong>Une relève à assurer :</strong> depuis 2022, producteurs et acteurs locaux se mobilisent pour transmettre ce savoir-faire ancestral aux nouvelles générations et redynamiser la filière.</p>
+            
+            </div>
+          </section>
+
+
+
+          <!-- OÙ OBSERVER -->
+          <section class="section" id="ou-observer">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Comment participer au marché ?
+            </h2>
+            <div class="histoire-texte">
+              
+              <p>Assister au marché aux truffes de Lalbenque se prépare : mieux vaut arriver tôt pour profiter pleinement du cérémonial et éviter la foule du cœur d'après-midi.</p>
+
+              <p><strong>Dès 13h00, dans le village</strong> il est conseillé de se poster le long de la rue principale avant l'ouverture du ban pour ne rien manquer de l'installation des paniers.</p>
+
+              <p><strong>Un déjeuner « tout truffe »</strong> peut se réserver dans les restaurants du village, avec en vedette la traditionnelle omelette aux truffes.</p>
+
+              <p><strong>Une démonstration de cavage</strong> chez un producteur, sur réservation, permet de découvrir la recherche de la truffe en truffière avant de rejoindre le marché.</p>
+
+              <p><strong>Renseignements et réservations</strong> auprès de l'Office de Tourisme Cahors — Vallée du Lot, qui coordonne également les animations de la Fête de la Truffe.</p>
+            
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Lalbenque · Pays de Lalbenque, Lot</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Marché gourmand traditionnel</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Saison</span>
+                <span class="aside-val">Tous les mardis, décembre à mars</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Occasion</span>
+                <span class="aside-val">Sortie gourmande · Découverte du terroir</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Site Remarquable du Goût depuis 1994</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Patrimoine culturel immatériel français</span>
+              </div>
+
+            </div>
+          </div>
+
+         
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <a href="../../occitanie.html" class="btn-retour-fixe" id="btnRetour">
+    ← Occitanie
+  </a>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
