@@ -83,7 +83,7 @@
     .fiche-hero-ecusson {
       position: absolute;
       left: 50%;
-      top: -90px;
+      top: -70px;
       transform: translateX(-50%);
       pointer-events: none;
     }
@@ -105,7 +105,7 @@
       padding: 20px 0;
       border-bottom: 1px solid var(--bordure);
     }
-    .fiche-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .fiche-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
     .fiche-tab {
       display: inline-flex;
       align-items: center;
@@ -367,6 +367,214 @@
     .photo-centre img { max-width: 700px; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
+    .guide-intro {
+      font-size: 14px;
+      color: var(--texte-doux);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 760px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .guide-card-header {
+      background: linear-gradient(135deg, #6B4A0A 0%, #8B5E0A 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .guide-card-header h4 {
+      font-family: var(--font-titre);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .guide-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .guide-badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 11px;
+      border-radius: 20px;
+    }
+    .guide-chapeau {
+      padding: 14px 20px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texte-doux);
+      line-height: 1.6;
+    }
+    .guide-etapes {
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .guide-etape {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+    }
+    .guide-etape-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #FAE8C8;
+      color: #8B5E0A;
+      font-family: var(--font-titre);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide-etape-corps h5 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bleu-profond);
+      margin-bottom: 4px;
+    }
+    .guide-etape-corps p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--texte);
+      margin: 0;
+    }
+    .guide-anecdote {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6B4A0A;
+      background: #FDF0DC;
+      border-left: 2px solid #E0A952;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    /* Cartes des circuits */
+    .guide-map {
+      height: 220px;
+      width: 100%;
+      margin: 14px 20px 6px;
+      width: calc(100% - 40px);
+      border-radius: var(--rayon);
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+      background: #eef1ea;
+    }
+    .guide-map-marker {
+      background: #8B5E0A;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); font-size: 12px; margin: 8px 10px; }
+    .leaflet-popup-content strong { color: #2C4A7C; }
+
+    /* Ligne badges + bouton télécharger dans le cartouche du circuit */
+    .guide-card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .guide-card-meta-row .guide-card-meta { margin-top: 0; }
+    .guide-download-btn-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 20px;
+      color: rgba(255,255,255,0.92);
+      font-family: var(--font-corps);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .guide-download-btn-inline:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: #fff;
+      color: #fff;
+    }
+    .guide-download-btn-inline svg { flex-shrink: 0; }
+
+    /* Zone dédiée à l'impression de la fiche circuit (hors écran, révélée uniquement à l'impression) */
+    .fiche-print-container {
+      position: fixed;
+      top: 0;
+      left: -99999px;
+      width: 297mm;
+      height: 210mm;
+      background: #fff;
+      z-index: 99999;
+      display: flex;
+      align-items: stretch;
+      gap: 10mm;
+      padding: 10mm;
+      box-sizing: border-box;
+      font-family: Georgia, serif;
+      color: #2b2b2b;
+      min-height: 0;
+    }
+    .fiche-print-container .p-col { flex: 1 1 50%; min-width: 0; min-height: 0; height: 100%; display: flex; flex-direction: column; }
+    .fiche-print-container .p-info {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 18px 22px;
+    }
+    .fiche-print-container .p-info h1 { font-family: Georgia, serif; font-size: 36px; line-height: 1.2; color: #2C4A7C; margin: 0 0 14px; }
+    .fiche-print-container .p-badges { margin-bottom: 16px; }
+    .fiche-print-container .p-badge { display: inline-block; font-size: 15px; background: #FAE8C8; color: #8B5E0A; padding: 5px 14px; border-radius: 14px; margin-right: 7px; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-chapeau { font-style: italic; font-size: 21px; color: #555; line-height: 1.6; margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px dashed #ccc; }
+    .fiche-print-container .p-etape { display: grid; grid-template-columns: 32px 1fr; gap: 13px; margin-bottom: 18px; }
+    .fiche-print-container .p-etape-num { width: 30px; height: 30px; border-radius: 50%; background: #FAE8C8; color: #8B5E0A; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps h5 { font-size: 21px; font-weight: 600; color: #2C4A7C; margin: 0 0 5px; font-family: var(--font-corps), Arial, sans-serif; }
+    .fiche-print-container .p-etape-corps p { font-size: 18px; line-height: 1.5; margin: 0; }
+    .fiche-print-container .p-anecdote { margin-top: 7px; font-size: 16.5px; line-height: 1.45; color: #6B4A0A; background: #FDF0DC; border-left: 2px solid #E0A952; padding: 8px 13px; border-radius: 3px; }
+    .fiche-print-container .p-map-wrap { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 100%; position: relative; }
+    .fiche-print-container .p-map { width: 100%; height: 100%; }
+    .fiche-print-container .p-map-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.9); font-size: 10px; padding: 3px 8px; font-family: Arial, sans-serif; color: #555; }
+
+    @media print {
+      body > *:not(.fiche-print-container) { display: none !important; }
+      .fiche-print-container {
+        position: static !important;
+        left: 0 !important;
+        top: 0 !important;
+      }
+      @page { size: A4 landscape; margin: 0; }
+    }
+
     @media (max-width: 680px) {
       .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
       .fiche-hero-titre h1 { font-size: 34px; }
@@ -375,7 +583,7 @@
       .village-star { grid-template-columns: 1fr; text-align: center; }
     }
   </style>
-</head>
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
 <body class="fiche-page">
 
   <div class="fiche-hero">
@@ -395,7 +603,7 @@
         </div>
 
         <div class="fiche-hero-ecusson">
-          <img src="../../../../assets/departement/occitanie/lot.jpg" alt="Écusson Lot" />
+          <img src="../../../../assets/departement/occitanie/lot.png" alt="Écusson Lot" />
         </div>
 
         <span class="fiche-hero-ancien">Préfecture : Cahors · Département 46</span>
@@ -415,6 +623,7 @@
           <button class="fiche-tab" data-panel="villages">Villages</button>
           <button class="fiche-tab" data-panel="agenda">Agenda</button>
           <button class="fiche-tab" data-panel="parcours">Parcours d'une journée</button>
+          <button class="fiche-tab" data-panel="guides">Visites Guidées</button>
         </div>
       </div>
     </div>
@@ -679,12 +888,68 @@
                 <div><h4>Marché aux truffes de Lalbenque</h4><p>Marché hebdomadaire hivernal réputé, négociants et particuliers s'y retrouvent pour la truffe noire du Quercy.</p></div>
               </div>
               <div class="agenda-item">
+                <div class="agenda-mois">Janv.</div>
+                <div><h4>Fête de la Saint-Vincent des vignerons</h4><p>À Cahors, tournante annuelle entre les domaines viticoles en l'honneur du saint patron des vignerons.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Févr.</div>
+                <div><h4>Carnaval de Cahors</h4><p>Défilés costumés et animations familiales dans les rues de la préfecture du Lot.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Févr.</div>
+                <div><h4>Foire aux vins et à la gastronomie</h4><p>À Figeac, salon régional réunissant vignerons et producteurs locaux autour de dégustations.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Grand marché de clôture de la truffe</h4><p>À Lalbenque, dernier grand rendez-vous de la saison truffière, entre négociants et gourmets.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mars</div>
+                <div><h4>Printemps des Poètes</h4><p>À Cahors, lectures publiques et rencontres littéraires dans les rues de la vieille ville.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Floralies de printemps</h4><p>À Gramat, marché horticole célébrant les premières floraisons du causse.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Avril</div>
+                <div><h4>Fête de la Transhumance</h4><p>Sur le causse de Gramat, montée en fanfare des troupeaux vers les pâturages d'estive.</p></div>
+              </div>
+              <div class="agenda-item">
                 <div class="agenda-mois">Mai</div>
                 <div><h4>Pèlerinage de printemps à Rocamadour</h4><p>Grand rassemblement de pèlerins venus honorer la Vierge noire de la cité sacrée.</p></div>
               </div>
               <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Fête de l'Asperge du Quercy</h4><p>Marché gourmand printanier célébrant l'asperge, spécialité maraîchère du Quercy Blanc.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Mai</div>
+                <div><h4>Nuits Romanes</h4><p>Concerts et animations dans les églises romanes du Lot, de Rocamadour à Cahors.</p></div>
+              </div>
+              <div class="agenda-item">
                 <div class="agenda-mois">Juin</div>
                 <div><h4>Fête du Vin de Cahors</h4><p>Célébration du Malbec cadurcien, dégustations et animations dans les vignobles.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Fête de la Musique</h4><p>Le 21 juin, concerts et animations investissent les places et ruelles de tout le département.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juin</div>
+                <div><h4>Nuit Européenne des Musées</h4><p>Ouverture nocturne et gratuite des musées Champollion à Figeac et Henri-Martin à Cahors.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Cahors Blues Festival</h4><p>Grand festival de blues, référence estivale attirant des artistes internationaux dans la préfecture.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Africajarc</h4><p>À Cajarc, festival de musiques et d'arts du monde au bord du Lot.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Juillet</div>
+                <div><h4>Festival de Saint-Céré</h4><p>Opéra et musique classique en plein air, dans la cour du château de Castelnau-Bretenoux et à Saint-Céré.</p></div>
               </div>
               <div class="agenda-item">
                 <div class="agenda-mois">Juillet</div>
@@ -692,19 +957,51 @@
               </div>
               <div class="agenda-item">
                 <div class="agenda-mois">Août</div>
-                <div><h4>Fête du Safran du Quercy</h4><p>Marché et animations autour de l'épice précieuse cultivée dans la région.</p></div>
+                <div><h4>Fête du Safran du Quercy</h4><p>Marché et animations autour de l'épice précieuse cultivée sur les causses du Lot.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Marché nocturne de Rocamadour</h4><p>Animations et étals de producteurs locaux dans la cité sacrée, en soirée d'été.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Août</div>
+                <div><h4>Fête votive de Figeac</h4><p>Bals populaires, feux d'artifice et animations tout au long de la semaine estivale.</p></div>
               </div>
               <div class="agenda-item">
                 <div class="agenda-mois">Sept.</div>
                 <div><h4>Vendanges dans le vignoble de Cahors</h4><p>Les domaines viticoles ouvrent leurs portes pour célébrer les vendanges du vin noir.</p></div>
               </div>
               <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Journées du Patrimoine</h4><p>Visites guidées et sites ouverts exceptionnellement à Cahors, Rocamadour et dans tout le Lot.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Sept.</div>
+                <div><h4>Festival de Rocamadour</h4><p>Concerts de musique sacrée résonnant sous les voûtes des sanctuaires de la cité religieuse.</p></div>
+              </div>
+              <div class="agenda-item">
                 <div class="agenda-mois">Oct.</div>
                 <div><h4>Marché de la Noix du Quercy</h4><p>Producteurs locaux présentent leurs récoltes de noix et produits dérivés.</p></div>
               </div>
               <div class="agenda-item">
+                <div class="agenda-mois">Oct.</div>
+                <div><h4>Foire à la volaille fermière</h4><p>À Cahors, marché traditionnel d'automne réunissant éleveurs et producteurs du Quercy.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Marché au gras</h4><p>Foire traditionnelle du foie gras et des canards du Quercy, à l'approche des fêtes de fin d'année.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Nov.</div>
+                <div><h4>Fête du Cabécou et des fromages de chèvre</h4><p>À Rocamadour, mise à l'honneur des productions fermières de fromage de chèvre AOP.</p></div>
+              </div>
+              <div class="agenda-item">
                 <div class="agenda-mois">Déc.</div>
                 <div><h4>Marché de Noël de Cahors</h4><p>Chalets et illuminations au pied du Pont Valentré, dans le cadre de la cité médiévale.</p></div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-mois">Déc.</div>
+                <div><h4>Veillée de Noël à Rocamadour</h4><p>Crèche vivante et illuminations de la cité sacrée, à quelques jours des fêtes.</p></div>
               </div>
             </div>
           </div>
@@ -797,7 +1094,143 @@
             </div>
           </div>
 
-          <div class="jour-card" data-profil="culture">
+                    <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Melon du Quercy, douceur du sud du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Quercy Blanc</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une exploitation</strong> de melon du Quercy sur le causse de Limogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la culture</strong> sous le soleil du Quercy Blanc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une salade de melon et jambon du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les villages de pierre sèche du causse de Limogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de melon frais et de vin de Cahors.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Safran du Quercy, l'or rouge des causses</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Causse de Limogne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une safranière</strong> familiale du Quercy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la récolte</strong> et de l'émondage du safran.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un plat parfumé au safran quercynois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> sur le causse, entre murets de pierre sèche et chênes truffiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de produits safranés à la ferme.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Agneau fermier et gastronomie du causse de Gramat</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gramat</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un élevage</strong> ovin sur le causse de Gramat.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de la filière</strong> agneau fermier du Quercy.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'un gigot d'agneau du causse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> parmi les dolines et les caselles de pierre sèche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de charcuterie et de vin de Cahors.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Marché de Cahors et spécialités cadurciennes</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cahors</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché couvert</strong> de Cahors, produits fermiers du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du pastis quercynois</strong> chez un pâtissier traditionnel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une farcidure ou d'un mique cadurcien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> le long du Pont Valentré et des berges du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin de Cahors dans une cave du centre-ville.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Noix du Quercy et moulins de la vallée du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une noyeraie</strong> traditionnelle dans la vallée du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte d'un ancien moulin</strong> à huile de noix, encore en activité.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une salade au gésier et à l'huile de noix.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> le long du Lot, entre noyeraies et vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de vin de noix et de spécialités locales.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Fromages de chèvre et vignoble du Quercy blanc</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Quercy blanc</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'une chèvrerie</strong> fermière du Quercy blanc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte de l'affinage</strong> du Cabécou et des fromages fermiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une tarte au Cabécou chaud.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les vignes du Quercy blanc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de fromages et de vin local.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Escapade gourmande à Gourdon et en Bouriane</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bouriane</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Marché de Gourdon</strong>, produits fermiers de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite d'un producteur</strong> de châtaignes et de miel forestier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> autour d'une spécialité châtaignière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la forêt de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation</strong> de produits du terroir bourian.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="gourmand">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Route du Malbec, de Cahors à Luzech</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vignoble de Cahors</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Gourmand</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite d'un domaine viticole</strong> aux portes de Cahors.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation commentée</strong> de Malbec cadurcien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans les vignes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> jusqu'à Luzech, dans la boucle du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Dégustation de clôture</strong> chez un vigneron familial.</div></div>
+            </div>
+          </div>
+
+<div class="jour-card" data-profil="culture">
             <div class="jour-card-header">
               <div class="jour-card-header-top">
                 <h4>Cahors, cité du Pont Valentré</h4>
@@ -865,7 +1298,143 @@
             </div>
           </div>
 
-          <div class="jour-card" data-profil="nature">
+                    <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Figeac, sur les pas de Champollion</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Figeac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Place des Écritures</strong>, hommage géant à la pierre de Rosette.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée Champollion</strong>, dans la maison natale du savant.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> au fil des ruelles et quais du Célé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur les places animées de la vieille ville.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Châteaux de Castelnau-Bretenoux et de Montal</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Haut-Quercy</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du château de Castelnau-Bretenoux</strong>, forteresse de grès rouge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte des collections</strong> et remparts du château.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> à Saint-Céré.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite du château de Montal</strong> et son escalier Renaissance sculpté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> par les villages du Haut-Quercy.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Martel et la vallée de la Dordogne quercynoise</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Martel</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans la ville aux sept tours de Martel.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Petit train touristique</strong> du Haut-Quercy le long des falaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> sur la place des Consuls.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> à Carennac, au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Martel.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cajarc et l'art contemporain au bord du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cajarc</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans le village de Cajarc, cher à Georges Pompidou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite</strong> de la Maison des Arts Georges-Pompidou.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en terrasse au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long des berges de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Cahors ou Figeac.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gourdon, cité du Quercy blanc</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gourdon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles pentues de Gourdon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite</strong> de l'église Saint-Pierre et son clocher-mur.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> en terrasse sur la place des Marronniers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Panorama</strong> sur le Quercy blanc depuis l'esplanade.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans la vieille ville avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Souillac et son abbatiale romane</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Souillac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite de l'abbatiale</strong> Sainte-Marie et de son bas-relief d'Isaïe.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Musée de l'Automate</strong>, collection unique de jouets mécaniques.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> dans le centre historique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> le long de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Martel ou Rocamadour.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Carennac, le prieuré clunisien au bord de la Dordogne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Carennac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite du portail roman</strong> de l'église Saint-Pierre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte du cloître</strong> et de la Mise au Tombeau polychrome.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles fleuries du village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Saint-Céré.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="culture">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Capdenac-le-Haut, éperon rocheux et mémoire médiévale</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Capdenac-le-Haut</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Culture</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> sur l'éperon fortifié de Capdenac-le-Haut.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des vestiges de la résistance à Simon de Montfort.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner</strong> avec vue sur la vallée du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite</strong> du musée local et du puits de César.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Figeac.</div></div>
+            </div>
+          </div>
+
+<div class="jour-card" data-profil="nature">
             <div class="jour-card-header">
               <div class="jour-card-header-top">
                 <h4>Gouffre de Padirac, rivière souterraine</h4>
@@ -933,7 +1502,143 @@
             </div>
           </div>
 
-          <div class="jour-card" data-profil="famille">
+                    <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée du Célé, entre falaises et rivière</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Célé</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> au fil du Célé, entre falaises calcaires et villages troglodytes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> du prieuré d'Espagnac-Sainte-Eulalie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite</strong> des ruines de l'abbaye de Marcilhac-sur-Célé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Figeac.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gabare sur la Dordogne quercynoise</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée de la Dordogne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Promenade en gabare</strong> sur la Dordogne, au départ de La Roque-Gageac ou Carennac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte commentée</strong> des falaises et villages riverains.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> à Carennac et son ancien prieuré clunisien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Martel.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Causse et forêt de la Braunhie</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Causse de Gramat</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la forêt domaniale de la Braunhie, plus vaste massif du causse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des dolines, gouffres et pelouses sèches.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en clairière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers une caselle de pierre sèche restaurée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Gramat.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Canyon de l'Alzou et Forêt des Singes</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Rocamadour</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans le canyon de l'Alzou, sous la cité de Rocamadour.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite</strong> de la Forêt des Singes, parc naturel de magots en semi-liberté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le plateau de l'Hospitalet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> jusqu'au Rocher des Aigles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Rocamadour.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Forêt de la Bouriane, poumon vert du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bouriane</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> dans la forêt de châtaigniers et de pins de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des étangs discrets nichés dans les vallons.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en sous-bois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers un village de grès roux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Gourdon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cascade et cirque d'Autoire, randonnée nature</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Autoire</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Randonnée</strong> jusqu'à la cascade du cirque d'Autoire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ascension</strong> vers le belvédère dominant le cirque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> avec vue sur les falaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers Loubressac par les crêtes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Saint-Céré.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Vallée de la Bave, balade entre étangs et prairies</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée de la Bave</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> le long de la Bave, entre prairies et bosquets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation</strong> de la faune des berges.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de l'eau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> vers Bretenoux et ses moulins.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Saint-Céré.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="nature">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Réserve naturelle du marais de Bonnefont</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bouriane</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Nature</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade</strong> dans cette zone humide préservée de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Observation</strong> des oiseaux et libellules des tourbières.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à l'ombre des arbres.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Sentier découverte</strong> autour des étangs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Gourdon.</div></div>
+            </div>
+          </div>
+
+<div class="jour-card" data-profil="famille">
             <div class="jour-card-header">
               <div class="jour-card-header-top">
                 <h4>Gouffre de Padirac en famille</h4>
@@ -1001,7 +1706,143 @@
             </div>
           </div>
 
-          <div class="jour-card" data-profil="romantique">
+                    <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>La Forêt des Singes en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Rocamadour</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> de la Forêt des Singes, parmi les magots en liberté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Spectacle de rapaces</strong> au Rocher des Aigles.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur le plateau de l'Hospitalet.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans la cité religieuse de Rocamadour.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Castelnau-Bretenoux en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Haut-Quercy</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du château fort de Castelnau-Bretenoux.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Ateliers pédagogiques</strong> sur la vie au Moyen Âge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> aux pieds des remparts.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> au village de Loubressac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Saint-Céré.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Petit train touristique du Haut-Quercy en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Martel</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade ludique</strong> dans les ruelles de Martel, ville aux sept tours.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Voyage</strong> à bord du petit train touristique le long des falaises.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> près de la gare.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> à la découverte des tours de la ville.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gouffre de Padirac et ferme pédagogique</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Padirac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en barque</strong> dans la rivière souterraine du gouffre de Padirac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte</strong> des immenses salles ornées de concrétions.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> à l'entrée du site.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Visite</strong> d'une ferme pédagogique et de ses animaux du causse.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Rocamadour.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cabanes et jeux nature en Bouriane</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bouriane</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Parcours ludique</strong> dans la forêt de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Construction de cabanes</strong> et jeux en forêt.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> en sous-bois.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> autour d'un étang forestier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Gourdon.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Souillac en famille, musée de l'Automate</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Souillac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du musée de l'Automate.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Balade</strong> autour de l'abbatiale Sainte-Marie.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Jeux</strong> sur les berges de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Goûter</strong> avant de reprendre la route.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Carennac en famille, jeu de piste au prieuré</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Carennac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Jeu de piste</strong> à la découverte du prieuré clunisien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite ludique</strong> du cloître et de la Mise au Tombeau.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Balade</strong> dans les ruelles fleuries.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Saint-Céré.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="famille">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Base de loisirs du Lot en famille</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Famille</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Baignade surveillée</strong> à la base de loisirs au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Pédalo ou jeux d'eau</strong> pour toute la famille.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique</strong> sur l'aire ombragée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Parcours ludique</strong> le long de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Retour tranquille</strong> vers Cahors.</div></div>
+            </div>
+          </div>
+
+<div class="jour-card" data-profil="romantique">
             <div class="jour-card-header">
               <div class="jour-card-header-top">
                 <h4>Saint-Cirq-Lapopie au coucher du soleil</h4>
@@ -1069,7 +1910,143 @@
             </div>
           </div>
 
-          <div class="jour-card" data-profil="actif">
+                    <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Cahors et le Pont Valentré au crépuscule</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cahors</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade tranquille</strong> dans la vieille ville de Cahors avant l'affluence.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite de la cathédrale</strong> Saint-Étienne en tête-à-tête.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong> au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long des berges du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le Pont Valentré illuminé.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Carennac, romance au bord de la Dordogne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Carennac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles de Carennac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite à deux</strong> du cloître et du prieuré clunisien.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> au bord de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la vallée de la Dordogne.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Cénevières en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Cénevières</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans le parc du château de Cénevières.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite à deux</strong> des salons Renaissance et plafonds peints.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner champêtre</strong> à proximité.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur la falaise dominant le Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la vallée du Lot.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Puy-l'Évêque, coucher de soleil sur le Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Puy-l'Évêque</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles dorées de Puy-l'Évêque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Dégustation à deux</strong> dans un domaine viticole voisin.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en amoureux</strong> avec vue sur le Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> sur les quais de l'ancien port batelier.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la vallée du Lot.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Gourdon, romance sur le Quercy blanc</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Gourdon</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles pentues de Gourdon.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte à deux</strong> de l'église Saint-Pierre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong> sur la place des Marronniers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> vers l'esplanade panoramique.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le Quercy blanc.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Loubressac, panorama à deux sur le Haut-Quercy</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Loubressac</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les ruelles de Loubressac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Vue panoramique</strong> sur la vallée de la Dordogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en tête-à-tête</strong> dans le village.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> vers Autoire par les petites routes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le Haut-Quercy.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Château de Montal, escapade Renaissance en amoureux</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Montal</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> dans les jardins du château de Montal.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Visite à deux</strong> de l'escalier Renaissance sculpté.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner champêtre</strong> à proximité.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> dans la campagne environnante.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur le château.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="romantique">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Luzech, romance dans la boucle du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Luzech</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Romantique</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Balade romantique</strong> vers le donjon de l'Impernal.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Découverte à deux</strong> du quartier du Barry.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Déjeuner en terrasse</strong> au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Flânerie</strong> le long du méandre.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Coucher de soleil</strong> sur la boucle du Lot.</div></div>
+            </div>
+          </div>
+
+<div class="jour-card" data-profil="actif">
             <div class="jour-card-header">
               <div class="jour-card-header-top">
                 <h4>Canoë sur le Lot, de Bouziès à Cahors</h4>
@@ -1137,7 +2114,1194 @@
             </div>
           </div>
 
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Escalade dans la vallée du Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Session d'escalade</strong> sur les falaises calcaires près de Cajarc.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Poursuite</strong> sur différentes voies équipées.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> au bord du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée retour</strong> le long de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération et détente</strong> en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée sur le chemin de Compostelle</h4>
+              </div>
+              <span class="jour-duree">Journée complète · GR65, Cahors à Cajarc</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> sur le GR65, chemin de Saint-Jacques-de-Compostelle.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> du causse de Limogne, entre pierre sèche et chênes truffiers.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de pèlerin</strong> en pleine nature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> vers un village étape.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et repos du randonneur.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Kayak sur le Célé, entre falaises et villages</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Célé</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Descente en kayak</strong> sur le Célé depuis Bouziès.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> sous les falaises et grottes troglodytes.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> sur une berge.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Poursuite</strong> de la descente vers Cabrerets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération</strong> au bord de l'eau.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans la vallée de la Dordogne quercynoise</h4>
+              </div>
+              <span class="jour-duree">Journée complète · env. 35 km VTT</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> le long des falaises de la Dordogne quercynoise.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les villages de Carennac et Loubressac.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en pleine nature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> par le cirque d'Autoire.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et Cabécou bien mérité.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Parcours aventure et accrobranche dans le Lot</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Lot</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Session accrobranche</strong> dans les arbres au-dessus de la vallée.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Poursuite</strong> sur différents parcours, du plus facile au plus sportif.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> en pleine nature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> le long du Lot.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération et détente</strong> en fin de journée.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Randonnée sur les crêtes de la Bouriane</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Bouriane</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Départ matinal</strong> pour une randonnée sur les crêtes boisées de la Bouriane.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Traversée</strong> de la forêt et de ses étangs.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> avec panorama.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Descente</strong> par un sentier différent.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération au village.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>VTT dans le Quercy blanc, de Lalbenque à Limogne</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Causse de Limogne</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Sortie VTT</strong> sur les chemins du causse de Limogne.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Passage</strong> par les gariottes de pierre sèche.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique énergétique</strong> en pleine nature.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Boucle retour</strong> vers Lalbenque.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Étirements</strong> et récupération.</div></div>
+            </div>
+          </div>
+
+          <div class="jour-card" data-profil="actif">
+            <div class="jour-card-header">
+              <div class="jour-card-header-top">
+                <h4>Escalade et randonnée dans les gorges du Célé</h4>
+              </div>
+              <span class="jour-duree">Journée complète · Vallée du Célé</span>
+            </div>
+            <div class="jour-card-tags"><span class="profil-tag">Actif</span></div>
+            <div class="jour-timeline">
+              <div class="jour-etape"><div class="jour-etape-moment">Matin</div><div class="jour-etape-desc"><strong>Session d'escalade</strong> sur les falaises du Célé, près de Cabrerets.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Fin de matinée</div><div class="jour-etape-desc"><strong>Poursuite</strong> sur différents secteurs équipés.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Midi</div><div class="jour-etape-desc"><strong>Pique-nique de récupération</strong> au bord de la rivière.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Après-midi</div><div class="jour-etape-desc"><strong>Randonnée</strong> vers Marcilhac-sur-Célé.</div></div>
+              <div class="jour-etape"><div class="jour-etape-moment">Soir</div><div class="jour-etape-desc"><strong>Récupération et détente</strong> en fin de journée.</div></div>
+            </div>
+          </div>
+
         </div>
+      </div>
+
+      <div class="fiche-panel" id="panel-guides">
+        <p class="guide-intro">Suivez le guide ! Ces circuits commentés, pédestres au cœur des villes et villages ou en voiture à travers la campagne lotoise, vous emmènent pas à pas — ou virage après virage — à la découverte de l'histoire, des anecdotes et des petits secrets que seuls les guides locaux connaissent vraiment.</p>
+        <div class="parcours-filters">
+          <button class="filter-btn guide-filter-btn active" data-guide-filter="tous">Tous les circuits</button>
+          <button class="filter-btn guide-filter-btn" data-guide-filter="pied">À pied</button>
+          <button class="filter-btn guide-filter-btn" data-guide-filter="voiture">En voiture</button>
+        </div>
+        <div class="guides-grid">
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Cahors, sur les pas du Pont Valentré</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 2h</span>
+                <span class="guide-badge">Cité cadurcienne</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Cahors se love dans un méandre du Lot si serré que la rivière l'entoure presque entièrement. Suivez-moi du fameux pont fortifié jusqu'au cœur de la vieille ville, entre ruelles médiévales et façades Renaissance. »</p><div class="guide-map" id="map-lot-0"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Le Pont Valentré</h5>
+                  <p>Chef-d'œuvre de l'architecture militaire médiévale, ce pont fortifié aux trois tours fut bâti à partir de 1308 pour protéger l'accès à la ville. Il n'a jamais été pris d'assaut en sept siècles d'histoire.</p>
+                  <div class="guide-anecdote">On raconte que le maître d'œuvre, pressé par les délais, aurait pactisé avec le diable pour achever l'ouvrage à temps — une légende que rappelle aujourd'hui une petite sculpture de diablotin sur la tour centrale.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La cathédrale Saint-Étienne</h5>
+                  <p>L'une des plus anciennes cathédrales à coupoles de France, consacrée en 1119. Son portail nord, orné d'un tympan sculpté représentant l'Ascension, compte parmi les chefs-d'œuvre de la sculpture romane du Quercy.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le quartier des Badernes</h5>
+                  <p>Ce dédale de ruelles autour de la cathédrale a conservé son plan médiéval : maisons à pans de bois, cours intérieures et hôtels particuliers racontent la prospérité marchande de Cahors aux XIVe et XVe siècles.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Les jardins secrets et la rue Nationale</h5>
+                  <p>Poussez la porte de l'un de ces jardins dissimulés derrière les façades : autrefois potagers ou vergers, plusieurs ont été restaurés et ouverts au public le temps d'une balade insolite.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">5</div>
+                <div class="guide-etape-corps">
+                  <h5>La Barbacane et les tours du pont</h5>
+                  <p>Retour vers le Pont Valentré pour admirer, depuis la rive, l'ensemble fortifié dans son intégralité : un rappel de l'importance stratégique de Cahors, verrouillée par sa boucle du Lot.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Rocamadour, la cité sacrée accrochée à la falaise</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 2h</span>
+                <span class="guide-badge">Cité religieuse</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Rocamadour surgit à flanc de falaise, comme suspendue entre ciel et canyon. Depuis le Moyen Âge, des millions de pèlerins ont gravi ses marches pour venir se recueillir devant la Vierge noire. »</p><div class="guide-map" id="map-lot-1"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>La cité religieuse et le Grand Escalier</h5>
+                  <p>Les pèlerins montaient traditionnellement à genoux les 216 marches de cet escalier pour atteindre le parvis des sanctuaires, en signe de pénitence.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La chapelle Notre-Dame et la Vierge noire</h5>
+                  <p>Cette statuette de bois sombre, vénérée depuis le XIIe siècle, attire toujours les pèlerins. La légende veut que la cloche voisine sonne d'elle-même pour annoncer un miracle en mer.</p>
+                  <div class="guide-anecdote">Selon la tradition, la cloche de la chapelle se serait mise à sonner seule à plusieurs reprises, au moment même où des marins en perdition invoquaient Notre-Dame de Rocamadour, à des milliers de kilomètres de là.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château et le chemin de croix</h5>
+                  <p>Tout en haut de la falaise, le château offre un panorama vertigineux sur le canyon de l'Alzou. Le chemin de croix, aménagé sur la pente rocheuse, ponctue la montée de stations sculptées.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Le village médiéval et la cité des Aigles</h5>
+                  <p>En contrebas, la rue principale du village concentre boutiques et maisons anciennes. Non loin, le Rocher des Aigles présente depuis plusieurs décennies des spectacles de rapaces au-dessus du canyon.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Saint-Cirq-Lapopie, village préféré des Français</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h30</span>
+                <span class="guide-badge">Village perché</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Perché à pic au-dessus du Lot, Saint-Cirq-Lapopie fut sacré village préféré des Français en 2012. Ses maisons à colombages accrochées à la falaise racontent huit siècles d'histoire de tourneurs sur bois et de bateliers. »</p><div class="guide-map" id="map-lot-2"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>L'ancien château des Lapopie et l'église</h5>
+                  <p>Perchée sur l'éperon rocheux, l'église fortifiée du XVe siècle domine le village. Les ruines du château voisin rappellent les rivalités entre les quatre familles seigneuriales qui se partageaient autrefois Saint-Cirq.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La place du Sombral et ses maisons à colombages</h5>
+                  <p>Ce cœur du village, pavé et fleuri, concentre les plus belles façades à pans de bois, restaurées avec soin depuis que le village fut classé parmi les Plus Beaux Villages de France.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Les ateliers des Caladous</h5>
+                  <p>Saint-Cirq fut longtemps un haut lieu du tournage sur bois de buis, utilisé pour fabriquer manches d'outils et robinets. Plusieurs ateliers d'artisans d'art ont depuis pris le relais dans ces mêmes maisons.</p>
+                  <div class="guide-anecdote">Le peintre André Breton, séduit par le village, y acheta une maison en 1950 et le qualifia de site qui avait « cessé pour lui de vivre en puissance ».</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Le belvédère sur la vallée du Lot</h5>
+                  <p>Depuis le sentier qui longe la falaise, la vue plonge sur les méandres du Lot, quatre-vingts mètres en contrebas — l'un des plus beaux panoramas de la vallée.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Figeac, sur les pas de Champollion</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h30</span>
+                <span class="guide-badge">Cité médiévale</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Figeac doit sa prospérité médiévale au commerce et au parchemin ; elle doit sa renommée mondiale à l'un de ses enfants, Jean-François Champollion, le déchiffreur des hiéroglyphes égyptiens. »</p><div class="guide-map" id="map-lot-3"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>La place des Écritures</h5>
+                  <p>Cette place pavée accueille une reproduction géante de la pierre de Rosette, gravée dans le granit noir par l'artiste américain Joseph Kosuth, en hommage à Champollion.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La maison natale de Champollion</h5>
+                  <p>Devenue musée, cette demeure du XIVe siècle retrace le parcours du savant qui perça en 1822 le secret des hiéroglyphes, ouvrant la voie à l'égyptologie moderne.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>L'hôtel de la Monnaie</h5>
+                  <p>Ce bel édifice gothique, dont la façade est percée de fenêtres géminées, aurait abrité un atelier de frappe de monnaie au Moyen Âge — un signe de l'importance économique de Figeac.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Les quais du Célé et le vieux Figeac</h5>
+                  <p>La balade s'achève au fil de la rivière, bordée de maisons à colombages et de tourelles, dans un dédale de ruelles qui a conservé tout son cachet médiéval.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Martel, la ville aux sept tours</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h15</span>
+                <span class="guide-badge">Cité médiévale</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Sept clochers et tours dominent encore les toits de lauze de Martel, cité consulaire qui fut au Moyen Âge l'une des villes les plus puissantes du Quercy. »</p><div class="guide-map" id="map-lot-4"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>La halle et la place des Consuls</h5>
+                  <p>Cette halle du XVIIIe siècle, où se tient toujours le marché, occupe le cœur de la cité. Tout autour, les hôtels particuliers témoignent de la prospérité des consuls qui gouvernaient jadis la ville.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Les sept tours de Martel</h5>
+                  <p>Depuis la place, on distingue plusieurs des sept tours qui valent à la ville son surnom : celles du Palais de la Raymondie, de l'église Saint-Maur ou encore de l'ancien hôtel de ville.</p>
+                  <div class="guide-anecdote">Selon la légende, Martel doit son nom à Charles Martel, qui aurait fait édifier une église ici après sa victoire contre les Sarrasins — même si les historiens restent prudents sur cette origine.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>L'église Saint-Maur</h5>
+                  <p>Fortifiée comme beaucoup d'édifices religieux du Quercy, cette église gothique conserve un clocher-donjon massif qui servait autrefois de poste de guet.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>L'ancienne gare et le Truffadou</h5>
+                  <p>Aux abords de la ville, l'ancienne gare accueille aujourd'hui un petit train touristique à vapeur qui longe les falaises de la Dordogne — souvenir de l'âge d'or du chemin de fer local.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Puy-l'Évêque, cité dorée sur le Lot</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h15</span>
+                <span class="guide-badge">Village médiéval</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Puy-l'Évêque dévale la falaise calcaire jusqu'aux berges du Lot dans un camaïeu de pierre dorée. Fief des évêques de Cahors, ce village conserve un urbanisme médiéval remarquablement préservé. »</p><div class="guide-map" id="map-lot-5"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Le donjon des évêques de Cahors</h5>
+                  <p>Seul vestige du château fort qui donna son nom à la ville, ce donjon du XIIIe siècle rappelle que Puy-l'Évêque appartenait autrefois aux évêques de Cahors, seigneurs temporels autant que spirituels.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>L'église Saint-Sauveur</h5>
+                  <p>Cette église gothique, en partie fortifiée, domine la vallée du Lot depuis le point culminant du village.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Les ruelles en calcaire doré</h5>
+                  <p>Les venelles pentues, parfois en escalier, dévoilent des façades à encorbellement et des passages voûtés qui donnent tout son caractère à ce village de pierre blonde.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Le port et les berges du Lot</h5>
+                  <p>Autrefois port batelier actif, exportant le vin de Cahors vers Bordeaux par gabarres, les quais offrent aujourd'hui une promenade tranquille au bord de la rivière.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Cajarc, escale littéraire au bord du Lot</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h</span>
+                <span class="guide-badge">Village au bord du Lot</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Cajarc s'étire paisiblement dans une boucle du Lot. Ce village, cher à Georges Pompidou qui y possédait une maison, cultive un art de vivre tranquille entre rivière et causse. »</p><div class="guide-map" id="map-lot-6"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>La place du village et ses arcades</h5>
+                  <p>Le centre ancien de Cajarc a conservé ses arcades de pierre, typiques des villages marchands du Quercy, où se tenait autrefois un marché animé.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Les berges du Lot</h5>
+                  <p>La promenade qui longe la rivière, ombragée de platanes, invite à la flânerie et rappelle l'importance de la batellerie dans l'histoire du village.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le vieux pont et le quartier ancien</h5>
+                  <p>Ce pont, reconstruit à plusieurs reprises au fil des crues du Lot, dessert un quartier de maisons de pêcheurs et de bateliers, aujourd'hui restaurées avec soin.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Vallée de la Dordogne quercynoise</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 70 km</span>
+                <span class="guide-badge">Journée complète</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Cette route longe la Dordogne de méandre en méandre, reliant villages de pierre blonde et cirques naturels spectaculaires, sur les traces des gabariers qui descendaient jadis la rivière jusqu'à Bordeaux. »</p><div class="guide-map" id="map-lot-7"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Souillac et son abbatiale</h5>
+                  <p>Départ depuis Souillac, dont l'abbatiale romane Sainte-Marie conserve un célèbre bas-relief représentant le prophète Isaïe, chef-d'œuvre de la sculpture du XIIe siècle.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Martel, halte parmi les sept tours</h5>
+                  <p>Petit détour par la cité consulaire de Martel, dont les tours de pierre dominent encore la campagne environnante.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Carennac, joyau du bord de Dordogne</h5>
+                  <p>Ce village, l'un des Plus Beaux Villages de France, s'organise autour d'un ancien prieuré clunisien dont le cloître et le tympan roman valent à eux seuls le détour.</p>
+                  <div class="guide-anecdote">L'écrivain Fénelon, précepteur du petit-fils de Louis XIV, fut prieur commendataire de Carennac et y rédigea une partie des Aventures de Télémaque.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Autoire et son cirque naturel</h5>
+                  <p>Le village d'Autoire, blotti au pied d'un cirque de falaises calcaires, cache une cascade de trente mètres accessible par un sentier facile.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">5</div>
+                <div class="guide-etape-corps">
+                  <h5>Loubressac, sentinelle du Haut-Quercy</h5>
+                  <p>Perché sur son promontoire, ce village de pierre offre l'un des plus beaux panoramas de la vallée, embrassant Saint-Céré, Castelnau-Bretenoux et Autoire.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">6</div>
+                <div class="guide-etape-corps">
+                  <h5>Retour par Saint-Céré</h5>
+                  <p>La route s'achève à Saint-Céré, ville d'art nichée au confluent de la Bave et de la Bertrandoune, dominée par les tours jumelles de Saint-Laurent.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Route des châteaux du Haut-Quercy</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 40 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Entre Dordogne et Bave, cette route relie deux des plus belles forteresses du Lot, témoins de la puissance des grandes familles seigneuriales du Quercy. »</p><div class="guide-map" id="map-lot-8"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château de Castelnau-Bretenoux</h5>
+                  <p>Cette imposante forteresse de grès rouge, perchée sur son éperon, fut l'une des plus puissantes places fortes du Quercy avant d'être restaurée au début du XXe siècle par un ténor de l'Opéra de Paris passionné d'art ancien.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château de Montal</h5>
+                  <p>Ce château Renaissance, célèbre pour son escalier à vis sculpté et ses bustes de famille, fut construit par une mère désireuse d'offrir à son fils, parti guerroyer en Italie, une demeure digne de son rang.</p>
+                  <div class="guide-anecdote">Menacé de démantèlement au début du XXe siècle, une partie de ses sculptures avait été vendue puis dispersée à l'étranger, avant d'être patiemment rachetée et remise en place par un mécène.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Saint-Céré, ville d'art et d'atelier</h5>
+                  <p>Halte dans cette cité animée, où le peintre Jean Lurçat installa son atelier de tapisserie dans les tours de Saint-Laurent, sur les hauteurs de la ville.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Autoire, dernière étape pittoresque</h5>
+                  <p>Le circuit s'achève à Autoire, dont les maisons à tourelles et le cirque naturel referment cette boucle patrimoniale du Haut-Quercy.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Vallée du Lot et vignoble de Cahors</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 55 km</span>
+                <span class="guide-badge">Journée complète</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Cette route suit les méandres du Lot à travers le vignoble qui donne naissance au célèbre vin noir de Cahors, planté sur ces coteaux depuis l'époque romaine. »</p><div class="guide-map" id="map-lot-9"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Départ de Cahors</h5>
+                  <p>La route quitte la cité cadurcienne et son Pont Valentré pour longer les premiers coteaux plantés de Malbec, le cépage roi du vignoble de Cahors.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Luzech et sa boucle du Lot</h5>
+                  <p>Bâti dans l'un des méandres les plus resserrés de la rivière, Luzech conserve un donjon du XIIe siècle qui domine l'ensemble de la boucle.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Puy-l'Évêque, halte dorée</h5>
+                  <p>La route traverse ce village médiéval de pierre blonde, ancien port batelier d'où partait autrefois le vin de Cahors vers Bordeaux.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Prayssac et les domaines viticoles</h5>
+                  <p>Au cœur du vignoble, plusieurs domaines familiaux ouvrent leurs chais pour une dégustation de Cahors, entre rouge charpenté et rosé plus léger.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Vallée du Célé et villages troglodytes</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 60 km</span>
+                <span class="guide-badge">Journée complète</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Moins connue que celle du Lot, la vallée du Célé cache des trésors : abbayes nichées au pied des falaises, villages creusés dans la roche et l'une des plus belles grottes ornées d'Europe. »</p><div class="guide-map" id="map-lot-10"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Départ de Figeac</h5>
+                  <p>La route s'enfonce dans la vallée encaissée du Célé, entre falaises calcaires et méandres tranquilles, aux confins du Lot et de l'Aveyron.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Espagnac-Sainte-Eulalie et son ancien prieuré</h5>
+                  <p>Ce hameau paisible, blotti dans un méandre du Célé, conserve les vestiges d'un prieuré du XIIIe siècle au clocher-pigeonnier surmonté de tuiles vernissées, unique dans la région.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Marcilhac-sur-Célé et son abbaye en ruines</h5>
+                  <p>Les impressionnants vestiges de cette abbaye bénédictine, à moitié écroulée, témoignent de la puissance passée de ce monastère qui fut longtemps rival de celui de Rocamadour pour la possession de la Vierge noire.</p>
+                  <div class="guide-anecdote">Selon la légende locale, un moine de Marcilhac aurait dérobé la statue de la Vierge noire pour la ramener à Rocamadour, à l'origine d'une rivalité séculaire entre les deux sanctuaires.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>La grotte du Pech Merle</h5>
+                  <p>L'une des rares grottes ornées préhistoriques encore ouvertes au public, célèbre pour ses chevaux ponctués peints il y a environ 25 000 ans et ses empreintes de mains d'enfants.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">5</div>
+                <div class="guide-etape-corps">
+                  <h5>Cabrerets et le château du Diable</h5>
+                  <p>Le village accueille, en surplomb de la vallée, les ruines du château des Anglais, refuge fortifié creusé à même la falaise pendant la guerre de Cent Ans.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Causse de Gramat, Padirac et Rocamadour</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 35 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Ce court circuit relie trois des sites les plus emblématiques du Lot : un plateau calcaire aride, un gouffre vertigineux et une cité sacrée accrochée à la falaise. »</p><div class="guide-map" id="map-lot-11"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Gramat et son causse</h5>
+                  <p>Départ sur le plateau calcaire du causse de Gramat, paysage aride parsemé de murets de pierre sèche, de dolines et de bergeries en pierre appelées « caselles ».</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le gouffre de Padirac</h5>
+                  <p>Cet effondrement spectaculaire de 75 mètres de profondeur donne accès à une rivière souterraine que l'on descend en barque, au milieu de salles ornées de concrétions géantes.</p>
+                  <div class="guide-anecdote">Selon la légende, ce gouffre serait né d'un coup de fourche donné par Satan lui-même, défié par saint Martin, pour tenter de lui barrer la route vers le paradis.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Rocamadour et ses sanctuaires</h5>
+                  <p>La route redescend vers Rocamadour, cité de pèlerinage accrochée à la falaise depuis le Moyen Âge, où la Vierge noire attire toujours les visiteurs.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>L'Hospitalet et le point de vue</h5>
+                  <p>Dernier arrêt panoramique sur le plateau de l'Hospitalet, qui domine tout le canyon de l'Alzou et offre la plus belle vue d'ensemble sur la cité sacrée.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Le Ségala et le pays de Figeac</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 45 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« À l'est du Lot, le Ségala offre un visage plus vert et vallonné, entre bastide perchée, cité médiévale et château Renaissance isolé au milieu des champs. »</p><div class="guide-map" id="map-lot-12"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Départ de Figeac</h5>
+                  <p>La route quitte la cité de Champollion pour grimper vers les collines boisées du Ségala, terre plus fraîche que le causse voisin.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Capdenac-le-Haut, l'éperon fortifié</h5>
+                  <p>Ce village perché sur un promontoire dominant le Lot fut l'un des bastions de la résistance à Simon de Montfort pendant la croisade albigeoise, avant de devenir place forte royale.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château d'Assier</h5>
+                  <p>Isolé au milieu des champs, ce château Renaissance ne conserve qu'une aile de son ensemble d'origine, mais son décor sculpté témoigne du faste voulu par Galiot de Genouillac, grand maître de l'artillerie de François Ier.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Lacapelle-Marival et son château</h5>
+                  <p>Cette ancienne bastide du Ségala conserve un imposant château féodal du XIIIe siècle et une halle de bois où se tient toujours un marché.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Sud du Lot, du causse de Limogne aux gorges</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 50 km</span>
+                <span class="guide-badge">Journée complète</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Au sud de Cahors, le causse de Limogne déploie ses paysages arides de truffières et de pierre sèche, avant de plonger brusquement dans les gorges du Lot. »</p><div class="guide-map" id="map-lot-13"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Lalbenque et son marché aux truffes</h5>
+                  <p>Chaque semaine en saison, ce village accueille l'un des marchés aux truffes les plus réputés de France, où négociants et particuliers négocient à la criée le précieux champignon.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le causse de Limogne</h5>
+                  <p>Cette route traverse un plateau calcaire parsemé de cabanes de pierre sèche appelées « gariottes », de murets et de chênes truffiers, paysage typique du Quercy blanc.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château de Cénevières</h5>
+                  <p>Perché sur une falaise dominant le Lot, ce château mêle architecture médiévale et décor Renaissance, avec des plafonds peints remarquablement conservés.</p>
+                  <div class="guide-anecdote">Pendant les guerres de Religion, le seigneur de Cénevières, converti au protestantisme, aurait participé au pillage de plusieurs abbayes voisines dont il rapporta le butin dans son château.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Saint-Cirq-Lapopie</h5>
+                  <p>Le circuit s'achève dans ce village emblématique perché au-dessus du Lot, point d'orgue d'une journée entre plateau aride et gorges verdoyantes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+                  <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Gourdon, balcon du Quercy blanc</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h15</span>
+                <span class="guide-badge">Quercy blanc</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Perchée sur sa butte calcaire, Gourdon domine tout le Quercy blanc. Cette ancienne place forte, rivale de Rocamadour au Moyen Âge, a gardé son plan resserré et ses ruelles pentues. »</p><div class="guide-map" id="map-lot-14"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>L'église Saint-Pierre</h5>
+                  <p>Reconstruite au XVIe siècle sur l'emplacement de l'ancien château détruit sur ordre de Richelieu, cette église gothique domine la ville de son imposant clocher-mur.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La halle et la place des Marronniers</h5>
+                  <p>Cœur historique de la ville, cette place ombragée accueillait autrefois les foires et marchés qui firent la prospérité de Gourdon, carrefour entre Quercy et Périgord.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Les ruelles de la vieille ville</h5>
+                  <p>Le lacis de venelles pentues qui grimpe vers le sommet de la butte a conservé ses maisons à encorbellement et ses passages voûtés, témoins de la Gourdon marchande des XVe et XVIe siècles.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>L'esplanade et le panorama sur le Quercy blanc</h5>
+                  <p>Là où se dressait autrefois le château fort, rasé au XVIIe siècle, s'étend aujourd'hui un vaste panorama sur les collines calcaires du Quercy blanc et les premiers contreforts du Périgord.</p>
+                  <div class="guide-anecdote">Le château de Gourdon fut démantelé sur ordre de Richelieu en 1622, punition infligée à la ville pour son ralliement au protestantisme pendant les guerres de Religion.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Souillac et son abbatiale romane</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h15</span>
+                <span class="guide-badge">Vallée de la Dordogne</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Souillac s'est développée au Moyen Âge autour d'une abbaye bénédictine devenue l'un des joyaux de l'art roman du Quercy, avant de devenir un carrefour commerçant animé au bord de la Dordogne. »</p><div class="guide-map" id="map-lot-15"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>L'abbatiale Sainte-Marie</h5>
+                  <p>Cette église romane du XIIe siècle conserve l'un des chefs-d'œuvre de la sculpture médiévale : un bas-relief représentant le prophète Isaïe, à la sinuosité et à l'expressivité saisissantes.</p>
+                  <div class="guide-anecdote">Le portail intérieur de l'abbatiale met en scène la légende de Théophile, moine ayant vendu son âme au diable avant d'être sauvé par l'intercession de la Vierge — l'un des tout premiers récits de ce type dans l'art occidental.</div>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le musée de l'Automate</h5>
+                  <p>Installé dans l'ancien couvent des Récollets, ce musée rassemble une collection unique d'automates et de jouets mécaniques des XIXe et XXe siècles.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le quartier ancien et ses maisons de négociants</h5>
+                  <p>Les ruelles autour de l'abbatiale conservent quelques belles façades de marchands, témoins de l'activité commerciale et batelière de Souillac au bord de la Dordogne.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Les berges de la Dordogne</h5>
+                  <p>La promenade se referme au bord de la rivière, où les gabares chargeaient autrefois bois et vin à destination de Bordeaux.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Luzech, dans la grande boucle du Lot</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h</span>
+                <span class="guide-badge">Vignoble de Cahors</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Luzech occupe l'un des méandres les plus resserrés du Lot, si étroit que la rivière manque de se rejoindre elle-même. Un site défensif providentiel, exploité depuis l'Antiquité. »</p><div class="guide-map" id="map-lot-16"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Le donjon de l'Impernal</h5>
+                  <p>Ce donjon du XIIe siècle domine la ville depuis l'oppidum de l'Impernal, occupé dès l'époque gauloise puis gallo-romaine avant de devenir la forteresse des seigneurs de Luzech.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>L'église Saint-Pierre</h5>
+                  <p>Cette église gothique du centre-ville abrite quelques vestiges romans, rescapés des remaniements successifs au fil des siècles.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le quartier du Barry et la Chapelle des Capucins</h5>
+                  <p>Ce quartier ancien, aux ruelles resserrées, a conservé son caractère médiéval, entre maisons de vignerons et anciens couvents.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Le port et le méandre du Lot</h5>
+                  <p>Depuis les berges, on mesure toute l'étroitesse de cette boucle du Lot, un site qui explique à lui seul deux mille ans d'occupation continue à Luzech.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Carennac, le prieuré clunisien au bord de la Dordogne</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h</span>
+                <span class="guide-badge">Vallée de la Dordogne</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Carennac s'organise tout entier autour de son ancien prieuré, dépendance de l'abbaye de Cluny devenue l'un des plus beaux ensembles romans du Lot, au bord d'une Dordogne paresseuse. »</p><div class="guide-map" id="map-lot-17"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Le portail roman de l'église Saint-Pierre</h5>
+                  <p>Ce tympan sculpté du XIIe siècle, représentant le Christ en majesté entouré des apôtres, compte parmi les plus beaux témoignages de la sculpture romane quercynoise.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le cloître et les bâtiments prieuraux</h5>
+                  <p>Ce petit cloître gothique et les bâtiments conventuels attenants abritent aujourd'hui une remarquable Mise au Tombeau en pierre polychrome du XVIe siècle.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château des Doyens</h5>
+                  <p>Cette demeure Renaissance, résidence des doyens du chapitre, rappelle que l'écrivain Fénelon fut lui-même prieur commendataire de Carennac au XVIIe siècle.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Les ruelles fleuries et les berges de la Dordogne</h5>
+                  <p>La balade s'achève au fil des ruelles de pierre dorée, jusqu'aux rives de la Dordogne où mouillaient autrefois les gabares.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="pied">
+            <div class="guide-card-header">
+              <h4>Autoire, le village du cirque</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">À pied</span>
+                <span class="guide-badge">Env. 1h</span>
+                <span class="guide-badge">Cirque naturel</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Autoire se love au pied d'un cirque de falaises calcaires d'où jaillit une cascade spectaculaire. Ses maisons à tourelles racontent la villégiature des bourgeois de Saint-Céré, venus y bâtir leurs résidences d'été. »</p><div class="guide-map" id="map-lot-18"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Les maisons à tourelles</h5>
+                  <p>Dès le XVIIIe siècle, riches notables et marchands de Saint-Céré firent bâtir ici de belles demeures ornées de tourelles, donnant à Autoire un caractère presque aristocratique.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château des Anglais</h5>
+                  <p>Ces vestiges troglodytiques, creusés à flanc de falaise, auraient servi de refuge fortifié pendant la guerre de Cent Ans — d'où leur nom, qui perpétue le souvenir des troupes anglaises dans la région.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>La cascade du cirque</h5>
+                  <p>Un sentier facile mène au pied de cette chute de trente mètres, qui dévale les falaises calcaires au fond du cirque naturel d'Autoire.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>L'église et le lavoir</h5>
+                  <p>Retour vers le village par son église romane et son lavoir traditionnel, où l'eau qui dévale du cirque continue d'alimenter le quotidien du village.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Gourdon et la forêt de la Bouriane</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 45 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« À l'ouest du Lot, la Bouriane change de visage : forêts de châtaigniers et de pins, étangs discrets et villages de grès roux annoncent déjà le Périgord voisin. »</p><div class="guide-map" id="map-lot-19"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Gourdon, capitale du Quercy blanc</h5>
+                  <p>Départ de cette ancienne place forte perchée, qui domine tout le pays bourian de son éperon calcaire.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>La forêt de la Bouriane</h5>
+                  <p>La route s'enfonce dans ce massif de châtaigniers et de pins, paysage plus vert et plus vallonné que le causse, typique de cette région de transition vers le Périgord.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Salviac et son église fortifiée</h5>
+                  <p>Ce village bourian conserve une église gothique fortifiée, où l'on peut admirer un reliquaire médiéval remarquable.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Cazals et son bastide</h5>
+                  <p>Cette petite bastide du XIIIe siècle, organisée autour de sa place à couverts, ponctue la route avant le retour vers Gourdon.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Vallée de la Bave et pays de Saint-Céré</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 30 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Ce court circuit relie les villages qui bordent la Bave, petite rivière au caractère bien trempé qui a façonné le paysage du Haut-Quercy autour de Saint-Céré. »</p><div class="guide-map" id="map-lot-20"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Saint-Céré, ville d'art</h5>
+                  <p>Départ de cette cité animée, dominée par les tours jumelles de Saint-Laurent où travailla le peintre Jean Lurçat.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Bretenoux, bastide au bord de la Bave</h5>
+                  <p>Fondée en 1277, cette bastide a conservé sa place centrale à couverts et ses maisons à tourelles typiques du Haut-Quercy.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château de Castelnau-Bretenoux</h5>
+                  <p>La route grimpe vers cette forteresse de grès rouge qui domine la confluence de la Bave et de la Dordogne.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Retour par Saint-Laurent-les-Tours</h5>
+                  <p>Le circuit se referme sur les hauteurs de Saint-Céré, au pied des tours médiévales qui donnent son nom au quartier.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Causse et Ségala, de Labastide-Murat à Assier</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 45 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Cette route traverse deux visages contrastés du Lot : le causse aride autour de Labastide-Murat, puis le Ségala plus vert et vallonné, jusqu'au château Renaissance d'Assier. »</p><div class="guide-map" id="map-lot-21"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Labastide-Murat, village natal d'un maréchal d'Empire</h5>
+                  <p>Cette bastide du causse doit son nom à Joachim Murat, maréchal de Napoléon et roi de Naples, né dans une modeste auberge du village.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le causse et ses dolines</h5>
+                  <p>La route traverse le plateau calcaire, ponctué de murets de pierre sèche et de vastes dépressions naturelles appelées dolines.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château d'Assier</h5>
+                  <p>Cette demeure Renaissance, aujourd'hui partielle, témoigne du faste voulu par Galiot de Genouillac, grand maître de l'artillerie de François Ier, natif du village.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Lacapelle-Marival, bastide du Ségala</h5>
+                  <p>Dernière étape dans cette ancienne bastide dominée par son château féodal et sa halle de bois, où se tient toujours le marché.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Grotte de Pech Merle et villages du Quercy blanc</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 40 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Ce circuit relie l'une des plus belles grottes ornées d'Europe aux villages perchés du Quercy blanc, terre de pierre claire et de chênes truffiers. »</p><div class="guide-map" id="map-lot-22"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>La grotte du Pech Merle</h5>
+                  <p>Cette grotte ornée, célèbre pour ses fresques préhistoriques de chevaux ponctués vieilles de 25 000 ans, s'ouvre au cœur du causse de Cabrerets.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Concots, village du causse</h5>
+                  <p>Ce petit village du Quercy blanc, entouré de murets de pierre sèche, illustre le paysage typique du causse de Limogne.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Beauregard et sa halle</h5>
+                  <p>Cette bastide discrète conserve une élégante halle de pierre du XIIIe siècle, rare témoignage de l'architecture commerciale médiévale du Quercy.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Limogne-en-Quercy, cœur du causse</h5>
+                  <p>Ce village, capitale du causse de Limogne, referme le circuit avec son marché traditionnel et ses maisons de pierre blonde.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card" data-type="voiture">
+            <div class="guide-card-header">
+              <h4>Route des villages du Haut-Quercy, de Bretenoux à Loubressac</h4>
+              <div class="guide-card-meta-row"><div class="guide-card-meta">
+                <span class="guide-badge">En voiture</span>
+                <span class="guide-badge">Env. 25 km</span>
+                <span class="guide-badge">Demi-journée</span>
+              </div><button class="guide-download-btn-inline" onclick="telechargerFicheCircuit(this)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>Imprimer</button></div>
+            </div>
+            <p class="guide-chapeau">« Un court circuit qui concentre certains des plus beaux villages du Lot, entre bastide médiévale, forteresse de grès rouge et village perché classé parmi les plus beaux de France. »</p><div class="guide-map" id="map-lot-23"></div>
+            <div class="guide-etapes">
+              <div class="guide-etape">
+                <div class="guide-etape-num">1</div>
+                <div class="guide-etape-corps">
+                  <h5>Bretenoux, la bastide fleurie</h5>
+                  <p>Départ de cette bastide du XIIIe siècle, dont la place à couverts et les maisons à tourelles bordent la Bave.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">2</div>
+                <div class="guide-etape-corps">
+                  <h5>Le château de Castelnau-Bretenoux</h5>
+                  <p>Cette forteresse de grès rouge, restaurée au début du XXe siècle, domine la confluence de la Bave et de la Dordogne depuis son éperon rocheux.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">3</div>
+                <div class="guide-etape-corps">
+                  <h5>Loubressac, sentinelle du Haut-Quercy</h5>
+                  <p>Perché sur son promontoire, ce village offre l'un des plus beaux panoramas de la région, embrassant Autoire, Castelnau-Bretenoux et la vallée de la Dordogne.</p>
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-etape-num">4</div>
+                <div class="guide-etape-corps">
+                  <h5>Autoire, dernière halte du circuit</h5>
+                  <p>Le circuit s'achève dans ce village blotti au pied de son cirque naturel, où cascade et maisons à tourelles referment la boucle du Haut-Quercy.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+</div>
       </div>
 
     </div>
@@ -1164,7 +3328,8 @@
       });
     });
 
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    // Filtres "Parcours d'une journée"
+    const filterBtns = document.querySelectorAll('#panel-parcours .filter-btn');
     const jourCards   = document.querySelectorAll('.jour-card');
     filterBtns.forEach(btn => {
       btn.addEventListener('click', function() {
@@ -1176,6 +3341,224 @@
         });
       });
     });
+
+    // Filtres "Visites Guidées"
+    const guideFilterBtns = document.querySelectorAll('.guide-filter-btn');
+    const guideCards = document.querySelectorAll('#panel-guides .guide-card');
+    guideFilterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filtre = this.dataset.guideFilter;
+        guideFilterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        guideCards.forEach(card => {
+          card.style.display = (filtre === 'tous' || card.dataset.type === filtre) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+  <script>
+  (function() {
+    var guideMapsData = {"map-lot-0": [{"lat": 44.4463, "lng": 1.4227, "label": "Le Pont Valentré"}, {"lat": 44.45, "lng": 1.4407, "label": "La cathédrale Saint-Étienne"}, {"lat": 44.4505, "lng": 1.4415, "label": "Le quartier des Badernes"}, {"lat": 44.4483, "lng": 1.44, "label": "Les jardins secrets et la rue Nationale"}, {"lat": 44.446, "lng": 1.4222, "label": "La Barbacane et les tours du pont"}], "map-lot-1": [{"lat": 44.7998, "lng": 1.6178, "label": "La cité religieuse et le Grand Escalier"}, {"lat": 44.7999, "lng": 1.618, "label": "La chapelle Notre-Dame et la Vierge noire"}, {"lat": 44.8005, "lng": 1.6183, "label": "Le château et le chemin de croix"}, {"lat": 44.7965, "lng": 1.6168, "label": "Le village médiéval et la cité des Aigles"}], "map-lot-2": [{"lat": 44.4593, "lng": 1.6693, "label": "L'ancien château des Lapopie et l'église"}, {"lat": 44.4589, "lng": 1.669, "label": "La place du Sombral et ses maisons à colombages"}, {"lat": 44.4585, "lng": 1.6688, "label": "Les ateliers des Caladous"}, {"lat": 44.4598, "lng": 1.67, "label": "Le belvédère sur la vallée du Lot"}], "map-lot-3": [{"lat": 44.6082, "lng": 2.0325, "label": "La place des Écritures"}, {"lat": 44.6088, "lng": 2.033, "label": "La maison natale de Champollion"}, {"lat": 44.6085, "lng": 2.032, "label": "L'hôtel de la Monnaie"}, {"lat": 44.6095, "lng": 2.0345, "label": "Les quais du Célé et le vieux Figeac"}], "map-lot-4": [{"lat": 44.9345, "lng": 1.5966, "label": "La halle et la place des Consuls"}, {"lat": 44.935, "lng": 1.597, "label": "Les sept tours de Martel"}, {"lat": 44.934, "lng": 1.596, "label": "L'église Saint-Maur"}, {"lat": 44.933, "lng": 1.599, "label": "L'ancienne gare et le Truffadou"}], "map-lot-5": [{"lat": 44.5024, "lng": 1.1339, "label": "Le donjon des évêques de Cahors"}, {"lat": 44.502, "lng": 1.1335, "label": "L'église Saint-Sauveur"}, {"lat": 44.5028, "lng": 1.1342, "label": "Les ruelles en calcaire doré"}, {"lat": 44.5015, "lng": 1.133, "label": "Le port et les berges du Lot"}], "map-lot-6": [{"lat": 44.4795, "lng": 1.8355, "label": "La place du village et ses arcades"}, {"lat": 44.479, "lng": 1.836, "label": "Les berges du Lot"}, {"lat": 44.48, "lng": 1.835, "label": "Le vieux pont et le quartier ancien"}], "map-lot-7": [{"lat": 44.8912, "lng": 1.4778, "label": "Souillac et son abbatiale"}, {"lat": 44.9345, "lng": 1.5966, "label": "Martel, halte parmi les sept tours"}, {"lat": 44.9333, "lng": 1.7833, "label": "Carennac, joyau du bord de Dordogne"}, {"lat": 44.8471, "lng": 1.7452, "label": "Autoire et son cirque naturel"}, {"lat": 44.859, "lng": 1.737, "label": "Loubressac, sentinelle du Haut-Quercy"}, {"lat": 44.858, "lng": 1.8917, "label": "Retour par Saint-Céré"}], "map-lot-8": [{"lat": 44.8987, "lng": 1.766, "label": "Le château de Castelnau-Bretenoux"}, {"lat": 44.8611, "lng": 1.9017, "label": "Le château de Montal"}, {"lat": 44.858, "lng": 1.8917, "label": "Saint-Céré, ville d'art et d'atelier"}, {"lat": 44.8471, "lng": 1.7452, "label": "Autoire, dernière étape pittoresque"}], "map-lot-9": [{"lat": 44.4479, "lng": 1.437, "label": "Départ de Cahors"}, {"lat": 44.4626, "lng": 1.2949, "label": "Luzech et sa boucle du Lot"}, {"lat": 44.5024, "lng": 1.1339, "label": "Puy-l'Évêque, halte dorée"}, {"lat": 44.5011, "lng": 1.1897, "label": "Prayssac et les domaines viticoles"}], "map-lot-10": [{"lat": 44.6082, "lng": 2.0325, "label": "Départ de Figeac"}, {"lat": 44.6357, "lng": 1.85, "label": "Espagnac-Sainte-Eulalie et son ancien prieuré"}, {"lat": 44.571, "lng": 1.796, "label": "Marcilhac-sur-Célé et son abbaye en ruines"}, {"lat": 44.5312, "lng": 1.6335, "label": "La grotte du Pech Merle"}, {"lat": 44.5286, "lng": 1.6367, "label": "Cabrerets et le château du Diable"}], "map-lot-11": [{"lat": 44.7789, "lng": 1.718, "label": "Gramat et son causse"}, {"lat": 44.8329, "lng": 1.7423, "label": "Le gouffre de Padirac"}, {"lat": 44.7998, "lng": 1.6178, "label": "Rocamadour et ses sanctuaires"}, {"lat": 44.804, "lng": 1.622, "label": "L'Hospitalet et le point de vue"}], "map-lot-12": [{"lat": 44.6082, "lng": 2.0325, "label": "Départ de Figeac"}, {"lat": 44.581, "lng": 2.07, "label": "Capdenac-le-Haut, l'éperon fortifié"}, {"lat": 44.6335, "lng": 1.9585, "label": "Le château d'Assier"}, {"lat": 44.7314, "lng": 1.9358, "label": "Lacapelle-Marival et son château"}], "map-lot-13": [{"lat": 44.3717, "lng": 1.5522, "label": "Lalbenque et son marché aux truffes"}, {"lat": 44.4033, "lng": 1.7511, "label": "Le causse de Limogne"}, {"lat": 44.4645, "lng": 1.7267, "label": "Le château de Cénevières"}, {"lat": 44.4593, "lng": 1.6693, "label": "Saint-Cirq-Lapopie"}], "map-lot-14": [{"lat": 44.7311, "lng": 1.3961, "label": "L'église Saint-Pierre"}, {"lat": 44.7308, "lng": 1.3958, "label": "La halle et la place des Marronniers"}, {"lat": 44.7315, "lng": 1.3965, "label": "Les ruelles de la vieille ville"}, {"lat": 44.7318, "lng": 1.397, "label": "L'esplanade et le panorama sur le Quercy blanc"}], "map-lot-15": [{"lat": 44.8912, "lng": 1.4778, "label": "L'abbatiale Sainte-Marie"}, {"lat": 44.8908, "lng": 1.4783, "label": "Le musée de l'Automate"}, {"lat": 44.8915, "lng": 1.4775, "label": "Le quartier ancien et ses maisons de négociants"}, {"lat": 44.8898, "lng": 1.479, "label": "Les berges de la Dordogne"}], "map-lot-16": [{"lat": 44.4626, "lng": 1.2949, "label": "Le donjon de l'Impernal"}, {"lat": 44.4622, "lng": 1.2945, "label": "L'église Saint-Pierre"}, {"lat": 44.463, "lng": 1.2953, "label": "Le quartier du Barry et la Chapelle des Capucins"}, {"lat": 44.4618, "lng": 1.296, "label": "Le port et le méandre du Lot"}], "map-lot-17": [{"lat": 44.9333, "lng": 1.7833, "label": "Le portail roman de l'église Saint-Pierre"}, {"lat": 44.933, "lng": 1.783, "label": "Le cloître et les bâtiments prieuraux"}, {"lat": 44.9336, "lng": 1.7837, "label": "Le château des Doyens"}, {"lat": 44.9328, "lng": 1.7825, "label": "Les ruelles fleuries et les berges de la Dordogne"}], "map-lot-18": [{"lat": 44.8471, "lng": 1.7452, "label": "Les maisons à tourelles"}, {"lat": 44.8478, "lng": 1.746, "label": "Le château des Anglais"}, {"lat": 44.8465, "lng": 1.7468, "label": "La cascade du cirque"}, {"lat": 44.8473, "lng": 1.7448, "label": "L'église et le lavoir"}], "map-lot-19": [{"lat": 44.7311, "lng": 1.3961, "label": "Gourdon, capitale du Quercy blanc"}, {"lat": 44.75, "lng": 1.32, "label": "La forêt de la Bouriane"}, {"lat": 44.6967, "lng": 1.2667, "label": "Salviac et son église fortifiée"}, {"lat": 44.6853, "lng": 1.2531, "label": "Cazals et son bastide"}], "map-lot-20": [{"lat": 44.858, "lng": 1.8917, "label": "Saint-Céré, ville d'art"}, {"lat": 44.9081, "lng": 1.8388, "label": "Bretenoux, bastide au bord de la Bave"}, {"lat": 44.8987, "lng": 1.766, "label": "Le château de Castelnau-Bretenoux"}, {"lat": 44.86, "lng": 1.893, "label": "Retour par Saint-Laurent-les-Tours"}], "map-lot-21": [{"lat": 44.6533, "lng": 1.5567, "label": "Labastide-Murat, village natal d'un maréchal d'Empire"}, {"lat": 44.64, "lng": 1.61, "label": "Le causse et ses dolines"}, {"lat": 44.6335, "lng": 1.9585, "label": "Le château d'Assier"}, {"lat": 44.7314, "lng": 1.9358, "label": "Lacapelle-Marival, bastide du Ségala"}], "map-lot-22": [{"lat": 44.5312, "lng": 1.6335, "label": "La grotte du Pech Merle"}, {"lat": 44.4386, "lng": 1.6944, "label": "Concots, village du causse"}, {"lat": 44.4204, "lng": 1.6386, "label": "Beauregard et sa halle"}, {"lat": 44.4033, "lng": 1.7511, "label": "Limogne-en-Quercy, cœur du causse"}], "map-lot-23": [{"lat": 44.9081, "lng": 1.8388, "label": "Bretenoux, la bastide fleurie"}, {"lat": 44.8987, "lng": 1.766, "label": "Le château de Castelnau-Bretenoux"}, {"lat": 44.859, "lng": 1.737, "label": "Loubressac, sentinelle du Haut-Quercy"}, {"lat": 44.8471, "lng": 1.7452, "label": "Autoire, dernière halte du circuit"}]};
+    var guideMapInstances = {};
+    window.guideMapsData = guideMapsData;
+
+    function initGuideMap(id) {
+      if (guideMapInstances[id]) return;
+      var data = guideMapsData[id];
+      var el = document.getElementById(id);
+      if (!data || !el || typeof L === 'undefined') return;
+      var map = L.map(id, { scrollWheelZoom: false });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+      var latlngs = [];
+      data.forEach(function(pt, i) {
+        var icon = L.divIcon({
+          className: 'guide-map-marker-wrap',
+          html: '<div class="guide-map-marker">' + (i + 1) + '</div>',
+          iconSize: [24, 24],
+          iconAnchor: [12, 12]
+        });
+        L.marker([pt.lat, pt.lng], { icon: icon }).addTo(map)
+          .bindPopup('<strong>' + (i + 1) + '. ' + pt.label + '</strong>');
+        latlngs.push([pt.lat, pt.lng]);
+      });
+      if (latlngs.length > 1) {
+        L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.75 }).addTo(map);
+        map._ficheBounds = L.latLngBounds(latlngs);
+        map.fitBounds(map._ficheBounds, { padding: [30, 30] });
+      } else if (latlngs.length === 1) {
+        map._ficheBounds = null;
+        map.setView(latlngs[0], 13);
+      }
+      guideMapInstances[id] = map;
+    }
+
+    function initVisibleGuideMaps(panelId) {
+      document.querySelectorAll('#' + panelId + ' .guide-map').forEach(function(el) {
+        initGuideMap(el.id);
+        var map = guideMapInstances[el.id];
+        if (map) {
+          setTimeout(function() {
+            map.invalidateSize();
+            if (map._ficheBounds) {
+              map.fitBounds(map._ficheBounds, { padding: [30, 30] });
+            }
+          }, 120);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      ['guides'].forEach(function(panelName) {
+        var tab = document.querySelector('.fiche-tab[data-panel="' + panelName + '"]');
+        if (tab) {
+          tab.addEventListener('click', function() { setTimeout(function() { initVisibleGuideMaps('panel-' + panelName); }, 90); });
+        }
+        var panel = document.getElementById('panel-' + panelName);
+        if (panel && panel.classList.contains('active')) {
+          setTimeout(function() { initVisibleGuideMaps('panel-' + panelName); }, 250);
+        }
+      });
+    });
+  })();
+  </script>
+  <script>
+  // Téléchargement d'une fiche circuit : construit une zone imprimable (infos + carte)
+  // et déclenche l'impression du navigateur (choisir "Enregistrer au format PDF").
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  var ficheImpressionMap = null;
+
+  function telechargerFicheCircuit(btn) {
+    var card = btn.closest('.guide-card');
+    if (!card) return;
+
+    var titre = card.querySelector('.guide-card-header h4').textContent.trim();
+    var badges = Array.prototype.map.call(card.querySelectorAll('.guide-badge'), function(b) {
+      return b.textContent.trim();
+    });
+    var chapeauEl = card.querySelector('.guide-chapeau');
+    var chapeau = chapeauEl ? chapeauEl.textContent.trim() : '';
+    var mapEl = card.querySelector('.guide-map');
+    var mapId = mapEl ? mapEl.id : null;
+    var points = (mapId && window.guideMapsData && window.guideMapsData[mapId]) ? window.guideMapsData[mapId] : [];
+
+    var etapes = Array.prototype.map.call(card.querySelectorAll('.guide-etape'), function(et) {
+      var num = et.querySelector('.guide-etape-num').textContent.trim();
+      var h5 = et.querySelector('.guide-etape-corps h5');
+      var p = et.querySelector('.guide-etape-corps > p');
+      var anecdote = et.querySelector('.guide-anecdote');
+      return {
+        num: num,
+        titre: h5 ? h5.textContent.trim() : '',
+        texte: p ? p.textContent.trim() : '',
+        anecdote: anecdote ? anecdote.textContent.trim() : ''
+      };
+    });
+
+    var old = document.getElementById('fiche-print-container');
+    if (old) old.remove();
+    if (ficheImpressionMap) {
+      try { ficheImpressionMap.remove(); } catch (e) {}
+      ficheImpressionMap = null;
+    }
+
+    var etapesHtml = etapes.map(function(e) {
+      return '<div class="p-etape">' +
+        '<div class="p-etape-num">' + esc(e.num) + '</div>' +
+        '<div class="p-etape-corps">' +
+          '<h5>' + esc(e.titre) + '</h5>' +
+          '<p>' + esc(e.texte) + '</p>' +
+          (e.anecdote ? '<div class="p-anecdote">' + esc(e.anecdote) + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    var badgesHtml = badges.map(function(b) { return '<span class="p-badge">' + esc(b) + '</span>'; }).join('');
+
+    var container = document.createElement('div');
+    container.id = 'fiche-print-container';
+    container.className = 'fiche-print-container';
+    container.innerHTML =
+      '<div class="p-col"><div class="p-info">' +
+        '<h1>' + esc(titre) + '</h1>' +
+        '<div class="p-badges">' + badgesHtml + '</div>' +
+        (chapeau ? '<p class="p-chapeau">' + esc(chapeau) + '</p>' : '') +
+        etapesHtml +
+      '</div></div>' +
+      '<div class="p-col"><div class="p-map-wrap">' +
+        '<div class="p-map" id="fiche-print-map"></div>' +
+        '<div class="p-map-caption">Fond de carte © OpenStreetMap contributors</div>' +
+      '</div></div>';
+
+    document.body.appendChild(container);
+
+    if (typeof L === 'undefined') {
+      window.print();
+      return;
+    }
+
+    ficheImpressionMap = L.map('fiche-print-map', { zoomControl: false, attributionControl: false, scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(ficheImpressionMap);
+
+    var latlngs = [];
+    points.forEach(function(pt, i) {
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="background:#8B5E0A;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);">' + (i + 1) + '</div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      L.marker([pt.lat, pt.lng], { icon: icon }).addTo(ficheImpressionMap);
+      latlngs.push([pt.lat, pt.lng]);
+    });
+    var ficheBounds = null;
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#8B5E0A', weight: 3, dashArray: '6 8', opacity: 0.8 }).addTo(ficheImpressionMap);
+      ficheBounds = L.latLngBounds(latlngs);
+      ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+    } else if (latlngs.length === 1) {
+      ficheImpressionMap.setView(latlngs[0], 13);
+    }
+
+    function recadrerFicheMap() {
+      ficheImpressionMap.invalidateSize();
+      if (ficheBounds) {
+        ficheImpressionMap.fitBounds(ficheBounds, { padding: [36, 36] });
+      }
+    }
+
+    function lancerImpression() {
+      recadrerFicheMap();
+      setTimeout(function() {
+        window.print();
+      }, 300);
+    }
+
+    setTimeout(lancerImpression, 600);
+
+    function avantImpression() {
+      if (ficheImpressionMap) { recadrerFicheMap(); }
+    }
+    window.addEventListener('beforeprint', avantImpression);
+
+    function nettoyerApresImpression() {
+      var c = document.getElementById('fiche-print-container');
+      if (c) c.remove();
+      if (ficheImpressionMap) {
+        try { ficheImpressionMap.remove(); } catch (e) {}
+        ficheImpressionMap = null;
+      }
+      window.removeEventListener('afterprint', nettoyerApresImpression);
+      window.removeEventListener('beforeprint', avantImpression);
+    }
+    window.addEventListener('afterprint', nettoyerApresImpression);
+  }
   </script>
 
 </body>
