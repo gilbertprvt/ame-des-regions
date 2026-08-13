@@ -3187,16 +3187,42 @@
 
   <script src="../../script.js"></script>
   <script>
+    // ==== DEBUT ONGLET ACTIF PERSISTANT (bloc à copier tel quel dans chaque fiche) ====
     const tabs   = document.querySelectorAll('.fiche-tab');
     const panels = document.querySelectorAll('.fiche-panel');
+
+    // Clé de stockage propre à cette page, pour ne pas mélanger l'onglet
+    // mémorisé d'une fiche avec celui d'une autre fiche département.
+    const cleOngletActif = 'ongletActif_' + window.location.pathname;
+
+    function activerOnglet(nomPanel, memoriser) {
+      const tabCorrespondant   = document.querySelector('.fiche-tab[data-panel="' + nomPanel + '"]');
+      const panelCorrespondant = document.getElementById('panel-' + nomPanel);
+      if (!tabCorrespondant || !panelCorrespondant) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tabCorrespondant.classList.add('active');
+      panelCorrespondant.classList.add('active');
+
+      if (memoriser !== false) {
+        localStorage.setItem(cleOngletActif, nomPanel);
+      }
+    }
+
     tabs.forEach(tab => {
       tab.addEventListener('click', function() {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+        activerOnglet(this.dataset.panel);
       });
     });
+
+    // Au chargement de la page, on restaure le dernier onglet actif mémorisé
+    // (sinon on garde l'onglet actif par défaut codé dans le HTML, ici "Gastronomie")
+    const dernierOnglet = localStorage.getItem(cleOngletActif);
+    if (dernierOnglet) {
+      activerOnglet(dernierOnglet, false);
+    }
+    // ==== FIN ONGLET ACTIF PERSISTANT ====
 
     // Filtres "Parcours d'une journée" (on exclut volontairement les boutons
     // de filtre des Visites Guidées, qui partagent la classe .filter-btn)
