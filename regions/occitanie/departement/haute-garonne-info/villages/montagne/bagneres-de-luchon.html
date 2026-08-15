@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bagnères-de-Luchon, Reine des Pyrénées — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour">
+            ← Retour à la fiche Haute-Garonne
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>B</em>agnères-de-<em>L</em>uchon<span class="sous-titre">Reine des Pyrénées, thermalisme et Belle Époque</span></h1>
+       
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png"
+               alt="Carte de la Haute-Garonne"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;" />
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/bagneres-de-luchon.png" alt="Écusson Bagnères-de-Luchon" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Reine des Pyrénées ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active"   >📖 Histoire</a>
+          <a href="#visite"   >🏞️ Visite pratique</a>
+          <a href="#patrimoine"   >🏆 Reconnaissance</a>
+          <a href="#thermalisme"   >💧 Eaux et Belle Époque</a>
+          <a href="#anecdotes"   >💬 Anecdotes</a>
+          <a href="#alentours"   >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p>Nichée au débouché de la vallée de la Pique, au cœur des Pyrénées centrales, Bagnères-de-Luchon doit son nom et sa vocation à ses eaux chaudes. Dès l'époque romaine, la cité est connue sous le nom d'Ilixon, en hommage à une divinité gauloise des eaux : les Romains y font creuser trois piscines de marbre, dotées d'une circulation d'air chaud et de vapeur. Une présence plus ancienne encore, datée du Néolithique, a été attestée dans la grotte de Saint-Mamet, révélant une fréquentation humaine du site depuis des millénaires.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/luchon-allees-etigny.jpg"
+                        alt="Les allées d'Étigny à Bagnères-de-Luchon" />
+                    <figcaption>Les allées d'Étigny, cœur historique de la ville thermale</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>Pendant des siècles, les bains sommeillent sans jamais s'éteindre tout à fait, fréquentés par les habitants des vallées voisines. Il faut attendre 1759 pour qu'un tournant décisif s'amorce : l'État envoie à Luchon le baron Antoine Mégret d'Étigny, intendant de Gascogne, qui fait tracer les routes et donne son nom à la grande allée plantée de platanes qui structure encore la ville aujourd'hui. Les eaux hyperthermales sulfurées sodiques, parmi les plus soufrées des Pyrénées, jaillissent à plus de 70°C et attirent bientôt une clientèle de curistes toujours plus nombreuse.</p>
+
+              <p>Le XIXe siècle marque l'apogée thermale de Luchon. L'aristocratie et la bourgeoisie européennes s'y pressent, de l'impératrice Eugénie à Napoléon III, tandis que des écrivains comme Lamartine, Flaubert, Maupassant ou Edmond Rostand, qui y passa vingt-deux étés de sa jeunesse, contribuent à sa renommée. En 1834, l'auteur Vincent de Chausenque la surnomme « Reine des Pyrénées » dans son ouvrage « Les Pyrénées ou voyages pédestres » ; le titre est popularisé en 1854 par Henri Nicolle, enchanté de son séjour. L'arrivée du chemin de fer en 1873 achève de consacrer la station comme destination incontournable du thermalisme et du pyrénéisme.</p>
+
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏞️</div>
+              Visite pratique
+            </h2>
+
+            <figure class="photo-bloc photo-droite">
+                   <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/luchon-thermes.jpg"
+                        alt="Les thermes de Bagnères-de-Luchon" />
+                    <figcaption>Les thermes de Luchon, parmi les eaux les plus sulfurées des Pyrénées</figcaption>
+                  </figure>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Environ 2h de visite</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile, ville de piémont pyrénéen</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">Cœur des Pyrénées centrales, à 140 km de Toulouse</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Tarif</div>
+                  <div class="recette-meta-val">Ville en accès libre, thermes et casino payants</div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Allées d'Étigny</span> Grande artère bordée de platanes centenaires, cœur historique et commerçant de la ville</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Thermes de Luchon</span> Eaux sulfurées parmi les plus riches des Pyrénées, espace thermoludique contemporain</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Casino de Luchon</span> Édifice Belle Époque, l'un des plus anciens casinos thermaux de France</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Villa Edmond Rostand</span> Demeure de l'écrivain, témoin de la villégiature thermale du XIXe siècle</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Musée du Pays de Luchon</span> Collections consacrées au thermalisme et au pyrénéisme</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Église Notre-Dame-de-l'Assomption</span> Édifice du XIXe siècle au cœur de la ville</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Superbagnères</span> Ancien Grand Hôtel d'altitude, accessible en télécabine</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Parc thermal et jardins</span> Aménagés dès le XVIIIe siècle pour la clientèle curiste</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les allées d'Étigny</div>
+                  <div class="etape-texte">Artère principale tracée sous l'impulsion du baron d'Étigny au XVIIIe siècle, aujourd'hui bordée de commerces et d'hôtels Belle Époque.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les thermes et l'espace thermoludique</div>
+                  <div class="etape-texte">Eaux hyperthermales sulfurées jaillissant depuis près de 14 000 ans, exploitées en cure depuis l'Antiquité romaine.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le casino et le quartier thermal</div>
+                  <div class="etape-texte">Construit à l'apogée de la station, témoin de la vie mondaine qui attira Napoléon III, Flaubert ou Maupassant.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La villa Edmond Rostand</div>
+                  <div class="etape-texte">Demeure où l'auteur de Cyrano passa vingt-deux étés de jeunesse, léguant à la ville l'esprit de la Fête des Fleurs.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Superbagnères</div>
+                  <div class="etape-texte">Ancien fleuron hôtelier d'altitude ouvert en 1922, accessible depuis la ville par télécabine, porte d'entrée du domaine skiable.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏔️</div>
+                <div>
+                  <div class="vin-nom">Grand site des Pyrénées centrales</div>
+                  <div class="vin-desc">Luchon est identifiée comme l'une des étapes majeures du tourisme pyrénéen, entre thermalisme, sports d'hiver et randonnée.</div>
+                </div>
+                <div class="vin-badge">Reconnaissance régionale</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🚴</div>
+                <div>
+                  <div class="vin-nom">Étape historique du Tour de France</div>
+                  <div class="vin-desc">La ville et les cols environnants, comme le Peyresourde, comptent parmi les passages emblématiques du Tour de France dans les Pyrénées.</div>
+                </div>
+                <div class="vin-badge">Depuis 1910</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Patrimoine architectural Belle Époque</div>
+                  <div class="vin-desc">Allées, villas et casino témoignent de l'âge d'or thermal européen du XIXe siècle.</div>
+                </div>
+                <div class="vin-badge">XIXe siècle</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎖️</div>
+                <div>
+                  <div class="vin-nom">« Reine des Pyrénées »</div>
+                  <div class="vin-desc">Surnom donné par Vincent de Chausenque en 1834, popularisé par Henri Nicolle en 1854, devenu emblème de la ville.</div>
+                </div>
+                <div class="vin-badge">Titre donné en 1834</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- THERMALISME -->
+          <section class="section" id="thermalisme">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💧</div>
+              L'or thermal, de Rome à la Belle Époque
+            </h2>
+            <div class="histoire-texte">
+              
+              <p>Dès le Ier siècle de notre ère, les Romains reconnaissent la qualité des eaux de Luchon et y fondent la cité d'Ilixon, du nom d'une divinité gauloise des eaux. Les vestiges de bassins antiques, aujourd'hui enfouis sous la ville moderne, témoignent d'un thermalisme déjà organisé, précurseur de deux millénaires de cure ininterrompue.</p>
+
+              <div class="citation-bloc">
+                <p>Ici, l'eau qui jaillit de la montagne guérit le corps et enchante l'âme.</p>
+                <cite>— Tradition thermale luchonnaise</cite>
+              </div>
+
+              <p>Au XIXe siècle, la ville vit son âge d'or : établissements thermaux, hôtels et villas se multiplient pour accueillir une clientèle européenne toujours plus nombreuse. En 1888, le journaliste Maurice Froyez, ami d'Edmond Rostand, crée la Fête des Fleurs, où calèches et fiacres fleuris défilent dans les rues aux côtés des curistes ; la tradition perdure aujourd'hui, rappelant l'âge d'or où Luchon rayonnait sur toute l'Europe thermale.</p>
+            
+            </div>
+          </section>
+
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">💧</div>
+                <div>
+                  <div class="vin-nom">Ilixon, la déesse oubliée</div>
+                  <div class="vin-desc">Le nom antique de Luchon, Ilixon, honorait une divinité gauloise des eaux ; la station commercialise aujourd'hui encore une eau minérale sous ce nom.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌸</div>
+                <div>
+                  <div class="vin-nom">La Fête des Fleurs</div>
+                  <div class="vin-desc">Née en 1888 à l'initiative du journaliste Maurice Froyez, ami d'Edmond Rostand, elle voit chaque année calèches et fiacres pavoisés de fleurs défiler dans les rues.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">👑</div>
+                <div>
+                  <div class="vin-nom">Rendez-vous princier</div>
+                  <div class="vin-desc">Dans les années 1930, la famille princière de Monaco venait chaque été présider la Fête des Fleurs.</div>
+                </div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🚂</div>
+                <div>
+                  <div class="vin-nom">Le train de la reine</div>
+                  <div class="vin-desc">L'arrivée du chemin de fer en 1873 permit à des générations de curistes européens de rallier plus facilement la station, consacrant sa renommée.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>Superbagnères</strong> Station de ski et balcon panoramique sur la chaîne pyrénéenne, à 1 800 m d'altitude.</p>
+
+              <p><strong>Vallée du Lys</strong> Cirque glaciaire réputé pour ses cascades, dont la spectaculaire cascade d'Enfer.</p>
+
+              <p><strong>Lac d'Oô</strong> Randonnée emblématique menant à un lac de montagne dominé par une cascade de 275 m.</p>
+
+              <p><strong>Hospice de France</strong> Point de départ vers le port de Vénasque et la frontière espagnole.</p>
+
+              <p><strong>Col de Peyresourde</strong> Col mythique du Tour de France reliant la vallée du Louron.</p>
+
+              <p><strong>Saint-Béat</strong> Village voisin connu pour ses carrières de marbre antiques, à une vingtaine de minutes.</p>
+            
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Haute-Garonne (Pyrénées centrales, vallée de la Pique)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Station thermale · Station de ski</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Population</span>
+                <span class="aside-val">Environ 2 900 habitants (Luchonnais)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Origine</span>
+                <span class="aside-val">Cité thermale romaine d'Ilixon (Ier siècle) · Essor XVIIIe-XIXe siècle</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">SURNOM</span>
+                <span class="aside-val">« Reine des Pyrénées » (1834)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Étape historique du Tour de France · Ville thermale classée</span>
+              </div>
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
