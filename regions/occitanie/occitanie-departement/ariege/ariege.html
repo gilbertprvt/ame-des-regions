@@ -1889,14 +1889,30 @@
 <script>
     const tabs   = document.querySelectorAll('.fiche-tab');
     const panels = document.querySelectorAll('.fiche-panel');
+    const FICHE_TAB_STORAGE_KEY = 'ariege-fiche-tab-active';
+
+    function activerOnglet(tab) {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    }
+
     tabs.forEach(tab => {
       tab.addEventListener('click', function() {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+        activerOnglet(this);
+        try { localStorage.setItem(FICHE_TAB_STORAGE_KEY, this.dataset.panel); } catch (e) {}
       });
     });
+
+    // Restaure l'onglet actif mémorisé (sinon on garde celui déjà actif dans le HTML)
+    try {
+      const ongletMemorise = localStorage.getItem(FICHE_TAB_STORAGE_KEY);
+      if (ongletMemorise) {
+        const tabMemorise = document.querySelector('.fiche-tab[data-panel="' + ongletMemorise + '"]');
+        if (tabMemorise) activerOnglet(tabMemorise);
+      }
+    } catch (e) {}
 
     const filterBtns = document.querySelectorAll('.filter-btn');
     const jourCards   = document.querySelectorAll('.jour-card');
