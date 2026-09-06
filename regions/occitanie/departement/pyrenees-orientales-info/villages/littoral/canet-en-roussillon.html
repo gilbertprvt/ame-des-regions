@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canet-en-Roussillon — Entre étang et Méditerranée — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+           font-size: clamp(22px, 4.4vw, 45px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 100px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+  <div class="produit-hero"><div class="container">
+    <div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="../../../../occitanie-departement/pyrenees-orientales/pyrenees-orientales.html" class="produit-btn-retour">← Retour à la fiche Pyrénées-Orientales</a></div></div>
+    <div class="produit-hero-body"><div><h1><em>C</em>anet-en<br><span style="padding-left: 40px;"><em>R</em>oussillon</span><br><span style="padding-left: 80px;"><em>E</em>ntre étang et</span> <br><span style="padding-left: 120px;"><em>M</em>éditerranée</span></h1></div><img src="../../../../../../assets/departement/occitanie/carte-pyrenees-orientales.png" alt="Carte des Pyrénées-Orientales" style="height:220px; width:auto; opacity:0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block; align-self:flex-start; margin-top:8px;" /></div>
+  </div>
+  <div class="fiche-hero-ecusson"><img src="../blason/canet-en-roussillon.png" alt="Écusson Canet-en-Roussillon" /></div>
+  <div class="hero-label-bas">⟹ Village catalan · Étang · Grande plage ⟸</div>
+  <div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a href="#histoire" class="active">📖 Histoire</a><a href="#incontournables">🏛️ Incontournables</a><a href="#terroir">🍽️ Terroir & gastronomie</a><a href="#personnages">🎨 Personnages & mémoire</a><a href="#infos-pratiques">📍 Infos pratiques</a></div></div></div>
+  </div>
+
+  <div class="produit-body"><div class="container"><div class="produit-layout"><div>
+    <section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Histoire & origines</h2><div class="histoire-texte"><p><strong>Un site ancien entre plaine et mer.</strong> Canet-en-Roussillon s’est développé au centre de la plaine du Roussillon, à proximité de l’embouchure de la Têt et d’un vaste système lagunaire. Cette position, tournée à la fois vers les terres agricoles, la mer et les voies de circulation du Roussillon, explique l’ancienneté de l’occupation humaine et la vocation d’échanges du site.</p>
+<p><strong>Le noyau médiéval du “castell”.</strong> Au Moyen Âge, la population se regroupe autour d’un château vicomtal et d’un ensemble fortifié. Le château de Canet occupe une position stratégique et intervient dans les rivalités entre les couronnes d’Aragon, de Majorque et de France. Il accueille notamment des personnages de premier plan, dont l’empereur Sigismond en 1415 lors des négociations liées au Grand Schisme d’Occident.</p>
+<p><strong>Le château vicomtal.</strong> Le château, aujourd’hui en ruines consolidées, conserve des vestiges de ses enceintes, de la chapelle Saint-Martin et d’aménagements successifs. Affaibli après le rattachement du Roussillon à la France en 1659, il perd progressivement sa fonction militaire. Sa sauvegarde est engagée au XXe siècle et la commune en devient pleinement propriétaire en 2024.</p>
+
+ <figure class="photo-bloc photo-centre" style="max-width: 280px;"><img src="../../../../../../assets/departement/occitanie/photo/pyrenees-orientales/canet-port.jpg" alt="Canet-en-Roussillon" /><figcaption>Canet-en-Roussillon, sous les palmier</figcaption></figure><p><strong>Saint-Jacques et la vie du vieux village.</strong> L’église Saint-Jacques devient le cœur religieux du bourg. Autour d’elle, les ruelles, placettes et maisons du vieux Canet gardent la lecture d’un village catalan longtemps tourné vers l’agriculture, la vigne, l’élevage, les métiers artisanaux et les échanges avec Perpignan.</p>
+<p><strong>Un territoire de pêcheurs.</strong> Au sud de la commune, l’étang de Canet–Saint-Nazaire a longtemps nourri une activité de pêche traditionnelle. Les cabanes de pêcheurs en roseaux rappellent ce mode de vie ancien et constituent aujourd’hui l’un des paysages patrimoniaux les plus singuliers du littoral roussillonnais.</p>
+<p><strong>La naissance de Canet-Plage.</strong> À partir de la fin du XIXe siècle et surtout au XXe siècle, la fréquentation balnéaire transforme profondément la commune. Les bains de mer, les transports depuis Perpignan, puis l’automobile favorisent l’urbanisation du front de mer. Canet devient progressivement l’une des grandes stations du littoral catalan.</p>
+<p><strong>Deux visages complémentaires.</strong> La commune conserve aujourd’hui une identité double : Canet-Village, autour du noyau historique, et Canet-Plage, ouverte sur une longue plage de sable, un port de plaisance et des équipements touristiques. Entre les deux, les quartiers modernes assurent la continuité urbaine.</p>
+ <figure class="photo-bloc photo-centre" style="max-width: 280px;"><img src="../../../../../../assets/departement/occitanie/photo/pyrenees-orientales/canet.jpg" alt="Canet-en-Roussillon" /><figcaption>Canet-en-Roussillon, entre village, plage et lagune</figcaption></figure>
+
+<p><strong>Un patrimoine naturel majeur.</strong> L’étang de Canet–Saint-Nazaire est protégé au titre de Natura 2000 et appartient en grande partie au Conservatoire du littoral. Roselières, sansouires, zones humides et plans d’eau accueillent de nombreuses espèces d’oiseaux, notamment des flamants roses, aigrettes, sternes et limicoles.</p>
+<p><strong>Canet aujourd’hui.</strong> La ville associe station balnéaire, port, vieux village, patrimoine médiéval et espaces naturels. Cette diversité en fait une porte d’entrée idéale pour comprendre les contrastes du littoral roussillonnais : plage aménagée, lagune protégée, culture catalane et arrière-pays agricole.</p>
+     
+      <p><strong>Pour approfondir :</strong> <a href="https://www.canetenroussillon.fr/mes-activites/culture/le-chateau-vicomtal/" target="_blank" rel="noopener">Ville de Canet — Château vicomtal</a> · <a href="https://www.canetenroussillon.fr/prestataires/letang-et-le-village-de-pecheurs/" target="_blank" rel="noopener">Ville de Canet — Étang et village de pêcheurs</a> · <a href="https://www.canetenroussillon.fr/mon-quotidien/marches-commerce/marches/" target="_blank" rel="noopener">Ville de Canet — Marchés</a>.</p></div></section>
+
+    <section class="section" id="incontournables"><h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Canet, du castell médiéval au littoral</h2>
+      <div class="recette-grid"><div class="recette-meta-card"><div class="recette-meta-icon">⚓</div><div><div class="recette-meta-label">Statut</div><div class="recette-meta-val">Station balnéaire &amp; village catalan</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">👥</div><div><div class="recette-meta-label">Population</div><div class="recette-meta-val">13 227 hab. (2023)</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🏞️</div><div><div class="recette-meta-label">Repère</div><div class="recette-meta-val">Étang Natura 2000</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🌊</div><div><div class="recette-meta-label">Mer</div><div class="recette-meta-val">Méditerranée</div></div></div></div>
+      <div class="ingredients-bloc"><div class="ingredients-titre">✦ Sites à ne pas manquer</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">★★★</span> Étang de Canet–Saint-Nazaire et village de pêcheurs</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Château vicomtal et chapelle Saint-Martin</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Vieux village et église Saint-Jacques</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Grande plage et promenade du front de mer</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Port de plaisance et Oniria</div>
+<div class="ingredient-item"><span class="ingredient-qte">★</span> Canet-Sud et paysages lagunaires</div></div></div>
+      <div class="etapes-liste"><div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Le château vicomtal</div><div class="etape-texte">Les vestiges du castell médiéval dominent le vieux village. On y lit encore les enceintes, la chapelle Saint-Martin et l’importance stratégique de Canet dans l’histoire du Roussillon.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">L’étang et les cabanes de pêcheurs</div><div class="etape-texte">Ce paysage de lagune, classé Natura 2000, offre l’un des plus beaux contrastes du département entre roseaux, oiseaux d’eau, cabanes traditionnelles et silhouette du Canigou.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Le vieux Canet</div><div class="etape-texte">Autour de la place Saint-Jacques, ruelles et maisons anciennes rappellent le bourg agricole et catalan qui précéda de plusieurs siècles la station balnéaire.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Canet-Plage</div><div class="etape-texte">Une longue plage de sable et une grande promenade maritime structurent la station. C’est le visage le plus animé de Canet, particulièrement en saison estivale.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Le port et Oniria</div><div class="etape-texte">Le port de plaisance marque l’entrée nord de la station. À proximité, Oniria propose une découverte des mondes aquatiques et complète la promenade sur le littoral.</div></div></div></div>
+    </section>
+
+    <section class="section" id="terroir"><h2 class="section-titre"><div class="section-titre-icon">🍽️</div>Terroir & gastronomie locale</h2><div class="vins-liste"><div class="vin-item"><div class="vin-icon">🐟</div><div><div class="vin-nom">Poissons et pêche de l’étang</div><div class="vin-desc">Anguille, muge et traditions de pêche lagunaire appartiennent à la mémoire culinaire locale.</div></div><div class="vin-badge">Mémoire vivante</div></div>
+<div class="vin-item"><div class="vin-icon">🍅</div><div><div class="vin-nom">Cuisine catalane du Roussillon</div><div class="vin-desc">Escalivade, cargolade, charcuteries, légumes du soleil et recettes familiales structurent la table locale.</div></div><div class="vin-badge">Catalan</div></div>
+<div class="vin-item"><div class="vin-icon">🍷</div><div><div class="vin-nom">Vins du Roussillon</div><div class="vin-desc">Les appellations voisines du Roussillon accompagnent poissons, tapas et cuisine méditerranéenne.</div></div><div class="vin-badge">Terroir</div></div>
+<div class="vin-item"><div class="vin-icon">🍑</div><div><div class="vin-nom">Fruits et produits de la plaine</div><div class="vin-desc">Pêches, abricots, tomates et autres productions de la plaine du Roussillon sont très présentes sur les marchés.</div></div><div class="vin-badge">Marché</div></div></div></section>
+    <section class="section" id="personnages"><h2 class="section-titre"><div class="section-titre-icon">🎨</div>Personnages, traditions & mémoire</h2><div class="histoire-texte"><p><strong>Les pêcheurs de l’étang</strong> ont façonné une part essentielle de l’identité de Canet. Leurs techniques, leurs cabanes en roseaux et leur connaissance du milieu lagunaire constituent un patrimoine culturel aussi important que les monuments du vieux village.</p><p>Le patrimoine local conserve également la mémoire des <strong>vicomtes de Canet</strong> et des grandes figures ayant séjourné au château, notamment l’empereur <strong>Sigismond</strong> en 1415.</p></div></section>
+    <section class="section" id="infos-pratiques"><h2 class="section-titre"><div class="section-titre-icon">📍</div>Infos pratiques</h2><div class="histoire-texte"><p><strong>Accès :</strong> Canet-en-Roussillon se rejoint surtout par la route depuis Perpignan en une quinzaine de minutes environ. Des lignes de bus du réseau Sankéo relient également la commune à l’agglomération.</p><p><strong>Office de tourisme :</strong> Canet Tourisme accueille les visiteurs à Canet-Plage et renseigne sur les visites du village, de l’étang et les animations saisonnières.</p><p><strong>Marchés :</strong> plusieurs marchés ont lieu toute l’année : Canet-Plage les mardi, jeudi, samedi et dimanche ; le village les mercredi et samedi ; Canet-Sud les lundi et vendredi, avec des compléments saisonniers en été.</p></div></section>
+  </div>
+
+  <aside class="produit-aside"><div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body">
+    <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+    <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Pyrénées-Orientales</span></div>
+    <div class="aside-row"><span class="aside-label">Population</span><span class="aside-val">13 227 hab. (2023)</span></div>
+    <div class="aside-row"><span class="aside-label">Mer</span><span class="aside-val">Méditerranée</span></div>
+    <div class="aside-row"><span class="aside-label">Distance Perpignan</span><span class="aside-val">≈ 12 km</span></div>
+    <div class="aside-row"><span class="aside-label">REPÈRE / PROTECTION</span><span class="aside-val">Étang Natura 2000</span></div>
+    <div class="aside-row"><span class="aside-label">RECONNU POUR</span><span class="aside-val">Étang · Château vicomtal · Plage</span></div>
+  </div></div></aside>
+  </div></div></div>
+
+  <div class="retour-haut"><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Retour en haut de page</a><a href="../../../../occitanie-departement/pyrenees-orientales/pyrenees-orientales.html">← Retour à la fiche Pyrénées-Orientales</a></div>
+  <footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a'); const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { navLinks.forEach(l => l.classList.remove('active')); const id = entry.target.id; const active = document.querySelector(`.produit-nav a[href="#${id}"]`); if (active) active.classList.add('active'); } }); }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s)); navLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const target = document.querySelector(link.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+  </script>
+</body></html>
