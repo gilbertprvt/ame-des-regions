@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agde — Hérault — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+           font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1      font-size: clamp(26px, 4.4vw, 48px);;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+
+<body class="produit-page">
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/herault/herault.html" class="produit-btn-retour">← Retour à la fiche Hérault</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div><h1><em>A</em>gde<br><span style="padding-left: 20px;"><em>H</em>érault <em>M</em>éditerranéen</span></h1></div>
+        <img src="../../../../../../assets/departement/occitanie/carte-herault.png"
+             alt="Carte de l'Hérault"
+             style="height:220px; width:auto; opacity:0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block; align-self:flex-start; margin-top:8px;" />
+      </div>
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../blason/agde.png" alt="Écusson Agde" />
+    </div>
+
+    <div class="hero-label-bas">⟹ Cité grecque · Basalte · Méditerranée ⟸</div>
+
+    <div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+      <a href="#histoire" class="active">📖 Histoire</a>
+      <a href="#incontournables">🏛️ Incontournables</a>
+      <a href="#terroir">🍽️ Terroir & gastronomie</a>
+      <a href="#personnages">🎨 Personnages & traditions</a>
+      <a href="#infos-pratiques">📍 Infos pratiques</a>
+    </div></div></div>
+  </div>
+
+  <div class="produit-body"><div class="container"><div class="produit-layout">
+    <div>
+      <section class="section" id="histoire">
+        <h2 class="section-titre"><div class="section-titre-icon">📖</div>Histoire & origines</h2>
+        <div class="histoire-texte">
+          <p><strong>Agathé, l’une des plus anciennes villes de France.</strong> Agde est fondée par des Grecs venus de Massalia vers la fin du VIe siècle av. J.-C. sous le nom d’Agathé Tyché, « la bonne fortune ». Installée près de l’embouchure de l’Hérault, la cité devient un comptoir d’échanges entre le monde méditerranéen et l’arrière-pays gaulois.</p>
+<p><strong>Une ville façonnée par le volcanisme.</strong> Le paysage agathois repose sur les anciennes formations volcaniques du mont Saint-Loup. Le basalte noir extrait localement marque profondément l’architecture de la ville ancienne, au point de donner à Agde son surnom de « Perle noire de la Méditerranée ».</p>
+<p><strong>De l’Antiquité au siège épiscopal.</strong> Après la période romaine, Agde demeure un centre régional important. Un évêché y est établi dès l’Antiquité tardive. Pendant plus d’un millénaire, l’évêque d’Agde joue un rôle majeur dans l’administration et la défense de la cité.</p>
+<p><strong>La cathédrale Saint-Étienne.</strong> Édifiée principalement aux XIIe et XIIIe siècles en basalte, la cathédrale fortifiée Saint-Étienne domine le fleuve. Son aspect austère, presque militaire, témoigne d’une époque où édifice religieux et fortification urbaine se confondent.</p>
+<p><strong>Les remparts et le commerce fluvial.</strong> Les fortifications médiévales reprennent en partie le tracé antique. Agde profite de sa position sur l’Hérault, des échanges maritimes et de la proximité des étangs. Le port fluvial, les quais et les chantiers liés au fleuve restent longtemps au cœur de la vie économique.</p>
+<p><strong>XVIIe siècle : le Canal du Midi.</strong> À la fin du XVIIe siècle, le Canal du Midi rejoint l’Hérault à Agde. L’écluse ronde, ouvrage exceptionnel construit en pierre volcanique, permet de distribuer la navigation vers Béziers, l’étang de Thau et le cours inférieur du fleuve.</p>
+<p><strong>XIXe-XXe siècles : bains de mer et nouveaux quartiers.</strong> Le Grau d’Agde et La Tamarissière se développent comme quartiers maritimes. Pêche, villégiature et navigation complètent les activités de la ville historique.</p>
+<p><strong>Les années 1960-1970 : naissance du Cap d’Agde.</strong> Dans le cadre de la Mission Racine, l’État choisit Agde pour accueillir l’une des grandes stations nouvelles du littoral languedocien. Le Cap d’Agde est aménagé autour d’un vaste port de plaisance et de quartiers touristiques, transformant profondément l’économie de la commune.</p>
+<p><strong>Une commune à quatre visages.</strong> Agde réunit aujourd’hui la cité historique, le Grau d’Agde, La Tamarissière et le Cap d’Agde. Cette diversité fait coexister 2 600 ans d’histoire, patrimoine fluvial, traditions de pêche, plages et architecture touristique contemporaine.</p>
+          <figure class="photo-bloc photo-centre" style="max-width: 360px;">
+            <img src="../../../../../../assets/departement/occitanie/photo/herault/agde.jpg" alt="Agde" />
+            <figcaption>Agde, patrimoine et paysages</figcaption>
+          </figure>
+          <div class="citation-bloc">
+            <p>Agde : une identité façonnée par le littoral, les paysages de l’Hérault et l’histoire du Languedoc.</p>
+            <cite>Repère synthétique — L'Âme des Régions</cite>
+          </div>
+          <p><strong>Pour aller plus loin — sources et documentation :</strong><br>• <a href="https://www.ville-agde.fr/" target="_blank" rel="noopener noreferrer">Ville d’Agde</a><br>
+• <a href="https://www.capdagde.com/" target="_blank" rel="noopener noreferrer">Office de tourisme Cap d’Agde Méditerranée</a><br>
+• <a href="https://www.insee.fr/fr/statistiques/1405599?geo=COM-34003" target="_blank" rel="noopener noreferrer">INSEE — Agde</a></p>
+        </div>
+      </section>
+
+      <section class="section" id="incontournables">
+        <h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Le cœur patrimonial de Agde</h2>
+        <div class="recette-grid">
+          <div class="recette-meta-card"><div class="recette-meta-icon">🏘️</div><div><div class="recette-meta-label">Identité</div><div class="recette-meta-val">Cité antique &amp; grande station méditerranéenne</div></div></div>
+          <div class="recette-meta-card"><div class="recette-meta-icon">👥</div><div><div class="recette-meta-label">Population</div><div class="recette-meta-val">29 939 hab. (2023)</div></div></div>
+          <div class="recette-meta-card"><div class="recette-meta-icon">⚓</div><div><div class="recette-meta-label">Repère</div><div class="recette-meta-val">Port du Cap d’Agde</div></div></div>
+          <div class="recette-meta-card"><div class="recette-meta-icon">🌿</div><div><div class="recette-meta-label">Patrimoine naturel</div><div class="recette-meta-val">Mont Saint-Loup &amp; littoral volcanique</div></div></div>
+        </div>
+        <div class="ingredients-bloc"><div class="ingredients-titre">✦ Sites à ne pas manquer</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">★★★</span> Centre historique &amp; cathédrale Saint-Étienne</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Remparts grecs</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Écluse ronde du Canal du Midi</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Mont Saint-Loup</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Grau d’Agde &amp; embouchure de l’Hérault</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Cap d’Agde &amp; port</div></div></div>
+        <div class="etapes-liste"><div class="etape"><div class="etape-num">1</div><div class="etape-corps">
+        <div class="etape-titre">La cité d’Agde</div><div class="etape-texte">Parcourez les rues de basalte autour de la cathédrale et des quais de l’Hérault.</div>
+        </div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps">
+        <div class="etape-titre">Les vestiges grecs</div><div class="etape-texte">Découvrez les traces de l’ancienne Agathé et ses remparts.</div>
+        </div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps">
+        <div class="etape-titre">L’écluse ronde</div><div class="etape-texte">Rejoignez cet ouvrage emblématique du Canal du Midi.</div>
+        </div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps">
+        <div class="etape-titre">Le Grau d’Agde</div><div class="etape-texte">Suivez l’Hérault jusqu’à son embouchure et au village de pêcheurs.</div>
+        </div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps">
+        <div class="etape-titre">Le Cap d’Agde</div><div class="etape-texte">Terminez autour du port, du mont Saint-Loup et du littoral volcanique.</div>
+        </div></div></div>
+      </section>
+
+      <section class="section" id="terroir">
+        <h2 class="section-titre"><div class="section-titre-icon">🍽️</div>Terroir & gastronomie locale</h2>
+        <div class="vins-liste"><div class="vin-item"><div class="vin-icon">🐟</div><div>
+        <div class="vin-nom">Bourride &amp; poissons</div><div class="vin-desc">La cuisine agathoise valorise poissons méditerranéens et recettes maritimes.</div>
+        </div><div class="vin-badge">Mer</div></div>
+<div class="vin-item"><div class="vin-icon">🐚</div><div>
+        <div class="vin-nom">Coquillages</div><div class="vin-desc">Moules, huîtres et coquillages du littoral et du bassin de Thau voisin.</div>
+        </div><div class="vin-badge">Local</div></div>
+<div class="vin-item"><div class="vin-icon">🍇</div><div>
+        <div class="vin-nom">Vins de l’Hérault</div><div class="vin-desc">Picpoul, rosés et vins méditerranéens accompagnent la cuisine locale.</div>
+        </div><div class="vin-badge">Terroir</div></div>
+<div class="vin-item"><div class="vin-icon">🦑</div><div>
+        <div class="vin-nom">Seiches &amp; poulpes</div><div class="vin-desc">Produits très présents dans la cuisine des ports languedociens.</div>
+        </div><div class="vin-badge">Tradition</div></div></div>
+      </section>
+
+      <section class="section" id="personnages">
+        <h2 class="section-titre"><div class="section-titre-icon">🎨</div>Personnages, traditions & mémoire locale</h2>
+        <div class="histoire-texte">
+          <p>La ville est indissociable de la mémoire des navigateurs, évêques, pêcheurs et bâtisseurs qui ont façonné la cité. Pierre-Paul Riquet est également associé au territoire par le Canal du Midi et l’écluse ronde.</p>
+          <p>Les joutes nautiques, les fêtes de la mer, les marchés et la culture occitane accompagnent toujours la vie agathoise, notamment sur les quais et dans les quartiers maritimes.</p>
+        </div>
+      </section>
+
+      <section class="section" id="infos-pratiques">
+        <h2 class="section-titre"><div class="section-titre-icon">📍</div>Infos pratiques</h2>
+        <div class="histoire-texte">
+          <p><strong>Accès :</strong> Agde se situe entre Béziers et Sète, sur l’Hérault et à quelques kilomètres de la Méditerranée. La gare dessert le centre-ville ; routes et pistes cyclables relient le Grau d’Agde et le Cap d’Agde.</p>
+          <p><strong>Office de tourisme :</strong> Les bureaux d’information touristique de la destination Cap d’Agde Méditerranée renseignent sur Agde, le Cap d’Agde, le Grau d’Agde et La Tamarissière.</p>
+          <p><strong>Conseil de visite :</strong> pour bien comprendre la commune, alternez le cœur historique, les espaces naturels et le littoral ; ce sont ces trois dimensions qui expliquent son identité actuelle.</p>
+        </div>
+      </section>
+    </div>
+
+    <aside class="produit-aside">
+      <div class="aside-card">
+        <div class="aside-card-header">📋 Carte d'identité</div>
+        <div class="aside-card-body">
+          <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+          <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Hérault</span></div>
+          <div class="aside-row"><span class="aside-label">Population</span><span class="aside-val">29 939 hab. (2023)</span></div>
+          <div class="aside-row"><span class="aside-label">Gentilé</span><span class="aside-val">Agathois · Agathoises</span></div>
+          <div class="aside-row"><span class="aside-label">Littoral</span><span class="aside-val">Mer Méditerranée</span></div>
+          <div class="aside-row"><span class="aside-label">Situation</span><span class="aside-val">≈ 24 km de Béziers</span></div>
+          <div class="aside-row"><span class="aside-label">REPÈRE</span><span class="aside-val">Port du Cap d’Agde</span></div>
+          <div class="aside-row"><span class="aside-label">NATURE</span><span class="aside-val">Mont Saint-Loup &amp; littoral volcanique</span></div>
+          <div class="aside-row"><span class="aside-label">RECONNU POUR</span><span class="aside-val">Agathé · Cap d’Agde · Hérault · basalte</span></div>
+        </div>
+      </div>
+    </aside>
+  </div></div></div>
+
+  <div class="retour-haut">
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Retour en haut de page</a>
+    <a href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a>
+  </div>
+
+  <footer class="site-footer"><div class="container footer-inner">
+    <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+    <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+  </div></footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
