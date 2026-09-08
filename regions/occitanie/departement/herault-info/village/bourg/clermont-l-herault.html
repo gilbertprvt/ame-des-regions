@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clermont-l'Hérault — Cité médiévale aux portes du Salagou — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+           font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1      font-size: clamp(26px, 4.4vw, 48px);;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>C</em>lermont-<em>l</em>'Hérault<br/><span style="padding-left: 20px;"><em>C</em>ité <em>M</em>édiévale</span></h1>
+</div>
+<img alt="Carte de l'Hérault" src="../../../../../../assets/departement/occitanie/carte-herault.png" style="height:220px; width:auto; opacity:0.85;
+                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                    display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson de Clermont-l'Hérault" src="../blason/clermont-herault.png"/>
+</div>
+<div class="hero-label-bas">⟹ Château · Saint-Paul · Salagou ⟸</div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#incontournables">🏛️ Incontournables</a>
+<a href="#terroir">🍽️ Terroir &amp; gastronomie</a>
+<a href="#personnages">🎨 Personnages illustres</a>
+<a href="#infos-pratiques">📍 Infos pratiques</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+    Histoire &amp; origines
+  </h2>
+<div class="histoire-texte">
+<p><strong>Un carrefour naturel au cœur de l'Hérault.</strong> Clermont-l'Hérault occupe une position privilégiée entre la vallée de l'Hérault, les premiers reliefs du Lodévois et les terres rouges du bassin du Salagou. À la croisée des routes reliant le littoral méditerranéen, Béziers, Lodève et les hauts cantons, la ville s'est développée très tôt comme un lieu de passage, d'échanges et de marché. Son paysage est dominé par le <strong>Puech Castel</strong>, colline sur laquelle s'élèvent les vestiges du château des Guilhem.</p>
+<p><strong>Des occupations protohistoriques très anciennes.</strong> Bien avant la naissance de la ville médiévale, le territoire clermontais est occupé par des populations protohistoriques. Sur la colline de <strong>La Ramasse</strong>, les fouilles archéologiques ont mis en évidence un oppidum daté principalement entre les VI<sup>e</sup> et III<sup>e</sup> siècles avant notre ère. Des stèles découvertes en remploi dans sa muraille témoignent de pratiques et d'aménagements antérieurs à la conquête romaine.</p>
+<p><strong>Peyre-Plantade, l'agglomération antique.</strong> À l'époque gallo-romaine, l'habitat principal se déplace vers la plaine, sur le site de <strong>Peyre-Plantade</strong>. Une importante agglomération se développe le long d'une voie romaine reliant le secteur de Saint-Thibéry à l'intérieur du Massif central. Les recherches archéologiques ont révélé des vestiges d'habitat, un établissement thermal et, dans les environs, plusieurs domaines ruraux. Le territoire clermontais s'inscrit alors dans un réseau actif de circulation des hommes, des marchandises, du vin et du bétail.</p>
+<p><strong>XI<sup>e</sup>-XII<sup>e</sup> siècles : naissance de la ville actuelle.</strong> Clermont prend véritablement sa forme urbaine au Moyen Âge. Une puissante famille seigneuriale, les <strong>Guilhem de Clermont</strong>, installe son pouvoir sur la colline du Puech Castel. Un acte du cartulaire de l'abbaye de Gellone, vers <strong>1140</strong>, mentionne Clermont comme une ville et un marché, preuve de sa vocation commerciale déjà affirmée. Le château est cité en <strong>1158</strong>.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Clermont-l'Hérault et le château des Guilhem" src="../../../../../../assets/departement/occitanie/photo/herault/clermont-herault.jpg"/>
+<figcaption>Clermont-l'Hérault dominée par le château des Guilhem</figcaption>
+</figure>
+<p><strong>Les Guilhem et la fortification de Clermont.</strong> Aimeric de Clermont, attesté dès 1128, comprend l'intérêt stratégique du site. Entre le XII<sup>e</sup> et la fin du XIII<sup>e</sup> siècle, le château est agrandi et fortifié. La ville se protège également derrière une enceinte de plus d'un kilomètre, ponctuée de tours et percée de plusieurs portes. Le plan circulaire du centre ancien conserve aujourd'hui la mémoire de cette ceinture défensive.</p>
+<p><strong>Une ville de marchands, d'artisans et de drapiers.</strong> Au XIII<sup>e</sup> siècle, Clermont connaît un essor économique important. Marchés et foires attirent les populations des campagnes environnantes. Le long du <strong>Rhônel</strong> s'installent des moulins à blé, des moulins drapiers et des tanneries. Le travail de la laine et la fabrication des draps prennent progressivement une place essentielle dans l'économie locale.</p>
+<p><strong>Franchises communales et tensions féodales.</strong> Les habitants obtiennent des libertés et franchises de leurs seigneurs. Après une révolte en <strong>1242</strong>, certaines sont supprimées avant d'être rétablies par la transaction de <strong>1347</strong>. Dans le même temps, les évêques de Lodève imposent progressivement leur suzeraineté aux Guilhem de Clermont, illustrant les rivalités de pouvoir qui structurent le Languedoc médiéval.</p>
+<p><strong>L'église Saint-Paul, monument majeur du gothique méridional.</strong> Le chantier de l'actuelle église <strong>Saint-Paul</strong> commence vers <strong>1275</strong> sur l'emplacement d'un édifice plus ancien. Sa construction s'étend sur près d'un siècle et demi. Sa grande rosace flamboyante, achevée au début du XV<sup>e</sup> siècle, constitue l'un des éléments les plus remarquables de l'édifice. L'église est classée au titre des Monuments historiques dès <strong>1840</strong>.</p>
+<p><strong>Une ville qui dépasse ses remparts.</strong> À partir de la fin du XIII<sup>e</sup> siècle, les faubourgs s'étendent autour des établissements religieux et le long du Rhônel. Les Bénédictines de Gorjan et les Dominicains participent à cette extension urbaine. Plusieurs maisons et hôtels des XIV<sup>e</sup> et XV<sup>e</sup> siècles subsistent encore dans le centre ancien, notamment autour des rues Bozène et Filandière.</p>
+<p><strong>Les guerres de Religion.</strong> Aux XVI<sup>e</sup> et XVII<sup>e</sup> siècles, Clermont est prise dans les affrontements qui déchirent le Languedoc. La ville et son château connaissent plusieurs épisodes militaires. En <strong>1584</strong>, le château résiste pendant quatre jours au siège du duc de Montmorency et sert de refuge à la population. Clermont devient un temps une place de sûreté protestante avant le rétablissement de l'autorité royale.</p>
+<p><strong>XVII<sup>e</sup>-XVIII<sup>e</sup> siècles : l'âge du drap.</strong> L'industrie textile devient l'un des moteurs majeurs de la ville. Les manufactures profitent de la force motrice du Rhônel et de la tradition lainière du Clermontais. La politique manufacturière menée sous Colbert et la création toute proche de la <strong>Manufacture royale de Villeneuvette</strong> renforcent cette spécialisation régionale. Drapiers, teinturiers, tanneurs et négociants façonnent durablement la société clermontaise.</p>
+<p><strong>Le déclin du château.</strong> Abandonné comme résidence seigneuriale à l'époque moderne, le château des Guilhem se dégrade progressivement. Au XVIII<sup>e</sup> siècle, une grande partie de ses bâtiments a déjà disparu. Il ne subsiste aujourd'hui que des éléments de l'enceinte, plusieurs tours et le puissant donjon connu sous le nom de <strong>Tour Guilhem</strong>. La commune rachète le site en 2020 et le rouvre au public en 2021 après sécurisation.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Église Saint-Paul de Clermont-l'Hérault" src="../../../../../../assets/departement/occitanie/photo/herault/clermont-herault2.jpg"/>
+<figcaption>L'église Saint-Paul, monument emblématique de Clermont-l'Hérault</figcaption>
+</figure>
+<p><strong>XIX<sup>e</sup> siècle : transformations urbaines et industrielles.</strong> Comme de nombreuses villes du Languedoc, Clermont se transforme avec l'amélioration des routes, le développement des échanges et l'évolution des activités textiles et viticoles. Les anciens remparts perdent progressivement leur fonction défensive, tandis que de nouvelles places, voies et équipements structurent la ville moderne.</p>
+<p><strong>Le vignoble et les crises agricoles.</strong> La vigne occupe une place importante dans l'économie du Clermontais aux XIX<sup>e</sup> et XX<sup>e</sup> siècles. La crise du phylloxéra, puis les grandes tensions viticoles du Midi, bouleversent durablement le monde rural. La viticulture demeure toutefois une composante essentielle du paysage et du terroir local, aujourd'hui représentée par plusieurs appellations languedociennes.</p>
+<p><strong>1969 : la naissance du lac du Salagou.</strong> À quelques kilomètres de la ville, la mise en eau du barrage du Salagou transforme profondément le paysage. Conçu à l'origine pour réguler les eaux et soutenir l'agriculture, le lac devient progressivement l'un des sites naturels et touristiques majeurs de l'Hérault. Ses terres rouges, appelées <strong>ruffes</strong>, contrastent avec le bleu de l'eau et donnent au bassin du Salagou son identité paysagère exceptionnelle.</p>
+<p><strong>Clermont-l'Hérault aujourd'hui.</strong> Avec <strong>9 461 habitants en 2023</strong>, Clermont-l'Hérault demeure un pôle commercial et de services important du cœur de l'Hérault. Sa singularité vient de la superposition de plusieurs héritages : oppidum protohistorique, agglomération romaine, cité féodale des Guilhem, ville drapière et viticole, puis porte d'entrée du Grand Site du Salagou. Cette continuité entre <strong>patrimoine médiéval, vie commerçante et paysages du Salagou</strong> constitue l'une des grandes forces de son identité.</p>
+<div class="citation-bloc">
+<p>« Du château des Guilhem aux ruffes du Salagou, Clermont-l'Hérault raconte plus de deux millénaires d'occupation et d'échanges. »</p>
+<cite>Repères historiques et patrimoniaux</cite>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Sources &amp; repères</div>
+<p style="margin:0; line-height:1.8;">
+        • <a href="https://www.ville-clermont-herault.fr/culture-loisirs/patrimoine/212-histoire-de-la-cite" rel="noopener noreferrer" target="_blank">Ville de Clermont-l'Hérault — Histoire de la cité</a><br/>
+        • <a href="https://www.ville-clermont-herault.fr/culture-loisirs/patrimoine/163-monuments/159-le-chateau-fort" rel="noopener noreferrer" target="_blank">Ville de Clermont-l'Hérault — Château des Guilhem</a><br/>
+        • <a href="https://www.ville-clermont-herault.fr/culture-loisirs/patrimoine/163-monuments" rel="noopener noreferrer" target="_blank">Ville de Clermont-l'Hérault — Patrimoine et monuments</a><br/>
+        • <a href="https://www.insee.fr/fr/statistiques/1405599?geo=COM-34079" rel="noopener noreferrer" target="_blank">INSEE — données démographiques de Clermont-l'Hérault</a>
+</p>
+</div>
+</div>
+</section>
+<!-- INCONTOURNABLES -->
+<section class="section" id="incontournables">
+<h2 class="section-titre">
+<div class="section-titre-icon">🏛️</div>
+    Le cœur patrimonial de Clermont-l'Hérault
+  </h2>
+<div class="recette-grid">
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🏰</div>
+<div>
+<div class="recette-meta-label">Identité</div>
+<div class="recette-meta-val">Cité médiévale des Guilhem</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">👥</div>
+<div>
+<div class="recette-meta-label">Population</div>
+<div class="recette-meta-val">9 461 hab. (2023)</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">⛪</div>
+<div>
+<div class="recette-meta-label">Monument majeur</div>
+<div class="recette-meta-val">Église Saint-Paul</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🌋</div>
+<div>
+<div class="recette-meta-label">Paysage</div>
+<div class="recette-meta-val">Lac &amp; ruffes du Salagou</div>
+</div>
+</div>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Sites à ne pas manquer</div>
+<div class="ingredients-liste">
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Château des Guilhem &amp; Tour Guilhem</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Église Saint-Paul &amp; grande rosace</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Centre ancien, ruelles &amp; portes médiévales</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Fontaine du Griffe &amp; places historiques</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Oppidum de la Ramasse</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Lac du Salagou à quelques kilomètres</div>
+</div>
+</div>
+<div class="etapes">
+<div class="etape">
+<div class="etape-num">1</div>
+<div class="etape-corps">
+<div class="etape-titre">Le centre ancien</div>
+<div class="etape-texte">Commencez par les rues du vieux Clermont. Leur tracé conserve la mémoire de l'enceinte médiévale et mène vers plusieurs anciennes portes, maisons et hôtels urbains.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">2</div>
+<div class="etape-corps">
+<div class="etape-titre">L'église Saint-Paul</div>
+<div class="etape-texte">Découvrez l'une des grandes églises gothiques du Languedoc, célèbre pour sa rosace flamboyante, son ample nef et son orgue.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">3</div>
+<div class="etape-corps">
+<div class="etape-titre">Le château des Guilhem</div>
+<div class="etape-texte">Montez au Puech Castel pour rejoindre la forteresse médiévale et profiter d'un vaste panorama sur la ville, la vallée de l'Hérault et les reliefs environnants.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">4</div>
+<div class="etape-corps">
+<div class="etape-titre">La Ramasse</div>
+<div class="etape-texte">Le site de l'ancien oppidum rappelle que l'histoire de Clermont commence plusieurs siècles avant la fondation de la ville médiévale.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">5</div>
+<div class="etape-corps">
+<div class="etape-titre">Le lac du Salagou</div>
+<div class="etape-texte">Terminez la découverte par les paysages spectaculaires du Salagou, entre ruffes rouges, eau bleue, vignes, collines volcaniques et villages du Clermontais.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TERROIR -->
+<section class="section" id="terroir">
+<h2 class="section-titre">
+<div class="section-titre-icon">🍽️</div>
+    Terroir &amp; gastronomie locale
+  </h2>
+<div class="vins-liste">
+<div class="vin-item">
+<div class="vin-icon">🍇</div>
+<div>
+<div class="vin-nom">Vins du Languedoc &amp; du Clermontais</div>
+<div class="vin-desc">Les coteaux autour de Clermont-l'Hérault appartiennent à un vieux pays de vigne. Rouges, rosés et blancs accompagnent une cuisine méditerranéenne marquée par les herbes, l'olive et les produits des garrigues.</div>
+</div>
+<div class="vin-badge">⭐ Terroir</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🫒</div>
+<div>
+<div class="vin-nom">Olives, huiles &amp; tapenades</div>
+<div class="vin-desc">L'olivier est indissociable des paysages du cœur d'Hérault. Huiles fruitées, olives de table et préparations à base d'olive prolongent une tradition méditerranéenne ancienne.</div>
+</div>
+<div class="vin-badge">Méditerranéen</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🐐</div>
+<div>
+<div class="vin-nom">Pélardon &amp; fromages de chèvre</div>
+<div class="vin-desc">Les reliefs et garrigues des environs sont un territoire privilégié de l'élevage caprin. Le pélardon AOP figure parmi les fromages emblématiques de l'arrière-pays languedocien.</div>
+</div>
+<div class="vin-badge">AOP</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍯</div>
+<div>
+<div class="vin-nom">Miels, garrigue &amp; produits paysans</div>
+<div class="vin-desc">Thym, romarin, châtaignier et fleurs sauvages nourrissent une production de miels variés, complétée par les fruits, légumes et produits fermiers des marchés du Clermontais.</div>
+</div>
+<div class="vin-badge">Local</div>
+</div>
+</div>
+</section>
+<!-- PERSONNAGES / TRADITIONS -->
+<section class="section" id="personnages">
+<h2 class="section-titre">
+<div class="section-titre-icon">🎨</div>
+    Personnages, familles &amp; mémoire locale
+  </h2>
+<div class="histoire-texte">
+<p><strong>Les Guilhem de Clermont</strong> sont indissociables de la naissance de la ville médiévale. Installée sur le Puech Castel, cette puissante famille seigneuriale contrôle Clermont à partir du XII<sup>e</sup> siècle et donne son nom au château qui domine encore aujourd'hui la cité.</p>
+<p><strong>Aimeric de Clermont</strong>, attesté au XII<sup>e</sup> siècle, incarne l'affirmation de cette dynastie. Par son implantation stratégique, la famille s'insère dans le jeu politique du Languedoc, entre les seigneurs de Montpellier, le comte de Toulouse et les évêques de Lodève.</p>
+<p>Les <strong>drapiers, tanneurs, meuniers et négociants</strong> constituent une autre mémoire essentielle de Clermont-l'Hérault. Pendant plusieurs siècles, leur activité anime les berges du Rhônel, les marchés et les rues commerçantes. L'histoire de la ville est autant celle de ses artisans que celle de ses seigneurs.</p>
+<p>La mémoire locale reste également liée aux <strong>vignerons du Clermontais</strong>, qui ont façonné les campagnes alentour, ainsi qu'aux habitants des villages et hameaux bouleversés par la création du lac du Salagou à la fin des années 1960.</p>
+</div>
+</section>
+<!-- INFOS PRATIQUES -->
+<section class="section" id="infos-pratiques">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+    Infos pratiques
+  </h2>
+<div class="histoire-texte">
+<p><strong>Accès :</strong> Clermont-l'Hérault se situe dans le cœur de l'Hérault, à proximité immédiate de l'<strong>A75</strong>, à environ 45 km de Montpellier et une cinquantaine de kilomètres de Béziers.</p>
+<p><strong>Office de tourisme :</strong> Office de Tourisme Destination Salagou, <strong>place Jean-Jaurès, 34800 Clermont-l'Hérault</strong>. Il renseigne sur les visites patrimoniales, le lac du Salagou, les randonnées, les domaines viticoles et les villages du Clermontais.</p>
+<p><strong>Découverte du centre :</strong> le cœur historique se visite facilement à pied. L'itinéraire naturel relie l'église Saint-Paul, les anciennes portes, les ruelles médiévales puis le château des Guilhem.</p>
+<p><strong>Château des Guilhem :</strong> le site domine la ville depuis le Puech Castel. L'accès implique une montée ; prévoir des chaussures adaptées et rester prudent par forte chaleur.</p>
+<p><strong>Lac du Salagou :</strong> situé à quelques kilomètres à l'ouest et au nord-ouest du centre selon les accès. Baignade, randonnée, VTT, activités nautiques et observation des paysages permettent de prolonger facilement la visite de Clermont-l'Hérault.</p>
+</div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Région</span>
+<span class="aside-val">Occitanie</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Département</span>
+<span class="aside-val">Hérault</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Population</span>
+<span class="aside-val">9 461 hab. (2023)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Gentilé</span>
+<span class="aside-val">Clermontais · Clermontaises</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Cours d'eau</span>
+<span class="aside-val">Rhônel</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Distance Montpellier</span>
+<span class="aside-val">≈ 45 km</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">SITE MAJEUR</span>
+<span class="aside-val">Château des Guilhem</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">À PROXIMITÉ</span>
+<span class="aside-val">Lac du Salagou</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">RECONNU POUR</span>
+<span class="aside-val">Saint-Paul · château · centre médiéval · Salagou</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<!-- Bouton retour flottant (apparaît au scroll) -->
+<div class="retour-haut">
+<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+      ↑ Retour en haut de page
+    </a>
+<a href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a>
+</div>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script>
+
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    if (btnRetour) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) btnRetour.classList.add('visible');
+        else btnRetour.classList.remove('visible');
+      });
+    }
+
+  </script>
+</body>
+</html>
