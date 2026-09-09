@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Église fortifiée Saint-Étienne d'Agde — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/herault/herault.html" class="produit-btn-retour">
+            ← Retour à la fiche Hérault
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>S</em>aint-<em>É</em>tienne<br><span style="padding-left: 60px;">d'<em>A</em>gde</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-herault.png"
+               alt="Carte Herault"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/herault.png" alt="Écusson Hérault" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Édifices religieux ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🏛️ Architecture & visite</a>
+          <a href="#accords"              >✨ Trésors & œuvres</a>
+          <a href="#jardins"            >🏰 Patrimoine & anecdotes</a>
+          <a href="#infos-pratiques"            >📍 Informations pratiques</a>
+          <a href="#approfondir">🔎 Pour approfondir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un très ancien siège chrétien.</strong> L'histoire de Saint-Étienne est indissociable de celle d'Agde, cité d'origine grecque devenue romaine puis siège épiscopal de l'Antiquité tardive. La présence chrétienne est solidement attestée au début du VIe siècle. En 506, Agde accueille un important concile des évêques du royaume wisigothique, présidé par Césaire d'Arles. Cette assemblée adopte une série de canons disciplinaires qui font du concile d'Agde un jalon majeur de l'histoire de l'Église en Gaule.</p>
+
+              <p><strong>Des édifices antérieurs sous et autour de la cathédrale.</strong> Le sanctuaire médiéval s'inscrit dans un secteur occupé depuis l'Antiquité. Les traditions locales ont longtemps évoqué la succession d'un sanctuaire antique puis d'une première église chrétienne ; les recherches archéologiques ont surtout confirmé l'ancienneté de l'occupation religieuse et funéraire. Des sépultures de l'Antiquité tardive et du haut Moyen Âge ainsi que des vestiges d'états antérieurs témoignent de la continuité du site bien avant la construction romane visible aujourd'hui.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/herault/eglise-saint-etienne-agde.jpg"
+                        alt="Ancienne cathédrale Saint-Étienne d'Agde" />
+                    <figcaption>La masse de basalte de Saint-Étienne rappelle autant une forteresse qu'une cathédrale</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p><strong>Le haut Moyen Âge et la continuité épiscopale.</strong> Après la période wisigothique, Agde traverse les bouleversements qui touchent la Septimanie puis son intégration au monde franc. La tradition du siège épiscopal se maintient au cours du Moyen Âge. Un édifice carolingien est généralement associé au site à partir de la fin du IXe siècle, avant les grandes transformations romanes des siècles suivants.</p>
+
+              <p><strong>Le grand chantier roman du XIIe siècle.</strong> L'ancienne cathédrale actuelle appartient pour l'essentiel au XIIe siècle. La date de 1173 est traditionnellement associée à une importante campagne de construction et de fortification sous l'épiscopat de Guillaume. Le choix du basalte local, extrait des coulées volcaniques du secteur du Mont Saint-Loup, donne à l'édifice sa couleur presque noire et sa puissance visuelle exceptionnelle.</p>
+
+              <p><strong>Une cathédrale-forteresse.</strong> Saint-Étienne est conçue dans un contexte où l'église épiscopale doit aussi participer à la défense de la cité. Ses murs très épais, ses volumes compacts, ses dispositifs de défense et son imposant clocher-donjon d'environ 35 mètres lui donnent l'apparence d'une forteresse. Cette architecture militaire et religieuse mêlée est l'un des traits les plus remarquables du monument et explique le surnom moderne de « perle noire » souvent donné à l'ancienne cathédrale.</p>
+
+              <p>La pierre volcanique n'est pas seulement un choix esthétique : elle appartient à l'identité même d'Agde. Employée dans de nombreux bâtiments du centre ancien, elle relie la cathédrale au paysage géologique local. La masse sombre de Saint-Étienne, dressée au bord de l'Hérault, constituait aussi un repère majeur pour les voyageurs arrivant par le fleuve et les voies terrestres.</p>
+
+              <p><strong>Le cœur du diocèse d'Agde.</strong> Pendant des siècles, la cathédrale est le siège de l'évêque et du chapitre. Autour d'elle s'organisent la vie liturgique, l'administration du diocèse, les cérémonies publiques et une partie de la vie politique de la cité. Le diocèse, de dimensions modestes, n'en possède pas moins une histoire très longue : la tradition épiscopale agathoise s'étend de l'Antiquité tardive jusqu'à la Révolution française.</p>
+
+              <p><strong>Transformations et embellissements de l'époque moderne.</strong> Comme beaucoup de cathédrales médiévales, Saint-Étienne n'est pas restée figée dans son état roman. Chapelles, mobilier, autels et décors sont modifiés au fil des siècles. Les XVIIe et XVIIIe siècles introduisent notamment un mobilier conforme aux nouveaux usages liturgiques et au goût baroque puis classique, créant un contraste avec l'austérité des puissantes maçonneries de basalte.</p>
+
+              <p><strong>1790 : la disparition de l'évêché.</strong> La Révolution française met fin au diocèse d'Agde lors de la réorganisation de la carte ecclésiastique. Saint-Étienne perd son rang de cathédrale. Le dernier évêque d'Agde, Charles-François de Rouvroy de Saint-Simon de Vermandois, est arrêté pendant la Terreur et exécuté à Paris en 1794. Le Concordat de 1801-1802 ne rétablit pas le diocèse, dont le territoire est intégré au diocèse de Montpellier.</p>
+
+              <p><strong>La naissance d'un monument patrimonial.</strong> Malgré la perte de son statut épiscopal, l'édifice conserve une valeur historique exceptionnelle. L'ancienne cathédrale Saint-Étienne est classée Monument historique dès 1840, au moment des premières grandes campagnes nationales de sauvegarde du patrimoine médiéval. Cette reconnaissance précoce témoigne de l'intérêt porté à son architecture romane fortifiée, très singulière dans le Midi.</p>
+
+              <p><strong>Archéologie et redécouverte du passé.</strong> Les recherches menées autour et sous l'édifice ont permis de mieux comprendre les occupations antérieures du site. Elles rappellent que la cathédrale visible aujourd'hui n'est que le dernier grand état d'un lieu religieux beaucoup plus ancien, lié à l'histoire chrétienne d'Agde depuis l'Antiquité tardive. Le monument rassemble ainsi plusieurs strates de mémoire : cité grecque et romaine, évêché paléochrétien, ville médiévale fortifiée et patrimoine contemporain.</p>
+
+              <div class="citation-bloc">
+                <p>À Saint-Étienne, le basalte volcanique donne une forme monumentale à près de quinze siècles de mémoire chrétienne agathoise.</p>
+                <cite>De l'évêché antique à l'ancienne cathédrale</cite>
+              </div>
+
+            
+            
+            </div>
+          </section>
+
+          <!-- VISITE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏛️</div>
+              Architecture & visite
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🌋</div>
+                <div>
+                  <div class="recette-meta-label">Matériau</div>
+                  <div class="recette-meta-val">Basalte noir du Mont Saint-Loup</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Entrée</div>
+                  <div class="recette-meta-val">Libre et gratuite</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🗼</div>
+                <div>
+                  <div class="recette-meta-label">Donjon</div>
+                  <div class="recette-meta-val">35 mètres de hauteur</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📍</div>
+                <div>
+                  <div class="recette-meta-label">Emplacement</div>
+                  <div class="recette-meta-val">Rive de l'Hérault, centre-ville</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ À ne pas manquer</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Extérieur</span> Murs de 2 à 3 m d'épaisseur</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Donjon</span> Créneaux et mâchicoulis défensifs</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Intérieur</span> Colonne du concile de 506</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Entrée</span> Chapelle Notre-Dame-de-Lourdes (XIXe s.)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Vitraux</span> Posés en 1870, dont l'oculus du concile</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Retable</span> Marbre polychrome du XVIIe siècle</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le donjon-clocher</div>
+                  <div class="etape-texte">Haut de 35 mètres, il domine tout l'horizon agathois et pourrait, à lui seul, servir de tour de guet médiévale.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La chapelle Notre-Dame</div>
+                  <div class="etape-texte">Ajoutée au XIXe siècle avec les pierres du cloître détruit, elle constitue l'entrée actuelle, inhabituelle, de l'édifice.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La colonne du concile</div>
+                  <div class="etape-texte">Seul vestige visible de l'édifice primitif, cette colonne de basalte de 3,30 mètres rappelle le concile de 506, l'un des plus importants de la Gaule méridionale.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le retable et la chaire</div>
+                  <div class="etape-texte">En marbre polychrome du XVIIe siècle, ils tranchent avec l'austérité générale de cette architecture pensée d'abord pour résister.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les berges de l'Hérault</div>
+                  <div class="etape-texte">Depuis le fleuve, la silhouette noire et massive de l'église, posée sur la rive, révèle le mieux l'ampleur de ses fortifications.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- ACCORDS VINS -->
+          <section class="section" id="accords">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">✨</div>
+              Trésors & œuvres
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🪨</div>
+                <div>
+                  <div class="vin-nom">La colonne du concile</div>
+                  <div class="vin-desc">Unique vestige visible de l'église primitive, cette colonne de basalte témoigne du concile d'Agde de 506, présidé par saint Césaire d'Arles.</div>
+                </div>
+                <div class="vin-badge">506</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🖼️</div>
+                <div>
+                  <div class="vin-nom">La lapidation de saint Étienne</div>
+                  <div class="vin-desc">Ce tableau représente le martyre du saint patron de l'édifice, premier martyr chrétien selon les Actes des Apôtres.</div>
+                </div>
+                <div class="vin-badge">Œuvre majeure</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎹</div>
+                <div>
+                  <div class="vin-nom">L'orgue baroque de 1990</div>
+                  <div class="vin-desc">Construit par Gérald Guillemin dans le style de Gottfried Silbermann, il remplace l'instrument de Maurice Puget datant de 1901.</div>
+                </div>
+                <div class="vin-badge">29 jeux</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- JARDINS & DOMAINE -->
+          <section class="section" id="jardins">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏰</div>
+              Patrimoine & anecdotes
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>La « perle noire de l'Hérault » :</strong> ce surnom vient tout entier du basalte du Mont Saint-Loup, un volcan éteint qui a aussi fourni la pierre d'une bonne partie du vieux centre d'Agde, donnant à la ville sa teinte si particulière.</p>
+              <p><strong>Une orientation atypique :</strong> contrairement à la plupart des églises, celle-ci n'est pas orientée est-ouest ; elle a dû s'adapter au parcellaire de la ville antique, tracé perpendiculairement aux berges de l'Hérault.</p>
+              <p><strong>72 évêques en treize siècles :</strong> de 506 à 1790, ils se sont succédé à la tête du diocèse d'Agde, depuis Sophronius, premier évêque mentionné avec certitude, jusqu'au dernier, guillotiné sous la Terreur.</p>
+              <p><strong>Sous le sol de l'église :</strong> des fouilles menées en 1987 ont mis au jour des sépultures des Ve et VIe siècles ainsi que les fondations de l'édifice primitif, dont l'axe différait de celui de la cathédrale actuelle.</p>
+            
+            </div>
+          </section>
+
+
+
+          <!-- INFOS PRATIQUES -->
+          <section class="section" id="infos-pratiques">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Informations pratiques
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>Adresse</strong> rue Louis-Bages, 34300 Agde, dans le centre ancien sur la rive de l'Hérault.</p>
+
+              <p><strong>Ouverture</strong> accès cultuel généralement libre lorsqu'elle est ouverte ; les horaires pouvant varier selon la saison et les offices, vérifier localement avant une visite dédiée.</p>
+
+              <p><strong>Accès</strong> en plein centre historique d'Agde, à pied, entouré de commerces et restaurants ; à environ 10 minutes du Cap d'Agde.</p>
+
+              <p><strong>À proximité</strong> les autres églises agathoises, Saint-André et Saint-Sever, complètent la découverte du patrimoine religieux de la ville.</p>
+            
+            </div>
+          </section>
+
+          <section class="section" id="approfondir">
+            <h2 class="section-titre"><div class="section-titre-icon">🔎</div>Pour approfondir</h2>
+            <div class="histoire-texte">
+              <p><strong>Protection et propriété.</strong> L’ancienne cathédrale Saint-Étienne est classée Monument historique depuis la <strong>liste de 1840</strong>, l’une des premières grandes listes françaises de monuments protégés. Elle appartient à la commune d’Agde et figure dans la base Mérimée sous la référence <strong>PA00103340</strong>.</p>
+              <p><strong>Chronologie architecturale.</strong> Le ministère de la Culture situe la campagne principale au XIIe siècle. Un édifice carolingien avait précédé la cathédrale actuelle ; la reconstruction et la fortification sont engagées dans la seconde moitié du XIIe siècle. Le clocher est ajouté puis surélevé au XIVe siècle et la cathédrale est consacrée en 1453.</p>
+              <p><strong>Une architecture véritablement militaire.</strong> Le dossier d’Inventaire régional décrit un vaisseau unique couvert d’un berceau brisé, un chevet plat et un plan en tau. Mâchicoulis entre les contreforts, parapet crénelé, tours sur les bras du transept et clocher-donjon témoignent d’une fonction défensive réelle, accentuée par l’austérité du basalte local.</p>
+              <p><strong>Le grand bouleversement de 1629.</strong> Après les conflits religieux, l’évêque Balthazar de Budos fait restaurer l’édifice et <strong>inverse la disposition intérieure</strong> : une porte est créée dans le chevet et le sanctuaire est déplacé vers l’ouest. Cette transformation explique en partie l’organisation inhabituelle que l’on perçoit aujourd’hui.</p>
+              <p><strong>Le maître-autel et son retable.</strong> Le retable monumental de la fin du XVIIe siècle est financé par le legs d’Antoine Marthelly. Quatre colonnes de marbre incarnat et blanc sont commandées aux carrières de Caunes en 1690. Le décor comprend notamment les figures de saint Étienne et de saint Laurent.</p>
+              <p><strong>La chaire.</strong> La chaire à prêcher en marbre, installée sur le mur nord de la nef, est traditionnellement datée de <strong>1751</strong>. Elle constitue l’un des principaux apports décoratifs de l’époque moderne dans un intérieur dominé par les volumes romans.</p>
+              <p><strong>Vitraux.</strong> L’Inventaire général recense notamment des verrières représentant l’Annonciation, le Sacré-Cœur et Marguerite-Marie Alacoque, la lapidation de saint Étienne, saint Martin ainsi que des saints et martyrs liés au territoire agathois. Certaines baies sont datées de 1900.</p>
+              <p><strong>Adresse patrimoniale.</strong> Les bases officielles situent l’édifice <strong>rue Louis-Bages, 34300 Agde</strong>, au bord de l’Hérault, dans le centre ancien. Les horaires d’ouverture cultuelle pouvant varier, il est prudent de vérifier localement avant une visite spécifiquement consacrée à l’intérieur.</p>
+              <p><strong>Sources et liens officiels :</strong><br>
+                <a href="https://pop.culture.gouv.fr/notice/merimee/PA00103340" target="_blank" rel="noopener noreferrer">Ministère de la Culture — notice Mérimée PA00103340 ↗</a><br>
+                <a href="https://inventaire.patrimoines.laregion.fr/dossier/IA34009012" target="_blank" rel="noopener noreferrer">Région Occitanie — Inventaire de l’ancienne cathédrale ↗</a><br>
+                <a href="https://inventaire.patrimoines.laregion.fr/dossier/IM34010697" target="_blank" rel="noopener noreferrer">Région Occitanie — maître-autel et retable ↗</a><br>
+                <a href="https://inventaire.patrimoines.laregion.fr/dossier/IM34010698" target="_blank" rel="noopener noreferrer">Région Occitanie — chaire à prêcher ↗</a><br>
+                <a href="https://inventaire.patrimoines.laregion.fr/dossier/IM34003964" target="_blank" rel="noopener noreferrer">Région Occitanie — verrières de Saint-Étienne ↗</a>
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Agde · Hérault</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Église romane fortifiée</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Époque</span>
+                <span class="aside-val">Fortifiée à partir de 1173</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Matériau</span>
+                <span class="aside-val">Basalte noir du Mont Saint-Loup</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Ancien statut</span>
+                <span class="aside-val">Cathédrale d'Agde jusqu'en 1790</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Monument Historique depuis 1840</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Label -->
+          <div class="aside-label-aop">
+            <div class="aside-aop-logo">🌋</div>
+            <div class="aside-aop-titre">La perle noire de l'Hérault</div>
+            <div class="aside-aop-desc">Un donjon-église en basalte, l'un des plus beaux exemples d'architecture romane fortifiée du Midi.</div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+  <div class="retour-haut">
+  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Retour en haut de page
+  </a>
+
+  <a href="../../../../occitanie-departement/herault/herault.html">
+    ← Retour à la fiche Hérault
+  </a>
+</div>
+
+
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
