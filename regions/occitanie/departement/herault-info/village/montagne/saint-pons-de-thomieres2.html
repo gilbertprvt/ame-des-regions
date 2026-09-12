@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saint-Pons-de-Thomières — Approfondir — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/herault/herault.html" class="produit-btn-retour">
+            ← Retour à la fiche Hérault
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>S</em>aint-<em>P</em>ons<br><span style="padding-left: 30px;">de-<em>T</em>homières</span><span class="sous-titre">La cité épiscopale à la porte des Cévennes et du Minervois</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-herault.png"
+               alt="Carte Herault"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/saint-pons.png" alt="Écusson Saint-Pons-de-Thomières" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Histoire & Patrimoine Religieux ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >⛪ Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🎼 Savoir-faire</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          
+<section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un site habité depuis la Préhistoire.</strong> La haute vallée du Jaur est occupée depuis des millénaires. Les ressources en eau, la présence de passages naturels entre le Minervois, les monts de l'Espinouse et le Tarn ainsi que les abris rocheux favorisent très tôt l'installation humaine. La source du Jaur, qui jaillit au cœur de la ville actuelle, constitue naturellement un point majeur de peuplement et de croyances.</p>
+
+              <p><strong>Thomières avant Saint-Pons.</strong> Avant la fondation de l'abbaye, un premier bourg, Thomières, se développe autour de la source et de la rivière. Il correspond à une communauté ancienne distincte du futur quartier monastique. Cette dualité urbaine marquera longtemps la ville : d'un côté Thomières, plus populaire, de l'autre Saint-Pons, organisé autour de l'abbaye.</p>
+
+              <p><strong>936 : fondation de l'abbaye bénédictine.</strong> Raymond III Pons, comte de Toulouse, et son épouse Garsinde fondent une abbaye dédiée à saint Pons de Cimiez, martyr du III<sup>e</sup> siècle. Des moines bénédictins venus de Saint-Géraud d'Aurillac s'y installent. La fondation bénéficie rapidement de protections pontificales et royales, ce qui accroît son prestige et ses possessions.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/herault/saint-pons-de-thomieres.jpg"
+                        alt="Ville de Saint-Pons-de-Thomières" />
+                    <figcaption>Saint-Pons-de-Thomières, née de la rencontre entre un ancien bourg et une puissante abbaye</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p><strong>937 : arrivée des reliques de saint Pons.</strong> Les reliques du martyr renforcent l'attractivité spirituelle de l'abbaye. Le monastère devient un lieu de pèlerinage et un centre religieux important du Haut-Languedoc. Le comte fondateur lui-même y est inhumé, ce qui souligne le statut exceptionnel de l'établissement.</p>
+
+              <p><strong>XI<sup>e</sup> siècle : une grande abbaye bénédictine.</strong> Sous des abbés puissants comme Frotard, le monastère étend ses possessions et son influence. L'église primitive est reconstruite et agrandie. En 1096, le pape Urbain II consacre l'abbatiale, signe de l'importance prise par le site dans la chrétienté méridionale.</p>
+
+              <p><strong>Une architecture romane majeure.</strong> L'abbatiale est remaniée au XII<sup>e</sup> siècle dans un puissant style roman. Plusieurs éléments sculptés remarquables subsistent, notamment des tympans et reliefs. La nef unique et les volumes massifs donnent encore aujourd'hui à l'édifice son caractère austère et monumental.</p>
+
+              <p><strong>1170 : pillage et conflits féodaux.</strong> La ville et l'abbaye sont attaquées par Roger de Trencavel dans le contexte des rivalités féodales qui agitent le Languedoc. Ces affrontements montrent combien l'abbaye est devenue à la fois un centre religieux, un pouvoir territorial et un enjeu politique.</p>
+
+              <p><strong>Deux bourgs, deux sociétés.</strong> Pendant des siècles, Saint-Pons et Thomières restent deux entités voisines mais socialement distinctes. Les sources anciennes et la tradition locale opposent volontiers la « ville mage », liée à l'abbaye, aux maisons plus modestes de Thomières. Avec le temps, les deux noyaux se rejoignent et forment une seule agglomération.</p>
+
+              <p><strong>1317-1318 : création du diocèse.</strong> Le pape Jean XXII crée un nouveau diocèse par démembrement de l'archevêché de Narbonne. L'abbatiale devient cathédrale et l'abbé Pierre Roger devient le premier évêque. Saint-Pons prend alors une dimension administrative et religieuse nouvelle qui durera jusqu'à la Révolution.</p>
+
+              <p><strong>Une petite capitale du Haut-Languedoc.</strong> Autour de la cathédrale et de l'évêché se développent institutions, maisons de notables, métiers, marchés et activités artisanales. La ville profite de sa position sur les routes entre Albigeois, Minervois et plaine biterroise.</p>
+
+              <p><strong>Le textile et les activités de rivière.</strong> Le Jaur fournit eau et énergie aux moulins et ateliers. Draps, laine, cuir et autres productions artisanales contribuent à la prospérité locale. Cette vocation manufacturière restera importante jusqu'aux XIX<sup>e</sup> et XX<sup>e</sup> siècles.</p>
+
+              <p><strong>1567 : les guerres de Religion ravagent la ville.</strong> Les affrontements entre catholiques et protestants frappent durement Saint-Pons. Le cloître est détruit et la cathédrale subit d'importants dégâts. Les bâtiments conventuels sont profondément affectés, transformant pour toujours l'ensemble monastique médiéval.</p>
+
+              <p><strong>XVII<sup>e</sup>-XVIII<sup>e</sup> siècles : reconstruire et affirmer le pouvoir épiscopal.</strong> Les évêques entreprennent une longue campagne de restauration. L'ancienne façade occidentale est condamnée et l'édifice reçoit une nouvelle organisation. Les travaux donnent progressivement à la cathédrale une physionomie très différente de celle de l'abbatiale romane originelle.</p>
+
+              <p><strong>1772 : l'orgue de Jean-Baptiste Micot.</strong> La cathédrale reçoit un grand orgue construit par Jean-Baptiste Micot. Cet instrument, aujourd'hui considéré comme un élément majeur du patrimoine musical local, témoigne du prestige encore important du siège épiscopal à la veille de la Révolution.</p>
+
+              <p><strong>1790 : disparition du diocèse.</strong> La Révolution française met fin à l'ancien évêché. Les institutions ecclésiastiques sont supprimées ou réorganisées et l'ancienne cathédrale devient église paroissiale. La ville connaît ensuite plusieurs fonctions administratives : chef-lieu de district puis siège d'arrondissement au XIX<sup>e</sup> siècle.</p>
+
+              <p><strong>XIX<sup>e</sup> siècle : ville ouvrière et administrative.</strong> Saint-Pons reste un centre important du Haut-Languedoc grâce à ses services, ses marchés, son artisanat et ses activités textiles. La ville est aussi connue pour une vie politique et sociale parfois très animée, dans un territoire marqué par les traditions républicaines et ouvrières.</p>
+
+              <p><strong>1926 : perte de la sous-préfecture.</strong> La suppression de l'arrondissement constitue un tournant symbolique. Comme de nombreux petits centres industriels, Saint-Pons doit ensuite faire face au déclin progressif du textile, aux transformations agricoles et à l'exode rural.</p>
+
+              <p><strong>Du patrimoine industriel au tourisme culturel.</strong> Au XX<sup>e</sup> siècle, la ville se tourne progressivement vers la valorisation de son patrimoine, de la source du Jaur, de la cathédrale et des paysages du Haut-Languedoc. La création du Parc naturel régional renforce cette nouvelle vocation.</p>
+
+              <p><strong>Une histoire encore lisible dans la ville.</strong> L'ancien évêché, la cathédrale, les ruelles, les maisons anciennes, la source du Jaur et les quartiers autrefois séparés permettent aujourd'hui de comprendre les grandes étapes d'une histoire commencée bien avant la fondation monastique et profondément structurée par près de neuf siècles de présence religieuse.</p>
+
+              <div class="citation-bloc">
+                <p>Repères : peuplement ancien autour de la source du Jaur · 936, fondation de l'abbaye · 937, arrivée des reliques de saint Pons · 1096, consécration de l'abbatiale · XIIe siècle, grande reconstruction romane · 1170, pillage par les Trencavel · 1317-1318, création du diocèse · 1567, destructions des guerres de Religion · 1772, orgue de Micot · 1790, suppression du diocèse · 1926, perte de la sous-préfecture.</p>
+                <cite>Chronologie synthétique de Saint-Pons-de-Thomières</cite>
+              </div>
+
+
+
+<div class="retour-plus">
+            <a href="saint-pons-de-thomieres.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche Saint-Pons-de-Thomières</strong>
+         
+              </span>
+
+
+</body>
+</html>

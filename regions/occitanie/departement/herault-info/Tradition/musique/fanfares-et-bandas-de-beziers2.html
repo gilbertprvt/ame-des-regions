@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fanfares &amp; bandas de Béziers — Approfondir — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  
+    /* ─── COMPLÉMENTS FICHE APPROFONDIE ───────────── */
+    .repere-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+    .repere-card{background:white;border:1px solid #E0DACE;border-radius:10px;padding:15px 16px}
+    .repere-card strong{display:block;color:#2C4A7C;font-family:var(--font-titre);font-size:15px;margin-bottom:5px}
+    .repere-card span{font:13px/1.6 var(--font-corps);color:#5b5048}
+    .source-list{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+    .source-list a{display:block;padding:11px 13px;border:1px solid #E0DACE;border-radius:8px;background:#F7F3EC;color:#2C4A7C;text-decoration:none;font:13px/1.45 var(--font-corps)}
+    .source-list a:hover{background:#2C4A7C;color:white}
+    @media(max-width:650px){.repere-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body class="produit-page">
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns"><a class="produit-btn-retour" href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a></div>
+</div>
+<div class="produit-hero-body"><div><h1><em>F</em>anfares &amp; bandas<br/><span style="padding-left:60px;">de <em>B</em>éziers</span><span class="sous-titre">Cuivres, peñas et musique de rue au cœur de la Féria</span></h1></div>
+<img alt="Carte Hérault" src="../../../../../../assets/departement/occitanie/carte-herault.png" style="height:220px; width:auto; opacity:0.85; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block; align-self:flex-start; margin-top:8px;"/></div>
+</div>
+<div class="fiche-hero-ecusson"><img alt="Écusson Hérault" src="../../../../../../assets/departement/occitanie/herault.png"/></div>
+<div class="hero-label-bas">⟹ Musiques &amp; traditions ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a class="active" href="#histoire">🎺 Histoire approfondie</a><a href="#reperes">📌 Repères</a><a href="#sources">📚 Sources</a></div></div></div>
+</div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+<section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">🎺</div>Fanfares &amp; bandas : le pouls musical de Béziers</h2><div class="histoire-texte">
+<p><strong>À Béziers, fanfares, peñas et bandas font partie de la signature sonore de la fête.</strong> Elles transforment la rue en scène mobile : cuivres, bois et percussions avancent au milieu du public, s'arrêtent devant une bodega, relancent un cortège puis repartent vers une autre place. Cette mobilité est essentielle à leur fonction : la musique ne vient pas seulement d'une scène, elle circule avec la foule.</p>
+<p><strong>Il faut distinguer plusieurs familles de formations.</strong> La fanfare française est historiquement liée aux sociétés musicales civiles ou militaires et à un répertoire de marche et de plein air. La <em>banda</em>, terme espagnol, désigne une formation de vents et percussions associée aux fêtes populaires. La <em>peña</em>, au sens festif du Sud de la France et de la péninsule Ibérique, est d'abord un groupe ou une association de passionnés ; par extension, le mot sert souvent à désigner sa formation musicale.</p>
+<p><strong>À Béziers, ces traditions se rencontrent naturellement dans le cadre de la Féria.</strong> Chaque mois d'août, le centre-ville est parcouru par de nombreuses formations. Les programmes officiels parlent explicitement de « peñas y bandas », d'animations de rue, de défilés et de musique en continu sur les places, les Allées Paul-Riquet et autour des lieux de fête.</p>
+<p><strong>Leur rôle dépasse celui d'un simple orchestre d'animation.</strong> Elles font le lien entre des espaces dispersés : arènes, Halles, places, bodegas, villages festifs et parcours de cortèges. En quelques mesures, elles indiquent où la fête se déplace et entraînent le public. Elles sont une forme de signal urbain autant qu'une pratique musicale.</p>
+<p><strong>Le répertoire privilégie l'efficacité collective.</strong> Pasodobles, airs de féria, morceaux populaires français, thèmes espagnols ou latino, chansons détournées, variétés et refrains immédiatement reconnaissables permettent au public de chanter ou de danser sans préparation. L'arrangement doit rester puissant, lisible et transportable dans le bruit de la rue.</p>
+<p><strong>L'instrumentation répond à cette contrainte.</strong> Trompettes, trombones, saxophones, clarinettes et parfois soubassophones ou tubas portent la mélodie et l'harmonie ; grosse caisse, caisse claire, cymbales et petites percussions donnent l'impulsion. Selon les groupes, l'effectif peut être réduit et très mobile ou au contraire proche d'une grande fanfare.</p>
+<p><strong>La proximité avec le public change profondément la manière de jouer.</strong> Une banda ne se contente pas d'exécuter une partition : elle doit lire l'ambiance, ralentir, accélérer, répéter un refrain, faire répondre la foule et parfois improviser une interaction avec un autre groupe. Cette dimension relationnelle est au cœur du savoir-faire.</p>
+<p><strong>La Féria de Béziers offre aujourd'hui un véritable parcours musical.</strong> Les sources touristiques et municipales récentes mentionnent des peñas et bandas présentes « à travers la ville », ainsi qu'une Plaza des Peñas et Bandas et des concours où les groupes rivalisent d'énergie, d'originalité et de présence scénique.</p>
+<p><strong>Les concours montrent que la tradition possède aussi ses codes propres.</strong> La qualité musicale compte, mais pas seulement : cohésion, tenue, capacité à entraîner le public, choix du répertoire et mise en scène participent à l'identité d'une formation. Dans une musique de rue, l'effet collectif est indissociable de la technique instrumentale.</p>
+<p><strong>Le phénomène est profondément intergénérationnel.</strong> Des musiciens expérimentés jouent aux côtés de jeunes instrumentistes, et certaines structures développent des ensembles juniors. C'est un moyen particulièrement efficace de transmettre la pratique : les jeunes apprennent à la fois l'instrument, le répertoire et le comportement musical spécifique à la rue.</p>
+<p><strong>Cette musique traduit aussi la position culturelle de Béziers.</strong> La ville appartient au Languedoc, mais sa Féria assume des influences ibériques très visibles : pasodoble, flamenco, vocabulaire de peña et de banda, couleurs taurines et ambiance de bodega. La musique devient le point de rencontre de ces héritages méditerranéens.</p>
+<p><strong>La tradition n'est pourtant pas figée dans un répertoire espagnol.</strong> Les formations intègrent des tubes contemporains, du rock, de la chanson française, des thèmes de films et des arrangements humoristiques. Cette capacité à absorber de nouveaux morceaux explique en partie leur succès : la forme reste traditionnelle, le contenu musical se renouvelle sans cesse.</p>
+<p><strong>Les Halles et les places centrales prolongent aujourd'hui cette culture tout au long de la Féria.</strong> Les programmations associent bandas, concerts, DJ, flamenco et autres formes de musique populaire. Les frontières entre fanfare, concert et animation de rue deviennent poreuses, mais les formations ambulantes conservent une fonction unique : mettre la ville en mouvement.</p>
+<p><strong>La peña possède enfin une dimension associative et affective.</strong> Derrière le groupe musical, il y a souvent des répétitions régulières, des déplacements, une identité graphique, des liens d'amitié et un attachement à une fête ou à un territoire. Cette sociabilité explique pourquoi certaines formations deviennent familières au public et reviennent d'année en année.</p>
+<p><strong>Les fanfares et bandas sont donc un patrimoine vivant de Béziers.</strong> Elles ne sont pas anciennes au même titre qu'un monument médiéval, mais elles participent à une tradition festive désormais profondément installée. Leur patrimoine réside dans les répertoires, les arrangements, les gestes, les tenues, les parcours urbains et surtout dans la capacité à créer une communauté éphémère autour de la musique.</p>
+</div><div class="citation-bloc"><p>À Béziers, la musique de rue n’accompagne pas la fête de l’extérieur : elle la fait avancer, elle la rassemble et elle lui donne son rythme.</p><cite>— Synthèse patrimoniale — L'Âme des Régions</cite></div></section>
+
+
+<div class="retour-plus">
+            <a href="fanfares-et-bandas-de-beziers.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche fanfares et bandas de Béziers</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+</body>
+</html>

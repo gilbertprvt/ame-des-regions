@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chants de joutes nautiques — Approfondir — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  
+    /* ─── COMPLÉMENTS FICHE APPROFONDIE ───────────── */
+    .repere-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+    .repere-card{background:white;border:1px solid #E0DACE;border-radius:10px;padding:15px 16px}
+    .repere-card strong{display:block;color:#2C4A7C;font-family:var(--font-titre);font-size:15px;margin-bottom:5px}
+    .repere-card span{font:13px/1.6 var(--font-corps);color:#5b5048}
+    .source-list{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+    .source-list a{display:block;padding:11px 13px;border:1px solid #E0DACE;border-radius:8px;background:#F7F3EC;color:#2C4A7C;text-decoration:none;font:13px/1.45 var(--font-corps)}
+    .source-list a:hover{background:#2C4A7C;color:white}
+    @media(max-width:650px){.repere-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body class="produit-page">
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns"><a class="produit-btn-retour" href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a></div>
+</div>
+<div class="produit-hero-body"><div><h1><em>C</em>hants de<br/><span style="padding-left:60px;"><em>j</em>outes <em>n</em>autiques</span><span class="sous-titre">Voix, mémoire et identité autour du Canal Royal</span></h1></div>
+<img alt="Carte Hérault" src="../../../../../../assets/departement/occitanie/carte-herault.png" style="height:220px; width:auto; opacity:0.85; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block; align-self:flex-start; margin-top:8px;"/></div>
+</div>
+<div class="fiche-hero-ecusson"><img alt="Écusson Hérault" src="../../../../../../assets/departement/occitanie/herault.png"/></div>
+<div class="hero-label-bas">⟹ Musiques &amp; traditions ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a class="active" href="#histoire">🎶 Histoire approfondie</a><a href="#reperes">📌 Repères</a><a href="#sources">📚 Sources</a></div></div></div>
+</div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+<section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">🎶</div>Chants de joutes : la mémoire vocale de Sète</h2><div class="histoire-texte">
+<p><strong>À Sète, les chants de joutes ne constituent pas un simple accompagnement folklorique.</strong> Ils appartiennent à un ensemble beaucoup plus vaste de pratiques vocales et musicales qui relient la ville à son port, à ses canaux, à l'étang de Thau et à la sociabilité des sociétés de jouteurs. Depuis la création du port en 1666, les réjouissances collectives sétoises associent volontiers affrontement nautique, défilé, musique, repas, chansons et plaisanteries.</p>
+<p><strong>La joute elle-même est contemporaine de la naissance de la ville moderne.</strong> Le port de Sète est officiellement inauguré le 29 juillet 1666 et un tournoi de joutes accompagne les fêtes. Sète n'est pas le berceau de la joute nautique languedocienne, mais elle en devient progressivement l'un des principaux centres, au point que le Canal Royal et la fête de la Saint-Louis sont aujourd'hui indissociables de cette pratique.</p>
+<p><strong>Le chant s'inscrit dans un cérémonial sonore déjà structuré par le hautbois et le tambour.</strong> Les sources consacrées aux joutes indiquent que des hautbois du Bas-Languedoc et de petits tambours accompagnent les tournois depuis les débuts du port. La voix vient compléter ce paysage : chansons identitaires, airs à reprendre en groupe, couplets humoristiques et chants de fête circulent autour du tournoi et dans les moments de convivialité.</p>
+<p><strong>Une tradition ancienne est conservée sous le titre <em>La cançon de las ajustas</em>, la « chanson des joutes ».</strong> Occitanica rattache ce fonds à une tradition languedocienne ancienne et cite notamment l'opéra de Frontignan de Nicolas Fizes, en 1678. Les versions recueillies ultérieurement mettent en scène les acteurs de la fête : jouteurs, chefs de jeunesse, pavillons, tambourineurs et joueur de hautbois.</p>
+<p><strong>Ces textes sont précieux parce qu'ils décrivent la joute de l'intérieur.</strong> Ils ne parlent pas seulement de victoire sportive. Ils évoquent le cortège, les couleurs, les sons, le prestige du bon jouteur et l'enthousiasme du public. Le chant devient ainsi une archive orale : il garde la mémoire de la manière dont les Sétois percevaient eux-mêmes leur fête.</p>
+<p><strong>La langue est elle aussi un élément du patrimoine.</strong> Une partie du répertoire est en occitan languedocien, une autre en français, et la tradition chansonnière sétoise fait également place à des tournures locales, au parler sétois et à des apports venus des communautés méditerranéennes installées dans la ville. Cette diversité reflète l'histoire sociale d'un port ouvert aux circulations humaines.</p>
+<p><strong>Le répertoire de joutes n'est jamais totalement séparé du répertoire populaire sétois.</strong> Des chansons sur la mer, les pêcheurs, les quartiers, les personnages locaux ou les plaisirs de la fête peuvent être reprises dans les mêmes espaces et par les mêmes chanteurs. C'est pourquoi il est plus juste de parler d'un écosystème musical des joutes que d'un corpus fermé de quelques chansons officielles.</p>
+<p><strong>Le défilé est l'un des moments où la frontière entre musique instrumentale et chant devient la plus poreuse.</strong> Les jouteurs quittent leurs sociétés, traversent la ville et gagnent le Canal Royal dans une ambiance de marche, de fanfare et de reprises collectives. Les bandas, apparues plus tard dans le paysage festif, ont renforcé ce caractère participatif en diffusant des airs immédiatement reconnaissables.</p>
+<p><strong><em>La Festa de l'Issanka</em> occupe une place particulière dans ce contexte.</strong> La documentation patrimoniale la cite comme une chanson traditionnelle sétoise utilisée par les bandas pour annoncer le départ du défilé. Elle illustre la manière dont un chant local peut devenir un véritable signal collectif : quelques mesures suffisent à évoquer l'entrée dans le temps de la joute.</p>
+<p><strong>Autour de la Saint-Louis, la ville entière devient caisse de résonance.</strong> Le Canal Royal concentre l'affrontement, mais les chansons circulent aussi dans les rues, les sièges des sociétés, les cafés, les repas et les retrouvailles d'après-tournoi. Cette géographie sonore explique pourquoi le patrimoine des joutes dépasse largement les limites du plan d'eau.</p>
+<p><strong>Le « temps de l'après » est essentiel.</strong> Après les passes viennent les commentaires, les récits, les plaisanteries et les chansons. Les fameuses « troisièmes mi-temps » permettent l'improvisation et la <em>galéjade</em> : on adapte des paroles à un air connu, on taquine un jouteur ou une société, on raconte l'événement du jour. Cette création immédiate est l'un des moteurs de la transmission orale.</p>
+<p><strong>Les chants ont longtemps été transmis sans partition.</strong> On les apprenait en les entendant, en les répétant lors des fêtes et en fréquentant les anciens. Les variantes de paroles ou de mélodie ne sont donc pas forcément des erreurs : elles témoignent du fonctionnement normal d'une tradition orale, transformée au fil des interprètes et des générations.</p>
+<p><strong>Les collectes et les enregistrements ont ensuite changé la situation.</strong> Les travaux du CIRDOC-Institut occitan de cultura, les recherches ethnomusicologiques, les éditions discographiques et les publications consacrées aux musiques de joutes ont permis de fixer une partie de ce patrimoine et de le rendre consultable au-delà du cercle des pratiquants.</p>
+<p><strong>Le recueil consacré à la musique des joutes languedociennes montre à quel point le cérémonial est organisé.</strong> Les airs y sont classés selon leur usage : parade, embarquement, musique de barque, retour du vainqueur, remise des prix, Descente de la Bourse, puis morceaux d'agrément. Même lorsqu'ils ne sont pas chantés, ces airs constituent le cadre dans lequel les pratiques vocales prennent place.</p>
+<p><strong>Le chant contribue enfin à l'identité sétoise.</strong> Il donne une voix à une tradition qui serait sinon essentiellement visuelle et sportive. En chantant les joutes, la ville se raconte elle-même : son rapport à l'eau, à la compétition, à la langue d'oc, au quartier, à la dérision et à la fête populaire.</p>
+<p><strong>Ce patrimoine reste vivant parce qu'il conserve une fonction.</strong> Les chansons ne sont pas seulement rejouées pour illustrer le passé ; elles continuent d'accompagner des fêtes réelles, des associations actives et des communautés qui se reconnaissent dans ce répertoire. C'est cette continuité d'usage qui donne aux chants de joutes toute leur valeur patrimoniale.</p>
+</div><div class="citation-bloc"><p>À Sète, les joutes ne se transmettent pas seulement par le geste et l’image : elles se transmettent aussi par des airs, des mots, des refrains et des voix.</p><cite>— Synthèse patrimoniale — L'Âme des Régions</cite></div></section>
+
+
+<div class="retour-plus">
+            <a href="chants-de-joutes-nautiques.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche chants de joutes nautiques</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+</body>
+</html>

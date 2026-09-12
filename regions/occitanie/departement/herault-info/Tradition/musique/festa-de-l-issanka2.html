@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>La Festa de l'Issanka — Approfondir — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns"><a class="produit-btn-retour" href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a></div>
+</div>
+<div class="produit-hero-body">
+<div><h1>La <em>F</em>esta de <br><span style="padding-left: 120px;">l’<em>I</em>ssanka</span><span class="sous-titre">Origines, auteurs et place dans la mémoire sétoise</span></h1></div>
+<img alt="Carte Herault" src="../../../../../../assets/departement/occitanie/carte-herault.png" style="height:220px; width:auto; opacity:0.85;
+filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson"><img alt="Écusson Hérault" src="../../../../../../assets/departement/occitanie/herault.png"/></div>
+<div class="hero-label-bas">⟹ Musiques &amp; traditions ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a class="active" href="#histoire">🎵 Histoire approfondie</a></div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div><section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">🎵</div>La Festa de l'Issanka : d'un lieu de promenade à un hymne sétois</h2><div class="histoire-texte">
+<p><strong>La Festa de l'Issanka occupe une place singulière dans le patrimoine musical sétois.</strong> Chantée en occitan languedocien, elle est à la fois une chanson de fête, une évocation d'un lieu familier et un signe de reconnaissance collectif. Son refrain, facile à reprendre en groupe, explique en grande partie sa longévité.</p>
+<p><strong>Le nom d'Issanka renvoie d'abord à un lieu réel.</strong> Situé à proximité de Sète, le site est connu pour sa source et son environnement végétal. L'Harmonie de Sète rappelle que cette source alimente la ville depuis le 31 août 1862. Avant la généralisation des loisirs balnéaires modernes, Issanka offrait aux familles sétoises un espace de fraîcheur et de détente où l'on pouvait venir pique-niquer et passer une journée loin de la chaleur urbaine.</p>
+<p><strong>La chanson transforme cette excursion en scène populaire.</strong> Le chant des cigales, l'herbe, l'idée de partir et de chasser le chagrin composent un petit tableau d'été méditerranéen. La fête n'y apparaît pas comme un événement officiel, mais comme une disposition d'esprit : on quitte les soucis, on se rassemble et l'on chante.</p>
+<p><strong>Les paroles sont attribuées à Michel Pino (1851-1901).</strong> Les sources sétoises le présentent comme l'auteur du texte. Son écriture s'inscrit dans une époque où l'occitan demeure très présent dans la vie quotidienne, même si son usage public et scolaire est progressivement marginalisé par les politiques linguistiques de la IIIe République.</p>
+<p><strong>La musique est due à Désiré Servel.</strong> Né à Clermont-l'Hérault en 1833, ce musicien s'établit à Sète et y exerce notamment comme professeur de musique. Les notices locales lui attribuent une production abondante : opéras, messes, romances, danses et de nombreuses chansons. La Festa de l'Issanka est pourtant l'œuvre qui reste la plus immédiatement attachée à son nom dans la mémoire sétoise.</p>
+<p><strong>Un chant profondément lié à la langue d'oc.</strong> Le texte est généralement transmis dans une graphie populaire sétoise, mais il a aussi été retranscrit en graphie occitane classique. Cette coexistence de formes écrites raconte à elle seule l'histoire d'une langue longtemps surtout parlée, puis progressivement documentée et normalisée par les mouvements de renaissance occitane.</p>
+<p><strong>Le refrain fonctionne comme une injonction à laisser les soucis derrière soi.</strong> Sans reproduire ici le texte intégral, son idée centrale est limpide : le chagrin doit « faire sa malle » pour laisser la place à l'amusement, au chant de la cigale et à la fête d'Issanka. Cette formule, immédiatement mémorisable, a largement contribué à faire du morceau un chant collectif.</p>
+<p><strong>De chanson de sortie, elle devient chanson de ville.</strong> Avec le temps, la Festa de l'Issanka dépasse le cadre du site qu'elle évoque. L'Harmonie de Sète la décrit comme un morceau qui marque les temps forts de la vie locale, entonné lors des repas et des grands rassemblements publics. Le lien avec Issanka demeure, mais la chanson parle désormais de Sète tout entière.</p>
+<p><strong>Les joutes nautiques lui donnent une nouvelle scène.</strong> Le répertoire ancien des joutes repose d'abord sur le hautbois et le tambour. À mesure que les bandas s'intègrent aux fêtes, elles apportent une sonorité plus massive et plus spectaculaire aux défilés. Occitanica signale qu'elles jouent la Festa de l'Issanka aux avant-postes pour annoncer le départ du cortège des jouteurs.</p>
+<p><strong>Cette présence dans les joutes renforce son statut d'emblème.</strong> Les tournois sétois sont eux-mêmes l'un des principaux marqueurs de l'identité de la ville. Être associé à leurs défilés, c'est donc entrer au cœur d'un rituel partagé par plusieurs générations d'habitants.</p>
+<p><strong>La chanson côtoie ainsi un répertoire très ancien.</strong> Dans les mêmes journées de fête, on peut entendre les marches pour hautbois et tambour, les airs de barque, « La Charge », les valses traditionnelles et, dans l'espace du défilé, les morceaux interprétés par les bandas. La Festa de l'Issanka se situe à la jonction de ces deux mondes : elle est une chanson populaire occitane devenue musique de cérémonie.</p>
+<p><strong>Le succès du morceau tient aussi à sa simplicité collective.</strong> Il ne demande pas une connaissance savante de la tradition pour être compris. Son refrain, son rythme et son message permettent à une foule entière de se l'approprier. C'est l'une des raisons pour lesquelles il continue d'être repris alors que beaucoup d'autres chansons locales du XIXe siècle ont disparu de l'usage courant.</p>
+<p><strong>La mémoire d'Issanka ajoute une dimension géographique à l'identité sétoise.</strong> Sète est souvent décrite par son port, ses canaux, l'étang de Thau et la mer. La chanson rappelle une autre composante du territoire : l'arrière-pays immédiat, la source, les arbres et les lieux de promenade où les habitants cherchaient autrefois fraîcheur et convivialité.</p>
+<p><strong>Une œuvre locale devenue patrimoine vivant.</strong> Aujourd'hui, la Festa de l'Issanka peut être étudiée comme une chanson ancienne, enregistrée et documentée, mais elle reste surtout vivante parce qu'elle continue d'être chantée et jouée. Sa valeur patrimoniale ne réside donc pas uniquement dans son âge ou dans ses auteurs : elle tient au fait qu'une communauté continue de s'y reconnaître.</p>
+<p><strong>À travers elle, Sète conserve une part de son histoire linguistique et festive.</strong> Elle relie l'occitan populaire, les loisirs d'autrefois à Issanka, la tradition musicale des sociétés locales et les grands rassemblements contemporains. Peu de chansons résument avec autant d'efficacité cette articulation entre un lieu, une langue et une identité urbaine.</p>
+</div><div class="citation-bloc"><p>La Festa de l'Issanka a transformé le souvenir d'une promenade estivale en un chant collectif où Sète reconnaît une part de son caractère.</p><cite>— Synthèse patrimoniale — L'Âme des Régions</cite></div></section><div class="retour-plus"><a class="btn-en-savoir-plus" href="festa-de-l-issanka.html">
+<span aria-hidden="true" class="btn-plus-icon"><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"></path><path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"></path></svg></span>
+<span class="btn-plus-text"><strong>Retour fiche La Festa de l’Issanka</strong></span><span aria-hidden="true" class="btn-plus-arrow">→</span></a></div></div></div></div></div></body>
+</html>

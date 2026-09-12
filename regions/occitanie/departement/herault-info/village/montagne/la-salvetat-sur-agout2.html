@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Salvetat-sur-Agout — Approfondir — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/herault/herault.html" class="produit-btn-retour">
+            ← Retour à la fiche Hérault
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>L</em>a Salvetat<br><span style="padding-left: 30px;">sur-<em>A</em>gout</span><span class="sous-titre">La « sauveté » du plateau des lacs, entre eau pétillante et grand air</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-herault.png"
+               alt="Carte Herault"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/salvetat.png" alt="Écusson La Salvetat-sur-Agout" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Village de Caractère & Nature ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >💧 Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🎣 Savoir-faire</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          
+<section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un territoire habité bien avant la naissance du bourg.</strong> Le haut bassin de l'Agout est occupé depuis des temps très anciens. Sa position, entre Montagne Noire, monts de Lacaune et vallées menant vers le Bas-Languedoc, en fait un espace de passage autant qu'un territoire d'élevage et de forêts. Les communautés anciennes s'installent près des cours d'eau et des plateaux, dans un milieu rude où l'altitude, l'hiver et l'abondance des eaux structurent les modes de vie.</p>
+
+              <p><strong>Les origines monastiques.</strong> La tradition locale rattache les débuts de La Salvetat à un établissement religieux ancien, situé vers le confluent de la Vèbre et de l'Agout. La chapelle romane Saint-Étienne de Cavall, isolée aujourd'hui dans le paysage, rappelle cette phase ancienne du peuplement chrétien. Les premiers noyaux d'habitat se seraient développés autour d'établissements religieux avant de gagner des positions plus faciles à défendre.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/herault/la-salvetat-sur-agout.jpg"
+                        alt="Village de La Salvetat-sur-Agout et ses toits d'ardoise" />
+                    <figcaption>Le bourg perché de La Salvetat, installé au-dessus de l'Agout</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p><strong>Une « sauveté » médiévale.</strong> Le nom même de La Salvetat appartient à la grande famille des « sauvetés » du Midi médiéval : des espaces de refuge placés sous une protection religieuse ou seigneuriale, où l'on pouvait bénéficier de garanties particulières. Le développement du village sur un éperon dominant l'Agout correspond à une époque de tensions féodales, de rivalités entre seigneuries et de recherche de sécurité par les populations.</p>
+
+              <p><strong>Un site fortifié au cœur de conflits féodaux.</strong> Au XII<sup>e</sup> siècle, le secteur se trouve dans une zone de contact entre les puissances du Midi. Les fortifications et droits seigneuriaux y sont un enjeu majeur. L'histoire de La Salvetat est ainsi liée aux conflits qui opposent notamment les seigneurs locaux et les Trencavel, maîtres d'une partie du Languedoc. Ces luttes expliquent la place prise par le château et les défenses du bourg.</p>
+
+              <p><strong>Le lien avec Saint-Pons-de-Thomières.</strong> La Salvetat appartient durablement à l'orbite religieuse et administrative de Saint-Pons-de-Thomières. Lorsque l'abbaye de Saint-Pons devient évêché au XIV<sup>e</sup> siècle, les relations entre les deux territoires se renforcent. La vie paroissiale, la fiscalité, les marchés et une partie de l'organisation judiciaire se trouvent alors intégrés à ce cadre ecclésiastique.</p>
+
+              <p><strong>Une terre de passage vers Compostelle.</strong> Les routes anciennes traversant le Haut-Languedoc sont empruntées par des voyageurs, marchands et pèlerins. La tradition locale associe la source de Rieumajou aux pèlerins en route vers Saint-Jacques-de-Compostelle. Ils s'y seraient arrêtés pour boire une eau naturellement gazeuse, réputée bénéfique. Ce lien entre itinérance, source et refuge correspond parfaitement à l'identité médiévale de la « salvetat ».</p>
+
+              <p><strong>Les guerres de Religion.</strong> Comme tout le Haut-Languedoc, la région est profondément marquée au XVI<sup>e</sup> siècle par les affrontements entre catholiques et protestants. Sa position de bourg fortifié lui confère une valeur stratégique. La tradition locale souligne que La Salvetat résiste aux attaques protestantes et conserve une forte identité catholique, contrairement à plusieurs localités voisines des Cévennes et du Languedoc intérieur.</p>
+
+              <p><strong>Une économie de montagne.</strong> Pendant des siècles, la vie repose sur l'élevage, la forêt, les cultures adaptées aux hauts plateaux, les moulins et les échanges avec les vallées voisines. Les maisons massives, les toitures d'ardoise et les ruelles resserrées témoignent encore de cette adaptation au climat montagnard. La foire et les marchés permettent d'écouler les produits agricoles, la laine, le bétail et les ressources forestières.</p>
+
+              <p><strong>XVIII<sup>e</sup> et XIX<sup>e</sup> siècles : un bourg prospère.</strong> À l'époque moderne puis au XIX<sup>e</sup> siècle, La Salvetat affirme son rôle de centre local. Elle devient chef-lieu de canton et rayonne sur de nombreux hameaux. Sa population atteint alors plusieurs milliers d'habitants. La vie économique est animée par les artisans, les commerçants et les activités liées aux campagnes environnantes.</p>
+
+              <p><strong>L'eau de Rieumajou, de remède populaire à ressource économique.</strong> Longtemps, les habitants attribuent à l'eau pétillante de Rieumajou des vertus contre les « fièvres » et diverses affections chroniques. Cette réputation populaire précède de loin son exploitation industrielle. La source devient progressivement un élément majeur de l'identité locale, jusqu'à l'essor de l'embouteillage de l'eau minérale naturelle La Salvetat au XX<sup>e</sup> siècle.</p>
+
+              <p><strong>Le choc de l'exode rural.</strong> Comme de nombreux bourgs de montagne, La Salvetat est touchée au XX<sup>e</sup> siècle par la baisse des activités agricoles traditionnelles et le départ d'une partie de la population vers les villes. Les deux guerres mondiales et l'évolution des modes de production accélèrent ce recul démographique.</p>
+
+              <p><strong>1957 : le lac de la Raviège transforme le territoire.</strong> La création du barrage et la mise en eau du lac de la Raviège modifient profondément le paysage et ouvrent une nouvelle époque. Les activités nautiques, la pêche, les résidences de vacances et le tourisme vert complètent peu à peu les fonctions agricoles et forestières traditionnelles.</p>
+
+              <p><strong>Une identité aujourd'hui fondée sur l'eau, la montagne et le patrimoine.</strong> La Salvetat-sur-Agout combine désormais son héritage médiéval, ses paysages de moyenne montagne, le lac de la Raviège et la notoriété de son eau minérale. Le village reste marqué par ses toits d'ardoise, ses passages couverts, ses ponts, ses ruelles et cette situation spectaculaire au-dessus de l'Agout.</p>
+
+              <div class="citation-bloc">
+                <p>Repères : origines monastiques anciennes · formation d'une « sauveté » médiévale · bourg fortifié du Haut-Languedoc · dépendance de Saint-Pons-de-Thomières · source de Rieumajou fréquentée de longue date · essor comme chef-lieu de canton · 1957, mise en eau du lac de la Raviège · développement de l'embouteillage de l'eau minérale.</p>
+                <cite>Chronologie synthétique de La Salvetat-sur-Agout</cite>
+              </div>
+
+
+
+
+<div class="retour-plus">
+            <a href="la-salvetat-sur-agout.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche La Salvetat-sur-Agout</strong>
+         
+              </span>
+
+
+</body>
+</html>
