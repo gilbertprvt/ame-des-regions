@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Les Cathares — Histoire, doctrine et déclin — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/aude/aude.html"> ← Retour à la fiche Aude </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>L</em>es <em>C</em>athares<br/><span style="padding-left: 60px;">une <em>d</em>issidence</span> <br><span style="padding-left: 120px;"><em>o</em>ccitane</span></h1>
+</div>
+
+
+<img alt="Carte de l'Aude" src="../../../../../../assets/departement/occitanie/carte-aude.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Aude" src="../../../../../../assets/departement/occitanie/aude.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Histoire, doctrine et déclin d'une Église dissidente ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner"><a class="active" href="#histoire">📖 Origines</a><a href="#doctrine">🕊️ Doctrine</a><a href="#mode-de-vie">🙏 Mode de vie</a><a href="#organisation">🏛️ Organisation</a><a href="#figures">👤 Figures</a><a href="#motivations">⚖️ Motivations</a><a href="#declin">🔥 Fin du catharisme</a><a href="#alentours">📍 Sites liés</a></div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+
+<!-- HISTOIRE / ORIGINES -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Origines &amp; naissance du catharisme
+            </h2>
+<div class="histoire-texte"><figure class="photo-bloc photo-centre" style="max-width: 320px;"><img alt="Les ruines du château de Montségur, haut lieu de la mémoire cathare" src="../../../../../../assets/departement/occitanie/photo/aude/carte.jpg"/><figcaption>Carte des Forteresses Royales du Languedoc</figcaption></figure><div class="clearfix"></div><p><strong>Un héritage venu d'Orient : les Bogomiles.</strong> Le catharisme occidental plonge ses racines dans le mouvement bogomile, né en Bulgarie au Xe siècle autour du pope Bogomil. Ce courant chrétien dualiste, qui oppose un principe du Bien et un principe du Mal, se diffuse le long des routes commerciales et des voies de pèlerinage vers Constantinople, l'Italie du Nord puis le sud de la France, où des missionnaires bogomiles et des « Églises » constituées entretiennent des contacts attestés avec les communautés occitanes dès le milieu du XIIe siècle.</p><p><strong>Les premières traces en Occident (XIe-XIIe siècle).</strong> Des groupes hérétiques aux croyances dualistes sont signalés dès le début du XIe siècle à Orléans, Arras ou Monforte, mais c'est en Rhénanie, dans le nord de l'Italie et surtout en Languedoc que le mouvement prend racine durablement. Le terme « cathare », du grec katharos (« pur »), apparaît sous la plume de l'inquisiteur allemand Eckbert de Schönau vers 1163 ; en Occitanie, les adeptes se désignent eux-mêmes plus simplement comme « bons hommes », « bonnes femmes » ou « bons chrétiens ».</p><p><strong>1167 : le concile de Saint-Félix-de-Caraman.</strong> Un moment fondateur de l'organisation cathare occidentale est le concile tenu vers 1167 à Saint-Félix-de-Caraman, près de Toulouse, sous la présidence de l'évêque bogomile Nicétas, venu de Constantinople. Cette assemblée structure officiellement l'Église cathare d'Occident en diocèses distincts — Albi, Toulouse, Carcassonne, Agen — calqués sur le modèle épiscopal bogomile, preuve d'une organisation déjà mature et internationale.</p><p><strong>Le Languedoc, terreau d'une expansion rapide.</strong> Le catharisme trouve en Occitanie un terrain particulièrement favorable : une société urbaine dynamique, un pouvoir comtal et seigneurial fragmenté et tolérant, une noblesse locale peu encline à réprimer une dissidence religieuse qui ne menace pas directement son autorité temporelle. Dès la fin du XIIe siècle, le mouvement compte des dizaines de milliers d'adeptes ou de sympathisants entre Toulouse, Albi, Carcassonne et les contreforts pyrénéens, au point que l'on parlera plus tard, par extension, de « Pays cathare ».</p><p><strong>Une Église rivale de Rome.</strong> Ce qui inquiète profondément la papauté n'est pas seulement la doctrine, mais l'existence d'une véritable Église parallèle, avec ses évêques, ses rites, ses lieux de culte et son propre clergé, reconnue et parfois protégée par des familles seigneurielles occitanes de premier plan — les Trencavel, les comtes de Foix, une partie de l'entourage des comtes de Toulouse. Cette implantation institutionnelle, plus que la simple dissidence de quelques individus, explique la détermination de Rome à intervenir militairement à partir de 1209.</p></div>
+</section>
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+<!-- DOCTRINE -->
+<section class="section" id="doctrine">
+<h2 class="section-titre">
+<div class="section-titre-icon">🕊️</div>
+              Qu'est-ce que le catharisme ? Définition &amp; doctrine
+            </h2>
+<div class="histoire-texte"><p><strong>Un dualisme chrétien.</strong> Le catharisme est une doctrine chrétienne dualiste : elle enseigne l'existence de deux principes éternels et opposés, un Dieu du Bien, créateur du monde spirituel et invisible, et un principe du Mal — assimilé par une partie des cathares à Satan, par d'autres à l'Ancien Testament lui-même — auteur du monde matériel et visible. Le corps, la chair et la matière tout entière sont ainsi perçus comme une prison, le fruit d'une création déchue, tandis que l'âme, étincelle divine égarée, aspire à retourner vers le royaume du Bien dont elle est originaire.</p><p><strong>Dualisme absolu et dualisme mitigé.</strong> Les historiens distinguent deux grandes tendances au sein du mouvement : un dualisme dit « absolu », proche du modèle bogomile le plus radical, qui pose deux principes coéternels et de puissance égale, et un dualisme « mitigé », plus répandu en Languedoc, où le Mal reste subordonné à un Dieu unique dont il serait la création rebelle, à la manière d'un ange déchu. Cette nuance théologique, âprement débattue entre les différentes Églises cathares d'Europe, n'empêche pas une doctrine commune sur l'essentiel : le rejet du monde matériel comme œuvre du Mal.</p><p><strong>Le rejet de l'Église catholique et de ses sacrements.</strong> Les cathares récusent l'essentiel de l'appareil sacramentel catholique — baptême par l'eau, eucharistie, mariage, confession auriculaire — jugés incapables de sauver une âme prisonnière de la matière. Ils rejettent également le culte de la croix, instrument de supplice, ainsi que la vénération des images et des reliques. Une partie du mouvement refuse l'autorité de l'Ancien Testament, jugé porteur d'un Dieu créateur violent et jaloux, incompatible avec le message d'amour du Christ, tout en conservant une lecture spirituelle des Évangiles, en particulier celui de Jean.</p><p><strong>La croyance en la métempsycose.</strong> Faute de pouvoir se libérer immédiatement de la matière, l'âme est vouée, selon la doctrine cathare, à transmigrer d'un corps à un autre — humain, voire animal selon certaines variantes — jusqu'à ce qu'elle reçoive le sacrement libérateur du consolament. Cette croyance en une forme de réincarnation explique en partie le refus cathare de tuer les animaux et la pratique répandue du végétarisme parmi les « parfaits ».</p><p><strong>Le consolament, sacrement unique et central.</strong> Au cœur du culte cathare se trouve un unique sacrement, le consolament (« consolation »), un baptême spirituel conféré par l'imposition des mains et la transmission du Livre. Il purifie l'âme du péché originel et confère le statut de « parfait » ou « parfaite », engageant son récipiendaire à une vie d'ascèse totale. Reçu généralement à l'âge adulte après une longue période de préparation, il pouvait aussi être administré in extremis aux mourants, une pratique appelée l'« endura » lorsque le malade, une fois consolé, choisissait de hâter sa fin par le jeûne pour éviter de retomber dans le péché.</p></div>
+</section>
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+<!-- MODE DE VIE -->
+<section class="section" id="mode-de-vie">
+<h2 class="section-titre">
+<div class="section-titre-icon">🙏</div>
+              Mode de vie : Parfaits et croyants
+            </h2>
+<div class="histoire-texte"><p><strong>Deux catégories de fidèles.</strong> La communauté cathare distingue nettement deux niveaux d'engagement : les « parfaits » et « parfaites » (appelés aussi bonshommes et bonnes femmes), qui ont reçu le consolament et mènent une vie d'ascète, et les simples « croyants » (credentes), bien plus nombreux, qui continuent une existence ordinaire — mariage, activité économique, parfois même pratique occasionnelle du culte catholique — tout en vénérant les parfaits et en espérant recevoir, le moment venu, le consolament salvateur.</p><p><strong>L'ascèse rigoureuse des parfaits.</strong> Une fois consolés, les parfaits s'engagent à une existence d'une exigence extrême : renoncement total à la propriété personnelle, chasteté absolue, refus de mentir ou de prêter serment, abstention de viande, d'œufs et de produits laitiers — seul le poisson est toléré —, jeûnes fréquents et prière régulière. Reconnaissables à leur simple robe noire ou sombre nouée d'une cordelière, ils vivent le plus souvent en petites communautés non mixtes, hommes et femmes séparément, dans des maisons appelées « maisons de parfaits ».</p><p><strong>Une prédication itinérante et un ancrage artisanal.</strong> Loin de l'image d'un clergé cloîtré, les parfaits mènent une vie active et itinérante : ils voyagent par deux, prêchent de village en village, visitent et réconfortent les croyants, tout en exerçant souvent un métier manuel — tissage, cordonnerie, tannerie, notariat — qui leur assure subsistance et proximité avec les populations urbaines et rurales. Cette proximité sociale, très éloignée du faste du haut clergé catholique de l'époque, contribue largement à leur popularité.</p><p><strong>Le rôle notable des femmes.</strong> Le catharisme offre aux femmes un statut religieux que l'Église catholique leur refuse alors largement : des femmes de haute noblesse, comme Esclarmonde de Foix, deviennent parfaites, dirigent des maisons de parfaites et financent la prédication ; d'autres exercent une réelle influence spirituelle sur leur entourage. Cette place accordée aux femmes, sans être une stricte égalité de statut avec les parfaits masculins, tranche avec les pratiques catholiques contemporaines et explique en partie l'attachement de nombreuses familles seigneurielles occitanes au mouvement.</p><p><strong>Les rites de la vie cathare.</strong> Outre le consolament, la vie communautaire s'organise autour de quelques pratiques rituelles simples : l'« apparelhament », confession collective mensuelle des parfaits reconnaissant leurs fautes devant leurs pairs, et le « melhorament », geste de révérence par lequel un croyant salue un parfait en lui demandant sa bénédiction. Ces rites, dépouillés de tout apparat, illustrent le refus cathare du formalisme liturgique catholique.</p></div>
+</section>
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+<!-- ORGANISATION -->
+<section class="section" id="organisation">
+<h2 class="section-titre">
+<div class="section-titre-icon">🏛️</div>
+              Organisation &amp; structure de l'Église cathare
+            </h2>
+<div class="histoire-texte"><p><strong>Une Église organisée en diocèses.</strong> Loin d'être une nébuleuse informelle, le catharisme occitan se structure, à partir du concile de Saint-Félix-de-Caraman (1167), en véritables « Églises » territoriales dotées chacune d'un évêque : l'Église de Toulouse, celle d'Albi, celle de Carcassonne et celle d'Agen, rejointes plus tard par l'Église du Razès. Cette organisation calquée sur le modèle épiscopal catholique — tout en le contestant sur le fond — témoigne de l'ambition du mouvement à se poser en alternative institutionnelle complète, et non en simple courant de piété marginal.</p><p><strong>Une hiérarchie à quatre degrés.</strong> Chaque Église cathare est dirigée par un évêque (episcopus), assisté de deux adjoints appelés « fils majeur » (filius major) et « fils mineur » (filius minor), destinés à lui succéder selon un ordre de préséance. Viennent ensuite les diacres, responsables d'un territoire plus restreint et chargés d'administrer certains sacrements et de superviser les maisons de parfaits de leur ressort, puis la masse des simples parfaits et parfaites, et enfin les croyants, bien plus nombreux, qui ne relèvent d'aucune fonction hiérarchique mais forment le socle social du mouvement.</p><div class="ingredients-bloc"><div class="ingredients-titre">✦ La hiérarchie cathare, en un coup d'œil</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">Évêque</span> Autorité suprême de chaque Église diocésaine cathare</div><div class="ingredient-item"><span class="ingredient-qte">Fils majeur</span> Premier adjoint et successeur désigné de l'évêque</div><div class="ingredient-item"><span class="ingredient-qte">Fils mineur</span> Second adjoint, second dans l'ordre de succession</div><div class="ingredient-item"><span class="ingredient-qte">Diacre</span> Responsable local, encadre les maisons de parfaits</div><div class="ingredient-item"><span class="ingredient-qte">Parfait(e)</span> Consolé(e), ascète, prédicateur itinérant</div><div class="ingredient-item"><span class="ingredient-qte">Croyant(e)</span> Fidèle non consolé, soutien du mouvement</div></div></div><p><strong>Des maisons plutôt que des monastères.</strong> Contrairement au clergé catholique régulier, les cathares ne disposent pas de grands monastères fortifiés : leurs communautés vivent dans des « maisons de parfaits » discrètes, souvent intégrées au tissu urbain de villes comme Toulouse, Albi ou Carcassonne, ou abritées par des châteaux seigneuriaux acquis à leur cause, tels que Montségur, Puilaurens ou Quéribus, qui deviennent après 1229 de véritables refuges institutionnels pour l'Église cathare en fuite.</p><p><strong>Le financement et le soutien seigneurial.</strong> L'Église cathare ne prélève pas d'impôt comparable à la dîme catholique ; elle vit des dons volontaires des croyants, souvent des familles nobles ou marchandes, qui financent la construction de maisons, l'entretien des parfaits itinérants et, après 1209, l'hébergement et la protection militaire de l'Église en résistance. Cette dépendance à la bienveillance seigneuriale explique la fragilité du mouvement une fois la noblesse occitane vaincue ou ralliée à la Couronne.</p></div>
+</section>
+
+<!-- FIGURES MARQUANTES -->
+<section class="section" id="figures">
+<h2 class="section-titre">
+<div class="section-titre-icon">👤</div>
+              Figures marquantes du catharisme
+            </h2>
+<div class="histoire-texte"><p>Quelques noms reviennent constamment dans l'histoire du mouvement cathare occitan, qu'il s'agisse de dignitaires religieux, de protecteurs laïcs ou des derniers résistants clandestins du XIVe siècle.</p></div>
+<div class="vins-liste">
+<div class="vin-item"><div class="vin-icon">✝️</div><div><div class="vin-nom">Guilhabert de Castres</div><div class="vin-desc">Évêque cathare de Toulouse, réfugié à Montségur après 1232 ; figure la plus influente de l'Église cathare occitane durant la croisade.</div></div><div class="vin-badge">Évêque de Toulouse</div></div>
+<div class="vin-item"><div class="vin-icon">👑</div><div><div class="vin-nom">Esclarmonde de Foix</div><div class="vin-desc">Sœur du comte de Foix, parfaite cathare et protectrice du mouvement, souvent associée à tort à la fortification de Montségur en 1204.</div></div><div class="vin-badge">Parfaite &amp; protectrice</div></div>
+<div class="vin-item"><div class="vin-icon">🕯️</div><div><div class="vin-nom">Bertrand Marty</div><div class="vin-desc">Successeur de Guilhabert de Castres comme évêque de Toulouse, présent à Montségur jusqu'à la reddition de 1244.</div></div><div class="vin-badge">Évêque de Toulouse</div></div>
+<div class="vin-item"><div class="vin-icon">🏰</div><div><div class="vin-nom">Raymond de Péreille</div><div class="vin-desc">Seigneur du lieu, fait fortifier le pog de Montségur en 1204 et en fait le siège officiel de l'Église cathare en 1232.</div></div><div class="vin-badge">Seigneur protecteur</div></div>
+<div class="vin-item"><div class="vin-icon">⚔️</div><div><div class="vin-nom">Pierre-Roger de Mirepoix</div><div class="vin-desc">Gendre de Raymond de Péreille, commande la garnison de Montségur lors du siège final de 1243-1244.</div></div><div class="vin-badge">Chef militaire</div></div>
+<div class="vin-item"><div class="vin-icon">📜</div><div><div class="vin-nom">Pierre &amp; Guilhem Authié</div><div class="vin-desc">Frères notaires d'Ax-les-Thermes, ils relancent une prédication clandestine dans le Sabartès et le Razès au début du XIVe siècle.</div></div><div class="vin-badge">Derniers prédicateurs</div></div>
+<div class="vin-item"><div class="vin-icon">🔥</div><div><div class="vin-nom">Guilhem Bélibaste</div><div class="vin-desc">Dernier parfait cathare connu, réfugié en Catalogne puis capturé ; brûlé à Villerouge-Termenès en 1321, marquant la fin du mouvement organisé.</div></div><div class="vin-badge">Dernier bûcher</div></div>
+<div class="vin-item"><div class="vin-icon">⚖️</div><div><div class="vin-nom">Dominique de Guzman</div><div class="vin-desc">Prédicateur castillan venu contrer le catharisme par la parole plutôt que par les armes ; fonde l'ordre dominicain, futur pilier de l'Inquisition.</div></div><div class="vin-badge">Adversaire &amp; fondateur des Dominicains</div></div>
+</div>
+</section>
+
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+<!-- MOTIVATIONS -->
+<section class="section" id="motivations">
+<h2 class="section-titre">
+<div class="section-titre-icon">⚖️</div>
+              Motivations : pourquoi le catharisme séduit
+            </h2>
+<div class="histoire-texte"><p><strong>Une réponse au scandale de la richesse ecclésiastique.</strong> Au XIIe siècle, une partie du clergé catholique occitan est perçue comme corrompue, absentéiste et avide de richesses — simonie, cumul de bénéfices, vie mondaine de certains prélats. Face à ce constat largement partagé, y compris par des réformateurs catholiques, l'exemplarité ascétique des parfaits, leur pauvreté volontaire et leur proximité avec le peuple offrent un contraste saisissant qui nourrit l'adhésion populaire.</p><p><strong>Une explication cohérente du mal et de la souffrance.</strong> Le dualisme cathare apporte une réponse simple et rassurante à la question du mal : si le monde matériel, source de souffrance, de maladie et d'injustice, est l'œuvre d'un principe mauvais distinct du Dieu bon, alors le Dieu d'amour n'est pas responsable des malheurs terrestres. Cette théodicée, plus intuitive pour beaucoup que la théologie catholique du péché originel, séduit une population confrontée aux famines, aux épidémies et aux violences féodales.</p><p><strong>Un ancrage social et familial.</strong> Le catharisme occitan se diffuse largement par les réseaux familiaux et seigneuriaux : nombre de lignages nobles comptent des parents consolés ou des maisons de parfaits sur leurs terres, ce qui installe la dissidence dans la durée bien au-delà d'un simple engouement religieux passager. La tolérance, voire la protection active de seigneurs comme les Trencavel ou une partie de l'entourage comtal toulousain, crée un terreau politique favorable que l'Église catholique ne peut ignorer.</p><p><strong>Une dimension identitaire et politique occitane.</strong> Au-delà de la théologie, le soutien au catharisme recoupe, pour une partie de la noblesse et des villes du Midi, une forme de résistance à l'ingérence croissante du pouvoir capétien et de la papauté romaine dans les affaires occitanes. La croisade contre les Albigeois, en s'attaquant à l'hérésie, sert aussi objectivement les intérêts de la Couronne de France et de ses alliés du Nord, désireux d'étendre leur autorité sur un Midi jusque-là largement autonome — un mélange de motifs religieux et politiques que les historiens continuent de débattre.</p><p><strong>La place accordée aux femmes et aux laïcs.</strong> Le statut religieux offert aux femmes consolées, l'absence de dîme obligatoire, la possibilité pour un simple croyant de conserver une vie normale tout en espérant un salut différé au moment de sa mort — via le consolament in extremis — rendent le catharisme particulièrement accessible et peu contraignant pour l'immense majorité de ses adeptes, à l'inverse de l'exigence ascétique réservée aux seuls parfaits.</p></div>
+</section>
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+<!-- DÉCLIN / FIN DU CATHARISME -->
+<section class="section" id="declin">
+<h2 class="section-titre">
+<div class="section-titre-icon">🔥</div>
+              Naissance et fin du catharisme : une chronologie
+            </h2>
+<div class="recette-grid"><div class="recette-meta-card"><div class="recette-meta-icon">🕊️</div><div><div class="recette-meta-label">Origine</div><div class="recette-meta-val">Bogomiles, Xe s.</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">⛪</div><div><div class="recette-meta-label">Structuration</div><div class="recette-meta-val">Concile de 1167</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">⚔️</div><div><div class="recette-meta-label">Croisade</div><div class="recette-meta-val">1209 – 1229</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🔥</div><div><div class="recette-meta-label">Dernier bûcher</div><div class="recette-meta-val">Villerouge-Termenès, 1321</div></div></div></div>
+<div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Xe – XIIe siècle : diffusion et implantation</div><div class="etape-texte">Le dualisme bogomile gagne l'Occident ; le concile de Saint-Félix-de-Caraman (1167) structure l'Église cathare occitane en diocèses.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">1208 : l'assassinat de Pierre de Castelnau</div><div class="etape-texte">Le légat pontifical est assassiné en Provence, probablement sur ordre de l'entourage de Raymond VI de Toulouse ; le pape Innocent III proclame la croisade contre les Albigeois.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">1209 : sac de Béziers et prise de Carcassonne</div><div class="etape-texte">L'armée croisée, menée par Simon de Montfort, s'empare de Béziers dans un massacre resté célèbre, puis de Carcassonne, ouvrant vingt années de guerre.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">1213 : la bataille de Muret</div><div class="etape-texte">La défaite et la mort du roi Pierre II d'Aragon, allié du comte de Toulouse, face à Simon de Montfort brisent durablement la résistance occitane.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">1229 : le traité de Meaux-Paris</div><div class="etape-texte">Raymond VII de Toulouse doit se soumettre à la Couronne de France, qui absorbe l'essentiel du Languedoc ; le catharisme perd ses principaux protecteurs politiques.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">1233 : la mise en place de l'Inquisition</div><div class="etape-texte">Le pape Grégoire IX confie aux frères dominicains la traque systématique de l'hérésie, avec des tribunaux permanents à Toulouse, Carcassonne et Albi.</div></div></div>
+<div class="etape"><div class="etape-num">7</div><div class="etape-corps"><div class="etape-titre">1244 : la chute de Montségur</div><div class="etape-texte">Après onze mois de siège, plus de deux cents parfaits refusant d'abjurer sont brûlés vifs, mettant fin à l'existence d'une Église cathare organisée et publique.</div></div></div>
+<div class="etape"><div class="etape-num">8</div><div class="etape-corps"><div class="etape-titre">1255 : la reddition de Quéribus</div><div class="etape-texte">Dernier château tenu par des dignitaires cathares en fuite, Quéribus capitule, achevant la résistance armée liée au mouvement.</div></div></div>
+<div class="etape"><div class="etape-num">9</div><div class="etape-corps"><div class="etape-titre">1300-1310 : la relance clandestine des frères Authié</div><div class="etape-texte">Depuis la Lombardie, où des communautés cathares subsistent en exil, Pierre et Guilhem Authié relancent une prédication secrète dans le Sabartès et le Razès.</div></div></div>
+<div class="etape"><div class="etape-num">10</div><div class="etape-corps"><div class="etape-titre">1318-1325 : l'enquête de Jacques Fournier à Montaillou</div><div class="etape-texte">L'évêque de Pamiers, futur pape Benoît XII, mène une enquête inquisitoriale minutieuse dans le village de Montaillou, source historique exceptionnelle sur les derniers cathares occitans.</div></div></div>
+<div class="etape"><div class="etape-num">11</div><div class="etape-corps"><div class="etape-titre">1321 : le bûcher de Guilhem Bélibaste</div><div class="etape-texte">Capturé après avoir été livré par un agent infiltré de l'Inquisition, le dernier parfait connu est brûlé à Villerouge-Termenès, marquant la fin du catharisme organisé en Occident.</div></div></div>
+</div>
+<div class="citation-bloc"><p>Une extinction progressive plutôt qu'un effondrement brutal</p><cite>Le catharisme ne disparaît pas en un jour : de la chute de Montségur (1244) au bûcher de Bélibaste (1321), près de quatre-vingts ans séparent l'anéantissement de l'Église publique et l'extinction de ses derniers réseaux clandestins.</cite></div>
+</section>
+
+<!-- SITES LIÉS -->
+<section class="section" id="alentours">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              Sur les traces des cathares : sites à découvrir
+            </h2>
+<div class="histoire-texte"><p>Plusieurs des huit forteresses inscrites au patrimoine mondial de l'UNESCO en 2026 sous le nom de « Forteresses royales capétiennes du Languedoc » ont directement abrité ou combattu l'Église cathare avant de devenir des places fortes royales.</p></div>
+<div class="vins-liste"><a class="vin-item" href="montsegur.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">⛰️</div><div><div class="vin-nom">Château de Montségur</div><div class="vin-desc">Ariège · siège officiel de l'Église cathare de 1232 à 1244, lieu du bûcher du 16 mars 1244.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="puilaurens.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🌲</div><div><div class="vin-nom">Château de Puilaurens</div><div class="vin-desc">Aude · refuge de parfaits et parfaites jusqu'en 1246, dernier château tenu par Chabert de Barbaira.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="forteresses-royales-du-languedoc.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🗺️</div><div><div class="vin-nom">Forteresses royales du Languedoc</div><div class="vin-desc">Vue d'ensemble des huit sites UNESCO nés de la croisade albigeoise et de la reconquête royale.</div></div><div class="vin-badge">Fiche disponible →</div></a></div>
+</section>
+
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body"><div class="aside-row"><span class="aside-label">Nature</span><span class="aside-val">Mouvement chrétien dualiste</span></div><div class="aside-row"><span class="aside-label">Origine</span><span class="aside-val">Bogomiles des Balkans, Xe s.</span></div><div class="aside-row"><span class="aside-label">Diffusion en Occitanie</span><span class="aside-val">XIIe – début XIVe siècle</span></div><div class="aside-row"><span class="aside-label">Zone principale</span><span class="aside-val">Toulousain · Albigeois · Razès · Ariège</span></div><div class="aside-row"><span class="aside-label">Sacrement central</span><span class="aside-val">Le consolament</span></div><div class="aside-row"><span class="aside-label">Hiérarchie</span><span class="aside-val">Évêque · fils majeur/mineur · diacre · parfait(e) · croyant(e)</span></div><div class="aside-row"><span class="aside-label">Répression</span><span class="aside-val">Croisade (1209-1229) · Inquisition (dès 1233)</span></div><div class="aside-row"><span class="aside-label">Fin du mouvement</span><span class="aside-val">Bûcher de Guilhem Bélibaste, 1321</span></div></div>
+</div>
+<div class="aside-card"><div class="aside-card-header">🔗 Fiches liées</div><div class="aside-card-body"><div class="aside-liens"><a class="aside-lien" href="montsegur.html">Château de Montségur<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="puilaurens.html">Château de Puilaurens<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="forteresses-royales-du-languedoc.html">Forteresses royales du Languedoc<span class="aside-lien-arrow">→</span></a></div></div></div>
+</aside>
+</div>
+</div>
+</div>
+
+<div class="retour-plus">
+            <a href="forteresses-royales-du-languedoc.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Forteresses royales du Languedoc</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+<div class="retour-haut">
+<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Retour en haut de page
+  </a>
+<a href="../../../../occitanie-departement/aude/aude.html">
+    ← Retour à la fiche Aude
+  </a>
+</div>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

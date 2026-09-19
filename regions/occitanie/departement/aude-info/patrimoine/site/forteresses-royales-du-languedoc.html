@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Forteresses royales du Languedoc — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/aude/aude.html"> ← Retour à la fiche Aude </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>F</em>orteresses <br><span style="padding-left: 60px;"><em>R</em>oyales</span><br/><span style="padding-left: 120px;"><em>d</em>u Languedoc</span></h1>
+</div>
+
+<img alt="Carte de l'Aude" src="../../../../../../assets/departement/occitanie/carte-aude.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;"/>
+
+
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Aude" src="../../../../../../assets/departement/occitanie/aude.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Patrimoine mondial UNESCO · Huit sites ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner"><a class="active" href="#histoire">📖 Histoire</a><a href="#unesco">🏅 Classement UNESCO</a><a href="#forteresses">🗺️ Les huit sites</a><a href="#utilite">🛡️ Rôle &amp; utilité</a><a href="#infos-pratiques">ℹ️ Infos pratiques</a><a href="#alentours">📍 Alentours</a></div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Une histoire commune
+            </h2>
+<div class="histoire-texte"><p><strong>Un système né de la croisade contre les Albigeois (1209-1229).</strong> Au début du XIIIe siècle, l'appel du pape Innocent III à la croisade contre l'hérésie cathare bouleverse le Languedoc. Menée par Simon de Montfort, l'armée croisée s'empare successivement de Béziers, Carcassonne, puis des grandes places fortes de la vicomté Trencavel et des seigneuries voisines : Termes en 1210, Minerve la même année. Chacune des huit forteresses aujourd'hui inscrites à l'UNESCO porte la trace de cet épisode fondateur, soit comme théâtre direct des combats, soit comme refuge de la résistance méridionale et cathare qui lui succède.</p>
+  
+  
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/aude/carte.jpg"
+                        alt="Ville Carte" />
+                    <figcaption>Carte des Forteresses Royales du Languedoc</figcaption>
+                  </figure>
+
+  
+  
+  <p><strong>1229 : le traité de Meaux-Paris et l'annexion du Languedoc.</strong> Vaincu, le comte Raymond VII de Toulouse doit signer en 1229 le traité de Meaux-Paris, qui place une grande partie du Languedoc sous l'influence croissante de la Couronne de France. Ce traité ne règle pas immédiatement le sort des places fortes des Corbières, où d'anciens seigneurs dépossédés, devenus faidits, continuent la lutte pendant encore une génération.</p><p><strong>1240-1244 : la dernière résistance méridionale et cathare.</strong> La révolte des faidits menée par Raymond Trencavel échoue devant Carcassonne en 1240, précipitant la soumission de Peyrepertuse et d'Aguilar. Quatre ans plus tard, en mars 1244, la chute de Montségur — où plus de deux cents « parfaits » cathares sont brûlés au pied du pog après un siège de plusieurs mois — marque la fin de la résistance cathare organisée en Languedoc, même si Quéribus, dernier refuge de dignitaires cathares en fuite, ne se rend qu'en 1255.</p><p><strong>La sénéchaussée de Carcassonne, cheville administrative du dispositif.</strong> Au fur et à mesure des conquêtes, la Couronne installe à Carcassonne un sénéchal royal chargé d'administrer les territoires nouvellement rattachés. Selon la description officielle de l'UNESCO, ces huit forteresses constituent « l'épine dorsale » de cette sénéchaussée nouvellement créée, affirmant l'autorité du sénéchal sur d'anciens territoires jusque-là tenus par des lignages féodaux indépendants. Le réseau n'est donc pas seulement militaire : il est aussi l'outil d'une administration royale naissante, avec ses garnisons, ses châtelains et ses fonctions judiciaires et fiscales.</p>
+  
+  
+   <div class="retour-plus">
+            <a href="cathares.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Les Cathares une dissidence occitane</strong>
+                <small>Voir la fiche Cathare</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+  
+  
+  <p><strong>Un chantier royal étalé sur plus d'un siècle (1226-XIVe s.).</strong> De la croisade royale de Louis VIII en 1226 jusqu'au règne de Philippe le Bel, les ingénieurs capétiens reconstruisent ou transforment profondément la plupart de ces sites : double enceinte et château comtal remaniés à Carcassonne, donjon Saint-Georges ajouté au sommet de Peyrepertuse, enceintes extérieures d'Aguilar et de Termes, châteaux de Lastours rebâtis sur l'emplacement des anciens repaires féodaux détruits. Paradoxe qui nourrit encore le débat patrimonial : la plupart des murailles aujourd'hui visibles ne datent donc pas de l'époque cathare elle-même, mais de la reconquête royale qui lui succède.</p><p><strong>1258 : le traité de Corbeil fixe la frontière avec l'Aragon.</strong> Le traité de Corbeil, signé en 1258 entre Louis IX et Jacques Ier d'Aragon, dessine durablement la frontière sud du royaume de France le long des crêtes des Corbières et des Pyrénées audoises. Désormais, la fonction principale du réseau bascule : de dispositif de pacification intérieure, il devient une ligne de sentinelles tournées vers le royaume d'Aragon, distant de seulement quelques dizaines de kilomètres à vol d'oiseau de Quéribus ou Peyrepertuse.</p><p><strong>Les « cinq fils de Carcassonne », noyau resserré d'un ensemble plus vaste.</strong> L'expression « cinq fils de Carcassonne », apparue dans l'historiographie moderne, désigne traditionnellement cinq forteresses frontalières placées sous l'autorité du sénéchal de Carcassonne : Aguilar, Peyrepertuse, Quéribus, Termes et Puilaurens. Le bien inscrit par l'UNESCO en 2026 reprend ce noyau mais l'élargit à trois sites supplémentaires essentiels à la compréhension du système : Carcassonne elle-même, siège du pouvoir administratif ; les châteaux de Lastours, verrou nord vers la Montagne Noire ; et Montségur, en Ariège, qui incarne la mémoire cathare à l'origine de toute l'entreprise royale.</p><p><strong>Un double objectif : surveiller la frontière et encadrer la population.</strong> Comme le résument les commentateurs de l'inscription, ces forteresses répondaient à un double objectif pour le roi de France : garder un œil sur une population locale encore perçue comme dissidente après des décennies de résistance et de catharisme, et surveiller le royaume d'Aragon voisin. Leur puissance est d'abord dissuasive plus que combative : à quelques exceptions près, la plupart de ces châteaux, une fois passés sous contrôle royal, ne connaîtront plus jamais de siège.</p>
+  
+  
+  
+            <div class="retour-plus">
+            <a href="cathares.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Les Cathares une dissidence occitane</strong>
+                <small>Voir la fiche Cathare</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+  
+  
+  
+  
+  
+  
+  <p><strong>1659 : le traité des Pyrénées met fin à la fonction stratégique.</strong> Le rattachement du Roussillon à la France par le traité des Pyrénées repousse la frontière loin au sud, jusqu'aux Pyrénées elles-mêmes. Le réseau de sentinelles des Corbières perd alors d'un coup sa raison d'être. Certains sites, comme Termes, sont volontairement démantelés par la Couronne en 1653-1654 pour éviter qu'ils ne servent de refuge à des bandes armées ; les autres sont simplement abandonnés à l'érosion et au temps.</p><p><strong>Du XVIIIe au XXe siècle : ruine, romantisme et sauvegarde.</strong> Livrées à elles-mêmes, ces forteresses se dégradent pendant près de deux siècles, leurs pierres parfois récupérées par les villages voisins. Le XIXe siècle, porté par le goût romantique pour les ruines médiévales et l'action de pionniers comme Prosper Mérimée à Carcassonne, amorce leur redécouverte patrimoniale. Les classements au titre des monuments historiques s'échelonnent ensuite sur près d'un siècle — de 1862 pour Carcassonne à 1949 pour Aguilar —, accompagnés à partir du XXe siècle de campagnes de fouilles archéologiques qui affinent la compréhension de chaque site.</p><p><strong>La construction du mythe du « Pays cathare » (XXe siècle).</strong> Après la Seconde Guerre mondiale, l'essor du tourisme régional popularise l'appellation de « châteaux cathares », mettant l'accent sur la mémoire de la croisade albigeoise plutôt que sur la reconquête capétienne qui a pourtant façonné l'essentiel de l'architecture visible aujourd'hui. Cette dénomination, entrée dans le langage courant et largement utilisée par les offices de tourisme, sera précisément au cœur des débats entourant le nom retenu par l'UNESCO en 2026.</p><p><strong>2025-2026 : une candidature de longue haleine.</strong> Le dossier de candidature, déposé sous l'intitulé savant de « système de forteresses de la sénéchaussée de Carcassonne (XIIIe-XIVe siècles) », est examiné par le Comité du patrimoine mondial lors de sa 48e session. La décision, très attendue dans les deux départements concernés, est annoncée le dimanche 26 juillet 2026 : les huit sites rejoignent la Liste du patrimoine mondial sous le nom officiel de « Forteresses royales capétiennes du Languedoc ».</p></div>
+</section><section class="section" id="unesco"><h2 class="section-titre"><div class="section-titre-icon">🏅</div> Classement au patrimoine mondial de l'UNESCO</h2><div class="recette-grid"><div class="recette-meta-card"><div class="recette-meta-icon">📅</div><div><div class="recette-meta-label">Date d'inscription</div><div class="recette-meta-val">26 juillet 2026</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🗂️</div><div><div class="recette-meta-label">Référence UNESCO</div><div class="recette-meta-val">Bien n° 1755</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">⚖️</div><div><div class="recette-meta-label">Critère retenu</div><div class="recette-meta-val">Critère (iv)</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">📐</div><div><div class="recette-meta-label">Superficie du bien</div><div class="recette-meta-val">78,35 ha</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🛡️</div><div><div class="recette-meta-label">Zone tampon</div><div class="recette-meta-val">9 405 ha</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🏛️</div><div><div class="recette-meta-label">Bien en série</div><div class="recette-meta-val">8 sites · 2 départements</div></div></div></div><div class="histoire-texte"><p><strong>Un nom officiel qui tourne la page des « châteaux cathares ».</strong> Le bien inscrit porte le nom officiel de « Forteresses royales capétiennes du Languedoc », et non plus celui de « châteaux cathares » sous lequel ces sites étaient connus du grand public. Ce choix, assumé par le dossier de candidature, met l'accent sur la fonction de conquête et de consolidation royale plutôt que sur la mémoire cathare. Il n'a pas fait l'unanimité localement : sur le terrain, plusieurs guides et acteurs du tourisme ont exprimé leur trouble face à l'effacement du mot « cathare », jugé porteur d'une identité régionale forte, même si historiquement une grande partie de l'architecture visible date bien de l'après-croisade.</p><p><strong>Le critère (iv) : un témoignage exceptionnel d'un système défensif.</strong> L'inscription repose sur le critère culturel (iv), qui reconnaît un ensemble architectural illustrant une période significative de l'histoire humaine. Le Comité du patrimoine mondial retient ici la valeur de ces huit sites comme témoignage exceptionnel de la consolidation politique, militaire et territoriale de la Couronne capétienne en Languedoc aux XIIIe et XIVe siècles, à travers une architecture aussi monumentale qu'adaptée à une topographie spectaculaire.</p><p><strong>Un bien en série de 78,35 hectares.</strong> Le bien inscrit couvre au total 78,35 hectares répartis sur les huit sites, entourés d'une zone tampon de 9 405 hectares destinée à protéger leurs abords et leur environnement paysager. Il s'agit d'un « bien en série » : chaque forteresse conserve son identité propre, mais c'est leur cohérence d'ensemble, en tant que réseau défensif structuré, qui justifie l'inscription — aucun des huit sites n'aurait probablement obtenu seul cette reconnaissance.</p><p><strong>Carcassonne, une double distinction.</strong> Élément phare de l'ensemble et siège historique de la sénéchaussée, le château comtal et les remparts de la Cité de Carcassonne bénéficient désormais d'une double reconnaissance : leur inscription individuelle de 1997 au titre de « ville historique fortifiée » demeure valable, tandis qu'ils intègrent en 2026 ce nouveau bien en série aux côtés de leurs sept partenaires. Carcassonne est ainsi le seul des huit sites à cumuler deux inscriptions distinctes sur la Liste du patrimoine mondial.</p><p><strong>Une annonce partagée avec les plages du Débarquement.</strong> L'inscription des Forteresses royales du Languedoc a été annoncée le même jour, dimanche 26 juillet 2026, que celle des plages du Débarquement de Normandie, lors de la 48e session du Comité du patrimoine mondial. Avec ces deux nouveaux biens, la France compte désormais 56 sites inscrits sur la Liste du patrimoine mondial de l'UNESCO.</p><div class="citation-bloc"><p>Documentation complémentaire</p><cite>Sources de référence : <a href="https://whc.unesco.org/fr/list/1755" rel="noopener noreferrer" target="_blank">fiche UNESCO du bien</a> · <a href="https://www.forteressesroyalesdulanguedoc.fr" rel="noopener noreferrer" target="_blank">site officiel des Forteresses royales du Languedoc</a></cite></div></div></section>
+<!-- ARCHITECTURE / SITE -->
+
+<div class="retour-plus">
+            <a href="cathares.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Les Cathares une dissidence occitane</strong>
+                <small>Voir la fiche Cathare</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+<section class="section" id="forteresses"><h2 class="section-titre"><div class="section-titre-icon">🗺️</div> Les huit sites du bien en série</h2><div class="histoire-texte"><p>D'ouest en est, le réseau s'étend de la Montagne Noire aux confins de l'Ariège et du Roussillon, en passant par le cœur des Corbières. Les huit sites disposent désormais chacun d'une fiche dédiée sur ce guide.</p></div><div class="vins-liste"><a class="vin-item" href="cite-medievale-de-carcassonne.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🏰</div><div><div class="vin-nom">Château et remparts de Carcassonne</div><div class="vin-desc">Aude · sénéchaussée — Siège du pouvoir royal et élément phare de l'ensemble ; double inscription UNESCO (1997 et 2026).</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="aguilar.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🦅</div><div><div class="vin-nom">Château d'Aguilar</div><div class="vin-desc">Tuchan, Aude · 296 m — Verrou méridional des Corbières, au cœur du vignoble du Haut Fitou.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="lastours.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🏯</div><div><div class="vin-nom">Châteaux de Lastours</div><div class="vin-desc">Aude · 4 châteaux — Quatre forteresses en enfilade sur une même crête, verrou nord vers la Montagne Noire.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="montsegur.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">⛰️</div><div><div class="vin-nom">Château de Montségur</div><div class="vin-desc">Ariège · 1 207 m — Dernier bastion cathare organisé, tombé en 1244.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="peyrepertuse.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🌄</div><div><div class="vin-nom">Château de Peyrepertuse</div><div class="vin-desc">Duilhac-sous-Peyrepertuse, Aude · 800 m — La « Carcassonne céleste », l'une des plus vastes forteresses des Corbières.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="puilaurens.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🌲</div><div><div class="vin-nom">Château de Puilaurens</div><div class="vin-desc">Lapradelle-Puilaurens, Aude · 697 m — Sentinelle du Fenouillèdes, aux confins du Pays de Sault.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="queribus.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">🗻</div><div><div class="vin-nom">Château de Quéribus</div><div class="vin-desc">Cucugnan, Aude · 728 m — Le dernier château cathare tombé, en 1255, avant de devenir citadelle royale.</div></div><div class="vin-badge">Fiche disponible →</div></a><a class="vin-item" href="termes.html" style="text-decoration:none; color:inherit; cursor:pointer;"><div class="vin-icon">⚔️</div><div><div class="vin-nom">Château de Termes</div><div class="vin-desc">Aude · 461 m — Théâtre de l'un des plus longs sièges de la croisade albigeoise, en 1210.</div></div><div class="vin-badge">Fiche disponible →</div></a></div></section>
+<!-- PARCOURS DE VISITE -->
+<section class="section" id="utilite"><h2 class="section-titre"><div class="section-titre-icon">🛡️</div> Rôle &amp; utilité du réseau</h2><div class="histoire-texte"><p><strong>Une chaîne de vigilance face à l'Aragon.</strong> Après le traité de Corbeil de 1258, la fonction première du réseau devient la surveillance de la frontière franco-aragonaise. Postées sur des crêtes qui s'observent parfois à vue d'œil les unes les autres, les forteresses forment une ligne de guet capable de relayer l'alerte en cas de mouvement suspect venu du sud, tout en marquant physiquement, dans le paysage, la limite du royaume de France.</p><p><strong>Un outil d'administration autant qu'un outil militaire.</strong> Chaque château abrite un châtelain royal, responsable devant le sénéchal de Carcassonne, chargé de la garnison mais aussi de fonctions judiciaires, fiscales et notariales locales. Le réseau sert ainsi à faire vivre concrètement l'autorité capétienne au quotidien, bien au-delà du seul temps de guerre — une administration de la frontière plus qu'une simple ligne de combat.</p><p><strong>Un instrument de pacification intérieure.</strong> Le second objectif, tout aussi important que la surveillance extérieure, est de garder un œil sur une population locale encore marquée par des décennies de résistance seigneuriale et de catharisme. La présence militaire et administrative dissuade toute tentative de reconquête par les anciens lignages féodaux, comme celle tentée par les faidits en 1240.</p><p><strong>Une démonstration de puissance architecturale.</strong> Au-delà de leur fonction strictement défensive, ces forteresses sont conçues pour impressionner : donjons polygonaux, doubles enceintes, escaliers taillés dans le roc à Peyrepertuse, chapelles seigneuriales. Cette architecture ostentatoire, adaptée à des sites naturellement vertigineux, affiche la puissance et la légitimité de la Couronne fraîchement installée sur un territoire tout juste conquis.</p><p><strong>Des garnisons réduites, un rôle surtout dissuasif.</strong> Contrairement à l'image de forteresses en état de siège permanent, la plupart de ces châteaux n'abritent, une fois passés sous contrôle royal, que de petites garnisons de quelques dizaines d'hommes. Leur efficacité tient moins à leur capacité de résistance qu'à leur simple existence : verrouiller visuellement le territoire suffit à décourager toute incursion, rendant très rares les sièges postérieurs à la reconquête capétienne.</p><p><strong>La fin d'une fonction avec le déplacement de la frontière.</strong> Cette utilité stratégique s'éteint d'un coup en 1659, lorsque le traité des Pyrénées repousse la frontière du royaume bien plus au sud. Sans ennemi à surveiller, les forteresses perdent leur rôle : certaines sont démantelées par précaution, d'autres simplement désarmées et abandonnées à l'entretien réduit, avant leur redécouverte patrimoniale des XIXe et XXe siècles.</p></div><div class="ingredients-bloc"><div class="ingredients-titre">✦ Les fonctions du réseau, en un coup d'œil</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">Défense</span> Surveillance de la frontière franco-aragonaise après 1258</div><div class="ingredient-item"><span class="ingredient-qte">Administration</span> Sénéchaussée de Carcassonne : justice, fiscalité, garnisons</div><div class="ingredient-item"><span class="ingredient-qte">Dissuasion</span> Contrôle d'une population locale marquée par le catharisme</div><div class="ingredient-item"><span class="ingredient-qte">Symbole</span> Architecture ostentatoire affichant le pouvoir capétien</div><div class="ingredient-item"><span class="ingredient-qte">Guet</span> Relais visuels entre crêtes intervisibles des Corbières</div><div class="ingredient-item"><span class="ingredient-qte">Frontière</span> Marquage physique de la limite sud du royaume de France</div></div></div></section>
+
+<div class="retour-plus">
+            <a href="cathares.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Les Cathares une dissidence occitane</strong>
+                <small>Voir la fiche Cathare</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+<!-- INFOS PRATIQUES -->
+<section class="section" id="infos-pratiques">
+<h2 class="section-titre">
+<div class="section-titre-icon">ℹ️</div>
+
+
+
+              Infos pratiques
+            </h2>
+<div class="vins-liste"><div class="vin-item"><div class="vin-icon">🗺️</div><div><div class="vin-nom">Répartition géographique</div><div class="vin-desc">7 sites en Aude, 1 site (Montségur) en Ariège</div></div><div class="vin-badge">≈ 2h de route entre les extrêmes</div></div><div class="vin-item"><div class="vin-icon">🎟️</div><div><div class="vin-nom">Billetterie</div><div class="vin-desc">Chaque site se visite avec son propre billet d'entrée</div></div><div class="vin-badge">Pas de pass unique pour les 8 sites à ce jour</div></div><div class="vin-item"><div class="vin-icon">🚗</div><div><div class="vin-nom">Accès</div><div class="vin-desc">Sites perchés, montée à pied requise pour la plupart</div></div><div class="vin-badge">Chaussures de marche conseillées</div></div><div class="vin-item"><div class="vin-icon">📅</div><div><div class="vin-nom">Meilleure période</div><div class="vin-desc">Printemps et automne, pour éviter la chaleur estivale</div></div><div class="vin-badge">Vent fort possible sur les crêtes</div></div><div class="vin-item"><div class="vin-icon">🌐</div><div><div class="vin-nom">Information officielle</div><div class="vin-desc">forteressesroyalesdulanguedoc.fr</div></div><div class="vin-badge">Site dédié à l'ensemble du bien UNESCO</div></div></div>
+</section>
+<!-- ALENTOURS -->
+<section class="section" id="alentours">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              À voir aux alentours
+            </h2>
+<div class="histoire-texte"><p><strong>Canal du Midi :</strong> l'autre grand site UNESCO de la région, inscrit depuis 1996, à parcourir à vélo ou en bateau entre Toulouse et la Méditerranée.</p><p><strong>Château de Villerouge-Termenès :</strong> à quelques kilomètres de Termes, ce château n'appartient pas au bien UNESCO mais partage la même mémoire cathare — c'est ici que fut brûlé le dernier « parfait », Guilhem Bélibaste, en 1321.</p><p><strong>Abbaye de Lagrasse :</strong> l'une des plus anciennes abbayes de France, au cœur des Corbières, accessible avec le pass 3 sites proposé autour de Termes.</p><p><strong>Bastide Saint-Louis de Carcassonne :</strong> la ville basse fondée par Louis IX en 1247 pour reloger les habitants expulsés de la Cité, à découvrir en contrepoint de la forteresse médiévale.</p><p><strong>Massif des Corbières et Montagne Noire :</strong> un réseau de sentiers de randonnée reliant plusieurs des sites entre garrigue, vignoble et forêt.</p></div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Départements</span><span class="aside-val">Aude · Ariège</span></div><div class="aside-row"><span class="aside-label">Nombre de sites</span><span class="aside-val">8 forteresses</span></div><div class="aside-row"><span class="aside-label">Catégorie</span><span class="aside-val">Bien culturel en série · UNESCO</span></div><div class="aside-row"><span class="aside-label">Date d'inscription</span><span class="aside-val">26 juillet 2026</span></div><div class="aside-row"><span class="aside-label">Critère UNESCO</span><span class="aside-val">Critère (iv)</span></div><div class="aside-row"><span class="aside-label">Superficie du bien</span><span class="aside-val">78,35 ha</span></div><div class="aside-row"><span class="aside-label">Zone tampon</span><span class="aside-val">9 405 ha</span></div><div class="aside-row"><span class="aside-label">Référence UNESCO</span><span class="aside-val">n° 1755</span></div><div class="aside-row"><span class="aside-label">Ancien nom d'usage</span><span class="aside-val">« Châteaux cathares »</span></div></div>
+</div>
+<div class="aside-card"><div class="aside-card-header">🔗 Les fiches détaillées</div><div class="aside-card-body"><div class="aside-liens"><a class="aside-lien" href="cite-medievale-de-carcassonne.html">Château et remparts de Carcassonne<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="aguilar.html">Château d'Aguilar<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="lastours.html">Châteaux de Lastours<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="montsegur.html">Château de Montségur<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="peyrepertuse.html">Château de Peyrepertuse<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="puilaurens.html">Château de Puilaurens<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="queribus.html">Château de Quéribus<span class="aside-lien-arrow">→</span></a><a class="aside-lien" href="termes.html">Château de Termes<span class="aside-lien-arrow">→</span></a></div></div></div></aside>
+</div>
+</div>
+</div>
+
+<div class="retour-plus">
+            <a href="cathares.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Les Cathares une dissidence occitane</strong>
+                <small>Voir la fiche Cathare</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+<div class="retour-haut">
+<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Retour en haut de page
+  </a>
+<a href="../../../../occitanie-departement/aude/aude.html">
+    ← Retour à la fiche Aude
+  </a>
+</div>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>
