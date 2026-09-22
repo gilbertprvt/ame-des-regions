@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marrons glacés des Cévennes — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/gard/gard.html">
+            ← Retour à la fiche Gard
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>M</em>arrons glacés<br/><span style="padding-left: 60px;">des Cévennes</span></h1>
+</div>
+<img alt="Carte Gard" src="../../../../../../assets/departement/occitanie/carte-gard.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Gard" src="../../../../../../assets/departement/occitanie/gard.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Douceurs Emblématiques ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#recette">👨‍🍳 Recette</a>
+<a href="#accords">🍷 Accords</a>
+<a href="#variantes">🔀 Variantes</a>
+<a href="#ou-manger">📍 Où déguster</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p>Dans les Cévennes gardoises, le châtaignier n'a jamais été un simple arbre fruitier : on l'a longtemps surnommé « l'arbre à pain », tant sa récolte a nourri des générations entières de montagnards, hommes et troupeaux confondus. La châtaigneraie cévenole façonne encore aujourd'hui le paysage, avec ses terrasses de pierre sèche et ses vieux arbres parfois plusieurs fois centenaires.</p>
+<p>La culture du châtaignier dans le massif remonte au Moyen Âge, où l'espèce, sans doute déjà présente à l'état sauvage, connaît une première phase de plantation organisée. Pendant des siècles, il n'était pas un seul jour sans châtaigne dans l'écuelle du Cévenol : consommée fraîche, séchée dans les <em>clèdes</em> — ces petits bâtiments dédiés au fumage lent des fruits — ou transformée en farine, la châtaigne constituait la base alimentaire de la région jusqu'au milieu du XXe siècle.</p>
+<p>C'est ce terroir exceptionnel, à cheval sur le Gard, la Lozère et l'Hérault, qui a valu à la <strong>Châtaigne des Cévennes</strong> d'obtenir en janvier 2023 une Appellation d'Origine Protégée européenne, reconnaissance d'un savoir-faire de castanéiculture façonné au fil des décennies. Une trentaine de variétés locales sont ainsi protégées, parmi lesquelles l'Aguyane, la Pellegrine ou la Sardonne, récoltées uniquement après leur chute naturelle et sans traitement chimique post-récolte.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 280px;"><img alt="Marrons glacés des Cévennes" src="../../../../../../assets/departement/occitanie/photo/gard/marrons-glaces-cevennes.jpg"/><figcaption>Marrons glacés confits, confiserie des châtaigneraies cévenoles</figcaption></figure><div class="clearfix"></div>
+<p>C'est sur cette matière première d'exception que s'est développée, plus tardivement, la confiserie du marron glacé cévenol. Transformer la châtaigne en douceur sucrée répondait à un double objectif : valoriser une production parfois abondante au-delà des débouchés alimentaires traditionnels, et faire face au déclin de la châtaigneraie au cours du XXe siècle, largement dû à l'exode rural et aux maladies du châtaignier.</p>
+<p>Le marron glacé proprement dit exige une transformation minutieuse : les châtaignes, épluchées puis cuites, sont progressivement imprégnées de sirop de sucre au fil de bains successifs échelonnés sur plusieurs jours, avant de recevoir un glaçage final au sucre vanillé. Ce processus long et délicat, hérité des grandes maisons de confiserie ardéchoises voisines, a été repris par plusieurs artisans et coopératives des Cévennes gardoises, qui utilisent les variétés locales protégées par l'AOP pour proposer leur propre production.</p>
+<p>Aujourd'hui, le marron glacé des Cévennes se retrouve aux côtés d'autres transformations de la châtaigne — crème de marrons, farine, confiture — dans les épiceries fines et sur les marchés d'automne du Gard, où il symbolise la reconversion réussie d'un produit longtemps considéré comme vivrier en une gourmandise de fête très recherchée en fin d'année.</p></div>
+</section>
+
+
+          <div class="retour-plus">
+            <a href="marrons-glaces-cevennes2.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>En savoir plus</strong>
+                <small>Accédez à davantage d'informations</small>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+
+<!-- RECETTE -->
+<section class="section" id="recette">
+<h2 class="section-titre">
+<div class="section-titre-icon">👨‍🍳</div>
+              La recette traditionnelle — Marrons glacés confits
+            </h2>
+<div class="recette-grid">
+<div class="recette-meta-card">
+<div class="recette-meta-icon">⏱️</div>
+<div>
+<div class="recette-meta-label">Préparation</div>
+<div class="recette-meta-val">45 min + 5 jours de confisage</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🔥</div>
+<div>
+<div class="recette-meta-label">Cuisson</div>
+<div class="recette-meta-val">40 min</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">👥</div>
+<div>
+<div class="recette-meta-label">Pour</div>
+<div class="recette-meta-val">30 marrons</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">📊</div>
+<div>
+<div class="recette-meta-label">Difficulté</div>
+<div class="recette-meta-val">Avancé</div>
+</div>
+</div>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Ingrédients</div>
+<div class="ingredients-liste">
+<div class="ingredient-item"><span class="ingredient-qte">1 kg</span> Châtaignes fraîches des Cévennes</div>
+<div class="ingredient-item"><span class="ingredient-qte">1 kg</span> Sucre en poudre</div>
+<div class="ingredient-item"><span class="ingredient-qte">500 ml</span> Eau</div>
+<div class="ingredient-item"><span class="ingredient-qte">2 gousses</span> Vanille</div>
+<div class="ingredient-item"><span class="ingredient-qte">QS</span> Sucre glace vanillé (glaçage final)</div>
+</div>
+</div>
+<div class="etapes-liste">
+<div class="etape">
+<div class="etape-num">1</div>
+<div class="etape-corps">
+<div class="etape-titre">Éplucher les châtaignes</div>
+<div class="etape-texte">Entaillez chaque châtaigne, plongez-les dans l'eau bouillante quelques minutes, puis retirez la coque et la seconde peau sans casser les fruits.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">2</div>
+<div class="etape-corps">
+<div class="etape-titre">Précuire les châtaignes</div>
+<div class="etape-texte">Enveloppez les châtaignes épluchées dans une mousseline et faites-les pocher doucement dans l'eau frémissante jusqu'à ce qu'elles soient tendres mais encore fermes.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">3</div>
+<div class="etape-corps">
+<div class="etape-titre">Préparer le premier sirop</div>
+<div class="etape-texte">Portez à ébullition l'eau, le sucre et la vanille fendue pour obtenir un sirop léger. Plongez-y délicatement les châtaignes et laissez reposer 24 heures.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">4</div>
+<div class="etape-corps">
+<div class="etape-titre">Renforcer le sirop chaque jour</div>
+<div class="etape-texte">Chaque jour pendant quatre à cinq jours, faites chauffer doucement le sirop avec les marrons en ajoutant un peu de sucre supplémentaire à chaque bain, afin d'augmenter progressivement la concentration en sucre sans faire éclater les fruits.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">5</div>
+<div class="etape-corps">
+<div class="etape-titre">Laisser sécher</div>
+<div class="etape-texte">Une fois le confisage terminé, égouttez délicatement les marrons sur une grille et laissez-les sécher à l'air libre pendant plusieurs heures.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">6</div>
+<div class="etape-corps">
+<div class="etape-titre">Glacer les marrons</div>
+<div class="etape-texte">Nappez chaque marron d'un fin glaçage de sucre vanillé légèrement liquide, puis laissez-le cristalliser à l'air libre jusqu'à obtenir la brillance caractéristique du marron glacé.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ACCORDS -->
+<section class="section" id="accords">
+<h2 class="section-titre">
+<div class="section-titre-icon">🍷</div>
+              Accords gourmands
+            </h2>
+<div class="vins-liste">
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Rivesaltes ambré</div>
+<div class="vin-desc">Vin doux naturel aux notes de fruits secs et de caramel qui font écho à la texture confite du marron.</div>
+</div>
+<div class="vin-badge">⭐ Accord idéal</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Banyuls</div>
+<div class="vin-desc">Vin doux naturel corsé, dont l'intensité cacaotée et fruitée s'accorde avec la richesse sucrée de la confiserie.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Café ou infusion de châtaignier</div>
+<div class="vin-desc">Une alternative plus sobre qui laisse toute la place au goût boisé et sucré du marron.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+</div>
+</section>
+<!-- VARIANTES -->
+<section class="section" id="variantes">
+<h2 class="section-titre">
+<div class="section-titre-icon">🔀</div>
+              Variantes régionales
+            </h2>
+<div class="histoire-texte">
+<p><strong>Crème de marrons :</strong> version tartinable obtenue en réduisant en purée les brisures de marrons confits, très utilisée en pâtisserie régionale.</p>
+<p><strong>Châtaignes au naturel :</strong> châtaignes simplement épluchées et conservées dans un sirop léger, sans glaçage, pour un usage cuisiné plus polyvalent.</p>
+<p><strong>Farine de châtaigne des Cévennes :</strong> issue des châtaignes séchées puis moulues, elle sert à confectionner pains, crêpes et gâteaux traditionnels cévenols.</p>
+</div>
+</section>
+<!-- OÙ DÉGUSTER -->
+<section class="section" id="ou-manger">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              Où déguster dans le Gard ?
+            </h2>
+<div class="histoire-texte">
+<p>Le marron glacé des Cévennes se déguste principalement dans les Cévennes gardoises, berceau de la châtaigneraie AOP, ainsi que dans les commerces de spécialités de Nîmes.</p>
+<p><strong>Le Vigan</strong> porte d'entrée des Cévennes gardoises, où plusieurs producteurs et confiseurs locaux transforment la châtaigne sous toutes ses formes, marrons glacés compris.</p>
+<p><strong>Saint-Jean-du-Gard</strong> et les villages voisins, où châtaigneraies séculaires et ateliers de transformation perpétuent le travail de la châtaigne des Cévennes.</p>
+<p><strong>Fêtes de la châtaigne</strong> organisées en automne dans plusieurs villages cévenols, occasion privilégiée de découvrir la production locale de marrons glacés aux côtés d'autres spécialités castanéicoles.</p>
+</div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Région</span>
+<span class="aside-val">Occitanie</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Territoire</span>
+<span class="aside-val">Cévennes gardoises · Le Vigan · Gard</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Catégorie</span>
+<span class="aside-val">Confiserie de fruits confits</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Saison</span>
+<span class="aside-val">Automne · Hiver (période de récolte et des fêtes)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Occasion</span>
+<span class="aside-val">Dessert de fêtes · Cadeau gourmand</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">LABEL / PROTECTION</span>
+<span class="aside-val">AOP Châtaigne des Cévennes (matière première, depuis 2023)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">RECONNU PAR</span>
+<span class="aside-val">Castanéiculteurs des Cévennes · INAO</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bouton retour flottant (apparaît au scroll) -->
+<div class="retour-haut">
+<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Retour en haut de page
+  </a>
+<a href="../../../../occitanie-departement/gard/gard.html">
+    ← Retour à la fiche Gard
+  </a>
+</div>
+<footer class="site-footer">
+<div class="container footer-inner">
+<div class="footer-logo">L'<span>Âme</span> des Régions</div>
+<p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+</div>
+</footer>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const btnRetour = document.getElementById('btnRetour');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) btnRetour.classList.add('visible');
+      else btnRetour.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

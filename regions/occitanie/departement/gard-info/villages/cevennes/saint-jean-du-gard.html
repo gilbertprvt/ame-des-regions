@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saint-Jean-du-Gard — Gard — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gard/gard.html" class="produit-btn-retour">
+            ← Retour à la fiche Gard
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>S</em>aint-Jean-du-Gard<span class="sous-titre">La porte d'entrée des Cévennes</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-gard.png"
+               alt="Carte du Gard"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/saint-jean-du-gard.png" alt="Écusson Saint-Jean-du-Gard" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Camisards · Châtaigniers · Train à vapeur ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🗺️ Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🎨 Traditions &amp; légendes</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>Un carrefour de vallées, avant-poste des Cévennes profondes.</strong> Bâti au confluent du Gardon de Saint-Jean et du Gardon de Mialet, le bourg occupe depuis le Moyen Âge une position de charnière entre la plaine languedocienne et les hautes vallées cévenoles. Son nom rappelle un prieuré placé sous le vocable de saint Jean-Baptiste, autour duquel s'est structuré l'habitat médiéval.</p>
+
+              <p><strong>La Réforme et le pays des Camisards.</strong> À partir du XVI e siècle, les Cévennes adhèrent massivement à la Réforme protestante. Après la révocation de l'édit de Nantes en 1685, qui interdit le culte réformé, la région de Saint-Jean-du-Gard devient l'un des foyers de la révolte des Camisards (1702-1704), insurrection paysanne et religieuse durement réprimée par les troupes royales. Cette mémoire huguenote imprègne encore profondément l'identité du bourg et de ses environs.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/gard/saint-jean-du-gard1.jpg"
+                        alt="Écomusée des Vallées Cévenoles à Saint-Jean-du-Gard" />
+                    <figcaption>Écomusée des Vallées Cévenoles</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p><strong>Le siècle de la soie.</strong> Du XVIII e au XIX e siècle, l'économie locale repose largement sur l'élevage du ver à soie : mûriers, magnaneries et petites filatures rythment la vie des vallées, avant que la pébrine, maladie du ver à soie, puis la concurrence asiatique ne portent un coup sévère à cette activité à la fin du XIX e siècle.</p>
+
+              <p><strong>Le chemin de fer et le tourisme cévenol.</strong> Le bourg devient au XX e siècle le terminus d'une ligne de chemin de fer secondaire reliant Anduze aux Cévennes, aujourd'hui reconvertie en train touristique à vapeur qui perpétue le souvenir de cette épopée ferroviaire et industrielle.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 280px;">
+                   <img src="../../../../../../assets/departement/occitanie/photo/gard/saint-jean-du-gard2.jpg"
+                        alt="Train à Vapeur des Cévennes à Saint-Jean-du-Gard" />
+                    <figcaption>Train à Vapeur des Cévennes</figcaption>
+                  </figure>
+              <div class="clearfix"></div>
+
+              <p>Aujourd'hui, Saint-Jean-du-Gard conserve une identité marquée par ce passé : bourg-porte des vallées cévenoles, la commune s'inscrit pleinement dans la zone Cévennes, entre mémoire patrimoniale et vie locale contemporaine. Cette continuité, entre héritage et vie quotidienne, fait aujourd'hui tout l'intérêt d'une visite attentive à l'histoire du lieu.</p>
+            
+            </div>
+          </section>
+
+          <!-- VISITE PRATIQUE -->
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Visite pratique
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏱️</div>
+                <div>
+                  <div class="recette-meta-label">Durée</div>
+                  <div class="recette-meta-val">Environ 2h à 3h de visite</div>
+                </div>
+              </div>
+<div class="recette-meta-card">
+                <div class="recette-meta-icon">📊</div>
+                <div>
+                  <div class="recette-meta-label">Difficulté</div>
+                  <div class="recette-meta-val">Facile, accessible à tous</div>
+                </div>
+              </div>
+<div class="recette-meta-card">
+                <div class="recette-meta-icon">🚗</div>
+                <div>
+                  <div class="recette-meta-label">Accès</div>
+                  <div class="recette-meta-val">≈ 45 km au nord-ouest d'Alès</div>
+                </div>
+              </div>
+<div class="recette-meta-card">
+                <div class="recette-meta-icon">🎟️</div>
+                <div>
+                  <div class="recette-meta-label">Tarif</div>
+                  <div class="recette-meta-val">Visite libre du village, gratuite</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Châtaigne cévenole</span> Farine, crème et marrons glacés, pilier de l'alimentation traditionnelle des vallées.</div>
+<div class="ingredient-item"><span class="ingredient-qte">Pélardon</span> Petit fromage de chèvre affiné, emblématique des garrigues et vallées cévenoles.</div>
+<div class="ingredient-item"><span class="ingredient-qte">Vin des Cévennes</span> Petites parcelles en restanques, cépages de montagne.</div>
+<div class="ingredient-item"><span class="ingredient-qte">Miel de châtaignier</span> Miel typé, ambré et corsé, récolté sur les massifs environnants.</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le pont vieux</div>
+                  <div class="etape-texte">Point de départ, il enjambe le Gardon et offre une vue d'ensemble sur le bourg.</div>
+                </div>
+              </div>
+<div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">La gare du Train à Vapeur</div>
+                  <div class="etape-texte">Découvrez l'épopée du chemin de fer cévenol, aujourd'hui ligne touristique.</div>
+                </div>
+              </div>
+<div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">L'écomusée</div>
+                  <div class="etape-texte">Plongez dans l'histoire de la soie, de la châtaigne et de la vie cévenole traditionnelle.</div>
+                </div>
+              </div>
+<div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Le vieux bourg</div>
+                  <div class="etape-texte">Flânez dans les ruelles autour de l'ancien prieuré.</div>
+                </div>
+              </div>
+<div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Les rives du Gardon</div>
+                  <div class="etape-texte">Terminez par une balade au fil de l'eau, entre baignade et fraîcheur en été.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- RECONNAISSANCE -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance &amp; patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🏘️</div>
+                <div>
+                  <div class="vin-nom">Village de caractère du Gard</div>
+                  <div class="vin-desc">Saint-Jean-du-Gard conserve un patrimoine bâti et paysager représentatif de la zone Cévennes.</div>
+                </div>
+                <div class="vin-badge">Cévennes</div>
+              </div>
+<div class="vin-item">
+                <div class="vin-icon">⭐</div>
+                <div>
+                  <div class="vin-nom">Identité locale</div>
+                  <div class="vin-desc">Camisards · marché · train touristique</div>
+                </div>
+                <div class="vin-badge">Repère local</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TRADITIONS & LEGENDES -->
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🎨</div>
+              Personnages, traditions & mémoire locale
+            </h2>
+            <div class="histoire-texte">
+              
+              <p>Le bourg garde vivace la mémoire des Camisards, ces insurgés protestants menés notamment par Jean Cavalier et Rolland dans les vallées voisines. L'écomusée des Vallées Cévenoles restitue cette histoire ainsi que celle du travail de la soie et de la châtaigne, piliers de l'identité cévenole.</p>
+<p>Chaque année, marché traditionnel et fêtes locales perpétuent l'attachement des habitants à leurs vallées et à un mode de vie rural resté proche de la nature.</p>
+
+              <div class="citation-bloc">
+                <p>Saint-Jean-du-Gard est un seuil : celui où la plaine languedocienne cède la place aux vallées profondes des Cévennes, façonnées par la soie, la châtaigne et la mémoire huguenote.</p>
+                <cite>Repère synthétique — L'Âme des Régions</cite>
+              </div>
+            
+            </div>
+          </section>
+
+          <!-- ANECDOTES -->
+          <section class="section" id="anecdotes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Le saviez-vous ? Anecdotes
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🚂</div>
+                <div>
+                  <div class="vin-nom">Le terminus d'un train mythique</div>
+                  <div class="vin-desc">Le Train à Vapeur des Cévennes, reliant Anduze à Saint-Jean-du-Gard, perpétue le souvenir de l'ancienne ligne ferroviaire cévenole.</div>
+                </div>
+                
+              </div>
+<div class="vin-item">
+                <div class="vin-icon">👥</div>
+                <div>
+                  <div class="vin-nom">Les habitants</div>
+                  <div class="vin-desc">Les habitants de Saint-Jean-du-Gard sont appelés les Saint-Jeannais · Saint-Jeannaises.</div>
+                </div>
+                
+              </div>
+<div class="vin-item">
+                <div class="vin-icon">⭐</div>
+                <div>
+                  <div class="vin-nom">Reconnu pour</div>
+                  <div class="vin-desc">Saint-Jean-du-Gard est aujourd'hui particulièrement identifié pour : camisards · marché · train touristique.</div>
+                </div>
+                
+              </div>
+            </div>
+          </section>
+
+          <!-- AUX ALENTOURS -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+              
+              <p><strong>Mialet</strong> village voisin de la zone Cévennes, mémoire du désert protestant.</p>
+
+              <p><strong>Saint-André-de-Valborgne</strong> village voisin de la zone Cévennes, le village de la vallée borgne.</p>
+
+              <p><strong>Mont Aigoual</strong> point culminant du Gard (1 567 m), avec son célèbre observatoire météorologique et un panorama exceptionnel sur les Cévennes.</p>
+            
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Gard (Cévennes)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Bourg-porte des vallées cévenoles</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Population</span>
+                <span class="aside-val">≈ 2 600 hab. · Saint-Jeannais · Saint-Jeannaises</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Village de caractère du Gard</span>
+              </div>
+
+              <div class="aside-row">
+                <span class="aside-label">RECONNU POUR</span>
+                <span class="aside-val">Camisards · marché · train touristique</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton retour flottant (apparaît au scroll) -->
+ <div class="retour-haut">
+  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Retour en haut de page
+  </a>
+
+  <a href="../../../../occitanie-departement/gard/gard.html">
+    ← Retour à la fiche Gard
+  </a>
+</div>
+
+
+
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
+      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
+     
+    </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>

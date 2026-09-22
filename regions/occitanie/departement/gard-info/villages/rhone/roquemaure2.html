@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roquemaure — Gard — Histoire &amp; origines — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gard/gard.html" class="produit-btn-retour">
+            ← Retour à la fiche Gard
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>R</em>oquemaure<span class="sous-titre">Le port fluvial et la relique de Saint Valentin</span></h1>
+          
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-gard.png"
+               alt="Carte du Gard"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/roquemaure.png" alt="Écusson Roquemaure" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Port fluvial · Saint Valentin · Côtes-du-Rhône ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🗺️ Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🎨 Traditions &amp; légendes</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+Histoire &amp; origines
+</h2>
+<div class="histoire-texte">
+
+<p>Le territoire de Roquemaure s'inscrit dans la vallée du Rhône, grand axe de circulation depuis l'Antiquité entre le monde méditerranéen et l'intérieur des terres gauloises puis françaises, corridor commercial et militaire dont l'importance stratégique n'a cessé de façonner l'histoire des villes et bourgs installés sur ses rives.</p>
+
+<p><strong>Hannibal aurait franchi le Rhône à Roquemaure.</strong> Selon une tradition ancienne, c'est à hauteur de Roquemaure qu'en 218 avant notre ère, le jeune général carthaginois Hannibal aurait choisi de faire traverser le Rhône à toute son armée, éléphants de guerre compris, avant d'affronter les Gaulois massés sur la rive gauche du fleuve ; cet épisode, resté dans les mémoires antiques comme une prouesse militaire sans pareille, illustre déjà l'importance stratégique de ce point de franchissement du fleuve, resserré par un verrou rocheux naturel.</p>
+
+<p><strong>Un port fluvial actif sur le Rhône.</strong> Roquemaure s'est développée comme port fluvial important sur le Rhône, profitant de sa position pour le commerce du vin, du bois et des marchandises transitant entre Lyon et la Méditerranée, jusqu'à l'essor du chemin de fer au XIX<sup>e</sup> siècle qui réduit progressivement le trafic fluvial.</p>
+
+<p><strong>Le château, sentinelle du verrou rhodanien.</strong> Perché sur un éperon rocheux dominant le fleuve, le château de Roquemaure, attesté dès le XI<sup>e</sup> siècle, commandait à la fois la navigation nord-sud du Rhône et le passage est-ouest entre Languedoc et Provence. Aux mains d'un baron des comtes de Toulouse jusqu'à la croisade contre les Albigeois, il est remis en gage de fidélité au pape par Raymond VI lui-même le 18 juin 1209, avant d'être reconstruit au XIII<sup>e</sup> siècle par le roi de France. Le pape Clément V, fondateur de la papauté avignonnaise, y aurait traversé le Rhône en avril 1314, tandis que sainte Catherine de Sienne s'y rend le 4 septembre 1376, sur l'invitation du duc d'Anjou qui fait alors du château sa résidence. En 1354, le viguier Gustave de Polignac fait creuser un fossé défensif face à la menace du Prince Noir, et le duc d'Anjou fait édifier les remparts de la ville sur le modèle de ceux d'Avignon. Ébranlé par un siège en 1590-1591, le château perd ensuite de son importance, servant tour à tour de prison puis de fonderie de plomb et d'argent, avant d'être vendu comme bien national en 1795 et arasé avant 1850 ; il n'en subsiste aujourd'hui que deux des sept tours d'origine, la tour carrée dite « des Carthaginois » et la tour de la Reine, du nom de Marie de Bretagne, épouse du duc d'Anjou.</p>
+
+<p><strong>Le vignoble et la protection contre le phylloxéra.</strong> Réputée pour son vignoble, la ville est également connue pour un épisode agricole particulier : en 1866, un négociant local aurait été le premier en France à repérer les ravages du phylloxéra, insecte ravageur venu d'Amérique qui allait détruire une grande partie du vignoble français dans les décennies suivantes. C'est également à Roquemaure, au XVIII<sup>e</sup> siècle, que se met en place l'une des premières tentatives de réglementation de la production viticole locale, contribuant à forger le terme même de « Côte du Rhône ».</p>
+
+<p><strong>Un poète local à l'origine du chant de Noël « Minuit, Chrétiens ».</strong> C'est un enfant de Roquemaure, Placide Cappeau, négociant en vin de son état, qui rédige en 1843 le texte du célèbre cantique de Noël « Minuit, Chrétiens », mis en musique par Adolphe Adam ; il répond alors à la demande d'un prêtre local, Guillaume Clerc, soucieux de commercialiser vers Paris les vins de la Côte du Rhône par l'intermédiaire du pont récemment édifié.</p>
+
+<p>Le fleuve, aussi précieux que redoutable, impose sa loi aux riverains : crues violentes, changements de lit et bancs de sable mouvants rendent la navigation périlleuse, tandis que le halage à contre-courant exige un travail harassant, longtemps assuré par des équipes d'hommes ou d'animaux de trait qui tiraient les <strong>gabarres</strong> chargées de marchandises depuis les chemins de halage aménagés sur les berges.</p>
+
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Port historique sur le Rhône à Roquemaure" src="../../../../../../assets/departement/occitanie/photo/gard/roquemaure1.jpg"/>
+<figcaption>Port historique sur le Rhône</figcaption>
+</figure>
+
+<p><strong>Les reliques de saint Valentin.</strong> En 1868, la paroisse de Roquemaure reçoit les reliques de saint Valentin, rapportées de Rome, qui font l'objet d'une vénération locale toujours vivace, la ville se présentant depuis comme un lieu de pèlerinage attaché à la Saint-Valentin.</p>
+
+<p>L'installation de la papauté à Avignon au XIV<sup>e</sup> siècle transforme profondément la vallée du Rhône gardoise, dont plusieurs villes et bourgs deviennent des dépendances, des résidences ou des points d'appui du pouvoir pontifical, tandis que le grand commerce fluvial, denrées agricoles, vins, bois et matières premières, continue de transiter par le fleuve entre Lyon et la Méditerranée.</p>
+
+<p>Le XX<sup>e</sup> siècle transforme la vallée du Rhône gardoise avec l'aménagement hydroélectrique et nucléaire du fleuve, notamment le site de Marcoule près de Bagnols-sur-Cèze, qui bouleverse l'économie régionale, tandis que le vignoble de Côtes-du-Rhône, replanté après la crise du phylloxéra qui ravage l'ensemble du vignoble français à la fin du XIX<sup>e</sup> siècle, continue de structurer le paysage et l'identité agricole des coteaux.</p>
+
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Église et reliques de saint Valentin à Roquemaure" src="../../../../../../assets/departement/occitanie/photo/gard/roquemaure2.jpg"/>
+<figcaption>Église et reliques de saint Valentin</figcaption>
+</figure>
+
+<p>Aujourd'hui, Roquemaure conserve une identité marquée par ce passé : ancien port fluvial du rhône, la commune s'inscrit pleinement dans la zone Vallée du Rhône, entre mémoire patrimoniale et vie locale contemporaine. Cette continuité, entre héritage et vie quotidienne, fait aujourd'hui tout l'intérêt d'une visite attentive à l'histoire du lieu.</p>
+
+<div class="citation-bloc"><p>Roquemaure a vécu du fleuve et de la vigne, avant de devenir, par la grâce d'une relique rapportée de Rome en 1868, l'une des villes françaises associées à la Saint-Valentin.</p><cite>Synthèse historique — L'Âme des Régions</cite></div>
+
+</div>
+</section>
+
+<div class="retour-plus">
+<a href="roquemaure.html" class="btn-en-savoir-plus">
+<span class="btn-plus-icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+<path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+</svg>
+</span>
+<span class="btn-plus-text">
+<strong>Retour fiche Roquemaure</strong>
+</span>
+<span class="btn-plus-arrow" aria-hidden="true">→</span>
+</a>
+</div>
+
+</body>
+</html>

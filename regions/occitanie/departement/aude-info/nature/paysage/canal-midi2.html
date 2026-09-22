@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Canal du Midi — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/aude/aude.html">
+            ← Retour à la fiche Aude
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>C</em>anal du <em>M</em>idi<br/><span style="padding-left: 20px;">et ses <em>p</em>latanes<br/> <em>c</em>entenaires</span></h1>
+</div>
+<img alt="Carte de l'Aude" src="../../../../../../assets/departement/occitanie/carte-aude.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Aude" src="../../../../../../assets/departement/occitanie/aude.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Patrimoine mondial UNESCO ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#decouverte">⚓ L'ouvrage d'art</a>
+<a href="#visite">🚶 Parcours de visite</a>
+<a href="#infos-pratiques">ℹ️ Infos pratiques</a>
+<a href="#alentours">📍 Alentours</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte">
+
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Ville d’Agde" src="../../../../../../assets/departement/occitanie/photo/aude/canal-du-midi.jpg"/>
+<figcaption>Canal du Midi</figcaption>
+</figure>
+
+
+<p><strong>Un rêve antique de relier les deux mers.</strong> L'idée de joindre l'Atlantique à la Méditerranée sans contourner la péninsule Ibérique par le détroit de Gibraltar est envisagée depuis l'Antiquité : les Romains, puis plus tard Charlemagne, François Ier et Henri IV auraient étudié la question sans jamais la résoudre. Le principal obstacle n'est pas seulement le creusement d'une tranchée : il faut surtout alimenter en eau, en permanence, un canal franchissant le seuil de Naurouze, ligne de partage des eaux entre les bassins atlantique et méditerranéen, un problème jugé insoluble depuis l'époque romaine.</p><p><strong>Pierre-Paul Riquet, un fermier de la gabelle devenu ingénieur.</strong> Né le 29 juin 1609 à Béziers, Pierre-Paul Riquet, baron de Bonrepos, fait fortune comme receveur général des gabelles du Languedoc, chargé de la collecte de l'impôt sur le sel. Sans formation d'ingénieur, il observe pendant plus de quinze ans le relief et l'hydrologie de la Montagne Noire depuis son château de Bonrepos, où il fait réaliser des maquettes. Il s'entoure de techniciens locaux, dont le fontainier Pierre Campmas, et s'appuie sur les observations de François Andréossy, qui avait étudié en Italie du Nord les écluses ovoïdes du canal de la Brenta.</p><p><strong>Le mémoire à Colbert et l'épreuve des experts (1662-1666).</strong> Le 15 novembre 1662, Riquet adresse à Colbert, ministre de Louis XIV, un mémoire exposant son projet de canal. Le 18 janvier 1663, un arrêt du Conseil du Roi crée une commission d'experts, comprenant notamment Bourtheroulde de Bourgneuf, seigneur du canal de Briare, et Louis Nicolas de Clerville, commissaire général des fortifications. En 1665, la commission rend un avis favorable mais exige une rigole d'essai : en octobre 1665, Riquet fait creuser cette rigole pour amener l'eau de la Montagne Noire jusqu'au seuil de Naurouze, démontrant la faisabilité technique du projet. Le 7 octobre 1666, un édit royal signé par Louis XIV autorise enfin le creusement du « canal royal de Languedoc ».</p><p><strong>Un financement partagé, une fortune engagée.</strong> Le financement du chantier associe la monarchie, les États de Languedoc et Riquet lui-même, qui engage une part considérable de sa fortune personnelle dans l'entreprise, au point de s'endetter lourdement. Le coût total est estimé à environ 17 millions de livres de l'époque — le salaire annuel d'un bon artisan étant alors d'une centaine de livres —, soit un montant que les historiens comparent aujourd'hui à près d'un milliard d'euros.</p><p><strong>Un chantier hors norme (1667-1681).</strong> Les travaux débutent en janvier 1667 avec le creusement des rigoles d'alimentation ; en avril commence le barrage de Saint-Ferréol, en présence de l'archevêque de Toulouse pour la pose de la première pierre ; dès septembre, le creusement du canal proprement dit démarre à Toulouse. Le chantier emploie jusqu'à 12 000 personnes, hommes et femmes, contre 2 000 au départ. Fait rare pour l'époque, Riquet loge, nourrit, équipe et rémunère généreusement ses ouvriers, leur assurant des salaires élevés et le paiement des jours de fête et de pluie, ce qui suscite l'irritation d'autres employeurs de la région.</p><p><strong>Saint-Ferréol et le système d'alimentation, clé de voûte de l'ouvrage.</strong> Le barrage-réservoir de Saint-Ferréol, établi sur le Laudot et complété plus tard par le réservoir du Lampy et un réseau de rigoles de la Montagne et de la plaine, permet de capter puis d'acheminer les eaux de la Montagne Noire jusqu'au seuil de Naurouze, point de partage culminant à environ 189-194 mètres d'altitude. De là, les eaux se répartissent vers les deux versants du canal, atlantique et méditerranéen. Ce système hydraulique, l'un des plus ingénieux de son temps, reste la contribution la plus admirée de Riquet à l'histoire des techniques.</p><p><strong>De Toulouse à Castelnaudary : le versant atlantique.</strong> Les 17 novembre 1667, le Parlement de Toulouse, les capitouls et l'archevêque assistent à la pose des premières pierres de l'écluse de Bazacle. Le tronçon de Toulouse à Naurouze puis à Castelnaudary est réalisé entre 1667 et 1674, franchissant le seuil de Naurouze à partir de 1669. En 1670 est construit le bassin de l'embouchure à Toulouse ; en 1674, le canal est achevé et mis en eau jusqu'à Castelnaudary.</p><p><strong>De Castelnaudary à l'étang de Thau : le versant méditerranéen.</strong> Le second versant progresse en parallèle : dès juillet 1667, la première pierre du port de Sète, choisi comme débouché méditerranéen, est bénie au Cap de Sète. En 1675, le canal est achevé jusqu'à l'étang de Thau depuis Béziers. En 1676 sont construits l'écluse ronde d'Agde et le pont-canal du Répudre, premier pont-canal de l'histoire du génie civil moderne.</p><p><strong>Le tunnel du Malpas et l'escalier de Fonseranes, prouesses finales.</strong> En 1679-1680, le tunnel du Malpas, creusé sous la colline d'Ensérune, devient le premier tunnel-canal navigable d'Europe : jusque-là, personne n'imaginait possible de percer une montagne pour y faire passer un canal. En 1680, Riquet achève à Béziers l'escalier d'écluses de Fonseranes, ensemble de huit bassins et neuf portes permettant de franchir un dénivelé de 13,60 mètres sur 300 mètres de long (jusqu'à 21,6 mètres en comptant la dernière écluse vers l'Orb). Riquet lui-même le baptise « l'escalier de Neptune » et l'offre en hommage à sa ville natale, avec vue sur la cathédrale et les remparts ; sept de ses écluses ovoïdes sont aujourd'hui encore en service.</p><p><strong>La mort de Riquet et l'achèvement de l'œuvre (1680-1682).</strong> Pierre-Paul Riquet meurt à Toulouse le 1er octobre 1680, à 71 ans, alors qu'il ne manque plus qu'une lieue — moins de 5 kilomètres — pour achever le canal. Son fils Jean-Mathias-de Riquet poursuit l'entreprise. Après une inspection favorable de d'Aguesseau, intendant du Languedoc, le voyage inaugural a lieu le 15 mai 1681 : un convoi de vingt-cinq barques relie Toulouse à l'étang de Thau. La réception définitive des travaux n'intervient qu'en décembre 1682, le canal étant alors pleinement opérationnel après quatorze années de chantier et environ sept millions de mètres cubes de terre déplacés à la main.</p><p><strong>Vauban consolide l'ouvrage.</strong> Dès la fin du XVIIe siècle, des faiblesses apparaissent : crues, envasement, ruptures de digues menacent la pérennité du canal. Vauban fait étudier et réaliser d'importants travaux de renforcement — nouveaux aqueducs permettant aux rivières de passer sous le canal, épanchoirs, amélioration de la rigole de la Montagne et augmentation des capacités de stockage de Saint-Ferréol — qui assurent la stabilité durable du système.</p><p><strong>Deux siècles d'activité économique intense.</strong> Pendant près de deux cents ans, le canal transporte voyageurs et marchandises : céréales, vins et eaux-de-vie, textiles, bois, matériaux de construction, ou encore le marbre rose de Caunes-Minervois. Un service de « barques de poste » assure le transport des voyageurs entre les principales étapes, tandis que le halage est assuré depuis les chemins de rive par des chevaux. Ports, auberges, magasins et ateliers se développent tout au long du tracé, faisant du canal une véritable artère économique du Languedoc.</p><p><strong>Du « canal royal de Languedoc » au « canal des Deux-Mers ».</strong> Connu à l'origine comme « canal royal de Languedoc », l'ouvrage prend le nom de canal du Midi à l'époque révolutionnaire. Le canal principal relie Toulouse à l'étang de Thau sur environ 240 kilomètres. Son réseau s'étend ensuite : canal de la Robine vers Narbonne et Port-la-Nouvelle, canal de Jonction, canal de Brienne à Toulouse, puis, au XIXe siècle, canal latéral à la Garonne (achevé en 1856, sur 193 kilomètres), qui prolonge la voie jusqu'à Bordeaux et l'Atlantique. L'ensemble forme finalement le « canal des Deux-Mers », un réseau continu d'environ 360 kilomètres.</p><p><strong>Le choc du chemin de fer et le déclin du trafic commercial.</strong> À partir du milieu du XIXe siècle, le rail concurrence durement la navigation commerciale, plus lente. Le canal conserve néanmoins un rôle dans le fret et l'irrigation pendant plus d'un siècle, tout en faisant l'objet de modernisations ponctuelles. Le déclin s'accélère au XXe siècle : les dernières barques de fret commercial empruntent le canal vers 1989-1990, mettant fin à trois siècles de navigation marchande.</p><p><strong>La renaissance par le tourisme fluvial.</strong> Dès les années 1960-1980, un nouvel usage se développe : la navigation de plaisance. En 1984 est inaugurée la pente d'eau, ouvrage permettant de raccourcir le temps de franchissement de certaines écluses. Le canal devient progressivement l'un des grands axes du tourisme fluvial et cyclable de France, notamment via l'itinéraire du « Canal des 2 Mers à vélo ».</p><p><strong>Un paysage construit et fragile : les platanes du canal.</strong> Les alignements d'arbres plantés le long des berges — on estime qu'environ 45 000 arbres bordaient initialement l'ensemble du réseau — deviennent au fil des siècles une composante essentielle de l'image du canal : ils stabilisent les berges, procurent de l'ombre et créent un long corridor paysager. Depuis le milieu des années 2000, le chancre coloré du platane, maladie fongique incurable, a entraîné l'abattage de dizaines de milliers d'arbres malades et le lancement d'un vaste programme de replantation diversifiée, afin de préserver ce paysage emblématique tout en le rendant plus résilient.</p><p><strong>1996 : la reconnaissance de l'UNESCO.</strong> Le canal du Midi est inscrit sur la Liste du patrimoine mondial de l'UNESCO en 1996, au titre des critères culturels (i), (ii), (iv) et (vi). L'UNESCO souligne la prouesse de génie civil, la créativité de son concepteur et son rôle précurseur dans l'éclosion technologique ayant ouvert la voie à la révolution industrielle, ainsi que l'attention portée à l'esthétique du paysage. Le bien inscrit couvre un réseau navigable d'environ 360 kilomètres comprenant 328 ouvrages d'art — écluses (dont 63 sur le seul canal historique), aqueducs, ponts, tunnels et dispositifs hydrauliques.</p><p><strong>Fonseranes, du site industriel au Grand Site de France.</strong> Entre 2015 et 2017, d'importants travaux d'aménagement sont menés sur le site des neuf écluses de Fonseranes à Béziers, dans le cadre d'un projet de classement au réseau des Grands Sites. En 2018, le site obtient le label Grand Site d'Occitanie, confirmant son statut de lieu emblématique et très fréquenté du patrimoine industriel et paysager du canal.</p><p><strong>Un patrimoine vivant, toujours en fonctionnement.</strong> Devenu propriété de l'État à la fin du XIX<sup>e</sup> siècle et aujourd'hui géré par Voies navigables de France, le canal du Midi, plus de trois siècles après la mort de Riquet, demeure un ouvrage hydraulique en activité autant qu'un monument historique : navigation de plaisance, cyclotourisme, randonnée, gestion de l'eau, irrigation agricole et préservation continue des ouvrages y coexistent. Son tracé et son système d'alimentation, restés fondamentalement fidèles à la conception originelle de Riquet, continuent de structurer les paysages du Languedoc.</p></div>
+</section>
+
+
+<div class="retour-plus">
+            <a href="canal-midi.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche Canal du Midi et ses platanes centenaires</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+</body>
+</html>

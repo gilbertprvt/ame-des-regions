@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nages-et-Solorgues — Gard — Histoire &amp; origines — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gard/gard.html" class="produit-btn-retour">
+            ← Retour à la fiche Gard
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>N</em>ages-et-Solorgues<span class="sous-titre">L'oppidum gaulois de la Vaunage</span></h1>
+          
+        </div>   
+         <img src="../../../../../../assets/departement/occitanie/carte-gard.png"
+               alt="Carte du Gard"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../blason/nages-et-solorgues.png" alt="Écusson Nages-et-Solorgues" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Oppidum gaulois · Archéologie · Vaunage ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🗺️ Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🎨 Traditions &amp; légendes</a>
+          <a href="#anecdotes"    >💬 Anecdotes</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+Histoire &amp; origines
+</h2>
+<div class="histoire-texte">
+
+<p>Le territoire de Nages-et-Solorgues appartient à la vallée du Vidourle, modeste fleuve côtier au régime torrentiel typiquement méditerranéen, qui a longtemps organisé la vie économique de ce pays de piémont, entre garrigues nîmoises et premiers contreforts cévenols.</p>
+
+<p><strong>La vallée qui a donné son nom à la Vaunage.</strong> Le nom même de la Vaunage, cette petite plaine agricole nichée entre Nîmes et Sommières, dérive de l'occitan Vau Najas, littéralement la « vallée de Nages » : le village constitue ainsi, étymologiquement, le cœur historique de toute la région qui l'entoure, connue durant le haut Moyen Âge sous le nom latin de Vallis Anagia.</p>
+
+<p><strong>Un oppidum gaulois exceptionnellement conservé.</strong> Le site des Castels, sur le territoire de Nages, constitue l'un des oppida gaulois les mieux conservés du sud de la France, occupé dès l'âge du Fer et fortifié de remparts encore visibles, témoignant de l'importance de l'habitat protohistorique dans la région nîmoise avant la conquête romaine. Il s'agit du plus monumental et du mieux étudié des six ou sept oppida qui, entre 800 et 50 avant notre ère, rassemblaient les populations celtiques de la Vaunage sur les hauteurs entourant la plaine — parmi lesquels celui, voisin, de la Roque de Viou, sur la commune de Saint-Dionizy. Fouillé systématiquement entre 1958 et 1974 par l'archéologue Michel Py, le site est classé monument historique dès 1980 ; les monnaies découvertes sur place, au nombre de plus de quatre cents, dont la majorité antérieures au règne d'Auguste, constituent aujourd'hui encore une référence pour l'étude de la circulation monétaire dans la Gaule méridionale.</p>
+
+<p><strong>Un habitat organisé et durable.</strong> Les fouilles archéologiques menées sur le site ont révélé un urbanisme gaulois structuré, avec des îlots d'habitations organisés le long de rues, remettant en cause l'image d'un habitat protohistorique désordonné et livrant des informations précieuses sur la société gauloise pré-romaine du Languedoc. L'occupation du site se poursuit sans interruption jusqu'à l'époque gallo-romaine, avec l'émergence d'un vicus qui succède directement à l'oppidum gaulois.</p>
+
+<p>Comme la vallée voisine de l'Hérault autour de Ganges, la moyenne vallée du Vidourle participe pleinement, à partir des XVI<sup>e</sup> et XVII<sup>e</sup> siècles, à l'essor de la sériciculture languedocienne : mûriers en alignement, magnaneries dans les mas et petites filatures rythment alors la vie rurale, avant que cette activité ne décline au tournant du XX<sup>e</sup> siècle.</p>
+
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Oppidum des Castels à Nages-et-Solorgues" src="../../../../../../assets/departement/occitanie/photo/gard/nages-et-solorgues1.jpg"/>
+<figcaption>Oppidum des Castels</figcaption>
+</figure>
+
+<p><strong>Une commune double dans la plaine de Vaunage.</strong> Réunissant les villages de Nages et de Solorgues, la commune s'inscrit dans la plaine agricole de la Vaunage, entre garrigue nîmoise et premiers reliefs cévenols, dans la continuité des villages voisins marqués par la culture de la vigne et de l'olivier. Pendant près d'un demi-siècle, un petit musée municipal, installé au premier étage de la mairie, présentait au public les vestiges archéologiques issus des fouilles de l'oppidum ; faute de moyens suffisants, il a fermé ses portes en 2023.</p>
+
+<p>Le pays du Vidourle, comme l'ensemble de la Vaunage et des garrigues nîmoises voisines, adhère massivement à la Réforme protestante dès le XVI<sup>e</sup> siècle et conserve aujourd'hui encore une identité huguenote affirmée, héritée des guerres de Religion puis de la répression consécutive à la révocation de l'édit de Nantes en 1685.</p>
+
+<p>Le Vidourle, réputé pour ses crues soudaines et parfois dévastatrices que la mémoire locale a surnommées « vidourlades », a marqué à plusieurs reprises l'histoire des villages de sa vallée ; la dernière crue majeure, survenue au début du XXI<sup>e</sup> siècle, rappelle la puissance de ce petit fleuve côtier au régime typiquement méditerranéen, tantôt asséché en été, tantôt torrentiel après de violents épisodes pluvieux cévenols.</p>
+
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Musée archéologique à Nages-et-Solorgues" src="../../../../../../assets/departement/occitanie/photo/gard/nages-et-solorgues2.jpg"/>
+<figcaption>Musée archéologique</figcaption>
+</figure>
+
+<p>Aujourd'hui, Nages-et-Solorgues conserve une identité marquée par ce passé : commune double, site archéologique majeur de la vaunage, la commune s'inscrit pleinement dans la zone Vidourle & Vaunage, entre mémoire patrimoniale et vie locale contemporaine. Cette continuité, entre héritage et vie quotidienne, fait aujourd'hui tout l'intérêt d'une visite attentive à l'histoire du lieu.</p>
+
+<div class="citation-bloc"><p>Nages-et-Solorgues conserve, sur le site des Castels, l'un des oppida gaulois les mieux préservés du Languedoc, témoin d'une société protohistorique organisée bien avant l'arrivée des Romains.</p><cite>Synthèse historique — L'Âme des Régions</cite></div>
+
+</div>
+</section>
+
+<div class="retour-plus">
+<a href="nages-et-solorgues.html" class="btn-en-savoir-plus">
+<span class="btn-plus-icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+<path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+</svg>
+</span>
+<span class="btn-plus-text">
+<strong>Retour fiche Nages-et-Solorgues</strong>
+</span>
+<span class="btn-plus-arrow" aria-hidden="true">→</span>
+</a>
+</div>
+
+</body>
+</html>
