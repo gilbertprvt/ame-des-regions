@@ -28,7 +28,7 @@
         transparent 1px, transparent 12px);
       pointer-events: none;
     }
-
+ 
     /* Topbar */
     .produit-topbar {
       display: flex;
@@ -837,59 +837,75 @@
     </div>
   </div>
 
-  <!-- Bouton retour flottant (apparaît au scroll) -->
+
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/gard/gard.html">← Retour à la fiche Gard</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
   
- <div class="retour-haut">
-  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-    ↑ Retour en haut de page
-  </a>
+<!--  Retour flottant-->
 
-  <a href="../../../../occitanie-departement/herault/herault.html">
-    ← Retour à la fiche Hérault
-  </a>
-</div>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+  </svg>
+</button>. 
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
 
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
-      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
-      
-      
-    </div>
-  </footer>
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
 
-  <script>
-    const navLinks = document.querySelectorAll('.produit-nav a');
-    const sections = document.querySelectorAll('.section');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(l => l.classList.remove('active'));
-          const id = entry.target.id;
-          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
-          if (active) active.classList.add('active');
-        }
-      });
-    }, { threshold: 0.4 });
-
-    sections.forEach(s => observer.observe(s));
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
     });
-
-    const btnRetour = document.getElementById('btnRetour');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) btnRetour.classList.add('visible');
-      else btnRetour.classList.remove('visible');
-    });
-  </script>
+  })();
+</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+ 
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+  </svg>
+</button>. 
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
+

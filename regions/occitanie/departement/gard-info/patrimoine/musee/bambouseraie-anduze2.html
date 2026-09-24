@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Bambouseraie en Cévennes — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gard/gard.html" class="produit-btn-retour">
+            ← Retour à la fiche Gard
+          </a>
+        </div>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>L</em>a<br><span style="padding-left: 60px;"><em>B</em>ambouseraie</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-gard.png"
+               alt="Carte Gard"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/gard.png" alt="Écusson Gard" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Musées & découvertes ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🌿 Jardin & visite</a>
+          <a href="#accords"              >✨ Trésors & collections</a>
+          <a href="#jardins"            >🏰 Patrimoine & anecdotes</a>
+          <a href="#infos-pratiques"            >📍 Informations pratiques</a>
+          <a href="#approfondir">🔎 Pour approfondir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un jardin né d’une passion.</strong> La Bambouseraie en Cévennes se situe à Générargues, à quelques kilomètres d’Anduze, sur le domaine de Prafrance. Elle naît en 1856 de l’initiative d’Eugène Mazel, négociant en épices passionné d’horticulture, qui entreprend d’acclimater dans les Cévennes des plantes venues d’Asie et d’autres continents.</p>
+
+              <p><strong>Eugène Mazel, un négociant cévenol.</strong> Originaire de la région, Eugène Mazel a fait fortune dans le commerce des épices et des produits importés d’Asie. Ses voyages et ses relations commerciales lui donnent accès à des graines et à des plants encore inconnus en France. Revenu dans le Gard, il consacre une grande partie de sa fortune à un projet d’acclimatation d’une ampleur rare pour l’époque.</p>
+
+              <p><strong>La mode des jardins d’acclimatation.</strong> Au milieu du XIX<sup>e</sup> siècle, l’Europe se passionne pour l’acclimatation des plantes et des animaux venus des autres continents. La Société zoologique d’acclimatation est fondée à Paris en 1854, et les grands propriétaires multiplient les jardins d’essai. La Bambouseraie naît dans ce contexte d’enthousiasme scientifique et économique.</p>
+
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="La Bambouseraie en Cévennes" src="../../../../../../assets/departement/occitanie/photo/gard/bambouseraie.jpg"/>
+<figcaption>Les allées de bambous géants de la Bambouseraie, à Générargues, près d’Anduze</figcaption>
+</figure>
+<div class="clearfix"></div>
+
+              <p><strong>Un site exceptionnellement favorable.</strong> Mazel choisit une vallée abritée, aux sols alluvionnaires profonds, au pied des premiers reliefs cévenols. Il fait aménager un canal d’irrigation qui apporte l’eau nécessaire aux bambous, grands consommateurs d’humidité. Ce microclimat, doux et humide, permet à des espèces tropicales et asiatiques de prospérer loin de leur milieu d’origine.</p>
+
+              <p><strong>Les Cévennes au temps de la soie.</strong> À l’époque de Mazel, l’économie des Cévennes repose largement sur la sériciculture : les mûriers couvrent les terrasses et les magnaneries élèvent les vers à soie. Mais dans les années 1850, la pébrine, une maladie du ver à soie, provoque une crise grave. La recherche de nouvelles cultures et de nouvelles plantes trouve alors un écho particulier dans la région.</p>
+
+              <p><strong>L’eau, une ressource maîtrisée.</strong> Les bambous exigent une humidité constante que le climat méditerranéen, sec en été, ne garantit pas. Le canal aménagé par Mazel irrigue le domaine par gravité et reste l’un des éléments essentiels de son fonctionnement. Le jardin doit aussi composer avec les épisodes cévenols, ces pluies violentes d’automne qui gonflent brutalement les cours d’eau.</p>
+
+              <p><strong>Le bambou, une plante à part.</strong> Le bambou n’est pas un arbre mais une graminée géante, de la même famille que les céréales. Il se développe à partir d’un réseau souterrain de rhizomes, d’où jaillissent chaque printemps de jeunes pousses qui atteignent leur taille définitive en quelques semaines. Sa floraison, très rare, survient parfois simultanément chez tous les individus d’une même espèce, qui peuvent ensuite dépérir.</p>
+
+              <p><strong>Des espèces venues d’Asie.</strong> La plupart des bambous géants du domaine appartiennent au genre <em>Phyllostachys</em>, originaire de Chine et du Japon. Le plus spectaculaire, le <em>Phyllostachys edulis</em>, ou bambou moso, forme les hautes futaies qui font la réputation du jardin. À leurs côtés, de nombreuses espèces plus petites illustrent la diversité de cette famille, des bambous nains aux variétés aux cannes colorées.</p>
+
+              <p><strong>Les premières plantations.</strong> Mazel plante des bambous en allées et en bosquets, mais aussi des palmiers, des séquoias, des magnolias, des ginkgos et de nombreuses essences exotiques. Certains de ces arbres, aujourd’hui plus que centenaires, figurent parmi les sujets les plus remarquables du jardin et témoignent de ces premières décennies d’expérimentation.</p>
+
+              <p><strong>Des arbres devenus géants.</strong> Plantés au XIX<sup>e</sup> siècle, certains séquoias, cèdres et palmiers atteignent aujourd’hui plusieurs dizaines de mètres de hauteur. Ils structurent le paysage du domaine et rappellent que la Bambouseraie est aussi un arboretum, où les essences exotiques se sont parfaitement adaptées au climat cévenol.</p>
+
+              <p><strong>De la faillite à la famille Nègre.</strong> Les dépenses engagées pour le domaine finissent par ruiner Eugène Mazel, qui doit s’en séparer à la fin du XIX<sup>e</sup> siècle. En 1902, Prafrance est acquis par Gaston Nègre. Sa famille entretient et enrichit les plantations pendant plusieurs générations, puis ouvre le jardin au public, qui devient l’un des sites les plus visités du Gard.</p>
+
+              <p><strong>Un siècle de transmission.</strong> Au XX<sup>e</sup> siècle, la famille Nègre poursuit l’œuvre de Mazel : elle entretient les plantations, remplace les sujets disparus, enrichit les collections et adapte le domaine à l’accueil des visiteurs. Avec l’essor du tourisme dans les Cévennes, la Bambouseraie devient une étape incontournable entre Anduze et Saint-Jean-du-Gard.</p>
+
+              <p><strong>Le savoir-faire des jardiniers.</strong> Entretenir une forêt de bambous demande un travail constant : éclaircir les cannes âgées, contenir l’expansion des rhizomes, favoriser la pousse des jeunes tiges et protéger les allées. Ce savoir-faire, transmis d’une génération de jardiniers à l’autre, permet de conserver la lumière et la lisibilité des perspectives.</p>
+
+              <p><strong>Un jardin botanique de 14 hectares.</strong> Grâce à plus d’un siècle et demi de soins, le domaine est devenu un jardin botanique d’environ 14 hectares végétalisés. Les bambous géants, dont certains dépassent 20 mètres, y côtoient des arbres remarquables — séquoias, palmiers, magnolias, ginkgos — et une grande diversité de plantes exotiques.</p>
+
+              <p><strong>Le Vallon du Dragon.</strong> Au tournant des années 2000, le paysagiste Érik Borja conçoit le Vallon du Dragon, un jardin inspiré des traditions japonaises. Bassins, rochers, végétaux taillés et jeux de perspectives y composent une promenade contemplative, en contraste avec l’exubérance de la forêt de bambous.</p>
+
+              <p><strong>Le village laotien.</strong> Le parcours traverse aussi un village laotien, reconstitué avec des maisons sur pilotis au milieu des bambous. Il rappelle l’usage quotidien de cette plante en Asie, où elle sert à la construction, à l’artisanat et à l’alimentation.</p>
+
+              <p><strong>Le bambou, matériau aux mille usages.</strong> En Asie, le bambou sert à bâtir des maisons et des échafaudages, à fabriquer des meubles, des ustensiles, des instruments de musique ou du papier ; ses jeunes pousses se consomment en cuisine. Le parcours rappelle cette polyvalence, qui fait du bambou l’une des plantes les plus utilisées par l’homme.</p>
+
+              <p><strong>Un décor de cinéma.</strong> Son atmosphère de jungle au cœur des Cévennes a attiré de nombreux tournages de films et de séries. On cite souvent <em>Le Salaire de la peur</em> d’Henri-Georges Clouzot (1953), dont certaines scènes auraient été tournées dans le Gard. Les allées de bambous ont ainsi servi à évoquer l’Asie, l’Amérique du Sud ou des contrées imaginaires.</p>
+
+              <p><strong>Une pépinière réputée.</strong> Au-delà du jardin, la Bambouseraie produit et commercialise des bambous et des plantes pour les particuliers comme pour les paysagistes. Cette activité de pépinière prolonge la vocation d’acclimatation voulue par Eugène Mazel et a contribué à diffuser le bambou dans les jardins français.</p>
+
+              <p><strong>Au rythme des saisons.</strong> Au printemps, les jeunes pousses de bambou percent le sol et grandissent à vue d’œil ; l’été, les allées offrent une fraîcheur recherchée ; l’automne colore les érables et les ginkgos ; l’hiver révèle la structure des tiges et le vert persistant des bambous. Chaque saison propose ainsi une visite différente.</p>
+
+              <p><strong>Un jardin vivant.</strong> La Bambouseraie est aussi une pépinière et un lieu d’animations. Floraisons, feuillages et programmations changent au fil des saisons, et le jardin a obtenu en 2019 la marque Esprit parc national, qui valorise les activités respectueuses des patrimoines naturels des Cévennes.</p>
+
+              <p><strong>Aux portes des Cévennes.</strong> Installée à la charnière entre la plaine et la montagne, la Bambouseraie s’inscrit dans un territoire riche en patrimoine : Anduze et son grand temple, la grotte de Trabuc, le Musée du Désert à Mialet et le train à vapeur des Cévennes, qui marque un arrêt au jardin. Un siècle et demi après sa création, le rêve d’Eugène Mazel reste l’un des paysages les plus singuliers du Gard.</p>
+
+              <p><strong>Anduze et ses vases.</strong> La ville voisine d’Anduze, surnommée la « porte des Cévennes », est célèbre pour ses grands vases en terre vernissée, décorés de guirlandes et de flammés verts et jaunes, dont la tradition remonte au XVII<sup>e</sup> siècle. Présents dans de nombreux jardins, ils prolongent naturellement la visite de la Bambouseraie par la découverte de l’artisanat local.</p>
+
+            </div>
+          </section>
+
+
+      
+         <div class="retour-plus">
+            <a href="bambouseraie-anduze.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche La Bambouseraie</strong>
+         
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+
+
+ <button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/gard/gard.html">← Retour à la fiche Gard</a></div>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

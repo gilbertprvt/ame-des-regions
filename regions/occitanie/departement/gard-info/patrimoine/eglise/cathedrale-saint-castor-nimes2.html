@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cathédrale Saint-Castor de Nîmes — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/gard/gard.html">
+            ← Retour à la fiche Gard
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>C</em>athédrale<br/><span style="padding-left: 60px;"><em>S</em>aint-<em>C</em>astor</span></h1>
+</div>
+<img alt="Carte Gard" src="../../../../../../assets/departement/occitanie/carte-gard.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Gard" src="../../../../../../assets/departement/occitanie/gard.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Édifices religieux ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#visite">🏛️ Architecture &amp; visite</a>
+<a href="#accords">✨ Trésors &amp; œuvres</a>
+<a href="#jardins">🏰 Patrimoine &amp; anecdotes</a>
+<a href="#infos-pratiques">📍 Informations pratiques</a>
+<a href="#approfondir">🔎 Pour approfondir</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte">
+<p><strong>Une cathédrale au cœur de la vieille ville.</strong> La cathédrale Notre-Dame-et-Saint-Castor domine la place aux Herbes, dans le centre historique de Nîmes, à quelques pas de l’ancien palais épiscopal. Elle occupe un secteur de la ville antique de <em>Nemausus</em> ; une tradition ancienne, difficile à vérifier, place même sous ses fondations un temple romain.</p>
+<p><strong>Un siège épiscopal très ancien.</strong> Le christianisme s’implante à Nîmes à la fin de l’Antiquité et l’évêché est attesté dès cette époque : un concile s’y réunit à la fin du IV<sup>e</sup> siècle. Un premier groupe épiscopal existe probablement à l’emplacement de l’édifice actuel, mais ses états successifs du haut Moyen Âge restent mal connus.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Cathédrale Saint-Castor de Nîmes" src="../../../../../../assets/departement/occitanie/photo/gard/cathedrale-saint-castor-nimes.jpg"/>
+<figcaption>La façade romane dominent la place aux Herbes, au cœur de la vieille ville</figcaption>
+</figure>
+<div class="clearfix"></div>
+<p><strong>La consécration de 1096.</strong> L’édifice roman est consacré en 1096 par le pape Urbain II, qui parcourt alors le Midi pour prêcher la première croisade et consacre plusieurs grandes églises de la région, dont Saint-Nazaire de Béziers. La cathédrale est probablement achevée au cours du XII<sup>e</sup> siècle.</p>
+<p><strong>Notre-Dame et saint Castor.</strong> La cathédrale est d’abord dédiée à la Vierge. Le vocable de saint Castor lui est associé en l’honneur d’un évêque d’Apt du V<sup>e</sup> siècle que la tradition fait naître à Nîmes. Cette double dédicace rappelle l’attachement de la ville à ses saints locaux.</p>
+<p><strong>Une façade romane exceptionnelle.</strong> L’édifice conserve une façade romane à arcatures lombardes, un grand fronton triangulaire et une longue frise sculptée consacrée à des épisodes de l’Ancien Testament, depuis la Création et le péché d’Adam et Ève jusqu’aux récits de Caïn et Abel et de Noé. Ces bas-reliefs du XII<sup>e</sup> siècle, inspirés par l’art antique encore très présent à Nîmes, constituent un témoignage majeur de la sculpture romane méridionale.</p>
+<p><strong>Le clocher, repère de la ville.</strong> Le clocher carré, élevé sur le flanc de la façade, est l’un des éléments les plus anciens et les plus visibles de l’ensemble. Il a traversé les destructions successives et reste, avec la frise, le principal témoin de l’édifice médiéval.</p>
+<p><strong>Nîmes, ville de la Réforme.</strong> Au XVI<sup>e</sup> siècle, la Réforme gagne une grande partie de la population nîmoise, qui devient l’un des principaux foyers protestants du royaume. La cathédrale se retrouve au cœur des affrontements entre catholiques et réformés qui marquent durablement l’histoire de la ville.</p>
+<p><strong>La Michelade de 1567.</strong> Le 29 septembre 1567, jour de la Saint-Michel, des protestants nîmois massacrent plusieurs dizaines de catholiques, notables et ecclésiastiques ; des corps sont jetés dans le puits de la cour de l’évêché, tout proche. L’épisode, appelé la « Michelade », reste l’un des plus sombres des guerres de Religion en Languedoc.</p>
+<p><strong>Un monument mutilé puis reconstruit.</strong> Pillée et en partie démolie lors des troubles du XVI<sup>e</sup> siècle puis des soulèvements protestants des années 1620, la cathédrale perd la majeure partie de ses structures romanes. La nef est reconstruite au XVII<sup>e</sup> siècle, tandis que les sculptures endommagées de la frise sont complétées ou refaites dans un esprit proche de l’original.</p>
+<p><strong>Le temps de la Contre-Réforme.</strong> Après la révocation de l’édit de Nantes en 1685, l’Église catholique cherche à reconquérir une ville restée largement protestante. Le palais épiscopal voisin est reconstruit à la fin du XVII<sup>e</sup> siècle, et l’évêque Esprit Fléchier, prédicateur célèbre et membre de l’Académie française, gouverne le diocèse de 1687 à 1710.</p>
+<p><strong>Révolution et Concordat.</strong> Sous la Révolution, la cathédrale est fermée au culte et utilisée à d’autres fins. Le Concordat de 1801 supprime le diocèse de Nîmes, rattaché à celui d’Avignon, avant qu’il ne soit rétabli en 1821. Le diocèse porte aujourd’hui le nom de Nîmes, Uzès et Alès, rappelant les anciens évêchés réunis.</p>
+<p><strong>La restauration d’Henri Révoil.</strong> Au XIX<sup>e</sup> siècle, l’architecte diocésain Henri Révoil conduit une importante campagne de travaux. L’intérieur est largement repris dans un style néo-roman et néo-byzantin, avec un nouveau chœur et des décors peints qui donnent à la cathédrale l’essentiel de son aspect intérieur actuel.</p>
+<p><strong>Un monument historique.</strong> La cathédrale est classée au titre des Monuments historiques en 1906. Le palais épiscopal voisin abrite aujourd’hui le musée du Vieux Nîmes, qui prolonge la découverte de l’histoire de ce quartier.</p>
+<p><strong>Une restauration contemporaine.</strong> Depuis plusieurs années, la cathédrale fait l’objet d’importants travaux. La façade occidentale, sa frise sculptée et le clocher ont bénéficié d’un vaste chantier de restauration, achevé dans sa phase principale en 2025, qui a rendu leur lisibilité aux reliefs romans.</p>
+<p><strong>Le quartier cathédral et la ville médiévale.</strong> Autour de la place aux Herbes se concentraient les fonctions religieuses et une part de la vie urbaine : cathédrale, résidence épiscopale, maisons canoniales et espaces de marché. La cathédrale n’était pas seulement un lieu de célébration ; elle constituait aussi un repère dans la topographie et les cérémonies de la cité.</p><p><strong>Un édifice à lire par couches successives.</strong> La façade occidentale ne doit pas être confondue avec un monument entièrement conservé du XII<sup>e</sup> siècle. Les destructions des guerres de Religion, les reconstructions classiques et les restaurations ultérieures y ont laissé leurs traces. L’observation des matériaux, des reprises de maçonnerie et des sculptures permet de distinguer plusieurs campagnes de travaux.</p><p><strong>La frise : un récit biblique en pierre.</strong> Les épisodes de la Genèse se déploient sous le fronton de la façade. Le récit sculpté remplissait une fonction religieuse et pédagogique, tout en manifestant le savoir-faire des ateliers romans. Plusieurs reliefs ont été restaurés ou refaits au XVII<sup>e</sup> siècle : leur aspect actuel témoigne donc à la fois de l’art médiéval et de sa réception à l’époque moderne.</p><p><strong>Le XVII<sup>e</sup> siècle et l’évêque Cohon.</strong> Sous l’épiscopat de Claude de Cohon, dans les années 1630-1640, la reconstruction donne à la cathédrale une organisation largement classique. La nef et ses chapelles latérales surmontées de tribunes appartiennent à cette grande phase de réaménagement, qui répond au retour du culte catholique dans une ville profondément marquée par les conflits confessionnels.</p><p><strong>Le portail et les décors du XIX<sup>e</sup> siècle.</strong> Le portail néoclassique à fronton triangulaire date de 1822. Entre 1877 et 1882, Henri Révoil transforme fortement l’espace intérieur dans un vocabulaire romano-byzantin ; les vitraux réalisés par Édouard Didron en 1882 participent de ce nouvel ensemble. La visite met ainsi en regard une façade médiévale et un intérieur largement réinterprété au XIX<sup>e</sup> siècle.</p><p><strong>Les œuvres conservées.</strong> L’intérieur renferme notamment un grand orgue dont le buffet remonte à 1643, ainsi que des œuvres peintes et des monuments funéraires liés à l’histoire du diocèse. Ces éléments rappellent que l’histoire d’une cathédrale se lit aussi dans son mobilier, ses commandes artistiques et les transformations de sa liturgie.</p><p><strong>Les restaurations et les métiers du patrimoine.</strong> Le chantier engagé en 2022 a mobilisé tailleurs de pierre, restaurateurs de sculptures, maîtres-verriers, spécialistes des cloches, architectes et archéologues. Après les interventions sur le clocher, la frise a notamment bénéficié en 2024 d’un nettoyage au laser. Les travaux sur la couverture du narthex ont prolongé cette campagne en 2025 ; les observations archéologiques enrichissent la connaissance des différentes phases de l’édifice.</p><p><strong>Pour approfondir.</strong> Les publications de la Direction régionale des affaires culturelles d’Occitanie documentent la restauration récente, tandis que le volume « Occitanie, terre de cathédrales » du ministère de la Culture décrit l’architecture et les œuvres de Saint-Castor. <a href="https://www.culture.gouv.fr/regions/drac-occitanie/actualites/actualite-a-la-une/journees-europeennes-du-patrimoine-a-la-cathedrale-de-nimes-decouvrez-les-artisans-a-l-aeuvre-sur-un-chantier-gigantesque" rel="noopener noreferrer" target="_blank">Consulter le dossier du ministère de la Culture ↗</a>.</p><p><strong>Une mémoire de pierre nîmoise.</strong> Saint-Castor résume à elle seule une grande partie de l’histoire de Nîmes : héritage antique, puissance de l’évêché médiéval, déchirements des guerres de Religion, reconquête catholique, restaurations du XIX<sup>e</sup> siècle et sauvegarde patrimoniale. Sa frise romane en fait l’un des témoins les plus précieux de l’art médiéval du Languedoc.</p>
+</div>
+</section>
+<div class="retour-plus">
+<a class="btn-en-savoir-plus" href="cathedrale-saint-castor-nimes.html">
+<span aria-hidden="true" class="btn-plus-icon">
+<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"></path>
+<path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"></path>
+</svg>
+</span>
+<span class="btn-plus-text">
+<strong>Retour fiche Cathédrale Saint-Castor</strong>
+</span>
+<span aria-hidden="true" class="btn-plus-arrow">→</span>
+</a>
+</div>
+<button aria-label="Revenir en haut de la page" class="btn-haut-page" title="Haut de page" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path>
+</svg>
+</button>
+<div class="retour-haut"><a href="../../../../occitanie-departement/gard/gard.html">← Retour à la fiche Gard</a></div>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+</div></div></div></div></body>
+</html>

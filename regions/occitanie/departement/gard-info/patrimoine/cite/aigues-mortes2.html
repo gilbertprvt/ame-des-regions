@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aigues-Mortes — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 50px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/gard/gard.html" class="produit-btn-retour">
+            ← Retour à la fiche Gard
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+
+          <h1><em>A</em>igues-<br><span style="padding-left: 60px;"><em>M</em>ortes</span><span class="sous-titre">Cité fortifiée médiévale</span></h1>
+
+        </div>
+        <img src="../../../../../../assets/departement/occitanie/carte-gard.png"
+               alt="Carte Gard"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../../../../assets/departement/occitanie/gard.png" alt="Écusson Gard" />
+    </div>
+
+    <div class="hero-label-bas">
+    ⟹ Sites Emblématiques ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire"   class="active">📖 Histoire</a>
+          <a href="#visite"              >🥾 Visite pratique</a>
+          <a href="#patrimoine"          >🏆 Reconnaissance</a>
+          <a href="#legendes"            >🌿 Cadre & paysage</a>
+          <a href="#alentours"           >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un pays d’eaux dormantes.</strong> Aigues-Mortes est née dans un milieu amphibie façonné par le Rhône. Pendant des millénaires, les alluvions du fleuve et les courants marins ont construit en Petite Camargue un paysage de cordons sableux, de lagunes, de marais et de canaux naturels. Le nom de la ville vient de l’occitan <em>aigas mortas</em>, du latin <em>aquae mortuae</em> : les « eaux mortes », c’est-à-dire les eaux stagnantes des étangs qui l’entourent. Ce décor, à la fois hostile et riche en ressources, a déterminé toute son histoire.</p>
+
+              <p><strong>Le sel, première richesse du littoral.</strong> Bien avant la fondation royale, les rivages de Camargue sont exploités pour le sel. La tradition attribue même à un Romain nommé Peccius l’aménagement des premiers bassins, souvenir que conserverait le nom des salins de Peccais. Au haut Moyen Âge, les terres de la zone appartiennent en grande partie à l’abbaye bénédictine de Psalmody, qui tire des revenus importants de la pêche et de la production de sel. Une tour de guet, la tour Matafère, dont la tradition fait remonter l’origine à l’époque carolingienne, surveillait déjà ces rivages.</p>
+
+              <p><strong>Un port pour le royaume de France.</strong> Au début du XIII<sup>e</sup> siècle, le domaine royal ne dispose d’aucun accès direct à la Méditerranée : Marseille dépend du comté de Provence, Montpellier du roi d’Aragon, et les autres ports du Languedoc de seigneurs puissants. Après l’intégration du Languedoc à la couronne en 1229, Louis IX cherche un débouché sûr, à la fois commercial et militaire. En 1240, il obtient par échange avec les moines de Psalmody le site d’Aigues-Mortes et y décide la création d’une ville nouvelle.</p>
+
+              <p><strong>Attirer les habitants.</strong> Fonder une ville au milieu des marais suppose de convaincre des colons de s’y installer. En 1246, Saint Louis accorde à Aigues-Mortes une charte de franchises très généreuse : exemptions d’impôts, privilèges commerciaux et garanties juridiques. Marchands, artisans et marins affluent. La ville est tracée selon un plan régulier en damier, typique des villes neuves médiévales, avec des rues rectilignes se croisant à angle droit autour d’une place centrale.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+                <img alt="Remparts d’Aigues-Mortes" src="../../../../../../assets/departement/occitanie/photo/gard/aigues-morte.jpg"/>
+                <figcaption>L’enceinte d’Aigues-Mortes, dressée au milieu des étangs et des salins de Petite Camargue</figcaption>
+              </figure>
+              <div class="clearfix"></div>
+
+              <p><strong>La Tour de Constance.</strong> Premier grand chantier royal, la Tour de Constance est élevée à partir de 1242, probablement à l’emplacement de l’ancienne tour Matafère. Ce donjon circulaire d’environ 22 mètres de diamètre, aux murs épais de près de 6 mètres, abrite deux grandes salles voûtées superposées. Il est surmonté d’une tourelle de guet dont la lanterne servait de phare pour guider les navires à travers les étangs. L’ensemble atteint près de 40 mètres et demeure le symbole de la puissance capétienne sur le littoral.</p>
+
+              <p><strong>Le départ des croisades.</strong> Le 25 août 1248, Louis IX embarque à Aigues-Mortes pour la septième croisade, à la tête d’une flotte en grande partie affrétée auprès de Gênes et de Marseille. Les navires rejoignent la mer par des chenaux creusés à travers les étangs. En 1270, le roi repart du même port pour la huitième croisade, dirigée vers Tunis, où il meurt de maladie quelques semaines plus tard. Aigues-Mortes reste ainsi à jamais associée à la figure de Saint Louis.</p>
+
+              <p><strong>L’enceinte des successeurs.</strong> Les remparts ne sont pas l’œuvre de Saint Louis lui-même. Son fils Philippe III le Hardi en lance la construction à partir de 1272, en confiant le financement et l’organisation du chantier au marchand génois Guillaume Boccanegra. Les travaux s’achèvent vers 1300 sous Philippe IV le Bel. L’enceinte forme un quadrilatère d’environ 1 640 mètres de courtines, flanquées de tours et percées de portes, dont plusieurs donnaient directement sur les quais et le port.</p>
+
+              <p><strong>Les Templiers prisonniers.</strong> Lors de l’arrestation des Templiers ordonnée par Philippe le Bel en 1307, Aigues-Mortes est l’un des lieux de détention du Midi. Plusieurs dizaines de frères de l’ordre, arrêtés dans la région, sont enfermés dans la Tour de Constance avant d’être jugés. C’est le premier usage carcéral connu d’un édifice qui deviendra, au fil des siècles, l’une des prisons les plus célèbres de France.</p>
+
+              <p><strong>Grandeur et déclin d’un port.</strong> Aux XIII<sup>e</sup> et XIV<sup>e</sup> siècles, Aigues-Mortes est l’un des grands ports du royaume en Méditerranée, par lequel transitent épices, draps, sel et denrées venues d’Orient. Mais les chenaux s’ensablent sans cesse et exigent des travaux coûteux. Le rattachement de Marseille à la couronne en 1481, puis la création du port de Sète en 1666, achèvent de marginaliser la cité, désormais éloignée de la mer par l’avancée du littoral.</p>
+
+              <p><strong>Le massacre des Bourguignons.</strong> Pendant la guerre civile entre Armagnacs et Bourguignons, la ville change plusieurs fois de mains. En 1418, selon une tradition tenace, les partisans armagnacs reprennent la place et massacrent la garnison bourguignonne ; faute de pouvoir enterrer rapidement les corps, on les aurait entassés dans une tour et recouverts de sel. L’anecdote a donné son nom à la tour des Bourguignons, l’une des tours de l’enceinte.</p>
+
+              <p><strong>L’entrevue de 1538.</strong> En juillet 1538, Aigues-Mortes accueille un événement diplomatique majeur : la rencontre entre le roi François I<sup>er</sup> et l’empereur Charles Quint, peu après la trêve de Nice. Les deux souverains, rivaux depuis des années, s’y retrouvent pour sceller un rapprochement qui sera de courte durée. Cet épisode montre que la cité conserve alors un prestige symbolique, même si son rôle portuaire décline.</p>
+
+              <p><strong>Place protestante puis prison des huguenots.</strong> Pendant les guerres de Religion, Aigues-Mortes devient une place de sûreté accordée aux protestants. Après la révocation de l’édit de Nantes en 1685, la situation s’inverse : la Tour de Constance sert de prison aux protestants refusant d’abjurer. Des camisards y sont enfermés, et le prophète Abraham Mazel parvient à s’en évader en 1705. Au XVIII<sup>e</sup> siècle, la tour est surtout la prison des femmes huguenotes.</p>
+
+              <p><strong>Marie Durand et le mot « Résister ».</strong> La plus célèbre de ces prisonnières est Marie Durand, arrêtée en 1730 alors qu’elle n’était qu’une adolescente, parce qu’elle était la sœur d’un pasteur. Elle reste enfermée trente-huit ans et n’est libérée qu’en 1768, sans jamais avoir renié sa foi. La tradition lui attribue l’inscription « REGISTER » (résister en occitan) gravée sur la margelle du puits de la salle haute, devenue un symbole de la liberté de conscience.</p>
+
+              <p><strong>Le sel et le drame de 1893.</strong> Au XIX<sup>e</sup> siècle, l’exploitation du sel s’industrialise avec la Compagnie des Salins du Midi, fondée en 1856. Les salins emploient de nombreux saisonniers, notamment italiens. En août 1893, des affrontements entre ouvriers français et italiens dégénèrent en véritable chasse à l’homme : au moins huit Italiens sont tués selon le bilan officiel, et de nombreux autres blessés. Ce massacre provoque une grave crise diplomatique entre la France et l’Italie.</p>
+
+              <p><strong>La redécouverte patrimoniale.</strong> Dès le XIX<sup>e</sup> siècle, les historiens et les architectes du service des Monuments historiques reconnaissent l’importance exceptionnelle de la cité : la Tour de Constance et les remparts comptent parmi les premiers monuments protégés en France. Restaurés, ils sont aujourd’hui gérés par le Centre des monuments nationaux, qui en assure l’ouverture au public.</p>
+
+              <p><strong>Une cité vivante aux portes de la Camargue.</strong> Aigues-Mortes est aujourd’hui l’un des ensembles fortifiés médiévaux les mieux conservés d’Europe. Ses remparts presque intacts, son plan régulier, ses salins aux teintes roses et sa position entre terre et eau en font un lieu unique. Les fêtes de la Saint-Louis, célébrées chaque année à la fin de l’été, rappellent encore l’acte fondateur du roi, près de huit siècles après la naissance de la ville.</p>
+
+            </div>
+          </section>
+
+          <div class="retour-plus">
+            <a href="aigues-mortes.html" class="btn-en-savoir-plus">
+              <span class="btn-plus-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"/>
+                  <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"/>
+                </svg>
+              </span>
+              <span class="btn-plus-text">
+                <strong>Retour fiche Aigues-Mortes</strong>
+              </span>
+              <span class="btn-plus-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

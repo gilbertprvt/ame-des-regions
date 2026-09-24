@@ -161,7 +161,7 @@
     .produit-body { padding: 48px 0 80px; }
     .produit-layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr 50px;
       gap: 36px;
       align-items: start;
     }
@@ -508,6 +508,7 @@
       }
     }
 
+
   </style>
 </head>
 <body class="produit-page">
@@ -638,6 +639,30 @@
             </a>
           </div>
 
+ 
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+  </svg>
+</button>. 
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
 
 </body>
 </html>
