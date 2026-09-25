@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Taureaux et chevaux de Camargue gardoise — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 130px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/gard/gard.html">
+            ← Retour à la fiche Gard
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>T</em>aureaux &amp; <br/><span style="padding-left: 60px;"><em>C</em>hevaux</span><br/><span style="padding-left: 120px;"><em>C</em>amargue gardoise</span><span class="sous-titre">Raço di Biòu &amp; cheval Camargue</span></h1>
+</div>
+<img alt="Carte Gard" src="../../../../../../assets/departement/occitanie/carte-gard.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Gard" src="../../../../../../assets/departement/occitanie/gard.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Sites Emblématiques ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#visite">🥾 Visite pratique</a>
+<a href="#patrimoine">🏆 Reconnaissance</a>
+<a href="#legendes">🌿 Nature &amp; paysage</a>
+<a href="#alentours">📍 Aux alentours</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p><strong>Deux animaux façonnés par le delta.</strong> Le taureau Camargue et le cheval Camargue sont indissociables des paysages du delta du Rhône. Leurs origines exactes se perdent dans une longue histoire d’élevage, de déplacements d’animaux et de sélection locale : il serait excessif de leur attribuer une filiation unique et certaine depuis l’Antiquité. Ce qui est bien visible, en revanche, c’est leur adaptation aux pâturages extensifs, aux terrains humides et aux variations saisonnières d’un territoire longtemps difficile à exploiter.</p><p><strong>La Petite Camargue, terre de pâturage.</strong> À l’ouest du Petit Rhône, les prés du Cailar, les environs de Vauvert et les marais proches de Saint-Laurent-d’Aigouze accueillent depuis longtemps des troupeaux. Les sansouïres, les prairies et les zones inondables imposent des déplacements saisonniers et une surveillance attentive. Le pâturage contribue à maintenir certains milieux ouverts, même si ses effets dépendent de la charge animale et des conditions écologiques. L’élevage camarguais s’est ainsi construit dans une relation permanente entre animaux, eau, végétation et travail humain.</p><p><strong>La manade, bien davantage qu’un troupeau.</strong> Une manade est un élevage de taureaux ou de chevaux conduit selon des pratiques extensives. Le manadier organise la reproduction, le suivi sanitaire et les déplacements ; les gardians interviennent à cheval pour rassembler et trier les bêtes. Leur trident, outil traditionnel de conduite, est devenu l’un des symboles de ce métier. Derrière les images de galop dans les marais, la vie quotidienne demande une connaissance précise des animaux, du terrain et des risques liés aux crues ou à la chaleur.</p><figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Taureaux et chevaux Camargue dans les marais gardois" src="../../../../../../assets/departement/occitanie/photo/gard/taureaux-chevaux-camargue.jpg"/>
+<figcaption>Gardians à cheval conduisant une manade de taureaux noirs à travers les marais</figcaption>
+</figure><div class="clearfix"></div><p><strong>Le cheval blanc qui naît souvent sombre.</strong> Le cheval Camargue est célèbre pour sa robe claire, mais les poulains naissent généralement avec une robe foncée qui s’éclaircit en grandissant. Compact, endurant et sûr de pied, il est particulièrement adapté au travail des gardians. La reconnaissance officielle de la race et la tenue de son livre généalogique ont contribué à préserver ses caractéristiques. Son image de cheval « sauvage » doit être nuancée : les chevaux de manade sont des animaux d’élevage, même lorsqu’ils vivent une grande partie de l’année en plein air.</p><p><strong>Le taureau Camargue et la culture de la bouvine.</strong> Plus petit et plus vif que certains bovins élevés pour la viande, le taureau Camargue occupe une place particulière dans les traditions locales. Dans la course camarguaise, il n’est pas mis à mort : les raseteurs tentent de retirer des attributs fixés à ses cornes. Les meilleurs cocardiers acquièrent une réputation durable et peuvent être célébrés bien au-delà de leur manade. Cette culture de la bouvine relie élevage, arènes, fêtes villageoises et mémoire collective.</p><p><strong>Le Cailar et la mémoire des grands cocardiers.</strong> Au Cailar, la mémoire du taureau Sanglier, mort en 1933, témoigne de l’attachement des habitants à certains animaux. Les noms des cocardiers se transmettent d’une génération à l’autre, comme ceux de sportifs ou d’artistes populaires. Ce phénomène distingue la course camarguaise d’autres spectacles taurins : la carrière et le caractère du taureau y occupent une place centrale. Les arènes et les places des villages gardois sont ainsi des lieux de transmission autant que de divertissement.</p><p><strong>Baroncelli, Mistral et l’affirmation d’une identité.</strong> À la fin du XIXe siècle et au début du XXe, le mouvement de renaissance provençale a contribué à mettre en valeur la langue, les costumes et les usages régionaux. Le marquis Folco de Baroncelli, poète et manadier, fonde la Nacioun Gardiano en 1904 pour défendre et transmettre les traditions camarguaises. Son action a durablement marqué l’image du gardian et les cérémonies locales. Cette tradition est à la fois héritée du travail pastoral et continuellement réinterprétée par les fêtes et les associations.</p><p><strong>Abrivado, bandido : des gestes devenus fêtes.</strong> Historiquement, conduire les taureaux entre pâturages et arènes nécessitait l’intervention de cavaliers expérimentés. L’abrivado évoque l’arrivée des taureaux, la bandido leur retour. Aujourd’hui, ces manifestations sont aussi des rendez-vous festifs qui mobilisent manades, gardians et villages. Elles font partie du patrimoine vivant de la Petite Camargue, tout en demandant des règles de sécurité et une attention croissante au bien-être des animaux.</p><p><strong>Un patrimoine vivant confronté aux changements.</strong> La reconnaissance du cheval Camargue et l’appellation d’origine de la viande de taureau ont donné des cadres à des pratiques anciennes. Mais les manades font face au coût du foncier, aux épisodes de sécheresse, à la salinisation et aux évolutions des attentes sociales. Préserver ce patrimoine ne consiste donc pas à figer une carte postale : il s’agit de maintenir des savoir-faire, des milieux naturels et des activités économiquement viables dans un delta en transformation.</p><p><strong>Des races construites dans la durée. </strong>Les caractéristiques actuelles du cheval et du taureau Camargue résultent d’une histoire longue, où se mêlent adaptation aux zones humides et choix des éleveurs. La rusticité ne signifie pas absence de soins : les animaux doivent supporter les variations de température, les insectes, les sols irréguliers et les périodes de faible ressource fourragère. Les manadiers sélectionnent aussi des aptitudes liées au travail ou aux traditions taurines. Cette double influence du milieu et de l’élevage explique pourquoi les origines légendaires doivent être distinguées des connaissances zootechniques.</p><p><strong>Le calendrier d’une manade. </strong>La vie d’une manade suit les saisons. La pousse de l’herbe, la disponibilité de l’eau, les naissances, les opérations de tri et les manifestations locales déterminent le rythme de travail. Rassembler les animaux dans de vastes pâturages demande de l’expérience : le gardian doit anticiper leurs réactions, connaître les passages praticables et éviter les situations dangereuses. Cette dimension quotidienne, souvent invisible pour le public, constitue une part essentielle du patrimoine professionnel camarguais.</p><p><strong>Le cocardier, une carrière singulière. </strong>Dans la course camarguaise, certains taureaux se distinguent par leur comportement dans l’arène et deviennent des cocardiers connus. Le public suit leur carrière au fil des saisons, et leur nom peut rester associé à un village ou à une manade bien après leur retraite. Cette mémoire populaire se retrouve dans les récits familiaux, les photographies anciennes et parfois les monuments. Elle rappelle que les traditions taurines locales reposent autant sur la connaissance individuelle des animaux que sur la fête elle-même.</p><p><strong>Paysage, économie et transmission. </strong>Une manade entretient des relations avec de nombreux acteurs : propriétaires de pâturages, vétérinaires, organisateurs de courses, associations et collectivités. Son activité peut contribuer au maintien de prairies ouvertes et de savoir-faire équestres, tout en devant composer avec les enjeux écologiques des zones humides. La transmission ne concerne donc pas seulement les costumes et les cérémonies : elle passe par l’apprentissage de la conduite des troupeaux, de la lecture du terrain et des responsabilités envers les animaux.</p></div>
+</section>
+<div class="retour-plus">
+<a class="btn-en-savoir-plus" href="taureaux-chevaux-camargue-gardoise.html">
+<span aria-hidden="true" class="btn-plus-icon">
+<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"></path>
+<path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"></path>
+</svg>
+</span>
+<span class="btn-plus-text">
+<strong>Retour fiche Taureaux &amp; Chevaux Camargue gardoise</strong>
+</span>
+<span aria-hidden="true" class="btn-plus-arrow">→</span>
+</a>Retour fiche
+          </div>
+<!--  Retour flottant -->
+<button aria-label="Revenir en haut de la page" class="btn-haut-page" title="Haut de page" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+</div></div></div></div></body>
+</html>

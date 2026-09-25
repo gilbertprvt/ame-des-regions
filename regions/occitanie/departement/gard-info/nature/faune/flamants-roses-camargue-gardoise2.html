@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Flamants roses de la Camargue gardoise — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 130px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/gard/gard.html">
+            ← Retour à la fiche Gard
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>F</em>lamants roses<br/><span style="padding-left: 0px;"><em>C</em>amargue gardoise</span><span class="sous-titre">L’oiseau emblème des étangs</span></h1>
+</div>
+<img alt="Carte Gard" src="../../../../../../assets/departement/occitanie/carte-gard.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Gard" src="../../../../../../assets/departement/occitanie/gard.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Sites Emblématiques ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#visite">🥾 Visite pratique</a>
+<a href="#patrimoine">🏆 Reconnaissance</a>
+<a href="#legendes">🌿 Nature &amp; paysage</a>
+<a href="#alentours">📍 Aux alentours</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p><strong>Un grand voyageur installé dans les lagunes.</strong> Le flamant rose (<em>Phoenicopterus roseus</em>) appartient à une lignée d’oiseaux très ancienne, spécialisée dans les eaux peu profondes. Contrairement à l’image d’un animal attaché à un seul étang, il parcourt un vaste réseau de zones humides, de la péninsule Ibérique à l’Italie et à l’Afrique du Nord. Les oiseaux que l’on observe près d’Aigues-Mortes peuvent donc avoir fréquenté, au cours de leur vie, plusieurs pays du bassin méditerranéen. La Camargue constitue pour eux à la fois un lieu de reproduction, de nourrissage et de repos.</p><p><strong>Comment le delta du Rhône a façonné son habitat.</strong> Pendant des millénaires, le Rhône a déplacé ses bras, accumulé des sédiments et créé une mosaïque de lagunes, d’étangs saumâtres, de sansouïres et de marais. Les flamants exploitent précisément cette diversité : leur long cou et leur bec recourbé leur permettent de filtrer la vase et l’eau à la recherche de petits invertébrés. Les niveaux d’eau et la salinité déterminent les zones où ils trouvent de la nourriture. Les aménagements humains, notamment les salins, ont ensuite modifié ces équilibres tout en créant certains habitats favorables.</p><p><strong>Une colonie qui dépend de la tranquillité des îlots.</strong> La Camargue abrite le principal site de reproduction régulier de l’espèce en France. Pour nicher, les flamants recherchent des îlots isolés des prédateurs terrestres et des dérangements. Les couples édifient de petits monticules de boue sur lesquels la femelle pond généralement un œuf. Les deux parents participent à l’incubation et nourrissent le poussin grâce à une sécrétion produite dans leur appareil digestif. Les jeunes se regroupent ensuite en véritables crèches, surveillées par des adultes. Une modification brutale du niveau de l’eau ou des passages trop proches peuvent compromettre une saison entière.</p><figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Flamants roses dans un étang de la Camargue gardoise" src="../../../../../../assets/departement/occitanie/photo/gard/flamants-roses-camargue.jpg"/>
+<figcaption>Groupe de flamants roses se nourrissant dans un étang près d’Aigues-Mortes</figcaption>
+</figure><div class="clearfix"></div><p><strong>Une couleur qui raconte leur alimentation.</strong> Les poussins naissent couverts d’un duvet gris ou blanchâtre : ils ne deviennent pas immédiatement roses. La teinte caractéristique apparaît progressivement grâce aux caroténoïdes contenus dans les petits organismes qu’ils consomment, notamment les artémies des eaux salées. Le flamant filtre la nourriture grâce aux lamelles de son bec, souvent la tête renversée sous l’eau. Sa silhouette spectaculaire est donc le résultat d’adaptations très concrètes à un milieu exigeant, et non d’une simple particularité décorative.</p><p><strong>Des décennies difficiles au XXe siècle.</strong> La reproduction camarguaise a longtemps été fragile. La collecte d’œufs, les tirs, les dérangements et les transformations des zones humides ont pesé sur les colonies. Certaines saisons se sont soldées par de très faibles résultats. Cette histoire rappelle qu’une grande concentration d’oiseaux n’est pas nécessairement le signe d’une population à l’abri : lorsqu’une espèce dépend de quelques sites de nidification, un incident local peut avoir des conséquences à grande échelle.</p><p><strong>La Tour du Valat et le suivi scientifique.</strong> Fondée en 1954 par Luc Hoffmann, la Tour du Valat a joué un rôle majeur dans l’étude et la protection des zones humides méditerranéennes. La création et l’entretien d’îlots adaptés ont favorisé la reproduction. Depuis 1977, le baguage de flamants avec des bagues lisibles à distance permet de reconstituer leurs déplacements, leur fidélité aux sites et parfois plusieurs décennies de vie. Chaque observation d’un oiseau bagué contribue à une connaissance collective de la population méditerranéenne.</p><p><strong>Aigues-Mortes : un paysage partagé entre sel et vie sauvage.</strong> Dans la Camargue gardoise, les salins d’Aigues-Mortes offrent un spectacle particulièrement saisissant : des bassins aux couleurs changeantes accueillent des groupes de flamants en quête de nourriture. Il faut toutefois distinguer les bassins où ils s’alimentent des îlots où se concentre la reproduction camarguaise. La saliculture et la biodiversité peuvent coexister, mais cet équilibre suppose une gestion attentive des niveaux d’eau, de la fréquentation et des habitats.</p><p><strong>Un symbole vivant, et non un décor.</strong> Le flamant rose est devenu une figure familière de la Camargue, présente sur les photographies, les affiches et les souvenirs. Derrière cette image se cache un oiseau sensible aux sécheresses, aux épisodes météorologiques extrêmes et aux changements de gestion des lagunes. L’observer à distance, sans chercher à approcher les groupes ni les jeunes, permet de préserver ce qui fait justement la beauté du spectacle : des oiseaux sauvages libres de se déplacer entre les étangs.</p><p><strong>Une vie rythmée par les saisons. </strong>La présence des flamants dans les étangs n’est pas identique toute l’année. Certains individus restent dans le Midi en hiver, tandis que d’autres gagnent des zones humides plus méridionales ou circulent entre les rives de la Méditerranée. Au printemps, les adultes reproducteurs peuvent parcourir de longues distances entre les lieux de nourrissage et la colonie. Le visiteur qui voit des centaines d’oiseaux sur un bassin n’assiste donc qu’à un instant d’une histoire beaucoup plus vaste, faite de déplacements, de fidélité à certains sites et d’occasions saisies lorsque les conditions deviennent favorables.</p><p><strong>Le rôle décisif de l’eau et du sel. </strong>Un étang trop profond empêche les flamants d’atteindre leur nourriture ; un bassin asséché ne leur offre plus les mêmes ressources. À l’inverse, une salinité adaptée peut favoriser certains petits crustacés dont ils se nourrissent. La gestion des niveaux d’eau est donc un véritable travail d’équilibriste. Dans les paysages aménagés des salins, la circulation de l’eau répond d’abord à une activité humaine, mais elle influence aussi la répartition des oiseaux. Cette interdépendance explique pourquoi la conservation ne se résume pas à interdire l’accès à un site : elle suppose de comprendre son fonctionnement hydraulique.</p><p><strong>Grandir au sein d’une colonie. </strong>Après l’éclosion, le jeune flamant dépend de ses parents pendant plusieurs semaines. Ceux-ci le reconnaissent notamment grâce à ses vocalisations au milieu d’une colonie très bruyante. Les jeunes rassemblés en crèche ne sont pas abandonnés : les adultes reviennent les nourrir. L’apprentissage de la recherche de nourriture, puis les premiers déplacements, constituent une période délicate. Les jeunes oiseaux, encore gris, peuvent être observés longtemps avant d’acquérir le plumage rosé caractéristique des adultes.</p><p><strong>Ce que révèle une simple bague. </strong>La lecture d’une bague à distance permet parfois de retrouver l’année de naissance d’un flamant et les régions où il a été observé. Les scientifiques peuvent ainsi étudier la survie des jeunes, les échanges entre colonies et les changements de parcours au fil des années. Les résultats rappellent que la protection d’un oiseau migrateur ne peut pas s’arrêter aux frontières du Gard : les conditions rencontrées en Espagne, en Italie ou en Afrique du Nord peuvent également influencer son avenir.</p></div>
+</section>
+<div class="retour-plus">
+<a class="btn-en-savoir-plus" href="flamants-roses-camargue-gardoise.html">
+<span aria-hidden="true" class="btn-plus-icon">
+<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22V5.5Z"></path>
+<path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22V5.5Z"></path>
+</svg>
+</span>
+<span class="btn-plus-text">
+<strong>Retour fiche Flamants roses Camargue gardoise</strong>
+</span>
+<span aria-hidden="true" class="btn-plus-arrow">→</span>
+</a>
+</div>
+<!--  Retour flottant -->
+<button aria-label="Revenir en haut de la page" class="btn-haut-page" title="Haut de page" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+</div></div></div></div></body>
+</html>
