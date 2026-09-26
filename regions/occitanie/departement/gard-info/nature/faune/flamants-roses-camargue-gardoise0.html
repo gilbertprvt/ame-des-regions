@@ -9,23 +9,57 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
 
+
     /* ─── BASE ─────────────────────────────────── */
     .produit-page { background: var(--ivoire); }
 
-    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    /* ─── LARGEURS : bandeau et colonnes de texte ─── */
+    /* Largeur maximale du bandeau photo (réduire pour un bandeau plus étroit) */
     .produit-hero {
-      background: #2C4A7C;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      /* Angles arrondis de la photo (augmenter pour plus d'arrondi) */
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    /* Largeur des colonnes de texte (augmenter pour un texte plus large) */
+    .produit-page .container {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+
+
+
+
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+   .produit-hero {
+      background-color: #2C4A7C; /* couleur de secours si la photo ne charge pas */
+     background-image: url('../../../../../../assets/departement/occitanie/panorama-gard.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       color: white;
       padding: 22px 0 0;
       position: relative;
       overflow: hidden;
     }
+    /* Voile sombre pour garder les textes lisibles sur la photo */
     .produit-hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: repeating-linear-gradient(45deg,
-        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
-        transparent 1px, transparent 12px);
+      background:
+        /* Assombrit le côté gauche (zone du titre) */
+        linear-gradient(to right,
+          rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 70%),
+        /* Voile haut/bas d'origine, un peu allégé */
+        linear-gradient(to bottom,
+          rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.10) 50%, rgba(0,0,0,0.45) 100%);
       pointer-events: none;
     }
 
@@ -83,7 +117,7 @@
       grid-template-columns: 1fr auto;
       gap: 24px;
       align-items: end;
-      padding-bottom: 28px;
+      padding-bottom: 12px;
       position: relative;
       z-index: 2;
     }
@@ -93,13 +127,31 @@
       font-weight: 700;
       line-height: 1.25;
       color: white;
-      margin-bottom: 90px;
-      margin-top: 30px;
+      margin-bottom: 0px;
+      margin-top: 10px;
+      /* Style affiche : ombre bleue pleine décalée + ombre noire + halo */
+      text-shadow:
+        3px 3px 0 #2C4A7C,
+        6px 6px 0 rgba(0,0,0,0.55),
+        0 0 30px rgba(0,0,0,0.6);
     }
+   
+
+.produit-hero-body h1 em {
+    color: #FAC775;          /* Initiales dorées */
+    font-style: italic;
+    font-size: 2em;
+    font-weight: 700;
+    text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55);
+}
+
+
+
+  /* 
     .produit-hero-body h1 em {
-      color: #C8843A;
+      color: #f2bc48ea;
       font-style: italic;
-    }
+    }. */
     .produit-hero-body h1 .sous-titre {
       display: block;
       font-size: 0.55em;
@@ -107,6 +159,7 @@
       font-style: italic;
       color: rgba(255,255,255,0.85);
       margin-top: 6px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.9);
     }
 
     .produit-hero-top {
@@ -122,7 +175,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: var(--ecusson-top, 30px);
+      top: var(--ecusson-top, 70px); /* position verticale de l'écusson (augmenter pour descendre) */
       z-index: 1;
       pointer-events: none;
     }
@@ -161,7 +214,7 @@
     .produit-body { padding: 48px 0 80px; }
     .produit-layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr 340px;
       gap: 36px;
       align-items: start;
     }
@@ -509,6 +562,10 @@
     }
 
   </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-gard.jpg'); }</style>
 </head>
 <body class="produit-page">
 
@@ -530,7 +587,7 @@
     <div class="produit-hero-body">
       <div>
           
-          <h1><em>F</em>lamants roses<br><span style="padding-left: 0px;"><em>C</em>amargue gardoise</span><span class="sous-titre">L’oiseau emblème des étangs</span></h1>
+          <h1><em>F</em>lamants roses<br><span style="padding-left: 0px;"><em>C</em>amargue </span> <span style="padding-left: 00px;">gardoise</span><span class="sous-titre">L’oiseau emblème des étangs</span></h1>
           
         </div>   
         <img src="../../../../../../assets/departement/occitanie/carte-gard.png"

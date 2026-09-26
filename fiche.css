@@ -1,0 +1,103 @@
+/* ══════════════════════════════════════════════════════════════
+   fiche.css — styles COMMUNS à toutes les fiches (bandeau + largeurs)
+   ──────────────────────────────────────────────────────────────
+   Ce fichier est chargé APRÈS le CSS propre à chaque page :
+   ce que vous modifiez ici s'applique à TOUTES les fiches d'un coup.
+
+   La photo du bandeau reste propre à chaque page (ligne
+   « background-image » juste sous le lien vers ce fichier).
+   Convention : assets/departement/<région>/panorama-<département>.jpg
+   Si la photo n'existe pas encore, le bandeau reste bleu.
+   ══════════════════════════════════════════════════════════════ */
+
+
+/* ─── LARGEURS : bandeau et colonnes de texte ─────────────────── */
+/* Largeur maximale du bandeau photo (réduire pour un bandeau plus étroit) */
+.produit-hero {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  /* Angles arrondis de la photo (augmenter pour plus d'arrondi) */
+  border-radius: 16px;
+  overflow: hidden;
+  /* Cadrage de la photo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Largeur des colonnes de texte (garder la même valeur que le bandeau) */
+.produit-page .container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+
+/* ─── VOILE SUR LA PHOTO ──────────────────────────────────────── */
+.produit-hero::before {
+  background:
+    /* Assombrit le côté gauche (zone du titre) */
+    linear-gradient(to right,
+      rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 70%),
+    /* Voile haut/bas */
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.10) 50%, rgba(0,0,0,0.45) 100%);
+}
+
+
+/* ─── HAUTEUR DU BANDEAU ──────────────────────────────────────── */
+/* Espace au-dessus du logo */
+.produit-hero {
+  padding-top: 14px;
+}
+/* « Sites Emblématiques » placé juste sous le sous-titre (sans le chevaucher) */
+.hero-label-bas {
+  margin-top: -10px;
+}
+/* Espace sous le titre (augmenter = bandeau plus haut) */
+.produit-hero-body {
+  padding-bottom: 12px;
+}
+
+
+/* ─── TITRE (style affiche) ───────────────────────────────────── */
+.produit-hero-body h1 {
+  color: white;
+  margin-top: 0px;       /* espace au-dessus du titre */
+  margin-bottom: 0px;    /* espace sous le titre */
+  /* Ombre bleue pleine décalée + ombre noire + halo */
+  text-shadow:
+    3px 3px 0 #2C4A7C,
+    6px 6px 0 rgba(0,0,0,0.55),
+    0 0 30px rgba(0,0,0,0.6);
+}
+
+/* Grandes initiales dorées */
+.produit-hero-body h1 em {
+  color: #FAC775;
+  font-style: italic;
+  font-weight: 700;
+  -webkit-text-stroke: 0;
+  text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55);
+}
+
+/* Sous-titre en italique */
+.produit-hero-body h1 .sous-titre {
+  display: block;
+  font-size: 0.55em;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  margin-top: 6px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+
+
+/* ─── ÉCUSSON ─────────────────────────────────────────────────── */
+/* Position verticale (augmenter pour descendre, max ~90px) */
+.fiche-hero-ecusson {
+  top: var(--ecusson-top, 70px);
+}
