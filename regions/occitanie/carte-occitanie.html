@@ -138,7 +138,7 @@
     /* Bandeau : photo de la région (panorama-occitanie.jpg), sinon photo de l'Aude */
     .carte-hero {
       max-width: 1400px; margin: 0 auto; border-radius: 0 0 16px 16px; overflow: hidden;
-      position: relative; padding: 50px 0 56px; min-height: 330px;
+      position: relative; padding: 0; min-height: 0;
       background-color: #2C4A7C;
       background-image: url('../../assets/departement/occitanie/panorama-occitanie.jpg'),
                         url('../../assets/departement/occitanie/panorama-aude.jpg');
@@ -147,17 +147,49 @@
     .carte-hero::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background:
-        linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0.45) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.50) 100%);
+        linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.20) 40%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.60) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.45) 100%);
     }
-    .carte-hero > .container { position: relative; z-index: 1; max-width: 1400px; padding: 0 32px; }
-    .carte-hero h1 { text-shadow: 3px 3px 0 #2C4A7C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .carte-hero > .container { position: relative; z-index: 1; max-width: 1400px; padding: 0 48px; }
+    /* Zone photo : titre à gauche, écusson au centre, chiffres clés à droite */
+    .carte-hero-inner {
+      min-height: 330px;               /* hauteur de la zone photo */
+      padding: 28px 0 30px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .carte-hero h1 {
+      margin-top: 0;                   /* ← réglez pour monter/descendre le titre */
+      text-shadow: 3px 3px 0 #2C4A7C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6);
+    }
     .carte-hero .titre-initial { color: #FAC775; text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55); }
-    .carte-hero-sub { text-shadow: 0 2px 6px rgba(0,0,0,0.9); }
-    .carte-hero-btn { background: rgba(0,0,0,0.25); text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
-    .carte-hero-chiffres { display: flex; gap: 26px; margin-top: 18px; }
-    .carte-hero-chiffres div { font-family: var(--font-corps); color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; text-shadow: 0 2px 6px rgba(0,0,0,0.9); }
-    .carte-hero-chiffres strong { display: block; font-family: var(--font-titre); font-size: 28px; color: #FAC775; letter-spacing: 0; text-transform: none; }
+    .carte-hero .fiche-hero-ecusson { top: 24px; }
+    .carte-hero .fiche-hero-ecusson img { height: 200px; }
+    .carte-hero-sub { text-shadow: 0 2px 6px rgba(0,0,0,0.9); margin-top: 14px; margin-bottom: 18px; }
+
+    /* Chiffres clés, à droite du blason */
+    .carte-hero-infos { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 380px; }
+    .carte-hero-infos div {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
+      padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .carte-hero-infos dt {
+      font-family: var(--font-corps); font-size: 24px;   /* même taille que les valeurs */
+      color: rgba(255,255,255,0.92); text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+    }
+    .carte-hero-infos dd {
+      margin: 0; font-family: var(--font-titre); font-size: 24px; font-weight: 700; color: #FAC775;
+      text-shadow: 2px 2px 0 #2C4A7C, 0 0 12px rgba(0,0,0,0.6); white-space: nowrap;
+    }
+
+    /* Légende intégrée au bas du bandeau (comme la barre des fiches) */
+    .carte-hero .legende-regions {
+      position: relative; z-index: 1;
+      background: rgba(0,0,0,0.35); border-top: 1px solid rgba(255,255,255,0.12); border-bottom: none;
+    }
+    .carte-hero .legende-regions .container { max-width: 1400px; padding: 0 48px; }
+    .carte-hero .legende-label { color: rgba(255,255,255,0.7); }
+    .carte-hero .legende-item { color: rgba(255,255,255,0.9); }
+    .carte-hero .legende-swatch { border-color: rgba(255,255,255,0.4); }
 
     /* Carte + panneau d'information côte à côte */
     .carte-main { grid-template-columns: minmax(0, 1fr) 340px; max-width: 1400px; padding: 32px 32px 40px; }
@@ -195,7 +227,13 @@
       .carte-main { grid-template-columns: 1fr; padding: 24px 16px; }
       .carte-panel { display: none; }
       .galerie { padding: 10px 16px 50px; }
-      .carte-hero-chiffres { gap: 16px; flex-wrap: wrap; }
+      .carte-hero > .container, .carte-hero .legende-regions .container { padding: 0 16px; }
+      .carte-hero-inner { flex-direction: column; align-items: flex-start; gap: 16px; min-height: 0; padding-top: 275px; }
+      .carte-hero .fiche-hero-ecusson { top: 16px; }
+      .carte-hero .fiche-hero-ecusson img { height: 150px; }
+      .carte-hero-sub { white-space: normal; font-size: 17px; }
+      .carte-hero-infos { min-width: 0; width: 100%; }
+      .carte-hero-infos dt, .carte-hero-infos dd { font-size: 19px; }
     }
   </style>
 </head>
@@ -205,42 +243,31 @@
     <div class="container">
       <div class="carte-hero-inner">
         <div class="carte-hero-left">
-         
-
- <h1><span class="titre-initial">O</span>ccitanie</h1>
-          <div class="carte-hero-chiffres">
-            <div><strong>13</strong>départements</div>
-            <div><strong>72 724</strong>km²</div>
-            <div><strong>Toulouse</strong>préfecture</div>
-          </div>
-
-
-        
+          <h1><span class="titre-initial">O</span>ccitanie</h1>
         </div>
 
- <div class="fiche-hero-ecusson">
-        <img src="../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
-        <p class="carte-hero-sub">Languedoc-Roussillon · Midi-Pyrénées</p>
-       </div>
-
-
-
-
-
-        <div class="carte-hero-btns">
-          <a href="../../index.html" class="carte-hero-btn">← Accueil</a>
-         
+        <div class="fiche-hero-ecusson">
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+          <p class="carte-hero-sub">Languedoc-Roussillon · Midi-Pyrénées</p>
         </div>
+
+        <!-- Chiffres clés de la région -->
+        <dl class="carte-hero-infos">
+          <div><dt>Chef-lieu de région</dt><dd>Toulouse</dd></div>
+          <div><dt>Départements</dt><dd>13</dd></div>
+          <div><dt>Surface</dt><dd>72 724 km²</dd></div>
+        </dl>
       </div>
     </div>
-  </div>
 
-  <div class="legende-regions">
-    <div class="container">
-      <div class="legende-inner">
-        <span class="legende-label">Anciennes régions :</span>
-        <div class="legende-item"><div class="legende-swatch sw-lr"></div> Languedoc-Roussillon (5 dép.)</div>
-        <div class="legende-item"><div class="legende-swatch sw-mp"></div> Midi-Pyrénées (8 dép.)</div>
+    <!-- Légende des anciennes régions, intégrée au bas du bandeau -->
+    <div class="legende-regions">
+      <div class="container">
+        <div class="legende-inner">
+          <span class="legende-label">Anciennes régions :</span>
+          <div class="legende-item"><div class="legende-swatch sw-lr"></div> Languedoc-Roussillon (5 dép.)</div>
+          <div class="legende-item"><div class="legende-swatch sw-mp"></div> Midi-Pyrénées (8 dép.)</div>
+        </div>
       </div>
     </div>
   </div>
