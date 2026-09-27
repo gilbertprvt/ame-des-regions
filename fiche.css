@@ -168,3 +168,48 @@
 .fiche-topbar-btn {
   background: rgba(0,0,0,0.25);
 }
+
+/* Mise en page du bandeau : titre et préfecture à gauche, médaillon à droite */
+.fiche-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "titre   medaillon"
+    "ancien  medaillon";
+  align-items: end;
+  column-gap: 24px;
+  min-height: 260px;          /* hauteur de la zone photo (augmenter = bandeau plus haut) */
+  padding-bottom: 24px;
+}
+.fiche-hero-titre  { grid-area: titre; }
+.fiche-hero-ancien { grid-area: ancien; margin-top: 10px; }
+
+/* Médaillon avec la carte du département */
+.fiche-hero-medaillon {
+  grid-area: medaillon;
+  align-self: center;
+  height: 230px;              /* taille du médaillon */
+  width: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.45));
+}
+
+/* Écusson : même position sur toutes les pages, sans être coupé en haut */
+.fiche-hero .fiche-hero-ecusson {
+  top: 10px;                  /* augmenter pour descendre l'écusson, diminuer pour le monter */
+}
+
+@media (max-width: 680px) {
+  /* Sur téléphone : écusson au-dessus du titre, sans chevauchement */
+  .fiche-hero .fiche-hero-ecusson {
+    grid-area: ecusson;
+    position: static;
+    transform: none;
+    justify-self: center;
+  }
+  .fiche-hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: "ecusson" "titre" "ancien";
+    min-height: 0;
+  }
+  .fiche-hero-medaillon { display: none; }
+}
