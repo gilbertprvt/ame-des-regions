@@ -617,28 +617,34 @@
     </div>
   </div>
 
-  <a href="#" class="btn-retour-fixe" id="btnRetourHaut">↑ Haut de page</a>
+<div class="retour-haut"><a href="../../../../occitanie-departement/herault/herault.html">← Retour à la fiche Hérault</a></div>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-logo">L'<span>Âme</span> des Régions</div>
-      <p class="footer-tagline">Valoriser le patrimoine vivant de la France</p>
-    </div>
-  </footer>
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
 
-  <script>
-    (function () {
-      const btn = document.getElementById('btnRetourHaut');
-      if (!btn) return;
-      window.addEventListener('scroll', function () {
-        if (window.scrollY > 500) btn.classList.add('visible');
-        else btn.classList.remove('visible');
-      });
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    })();
-  </script>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
 </body>
 </html>
