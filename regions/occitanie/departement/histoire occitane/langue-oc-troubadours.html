@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La langue d'oc et les troubadours — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+
+<style>
+.produit-hero{background-image:linear-gradient(rgba(22,42,34,.62),rgba(22,42,34,.70)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Musee_du_Desert_Mialet.jpg')!important;background-position:center 48%!important;}
+.protest-symbol{font-family:var(--font-titre);font-size:100px;color:#fff;opacity:.9;line-height:1;text-shadow:0 3px 12px rgba(0,0,0,.35)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.kpi{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;text-align:center}.kpi b{display:block;font-family:var(--font-titre);font-size:21px;color:#C8843A}.kpi span{font-size:11px;color:#6d5c4a}.mini-map{background:#FBF8F2;border:1px solid #E0DACE;border-radius:12px;padding:16px;margin:18px 0}.portrait-note{font-size:12px;color:#7c6c59}.tagline{font-family:var(--font-titre);font-size:18px;color:#5A3E1B;font-style:italic}.danger{background:#F9EAEA;border-left:4px solid #A94442;padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0}.success{background:#EEF7EE;border-left:4px solid #4D7A55;padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr 1fr}}
+</style><style>
+.produit-hero{background-image:linear-gradient(rgba(48,34,55,.58),rgba(31,38,61,.72)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Troubadour_BnF_MS12473_fol_61.jpg')!important;background-position:center 38%!important;}
+.small-note{font-size:12px;color:#7c6c59;line-height:1.55}.langue-card{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:16px;margin:12px 0}.langue-card b{color:#2C4A7C}.exemple-oc{font-family:var(--font-titre);font-size:17px;color:#5A3E1B;font-style:italic}.chant-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0}.chant-card{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.chant-card strong{display:block;color:#C8843A;margin-bottom:5px}.map-label{font:12px 'Source Sans 3',sans-serif;fill:#3A3028}.map-city{fill:#C8843A;stroke:#fff;stroke-width:2}@media(max-width:700px){.chant-grid{grid-template-columns:1fr}}
+.produit-hero{background-color:#30263D;background-size:cover}
+.g-trob{color:#A0522D}.g-trobairitz{color:#7A3E7C}.g-mod{color:#2C4A7C}.g-cont{color:#3E7C4A}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container">
+<div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div>
+<div class="produit-hero-body"><div><h1><em>L</em>a langue d'oc<br><span style="padding-left:40px;">&amp; les <em>T</em>roubadours</span></h1></div></div></div>
+<div class="hero-label-bas">⟹ XI<sup>e</sup> siècle – aujourd'hui · Langue, poésie, fin'amor &amp; mémoire occitane ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#comprendre" class="active">📖 Comprendre</a><a href="#naissance">🌱 Naissance</a><a href="#territoire">🗺️ Territoire</a><a href="#moyenage">🏰 Moyen Âge</a><a href="#troubadours">🎼 Troubadours</a><a href="#finamor">❤ Fin'amor</a><a href="#genres">🎵 Genres</a><a href="#femmes">👑 Trobairitz</a><a href="#personnalites">👤 Personnages</a><a href="#societe">🏠 Société</a><a href="#declin">📉 Recul</a><a href="#renaissance">🌿 Renaissance</a><a href="#aujourdhui">🗣️ Aujourd'hui</a><a href="#chronologie">⏳ Chronologie</a><a href="#mythes">🔎 Idées reçues</a><a href="#parcours">🥾 Parcours</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+<section class="section" id="comprendre"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Langue d'oc, occitan, troubadours : de quoi parle-t-on ?</h2><div class="histoire-texte">
+<p><strong>La langue d'oc — aujourd'hui généralement appelée occitan — est une langue romane issue du latin parlé.</strong> Elle s'est formée progressivement après la disparition de l'Empire romain, comme le français, le catalan, l'italien, l'espagnol ou le portugais. Son domaine historique couvre une grande partie du Midi de la France, mais aussi le Val d'Aran en Espagne et plusieurs vallées alpines d'Italie.</p>
+<p>Le mot <strong>« oc »</strong> signifie « oui ». Au début du XIV<sup>e</sup> siècle, Dante distingue les langues romanes selon leur manière de dire oui : <em>oc</em>, <em>oïl</em> et <em>si</em>. « Langue d'oc » et « occitan » désignent donc la même grande réalité linguistique, même si celle-ci comprend plusieurs variétés régionales.</p><div class="schema"><span class="schema-titre">Dante classe les langues selon leur façon de dire « oui »</span><div class="schema-flow"><div class="schema-box">Latin <i>hoc</i><br><span class="small">« cela »</span></div><div class="schema-arrow">→</div><div class="schema-box fort"><b>òc</b><br><span style="font-size:12px;opacity:.85">langue d’oc, au sud</span></div><div class="schema-box">Latin <i>hoc ille</i><br><span class="small">→</span> <b>oïl</b>, puis « oui »<br><span class="small">langue d’oïl, au nord</span></div><div class="schema-box">Latin <i>sic</i><br><span class="small">→</span> <b>sì</b><br><span class="small">langue de si, l’italien</span></div></div><p class="small" style="text-align:center;margin-top:10px">D’après le <i>De vulgari eloquentia</i> de Dante, écrit vers 1303-1305.</p></div>
+<p>Entre les XI<sup>e</sup> et XIII<sup>e</sup> siècles, cette langue devient le véhicule d'une création poétique exceptionnelle : celle des <strong>troubadours</strong>. Leurs chansons circulent de cour en cour et influencent durablement la poésie européenne. Mais l'occitan médiéval ne sert pas qu'à chanter l'amour : on l'emploie aussi dans des chroniques, des textes religieux, juridiques, scientifiques et administratifs.</p>
+<div class="repere-grid"><div class="repere"><strong>fin X<sup>e</sup> s.</strong><span>Premiers textes littéraires connus en occitan.</span></div><div class="repere"><strong>XI<sup>e</sup>–XIII<sup>e</sup></strong><span>Grand âge des troubadours.</span></div><div class="repere"><strong>1854</strong><span>Fondation du Félibrige, grande renaissance littéraire.</span></div></div>
+<div class="notice"><strong>À retenir :</strong> un troubadour n'est pas simplement un musicien ambulant. C'est d'abord un <strong>créateur de paroles et souvent de mélodies</strong> en langue d'oc. L'interprétation peut être assurée par lui-même ou par un jongleur.</div>
+</div></section>
+
+<section class="section" id="naissance"><h2 class="section-titre"><div class="section-titre-icon">🌱</div>Comment est née la langue d'oc ?</h2><div class="histoire-texte">
+<h3 class="sous-titre">Du latin à une nouvelle langue</h3><p>Après la conquête romaine, le latin parlé s'impose progressivement en Gaule méridionale. Mais ce latin populaire varie selon les régions et continue d'évoluer après l'Antiquité. Entre le VI<sup>e</sup> et le IX<sup>e</sup> siècle, les habitants ne parlent déjà plus le latin classique : leurs parlers romans deviennent peu à peu des langues distinctes.</p>
+<p>Le sud de la Gaule possède des traits phonétiques et grammaticaux propres. L'occitan conserve par exemple davantage de voyelles finales que le français et maintient certaines consonnes que le français a fait disparaître. On dira ainsi <em>amiga</em>, <em>seda</em>, <em>loba</em>, là où le français a « amie », « soie », « louve ».</p>
+<div class="schema"><span class="schema-titre">Une filiation simplifiée</span><div class="schema-flow"><div class="schema-box">Latin parlé<br><b>Antiquité</b></div><div class="schema-arrow">→</div><div class="schema-box">Parlers romans<br><b>VI<sup>e</sup>–IX<sup>e</sup> s.</b></div><div class="schema-arrow">→</div><div class="schema-box fort">Occitan médiéval<br><b>X<sup>e</sup>–XIII<sup>e</sup> s.</b></div><div class="schema-arrow">→</div><div class="schema-box">Variétés modernes<br><b>gascon · languedocien…</b></div></div></div>
+<h3 class="sous-titre">Une langue écrite très tôt</h3><p>Les premières œuvres connues remontent à la fin du X<sup>e</sup> siècle. Au Moyen Âge, l'occitan possède une tradition écrite riche : poésie lyrique, récits, vies de saints, chroniques, théâtre, traités de médecine ou de calcul, grammaires et actes de la vie civile. Il n'est donc pas seulement une langue orale ou paysanne.</p>
+</div></section>
+
+<section class="section" id="territoire"><h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Un vaste espace linguistique, bien plus grand que l'Occitanie actuelle</h2><div class="histoire-texte"><p>Le domaine occitan historique s'étend approximativement du Limousin et de l'Auvergne aux Pyrénées, de l'Atlantique aux Alpes. L'actuelle région administrative Occitanie n'en représente donc qu'une partie : le provençal appartient aussi à l'ensemble occitan, tandis que le catalan du Roussillon constitue une autre langue romane.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Grande variété</th><th>Principales zones</th><th>Quelques traits / remarques</th></tr></thead><tbody>
+<tr><td><strong>Languedocien</strong></td><td>Toulousain, Albigeois, Lauragais, Quercy méridional, Languedoc</td><td>Souvent considéré comme central dans le continuum occitan.</td></tr>
+<tr><td><strong>Gascon</strong></td><td>Gascogne, Gers, Comminges, Bigorre, Béarn ; Val d'Aran</td><td>Ensemble fortement caractérisé ; l'aranais en est une forme.</td></tr>
+<tr><td><strong>Provençal</strong></td><td>Provence</td><td>Grande tradition littéraire moderne, notamment avec Mistral.</td></tr>
+<tr><td><strong>Limousin</strong></td><td>Limousin, nord-ouest du domaine</td><td>Terre de nombreux troubadours médiévaux.</td></tr>
+<tr><td><strong>Auvergnat</strong></td><td>Auvergne</td><td>Variétés septentrionales du domaine d'oc.</td></tr>
+<tr><td><strong>Vivaro-alpin</strong></td><td>Vivarais, Alpes occitanes</td><td>Prolonge le domaine jusqu'aux vallées occitanes d'Italie.</td></tr>
+</tbody></table></div>
+<figure class="schema"><svg viewBox="0 0 640 330" role="img" aria-label="Carte schématique du domaine occitan"><rect width="640" height="330" rx="12" fill="#FBF8F2"/><path d="M80 105 Q145 55 225 75 Q285 42 350 78 Q425 50 520 100 L565 175 Q535 235 470 255 Q390 286 305 250 Q220 275 150 235 Q95 210 72 160 Z" fill="#eadfc8" stroke="#8b7355" stroke-width="2"/><path d="M90 170 Q165 135 245 150 Q330 125 410 160 Q475 145 545 178" fill="none" stroke="#c8843a" stroke-width="3" stroke-dasharray="6 5"/><text x="130" y="122" class="map-label">Limousin</text><text x="265" y="102" class="map-label">Auvergnat</text><text x="445" y="118" class="map-label">Vivaro-alpin</text><text x="165" y="205" class="map-label">Gascon</text><text x="315" y="205" class="map-label">Languedocien</text><text x="470" y="205" class="map-label">Provençal</text><circle cx="315" cy="178" r="6" class="map-city"/><text x="325" y="174" class="map-label">Toulouse</text><circle cx="370" cy="194" r="6" class="map-city"/><text x="380" y="192" class="map-label">Montpellier</text><text x="318" y="305" text-anchor="middle" class="map-label">Schéma indicatif : les limites linguistiques sont progressives, non des frontières nettes.</text></svg></figure>
+</section>
+
+<section class="section" id="moyenage"><h2 class="section-titre"><div class="section-titre-icon">🏰</div>Le Midi médiéval : le monde qui fait naître les troubadours</h2><div class="histoire-texte">
+<p>Aux XI<sup>e</sup> et XII<sup>e</sup> siècles, le Midi n'est pas un État occitan unifié. Il est partagé entre de nombreux pouvoirs : comtes de Toulouse, ducs d'Aquitaine, vicomtes Trencavel, seigneuries, évêchés et villes. Les liens avec la Catalogne, l'Aragon et l'Italie sont nombreux. Les cours aristocratiques forment des lieux de prestige où la poésie peut servir à divertir, célébrer, convaincre ou attaquer.</p>
+<p>La société reste féodale, hiérarchisée et violente, mais certaines cours valorisent une culture raffinée du langage. C'est dans cet univers que le <strong>trobar</strong> — l'art de « trouver », c'est-à-dire composer — devient une véritable discipline poétique.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Pourquoi cette poésie est-elle une révolution culturelle ?</div><p>Parce qu'elle donne à une langue vernaculaire un prestige littéraire comparable à celui jusque-là réservé au latin. Elle développe une poésie personnelle, savante dans sa forme, destinée à être chantée et capable de voyager d'une cour à l'autre.</p></div>
+</div></section>
+
+<section class="section" id="troubadours"><h2 class="section-titre"><div class="section-titre-icon">🎼</div>Qui étaient réellement les troubadours ?</h2><div class="histoire-texte">
+<p>Le mot occitan <strong><em>trobador</em></strong> vient du verbe <em>trobar</em>, « trouver, composer ». Les troubadours sont des auteurs-compositeurs de poésie lyrique en langue d'oc. On en connaît plusieurs centaines, issus de milieux très différents : grands seigneurs, petits nobles, clercs, bourgeois ou hommes de condition plus modeste.</p>
+<p>Le premier troubadour dont l'œuvre nous soit largement conservée est généralement <strong>Guilhem IX d'Aquitaine</strong> (1071–1127), puissant prince et grand-père d'Aliénor d'Aquitaine. Après lui, l'art du trobar connaît un extraordinaire développement aux XII<sup>e</sup> et XIII<sup>e</sup> siècles.</p>
+<h3 class="sous-titre">Troubadour, jongleur, ménestrel : attention aux mots</h3><div class="tableau-wrap"><table class="tableau"><thead><tr><th>Terme</th><th>Fonction principale</th><th>À retenir</th></tr></thead><tbody><tr><td><strong>Troubadour</strong></td><td>Compose texte et souvent mélodie</td><td>C'est d'abord un créateur.</td></tr><tr><td><strong>Jongleur</strong></td><td>Interprète, récite, chante, joue d'un instrument</td><td>Il peut diffuser les œuvres d'autres auteurs.</td></tr><tr><td><strong>Ménestrel</strong></td><td>Musicien professionnel attaché ou non à une cour</td><td>Terme plus large, surtout dans les périodes ultérieures.</td></tr></tbody></table></div>
+<p>Les œuvres nous sont parvenues grâce aux <strong>chansonniers</strong>, manuscrits copiés surtout aux XIII<sup>e</sup> et XIV<sup>e</sup> siècles. Ils conservent les poèmes, parfois les mélodies, ainsi que des <em>vidas</em> — biographies souvent tardives et mêlées d'anecdotes — et des <em>razos</em>, récits censés expliquer les circonstances d'une chanson.</p>
+</div></section>
+
+<section class="section" id="finamor"><h2 class="section-titre"><div class="section-titre-icon">❤</div>La fin'amor : aimer selon les codes de la cour</h2><div class="histoire-texte">
+<p>La notion la plus célèbre associée aux troubadours est la <strong><em>fin'amor</em></strong>, souvent traduite par « amour courtois ». L'amant-poète se place au service d'une dame idéalisée, souvent socialement supérieure et parfois mariée. Il doit faire preuve de mesure, fidélité, discrétion et mérite.</p>
+<p>Cette poésie ne décrit pas simplement la vie amoureuse réelle. Elle constitue un <strong>jeu social et littéraire très codifié</strong>. Le désir peut être entretenu par la distance, le secret et l'attente. La dame possède un pouvoir symbolique : c'est elle qui accepte, refuse, récompense ou éprouve l'amant.</p>
+<div class="schema"><span class="schema-titre">Le mécanisme poétique de la fin'amor</span><div class="schema-flow"><div class="schema-box">Désir<br><b>amor</b></div><div class="schema-arrow">→</div><div class="schema-box">Service<br><b>fidélité</b></div><div class="schema-arrow">→</div><div class="schema-box fort">Épreuve<br><b>distance · secret</b></div><div class="schema-arrow">→</div><div class="schema-box">Perfectionnement<br><b>mérite · joie</b></div></div></div>
+<div class="notice"><strong>Important :</strong> tous les troubadours ne chantent pas uniquement l'amour. Ils parlent aussi de guerre, de politique, de croisade, de morale, de religion et des rivalités de leur temps.</div>
+</div></section>
+
+<section class="section" id="genres"><h2 class="section-titre"><div class="section-titre-icon">🎵</div>Une poésie beaucoup plus variée qu'on ne l'imagine</h2><div class="chant-grid">
+<div class="chant-card"><strong>Canso</strong>La grande chanson d'amour, forme emblématique de la lyrique courtoise.</div><div class="chant-card"><strong>Sirventès</strong>Poème satirique, moral ou politique ; il peut attaquer un adversaire ou commenter l'actualité.</div><div class="chant-card"><strong>Alba</strong>Chanson de l'aube : les amants doivent se séparer lorsque le jour paraît.</div><div class="chant-card"><strong>Pastorela</strong>Rencontre dialoguée, souvent entre un chevalier et une bergère.</div><div class="chant-card"><strong>Planh</strong>Lamentation funèbre composée à la mort d'un personnage.</div><div class="chant-card"><strong>Tenson / partimen</strong>Débat poétique entre deux interlocuteurs sur une question d'amour, de morale ou de conduite.</div>
+</div><div class="histoire-texte"><p>La poésie est faite pour être entendue. Le texte, la voix et la mélodie forment un ensemble. Certaines mélodies nous sont parvenues, mais beaucoup ont disparu : les manuscrits ont mieux conservé les paroles que la musique.</p><p>Les troubadours développent aussi plusieurs manières d'écrire : le <strong><em>trobar leu</em></strong>, plus clair et accessible ; le <strong><em>trobar clus</em></strong>, volontairement dense et obscur ; et le <strong><em>trobar ric</em></strong>, qui recherche la virtuosité formelle.</p></div></section>
+
+<section class="section" id="femmes"><h2 class="section-titre"><div class="section-titre-icon">👑</div>Les trobairitz : des femmes prennent la parole</h2><div class="histoire-texte">
+<p>Les femmes troubadours sont appelées aujourd'hui <strong>trobairitz</strong>. Leur existence est l'un des aspects les plus remarquables de cette littérature. Elles appartiennent généralement aux milieux aristocratiques et composent elles aussi en langue d'oc.</p>
+<p>La plus célèbre est la <strong>Comtessa de Dia</strong>, dont plusieurs chansons sont conservées. Dans leurs textes, les femmes peuvent exprimer le désir, le regret, le reproche ou revendiquer la loyauté de l'amant. Leur voix inverse parfois la position traditionnelle de la dame silencieuse chantée par un homme.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Une liberté à ne pas idéaliser</div><p>La présence de trobairitz ne signifie pas que la société médiévale était égalitaire. Leur possibilité d'écrire tient beaucoup à leur appartenance aux élites. Mais leurs œuvres constituent un témoignage rare de voix féminines dans la littérature européenne médiévale.</p></div>
+</div></section>
+
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Quelques grandes figures de la langue d’oc</h2><div class="perso-groupe"><div class="perso-groupe-titre g-trob">Troubadours</div><div class="perso-grid"><div class="perso g-trob"><div class="perso-nom">Guilhem IX d'Aquitaine</div><div class="perso-dates">1071–1127</div><div class="perso-desc">Un des premiers troubadours connus. Grand seigneur, il montre que le trobar naît aussi dans les plus hautes cours aristocratiques.</div></div><div class="perso g-trob"><div class="perso-nom">Jaufre Rudel</div><div class="perso-dates">XII<sup>e</sup> siècle</div><div class="perso-desc">Prince de Blaye, célèbre pour le thème de « l'amour de loin », devenu l'une des images les plus durables de la poésie troubadouresque.</div></div><div class="perso g-trob"><div class="perso-nom">Bernart de Ventadorn</div><div class="perso-dates">v. 1125 – v. 1200</div><div class="perso-desc">L'un des maîtres de la canso. Son œuvre a connu une large diffusion et plusieurs de ses mélodies sont conservées.</div></div><div class="perso g-trob"><div class="perso-nom">Marcabru</div><div class="perso-dates">XII<sup>e</sup> siècle</div><div class="perso-desc">Poète moraliste et souvent mordant, associé au trobar clus ; il montre la diversité des tons bien au-delà de l'amour galant.</div></div><div class="perso g-trob"><div class="perso-nom">Peire Vidal</div><div class="perso-dates">v. 1175 – v. 1205</div><div class="perso-desc">Toulousain selon sa vida, voyageur et poète flamboyant, actif dans plusieurs cours méditerranéennes.</div></div><div class="perso g-trob"><div class="perso-nom">Raimon de Miraval</div><div class="perso-dates">fin XII<sup>e</sup> – début XIII<sup>e</sup></div><div class="perso-desc">Seigneur du Carcassès, figure majeure de la poésie courtoise au moment où la croisade albigeoise bouleverse le Languedoc.</div></div><div class="perso g-trob"><div class="perso-nom">Peire Cardenal</div><div class="perso-dates">v. 1180 – v. 1278</div><div class="perso-desc">Auteur de sirventès virulents contre le clergé et les croisés : une voix critique de l’époque de la croisade.</div></div><div class="perso g-trob"><div class="perso-nom">Guiraut Riquier</div><div class="perso-dates">v. 1230 – v. 1292</div><div class="perso-desc">Narbonnais, souvent présenté comme l'un des derniers grands troubadours. Son œuvre témoigne des transformations de la fin du XIII<sup>e</sup> siècle.</div></div></div></div><div class="perso-groupe"><div class="perso-groupe-titre g-trobairitz">Trobairitz</div><div class="perso-grid"><div class="perso g-trobairitz"><div class="perso-nom">Comtessa de Dia</div><div class="perso-dates">XII<sup>e</sup> siècle</div><div class="perso-desc">La plus célèbre des trobairitz ; une de ses chansons est la seule d’une femme troubadour dont la mélodie nous soit parvenue.</div></div><div class="perso g-trobairitz"><div class="perso-nom">Azalais de Porcairagues</div><div class="perso-dates">XII<sup>e</sup> siècle</div><div class="perso-desc">Trobairitz de la région de Montpellier, dont une canso est conservée.</div></div></div></div><div class="perso-groupe"><div class="perso-groupe-titre g-mod">Poètes et écrivains modernes</div><div class="perso-grid"><div class="perso g-mod"><div class="perso-nom">Pèire Godolin</div><div class="perso-dates">1580–1649</div><div class="perso-desc">Grand poète baroque toulousain, auteur du <i>Ramelet mondin</i> ; sa statue se dresse au cœur du square Wilson à Toulouse.</div></div><div class="perso g-mod"><div class="perso-nom">Frédéric Mistral</div><div class="perso-dates">1830–1914</div><div class="perso-desc">Provençal, cofondateur du Félibrige, auteur de <i>Mirèio</i>, prix Nobel de littérature en 1904.</div></div><div class="perso g-mod"><div class="perso-nom">Antonin Perbosc et Prosper Estieu</div><div class="perso-dates">1861–1944 · 1860–1939</div><div class="perso-desc">Instituteurs du Quercy et du Lauragais, artisans de la graphie classique et du renouveau occitan dans le Toulousain.</div></div><div class="perso g-mod"><div class="perso-nom">Joan Bodon</div><div class="perso-dates">1920–1975</div><div class="perso-desc">Écrivain du Rouergue, auteur de romans majeurs de la littérature occitane du XX<sup>e</sup> siècle, comme <i>La Grava sul camin</i>.</div></div><div class="perso g-mod"><div class="perso-nom">Max Rouquette</div><div class="perso-dates">1908–2005</div><div class="perso-desc">Écrivain de Montpellier, auteur de <i>Vert paradís</i>, l’une des grandes œuvres en prose occitane.</div></div><div class="perso g-mod"><div class="perso-nom">Robert Lafont</div><div class="perso-dates">1923–2009</div><div class="perso-desc">Linguiste et écrivain nîmois, grand penseur de l’occitanisme.</div></div></div></div><div class="perso-groupe"><div class="perso-groupe-titre g-cont">Chanson et création contemporaine</div><div class="perso-grid"><div class="perso g-cont"><div class="perso-nom">Claude Marti</div><div class="perso-dates">né en 1940</div><div class="perso-desc">Chanteur audois de la « nouvelle chanson occitane » des années 1970, liée aux luttes du Larzac et de la viticulture.</div></div><div class="perso g-cont"><div class="perso-nom">Les Fabulous Trobadors</div><div class="perso-dates">depuis les années 1980</div><div class="perso-desc">Groupe toulousain qui mêle rap et joutes verbales occitanes, héritières des tensons des troubadours.</div></div></div></div></section>
+
+<section class="section" id="societe"><h2 class="section-titre"><div class="section-titre-icon">🏠</div>Que nous apprennent les troubadours sur la société ?</h2><div class="histoire-texte">
+<p>Leurs chansons parlent d'un monde de cours, de fidélités, de réputation et de hiérarchie. La poésie peut valoriser un protecteur, dénoncer un mauvais seigneur ou commenter une guerre. Le troubadour dépend souvent de réseaux de patronage : une œuvre réussie peut circuler et accroître son prestige.</p>
+<p>Les échanges sont internationaux. La langue et les formes des troubadours influencent les <strong>trouvères</strong> du nord de la France, les poètes catalans, italiens, galiciens-portugais et germaniques. Leur héritage participe à la formation de la lyrique européenne.</p>
+<h3 class="sous-titre">La croisade albigeoise : rupture politique et culturelle ?</h3><p>À partir de 1209, la croisade contre les Albigeois bouleverse le Languedoc. Des seigneuries disparaissent ou changent de mains, les équilibres des cours sont transformés et le pouvoir capétien progresse. Il serait toutefois trop simple de dire que la croisade « tue » à elle seule la poésie des troubadours : le trobar continue au XIII<sup>e</sup> siècle, mais son monde social et politique se transforme profondément.</p>
+</div></section>
+
+<section class="section" id="declin"><h2 class="section-titre"><div class="section-titre-icon">📉</div>Pourquoi la langue d'oc recule-t-elle comme langue de pouvoir ?</h2><div class="histoire-texte">
+<p>À la fin du Moyen Âge, l'occitan reste très largement parlé et continue d'être écrit. Mais le français gagne progressivement les usages administratifs et politiques à mesure que le pouvoir royal s'étend dans le Midi. Dans la seconde moitié du XV<sup>e</sup> siècle et au XVI<sup>e</sup>, les documents français deviennent de plus en plus nombreux.</p>
+<p>L'<strong>ordonnance de Villers-Cotterêts de 1539</strong> impose que les actes de justice et d'administration soient rédigés en « langage maternel français » plutôt qu'en latin. Elle accélère la place du français dans l'écrit officiel, mais il est inexact de la présenter comme une interdiction générale de parler occitan.</p>
+<h3 class="sous-titre">Le grand basculement : l'école, l'État et la mobilité</h3><p>Le recul de l'occitan oral est surtout beaucoup plus tardif. Les élites deviennent progressivement bilingues, tandis que la majorité de la population rurale continue longtemps à parler occitan. Aux XIX<sup>e</sup> et XX<sup>e</sup> siècles, l'école généralisée en français, le service militaire, l'administration, la presse, les migrations vers les villes puis la radio et la télévision accélèrent le changement de langue.</p>
+<p>Au début du XX<sup>e</sup> siècle, le français domine déjà davantage dans les villes ; après la Seconde Guerre mondiale, la transmission familiale de l'occitan s'effondre dans de nombreuses campagnes. Beaucoup de parents choisissent alors de parler français à leurs enfants, langue perçue comme indispensable à la réussite sociale.</p>
+<div class="danger"><strong>⚠️ Une rupture de transmission.</strong> Le déclin n'est donc pas un événement unique mais une succession de changements : perte des usages officiels, prestige croissant du français, scolarisation monolingue, mobilité sociale et enfin arrêt de la transmission familiale.</div>
+</div></section>
+
+<section class="section" id="renaissance"><h2 class="section-titre"><div class="section-titre-icon">🌿</div>Renaissances : Félibrige, Mistral et occitanisme</h2><div class="histoire-texte">
+<p>La langue n'a jamais cessé d'être écrite. À Toulouse, le <strong>Consistori del Gay Saber</strong>, fondé en 1323, rédige au XIV<sup>e</sup> siècle les <i>Leys d’Amors</i>, une grammaire et un art poétique de l’occitan. Au XVII<sup>e</sup> siècle, le Toulousain <strong>Pèire Godolin</strong> donne à la langue une grande œuvre baroque. Mais c’est au XIX<sup>e</sup> siècle que se produit une renaissance spectaculaire. En <strong>1854</strong>, sept jeunes écrivains provençaux fondent le <strong>Félibrige</strong>. Sa figure la plus célèbre est <strong>Frédéric Mistral</strong> (1830–1914), auteur de <em>Mirèio</em> et prix Nobel de littérature en 1904.</p>
+<p>Au XX<sup>e</sup> siècle, des linguistes et écrivains développent une <strong>graphie classique</strong>, inspirée de l'orthographe médiévale, qui permet de rapprocher à l'écrit les différentes variétés. L'<strong>Institut d'Estudis Occitans</strong>, fondé en 1945, joue un rôle majeur dans l'enseignement, l'édition et la diffusion culturelle.</p>
+<p>Dans le Toulousain, les instituteurs <strong>Antonin Perbosc</strong> et <strong>Prosper Estieu</strong> défendent dès le début du XX<sup>e</sup> siècle une écriture commune à tout le domaine d’oc. Dans les années 1970, la lutte du Larzac et la crise viticole donnent naissance au slogan <i>Volem viure al país</i> (« Nous voulons vivre au pays ») : la langue devient aussi un étendard social et politique.</p><p>La <strong>loi Deixonne de 1951</strong> ouvre pour la première fois un cadre légal à l'enseignement de plusieurs langues régionales, dont l'occitan. À partir des années 1970 apparaissent aussi les écoles associatives immersives <strong>Calandretas</strong>. La création culturelle contemporaine utilise l'occitan dans la chanson, le théâtre, la littérature, les médias et les festivals.</p>
+</div></section>
+
+<section class="section" id="aujourdhui"><h2 class="section-titre"><div class="section-titre-icon">🗣️</div>La langue d'oc aujourd'hui : patrimoine vivant, mais transmission fragile</h2><div class="histoire-texte">
+<p>Depuis 2008, les langues régionales appartiennent constitutionnellement au <strong>patrimoine de la France</strong>. Le ministère de la Culture reconnaît l'occitan parmi les langues régionales de métropole, sous ses différentes formes : auvergnat, gascon, languedocien, limousin, provençal et vivaro-alpin.</p>
+<p>L'occitan reste parlé, enseigné, chanté et écrit, mais sa situation est fragile : le nombre de locuteurs ayant reçu la langue naturellement dans leur famille a fortement diminué. Sa vitalité repose désormais à la fois sur les derniers locuteurs de transmission familiale, les nouveaux apprenants, l'école, les associations, les universités, les artistes, les médias et les politiques publiques territoriales.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Combien de locuteurs ?</div><p>Les estimations varient beaucoup selon les enquêtes et la définition retenue : savoir parler couramment, comprendre, parler un peu. On cite le plus souvent quelques centaines de milliers de locuteurs pour l’ensemble du domaine, majoritairement âgés, et un nombre bien plus important de personnes qui comprennent la langue. Ces chiffres doivent être lus comme des ordres de grandeur.</p></div><h3 class="sous-titre">Les villes d’Occitanie dans leur langue</h3><p>Beaucoup de communes affichent aujourd’hui leur nom occitan sur des panneaux bilingues, et le métro de Toulouse annonce ses stations dans les deux langues. Ces noms rappellent la forme ancienne, souvent plus proche du latin.</p>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Nom français</th><th>Nom occitan</th><th>Remarque</th></tr></thead><tbody>
+<tr><td><strong>Toulouse</strong></td><td><i>Tolosa</i></td><td>Du latin <i>Tolosa</i>, capitale des comtes et des Jeux floraux</td></tr>
+<tr><td><strong>Montpellier</strong></td><td><i>Montpelhièr</i></td><td>Le « lh » occitan se prononce comme le « lh » portugais</td></tr>
+<tr><td><strong>Carcassonne</strong></td><td><i>Carcassona</i></td><td>Le « a » final, typique de l’occitan, devient « e » en français</td></tr>
+<tr><td><strong>Nîmes</strong></td><td><i>Nimes</i></td><td>Du latin <i>Nemausus</i></td></tr>
+<tr><td><strong>Béziers</strong></td><td><i>Besièrs</i></td><td>Ville de Riquet et du 17<sup>e</sup> de 1907</td></tr>
+<tr><td><strong>Rodez</strong></td><td><i>Rodés</i></td><td>Capitale du Rouergue</td></tr>
+<tr><td><strong>Perpignan</strong></td><td><i>Perpinyà</i></td><td>Nom catalan : le Roussillon parle catalan, une autre langue romane</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Les terminaisons en <b>-ac</b> (Gaillac, Cognac…), <b>-argues</b> ou les noms comme <b>Puech</b>, <b>Castelnau</b> (<i>castèl nòu</i>, château neuf) ou <b>Mas</b> portent aussi la trace de l’occitan et des langues plus anciennes.</p><h3 class="sous-titre">Une langue toujours visible sans qu'on s'en aperçoive</h3><p>De très nombreux noms de lieux, noms de famille et mots du français méridional portent la trace de l'occitan. L'accent du Midi lui-même a été façonné par des siècles de contact entre occitan et français. La langue survit donc aussi dans la manière de nommer les paysages, les plantes, les métiers, la cuisine et les gestes de la vie quotidienne.</p>
+<div class="success"><strong>🌿 Une histoire qui continue.</strong> La langue des troubadours n'est pas une langue figée au Moyen Âge : elle possède aujourd'hui des enseignants, écrivains, musiciens, médias, associations et nouveaux locuteurs.</div>
+</div></section>
+
+<div class="commentaire" style="margin-top:-20px;margin-bottom:44px"><div class="commentaire-titre">💬 La croix occitane, emblème d’une langue et d’une région</div><p>La croix jaune aux douze pommettes sur fond rouge est l’ancien blason des <strong>comtes de Toulouse</strong>. Elle est devenue, au XX<sup>e</sup> siècle, le symbole de l’occitanisme, puis l’emblème de la région Occitanie créée en 2016. Ce n’est ni une croix religieuse au sens strict, ni un symbole cathare.</p><p>Cette fiche croise d’autres époques de la série : la <a href="catharisme-forteresses-occitanie.html">croisade contre les Albigeois</a> bouleverse le monde des troubadours, les <a href="violette-toulouse.html">Jeux floraux</a> récompensent les poètes d’une violette d’or depuis 1324, et la révolte de la <a href="vigne-occitanie.html">vigne</a> de 1907 défile sous des banderoles en occitan.</p></div>
+<section class="section" id="chronologie"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Grande chronologie</h2><div class="frise">
+<div class="frise-periode">Naissance &amp; apogée</div><div class="frise-item"><span class="frise-date">fin X<sup>e</sup> s.</span><div class="frise-texte">Premières œuvres littéraires connues en langue d'oc.</div></div><div class="frise-item majeur"><span class="frise-date">v. 1100</span><div class="frise-texte">Guilhem IX d'Aquitaine compose : début de la grande tradition troubadouresque conservée.</div></div><div class="frise-item"><span class="frise-date">XII<sup>e</sup> s.</span><div class="frise-texte">Apogée de la canso et de la fin'amor ; Bernart de Ventadorn, Jaufre Rudel, Marcabru.</div></div><div class="frise-item majeur"><span class="frise-date">1209</span><div class="frise-texte">Début de la croisade albigeoise ; profond bouleversement du Languedoc.</div></div><div class="frise-item"><span class="frise-date">XIII<sup>e</sup> s.</span><div class="frise-texte">Le trobar continue et rayonne encore ; Guiraut Riquier appartient à la dernière grande génération.</div></div>
+<div class="frise-periode">Recul institutionnel</div><div class="frise-item"><span class="frise-date">XIV<sup>e</sup> s.</span><div class="frise-texte">Dante emploie la distinction langue d'oc / langue d'oïl / langue de si ; à Toulouse, les Jeux floraux perpétuent une tradition poétique.</div></div><div class="frise-item majeur"><span class="frise-date">1323 – 1324</span><div class="frise-texte">Fondation du Consistori del Gay Saber à Toulouse ; première violette d’or décernée en 1324.</div></div><div class="frise-item"><span class="frise-date">1356</span><div class="frise-texte">Rédaction des <i>Leys d’Amors</i>, grammaire et art poétique de l’occitan.</div></div><div class="frise-item"><span class="frise-date">XV<sup>e</sup>–XVI<sup>e</sup></span><div class="frise-texte">Le français progresse dans les écrits administratifs du Midi.</div></div><div class="frise-item majeur"><span class="frise-date">1539</span><div class="frise-texte">Ordonnance de Villers-Cotterêts : le français s'impose dans les actes officiels du royaume.</div></div>
+<div class="frise-periode">Renaissances &amp; sauvegarde</div><div class="frise-item"><span class="frise-date">1617</span><div class="frise-texte">Pèire Godolin publie le <i>Ramelet mondin</i> à Toulouse.</div></div><div class="frise-item majeur"><span class="frise-date">1854</span><div class="frise-texte">Fondation du Félibrige.</div></div><div class="frise-item majeur"><span class="frise-date">1904</span><div class="frise-texte">Frédéric Mistral reçoit le prix Nobel de littérature.</div></div><div class="frise-item"><span class="frise-date">1945</span><div class="frise-texte">Fondation de l'Institut d'Estudis Occitans.</div></div><div class="frise-item majeur"><span class="frise-date">1951</span><div class="frise-texte">Loi Deixonne : ouverture de l'enseignement scolaire à l'occitan.</div></div><div class="frise-item"><span class="frise-date">années 1970</span><div class="frise-texte">Nouvel essor culturel occitan, nouvelle chanson occitane et lutte du Larzac ; première Calandreta ouverte à Pau en 1979.</div></div><div class="frise-item majeur"><span class="frise-date">2008</span><div class="frise-texte">Les langues régionales entrent dans la Constitution comme patrimoine de la France.</div></div><div class="frise-item"><span class="frise-date">2016</span><div class="frise-texte">La nouvelle région prend le nom d’« Occitanie » et adopte la croix occitane dans son logo.</div></div>
+</div></section>
+
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues à corriger</h2>
+<div class="mythe"><strong>« L'occitan est un patois. »</strong><br><span class="verdict faux">Faux</span><br>L'occitan est une langue romane avec une histoire écrite millénaire, une littérature et plusieurs variétés dialectales.</div>
+<div class="mythe"><strong>« La langue d'oc n'était parlée que dans l'actuelle région Occitanie. »</strong><br><span class="verdict faux">Faux</span><br>Son domaine historique dépasse largement la région administrative et comprend notamment la Provence, le Limousin, une partie de l'Auvergne et des Alpes.</div>
+<div class="mythe"><strong>« Tous les troubadours étaient des chanteurs pauvres allant de château en château. »</strong><br><span class="verdict faux">Faux</span><br>Certains étaient de très grands seigneurs ; d'autres venaient de milieux plus modestes. Le troubadour est avant tout le compositeur.</div>
+<div class="mythe"><strong>« Les troubadours ne parlaient que d'amour. »</strong><br><span class="verdict faux">Faux</span><br>Le sirventès aborde politique, guerre, morale et satire ; on trouve aussi des chants de croisade et des lamentations.</div>
+<div class="mythe"><strong>« Villers-Cotterêts a interdit aux gens de parler occitan en 1539. »</strong><br><span class="verdict nuance">À corriger</span><br>L'ordonnance concerne d'abord la langue des actes judiciaires et administratifs. Le recul de l'occitan parlé est beaucoup plus tardif et progressif.</div>
+<div class="mythe"><strong>« La croix occitane est la croix des cathares. »</strong><br><span class="verdict faux">Faux</span><br>C’est le blason des comtes de Toulouse. L’association avec les cathares est une confusion récente, entretenue par le tourisme du « Pays cathare ».</div><div class="mythe"><strong>« L'occitan a disparu. »</strong><br><span class="verdict faux">Faux</span><br>Sa transmission familiale a fortement reculé, mais la langue est toujours parlée, enseignée, écrite, chantée et créée.</div>
+</section>
+
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>Parcours conseillé : sur les traces de la langue d'oc</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Toulouse</div><div class="etape-texte">Capitale historique du Languedoc, tradition des Jeux floraux, bibliothèques et fonds occitans ; point de départ idéal pour comprendre langue et littérature. Statue de Godolin, hôtel d’Assézat où siège l’Académie des Jeux floraux, annonces bilingues du métro.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Albi</div><div class="etape-texte">La bibliothèque Rochegude conserve d'importants fonds liés à la littérature et aux poètes occitans médiévaux.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Carcassonne &amp; Cabardès</div><div class="etape-texte">Territoire de Raimon de Miraval et cadre des bouleversements de la croisade albigeoise.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Narbonne</div><div class="etape-texte">Ville de Guiraut Riquier et carrefour méditerranéen essentiel à la circulation culturelle.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Fanjeaux · Lauragais</div><div class="etape-texte">Paysages où se croisent mémoire médiévale, langue d'oc et histoire de la société languedocienne.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Montauban · Quercy</div><div class="etape-texte">Découvrir les variantes languedociennes et les traditions littéraires modernes du nord-ouest de l'Occitanie, terre d’Antonin Perbosc.</div></div></div>
+<div class="etape"><div class="etape-num">7</div><div class="etape-corps"><div class="etape-titre">Béziers · CIRDÒC</div><div class="etape-texte">Le Centre interrégional de développement de l’occitan, grande médiathèque de la langue et de la culture d’oc.</div></div></div>
+</div></section>
+
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://www.culture.gouv.fr/content/download/93537/file/lc_10_occitan_def.pdf" target="_blank" rel="noopener">Ministère de la Culture — L'occitan : qu'es aquò ?</a></li>
+<li><a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/promouvoir-les-langues-de-france/langues-regionales" target="_blank" rel="noopener">Ministère de la Culture — Langues régionales de France</a></li>
+<li><a href="https://histoiredesarts.culture.gouv.fr/Fiches-reperes/Litterature" target="_blank" rel="noopener">Histoire des arts / Ministère de la Culture — littérature médiévale et troubadours</a></li>
+<li><a href="https://gallica.bnf.fr/" target="_blank" rel="noopener">BnF Gallica — chansonniers, manuscrits et éditions anciennes</a></li>
+<li><a href="https://ccfr.bnf.fr/" target="_blank" rel="noopener">BnF / Catalogue collectif de France — fonds de poésie occitane médiévale</a></li>
+<li><a href="https://www.locongres.org/" target="_blank" rel="noopener">Lo Congrès permanent de la lenga occitana — ressources linguistiques contemporaines</a></li>
+<li><a href="https://www.ieo-oc.org/" target="_blank" rel="noopener">Institut d'Estudis Occitans — langue, édition et culture occitanes</a></li>
+</ul><p class="small">Pour approfondir : Robert Lafont, <i>Nouvelle histoire de la littérature occitane</i> ; Philippe Martel, <i>Les Félibres et leur temps</i>.</p><p class="small">La carte de cette fiche est un schéma pédagogique : les parlers forment un continuum et leurs limites ne sont pas des frontières nettes. Les biographies médiévales des troubadours (<em>vidas</em>) doivent être utilisées avec prudence : elles sont souvent postérieures aux auteurs et mêlent renseignements et récits littéraires.</p></div></section>
+</div>
+<aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Famille</span><span class="aside-val">Langues romanes</span></div><div class="aside-row"><span class="aside-label">Nom</span><span class="aside-val">Occitan · langue d'oc</span></div><div class="aside-row"><span class="aside-label">Premiers textes</span><span class="aside-val">fin X<sup>e</sup> siècle</span></div><div class="aside-row"><span class="aside-label">Âge d'or du trobar</span><span class="aside-val">XI<sup>e</sup>–XIII<sup>e</sup> siècles</span></div><div class="aside-row"><span class="aside-label">Domaine</span><span class="aside-val">Midi de la France · Val d'Aran · vallées d'Italie</span></div><div class="aside-row"><span class="aside-label">Statut France</span><span class="aside-val">Langue régionale · patrimoine national</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 Dates clés</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>v. 1100</b><span>Premiers troubadours</span></div><div class="chiffre"><b>1209</b><span>Croisade albigeoise</span></div><div class="chiffre"><b>1539</b><span>Villers-Cotterêts</span></div><div class="chiffre"><b>1854</b><span>Félibrige</span></div><div class="chiffre"><b>1951</b><span>Loi Deixonne</span></div><div class="chiffre"><b>2008</b><span>Constitution</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📖 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Òc</dt><dd>« Oui » en occitan ; à l'origine du nom langue d'oc.</dd><dt>Trobar</dt><dd>Composer, inventer une œuvre poétique.</dd><dt>Trobador</dt><dd>Poète-compositeur de langue d'oc.</dd><dt>Trobairitz</dt><dd>Femme troubadour.</dd><dt>Fin'amor</dt><dd>Conception raffinée et codifiée de l'amour dans la poésie courtoise.</dd><dt>Canso</dt><dd>Chanson lyrique, le plus souvent amoureuse.</dd><dt>Sirventès</dt><dd>Poème satirique, moral ou politique.</dd><dt>Vida</dt><dd>Biographie médiévale d'un troubadour, à manier avec prudence.</dd><dt>Chansonnier</dt><dd>Manuscrit rassemblant des poèmes et parfois leurs mélodies.</dd><dt>Félibrige</dt><dd>Mouvement littéraire fondé en 1854 pour promouvoir la langue d'oc.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">🗣️ Quelques mots</div><div class="aside-card-body"><p class="small"><b>òc</b> : oui<br><b>bonjorn</b> : bonjour<br><b>mercés</b> : merci<br><b>ostal</b> : maison<br><b>dròlle</b> : enfant / garçon selon les usages<br><b>lenga</b> : langue<br><b>amor</b> : amour<br><b>cantar</b> : chanter</p></div></div>
+<div class="aside-card"><div class="aside-card-header">🧠 Fil conducteur</div><div class="aside-card-body"><p class="small">Latin parlé → langue romane → prestige des troubadours → recul institutionnel → maintien populaire → renaissance littéraire → rupture de transmission → sauvegarde contemporaine.</p></div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+</body></html>

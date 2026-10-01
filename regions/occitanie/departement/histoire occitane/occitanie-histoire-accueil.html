@@ -64,6 +64,17 @@
     .zone-ligne.fine.on-hover { stroke: rgba(200,132,58,.85); stroke-width: 4; stroke-dasharray: none; }
     .fleche { fill: none; stroke: #B7A88F; stroke-width: 1.8; stroke-dasharray: 5 5; transition: all .25s; }
     .fleche.actif { stroke: var(--ocre); stroke-width: 2.6; stroke-dasharray: none; }
+    /* Protestantisme : flèche secondaire discrète, éclats visibles au survol */
+    .fleche.secondaire { stroke: #C8843A; stroke-width: 1.6; stroke-dasharray: 3 5; opacity: .75; }
+    .fleche.secondaire.on-hover { stroke-width: 2.6; stroke-dasharray: none; opacity: 1; }
+    .zone-region { fill: transparent; stroke: transparent; stroke-width: 5; transition: all .3s; pointer-events: none; }
+    .zone-region.on-hover { fill: rgba(200,132,58,.10); stroke: rgba(200,132,58,.85); }
+    .hub { fill: #FFF8EC; stroke: #C8843A; stroke-width: 2; transition: all .25s; }
+    .hub.on-hover { fill: #C8843A; }
+    .eclat { fill: none; stroke: #C8843A; stroke-width: 2; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .eclat.on-hover { opacity: 1; }
+    .eclat-pt { fill: rgba(200,132,58,.25); stroke: #C8843A; stroke-width: 1.5; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .eclat-pt.on-hover { opacity: 1; }
     .depart { fill: #B7A88F; } .depart.actif { fill: var(--ocre); }
     .marq { opacity: 0; transition: opacity .25s; pointer-events: none; }
     .marq rect { fill: #A0522D; stroke: white; stroke-width: 1.5; }
@@ -177,9 +188,11 @@
             <mask id="fondu" maskContentUnits="objectBoundingBox">
               <rect width="1" height="1" fill="url(#fondu-grad)"/>
             </mask>
+            <marker id="pointe-eclat" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C8843A"/></marker>
           </defs>
 <polygon class="mer" mask="url(#fondu)" points="922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 722.2,599.0 741.5,627.5 726.0,659.6 719.6,695.2 687.4,730.8 668.0,757.5 1164.3,757.5 1164.3,330.3"/>
 <polygon class="region" points="500.5,132.7 522.4,146.9 543.0,155.8 579.1,146.9 598.4,166.5 633.2,161.2 664.2,166.5 691.2,152.3 713.2,164.7 731.2,154.0 751.8,152.3 767.3,175.4 786.6,173.6 811.1,203.9 822.7,221.7 822.7,250.2 847.2,268.0 879.4,262.6 913.0,268.0 919.4,300.0 922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 693.8,595.5 661.6,602.6 635.8,615.1 597.1,609.7 564.9,600.8 536.6,588.4 500.5,570.6 461.8,549.2 436.0,535.0 403.8,526.1 384.5,552.8 352.2,554.5 313.6,552.8 296.8,538.5 272.3,527.8 274.9,490.5 300.7,449.5 277.5,415.7 281.3,389.0 300.7,371.2 307.1,333.8 339.3,323.1 384.5,308.9 414.1,307.1 425.7,276.9 450.2,255.5 439.9,223.5 455.4,211.0 481.1,179.0 494.0,152.3 500.5,132.7"/>
+<polygon class="zone-region" data-t="langue" points="500.5,132.7 522.4,146.9 543.0,155.8 579.1,146.9 598.4,166.5 633.2,161.2 664.2,166.5 691.2,152.3 713.2,164.7 731.2,154.0 751.8,152.3 767.3,175.4 786.6,173.6 811.1,203.9 822.7,221.7 822.7,250.2 847.2,268.0 879.4,262.6 913.0,268.0 919.4,300.0 922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 693.8,595.5 661.6,602.6 635.8,615.1 597.1,609.7 564.9,600.8 536.6,588.4 500.5,570.6 461.8,549.2 436.0,535.0 403.8,526.1 384.5,552.8 352.2,554.5 313.6,552.8 296.8,538.5 272.3,527.8 274.9,490.5 300.7,449.5 277.5,415.7 281.3,389.0 300.7,371.2 307.1,333.8 339.3,323.1 384.5,308.9 414.1,307.1 425.7,276.9 450.2,255.5 439.9,223.5 455.4,211.0 481.1,179.0 494.0,152.3 500.5,132.7"/>
 <path class="riviere" d="M311.0,543.9 Q311.0,543.9 347.7,519.8 Q384.5,495.8 410.2,479.8 Q436.0,463.8 458.6,441.5 Q481.1,419.3 488.9,404.1 Q496.6,389.0 482.4,364.1 Q468.2,339.2 452.1,321.4 Q436.0,303.6 425.1,305.3 L414.1,307.1"/>
 <path class="riviere" d="M777.6,259.1 Q777.6,259.1 755.1,274.2 Q732.5,289.3 709.9,300.9 Q687.4,312.5 655.2,319.6 Q622.9,326.7 603.6,331.1 Q584.3,335.6 558.5,332.9 Q532.7,330.3 510.1,324.0 Q487.6,317.8 470.2,312.5 L452.8,307.1"/>
 <path class="riviere" d="M584.3,570.6 Q584.3,570.6 593.9,545.6 Q603.6,520.7 600.4,505.6 Q597.1,490.5 606.8,476.2 Q616.5,462.0 642.3,460.2 Q668.0,458.4 684.2,457.5 Q700.3,456.6 714.4,456.6 L728.6,456.6"/>
@@ -196,6 +209,7 @@
 <text class="lbl-riv" x="896.2" y="246.6" >Rhône</text>
 <text class="lbl-riv" x="687.4" y="303.6" >Tarn</text>
 <ellipse class="zone actif" data-t="cathares" cx="597.1" cy="502.9" rx="72" ry="50" transform="rotate(-15 597.1 502.9)"/>
+<circle class="hub" data-t="langue" cx="448.9" cy="241.3" r="5"/>
 <ellipse class="zone actif" data-t="violette" cx="496.6" cy="369.4" rx="16" ry="24" transform="rotate(20 496.6 369.4)"/>
 <ellipse class="zone actif" data-t="pastel" cx="545.6" cy="401.5" rx="70" ry="40" transform="rotate(-20 545.6 401.5)"/>
 <path class="zone-ligne actif" data-t="canal" d="M499.2,392.6 Q499.2,392.6 517.9,413.0 Q536.6,433.5 550.7,437.9 Q564.9,442.4 590.7,452.2 Q616.5,462.0 642.3,458.4 Q668.0,454.9 690.6,450.4 Q713.2,446.0 720.9,443.3 Q728.6,440.6 745.4,442.4 Q762.1,444.2 776.3,436.2 L790.5,428.2"/>
@@ -203,6 +217,7 @@
 <ellipse class="zone actif" data-t="mines" cx="838.2" cy="285.8" rx="20" ry="18" transform="rotate(0 838.2 285.8)"/>
 <ellipse class="zone actif" data-t="soie" cx="780.2" cy="326.7" rx="36" ry="24" transform="rotate(-20 780.2 326.7)"/>
 <path class="zone-ligne fine actif" data-t="rail" d="M487.6,317.8 Q487.6,317.8 493.4,355.2 Q499.2,392.6 532.1,417.5 Q564.9,442.4 590.7,452.2 Q616.5,462.0 658.4,464.6 Q700.3,467.3 714.4,453.1 Q728.6,438.8 759.6,433.5 Q790.5,428.2 802.1,409.5 Q813.7,390.8 844.6,370.3 L875.6,349.8"/>
+<ellipse class="zone actif" data-t="protestant" cx="842.1" cy="339.2" rx="26" ry="18" transform="rotate(-20 842.1 339.2)"/>
 <ellipse class="zone actif" data-t="vigne" cx="726.0" cy="440.6" rx="84" ry="30" transform="rotate(-25 726.0 440.6)"/>
 <circle class="ville grande" cx="499.2" cy="392.6" r="5"/>
 <text class="lbl-ville grande" x="499.2" y="412.6" text-anchor="middle">Toulouse</text>
@@ -252,10 +267,13 @@
 <g class="marq" data-t="soie"><rect x="787.8" y="329.8" width="8" height="8" transform="rotate(45 791.8 333.8)"/><text x="791.8" y="324.8" text-anchor="middle">Ganges</text></g>
 <g class="marq" data-t="soie"><rect x="773.6" y="319.1" width="8" height="8" transform="rotate(45 777.6 323.1)"/><text x="777.6" y="314.1" text-anchor="middle">Le Vigan</text></g>
 <g class="marq" data-t="rail"><rect x="496.5" y="386.8" width="8" height="8" transform="rotate(45 500.5 390.8)"/><text x="500.5" y="381.8" text-anchor="middle">Matabiau</text></g>
+<g class="marq" data-t="protestant"><rect x="818.7" y="299.6" width="8" height="8" transform="rotate(45 822.7 303.6)"/><text x="822.7" y="294.6" text-anchor="middle">Mialet</text></g>
 <path class="fleche actif" data-t="cathares" d="M274.0,599.0 C421.4,599.0 501.7,544.0 541.9,514.3" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="cathares" cx="274.0" cy="599.0" r="4"/>
-<path class="fleche actif" data-t="violette" d="M274.0,219.0 C390.6,219.0 454.2,309.8 486.0,358.7" marker-end="url(#pointe-on)"/>
-<circle class="depart actif" data-t="violette" cx="274.0" cy="219.0" r="4"/>
+<path class="fleche actif" data-t="langue" d="M274.0,63.0 C368.0,63.0 419.3,176.3 445.0,237.3" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="langue" cx="274.0" cy="63.0" r="4"/>
+<path class="fleche actif" data-t="violette" d="M274.0,239.0 C390.4,239.0 453.8,317.5 485.6,359.7" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="violette" cx="274.0" cy="239.0" r="4"/>
 <path class="fleche actif" data-t="pastel" d="M274.0,409.0 C392.6,409.0 457.3,404.7 489.6,402.3" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="pastel" cx="274.0" cy="409.0" r="4"/>
 <path class="fleche actif" data-t="canal" d="M455.0,102.0 C455.0,286.7 525.5,387.5 563.4,437.8" marker-end="url(#pointe-on)"/>
@@ -265,18 +283,34 @@
 <circle class="depart actif" data-t="mines" cx="825.0" cy="102.0" r="4"/>
 <path class="fleche actif" data-t="soie" d="M930.0,279.0 C862.7,279.0 826.0,306.2 807.6,320.9" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="soie" cx="930.0" cy="279.0" r="4"/>
-<path class="fleche actif" data-t="rail" d="M930.0,439.0 C885.1,439.0 860.6,395.7 848.4,372.5" marker-end="url(#pointe-on)"/>
-<circle class="depart actif" data-t="rail" cx="930.0" cy="439.0" r="4"/>
-<path class="fleche actif" data-t="vigne" d="M930.0,599.0 C847.0,599.0 801.8,505.6 779.1,455.3" marker-end="url(#pointe-on)"/>
-<circle class="depart actif" data-t="vigne" cx="930.0" cy="599.0" r="4"/>
+<path class="fleche actif" data-t="rail" d="M930.0,599.0 C849.4,599.0 805.4,493.7 783.4,437.1" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="rail" cx="930.0" cy="599.0" r="4"/>
+<path class="fleche actif" data-t="protestant" d="M930.0,439.0 C889.2,439.0 866.9,381.1 855.8,350.0" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="protestant" cx="930.0" cy="439.0" r="4"/>
+<path class="fleche actif" data-t="vigne" d="M685.0,630.0 C685.0,538.7 702.4,489.0 711.8,464.1" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="vigne" cx="685.0" cy="630.0" r="4"/>
+<path class="fleche secondaire actif" data-t="protestant" d="M930.0,439.0 C813.9,449.0 731.9,365.6 671.9,335.6"/>
+<circle class="hub" data-t="protestant" cx="671.9" cy="335.6" r="5"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q584.2,313.1 496.5,318.7" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="protestant" cx="487.6" cy="317.8" r="6"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q589.8,348.7 507.7,389.7" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="protestant" cx="499.2" cy="392.6" r="6"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q640.6,346.4 609.4,385.2" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="protestant" cx="602.3" cy="390.8" r="6"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q687.8,308.5 703.7,309.3" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="protestant" cx="710.6" cy="303.6" r="6"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q738.6,347.6 805.3,387.5" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="protestant" cx="813.7" cy="390.8" r="6"/>
 <a href="catharisme-forteresses-occitanie.html" class="bouton actif" data-t="cathares" aria-label="Cathares et forteresses — ouvrir la fiche"><rect class="btn-fond" x="24" y="560" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="574" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="608" text-anchor="middle">🏰</text><text class="btn-titre" x="98" y="590">Cathares &amp; forteresses</text><text class="btn-sous" x="98" y="608">XII<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan> – XIV<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan> siècle</text><text class="btn-etat on" x="98" y="626">Découvrir →</text></a>
-<a href="violette-toulouse.html" class="bouton actif" data-t="violette" aria-label="La violette de Toulouse — ouvrir la fiche"><rect class="btn-fond" x="24" y="180" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="194" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="228" text-anchor="middle">💜</text><text class="btn-titre" x="98" y="210">La violette de Toulouse</text><text class="btn-sous" x="98" y="228">Une fleur d'hiver · depuis 1854</text><text class="btn-etat on" x="98" y="246">Découvrir →</text></a>
+<a href="langue-oc-troubadours.html" class="bouton actif" data-t="langue" aria-label="La langue d'oc — ouvrir la fiche"><rect class="btn-fond" x="24" y="24" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="38" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="72" text-anchor="middle">🎼</text><text class="btn-titre" x="98" y="54">La langue d'oc</text><text class="btn-sous" x="98" y="72">Troubadours &amp; occitan</text><text class="btn-etat on" x="98" y="90">Découvrir →</text></a>
+<a href="violette-toulouse.html" class="bouton actif" data-t="violette" aria-label="La violette de Toulouse — ouvrir la fiche"><rect class="btn-fond" x="24" y="200" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="214" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="248" text-anchor="middle">💜</text><text class="btn-titre" x="98" y="230">La violette de Toulouse</text><text class="btn-sous" x="98" y="248">Une fleur d'hiver · depuis 1854</text><text class="btn-etat on" x="98" y="266">Découvrir →</text></a>
 <a href="pays-cocagne-pastel.html" class="bouton actif" data-t="pastel" aria-label="Le pays de Cocagne — ouvrir la fiche"><rect class="btn-fond" x="24" y="370" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="384" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="418" text-anchor="middle">🌿</text><text class="btn-titre" x="98" y="400">Le pays de Cocagne</text><text class="btn-sous" x="98" y="418">L'or bleu du pastel · XV<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan> – XVI<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan></text><text class="btn-etat on" x="98" y="436">Découvrir →</text></a>
 <a href="canal-du-midi.html" class="bouton actif" data-t="canal" aria-label="Le canal du Midi — ouvrir la fiche"><rect class="btn-fond" x="330" y="24" width="250" height="78" rx="14"/><rect class="btn-icone" x="342" y="38" width="50" height="50" rx="12"/><text class="btn-emoji" x="367" y="72" text-anchor="middle">⛵</text><text class="btn-titre" x="404" y="54">Le canal du Midi</text><text class="btn-sous" x="404" y="72">Pierre-Paul Riquet · 1666 – 1681</text><text class="btn-etat on" x="404" y="90">Découvrir →</text></a>
 <a href="mines-charbon-occitanie.html" class="bouton actif" data-t="mines" aria-label="Les mines de charbon — ouvrir la fiche"><rect class="btn-fond" x="700" y="24" width="250" height="78" rx="14"/><rect class="btn-icone" x="712" y="38" width="50" height="50" rx="12"/><text class="btn-emoji" x="737" y="72" text-anchor="middle">⛏️</text><text class="btn-titre" x="774" y="54">Les mines de charbon</text><text class="btn-sous" x="774" y="72">Carmaux · Decazeville · Alès</text><text class="btn-etat on" x="774" y="90">Découvrir →</text></a>
-<a href="soie-cevennes.html" class="bouton actif" data-t="soie" aria-label="La soie des Cévennes — ouvrir la fiche"><rect class="btn-fond" x="930" y="240" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="254" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="288" text-anchor="middle">🧵</text><text class="btn-titre" x="1004" y="270">La soie des Cévennes</text><text class="btn-sous" x="1004" y="288">Magnaneries &amp; bas de soie</text><text class="btn-etat on" x="1004" y="306">Découvrir →</text></a>
-<a href="chemin-de-fer-occitanie.html" class="bouton actif" data-t="rail" aria-label="Le chemin de fer — ouvrir la fiche"><rect class="btn-fond" x="930" y="400" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="414" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="448" text-anchor="middle">🚂</text><text class="btn-titre" x="1004" y="430">Le chemin de fer</text><text class="btn-sous" x="1004" y="448">Du charbon d'Alès au TGV</text><text class="btn-etat on" x="1004" y="466">Découvrir →</text></a>
-<a href="vigne-occitanie.html" class="bouton actif" data-t="vigne" aria-label="La vigne en révolte — ouvrir la fiche"><rect class="btn-fond" x="930" y="560" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="574" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="608" text-anchor="middle">🍇</text><text class="btn-titre" x="1004" y="590">La vigne en révolte</text><text class="btn-sous" x="1004" y="608">Phylloxéra &amp; révolte de 1907</text><text class="btn-etat on" x="1004" y="626">Découvrir →</text></a>
+<a href="soie-cevennes.html" class="bouton actif" data-t="soie" aria-label="La soie des Cévennes — ouvrir la fiche"><rect class="btn-fond" x="930" y="240" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="254" width="50" height="50" rx="12"/><g transform="translate(951,261)"><rect x="2" y="1" width="28" height="5" rx="2" fill="#A8743F"/><rect x="2" y="30" width="28" height="5" rx="2" fill="#A8743F"/><rect x="6" y="6" width="20" height="24" fill="#FFFFFF" stroke="#CBBFAE" stroke-width="1"/><rect x="9" y="7" width="3" height="22" fill="#F3EEE4"/><path d="M6 10.5h20M6 15h20M6 19.5h20M6 24h20" stroke="#E4DACB" stroke-width="1"/><path d="M26 20 C31 22 31 29 27 33" fill="none" stroke="#B9AD9A" stroke-width="1.3"/></g><text class="btn-titre" x="1004" y="270">La soie des Cévennes</text><text class="btn-sous" x="1004" y="288">Magnaneries &amp; bas de soie</text><text class="btn-etat on" x="1004" y="306">Découvrir →</text></a>
+<a href="chemin-de-fer-occitanie.html" class="bouton actif" data-t="rail" aria-label="Le chemin de fer — ouvrir la fiche"><rect class="btn-fond" x="930" y="560" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="574" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="608" text-anchor="middle">🚂</text><text class="btn-titre" x="1004" y="590">Le chemin de fer</text><text class="btn-sous" x="1004" y="608">Du charbon d'Alès au TGV</text><text class="btn-etat on" x="1004" y="626">Découvrir →</text></a>
+<a href="protestantisme-occitanie.html" class="bouton actif" data-t="protestant" aria-label="Le protestantisme — ouvrir la fiche"><rect class="btn-fond" x="930" y="400" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="414" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="448" text-anchor="middle">📖</text><text class="btn-titre" x="1004" y="430">Le protestantisme</text><text class="btn-sous" x="1004" y="448">Réforme, Camisards &amp; Désert</text><text class="btn-etat on" x="1004" y="466">Découvrir →</text></a>
+<a href="vigne-occitanie.html" class="bouton actif" data-t="vigne" aria-label="La vigne en révolte — ouvrir la fiche"><rect class="btn-fond" x="560" y="630" width="250" height="78" rx="14"/><rect class="btn-icone" x="572" y="644" width="50" height="50" rx="12"/><text class="btn-emoji" x="597" y="678" text-anchor="middle">🍇</text><text class="btn-titre" x="634" y="660">La vigne en révolte</text><text class="btn-sous" x="634" y="678">Phylloxéra &amp; révolte de 1907</text><text class="btn-etat on" x="634" y="696">Découvrir →</text></a>
         </svg>
       </div>
       <p class="consigne">Survolez un bouton pour voir la région concernée · cliquez pour ouvrir la fiche</p>
@@ -289,12 +323,14 @@
       <p class="intro-texte">Chaque fiche retrace une époque : son contexte, ses dates clés, ses personnages, ses lieux à visiter, avec cartes, schémas et photos. La série s’enrichira au fil du temps de nouvelles époques.</p>
       <div class="themes-grid">
 <a class="carte-theme actif" data-t="cathares" href="catharisme-forteresses-occitanie.html"><span class="ct-ico">🏰</span><span><span class="ct-titre">Cathares &amp; forteresses</span><span class="ct-sous">XII<sup>e</sup> – XIV<sup>e</sup> siècle</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="langue" href="langue-oc-troubadours.html"><span class="ct-ico">🎼</span><span><span class="ct-titre">La langue d'oc</span><span class="ct-sous">Troubadours &amp; occitan</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="violette" href="violette-toulouse.html"><span class="ct-ico">💜</span><span><span class="ct-titre">La violette de Toulouse</span><span class="ct-sous">Une fleur d'hiver · depuis 1854</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="pastel" href="pays-cocagne-pastel.html"><span class="ct-ico">🌿</span><span><span class="ct-titre">Le pays de Cocagne</span><span class="ct-sous">L'or bleu du pastel · XV<sup>e</sup> – XVI<sup>e</sup></span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="canal" href="canal-du-midi.html"><span class="ct-ico">⛵</span><span><span class="ct-titre">Le canal du Midi</span><span class="ct-sous">Pierre-Paul Riquet · 1666 – 1681</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="mines" href="mines-charbon-occitanie.html"><span class="ct-ico">⛏️</span><span><span class="ct-titre">Les mines de charbon</span><span class="ct-sous">Carmaux · Decazeville · Alès</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
-<a class="carte-theme actif" data-t="soie" href="soie-cevennes.html"><span class="ct-ico">🧵</span><span><span class="ct-titre">La soie des Cévennes</span><span class="ct-sous">Magnaneries &amp; bas de soie</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="soie" href="soie-cevennes.html"><span class="ct-ico"><svg viewBox="0 0 32 36" width="30" height="34" aria-hidden="true"><rect x="2" y="1" width="28" height="5" rx="2" fill="#A8743F"/><rect x="2" y="30" width="28" height="5" rx="2" fill="#A8743F"/><rect x="6" y="6" width="20" height="24" fill="#FFFFFF" stroke="#CBBFAE" stroke-width="1"/><rect x="9" y="7" width="3" height="22" fill="#F3EEE4"/><path d="M6 10.5h20M6 15h20M6 19.5h20M6 24h20" stroke="#E4DACB" stroke-width="1"/><path d="M26 20 C31 22 31 29 27 33" fill="none" stroke="#B9AD9A" stroke-width="1.3"/></svg></span><span><span class="ct-titre">La soie des Cévennes</span><span class="ct-sous">Magnaneries &amp; bas de soie</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="rail" href="chemin-de-fer-occitanie.html"><span class="ct-ico">🚂</span><span><span class="ct-titre">Le chemin de fer</span><span class="ct-sous">Du charbon d'Alès au TGV</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="protestant" href="protestantisme-occitanie.html"><span class="ct-ico">📖</span><span><span class="ct-titre">Le protestantisme</span><span class="ct-sous">Réforme, Camisards &amp; Désert</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="vigne" href="vigne-occitanie.html"><span class="ct-ico">🍇</span><span><span class="ct-titre">La vigne en révolte</span><span class="ct-sous">Phylloxéra &amp; révolte de 1907</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
       </div>
     </div>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le protestantisme en Occitanie — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+
+<style>
+.produit-hero{background-image:linear-gradient(rgba(22,42,34,.62),rgba(22,42,34,.70)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Musee_du_Desert_Mialet.jpg')!important;background-position:center 48%!important;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.kpi{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;text-align:center}.kpi b{display:block;font-family:var(--font-titre);font-size:21px;color:#C8843A}.kpi span{font-size:11px;color:#6d5c4a}.mini-map{background:#FBF8F2;border:1px solid #E0DACE;border-radius:12px;padding:16px;margin:18px 0}.portrait-note{font-size:12px;color:#7c6c59}.tagline{font-family:var(--font-titre);font-size:18px;color:#5A3E1B;font-style:italic}.danger{background:#F9EAEA;border-left:4px solid #A94442;padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0}.success{background:#EEF7EE;border-left:4px solid #4D7A55;padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr 1fr}}
+.produit-hero{background-color:#28443A;background-size:cover}
+.carte-prot{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;margin:18px 0 22px}.carte-prot svg{width:100%;height:auto;display:block}.carte-prot figcaption{font-size:12px;color:#8B7355;font-style:italic;text-align:center;margin-top:8px;font-family:var(--font-corps)}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container">
+<div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div>
+<div class="produit-hero-body"><div><h1><em>L</em>e protestantisme<br><span style="padding-left:40px;">en <em>O</em>ccitanie</span></h1></div></div></div>
+<div class="hero-label-bas">⟹ XVI<sup>e</sup> siècle – aujourd'hui · Réforme, guerres, Désert &amp; liberté de conscience ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#comprendre" class="active">📖 Comprendre</a><a href="#origines">🌍 Origines</a><a href="#implantation">🧭 Implantation</a><a href="#croyances">✦ Croyances</a><a href="#guerres">⚔️ Guerres</a><a href="#nantes">📜 Édit de Nantes</a><a href="#revocation">🔥 Révocation</a><a href="#camisards">⛰️ Camisards</a><a href="#desert">🌙 Désert</a><a href="#tolerance">⚖️ Tolérance</a><a href="#personnalites">👤 Personnages</a><a href="#vie">🏠 Vie quotidienne</a><a href="#patrimoine">⛪ Patrimoine</a><a href="#chronologie">⏳ Chronologie</a><a href="#mythes">🔎 Idées reçues</a><a href="#aujourdhui">🌿 Aujourd'hui</a><a href="#parcours">🥾 Parcours</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+<section class="section" id="comprendre"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Le protestantisme : comprendre avant de raconter</h2><div class="histoire-texte">
+<p><strong>Le protestantisme naît au XVI<sup>e</sup> siècle d'un mouvement de réforme du christianisme occidental.</strong> Il ne s'agit pas d'une religion arrivée toute faite dans le Midi : des critiques de l'Église existaient déjà, mais les écrits de Martin Luther, puis surtout l'organisation inspirée par Jean Calvin à Genève, donnent à ces aspirations une doctrine, des textes, des pasteurs et des communautés structurées.</p>
+<p>Dans l'actuelle Occitanie, la Réforme connaît une implantation exceptionnellement forte : <strong>Nîmes, Montpellier, Montauban, Castres, les Cévennes, le Vivarais voisin, le Rouergue, le Tarn, le Tarn-et-Garonne et une partie du Lauragais</strong> deviennent des espaces où catholiques et réformés vivent côte à côte, parfois en paix, parfois dans une violence extrême.</p>
+<div class="repere-grid"><div class="repere"><strong>vers 1520</strong><span>Les écrits de Luther commencent à circuler en France.</span></div><div class="repere"><strong>1555–1560</strong><span>Les Églises réformées s'organisent ; le Midi devient un foyer majeur.</span></div><div class="repere"><strong>1685–1787</strong><span>Interdiction, clandestinité du « Désert », persécutions puis retour progressif à la tolérance.</span></div></div>
+<div class="notice"><strong>À retenir :</strong> « protestant », « réformé », « huguenot » et « camisard » ne sont pas synonymes. Le protestantisme est l'ensemble religieux ; les réformés français sont principalement calvinistes ; « huguenot » est un nom historique donné aux protestants français ; les Camisards sont des insurgés protestants des Cévennes au début du XVIII<sup>e</sup> siècle.</div>
+</div></section>
+<section class="section" id="origines"><h2 class="section-titre"><div class="section-titre-icon">🌍</div>D'où vient la Réforme ?</h2><div class="histoire-texte">
+<h3 class="sous-titre">Luther : le déclencheur européen</h3><p>En 1517, le moine allemand <strong>Martin Luther</strong> conteste notamment le commerce des indulgences et affirme que le salut vient de la grâce de Dieu reçue par la foi. Il donne à la Bible une place centrale et refuse que l'autorité du pape soit supérieure à celle des Écritures. L'imprimerie permet à ses textes de circuler à une vitesse jusque-là inconnue.</p>
+<h3 class="sous-titre">Calvin : l'influence décisive en France</h3><p>Le Français <strong>Jean Calvin</strong> (1509–1564), réfugié à Genève, systématise la doctrine réformée dans <em>L'Institution de la religion chrétienne</em>. Genève devient un centre de formation et d'impression. Des pasteurs formés là-bas gagnent clandestinement la France et « dressent » des Églises.</p>
+<div class="schema"><span class="schema-titre">Comment les idées de la Réforme arrivent dans le Midi</span><div class="schema-flow"><div class="schema-box">Allemagne<br><b>Luther · 1517</b></div><div class="schema-arrow">→</div><div class="schema-box">Imprimeries<br><b>livres &amp; pamphlets</b></div><div class="schema-arrow">→</div><div class="schema-box fort">Genève<br><b>Calvin · pasteurs</b></div><div class="schema-arrow">→</div><div class="schema-box">Routes marchandes<br><b>Rhône · foires · villes</b></div><div class="schema-arrow">→</div><div class="schema-box">Languedoc<br><b>Églises réformées</b></div></div></div>
+<h3 class="sous-titre">Pourquoi le Midi ?</h3><p>Il n'existe pas une cause unique. Les villes commerçantes et universitaires facilitent la circulation des livres ; les réseaux de marchands et d'artisans transmettent les idées ; une partie des élites urbaines et de la noblesse se convertit ; la prédication en français et la lecture de la Bible attirent des fidèles. Dans les Cévennes, l'enracinement devient également rural et familial, ce qui expliquera sa remarquable capacité de survie après 1685.</p>
+</div></section>
+<section class="section" id="implantation"><h2 class="section-titre"><div class="section-titre-icon">🧭</div>Une implantation particulièrement forte en Occitanie</h2><div class="histoire-texte"><p>Au XVII<sup>e</sup> siècle, le Midi concentre une part considérable des réformés français. Vers 1660, les provinces synodales du Haut-Languedoc–Haute-Guyenne, du Bas-Languedoc et des Cévennes regroupent à elles seules des centaines d'Églises et une population réformée très importante.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Territoire</th><th>Foyers majeurs</th><th>Caractère</th><th>Repères</th></tr></thead><tbody>
+<tr><td><strong>Cévennes</strong></td><td>Anduze, Saint-Jean-du-Gard, Mialet, Lasalle, vallée Française</td><td>Très rural, familial et durable</td><td>Cœur du Désert et de la guerre des Camisards</td></tr>
+<tr><td><strong>Nîmes &amp; Vaunage</strong></td><td>Nîmes, Calvisson, Sommières, villages de la Vaunage</td><td>Urbain et rural</td><td>Un des grands pôles réformés du royaume</td></tr>
+<tr><td><strong>Montpellier &amp; Hérault</strong></td><td>Montpellier, Ganges, Lunel, Marsillargues</td><td>Universitaire, urbain puis rural</td><td>Montpellier est place de sûreté avant 1622</td></tr>
+<tr><td><strong>Tarn</strong></td><td>Castres, Mazamet, Réalmont</td><td>Bourgeoisie, artisans, textile</td><td>Castres est une grande place réformée</td></tr>
+<tr><td><strong>Montauban</strong></td><td>Montauban et Bas-Quercy</td><td>Ville forte et intellectuelle</td><td>Académie protestante ; résistance à Louis XIII</td></tr>
+<tr><td><strong>Rouergue</strong></td><td>Millau et sud Aveyron</td><td>Communautés urbaines et marchandes</td><td>Liens avec Haut-Languedoc et Cévennes</td></tr>
+</tbody></table></div>
+<figure class="carte-prot"><svg viewBox="0 0 720 410" role="img" aria-label="Carte des foyers protestants d'Occitanie"><g font-family="Source Sans 3,sans-serif"><rect width="720" height="410" fill="#FBF8F2"/><polygon points="504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 360.9,358.0 374.8,378.5 363.7,401.6 359.1,427.2 335.9,452.8 322.0,472.0 678.9,472.0 678.9,164.8" fill="#DCE7F2"/><polygon points="201.5,22.7 217.2,32.9 232.1,39.3 258.0,32.9 271.9,47.0 297.0,43.2 319.2,47.0 338.7,36.8 354.4,45.7 367.4,38.0 382.2,36.8 393.4,53.4 407.3,52.1 424.9,73.9 433.2,86.7 433.2,107.2 450.8,120.0 474.0,116.1 498.1,120.0 502.7,143.0 504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 340.5,355.5 317.4,360.6 298.8,369.6 271.0,365.7 247.8,359.3 227.4,350.4 201.5,337.6 173.7,322.2 155.1,312.0 132.0,305.6 118.1,324.8 94.9,326.0 67.1,324.8 55.0,314.5 37.4,306.8 39.3,280.0 57.8,250.5 41.1,226.2 43.9,207.0 57.8,194.2 62.4,167.3 85.6,159.6 118.1,149.4 139.4,148.1 147.7,126.4 165.3,111.0 157.9,88.0 169.0,79.0 187.6,56.0 196.8,36.8 201.5,22.7" fill="#F4ECDD" stroke="#B8A58A" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="417.5" cy="135.3" rx="48" ry="26" transform="rotate(-30 417.5 135.3)" fill="#3E7C4A" opacity=".28"/><circle cx="471.2" cy="178.8" r="16" fill="#2C4A7C" opacity=".75"/><text x="492.2" y="182.8" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="start">Nîmes</text><circle cx="426.7" cy="208.3" r="11" fill="#2C4A7C" opacity=".75"/><text x="410.7" y="212.3" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="end">Montpellier</text><circle cx="192.2" cy="155.8" r="13" fill="#2C4A7C" opacity=".75"/><text x="174.2" y="159.8" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="end">Montauban</text><circle cx="274.7" cy="208.3" r="12" fill="#2C4A7C" opacity=".75"/><text x="257.7" y="212.3" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="end">Castres</text><circle cx="352.6" cy="145.6" r="8" fill="#2C4A7C" opacity=".75"/><text x="339.6" y="149.6" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="end">Millau</text><circle cx="411.0" cy="167.3" r="7" fill="#2C4A7C" opacity=".75"/><text x="399.0" y="171.3" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="end">Ganges</text><circle cx="436.0" cy="152.0" r="7" fill="#2C4A7C" opacity=".75"/><text x="436.0" y="172.0" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="middle">Anduze</text><circle cx="287.7" cy="223.6" r="6" fill="#2C4A7C" opacity=".75"/><text x="298.7" y="227.6" font-size="11.5" font-weight="600" fill="#2C2418" text-anchor="start">Mazamet</text><rect x="409.7" y="106.0" width="10" height="10" transform="rotate(45 414.7 111.0)" fill="#A94442" stroke="white" stroke-width="1.5"/><text x="423.7" y="115.0" font-size="11" fill="#7A2E2C">Pont-de-Montvert</text><rect x="428.2" y="140.6" width="10" height="10" transform="rotate(45 433.2 145.6)" fill="#A94442" stroke="white" stroke-width="1.5"/><text x="442.2" y="149.6" font-size="11" fill="#7A2E2C">Mialet · Musée du Désert</text><rect x="450.5" y="208.4" width="10" height="10" transform="rotate(45 455.5 213.4)" fill="#A94442" stroke="white" stroke-width="1.5"/><text x="464.5" y="217.4" font-size="11" fill="#7A2E2C">Aigues-Mortes · tour de Constance</text><rect x="195.6" y="204.6" width="10" height="10" transform="rotate(45 200.6 209.6)" fill="#A94442" stroke="white" stroke-width="1.5"/><text x="200.6" y="228.6" font-size="11" fill="#7A2E2C" text-anchor="middle">Toulouse · affaire Calas</text><g font-size="11" fill="#3A3028"><rect x="490" y="310" width="215" height="88" rx="8" fill="white" stroke="#E0DACE"/><circle cx="508" cy="328" r="7" fill="#2C4A7C" opacity=".75"/><text x="524" y="332">Grand foyer réformé</text><ellipse cx="508" cy="350" rx="11" ry="6" fill="#3E7C4A" opacity=".35"/><text x="524" y="354">Cœur de la guerre des Camisards</text><rect x="503" y="367" width="10" height="10" transform="rotate(45 508 372)" fill="#A94442"/><text x="524" y="376">Lieu de mémoire</text><text x="502" y="392" font-size="10" fill="#8B7355" font-style="italic">taille des cercles indicative</text></g></g></svg><figcaption>Les principaux foyers réformés d’Occitanie et les lieux de mémoire (carte schématique ; la taille des cercles donne une idée approximative de l’importance des communautés).</figcaption></figure>
+</section>
+<section class="section" id="croyances"><h2 class="section-titre"><div class="section-titre-icon">✦</div>Que croient les protestants réformés ?</h2><div class="histoire-texte"><p>La Réforme ne consiste pas seulement à refuser l'autorité du pape. Elle propose une autre manière d'organiser la foi chrétienne, le culte et l'Église.</p></div>
+<div class="compare"><div class="compare-col compare-cath"><h4>Tradition réformée</h4><ul><li><strong>Bible</strong> comme autorité fondamentale</li><li>Salut reçu par la <strong>grâce</strong> et la foi</li><li>Deux sacrements : <strong>baptême et Cène</strong></li><li>Pas de culte des saints ni des reliques</li><li>Pasteur chargé de prêcher et d'enseigner</li><li>Culte centré sur prédication, prière et psaumes</li><li>Temple généralement sobre</li></ul></div><div class="compare-col compare-rom"><h4>Catholicisme de l'époque moderne</h4><ul><li>Bible et Tradition de l'Église</li><li>Sept sacrements</li><li>Autorité du pape et hiérarchie épiscopale</li><li>Culte des saints et de la Vierge</li><li>Messe centrée sur l'eucharistie</li><li>Prêtres ordonnés</li><li>Images, autels, reliques dans les églises</li></ul></div></div>
+<div class="schema"><span class="schema-titre">Organisation simplifiée d'une Église réformée</span><div class="schema-flow"><div class="schema-box">Fidèles<br><span class="small">communauté locale</span></div><div class="schema-arrow">→</div><div class="schema-box fort">Consistoire<br><b>pasteur + anciens</b></div><div class="schema-arrow">→</div><div class="schema-box">Colloque<br><span class="small">plusieurs Églises</span></div><div class="schema-arrow">→</div><div class="schema-box">Synode provincial</div><div class="schema-arrow">→</div><div class="schema-box">Synode national</div></div></div>
+</section>
+<section class="section" id="guerres"><h2 class="section-titre"><div class="section-titre-icon">⚔️</div>Les guerres de Religion : voisins devenus ennemis</h2><div class="histoire-texte">
+<p>À partir de <strong>1562</strong>, le royaume entre dans près de quarante années de guerres civiles entrecoupées de paix fragiles. Religion, rivalités nobiliaires, pouvoir royal, contrôle des villes et intérêts locaux s'entremêlent. Le Midi est profondément touché.</p>
+<h3 class="sous-titre">Nîmes, Montpellier, Montauban, Castres</h3><p>Des villes passent sous contrôle protestant ; églises et couvents sont parfois saisis ou détruits, tandis que les reconquêtes catholiques s'accompagnent également de violences. À Montpellier, les affrontements de 1562 puis le siège de 1567 endommagent lourdement la cathédrale Saint-Pierre. Nîmes connaît la sanglante <strong>Michelade de 1567</strong>, au cours de laquelle des catholiques sont tués par des protestants. La violence n'est donc pas l'apanage d'un seul camp.</p>
+<div class="danger"><strong>⚠️ Une guerre civile et confessionnelle.</strong> Pour comprendre cette période, il faut éviter le récit d'un camp uniquement victime et d'un autre uniquement bourreau. Massacres, destructions, représailles et sièges sont commis dans les deux camps, même si leur contexte, leur ampleur et les rapports de force varient selon les moments.</div>
+<h3 class="sous-titre">1572 : la Saint-Barthélemy</h3><p>Le massacre commencé à Paris le 24 août 1572 s'étend à plusieurs villes du royaume. Son impact psychologique est immense : la coexistence paraît plus fragile encore et de nombreux réformés cherchent désormais des garanties politiques et militaires.</p>
+</div></section>
+<section class="section" id="nantes"><h2 class="section-titre"><div class="section-titre-icon">📜</div>1598 : l'édit de Nantes, une paix imparfaite</h2><div class="histoire-texte"><p>Promulgué par <strong>Henri IV</strong>, ancien protestant devenu catholique, l'édit de Nantes met fin à la dernière guerre de Religion. Il ne proclame pas une liberté religieuse moderne : le catholicisme demeure religion dominante, mais les réformés obtiennent des droits civils, une liberté de culte encadrée et des garanties de sécurité dans certains lieux.</p><p>Dans le Midi, plusieurs villes disposent de fortes institutions protestantes. Des temples sont construits, des consistoires et synodes fonctionnent, et des académies forment pasteurs et élites.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Ce que permet l'édit</th><th>Ce qu'il ne permet pas</th></tr></thead><tbody><tr><td>Existence légale des protestants et droits civils</td><td>Une égalité complète entre les deux confessions</td></tr><tr><td>Culte dans les lieux autorisés</td><td>Le culte protestant partout dans le royaume</td></tr><tr><td>Places de sûreté temporaires</td><td>Un État protestant indépendant</td></tr><tr><td>Accès à certaines charges et juridictions</td><td>La disparition des tensions confessionnelles</td></tr></tbody></table></div>
+<h3 class="sous-titre">1621–1629 : le pouvoir politique huguenot est brisé</h3><div class="histoire-texte"><p>Sous Louis XIII, de nouvelles révoltes éclatent. <strong>Montauban résiste au siège royal de 1621</strong>. Montpellier capitule en 1622 après un siège conduit par le roi. La <strong>paix d'Alès de 1629</strong> maintient les garanties religieuses mais supprime les places de sûreté et l'organisation politico-militaire protestante.</p></div>
+</section>
+<section class="section" id="revocation"><h2 class="section-titre"><div class="section-titre-icon">🔥</div>1685 : la Révocation et la persécution</h2><div class="histoire-texte"><p>Sous Louis XIV, les droits protestants sont progressivement réduits : temples fermés ou détruits, professions restreintes, écoles supprimées, conversions encouragées puis forcées. Les <strong>dragonnades</strong> utilisent le logement de soldats chez les familles protestantes comme moyen de pression.</p><p>Le <strong>18 octobre 1685</strong>, l'édit de Fontainebleau révoque l'édit de Nantes. Les temples doivent être détruits, les pasteurs partir ou se convertir, tandis que les fidèles n'ont théoriquement pas le droit d'émigrer. Beaucoup deviennent officiellement des « nouveaux convertis » tout en gardant leur foi en secret.</p></div>
+<div class="schema"><span class="schema-titre">Après 1685 : quatre destins possibles</span><div class="schema-flow"><div class="schema-box">Abjurer<br><span class="small">conversion officielle</span></div><div class="schema-box">Pratiquer en secret<br><b>Désert</b></div><div class="schema-box">Fuir clandestinement<br><b>Refuge</b></div><div class="schema-box">Résister<br><b>jusqu'à l'insurrection</b></div></div></div>
+<h3 class="sous-titre">Le Refuge : partir malgré l'interdiction</h3><div class="histoire-texte"><p>Des protestants quittent clandestinement la France pour la Suisse, les Provinces-Unies, l'Angleterre, les principautés allemandes ou d'autres terres d'accueil. À l'échelle française, environ <strong>200 000</strong> départs sont souvent retenus. Cette émigration prive certains territoires de marchands, artisans qualifiés, soldats et intellectuels, tout en créant une diaspora huguenote européenne.</p></div>
+</section>
+<section class="section" id="camisards"><h2 class="section-titre"><div class="section-titre-icon">⛰️</div>1702–1704 : la guerre des Camisards</h2><div class="histoire-texte"><p>Dans les Cévennes, la clandestinité religieuse se mêle à un mouvement prophétique. L'arrestation de fidèles et la répression nourrissent les tensions. Le <strong>24 juillet 1702</strong>, l'abbé du Chayla, chargé de lutter contre les assemblées clandestines, est tué à Pont-de-Montvert. L'insurrection commence.</p><p>Les insurgés, appelés <strong>Camisards</strong>, sont pour beaucoup de jeunes paysans et artisans. Ils connaissent parfaitement montagnes, vallées et chemins. Leurs chefs les plus célèbres sont <strong>Jean Cavalier</strong>, <strong>Pierre Laporte dit Rolland</strong> et <strong>Abraham Mazel</strong>.</p></div>
+<div class="recette-grid"><div class="recette-meta-card"><div class="recette-meta-icon">👥</div><div><div class="recette-meta-label">Combattants</div><div class="recette-meta-val">Petites bandes mobiles</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🗺️</div><div><div class="recette-meta-label">Atout</div><div class="recette-meta-val">Connaissance du terrain</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🌙</div><div><div class="recette-meta-label">Tactique</div><div class="recette-meta-val">Surprise &amp; mobilité</div></div></div><div class="recette-meta-card"><div class="recette-meta-icon">🔥</div><div><div class="recette-meta-label">Répression</div><div class="recette-meta-val">Exécutions &amp; villages brûlés</div></div></div></div>
+<div class="histoire-texte"><div class="commentaire"><div class="commentaire-titre">💬 Commentaire · pourquoi « Camisards » ?</div><p>L’origine du mot reste discutée. On la rattache souvent à l’occitan <em>camisa</em>, la chemise, que les insurgés auraient portée par-dessus leurs vêtements pour se reconnaître lors des attaques nocturnes, ou à la <em>camisade</em>, une attaque de nuit. Les Camisards, eux, se désignaient plutôt comme les « enfants de Dieu ».</p></div><h3 class="sous-titre">Une guerre d'une extrême violence</h3><p>Les Camisards attaquent soldats, prêtres, églises et adversaires locaux ; les troupes royales répondent par exécutions, déportations, incendies et politique de terre brûlée. Le maréchal de Montrevel mène une répression dure ; son successeur Villars cherche davantage la négociation. En 1704, Jean Cavalier traite avec Villars et quitte la France. Rolland est tué la même année. Des résistances subsistent encore plusieurs années, mais l'insurrection organisée est brisée.</p></div>
+</section>
+<section class="section" id="desert"><h2 class="section-titre"><div class="section-titre-icon">🌙</div>Le Désert : garder sa foi dans la clandestinité</h2><div class="histoire-texte"><p>Le mot <strong>« Désert »</strong> désigne la période pendant laquelle le protestantisme est interdit et se pratique clandestinement, par référence au désert biblique. Les fidèles se réunissent de nuit ou dans des lieux isolés : ravins, bois, grottes, mas reculés. On lit la Bible, chante les psaumes et écoute des prédicants.</p><p>Après l'échec camisard, <strong>Antoine Court</strong> entreprend à partir de 1715 de réorganiser pacifiquement les Églises : consistoires, synodes clandestins et formation de pasteurs. Cette stratégie permet au protestantisme réformé de survivre sans reprendre la lutte armée.</p>
+<h3 class="sous-titre">Le prix de la clandestinité</h3><p>Les pasteurs clandestins risquent la mort. Des hommes sont envoyés aux galères ; des femmes sont emprisonnées, notamment à la <strong>tour de Constance à Aigues-Mortes</strong>. La figure de <strong>Marie Durand</strong>, emprisonnée trente-huit ans, est devenue l'un des symboles de cette résistance de conscience.</p></div><div class="schema"><span class="schema-titre">Ce que risquaient les protestants du Désert</span><div class="schema-flow"><div class="schema-box"><b>Pasteurs</b><br><span class="small">pendaison, après 1724</span></div><div class="schema-box"><b>Hommes</b><br><span class="small">galères à vie, à Marseille ou Toulon</span></div><div class="schema-box"><b>Femmes</b><br><span class="small">prison, comme la tour de Constance</span></div><div class="schema-box"><b>Enfants</b><br><span class="small">parfois retirés aux familles pour être élevés au couvent</span></div><div class="schema-box fort"><b>Biens</b><br><span style="font-size:12px;opacity:.85">confisqués, maisons rasées</span></div></div><p class="small" style="text-align:center;margin-top:10px">Peines prévues par les ordonnances royales, appliquées de façon très inégale selon les époques et les lieux.</p></div><div class="histoire-texte"><h3 class="sous-titre">L’assemblée au Désert</h3><p>Une assemblée se prépare dans le secret : on fait passer le mot de bouche à oreille, on choisit un lieu écarté, des guetteurs surveillent les chemins. Le pasteur prêche debout, parfois sur une chaire démontable que l’on cache ensuite ; les fidèles chantent les psaumes à voix basse. On y célèbre baptêmes et mariages, que l’État ne reconnaît pas : jusqu’en 1787, les enfants nés de ces unions sont considérés comme illégitimes.</p><p>À Nîmes, le pasteur <strong>Paul Rabaut</strong> exerce ainsi pendant plus de cinquante ans dans la clandestinité. Son fils, <strong>Rabaut Saint-Étienne</strong>, député en 1789, défendra la liberté religieuse à l’Assemblée nationale.</p></div>
+<div class="citation-bloc"><p>« Résister »</p><cite>— Mot traditionnellement associé à Marie Durand et à la tour de Constance ; son attribution exacte et son contexte doivent être présentés avec prudence.</cite></div>
+</section>
+<section class="section" id="tolerance"><h2 class="section-titre"><div class="section-titre-icon">⚖️</div>De la tolérance à la liberté de conscience</h2><div class="histoire-texte"><h3 class="sous-titre">1762 : l'affaire Calas à Toulouse</h3><p><strong>Jean Calas</strong>, marchand protestant toulousain, est condamné à mort et exécuté en 1762, accusé d'avoir tué son fils. Voltaire se saisit de l'affaire, dénonce le fanatisme et obtient la réhabilitation de Calas en 1765. L'affaire devient un symbole européen de la lutte pour la tolérance judiciaire et religieuse.</p>
+<h3 class="sous-titre">1787 : l'édit de tolérance</h3><p>L'édit de Versailles accorde notamment un état civil aux non-catholiques. Il ne crée pas encore une liberté religieuse complète, mais met fin à une situation juridique intenable.</p><h3 class="sous-titre">1789–1802 : changement de monde</h3><p>La Déclaration des droits de l'homme et du citoyen affirme la liberté des opinions, y compris religieuses. Le régime concordataire et les Articles organiques de 1802 donnent ensuite un cadre légal aux Églises réformées. De nombreux temples sont construits ou reconstruits au XIX<sup>e</sup> siècle.</p></div>
+</section>
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités qui ont marqué cette histoire</h2>
+<div class="perso-groupe"><div class="perso-groupe-titre g-occ">Réformateurs &amp; pasteurs</div><div class="perso-grid"><div class="perso g-occ"><div class="perso-nom">Jean Calvin</div><div class="perso-dates">1509–1564</div><div class="perso-desc">Réformateur français installé à Genève ; influence doctrinale majeure sur les Églises réformées françaises.</div></div><div class="perso g-occ"><div class="perso-nom">Pierre Viret</div><div class="perso-dates">1511–1571</div><div class="perso-desc">Réformateur vaudois, prédicateur actif dans le Midi, notamment à Nîmes et Montpellier.</div></div><div class="perso g-occ"><div class="perso-nom">Claude Brousson</div><div class="perso-dates">1647–1698</div><div class="perso-desc">Avocat puis prédicant du Désert ; exécuté à Montpellier.</div></div><div class="perso g-occ"><div class="perso-nom">Paul Rabaut</div><div class="perso-dates">1718–1794</div><div class="perso-desc">Pasteur du Désert à Nîmes pendant un demi-siècle, figure de la résistance pacifique et de la reconstruction des Églises.</div></div><div class="perso g-occ"><div class="perso-nom">Antoine Court</div><div class="perso-dates">1695–1760</div><div class="perso-desc">Réorganise les Églises clandestines à partir de 1715 et privilégie une stratégie religieuse non insurrectionnelle.</div></div></div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-crois">Chefs &amp; résistants</div><div class="perso-grid"><div class="perso g-crois"><div class="perso-nom">Henri de Rohan</div><div class="perso-dates">1579–1638</div><div class="perso-desc">Grand chef politique et militaire du parti huguenot sous Louis XIII.</div></div><div class="perso g-crois"><div class="perso-nom">Jean Cavalier</div><div class="perso-dates">1681–1740</div><div class="perso-desc">Jeune chef camisard, remarquable tacticien ; négocie avec Villars en 1704 puis s'exile.</div></div><div class="perso g-crois"><div class="perso-nom">Rolland (Pierre Laporte)</div><div class="perso-dates">1680–1704</div><div class="perso-desc">L'un des principaux chefs camisards, tué en 1704.</div></div><div class="perso g-crois"><div class="perso-nom">Marie Durand</div><div class="perso-dates">1711–1776</div><div class="perso-desc">Emprisonnée à la tour de Constance de 1730 à 1768 pour sa fidélité protestante.</div></div></div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-egl">Tolérance &amp; mémoire</div><div class="perso-grid"><div class="perso g-egl"><div class="perso-nom">Jean Calas</div><div class="perso-dates">1698–1762</div><div class="perso-desc">Marchand protestant toulousain dont le procès et l'exécution deviennent une grande affaire de tolérance.</div></div><div class="perso g-egl"><div class="perso-nom">Rabaut Saint-Étienne</div><div class="perso-dates">1743–1793</div><div class="perso-desc">Fils de Paul Rabaut, pasteur et député de Nîmes en 1789 ; il plaide pour la liberté religieuse lors de la rédaction de la Déclaration des droits.</div></div><div class="perso g-egl"><div class="perso-nom">Voltaire</div><div class="perso-dates">1694–1778</div><div class="perso-desc">Sa campagne dans l'affaire Calas contribue à la réhabilitation de 1765 et nourrit le débat sur la tolérance.</div></div></div></div>
+</section>
+<section class="section" id="vie"><h2 class="section-titre"><div class="section-titre-icon">🏠</div>Vivre protestant : famille, école, travail et société</h2><div class="histoire-texte"><h3 class="sous-titre">La Bible et l'apprentissage de la lecture</h3><p>La lecture personnelle des Écritures donne une grande valeur à l'instruction. Il serait exagéré d'affirmer que tous les protestants savaient lire, mais l'enseignement du catéchisme, des psaumes et de la Bible favorise une culture de l'écrit. Les académies de Nîmes, Montpellier et Montauban participent à la formation des élites.</p>
+<h3 class="sous-titre">La famille, refuge de la foi</h3><p>Après 1685, quand temples et pasteurs disparaissent, la maison devient essentielle. On conserve des Bibles, on récite des psaumes, on transmet les récits des persécutions et des assemblées. Cette transmission familiale explique en partie la persistance du protestantisme cévenol.</p>
+<h3 class="sous-titre">Métiers et économie</h3><p>Les protestants sont présents dans tous les milieux : paysans cévenols, artisans, marchands, négociants, fabricants textiles, professions libérales. Aux XVIII<sup>e</sup> et XIX<sup>e</sup> siècles, certaines familles protestantes jouent un rôle notable dans le textile, la soie, la banque, le commerce et l'industrie du Midi. Il faut toutefois éviter d'en déduire une relation automatique entre protestantisme et réussite économique.</p>
+<h3 class="sous-titre">Cimetières et paysages</h3><p>Dans les Cévennes, de nombreux cimetières protestants familiaux sont installés près des mas. Ils constituent aujourd'hui une caractéristique discrète mais très forte du paysage culturel.</p></div>
+</section>
+<section class="section" id="patrimoine"><h2 class="section-titre"><div class="section-titre-icon">⛪</div>Temples, lieux de mémoire et patrimoine</h2><div class="fort-grid"><div class="fort"><div class="fort-head">Musée du Désert <small>Mialet</small></div><div class="fort-body">Installé au Mas Soubeyran, lieu majeur pour comprendre la Révocation, les assemblées clandestines, les Camisards et la mémoire huguenote.</div></div><div class="fort"><div class="fort-head">Tour de Constance <small>Aigues-Mortes</small></div><div class="fort-body">Prison de femmes protestantes au XVIII<sup>e</sup> siècle ; associée à la mémoire de Marie Durand.</div></div><div class="fort"><div class="fort-head">Grand Temple <small>Anduze</small></div><div class="fort-body">Grand édifice du XIX<sup>e</sup> siècle construit dans un bourg profondément marqué par la Réforme.</div></div><div class="fort"><div class="fort-head">Temple <small>Saint-Jean-du-Gard</small></div><div class="fort-body">Témoigne de la reconstruction publique du protestantisme après la clandestinité.</div></div><div class="fort"><div class="fort-head">Montauban</div><div class="fort-body">Ville majeure de la Réforme méridionale, siège d'une académie et symbole de résistance au pouvoir royal au XVII<sup>e</sup> siècle.</div></div><div class="fort"><div class="fort-head">Toulouse</div><div class="fort-body">La mémoire de l'affaire Calas rappelle que le protestantisme occitan ne se limite pas aux Cévennes.</div></div></div>
+</section>
+<section class="section" id="chronologie"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Grande chronologie</h2><div class="frise">
+<div class="frise-periode">La Réforme</div><div class="frise-item majeur"><span class="frise-date">1517</span><div class="frise-texte">Luther publie ses 95 thèses : début symbolique de la Réforme.</div></div><div class="frise-item"><span class="frise-date">1536</span><div class="frise-texte">Première édition de l'<em>Institution de la religion chrétienne</em> de Calvin.</div></div><div class="frise-item majeur"><span class="frise-date">1555–1560</span><div class="frise-texte">Multiplication et organisation des Églises réformées françaises ; essor rapide dans le Midi.</div></div>
+<div class="frise-periode">Guerres &amp; coexistence</div><div class="frise-item majeur"><span class="frise-date">1562</span><div class="frise-texte">Début des guerres de Religion.</div></div><div class="frise-item"><span class="frise-date">1567</span><div class="frise-texte">Violences à Nîmes (Michelade) et nouveau siège de Montpellier.</div></div><div class="frise-item majeur"><span class="frise-date">1572</span><div class="frise-texte">Massacre de la Saint-Barthélemy.</div></div><div class="frise-item majeur"><span class="frise-date">1598</span><div class="frise-texte">Édit de Nantes.</div></div><div class="frise-item"><span class="frise-date">1621</span><div class="frise-texte">Siège de Montauban.</div></div><div class="frise-item"><span class="frise-date">1622</span><div class="frise-texte">Siège et reddition de Montpellier.</div></div><div class="frise-item majeur"><span class="frise-date">1629</span><div class="frise-texte">Paix d'Alès : fin de la puissance politico-militaire huguenote.</div></div>
+<div class="frise-periode">Révocation &amp; Désert</div><div class="frise-item majeur"><span class="frise-date">1685</span><div class="frise-texte">Édit de Fontainebleau : révocation de l'édit de Nantes.</div></div><div class="frise-item"><span class="frise-date">1698</span><div class="frise-texte">Claude Brousson est exécuté à Montpellier.</div></div><div class="frise-item majeur"><span class="frise-date">1702–1704</span><div class="frise-texte">Phase principale de la guerre des Camisards.</div></div><div class="frise-item"><span class="frise-date">21 août 1715</span><div class="frise-texte">Premier synode du Désert réuni par Antoine Court près de Monoblet, dans les Cévennes : début de la réorganisation des Églises.</div></div><div class="frise-item"><span class="frise-date">1730–1768</span><div class="frise-texte">Emprisonnement de Marie Durand à la tour de Constance.</div></div><div class="frise-item majeur"><span class="frise-date">1762–1765</span><div class="frise-texte">Affaire Calas et réhabilitation.</div></div><div class="frise-item majeur"><span class="frise-date">1787</span><div class="frise-texte">Édit de tolérance.</div></div>
+<div class="frise-periode">Liberté &amp; mémoire</div><div class="frise-item"><span class="frise-date">1789</span><div class="frise-texte">Déclaration des droits de l'homme et du citoyen.</div></div><div class="frise-item"><span class="frise-date">1802</span><div class="frise-texte">Organisation légale des cultes protestants sous le Consulat.</div></div><div class="frise-item"><span class="frise-date">1905</span><div class="frise-texte">Loi de séparation des Églises et de l'État.</div></div><div class="frise-item"><span class="frise-date">1911</span><div class="frise-texte">Création du Musée du Désert à Mialet et institutionnalisation des grandes assemblées commémoratives.</div></div>
+</div></section>
+<div class="commentaire" style="margin-top:-20px;margin-bottom:44px"><div class="commentaire-titre">💬 Liens avec les autres fiches de la série</div><p>Cette histoire croise plusieurs autres époques de l’Occitanie. Les guerres de Religion contribuent à mettre fin au siècle d’or du <a href="pays-cocagne-pastel.html">pastel</a>, et le grand marchand Pierre d’Assézat était lui-même protestant. Dans les Cévennes, la <a href="soie-cevennes.html">soie</a> participe au relèvement économique des vallées après la guerre des Camisards, portée par des réseaux de marchands réformés. Enfin, la comparaison avec les <a href="catharisme-forteresses-occitanie.html">cathares</a> est tentante, mais elle doit être faite avec prudence (voir les idées reçues).</p></div>
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues à corriger</h2>
+<div class="mythe"><strong>« Les protestants du Midi sont les héritiers des cathares. »</strong><br><span class="verdict faux">Faux</span><br>Cette filiation a été très populaire au XIX<sup>e</sup> siècle, chez certains auteurs protestants comme dans la mémoire régionale. Les historiens la rejettent : près de trois siècles séparent les deux mouvements, leurs doctrines sont très différentes (les réformés ne sont pas dualistes) et leurs foyers ne coïncident que partiellement. Ce qui les rapproche est surtout le souvenir d’une dissidence méridionale réprimée.</div><div class="mythe"><strong>« Tous les protestants des Cévennes étaient des Camisards. »</strong><br><span class="verdict faux">Faux</span><br>Les Camisards sont une minorité combattante dans une population protestante plus large ; certains fidèles soutiennent les insurgés, d'autres restent à l'écart ou souhaitent la paix.</div>
+<div class="mythe"><strong>« Les guerres de Religion sont uniquement des guerres entre croyances. »</strong><br><span class="verdict nuance">À nuancer</span><br>La religion est centrale, mais les rivalités politiques, dynastiques, urbaines, seigneuriales et sociales jouent aussi un rôle.</div>
+<div class="mythe"><strong>« L'édit de Nantes instaurait la liberté religieuse. »</strong><br><span class="verdict nuance">À nuancer</span><br>Il organisait une coexistence juridiquement encadrée, très éloignée de la liberté de conscience moderne.</div>
+<div class="mythe"><strong>« Après 1685, il n'y avait plus de protestants en France. »</strong><br><span class="verdict faux">Faux</span><br>Beaucoup abjurent officiellement mais continuent à pratiquer clandestinement ; d'autres s'exilent.</div>
+<div class="mythe"><strong>« Le protestantisme occitan se résume aux Cévennes. »</strong><br><span class="verdict faux">Faux</span><br>Nîmes, Montpellier, Montauban, Castres, Millau et de nombreuses plaines et vallées ont possédé d'importantes communautés réformées.</div>
+</section>
+<section class="section" id="aujourdhui"><h2 class="section-titre"><div class="section-titre-icon">🌿</div>Que reste-t-il aujourd'hui ?</h2><div class="histoire-texte"><p>Le protestantisme est aujourd'hui une minorité religieuse librement pratiquée. En Occitanie, son héritage est particulièrement visible dans les Cévennes et le Gard, mais aussi dans le Tarn, le Tarn-et-Garonne et l'Hérault. Temples, cimetières familiaux, musées, archives et traditions commémoratives maintiennent une mémoire très présente.</p><p>L'<strong>Assemblée du Désert</strong>, organisée au Mas Soubeyran près de Mialet, rassemble chaque année, le premier dimanche de septembre, plusieurs milliers de participants autour de cultes, conférences et commémorations, une tradition née en 1911 avec le musée. Au-delà de la religion, cette histoire nourrit une mémoire régionale de la <strong>liberté de conscience, de la résistance à la contrainte religieuse et de la transmission familiale</strong>.</p></div>
+<div class="success"><strong>🌿 Une empreinte durable.</strong> Le protestantisme n'a pas seulement laissé des temples. Il a marqué des paysages, des familles, des réseaux économiques, une culture de la lecture, des mémoires de persécution et une sensibilité particulière aux questions de conscience et de liberté.</div>
+</section>
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>Parcours conseillé : sur les traces du protestantisme occitan</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Nîmes</div><div class="etape-texte">Comprendre l'importance urbaine de la Réforme et les conflits confessionnels.</div></div></div><div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Aigues-Mortes</div><div class="etape-texte">Tour de Constance et mémoire des prisonnières protestantes.</div></div></div><div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Anduze</div><div class="etape-texte">Porte des Cévennes et grand temple.</div></div></div><div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Mialet</div><div class="etape-texte">Musée du Désert, cœur documentaire et mémoriel.</div></div></div><div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Pont-de-Montvert</div><div class="etape-texte">Lieu déclencheur de l'insurrection camisarde de 1702.</div></div></div><div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Montauban &amp; Castres</div><div class="etape-texte">Deux grands foyers du protestantisme du Haut-Languedoc.</div></div></div><div class="etape"><div class="etape-num">7</div><div class="etape-corps"><div class="etape-titre">Toulouse</div><div class="etape-texte">Terminer par l'affaire Calas et la question de la tolérance.</div></div></div>
+</div></section>
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://museeprotestant.org/" target="_blank" rel="noopener">Musée protestant — histoire du protestantisme français</a></li>
+<li><a href="https://www.museedudesert.com/" target="_blank" rel="noopener">Musée du Désert — Mialet, Cévennes</a></li>
+<li><a href="https://essentiels.bnf.fr/" target="_blank" rel="noopener">Bibliothèque nationale de France — BnF Essentiels</a></li>
+<li><a href="https://pop.culture.gouv.fr/" target="_blank" rel="noopener">Ministère de la Culture — POP, patrimoine protestant</a></li>
+<li><a href="https://www.archives.toulouse.fr/" target="_blank" rel="noopener">Archives municipales de Toulouse — affaire Calas</a></li>
+<li><a href="https://gallica.bnf.fr/" target="_blank" rel="noopener">Gallica — cartes, estampes, ouvrages et sources anciennes</a></li>
+</ul><p class="small">Pour approfondir : Philippe Joutard, <em>La Légende des Camisards</em> ; Patrick Cabanel, <em>Histoire des protestants en France</em>.</p><p class="small">Carte et schémas sont des illustrations pédagogiques, non à l’échelle. Cette fiche privilégie les sources patrimoniales, archivistiques et muséales. Les chiffres anciens doivent être lus comme des ordres de grandeur lorsqu'ils proviennent de dénombrements confessionnels incomplets.</p></div></section>
+</div>
+<aside class="produit-aside"><div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Début</span><span class="aside-val">XVI<sup>e</sup> siècle</span></div><div class="aside-row"><span class="aside-label">Courant dominant</span><span class="aside-val">Réformé / calviniste</span></div><div class="aside-row"><span class="aside-label">Foyers</span><span class="aside-val">Cévennes · Gard · Tarn · Montauban · Hérault</span></div><div class="aside-row"><span class="aside-label">Période clé</span><span class="aside-val">1560–1787</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 Quelques repères</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>1517</b><span>Luther</span></div><div class="chiffre"><b>1598</b><span>Édit de Nantes</span></div><div class="chiffre"><b>1685</b><span>Révocation</span></div><div class="chiffre"><b>1702</b><span>Camisards</span></div><div class="chiffre"><b>1787</b><span>Tolérance</span></div><div class="chiffre"><b>1905</b><span>Laïcité</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📖 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Huguenot</dt><dd>Nom historique donné aux protestants français.</dd><dt>Temple</dt><dd>Lieu de culte protestant.</dd><dt>Pasteur</dt><dd>Ministre chargé de la prédication et de l'accompagnement de l'Église.</dd><dt>Consistoire</dt><dd>Conseil local composé du pasteur et d'anciens.</dd><dt>Désert</dt><dd>Période et pratique clandestine après la Révocation.</dd><dt>Camisard</dt><dd>Insurgé protestant cévenol du début du XVIII<sup>e</sup> siècle.</dd><dt>Refuge</dt><dd>Diaspora des protestants ayant quitté la France.</dd><dt>Dragonnade</dt><dd>Logement forcé de soldats chez des protestants pour obtenir leur conversion.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">🧠 Fil conducteur</div><div class="aside-card-body"><p class="small">Réforme → implantation → guerres → coexistence → suppression → clandestinité → résistance → tolérance → mémoire.</p></div></div>
+</aside></div></div></div>
+<script>document.querySelectorAll('.produit-nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.produit-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active')}));</script>
+</body></html>
