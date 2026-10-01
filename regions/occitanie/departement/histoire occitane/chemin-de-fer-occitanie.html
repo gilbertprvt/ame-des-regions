@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le chemin de fer en Occitanie — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page : le canal (Wikimedia Commons) -->
+<style>
+.produit-hero{background-image:linear-gradient(rgba(24,28,38,.55),rgba(24,28,38,.66)),linear-gradient(120deg,#243c63,#5a3e1b);background-size:cover}
+.produit-hero-body h1{margin-bottom:90px}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.impact{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:16px;font-family:var(--font-corps);font-size:14px;line-height:1.6;color:#3A3028}.impact strong{display:block;color:#2C4A7C;font-family:var(--font-titre);font-size:16px;margin-bottom:4px}
+.ouvrage-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}.ouvrage{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.ouvrage h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}.ouvrage p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028;font-family:var(--font-corps)}
+.ouvrage .lieu{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:4px;font-family:var(--font-corps)}
+.g-fin{color:#2C4A7C}.g-ing{color:#3E7C4A}.g-chem{color:#A0522D}
+.carte-rail{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;margin:18px 0 22px}.carte-rail svg{width:100%;height:auto;display:block}
+.carte-rail figcaption{font-size:12px;color:#8B7355;font-style:italic;text-align:center;margin-top:8px;font-family:var(--font-corps)}
+@media(max-width:760px){.impact-grid,.ouvrage-grid{grid-template-columns:1fr}}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container"><div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div><div class="produit-hero-body"><div><h1><em>L</em>'arrivée du<br><span style="padding-left:40px"><em>c</em>hemin de fer</span></h1></div></div></div><div class="hero-label-bas">⟹ XIX<sup>e</sup> – XXI<sup>e</sup> siècle · le rail transforme l'Occitanie ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#comprendre" class="active">🚂 Comprendre</a><a href="#debuts">🛤️ Premières lignes</a><a href="#reseau">🗺️ Réseau</a><a href="#chrono">⏳ Chronologie</a><a href="#construction">🏗️ Construction</a><a href="#ouvrages">🌉 Ouvrages</a><a href="#economie">💰 Économie</a><a href="#population">👥 Population</a><a href="#villes">🏙️ Villes</a><a href="#conflits">⚖️ Conflits</a><a href="#metiers">👷 Métiers</a><a href="#personnalites">👤 Personnages</a><a href="#declin">🚌 Déclin</a><a href="#heritage">🏛️ Héritage</a><a href="#mythes">🔎 Idées reçues</a><a href="#parcours">🥾 Circuit</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<section class="section" id="comprendre"><h2 class="section-titre"><div class="section-titre-icon">🚂</div>Une révolution du territoire</h2><div class="histoire-texte"><p><strong>Le chemin de fer ne fut pas seulement un moyen de transport nouveau : il changea l'échelle de la vie quotidienne.</strong> En quelques décennies, villes, ports, bassins miniers et campagnes productrices furent reliés à des marchés beaucoup plus vastes. Les temps de trajet diminuèrent, les marchandises purent circuler en masse et les gares firent naître de nouveaux quartiers.</p>
+<div class="repere-grid"><div class="repere"><strong>1839 – 1840</strong><span>Beaucaire – Nîmes – Alès et Montpellier – Sète : les premiers rails du Languedoc.</span></div><div class="repere"><strong>1856 – 1857</strong><span>Toulouse est reliée à Bordeaux puis à Sète : l’Atlantique rejoint la Méditerranée.</span></div><div class="repere"><strong>1850 – 1914</strong><span>Le réseau principal et les lignes secondaires maillent tout le territoire.</span></div></div>
+<div class="notice"><strong>À retenir :</strong> le rail accélère industrialisation, spécialisation agricole, urbanisation et mobilité, mais il ne les explique pas à lui seul. Les territoires bien reliés en profitent davantage que ceux restés à l'écart.</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · le fil rouge de toute la série</div><p>Le chemin de fer relie presque toutes les fiches de cette série. Il naît dans le Gard pour transporter le <strong>charbon</strong> d’Alès ; il fait de la plaine languedocienne un océan de <strong>vignes</strong> en ouvrant le marché parisien ; il expédie dans toute l’Europe les <strong>violettes</strong> de Toulouse ; et il concurrence directement le <strong>canal du Midi</strong>, au point de le prendre à bail en 1858. Comprendre le rail, c’est comprendre l’Occitanie du XIX<sup>e</sup> siècle.</p></div></div></section>
+
+<section class="section" id="debuts"><h2 class="section-titre"><div class="section-titre-icon">🛤️</div>Des premiers rails au grand axe du Midi</h2><div class="histoire-texte"><h3 class="sous-titre">Avant le train</h3><p>Routes, diligences, charrois, canal du Midi et navigation côtière assurent l'essentiel des déplacements. Le canal est remarquable pour les marchandises lourdes, mais le transport terrestre demeure lent, cher et dépendant de l'état des chemins.</p>
+<h3 class="sous-titre">1839 – 1840 : le charbon d’Alès ouvre la voie</h3><p>Les tout premiers rails de la région sont posés pour le charbon. L’ingénieur <strong>Paulin Talabot</strong> construit la ligne d’<strong>Alès à Beaucaire</strong> par Nîmes, ouverte entre 1839 et 1840 : elle permet d’acheminer la houille des Cévennes jusqu’au Rhône. Au même moment, la ligne <strong>Montpellier – Sète</strong>, construite entre 1833 et 1839, rapproche Montpellier de son port. Montpellier est ensuite reliée à Nîmes en 1845. Le littoral languedocien entre ainsi dans l'âge ferroviaire bien avant Toulouse.</p>
+<h3 class="sous-titre">1856 – 1857 : Toulouse devient un carrefour</h3><p>La <strong>Compagnie des chemins de fer du Midi</strong>, fondée en 1852 par les frères <strong>Émile et Isaac Pereire</strong>, pousse la ligne depuis Bordeaux. Toulouse est atteinte en 1856. Le <strong>22 avril 1857</strong>, l'ouverture Toulouse – Cette (l’ancienne orthographe de Sète) assure la continuité entre Atlantique et Méditerranée. Deux trains venus des extrémités se rejoignent à Toulouse pour célébrer l'événement. Le trajet voyageurs Bordeaux – Méditerranée se fait alors en environ dix heures, contre plusieurs jours auparavant.</p></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · deux grandes compagnies se partagent le Midi</div><p>Jusqu’en 1938, le réseau est exploité par des compagnies privées concessionnaires. À l’ouest et au centre, la <strong>Compagnie du Midi</strong> des Pereire, de Bordeaux à Sète et vers les Pyrénées ; à l’est, la puissante <strong>PLM</strong> (Paris – Lyon – Méditerranée), qui tient Nîmes, Alès et la vallée du Rhône. Sète devient le point de rencontre des deux réseaux, et donc un grand port d’échange entre rail et mer.</p></div></section>
+
+<section class="section" id="reseau"><h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Le réseau : un axe et des branches</h2><div class="histoire-texte"><p>Le réseau occitan s’organise autour d’un grand axe, <strong>Bordeaux – Toulouse – Narbonne – Sète – Montpellier – Nîmes</strong>, d’où partent des branches vers les bassins miniers, les villes industrielles et les vallées. Les lignes de montagne, plus tardives, sont les plus spectaculaires : <strong>ligne des Cévennes</strong> vers Clermont-Ferrand, <strong>ligne des Causses</strong> de Béziers vers Neussargues, <strong>Transpyrénéenne</strong> vers l’Espagne par Latour-de-Carol, et le célèbre <strong>Train jaune</strong> de Cerdagne.</p></div><figure class="carte-rail"><svg viewBox="0 0 720 410" role="img" aria-label="Carte du réseau ferré d'Occitanie"><g font-family="Source Sans 3,sans-serif"><rect width="720" height="410" fill="#FBF8F2"/><polygon points="504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 360.9,358.0 374.8,378.5 363.7,401.6 359.1,427.2 335.9,452.8 322.0,472.0 678.9,472.0 678.9,164.8" fill="#DCE7F2"/><polygon points="201.5,22.7 217.2,32.9 232.1,39.3 258.0,32.9 271.9,47.0 297.0,43.2 319.2,47.0 338.7,36.8 354.4,45.7 367.4,38.0 382.2,36.8 393.4,53.4 407.3,52.1 424.9,73.9 433.2,86.7 433.2,107.2 450.8,120.0 474.0,116.1 498.1,120.0 502.7,143.0 504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 340.5,355.5 317.4,360.6 298.8,369.6 271.0,365.7 247.8,359.3 227.4,350.4 201.5,337.6 173.7,322.2 155.1,312.0 132.0,305.6 118.1,324.8 94.9,326.0 67.1,324.8 55.0,314.5 37.4,306.8 39.3,280.0 57.8,250.5 41.1,226.2 43.9,207.0 57.8,194.2 62.4,167.3 85.6,159.6 118.1,149.4 139.4,148.1 147.7,126.4 165.3,111.0 157.9,88.0 169.0,79.0 187.6,56.0 196.8,36.8 201.5,22.7" fill="#F4ECDD" stroke="#B8A58A" stroke-width="1.4" stroke-linejoin="round"/><path d="M57.8,107.2 L124.5,132.8 L192.2,155.8 L200.6,209.6 L247.8,245.4 L284.9,259.5 L345.2,263.3 L365.6,242.8 L410.0,235.2 L426.7,208.3 L471.2,178.8 L497.2,182.7" fill="none" stroke="#2C4A7C" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" /><path d="M471.2,178.8 L445.3,141.7 L440.6,131.5 L433.2,100.8 L423.9,56.0" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M365.6,242.8 L356.3,207.0 L352.6,145.6 L354.4,94.4 L359.1,43.2" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M345.2,263.3 L340.5,299.2 L335.9,324.8 L352.6,350.4 L360.9,358.0" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M200.6,209.6 L196.8,235.2 L216.3,291.5 L238.6,322.2 L243.2,352.9" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M200.6,209.6 L159.8,228.8 L74.5,256.9 L34.6,248.0" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M200.6,209.6 L266.4,167.3 L267.3,152.0 L289.5,132.8 L305.3,113.6" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M192.2,155.8 L200.6,100.8 L206.1,36.8" fill="none" stroke="#C8843A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" /><path d="M335.9,324.8 L289.5,337.6 L257.1,350.4 L243.2,352.9" fill="none" stroke="#D4A017" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/><path d="M74.5,256.9 L62.4,273.6 L122.7,312.0" fill="none" stroke="#C8843A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" /><circle cx="200.6" cy="209.6" r="4.5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="207.6" y="213.6" font-size="12" font-weight="700" fill="#2C4A7C" text-anchor="start">Toulouse</text><circle cx="426.7" cy="208.3" r="4.5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="426.7" y="199.3" font-size="12" font-weight="700" fill="#2C4A7C" text-anchor="middle">Montpellier</text><circle cx="471.2" cy="178.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="478.2" y="182.8" font-size="11"  fill="#3A3028" text-anchor="start">Nîmes</text><circle cx="410.0" cy="235.2" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="410.0" y="252.2" font-size="11"  fill="#3A3028" text-anchor="middle">Sète</text><circle cx="345.2" cy="263.3" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="345.2" y="280.3" font-size="11"  fill="#3A3028" text-anchor="middle">Narbonne</text><circle cx="365.6" cy="242.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="365.6" y="233.8" font-size="11"  fill="#3A3028" text-anchor="middle">Béziers</text><circle cx="284.9" cy="259.5" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="284.9" y="276.5" font-size="11"  fill="#3A3028" text-anchor="middle">Carcassonne</text><circle cx="335.9" cy="324.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="342.9" y="328.8" font-size="11"  fill="#3A3028" text-anchor="start">Perpignan</text><circle cx="445.3" cy="141.7" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="452.3" y="145.7" font-size="11"  fill="#3A3028" text-anchor="start">Alès</text><circle cx="266.4" cy="167.3" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="259.4" y="171.3" font-size="11"  fill="#3A3028" text-anchor="end">Albi</text><circle cx="305.3" cy="113.6" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="312.3" y="117.6" font-size="11"  fill="#3A3028" text-anchor="start">Rodez</text><circle cx="192.2" cy="155.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="185.2" y="159.8" font-size="11"  fill="#3A3028" text-anchor="end">Montauban</text><circle cx="74.5" cy="256.9" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="74.5" y="247.9" font-size="11"  fill="#3A3028" text-anchor="middle">Tarbes</text><circle cx="62.4" cy="273.6" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="62.4" y="290.6" font-size="11"  fill="#3A3028" text-anchor="middle">Lourdes</text><circle cx="200.6" cy="100.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="207.6" y="104.8" font-size="11"  fill="#3A3028" text-anchor="start">Cahors</text><circle cx="243.2" cy="352.9" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="243.2" y="369.9" font-size="11"  fill="#3A3028" text-anchor="middle">Latour-de-Carol</text><text x="34.6" y="79.0" font-size="11" fill="#2C4A7C" font-style="italic">← Bordeaux</text><text x="362.3" y="62.4" font-size="10.5" fill="#A0522D" font-style="italic">ligne des Causses</text><text x="436.4" y="81.6" font-size="10.5" fill="#A0522D" font-style="italic">ligne des Cévennes</text><text x="289.5" y="360.0" font-size="10.5" fill="#8B6B00" font-style="italic" text-anchor="middle">Train jaune</text><rect x="282.7" y="130.3" width="10" height="10" transform="rotate(45 287.7 135.3)" fill="#7A3E7C" stroke="white"/><rect x="264.2" y="342.8" width="10" height="10" transform="rotate(45 269.2 347.8)" fill="#7A3E7C" stroke="white"/><g font-size="11" fill="#3A3028"><rect x="505" y="300" width="200" height="100" rx="8" fill="white" stroke="#E0DACE"/><line x1="517" y1="318" x2="539" y2="318" stroke="#2C4A7C" stroke-width="4.5"/><text x="546" y="322">Axe Bordeaux – Sète – Nîmes</text><line x1="517" y1="340" x2="539" y2="340" stroke="#C8843A" stroke-width="2.6"/><text x="546" y="344">Autres lignes principales</text><line x1="517" y1="362" x2="539" y2="362" stroke="#D4A017" stroke-width="2.6" stroke-dasharray="6 4"/><text x="546" y="366">Train jaune (voie étroite)</text><rect x="523" y="379" width="10" height="10" transform="rotate(45 528 384)" fill="#7A3E7C"/><text x="546" y="388">Grand ouvrage d’art</text></g></g></svg><figcaption>Les grandes lignes du réseau ferré en Occitanie (carte très simplifiée, tracés et positions approximatifs).</figcaption></figure>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Ligne</th><th>Ouverture</th><th>Ce qu’elle transporte</th><th>Particularité</th></tr></thead><tbody>
+<tr><td><strong>Alès – Beaucaire</strong></td><td>1839 – 1840</td><td>Charbon des Cévennes</td><td>L’une des premières lignes du Midi</td></tr>
+<tr><td><strong>Montpellier – Sète</strong></td><td>1839</td><td>Voyageurs, marchandises du port</td><td>Premier jalon de l’axe littoral</td></tr>
+<tr><td><strong>Bordeaux – Toulouse – Sète</strong></td><td>1856 – 1857</td><td>Vin, céréales, voyageurs</td><td>Relie l’Atlantique à la Méditerranée</td></tr>
+<tr><td><strong>Ligne des Cévennes</strong></td><td>achevée en 1870</td><td>Charbon, voyageurs vers Paris</td><td>Nombreux viaducs et tunnels</td></tr>
+<tr><td><strong>Ligne des Causses</strong></td><td>achevée en 1888</td><td>Produits agricoles, voyageurs</td><td>Traverse le Larzac et l’Aubrac</td></tr>
+<tr><td><strong>Carmaux – Rodez</strong></td><td>1902</td><td>Charbon, marchandises</td><td>Viaduc du Viaur</td></tr>
+<tr><td><strong>Train jaune (Cerdagne)</strong></td><td>1910 – 1927</td><td>Voyageurs, desserte de montagne</td><td>Voie étroite électrifiée, jusqu’à plus de 1 500 m d’altitude</td></tr>
+<tr><td><strong>Transpyrénéenne</strong></td><td>1929</td><td>Voyageurs, échanges avec l’Espagne</td><td>Tunnel du Puymorens</td></tr>
+</tbody></table></div><p class="tableau-legende">Dates arrondies : les ouvertures se font souvent par tronçons successifs.</p></section>
+
+<section class="section" id="chrono"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Chronologie</h2><div class="frise">
+<div class="frise-periode">Premiers réseaux</div>
+<div class="frise-item majeur"><div class="frise-date">1839 – 1840</div><div class="frise-texte">Beaucaire – Nîmes – Alès (charbon) et Montpellier – Sète.</div></div>
+<div class="frise-item"><div class="frise-date">1845</div><div class="frise-texte">Montpellier – Nîmes.</div></div>
+<div class="frise-item"><div class="frise-date">1852</div><div class="frise-texte">Fondation de la Compagnie des chemins de fer du Midi par les frères Pereire.</div></div>
+<div class="frise-periode">Le grand axe</div>
+<div class="frise-item"><div class="frise-date">1856</div><div class="frise-texte">Le train arrive à Toulouse depuis Bordeaux ; une première gare Matabiau est ouverte.</div></div>
+<div class="frise-item majeur"><div class="frise-date">22 avril 1857</div><div class="frise-texte">Toulouse – Cette : liaison ferroviaire Atlantique – Méditerranée.</div></div>
+<div class="frise-item"><div class="frise-date">1858</div><div class="frise-texte">La Compagnie du Midi prend à bail le canal du Midi, son concurrent direct.</div></div>
+<div class="frise-periode">Maillage</div>
+<div class="frise-item"><div class="frise-date">1866</div><div class="frise-texte">Le rail atteint Lourdes : les grands pèlerinages par trains spéciaux commencent.</div></div>
+<div class="frise-item"><div class="frise-date">1870</div><div class="frise-texte">Achèvement de la ligne des Cévennes vers Clermont-Ferrand.</div></div>
+<div class="frise-item"><div class="frise-date">1879</div><div class="frise-texte">Plan Freycinet : l’État lance un vaste programme de lignes d’intérêt local.</div></div>
+<div class="frise-item"><div class="frise-date">années 1880</div><div class="frise-texte">Les wagons-foudres favorisent le transport massif du vin.</div></div>
+<div class="frise-item"><div class="frise-date">1888</div><div class="frise-texte">Ligne des Causses achevée.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1902</div><div class="frise-texte">Inauguration du viaduc du Viaur entre Carmaux et Rodez.</div></div>
+<div class="frise-item"><div class="frise-date">1903 – 1905</div><div class="frise-texte">Construction de l’actuel bâtiment de la gare Matabiau à Toulouse.</div></div>
+<div class="frise-item"><div class="frise-date">1910</div><div class="frise-texte">Grande grève nationale des cheminots ; mise en service du premier tronçon du Train jaune.</div></div>
+<div class="frise-item"><div class="frise-date">1929</div><div class="frise-texte">Ouverture de la ligne transpyrénéenne Toulouse – Latour-de-Carol – Barcelone.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1938</div><div class="frise-texte">Création de la SNCF : fin des grandes compagnies privées.</div></div>
+<div class="frise-periode">Recomposition</div>
+<div class="frise-item"><div class="frise-date">1930 – 1970</div><div class="frise-texte">Autocars, automobiles et camions concurrencent les petites lignes, qui ferment en nombre.</div></div>
+<div class="frise-item"><div class="frise-date">1967</div><div class="frise-texte">Le train « Le Capitole » relie Paris à Toulouse à 200 km/h sur une partie du trajet.</div></div>
+<div class="frise-item"><div class="frise-date">2013</div><div class="frise-texte">Ligne à grande vitesse Perpignan – Figueras : trains directs vers Barcelone.</div></div>
+<div class="frise-item"><div class="frise-date">2017 – 2018</div><div class="frise-texte">Ligne à grande vitesse Bordeaux – Paris, puis contournement Nîmes – Montpellier.</div></div>
+<div class="frise-item"><div class="frise-date">XXI<sup>e</sup> siècle</div><div class="frise-texte">Modernisation des grands axes, TER, retour des trains de nuit et projets de lignes nouvelles vers Toulouse et Perpignan.</div></div>
+</div></section>
+
+<section class="section" id="construction"><h2 class="section-titre"><div class="section-titre-icon">🏗️</div>Construire une ligne : remodeler le paysage</h2><div class="histoire-texte"><p>Une voie ferrée exige des pentes faibles, des courbes larges et une plateforme stable. Dans les Cévennes, les Causses, la Montagne Noire ou les Pyrénées, il faut creuser tunnels et tranchées, bâtir viaducs et murs de soutènement. Les compagnies acquièrent des bandes continues de terrain : parcelles coupées, chemins déplacés et expropriations provoquent parfois de fortes oppositions.</p><p>Les chantiers mobilisent des milliers de terrassiers, souvent venus d’ailleurs, dont de nombreux Italiens et Piémontais spécialistes des tunnels. Ils vivent dans des baraquements provisoires, travaillent à la pioche, à la brouette et à la poudre, et paient un lourd tribut en accidents.</p></div>
+<div class="schema"><span class="schema-titre">De l'idée au premier train</span><div class="schema-flow"><div class="schema-box">Études<br><span class="small">tracé &amp; trafic</span></div><div class="schema-arrow">→</div><div class="schema-box">Concession<br><span class="small">loi, compagnie</span></div><div class="schema-arrow">→</div><div class="schema-box">Enquête<br><span class="small">terrains</span></div><div class="schema-arrow">→</div><div class="schema-box">Terrassements</div><div class="schema-arrow">→</div><div class="schema-box">Ponts &amp; tunnels</div><div class="schema-arrow">→</div><div class="schema-box fort">Rails &amp; gare</div></div></div>
+<div class="histoire-texte"><h3 class="sous-titre">Pourquoi tant de gares hors des centres ?</h3><p>Les villes anciennes offrent rarement l'espace nécessaire aux faisceaux de voies, dépôts et halles. Les gares s'installent donc en périphérie ; ensuite, hôtels, cafés, entrepôts, industries et logements remplissent progressivement l'espace entre gare et ville.</p></div></section>
+
+<section class="section" id="ouvrages"><h2 class="section-titre"><div class="section-titre-icon">🌉</div>Les grands ouvrages d’art</h2><div class="histoire-texte"><p>Le relief occitan a donné naissance à certains des plus beaux ouvrages ferroviaires de France, véritables prouesses d’ingénieurs à la fin du XIX<sup>e</sup> et au début du XX<sup>e</sup> siècle.</p></div><div class="ouvrage-grid">
+<div class="ouvrage"><span class="lieu">Aveyron – Tarn · 1902</span><h4>Viaduc du Viaur</h4><p>Pont métallique de Paul Bodin, haut de plus de 100 m, sur la ligne Carmaux – Rodez. Sa grande arche à trois articulations est un chef-d’œuvre de la construction métallique.</p></div>
+<div class="ouvrage"><span class="lieu">Pyrénées-Orientales · 1908</span><h4>Viaduc Séjourné</h4><p>Pont de pierre à deux étages conçu par Paul Séjourné pour le Train jaune, près de Fontpédrouse, à plus de 60 m au-dessus de la Têt.</p></div>
+<div class="ouvrage"><span class="lieu">Pyrénées-Orientales · 1908</span><h4>Pont Gisclard</h4><p>Le seul pont suspendu ferroviaire encore en service en France, sur le Train jaune. Son concepteur, Albert Gisclard, meurt lors d’un essai en 1909.</p></div>
+<div class="ouvrage"><span class="lieu">Gard · années 1860</span><h4>Viaducs de la ligne des Cévennes</h4><p>Une succession de viaducs de pierre et de tunnels, comme le viaduc de Chamborigaud, permet au rail de franchir les vallées cévenoles.</p></div>
+</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · des lignes construites contre le relief</div><p>Ces lignes de montagne n’ont jamais été très rentables : elles répondent autant à une volonté politique d’aménagement, desservir chaque région et la relier à Paris, qu’à un calcul économique. Le plan Freycinet de 1879 incarne cette ambition. C’est aussi ce qui les rend aujourd’hui fragiles, mais exceptionnellement belles et prisées des touristes.</p></div></section>
+
+<section class="section" id="economie"><h2 class="section-titre"><div class="section-titre-icon">💰</div>Une révolution économique</h2><div class="histoire-texte"><p>Le train réduit le coût, le temps et l'incertitude du transport. Un producteur n'est plus limité à son marché voisin. Le charbon, le vin, les céréales, le textile, le cuir, le bois et les fruits peuvent atteindre des clients éloignés.</p></div>
+<div class="impact-grid"><div class="impact"><strong>🍷 Vigne</strong>Le Languedoc expédie des volumes considérables vers les villes. Les wagons-foudres renforcent cette économie de masse.</div><div class="impact"><strong>⛏️ Charbon</strong>Le rail naît pour le charbon d’Alès et permet aux bassins de Carmaux et de Decazeville d'élargir fortement leur marché.</div><div class="impact"><strong>🧶 Industrie</strong>Castres, Mazamet et d'autres centres reçoivent matières premières et expédient leurs productions plus facilement.</div><div class="impact"><strong>💜 Fleurs et primeurs</strong>Violettes de Toulouse, fruits et légumes du Roussillon gagnent Paris et l’Europe en une nuit.</div><div class="impact"><strong>⛪ Pèlerinages</strong>Lourdes accueille des centaines de milliers de pèlerins par trains spéciaux dès la fin du XIX<sup>e</sup> siècle.</div><div class="impact"><strong>♨️ Thermalisme</strong>Luchon, Ax, Amélie-les-Bains ou Lamalou attirent une clientèle aisée venue en train.</div></div>
+<div class="histoire-texte"><h3 class="sous-titre">Le revers : dépendance et concurrence</h3><p>Le train apporte aussi les produits concurrents. Il encourage la spécialisation : celle-ci peut enrichir une région mais la rend vulnérable aux cours nationaux. La viticulture languedocienne en offre un exemple majeur : le rail favorise son formidable essor, mais la monoculture rend la crise de surproduction du début du XX<sup>e</sup> siècle particulièrement brutale et contribue au contexte de la révolte de 1907.</p></div><figure class="schema"><svg viewBox="0 0 720 245" role="img" aria-label="Évolution des temps de trajet Toulouse–Paris"><g font-family="Source Sans 3,sans-serif"><text x="360" y="22" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="16" fill="#2C4A7C">Toulouse – Paris : combien de temps ?</text><text x="230" y="67" text-anchor="end" font-size="12.5" fill="#3A3028">Diligence, vers 1830</text><rect x="240" y="48" width="360" height="28" rx="6" fill="#8B7355"/><text x="608" y="67" font-size="13" font-weight="700" fill="#8B7355">≈ 4 jours</text><text x="230" y="111" text-anchor="end" font-size="12.5" fill="#3A3028">Premiers trains, années 1860</text><rect x="240" y="92" width="75" height="28" rx="6" fill="#A0522D"/><text x="323" y="111" font-size="13" font-weight="700" fill="#A0522D">≈ 20 h</text><text x="230" y="155" text-anchor="end" font-size="12.5" fill="#3A3028">Train « Le Capitole », 1967</text><rect x="240" y="136" width="22" height="28" rx="6" fill="#C8843A"/><text x="270" y="155" font-size="13" font-weight="700" fill="#C8843A">≈ 6 h</text><text x="230" y="199" text-anchor="end" font-size="12.5" fill="#3A3028">TGV via Bordeaux, aujourd’hui</text><rect x="240" y="180" width="16" height="28" rx="6" fill="#2C4A7C"/><text x="264" y="199" font-size="13" font-weight="700" fill="#2C4A7C">≈ 4 h 15</text><text x="360" y="232" text-anchor="middle" font-size="11" fill="#8B7355" font-style="italic">Durées indicatives, en ordres de grandeur ; la diligence voyageait jour et nuit avec relais.</text></g></svg><figcaption>En un siècle et demi, le trajet passe de plusieurs jours à quelques heures.</figcaption></figure></section>
+
+<section class="section" id="population"><h2 class="section-titre"><div class="section-titre-icon">👥</div>Population : partir, venir, travailler ailleurs</h2><div class="histoire-texte"><h3 class="sous-titre">Le chemin de fer a-t-il provoqué l'exode rural ?</h3><p>Il l'a <strong>facilité</strong>, mais ne l'a pas créé seul. Industrialisation, transformations agricoles, salaires urbains, école, armée et évolution des modes de vie expliquent aussi les départs. Le rail rend simplement la mobilité beaucoup plus facile : aller travailler en ville, rejoindre un bassin minier, migrer saisonnièrement ou revenir voir sa famille devient moins exceptionnel.</p><h3 class="sous-titre">Une nouvelle hiérarchie des villes</h3><p>Une gare de bifurcation, un dépôt ou un triage attire cheminots, commerces et ateliers. À l'inverse, une ville contournée peut perdre des fonctions commerciales. Les recherches historiques montrent donc un effet de sélection : toutes les villes ne profitent pas également du rail.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Effet</th><th>Transformation</th><th>Conséquence</th></tr></thead><tbody><tr><td><strong>Mobilité</strong></td><td>Trajets rapides et réguliers</td><td>Migrations de travail, tourisme, visites familiales</td></tr><tr><td><strong>Emploi</strong></td><td>Gares, dépôts, ateliers</td><td>Quartiers cheminots</td></tr><tr><td><strong>Marchés</strong></td><td>Vente à longue distance</td><td>Spécialisation agricole et industrielle</td></tr><tr><td><strong>Villes</strong></td><td>Carrefours avantagés</td><td>Croissances démographiques différentes</td></tr><tr><td><strong>Temps</strong></td><td>Horaires des trains</td><td>Adoption de l’heure de Paris dans toute la France en 1891</td></tr></tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · le train unifie l’heure</div><p>Avant le chemin de fer, chaque ville vivait à son heure solaire : midi à Nîmes ne tombait pas au même instant que midi à Toulouse. Pour établir des horaires, les compagnies imposent l’heure de Paris dans les gares, puis la loi de 1891 en fait l’heure légale de toute la France. Le train a donc changé jusqu’à la façon de mesurer le temps.</p></div></section>
+
+<section class="section" id="villes"><h2 class="section-titre"><div class="section-titre-icon">🏙️</div>La gare transforme la ville</h2><div class="histoire-texte"><p><strong>Toulouse est un cas particulièrement lisible.</strong> Matabiau se trouve hors du noyau ancien, de l’autre côté du canal du Midi. La gare oblige à améliorer la liaison avec le centre : élargissement de la rue Bayard, construction du pont Bayard, puis création d'un réseau d'omnibus. Dès 1863, trois lignes relient notamment la gare au Capitole et à plusieurs quartiers. Le bâtiment actuel, construit entre 1903 et 1905 par l’architecte Marius Toudoire, donne à la ville une façade monumentale digne d’une capitale régionale.</p><p>Une anecdote montre à quel point les accès étaient initialement mal adaptés : en 1857 – 1859, plusieurs voyageurs sortant de la gare tombent dans le canal ; un soldat s'y noie en janvier 1858. Le rail impose donc aussi une transformation des rues et des transports urbains.</p><h3 class="sous-titre">La gare, nouvelle porte de la cité</h3><p>Autour d'elle apparaissent hôtels, restaurants, fiacres, omnibus, messageries, entrepôts et commerces. La gare devient un lieu social : on y attend, on s'y sépare, on accueille les voyageurs, les soldats, les saisonniers et les marchandises. À Montpellier, Narbonne, Béziers ou Perpignan, les avenues de la Gare deviennent des axes majeurs, bordés d’immeubles bourgeois.</p></div></section>
+
+<section class="section" id="conflits"><h2 class="section-titre"><div class="section-titre-icon">⚖️</div>Conflits, résistances et luttes sociales</h2><div class="histoire-texte"><h3 class="sous-titre">Tracés et expropriations</h3><p>Chaque commune souhaite être desservie, mais les propriétaires contestent parfois le passage de la voie. Le choix d'une gare peut déplacer le centre de gravité économique d'un bourg. Les rivalités entre itinéraires sont donc politiques autant que techniques.</p><h3 class="sous-titre">Des métiers anciens fragilisés</h3><p>Diligences, roulage et certaines activités de batellerie perdent une partie de leur clientèle. Le canal du Midi, grand axe régional depuis le XVII<sup>e</sup> siècle, subit directement la concurrence de la ligne Bordeaux – Sète. Pire : en 1858, la Compagnie du Midi obtient le canal à bail et relève les péages pour orienter le trafic vers ses trains. Il faudra attendre 1898 pour que l’État reprenne la voie d’eau.</p><h3 class="sous-titre">Le monde cheminot</h3><p>La discipline des compagnies est forte et les métiers sont dangereux. Les cheminots deviennent progressivement un groupe professionnel très structuré et syndiqué. Les grands conflits nationaux du rail, dont la grève d’octobre 1910, ont naturellement des répercussions dans les réseaux du Midi ; la grève de 1910 est brisée par la mobilisation militaire des grévistes ordonnée par le gouvernement Briand.</p><div class="notice"><strong>Les conflits du rail ne sont donc pas seulement des grèves :</strong> ils concernent aussi les terrains, le tracé, le financement, la concurrence entre villes et la disparition d'anciens métiers.</div></div></section>
+
+<section class="section" id="metiers"><h2 class="section-titre"><div class="section-titre-icon">👷</div>Les hommes et les femmes du chemin de fer</h2><div class="tableau-wrap"><table class="tableau"><thead><tr><th>Métier</th><th>Rôle</th><th>Conditions</th></tr></thead><tbody><tr><td><strong>Mécanicien</strong></td><td>Conduite de la locomotive</td><td>Responsabilité, chaleur, bruit</td></tr><tr><td><strong>Chauffeur</strong></td><td>Alimente le foyer en charbon</td><td>Travail physique et salissant</td></tr><tr><td><strong>Poseur de voie</strong></td><td>Entretien rails, traverses, ballast</td><td>Travail extérieur, risques ferroviaires</td></tr><tr><td><strong>Aiguilleur</strong></td><td>Oriente les circulations</td><td>Vigilance permanente</td></tr><tr><td><strong>Chef de gare</strong></td><td>Coordonne trafic, voyageurs et agents</td><td>Forte responsabilité</td></tr><tr><td><strong>Garde-barrière</strong></td><td>Ferme et surveille les passages</td><td>Métier souvent exercé par des femmes</td></tr></tbody></table></div><div class="histoire-texte"><p>À ces agents s'ajoutent porteurs, manutentionnaires, employés des ateliers, hôteliers, restaurateurs, commissionnaires et loueurs de voitures. Une grande gare fait vivre tout un quartier. Le couple formé par le cheminot et la garde-barrière, logés dans une petite maison au bord de la voie, est une figure familière des campagnes jusqu’à l’automatisation des passages à niveau.</p></div>
+<div class="schema"><span class="schema-titre">Le duo de la locomotive à vapeur</span><div class="schema-flow"><div class="schema-box">Chauffeur<br><b>charge le charbon</b></div><div class="schema-arrow">→</div><div class="schema-box">Foyer<br><b>chauffe l’eau</b></div><div class="schema-arrow">→</div><div class="schema-box">Chaudière<br><b>produit la vapeur</b></div><div class="schema-arrow">→</div><div class="schema-box fort">Mécanicien<br><b>règle la vapeur et conduit</b></div></div><p class="small" style="text-align:center;margin-top:10px">Une locomotive à vapeur consommait beaucoup d’eau : d’où les châteaux d’eau dans les gares.</p></div></section>
+
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités du rail</h2>
+<div class="perso-groupe"><div class="perso-groupe-titre g-fin">Financiers et entrepreneurs</div><div class="perso-grid">
+<div class="perso g-fin"><div class="perso-nom">Émile et Isaac Pereire</div><div class="perso-dates">1800–1875 · 1806–1880</div><div class="perso-desc">Banquiers nés à Bordeaux, fondateurs de la Compagnie du Midi en 1852 ; ils relient Bordeaux à Sète et développent aussi la station d’Arcachon.</div></div>
+<div class="perso g-fin"><div class="perso-nom">Paulin Talabot</div><div class="perso-dates">1799–1885</div><div class="perso-desc">Ingénieur et homme d’affaires, il construit la ligne Alès – Beaucaire pour le charbon cévenol, puis dirige la compagnie PLM.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-ing">Ingénieurs et architectes</div><div class="perso-grid">
+<div class="perso g-ing"><div class="perso-nom">Paul Bodin</div><div class="perso-dates">1847–1926</div><div class="perso-desc">Ingénieur des constructions métalliques, auteur du viaduc du Viaur (1902).</div></div>
+<div class="perso g-ing"><div class="perso-nom">Paul Séjourné</div><div class="perso-dates">1851–1939</div><div class="perso-desc">Grand bâtisseur de ponts en maçonnerie, il conçoit le viaduc de Fontpédrouse sur la ligne de Cerdagne.</div></div>
+<div class="perso g-ing"><div class="perso-nom">Albert Gisclard</div><div class="perso-dates">1844–1909</div><div class="perso-desc">Officier du génie, inventeur du pont suspendu qui porte son nom ; il meurt en 1909 lors d’un essai sur la ligne.</div></div>
+<div class="perso g-ing"><div class="perso-nom">Marius Toudoire</div><div class="perso-dates">1852–1922</div><div class="perso-desc">Architecte du bâtiment actuel de la gare Matabiau à Toulouse, construit entre 1903 et 1905.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-chem">Le monde du rail</div><div class="perso-grid">
+<div class="perso g-chem"><div class="perso-nom">Les terrassiers</div><div class="perso-dates">XIX<sup>e</sup> siècle</div><div class="perso-desc">Des milliers d’ouvriers, souvent étrangers, ont creusé tranchées et tunnels à la main, au prix de nombreux accidents.</div></div>
+<div class="perso g-chem"><div class="perso-nom">Les cheminots</div><div class="perso-dates">XIX<sup>e</sup> – XXI<sup>e</sup> siècle</div><div class="perso-desc">Mécaniciens, aiguilleurs, poseurs, garde-barrières : un monde professionnel très solidaire, au cœur de la vie de nombreuses villes.</div></div>
+</div></div></section>
+
+<section class="section" id="declin"><h2 class="section-titre"><div class="section-titre-icon">🚌</div>Automobile, fermetures et nouveau réseau</h2><div class="histoire-texte"><p>À partir de l'entre-deux-guerres, l'automobile, l'autocar et surtout le camion offrent la souplesse du « porte à porte ». Les lignes rurales peu fréquentées deviennent coûteuses et ferment progressivement.</p><p>Dans le Tarn, l'ancienne liaison Castres – Albi perd son trafic voyageurs en 1940 puis son trafic marchandises en 1987 ; une partie de son emprise est aujourd'hui une voie verte. Ce type de reconversion est devenu fréquent : dans l’Hérault, la voie verte <strong>Passa Païs</strong> suit ainsi une ancienne ligne entre Bédarieux et Mazamet.</p><p>Le rail ne disparaît pourtant pas : les grands axes sont modernisés et électrifiés, puis les TER redonnent une fonction quotidienne à de nombreuses lignes. La grande vitesse arrive par étapes, de Perpignan vers Barcelone en 2013 au contournement de Nîmes et Montpellier en 2018. Aujourd'hui, les débats portent sur la desserte des petites villes, le fret, les trains de nuit, la ligne nouvelle Bordeaux – Toulouse et la transition écologique.</p></div>
+<div class="schema"><span class="schema-titre">Quatre âges du rail en Occitanie</span><div class="schema-flow"><div class="schema-box">1839 – 1880<br><b>Grandes lignes</b></div><div class="schema-arrow">→</div><div class="schema-box">1880 – 1930<br><b>Maillage fin</b></div><div class="schema-arrow">→</div><div class="schema-box">1930 – 1990<br><b>Fermetures</b></div><div class="schema-arrow">→</div><div class="schema-box fort">depuis 1990<br><b>TER, grande vitesse, voies vertes</b></div></div></div></section>
+
+<section class="section" id="heritage"><h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Ce qu'il reste aujourd'hui</h2><div class="histoire-texte"><p>Gares, halles à marchandises, maisons de garde-barrière, ponts métalliques, tunnels, viaducs, châteaux d'eau et anciennes plateformes racontent encore cette révolution. Même lorsqu'une voie a disparu, son tracé reste souvent visible dans le paysage.</p></div><figure class="schema"><svg viewBox="0 0 720 300" role="img" aria-label="Dessin d'une ancienne gare"><g font-family="Source Sans 3,sans-serif"><rect width="720" height="300" fill="#EEF2F8"/><rect y="230" width="720" height="70" fill="#C9B79A"/><g stroke="#5C5248" stroke-width="3"><line x1="0" y1="250" x2="720" y2="250"/><line x1="0" y1="262" x2="720" y2="262"/><line x1="0" y1="280" x2="720" y2="280"/><line x1="0" y1="292" x2="720" y2="292"/></g><rect x="0" y="222" width="720" height="10" fill="#B8A58A"/><rect x="200" y="130" width="200" height="92" fill="#E8D5B0" stroke="#8B7355" stroke-width="1.5"/><path d="M190,132 L300,90 L410,132Z" fill="#9E4B3B"/><g fill="#5C7A9A"><rect x="215" y="160" width="20" height="34" rx="9"/><rect x="253" y="160" width="20" height="34" rx="9"/><rect x="291" y="160" width="20" height="34" rx="9"/><rect x="329" y="160" width="20" height="34" rx="9"/><rect x="367" y="160" width="20" height="34" rx="9"/></g><rect x="270" y="112" width="60" height="16" fill="white" stroke="#8B7355"/><text x="300" y="124" text-anchor="middle" font-size="9" fill="#2C2418">GARE</text><circle cx="300" cy="102" r="6" fill="white" stroke="#2C2418"/><path d="M200,198 L400,198 L410,210 L190,210Z" fill="#6E7E8E"/><rect x="470" y="150" width="140" height="72" fill="#D9C7A3" stroke="#8B7355" stroke-width="1.5"/><path d="M462,152 L540,120 L618,152Z" fill="#8B6B45"/><rect x="520" y="170" width="40" height="52" fill="#6E5A40"/><rect x="465" y="210" width="150" height="12" fill="#A89576"/><rect x="80" y="150" width="20" height="72" fill="#C9B79A" stroke="#8B7355"/><ellipse cx="90" cy="140" rx="34" ry="12" fill="#7FA3C8" stroke="#5E8FC2"/><rect x="56" y="118" width="68" height="22" fill="#7FA3C8" stroke="#5E8FC2"/><path d="M100,170 h40 v40" stroke="#5E8FC2" stroke-width="3" fill="none"/><rect x="650" y="180" width="50" height="42" fill="#E8D5B0" stroke="#8B7355"/><path d="M645,182 L675,160 L705,182Z" fill="#9E4B3B"/><g font-size="11.5" fill="#2C2418"><text x="300" y="72" text-anchor="middle" font-weight="700" fill="#2C4A7C">Bâtiment voyageurs</text><text x="300" y="86" text-anchor="middle">guichets, salles d’attente, logement du chef de gare</text><text x="540" y="104" text-anchor="middle" font-weight="700" fill="#2C4A7C">Halle à marchandises</text><text x="540" y="116" text-anchor="middle" font-size="10.5">quai surélevé pour charrettes et wagons</text><text x="90" y="100" text-anchor="middle" font-weight="700" fill="#2C4A7C">Château d’eau</text><text x="90" y="112" text-anchor="middle" font-size="10.5">pour les locomotives à vapeur</text><text x="675" y="150" text-anchor="middle" font-weight="700" fill="#2C4A7C" font-size="10.5">Garde-barrière</text><text x="300" y="242" text-anchor="middle" font-size="10.5" fill="#2C2418">quai et marquise</text><text x="140" y="273" font-size="10.5" fill="white">voies principales et voies de garage</text></g></g></svg><figcaption>Les éléments d’une petite gare du XIX<sup>e</sup> siècle : on les retrouve, parfois reconvertis, dans de nombreux villages d’Occitanie.</figcaption></figure>
+<div class="histoire-texte"><h3 class="sous-titre">Une empreinte dans « l'âme » de l'Occitanie</h3><p>Le train a rapproché plaines viticoles, bassins miniers, villes industrielles, ports méditerranéens, vallées pyrénéennes et métropole toulousaine. Il a créé une culture ouvrière cheminote et une mémoire faite de départs, de retours, de gares et de lignes aujourd'hui parfois disparues. Des trains touristiques, comme le <strong>Train jaune</strong> ou le train du Pays cathare et du Fenouillèdes, font revivre aujourd’hui le plaisir du voyage lent.</p></div></section>
+
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues</h2>
+<div class="mythe"><strong>« Le premier train d’Occitanie a été le Bordeaux – Sète. »</strong><br><span class="verdict faux">Faux</span><br>Les premiers rails sont posés dans le Gard et l’Hérault en 1839 – 1840, pour le charbon d’Alès et le port de Sète, bien avant l’arrivée du train à Toulouse.</div>
+<div class="mythe"><strong>« Le train a tué le canal du Midi. »</strong><br><span class="verdict nuance">À nuancer</span><br>Il lui a pris l’essentiel de son trafic, aidé par le bail de 1858, mais le canal a continué à transporter des marchandises jusqu’au XX<sup>e</sup> siècle avant de devenir une voie de plaisance.</div>
+<div class="mythe"><strong>« Toutes les petites lignes ont fermé parce qu’elles étaient inutiles. »</strong><br><span class="verdict nuance">À nuancer</span><br>Beaucoup étaient peu fréquentées, mais les fermetures relèvent aussi de choix politiques en faveur de la route. Certaines lignes sont aujourd’hui rouvertes ou défendues par les élus et les usagers.</div>
+</section>
+
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>Circuit conseillé : sur les rails d’Occitanie</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Toulouse · Matabiau</div><div class="etape-texte">La façade de 1905 face au canal du Midi, et le quartier né autour de la gare.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Viaduc du Viaur</div><div class="etape-texte">Entre Tarn et Aveyron, un belvédère permet d’admirer la grande arche métallique de 1902.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Ligne des Cévennes</div><div class="etape-texte">D’Alès à Villefort, un voyage en TER au fil des viaducs, des tunnels et des anciens sites miniers.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Ligne des Causses</div><div class="etape-texte">De Béziers vers le Larzac et l’Aubrac, l’une des lignes de montagne les plus spectaculaires du Midi.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Le Train jaune</div><div class="etape-texte">De Villefranche-de-Conflent à Latour-de-Carol, par le viaduc Séjourné et le pont Gisclard, à travers la Cerdagne.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Passa Païs</div><div class="etape-texte">Une voie verte à vélo sur une ancienne ligne de chemin de fer, dans le Haut-Languedoc.</div></div></div>
+</div><p class="small" style="margin-top:12px">Horaires, saisons d’ouverture et travaux : se renseigner auprès des exploitants avant le voyage.</p></section>
+
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list"><li><a target="_blank" rel="noopener" href="https://archives.toulouse.fr/transports-en-commun/">Archives municipales de Toulouse — chemin de fer et transports urbains</a></li><li><a target="_blank" rel="noopener" href="https://www.archives.toulouse.fr/histoire-de-toulouse/lieux/rue-de-bayard">Archives de Toulouse — Matabiau et rue Bayard</a></li><li><a target="_blank" rel="noopener" href="https://revue-belveder.org/index.php/1857-de-bordeaux-a-sete-en-chemin-de-fer/">Robert Marconis — 1857, de Bordeaux à Sète en chemin de fer</a></li><li><a target="_blank" rel="noopener" href="https://inventaire.patrimoines.laregion.fr/dossier/IA34000339">Inventaire général Occitanie — gare de Montpellier</a></li><li><a target="_blank" rel="noopener" href="https://www.persee.fr/doc/geo_0003-4010_1982_num_91_507_20140">Persée — Chemin de fer et croissance urbaine au XIX<sup>e</sup> siècle</a></li><li><a target="_blank" rel="noopener" href="https://www.observatoire-des-territoires.gouv.fr/kiosque/2021-2022-rapport-cahier-1-demo-chap-01-03-dune-france-rurale-une-france-urbaine-les">Observatoire des territoires — exode rural et urbanisation</a></li><li><a target="_blank" rel="noopener" href="https://www.haut-languedoc-vignobles.com/explorer/patrimoine/partager-la-culture-du-vin/le-vin-une-histoire-sans-moderation">Pays Haut Languedoc et Vignobles — rail et viticulture</a></li><li><a target="_blank" rel="noopener" href="https://www.ville-castres.fr/boucle-jean-petit-le-chemin-des-droits-de-lhomme/">Ville de Castres — ancienne ligne Castres – Albi</a></li></ul><p class="small">Carte, temps de parcours et dessin de gare sont des illustrations pédagogiques, non à l’échelle. Les dates d’ouverture des lignes, souvent réalisées par tronçons, sont arrondies.</p></div></section>
+</div>
+
+<aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Débuts</span><span class="aside-val">1839</span></div><div class="aside-row"><span class="aside-label">Toulouse</span><span class="aside-val">1856 – 1857</span></div><div class="aside-row"><span class="aside-label">Maillage maximal</span><span class="aside-val">fin XIX<sup>e</sup> – début XX<sup>e</sup></span></div><div class="aside-row"><span class="aside-label">Grands acteurs</span><span class="aside-val">Midi · PLM · État · SNCF</span></div><div class="aside-row"><span class="aside-label">Nationalisation</span><span class="aside-val">1938</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 Quelques repères</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>1839</b><span>premiers rails dans le Gard et l’Hérault</span></div><div class="chiffre"><b>22 avril 1857</b><span>l’Atlantique rejoint la Méditerranée</span></div><div class="chiffre"><b>≈ 10 h</b><span>Bordeaux – Méditerranée en 1857</span></div><div class="chiffre"><b>1891</b><span>l’heure de Paris pour toute la France</span></div><div class="chiffre"><b>1902</b><span>viaduc du Viaur</span></div><div class="chiffre"><b>1938</b><span>naissance de la SNCF</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📚 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Embranchement</dt><dd>Ligne raccordée à un axe principal.</dd><dt>Triage</dt><dd>Ensemble de voies pour composer les trains de marchandises.</dd><dt>Wagon-foudre</dt><dd>Wagon équipé de grandes cuves pour le vin.</dd><dt>Rotonde</dt><dd>Bâtiment de remisage des locomotives, souvent autour d’une plaque tournante.</dd><dt>Ballast</dt><dd>Pierres concassées stabilisant la voie.</dd><dt>Concession</dt><dd>Droit accordé par l’État à une compagnie de construire et d’exploiter une ligne.</dd><dt>Voie étroite</dt><dd>Voie plus étroite que la normale (1,435 m), utilisée en montagne comme sur le Train jaune.</dd><dt>Voie verte</dt><dd>Ancienne voie ferrée aménagée pour les piétons et les cyclistes.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">💡 Fil conducteur</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Le rail est le grand accélérateur du XIX<sup>e</sup> siècle occitan : il porte le charbon, le vin et les fleurs vers des marchés lointains, redessine les villes autour des gares, puis s’efface en partie devant la route avant de revenir avec la grande vitesse et les TER.</div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer></body></html>
