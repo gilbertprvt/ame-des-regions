@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Retirada, 1939 — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page : le canal (Wikimedia Commons) -->
+<style>
+.produit-hero{background-image:linear-gradient(rgba(24,28,38,.55),rgba(24,28,38,.68)),linear-gradient(120deg,#3b4a5c,#7a5a3a);background-size:cover}
+.produit-hero-body h1{margin-bottom:90px}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.impact{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:16px;font-family:var(--font-corps);font-size:14px;line-height:1.6;color:#3A3028}.impact strong{display:block;color:#2C4A7C;font-family:var(--font-titre);font-size:16px;margin-bottom:4px}
+.g-voix{color:#7A3E7C}.g-pol{color:#2C4A7C}.g-sol{color:#3E7C4A}.g-res{color:#A0522D}
+.carte-ret{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;margin:18px 0 22px}.carte-ret svg{width:100%;height:auto;display:block}
+.carte-ret figcaption{font-size:12px;color:#8B7355;font-style:italic;text-align:center;margin-top:8px;font-family:var(--font-corps)}
+@media(max-width:760px){.impact-grid{grid-template-columns:1fr}}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container"><div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div><div class="produit-hero-body"><div><h1><em>L</em>a Retirada<br><span style="padding-left:40px"><em>1</em>939</span></h1></div></div></div><div class="hero-label-bas">⟹ Janvier – février 1939 · de la chute de la Catalogne à l'exil républicain ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#comprendre" class="active">📖 Comprendre</a><a href="#guerre">⚔️ Guerre d'Espagne</a><a href="#exode">🥾 L'exode</a><a href="#passages">🏔️ Frontière</a><a href="#accueil">🤝 Accueil</a><a href="#camps">⛺ Camps</a><a href="#vie">👥 Vie quotidienne</a><a href="#femmes">👩 Femmes &amp; enfants</a><a href="#travail">🛠️ Travail</a><a href="#guerre40">🎖️ 1939 – 1945</a><a href="#occitanie">🧭 Occitanie</a><a href="#personnalites">👤 Personnages</a><a href="#memoire">🕯️ Mémoire</a><a href="#mythes">🔎 Idées reçues</a><a href="#chrono">⏳ Chronologie</a><a href="#parcours">🥾 Circuit</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<section class="section" id="comprendre"><h2 class="section-titre"><div class="section-titre-icon">📖</div>La Retirada : un exode de masse</h2><div class="histoire-texte"><p><strong>« Retirada » signifie « retraite » en espagnol et en catalan.</strong> Le mot désigne l'exode massif qui accompagne l'effondrement de la Catalogne républicaine à la fin de la guerre civile espagnole. Entre la fin janvier et la mi-février 1939, civils et soldats franchissent les Pyrénées pour échapper à l'avancée franquiste et à la répression annoncée.</p>
+<p>Les travaux fondés sur les archives évaluent à environ <strong>475 000</strong> le nombre de réfugiés passés en France lors de cette grande vague, chiffre souvent arrondi à « un demi-million ». C'est le plus grand afflux de réfugiés jamais reçu en si peu de temps par la France, et il se concentre sur un seul département, les Pyrénées-Orientales, qui compte alors environ 250 000 habitants.</p>
+<div class="repere-grid"><div class="repere"><strong>26 janvier 1939</strong><span>Barcelone tombe aux mains des troupes franquistes.</span></div><div class="repere"><strong>27 – 28 janvier</strong><span>La France ouvre la frontière aux civils et aux blessés.</span></div><div class="repere"><strong>5 février</strong><span>Les soldats républicains sont admis, puis désarmés.</span></div></div>
+<div class="notice"><strong>À retenir :</strong> la Retirada n'est pas seulement l'histoire des camps. C'est d'abord celle d'une défaite militaire, d'une marche d'hiver, de familles séparées et d'un accueil improvisé, puis d'une diaspora qui marquera durablement tout le sud de la France.</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une frontière que l'on traverse dans les deux sens</div><p>Les Pyrénées ont souvent été, dans cette série, un refuge : les derniers cathares se cachaient dans leurs vallées, et les protestants du Désert fuyaient eux aussi vers l'étranger. En 1939, le mouvement s'inverse : c'est l'Espagne qui se vide vers la France. Quatre ans plus tard, les mêmes sentiers serviront aux évadés de France qui fuient l'occupant vers l'Espagne, souvent guidés… par des républicains espagnols.</p></div></div></section>
+
+<section class="section" id="guerre"><h2 class="section-titre"><div class="section-titre-icon">⚔️</div>Pourquoi des centaines de milliers d'Espagnols prennent-ils la route ?</h2><div class="histoire-texte"><h3 class="sous-titre">1936 : l'Espagne bascule dans la guerre civile</h3><p>Après la victoire électorale du Front populaire en février 1936, une partie de l'armée se soulève les 17 et 18 juillet contre la République. Le coup d'État échoue à prendre tout le pays et se transforme en guerre civile. Le camp républicain rassemble des forces très diverses — républicains, socialistes, communistes, anarchistes, nationalistes catalans et basques — tandis que les nationalistes du général <strong>Francisco Franco</strong> bénéficient de l'aide de l'Allemagne nazie et de l'Italie fasciste. La France et le Royaume-Uni choisissent la « non-intervention ».</p>
+<h3 class="sous-titre">1938 – 1939 : la Catalogne isolée</h3><p>Après la bataille de l'Èbre (juillet – novembre 1938), l'armée républicaine est épuisée. L'offensive franquiste sur la Catalogne commence le 23 décembre 1938. Tarragone tombe le 15 janvier 1939, Barcelone le 26. Gouvernement, armée et population refluent vers Gérone, Figueres et la frontière française.</p>
+<p>La peur est nourrie par les combats, mais aussi par la perspective des arrestations et des représailles. Les routes deviennent un immense flot de soldats, de familles, de vieillards, d'enfants, d'élus, de fonctionnaires, d'intellectuels et de militants.</p></div></section>
+
+<section class="section" id="exode"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>La marche vers la France</h2><div class="histoire-texte"><p>L'exode se déroule en plein hiver. Beaucoup avancent à pied, avec quelques couvertures, valises ou ballots ; d'autres utilisent charrettes, camions et voitures abandonnées à mesure que le carburant manque ou que les routes se bloquent. Les colonnes subissent le froid, la fatigue, la faim et les bombardements de l'aviation franquiste et italienne.</p>
+<p>Pour une famille, partir signifie choisir dans l'urgence ce que l'on peut emporter. Maisons, terres, commerces et ateliers restent derrière. Beaucoup pensent encore que l'exil sera provisoire ; pour certains, il durera toute une vie.</p>
+<figure class="schema"><svg viewBox="0 0 720 145" role="img" aria-label="Schéma des étapes de l'exode"><defs><marker id="fl-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#9E3B2E"/></marker><marker id="fl-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2C4A7C"/></marker><marker id="fl-gr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8B7355"/></marker><marker id="fl-re" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#A0522D"/></marker></defs><g font-family="Source Sans 3,sans-serif"><rect x="12" y="34" width="122" height="72" rx="10" fill="white" stroke="#5C5248" stroke-width="2"/><rect x="12" y="34" width="122" height="24" rx="10" fill="#5C5248"/><rect x="12" y="48" width="122" height="10" fill="#5C5248"/><text x="73" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="white">26 janv.</text><text x="73" y="86" text-anchor="middle" font-size="12.5" fill="#3A3028">Barcelone tombe</text><path d="M136,70 L152,70" stroke="#8B7355" stroke-width="2.5" marker-end="url(#fl-gr)"/><rect x="154" y="34" width="122" height="72" rx="10" fill="white" stroke="#7A5A3A" stroke-width="2"/><rect x="154" y="34" width="122" height="24" rx="10" fill="#7A5A3A"/><rect x="154" y="48" width="122" height="10" fill="#7A5A3A"/><text x="215" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="white">Gérone · Figueres</text><text x="215" y="86" text-anchor="middle" font-size="12.5" fill="#3A3028">routes saturées</text><path d="M278,70 L294,70" stroke="#8B7355" stroke-width="2.5" marker-end="url(#fl-gr)"/><rect x="296" y="34" width="122" height="72" rx="10" fill="white" stroke="#9E3B2E" stroke-width="2"/><rect x="296" y="34" width="122" height="24" rx="10" fill="#9E3B2E"/><rect x="296" y="48" width="122" height="10" fill="#9E3B2E"/><text x="357" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="white">Pyrénées</text><text x="357" y="86" text-anchor="middle" font-size="12.5" fill="#3A3028">froid et marche</text><path d="M420,70 L436,70" stroke="#8B7355" stroke-width="2.5" marker-end="url(#fl-gr)"/><rect x="438" y="34" width="122" height="72" rx="10" fill="white" stroke="#2C4A7C" stroke-width="2"/><rect x="438" y="34" width="122" height="24" rx="10" fill="#2C4A7C"/><rect x="438" y="48" width="122" height="10" fill="#2C4A7C"/><text x="499" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="white">Frontière</text><text x="499" y="86" text-anchor="middle" font-size="12.5" fill="#3A3028">désarmement, tri</text><path d="M562,70 L578,70" stroke="#8B7355" stroke-width="2.5" marker-end="url(#fl-gr)"/><rect x="580" y="34" width="122" height="72" rx="10" fill="white" stroke="#3E7C4A" stroke-width="2"/><rect x="580" y="34" width="122" height="24" rx="10" fill="#3E7C4A"/><rect x="580" y="48" width="122" height="10" fill="#3E7C4A"/><text x="641" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="white">Camps / centres</text><text x="641" y="86" text-anchor="middle" font-size="12.5" fill="#3A3028">dispersion</text><text x="360" y="20" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="15" fill="#2C4A7C">De Barcelone à l’exil : trois semaines d’hiver</text><text x="360" y="132" text-anchor="middle" font-size="11" fill="#8B7355" font-style="italic">fin janvier → mi-février 1939 · à pied pour la plupart, sous la tramontane et parfois sous les bombardements</text></g></svg><figcaption>Les grandes étapes de l’exode, de la chute de Barcelone à la dispersion en France.</figcaption></figure>
+<div class="citation-bloc"><p>« Estos días azules y este sol de la infancia. »<br><em>(« Ces jours bleus et ce soleil de l'enfance. »)</em></p><cite>— Dernier vers retrouvé dans la poche d'Antonio Machado, mort à Collioure le 22 février 1939, trois semaines après avoir passé la frontière</cite></div></div></section>
+
+<section class="section" id="passages"><h2 class="section-titre"><div class="section-titre-icon">🏔️</div>Les passages des Pyrénées</h2><div class="histoire-texte"><p>Les principaux flux convergent vers <strong>Le Perthus</strong> et <strong>Cerbère</strong>, mais de nombreux réfugiés franchissent aussi les cols et vallées du Vallespir — Prats-de-Mollo, Saint-Laurent-de-Cerdans, Arles-sur-Tech — ainsi que la Cerdagne par Bourg-Madame. Le col d'Ares, au-dessus de Prats-de-Mollo, voit passer des colonnes entières dans la neige.</p>
+<p>Les civils, les vieillards, les enfants et les blessés sont admis les premiers. À partir du 5 février, les combattants de l'Armée populaire franchissent à leur tour la frontière. Ils doivent déposer leurs armes : des montagnes de fusils, de camions et même de canons s'accumulent au Perthus. Commence alors une séparation douloureuse entre les hommes, envoyés vers les camps, et les familles, dispersées vers des centres d'hébergement parfois très éloignés. Le 9 février, les troupes franquistes atteignent la frontière.</p></div>
+<figure class="carte-ret"><svg viewBox="0 0 720 530" role="img" aria-label="Carte des passages des Pyrénées et des camps du Roussillon"><defs><marker id="fl-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#9E3B2E"/></marker><marker id="fl-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2C4A7C"/></marker><marker id="fl-gr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8B7355"/></marker><marker id="fl-re" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#A0522D"/></marker></defs><g font-family="Source Sans 3,sans-serif"><rect width="720" height="530" fill="#ECE5D6"/><polygon points="1321.1,-583.7 1285.2,-492.2 1208.9,-419.0 1101.1,-284.8 1042.7,-333.6 930.5,-278.7 863.1,-248.2 782.3,-168.9 656.6,-126.2 593.7,-53.0 566.8,38.5 562.3,160.5 571.3,270.3 625.2,337.4 625.2,337.4 692.5,435.0 638.6,544.8 616.2,666.8 503.9,788.8 436.6,880.3 2165.3,880.3 2165.3,-583.7" fill="#DCE7F2"/><polygon points="-147.2,-1260.8 -70.8,-1212.0 1.0,-1181.5 126.7,-1212.0 194.1,-1144.9 315.3,-1163.2 423.1,-1144.9 517.4,-1193.7 593.7,-1151.0 656.6,-1187.6 728.4,-1193.7 782.3,-1114.4 849.7,-1120.5 935.0,-1016.8 975.4,-955.8 975.4,-858.2 1060.7,-797.2 1173.0,-815.5 1289.7,-797.2 1312.2,-687.4 1321.1,-583.7 1285.2,-492.2 1208.9,-419.0 1101.1,-284.8 1042.7,-333.6 930.5,-278.7 863.1,-248.2 782.3,-168.9 656.6,-126.2 593.7,-53.0 566.8,38.5 562.3,160.5 571.3,270.3 625.2,337.4 526.4,325.2 414.1,349.6 324.3,392.3 189.6,374.0 77.4,343.5 -21.4,300.8 -147.2,239.8 -281.9,166.6 -371.7,117.8 -483.9,87.3 -551.3,178.8 -663.5,184.9 -798.2,178.8 -856.6,130.0 -941.9,93.4 -932.9,-34.7 -843.1,-175.0 -924.0,-290.9 -910.5,-382.4 -843.1,-443.4 -820.7,-571.5 -708.4,-608.1 -551.3,-656.9 -448.0,-663.0 -407.6,-766.7 -322.3,-839.9 -358.2,-949.7 -304.3,-992.4 -214.5,-1102.2 -169.6,-1193.7 -147.2,-1260.8" fill="#F7F1E5" stroke="#B8A58A" stroke-width="1.2" stroke-linejoin="round"/><polyline points="625.2,337.4 526.4,325.2 414.1,349.6 324.3,392.3 189.6,374.0 77.4,343.5 -21.4,300.8 -147.2,239.8 -281.9,166.6 -371.7,117.8 -483.9,87.3 -551.3,178.8 -663.5,184.9 -798.2,178.8 -856.6,130.0 -941.9,93.4" fill="none" stroke="#9E3B2E" stroke-width="2" stroke-dasharray="7 4" stroke-linejoin="round"/><text x="212.1" y="459.4" font-size="13" fill="#9A8C78" text-anchor="middle" letter-spacing="3" font-weight="700">CATALOGNE (Espagne)</text><text x="257.0" y="81.2" font-size="13" fill="#9A8C78" text-anchor="middle" letter-spacing="2" font-weight="700">PYRÉNÉES-ORIENTALES (France)</text><text x="656.6" y="178.8" font-size="13" fill="#5E8FC2" text-anchor="middle" font-style="italic">Méditerranée</text><path d="M530.9,471.6 Q530.9,471.6 521.9,438.0 Q512.9,404.5 501.7,374.0 L490.5,343.5" fill="none" stroke="#9E3B2E" stroke-width="5" stroke-linecap="round" opacity=".85" marker-end="url(#fl-es)"/><path d="M557.8,459.4 Q557.8,459.4 580.3,431.9 Q602.7,404.5 611.7,377.0 L620.7,349.6" fill="none" stroke="#9E3B2E" stroke-width="5" stroke-linecap="round" opacity=".85" marker-end="url(#fl-es)"/><path d="M324.3,489.9 Q324.3,489.9 322.1,456.3 Q319.8,422.8 317.6,398.4 L315.3,374.0" fill="none" stroke="#9E3B2E" stroke-width="5" stroke-linecap="round" opacity=".85" marker-end="url(#fl-es)"/><path d="M90.8,471.6 Q90.8,471.6 86.3,438.0 Q81.8,404.5 79.6,380.1 L77.4,355.7" fill="none" stroke="#9E3B2E" stroke-width="5" stroke-linecap="round" opacity=".85" marker-end="url(#fl-es)"/><path d="M490.5,319.1 Q490.5,319.1 506.2,303.8 Q521.9,288.6 535.4,279.4 L548.8,270.3" fill="none" stroke="#2C4A7C" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#fl-fr)"/><path d="M620.7,325.2 Q620.7,325.2 609.4,309.9 Q598.2,294.7 582.5,282.5 L566.8,270.3" fill="none" stroke="#2C4A7C" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#fl-fr)"/><path d="M490.5,319.1 Q490.5,319.1 497.2,285.5 Q503.9,252.0 526.4,239.8 L548.8,227.6" fill="none" stroke="#2C4A7C" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#fl-fr)"/><path d="M503.9,178.8 Q503.9,178.8 519.6,160.5 Q535.4,142.2 544.3,133.0 L553.3,123.9" fill="none" stroke="#2C4A7C" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#fl-fr)"/><circle cx="530.9" cy="441.1" r="3.2" fill="#7A6A58" stroke="white" stroke-width="1.5"/><text x="523.9" y="445.1" font-size="11"  fill="#7A6A58" text-anchor="end">Figueres</text><circle cx="324.3" cy="496.0" r="3.2" fill="#7A6A58" stroke="white" stroke-width="1.5"/><text x="331.3" y="500.0" font-size="11"  fill="#7A6A58" text-anchor="start">Olot</text><circle cx="68.4" cy="343.5" r="3.2" fill="#7A6A58" stroke="white" stroke-width="1.5"/><text x="61.4" y="347.5" font-size="11"  fill="#7A6A58" text-anchor="end">Puigcerdà</text><circle cx="503.9" cy="178.8" r="4.5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="496.9" y="182.8" font-size="12" font-weight="700" fill="#2C4A7C" text-anchor="end">Perpignan</text><circle cx="486.0" cy="322.1" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="479.0" y="326.1" font-size="11"  fill="#3A3028" text-anchor="end">Le Perthus</text><circle cx="622.9" cy="334.3" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="629.9" y="338.3" font-size="11"  fill="#3A3028" text-anchor="start">Cerbère</text><circle cx="315.3" cy="358.7" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="308.3" y="362.7" font-size="11"  fill="#3A3028" text-anchor="end">Prats-de-Mollo</text><circle cx="382.7" cy="325.2" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="382.7" y="316.2" font-size="11"  fill="#3A3028" text-anchor="middle">Arles-sur-Tech</text><circle cx="77.4" cy="343.5" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="84.4" y="347.5" font-size="11"  fill="#3A3028" text-anchor="start">Bourg-Madame</text><circle cx="288.4" cy="227.6" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="288.4" y="218.6" font-size="11"  fill="#3A3028" text-anchor="middle">Prades</text><path d="M539.2,277.5 L548.8,260.7 L558.4,277.5Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M548.8,260.7 L548.8,277.5" stroke="white" stroke-width="1"/><text x="534.8" y="262.3" font-size="12" fill="#9E3B2E" text-anchor="end" font-weight="700">Argelès-sur-Mer</text><path d="M543.7,234.8 L553.3,218.0 L562.9,234.8Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M553.3,218.0 L553.3,234.8" stroke="white" stroke-width="1"/><text x="565.3" y="231.6" font-size="12" fill="#9E3B2E" text-anchor="start" font-weight="700">Saint-Cyprien</text><path d="M548.2,131.1 L557.8,114.3 L567.4,131.1Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M557.8,114.3 L557.8,131.1" stroke="white" stroke-width="1"/><text x="569.8" y="127.9" font-size="12" fill="#9E3B2E" text-anchor="start" font-weight="700">Le Barcarès</text><path d="M482.5,129.9 L490.5,115.9 L498.5,129.9Z" fill="#8B8B8B" stroke="white" stroke-width="1.2"/><path d="M490.5,115.9 L490.5,129.9" stroke="white" stroke-width="1"/><text x="479.5" y="127.9" font-size="11" fill="#6E6E6E" text-anchor="end" font-style="italic">Rivesaltes (1941)</text><polygon points="535.4,232.8 537.2,237.3 542.0,237.6 538.3,240.8 539.5,245.5 535.4,242.9 531.2,245.5 532.4,240.8 528.7,237.6 533.5,237.3" fill="#3E7C4A" stroke="white" stroke-width="1"/><text x="525.4" y="243.8" font-size="11" fill="#3E7C4A" text-anchor="end" >Elne · maternité</text><polygon points="584.7,279.5 586.3,283.4 590.5,283.7 587.3,286.4 588.3,290.4 584.7,288.2 581.2,290.4 582.2,286.4 579.0,283.7 583.2,283.4" fill="#7A3E7C" stroke="white" stroke-width="1"/><text x="593.7" y="297.5" font-size="11" fill="#7A3E7C" text-anchor="start" >Collioure</text><g font-size="11" fill="#3A3028" transform="translate(-458,-212)"><rect x="470" y="378" width="240" height="114" rx="8" fill="white" stroke="#E0DACE"/><line x1="482" y1="396" x2="506" y2="396" stroke="#9E3B2E" stroke-width="5"/><text x="514" y="400">Colonnes de réfugiés venant d’Espagne</text><line x1="482" y1="417" x2="506" y2="417" stroke="#2C4A7C" stroke-width="2.2" stroke-dasharray="6 4"/><text x="514" y="421">Acheminement vers les camps</text><path d="M486.0,444.0 L494.0,430.0 L502.0,444.0Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M494.0,430.0 L494.0,444.0" stroke="white" stroke-width="1"/><text x="514" y="442">Camp de février 1939</text><polygon points="494.0,452.0 495.9,456.5 500.7,456.8 497.0,460.0 498.1,464.7 494.0,462.1 489.9,464.7 491.0,460.0 487.3,456.8 492.1,456.5" fill="#3E7C4A" stroke="white" stroke-width="1"/><text x="514" y="463">Lieu de solidarité / de mémoire</text><line x1="482" y1="480" x2="506" y2="480" stroke="#9E3B2E" stroke-width="2" stroke-dasharray="7 4"/><text x="514" y="484">Frontière franco-espagnole</text></g></g></svg><figcaption>Les principaux passages de la frontière et les camps du Roussillon en février 1939 (carte schématique, positions approximatives).</figcaption></figure>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Passage / secteur</th><th>Destination fréquente en 1939</th><th>Particularité</th></tr></thead><tbody>
+<tr><td><strong>Le Perthus</strong></td><td>Argelès, puis Saint-Cyprien et autres camps</td><td>Grand axe routier de l'exode ; lieu du désarmement</td></tr>
+<tr><td><strong>Cerbère / Banyuls</strong></td><td>Argelès-sur-Mer</td><td>Passage littoral et ferroviaire (tunnel de Portbou)</td></tr>
+<tr><td><strong>Vallée du Tech</strong></td><td>Prats-de-Mollo, Arles-sur-Tech, Saint-Laurent-de-Cerdans</td><td>Col d'Ares ; camps provisoires de montagne</td></tr>
+<tr><td><strong>Cerdagne</strong></td><td>Bourg-Madame, puis vallée de la Têt</td><td>Passage d'altitude, très enneigé</td></tr>
+</tbody></table></div><p class="tableau-legende">Les itinéraires étaient fixés au jour le jour par l'armée et la préfecture ; le tableau donne les tendances principales.</p></section>
+
+<section class="section" id="accueil"><h2 class="section-titre"><div class="section-titre-icon">🤝</div>La France face à l'arrivée : solidarité, peur et improvisation</h2><div class="histoire-texte"><p>Le gouvernement français avait envisagé dès 1938 la possibilité d'un afflux, mais l'ampleur de janvier – février 1939 dépasse tout ce qui était prévu. Armée, gendarmerie, préfectures et municipalités doivent gérer en quelques jours une population immense. L'accueil mêle <strong>aide humanitaire, inquiétude politique et logique de contrôle</strong>. Le décret-loi du 12 novembre 1938 avait d'ailleurs déjà prévu l'internement des étrangers jugés « indésirables ».</p>
+<p>La société française est elle-même divisée. Des habitants, des militants, des organisations caritatives et des réseaux de solidarité — Secours populaire, quakers, comités suisses — apportent nourriture, vêtements et soins. D'autres voix dénoncent le coût de l'accueil ou redoutent l'arrivée de militants révolutionnaires. Le vocabulaire administratif de l'époque parle officiellement de « camps de concentration » au sens de lieux de regroupement sous surveillance ; ce terme ne doit pas être confondu avec le système concentrationnaire nazi, qui relève d'une autre histoire et d'autres finalités.</p>
+<div class="encadre"><strong>Pourquoi enfermer les réfugiés ?</strong><br>Les autorités veulent désarmer et identifier les anciens combattants, contrôler les étrangers, éviter leur dispersion immédiate et organiser soit leur rapatriement, soit leur transfert. Dans les faits, cette politique produit des camps surpeuplés et des conditions indignes.</div></div></section>
+
+<section class="section" id="camps"><h2 class="section-titre"><div class="section-titre-icon">⛺</div>Argelès, Saint-Cyprien, Le Barcarès… les camps</h2><div class="histoire-texte"><p><strong>Argelès-sur-Mer</strong> devient le symbole de la Retirada. Le camp est monté dans l'urgence à partir du 30 janvier 1939, directement sur la plage : d'abord des piquets et des barbelés, presque aucun abri. Les réfugiés doivent eux-mêmes creuser des trous dans le sable pour se protéger du vent, puis construire une partie des baraques. Au 1<sup>er</sup> mars, les rapports militaires comptent environ <strong>81 000 personnes à Argelès</strong> et <strong>80 400 à Saint-Cyprien</strong>, sur quelque 240 000 réfugiés présents dans les camps et centres du département.</p>
+<p>Le Barcarès ouvre ensuite pour désengorger les plages. D'autres camps sont installés dans le grand Sud : <strong>Bram</strong> dans l'Aude, <strong>Le Vernet</strong> en Ariège, <strong>Septfonds</strong> dans le Tarn-et-Garonne, <strong>Agde</strong> dans l'Hérault, ainsi que Gurs dans les Basses-Pyrénées, hors de l'actuelle Occitanie.</p></div>
+<figure class="schema"><svg viewBox="0 0 720 248" role="img" aria-label="Graphique des effectifs des camps au 1er mars 1939"><g font-family="Source Sans 3,sans-serif"><text x="360" y="22" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="16" fill="#2C4A7C">Pyrénées-Orientales, 1<tspan dy="-5" font-size="10">er</tspan><tspan dy="5"> mars 1939 : ≈ 240 000 réfugiés</tspan></text><text x="262.0" y="65.0" font-size="12.5" fill="#3A3028" text-anchor="end" >Argelès-sur-Mer</text><rect x="272" y="46" width="330" height="30" rx="6" fill="#9E3B2E"/><text x="610.0" y="66.0" font-size="13" fill="#9E3B2E" text-anchor="start" font-weight="700">≈ 81 000</text><text x="262.0" y="111.0" font-size="12.5" fill="#3A3028" text-anchor="end" >Saint-Cyprien</text><rect x="272" y="92" width="328" height="30" rx="6" fill="#B5653C"/><text x="607.6" y="112.0" font-size="13" fill="#B5653C" text-anchor="start" font-weight="700">≈ 80 400</text><text x="262.0" y="157.0" font-size="12.5" fill="#3A3028" text-anchor="end" >Autres camps et centres du département</text><rect x="272" y="138" width="320" height="30" rx="6" fill="#C8A27A"/><text x="600.2" y="158.0" font-size="13" fill="#C8A27A" text-anchor="start" font-weight="700">≈ 78 600</text><line x1="272" y1="190" x2="602" y2="190" stroke="#B8A58A"/><text x="360.0" y="214.0" font-size="12" fill="#3A3028" text-anchor="middle" font-weight="600">Le département compte alors environ 250 000 habitants : la population double en quelques semaines.</text><text x="360.0" y="234.0" font-size="10.5" fill="#8B7355" text-anchor="middle" font-style="italic">« Autres camps et centres » : différence entre le total et les deux grands camps (Le Barcarès, Prats-de-Mollo, Arles-sur-Tech, hôpitaux…).</text></g></svg><figcaption>Deux plages transformées en villes de toile et de barbelés : Argelès et Saint-Cyprien rassemblent à elles seules les deux tiers des réfugiés du département.</figcaption></figure>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Camp</th><th>Département actuel</th><th>Rôle / mémoire</th></tr></thead><tbody>
+<tr><td><strong>Argelès-sur-Mer</strong></td><td>Pyrénées-Orientales</td><td>Principal camp de la première phase ; plage devenue grand lieu de mémoire</td></tr>
+<tr><td><strong>Saint-Cyprien</strong></td><td>Pyrénées-Orientales</td><td>Très grand camp littoral ouvert en février 1939</td></tr>
+<tr><td><strong>Le Barcarès</strong></td><td>Pyrénées-Orientales</td><td>Camp construit pour absorber une partie des effectifs</td></tr>
+<tr><td><strong>Bram</strong></td><td>Aude</td><td>Camp de baraques organisé à l'intérieur des terres, notamment pour les plus âgés</td></tr>
+<tr><td><strong>Le Vernet</strong></td><td>Ariège</td><td>Devient un camp « répressif » pour étrangers jugés indésirables</td></tr>
+<tr><td><strong>Septfonds</strong></td><td>Tarn-et-Garonne</td><td>Camp de Judes, ouvert en 1939 ; cimetière des Espagnols</td></tr>
+<tr><td><strong>Agde</strong></td><td>Hérault</td><td>Camp important, en partie réservé aux Catalans</td></tr>
+</tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · des mots qui pèsent</div><p>Les réfugiés parlent de « camps de sable », d'« enfer d'Argelès » ; l'administration parle de « camps de concentration », les historiens d'aujourd'hui de « camps d'internement ». Ces mots différents disent la même réalité vue de trois points de vue : celui des internés, celui de l'État de 1939 et celui de l'historien, qui doit sans cesse distinguer les camps français de 1939 des camps nazis.</p></div></section>
+
+<section class="section" id="vie"><h2 class="section-titre"><div class="section-titre-icon">👥</div>Vivre derrière les barbelés</h2><div class="histoire-texte"><h3 class="sous-titre">Le sable, le vent, le froid</h3><p>Dans les premières semaines, Argelès et Saint-Cyprien sont des enclos sur la plage, exposés à la tramontane. Les baraques sont insuffisantes ou inexistantes, l'eau potable et les latrines manquent, la nourriture est pauvre et les soins débordés. La promiscuité favorise dysenterie, gale et typhoïde ; plusieurs centaines de personnes meurent durant les premiers mois.</p>
+<h3 class="sous-titre">S'organiser malgré tout</h3><p>Les internés ne restent pas passifs. Les solidarités politiques, professionnelles et régionales se recomposent. Cuisines, infirmeries, activités culturelles, écoles improvisées, journaux manuscrits et ateliers apparaissent. Des artistes comme <strong>Josep Bartolí</strong> dessinent la vie du camp, laissant des témoignages essentiels.</p>
+<h3 class="sous-titre">Sortir du camp</h3><p>Les sorties suivent plusieurs voies : retour en Espagne, émigration vers un autre pays, regroupement familial, contrat de travail ou incorporation dans des formations de travailleurs étrangers. Ces choix sont rarement simples : retourner dans l'Espagne franquiste peut exposer à la répression, tandis que rester en France signifie souvent vivre dans l'incertitude.</p></div>
+<figure class="schema"><svg viewBox="0 0 720 310" role="img" aria-label="Schéma des trajectoires des réfugiés"><defs><marker id="fl-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#9E3B2E"/></marker><marker id="fl-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2C4A7C"/></marker><marker id="fl-gr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8B7355"/></marker><marker id="fl-re" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#A0522D"/></marker></defs><g font-family="Source Sans 3,sans-serif"><path d="M450,189 L565,239" stroke="#9E3B2E" stroke-width="2.4" marker-end="url(#fl-gr)"/><path d="M360,196 L360,255" stroke="#A0522D" stroke-width="2.4" marker-end="url(#fl-gr)"/><path d="M270,189 L155,239" stroke="#3E7C4A" stroke-width="2.4" marker-end="url(#fl-gr)"/><path d="M443,111 L549,61" stroke="#7A3E7C" stroke-width="2.4" marker-end="url(#fl-gr)"/><path d="M277,111 L171,61" stroke="#5C5248" stroke-width="2.4" marker-end="url(#fl-gr)"/><rect x="250" y="120" width="220" height="60" rx="12" fill="#2C4A7C"/><text x="360.0" y="144.0" font-size="15" fill="white" text-anchor="middle" font-weight="700">≈ 475 000 réfugiés</text><text x="360.0" y="164.0" font-size="12" fill="#E8EEF6" text-anchor="middle" >février 1939</text><rect x="30" y="18" width="200" height="48" rx="10" fill="white" stroke="#5C5248" stroke-width="2"/><text x="130.0" y="38.0" font-size="13" fill="#5C5248" text-anchor="middle" font-weight="700">Retour en Espagne</text><text x="130.0" y="55.0" font-size="10.5" fill="#5C5248" text-anchor="middle" >dès 1939, souvent sous la contrainte</text><rect x="490" y="18" width="200" height="48" rx="10" fill="white" stroke="#7A3E7C" stroke-width="2"/><text x="590.0" y="38.0" font-size="13" fill="#7A3E7C" text-anchor="middle" font-weight="700">Émigration lointaine</text><text x="590.0" y="55.0" font-size="10.5" fill="#5C5248" text-anchor="middle" >Mexique, Amérique latine, URSS…</text><rect x="10" y="234" width="200" height="48" rx="10" fill="white" stroke="#3E7C4A" stroke-width="2"/><text x="110.0" y="254.0" font-size="13" fill="#3E7C4A" text-anchor="middle" font-weight="700">Travail en France</text><text x="110.0" y="271.0" font-size="10.5" fill="#5C5248" text-anchor="middle" >CTE, agriculture, mines, industrie</text><rect x="260" y="254" width="200" height="48" rx="10" fill="white" stroke="#A0522D" stroke-width="2"/><text x="360.0" y="274.0" font-size="13" fill="#A0522D" text-anchor="middle" font-weight="700">Armée et Résistance</text><text x="360.0" y="291.0" font-size="10.5" fill="#5C5248" text-anchor="middle" >volontaires 1939-40, maquis, guérilleros</text><rect x="510" y="234" width="200" height="48" rx="10" fill="white" stroke="#9E3B2E" stroke-width="2"/><text x="610.0" y="254.0" font-size="13" fill="#9E3B2E" text-anchor="middle" font-weight="700">Installation durable</text><text x="610.0" y="271.0" font-size="10.5" fill="#5C5248" text-anchor="middle" >Toulouse et tout le Midi</text></g></svg><figcaption>Que deviennent les réfugiés ? Les trajectoires se croisent et se succèdent souvent pour une même personne (schéma qualitatif, sans proportions).</figcaption></figure></section>
+
+<section class="section" id="femmes"><h2 class="section-titre"><div class="section-titre-icon">👩</div>Femmes, enfants et familles séparées</h2><div class="histoire-texte"><p>La Retirada est aussi une histoire familiale. Les autorités françaises évacuent d'abord femmes, enfants et vieillards hors des Pyrénées-Orientales, parfois jusqu'en Bretagne ou dans le Centre, tandis que beaucoup d'hommes sont internés près de la frontière. Des familles se retrouvent séparées entre plusieurs départements, souvent sans savoir où se trouve un proche.</p>
+<p>La <strong>maternité suisse d'Elne</strong>, fondée par <strong>Elisabeth Eidenbenz</strong> en 1939 et installée au château d'en Bardou, permet à des mères internées d'accoucher hors des camps, où la mortalité des nouveau-nés était terrible. Près de 600 enfants y naissent jusqu'en 1944, d'abord de mères espagnoles, puis aussi de femmes juives et tsiganes internées sous Vichy.</p>
+<div class="notice"><strong>Une conséquence durable :</strong> les trajectoires familiales deviennent transnationales. Certains repartent en Espagne, d'autres gagnent le Mexique, l'Amérique latine ou l'URSS ; beaucoup s'installent finalement en France. Les enfants grandissent entre mémoire espagnole, langue familiale et intégration française.</div></div></section>
+
+<section class="section" id="travail"><h2 class="section-titre"><div class="section-titre-icon">🛠️</div>Du réfugié au travailleur</h2><div class="histoire-texte"><p>Au printemps et à l'été 1939, l'État cherche à réduire la population des camps et à utiliser une main-d'œuvre disponible. Le décret-loi du <strong>12 avril 1939</strong> permet d'imposer des prestations aux étrangers sans nationalité ou bénéficiaires du droit d'asile. Les <strong>Compagnies de travailleurs étrangers (CTE)</strong> affectent des hommes à des travaux militaires, forestiers, agricoles ou industriels, jusque sur la ligne Maginot.</p>
+<p>Une circulaire du 10 août 1939 facilite aussi l'emploi de réfugiés espagnols dans l'agriculture et l'industrie. Pour beaucoup, le travail devient un moyen de quitter les camps, mais il s'accompagne d'un contrôle administratif étroit.</p>
+<p>Ces hommes apportent des compétences très diverses : ouvriers du bâtiment, mineurs, métallurgistes, agriculteurs, mécaniciens, artisans, employés et intellectuels. Dans le Midi, on les retrouve dans les vignes, les barrages pyrénéens, les mines de Carmaux et de Decazeville, ou les chantiers forestiers.</p></div></section>
+
+<section class="section" id="guerre40"><h2 class="section-titre"><div class="section-titre-icon">🎖️</div>De l'exil à la Seconde Guerre mondiale</h2><div class="histoire-texte"><p>Quelques mois après la Retirada, la France entre en guerre contre l'Allemagne. Des Espagnols s'engagent dans la Légion étrangère, les régiments de marche de volontaires étrangers ou les compagnies de travailleurs. Après la défaite de 1940, leur situation devient encore plus dangereuse : Vichy les encadre dans des Groupements de travailleurs étrangers (GTE), et des milliers de républicains capturés en uniforme français sont déportés à <strong>Mauthausen</strong>.</p>
+<h3 class="sous-titre">Les guérilleros du Sud-Ouest</h3><p>Des républicains espagnols rejoignent la <strong>Résistance</strong> et les maquis, très actifs en Ariège, dans l'Aude, le Tarn-et-Garonne ou les Pyrénées. Organisés en « guérilleros », ils participent en août 1944 à la libération de plusieurs villes du Sud-Ouest, dont Foix. En octobre 1944, plusieurs milliers d'entre eux tentent même de reconquérir l'Espagne par le <strong>Val d'Aran</strong> : l'opération échoue en quelques jours.</p>
+<p>D'autres combattent dans les Forces françaises libres : la <strong>« Nueve »</strong>, 9<sup>e</sup> compagnie de la 2<sup>e</sup> division blindée, composée en majorité d'Espagnols, est parmi les premières unités à entrer dans Paris le 24 août 1944.</p>
+<p>Le camp de Rivesaltes, ouvert comme camp d'internement en 1941, appartient à une chronologie postérieure à la Retirada proprement dite. Il accueille sous Vichy des étrangers, des Juifs et des Tsiganes, avant d'autres usages après-guerre (prisonniers allemands, harkis). Il est important de ne pas confondre ces périodes d'internement.</p></div></section>
+
+<section class="section" id="occitanie"><h2 class="section-titre"><div class="section-titre-icon">🧭</div>Une empreinte profonde en Occitanie</h2><div class="histoire-texte"><p>La région actuelle est au cœur de cette histoire : frontière des Pyrénées-Orientales, camps du Roussillon, de l'Aude, de l'Ariège, de l'Hérault et du Tarn-et-Garonne, mais aussi villes d'accueil et de réinstallation.</p>
+<p><strong>Toulouse</strong> devient le principal foyer de l'exil républicain espagnol. Des milliers de réfugiés s'y installent ; partis, syndicats (notamment anarchistes de la CNT), journaux, cafés, athénées et troupes de théâtre entretiennent une vie politique espagnole en exil pendant près de quarante ans. La ville acquiert durablement la réputation de « capitale de l'Espagne républicaine en exil ».</p>
+<p>L'installation ne se limite pas aux grandes villes. Des familles trouvent du travail dans l'agriculture, le bâtiment, les mines, l'industrie et l'artisanat. Mariages, naturalisations et générations nées en France inscrivent progressivement cette histoire dans la société régionale.</p></div>
+<figure class="carte-ret"><svg viewBox="0 0 720 420" role="img" aria-label="Carte de la Retirada en Occitanie"><defs><marker id="fl-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#9E3B2E"/></marker><marker id="fl-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2C4A7C"/></marker><marker id="fl-gr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8B7355"/></marker><marker id="fl-re" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#A0522D"/></marker></defs><g font-family="Source Sans 3,sans-serif"><rect width="720" height="420" fill="#FBF8F2"/><polygon points="504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 360.9,358.0 374.8,378.5 363.7,401.6 359.1,427.2 335.9,452.8 322.0,472.0 678.9,472.0 678.9,164.8" fill="#DCE7F2"/><polygon points="201.5,22.7 217.2,32.9 232.1,39.3 258.0,32.9 271.9,47.0 297.0,43.2 319.2,47.0 338.7,36.8 354.4,45.7 367.4,38.0 382.2,36.8 393.4,53.4 407.3,52.1 424.9,73.9 433.2,86.7 433.2,107.2 450.8,120.0 474.0,116.1 498.1,120.0 502.7,143.0 504.6,164.8 497.2,184.0 481.4,199.3 459.2,227.5 447.1,217.2 423.9,228.8 410.0,235.2 393.4,251.8 367.4,260.8 354.4,276.1 348.9,295.3 347.9,320.9 349.8,344.0 360.9,358.0 340.5,355.5 317.4,360.6 298.8,369.6 271.0,365.7 247.8,359.3 227.4,350.4 201.5,337.6 173.7,322.2 155.1,312.0 132.0,305.6 118.1,324.8 94.9,326.0 67.1,324.8 55.0,314.5 37.4,306.8 39.3,280.0 57.8,250.5 41.1,226.2 43.9,207.0 57.8,194.2 62.4,167.3 85.6,159.6 118.1,149.4 139.4,148.1 147.7,126.4 165.3,111.0 157.9,88.0 169.0,79.0 187.6,56.0 196.8,36.8 201.5,22.7" fill="#F4ECDD" stroke="#B8A58A" stroke-width="1.4" stroke-linejoin="round"/><text x="215.4" y="391.3" font-size="12" fill="#9A8C78" text-anchor="middle" letter-spacing="4" font-weight="700">ESPAGNE</text><path d="M333.1,344.0 Q287.3,308.3 262.7,255.6" fill="none" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4" opacity=".75" marker-end="url(#fl-gr)"/><path d="M333.1,344.0 Q264.9,317.0 216.3,262.0" fill="none" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4" opacity=".75" marker-end="url(#fl-gr)"/><path d="M333.1,344.0 Q250.1,253.5 217.2,135.3" fill="none" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4" opacity=".75" marker-end="url(#fl-gr)"/><path d="M333.1,344.0 Q349.2,288.6 388.7,246.7" fill="none" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4" opacity=".75" marker-end="url(#fl-gr)"/><path d="M333.1,344.0 Q250.7,292.7 200.6,209.6" fill="none" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4" opacity=".75" marker-end="url(#fl-gr)"/><path d="M145.9,283.8 L141.2,329.9" stroke="#A0522D" stroke-width="3" fill="none" marker-end="url(#fl-re)"/><text x="135.2" y="347.9" font-size="10.5" fill="#A0522D" text-anchor="middle" font-style="italic">Val d’Aran, oct. 1944</text><path d="M61.9,254.4 L33.9,254.4" stroke="#8B7355" stroke-width="1.6" marker-end="url(#fl-gr)"/><text x="33.9" y="246.4" font-size="10.5" fill="#8B7355" text-anchor="start" font-style="italic">Gurs (Béarn)</text><circle cx="426.7" cy="208.3" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="426.7" y="199.3" font-size="11"  fill="#3A3028" text-anchor="middle">Montpellier</text><circle cx="335.9" cy="324.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="328.9" y="328.8" font-size="11"  fill="#3A3028" text-anchor="end">Perpignan</text><circle cx="192.2" cy="155.8" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="185.2" y="159.8" font-size="11"  fill="#3A3028" text-anchor="end">Montauban</text><circle cx="216.3" cy="291.5" r="3.2" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="209.3" y="295.5" font-size="11"  fill="#3A3028" text-anchor="end">Foix</text><path d="M339.9,337.2 L347.9,323.2 L355.9,337.2Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M347.9,323.2 L347.9,337.2" stroke="white" stroke-width="1"/><text x="357.9" y="335.2" font-size="11.5" fill="#9E3B2E" text-anchor="start" font-weight="700">Camps du littoral</text><path d="M254.7,261.6 L262.7,247.6 L270.7,261.6Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M262.7,247.6 L262.7,261.6" stroke="white" stroke-width="1"/><text x="274.7" y="259.6" font-size="11.5" fill="#9E3B2E" text-anchor="start" font-weight="700">Bram</text><path d="M208.3,268.0 L216.3,254.0 L224.3,268.0Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M216.3,254.0 L216.3,268.0" stroke="white" stroke-width="1"/><text x="204.3" y="266.0" font-size="11.5" fill="#9E3B2E" text-anchor="end" font-weight="700">Le Vernet</text><path d="M209.2,141.3 L217.2,127.3 L225.2,141.3Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M217.2,127.3 L217.2,141.3" stroke="white" stroke-width="1"/><text x="229.2" y="139.3" font-size="11.5" fill="#9E3B2E" text-anchor="start" font-weight="700">Septfonds</text><path d="M380.7,252.7 L388.7,238.7 L396.7,252.7Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M388.7,238.7 L388.7,252.7" stroke="white" stroke-width="1"/><text x="388.7" y="266.7" font-size="11.5" fill="#9E3B2E" text-anchor="middle" font-weight="700">Agde</text><circle cx="200.6" cy="209.6" r="15" fill="none" stroke="#2C4A7C" stroke-width="2" stroke-dasharray="3 3"/><circle cx="200.6" cy="209.6" r="4.5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="180.6" y="214.6" font-size="12.5" fill="#2C4A7C" text-anchor="end" font-weight="700">Toulouse</text><text x="180.6" y="235.6" font-size="10.5" fill="#2C4A7C" text-anchor="end" font-style="italic">« capitale » de l’exil</text><g font-size="11" fill="#3A3028"><rect x="500" y="300" width="210" height="110" rx="8" fill="white" stroke="#E0DACE"/><path d="M506.0,326.0 L514.0,312.0 L522.0,326.0Z" fill="#9E3B2E" stroke="white" stroke-width="1.2"/><path d="M514.0,312.0 L514.0,326.0" stroke="white" stroke-width="1"/><text x="532" y="324">Camp d’internement 1939</text><line x1="504" y1="345" x2="526" y2="345" stroke="#8B7355" stroke-width="1.6" stroke-dasharray="5 4"/><text x="532" y="349">Transferts vers l’intérieur</text><line x1="504" y1="370" x2="526" y2="370" stroke="#A0522D" stroke-width="3"/><text x="532" y="374">Offensive des guérilleros</text><circle cx="515" cy="394" r="8" fill="none" stroke="#2C4A7C" stroke-width="2" stroke-dasharray="3 3"/><text x="532" y="398">Grand foyer de l’exil</text></g></g></svg><figcaption>La Retirada à l’échelle de l’Occitanie : camps, transferts et foyers de l’exil (carte schématique).</figcaption></figure>
+<div class="impact-grid"><div class="impact"><strong>Population</strong>Installation durable de dizaines de milliers de familles espagnoles dans le Midi.</div><div class="impact"><strong>Travail</strong>Main-d'œuvre pour l'agriculture, les mines, les barrages et le bâtiment.</div><div class="impact"><strong>Culture</strong>Associations, mémoire républicaine, langue, fêtes et traditions familiales.</div></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · un fil avec les autres fiches</div><p>La Retirada croise plusieurs fiches de la série : les réfugiés descendent dans les <strong>mines</strong> de Carmaux et de Decazeville, travaillent dans les <strong>vignes</strong> du Languedoc, arrivent par le <strong>chemin de fer</strong> de Cerbère et parlent souvent catalan, langue sœur de l'<strong>occitan</strong>. Elle prolonge aussi une longue histoire de passages à travers les Pyrénées.</p></div></section>
+
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités de la Retirada</h2>
+<div class="perso-groupe"><div class="perso-groupe-titre g-voix">Écrivains et artistes</div><div class="perso-grid">
+<div class="perso g-voix"><div class="perso-nom">Antonio Machado</div><div class="perso-dates">1875 – 1939</div><div class="perso-desc">Grand poète espagnol, il passe la frontière avec sa mère fin janvier 1939 et meurt épuisé à Collioure le 22 février ; sa tombe y est toujours fleurie.</div></div>
+<div class="perso g-voix"><div class="perso-nom">Josep Bartolí</div><div class="perso-dates">1910 – 1995</div><div class="perso-desc">Dessinateur catalan interné dans plusieurs camps ; ses dessins des barbelés et des gardiens sont parmi les témoignages les plus forts (film d'animation <em>Josep</em>, 2020).</div></div>
+<div class="perso g-voix"><div class="perso-nom">Pau Casals</div><div class="perso-dates">1876 – 1973</div><div class="perso-desc">Violoncelliste mondialement connu, il s'installe à Prades en 1939, vient en aide aux internés et y crée en 1950 un festival de musique toujours vivant.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-pol">Responsables politiques</div><div class="perso-grid">
+<div class="perso g-pol"><div class="perso-nom">Manuel Azaña</div><div class="perso-dates">1880 – 1940</div><div class="perso-desc">Président de la République espagnole, il franchit la frontière en février 1939 et meurt en exil à Montauban le 3 novembre 1940, où il est inhumé.</div></div>
+<div class="perso g-pol"><div class="perso-nom">Federica Montseny</div><div class="perso-dates">1905 – 1994</div><div class="perso-desc">Militante anarchiste, première femme ministre en Espagne (1936 – 1937) ; figure de l'exil libertaire à Toulouse, où elle meurt.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-sol">Solidarité et résistance</div><div class="perso-grid">
+<div class="perso g-sol"><div class="perso-nom">Elisabeth Eidenbenz</div><div class="perso-dates">1913 – 2011</div><div class="perso-desc">Institutrice suisse, fondatrice de la maternité d'Elne ; reconnue Juste parmi les nations pour avoir aussi protégé des enfants juifs.</div></div>
+<div class="perso g-sol"><div class="perso-nom">Francisco Ponzán Vidal</div><div class="perso-dates">1911 – 1944</div><div class="perso-desc">Anarchiste aragonais, il organise depuis le Midi une filière d'évasion à travers les Pyrénées ; arrêté, il est exécuté par les nazis en août 1944 près de Toulouse.</div></div>
+<div class="perso g-sol"><div class="perso-nom">Neus Català</div><div class="perso-dates">1915 – 2019</div><div class="perso-desc">Infirmière catalane passée en France avec un groupe d'enfants en 1939, résistante, déportée à Ravensbrück ; grande voix de la mémoire de la déportation.</div></div>
+</div></div>
+</section>
+
+<section class="section" id="memoire"><h2 class="section-titre"><div class="section-titre-icon">🕯️</div>De l'oubli à la mémoire</h2><div class="histoire-texte"><p>Pendant longtemps, beaucoup d'anciens réfugiés parlent peu de l'exil, parfois par douleur, parfois pour faciliter l'intégration des enfants. À partir des dernières décennies du XX<sup>e</sup> siècle, témoignages, recherches historiques, associations de « fils et filles de républicains » et collectivités rendent cette mémoire beaucoup plus visible.</p>
+<p>Argelès-sur-Mer possède aujourd'hui un mémorial consacré au camp. Le <strong>Mémorial du camp de Rivesaltes</strong>, ouvert en 2015, replace l'internement dans une histoire plus large. La maternité d'Elne est devenue un lieu de visite. Les Archives départementales des Pyrénées-Orientales ont numérisé de nombreux registres concernant les camps pour la période postérieure aux premiers mois de 1939 ; elles précisent toutefois qu'aucune liste nominative exhaustive n'est conservée pour la première phase de la Retirada.</p>
+<div class="encadre"><strong>La Retirada dans « L'Âme des Régions »</strong><br>Elle a laissé une mémoire de frontière et d'exil, mais aussi une histoire d'intégration. Derrière les chiffres se trouvent des familles dont les descendants vivent aujourd'hui dans tout le Midi. Noms espagnols, associations mémorielles, monuments, cérémonies et récits familiaux rendent encore cette histoire visible.</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une mémoire de famille</div><p>En Occitanie, presque chacun connaît un voisin, un collègue ou un grand-parent dont la famille est arrivée en 1939. C'est ce qui rend la Retirada si particulière : un événement de quelques semaines, mais une histoire qui se transmet encore à table, souvent en espagnol ou en catalan.</p></div></div></section>
+
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues</h2>
+<div class="mythe"><strong>« Les réfugiés étaient surtout des soldats. »</strong><br><span class="verdict faux">Faux</span><br>Les civils — femmes, enfants, vieillards — passent les premiers et forment une très large part de l'exode ; les soldats ne sont admis qu'à partir du 5 février.</div>
+<div class="mythe"><strong>« Les camps de 1939 étaient des camps de concentration comme ceux des nazis. »</strong><br><span class="verdict nuance">À nuancer</span><br>Le terme est bien employé par l'administration française, mais au sens de camp de regroupement. Les conditions y sont indignes et meurtrières, sans relever d'une politique d'extermination.</div>
+<div class="mythe"><strong>« Rivesaltes est le camp de la Retirada. »</strong><br><span class="verdict faux">Faux</span><br>Le grand camp de Rivesaltes ouvre en 1941, sous Vichy. Les camps de 1939 sont d'abord ceux des plages : Argelès, Saint-Cyprien, Le Barcarès.</div>
+<div class="mythe"><strong>« Les réfugiés sont presque tous repartis en Espagne. »</strong><br><span class="verdict nuance">À nuancer</span><br>Une part importante rentre dès 1939, souvent sous la pression des autorités ; mais des dizaines de milliers restent, et Toulouse demeure pendant près de quarante ans la capitale de l'exil.</div>
+<div class="mythe"><strong>« Les Français les ont tous mal accueillis. »</strong><br><span class="verdict nuance">À nuancer</span><br>La politique de l'État est d'abord celle du contrôle et de l'enfermement, mais de nombreux habitants, militants et organisations humanitaires ont aidé, nourri et caché des réfugiés.</div>
+</section>
+
+<section class="section" id="chrono"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Chronologie : de la guerre civile à l'installation en France</h2><div class="frise">
+<div class="frise-periode">Guerre civile</div>
+<div class="frise-item"><div class="frise-date">17 – 18 juillet 1936</div><div class="frise-texte">Soulèvement militaire ; début de la guerre civile.</div></div>
+<div class="frise-item"><div class="frise-date">Juillet – novembre 1938</div><div class="frise-texte">Bataille de l'Èbre ; affaiblissement décisif de la République.</div></div>
+<div class="frise-item"><div class="frise-date">23 décembre 1938</div><div class="frise-texte">Début de l'offensive franquiste en Catalogne.</div></div>
+<div class="frise-periode">Retirada</div>
+<div class="frise-item majeur"><div class="frise-date">26 janvier 1939</div><div class="frise-texte">Chute de Barcelone.</div></div>
+<div class="frise-item"><div class="frise-date">27 – 28 janvier</div><div class="frise-texte">Ouverture de la frontière aux femmes, enfants, vieillards et blessés.</div></div>
+<div class="frise-item"><div class="frise-date">30 janvier</div><div class="frise-texte">Mise en place en urgence du camp d'Argelès.</div></div>
+<div class="frise-item majeur"><div class="frise-date">5 février</div><div class="frise-texte">Entrée autorisée des soldats républicains, désarmés à la frontière.</div></div>
+<div class="frise-item"><div class="frise-date">9 – 10 février</div><div class="frise-texte">Les troupes franquistes atteignent la frontière catalane.</div></div>
+<div class="frise-item"><div class="frise-date">22 février</div><div class="frise-texte">Mort d'Antonio Machado à Collioure.</div></div>
+<div class="frise-item"><div class="frise-date">27 février</div><div class="frise-texte">La France et le Royaume-Uni reconnaissent le gouvernement de Franco.</div></div>
+<div class="frise-item"><div class="frise-date">1<sup>er</sup> mars</div><div class="frise-texte">Environ 240 000 réfugiés recensés dans les camps et centres des Pyrénées-Orientales.</div></div>
+<div class="frise-item"><div class="frise-date">1<sup>er</sup> avril</div><div class="frise-texte">Fin officielle de la guerre civile espagnole.</div></div>
+<div class="frise-periode">Après l'exode</div>
+<div class="frise-item"><div class="frise-date">12 avril 1939</div><div class="frise-texte">Décret sur les prestations imposées aux étrangers ; naissance des CTE.</div></div>
+<div class="frise-item"><div class="frise-date">Septembre 1939</div><div class="frise-texte">Début de la Seconde Guerre mondiale.</div></div>
+<div class="frise-item"><div class="frise-date">3 novembre 1940</div><div class="frise-texte">Mort de Manuel Azaña à Montauban.</div></div>
+<div class="frise-item"><div class="frise-date">1941</div><div class="frise-texte">Ouverture du camp de Rivesaltes sous Vichy.</div></div>
+<div class="frise-item majeur"><div class="frise-date">Août 1944</div><div class="frise-texte">Les guérilleros espagnols participent à la libération du Sud-Ouest ; la Nueve entre dans Paris.</div></div>
+<div class="frise-item"><div class="frise-date">Octobre 1944</div><div class="frise-texte">Échec de l'offensive du Val d'Aran.</div></div>
+<div class="frise-item"><div class="frise-date">1975</div><div class="frise-texte">Mort de Franco ; début de la transition démocratique, fin de l'exil pour beaucoup.</div></div>
+<div class="frise-item"><div class="frise-date">2015</div><div class="frise-texte">Inauguration du Mémorial du camp de Rivesaltes.</div></div>
+</div></section>
+
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>Circuit conseillé : sur les pas de la Retirada</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Le Perthus · col d'Ares</div><div class="etape-texte">Les deux grands passages : la route du Perthus et, au-dessus de Prats-de-Mollo, le col de montagne franchi dans la neige.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Argelès-sur-Mer</div><div class="etape-texte">Le Mémorial du camp, puis la plage et sa stèle : là où se trouvait le plus grand camp de 1939.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Collioure</div><div class="etape-texte">La tombe d'Antonio Machado au cimetière, avec sa boîte aux lettres où les visiteurs déposent des messages.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Elne · maternité suisse</div><div class="etape-texte">Le château d'en Bardou, où sont nés près de 600 enfants entre 1939 et 1944.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Rivesaltes · Mémorial du camp</div><div class="etape-texte">Un grand bâtiment enterré au milieu des baraques en ruines, pour comprendre toutes les périodes d'internement.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Prades</div><div class="etape-texte">La ville de Pau Casals et de son festival de musique, au pied du Canigou.</div></div></div>
+<div class="etape"><div class="etape-num">7</div><div class="etape-corps"><div class="etape-titre">Le Vernet d'Ariège · Septfonds</div><div class="etape-texte">Cimetières et lieux de mémoire des camps de l'intérieur.</div></div></div>
+<div class="etape"><div class="etape-num">8</div><div class="etape-corps"><div class="etape-titre">Montauban · Toulouse</div><div class="etape-texte">La tombe de Manuel Azaña, puis Toulouse, capitale de l'exil, ses archives et ses associations de mémoire.</div></div></div>
+</div></section>
+
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list"><li><a target="_blank" rel="noopener" href="https://www.memorial-argeles.eu/">Mémorial du camp d'Argelès-sur-Mer — histoire de la Retirada et archives</a></li><li><a target="_blank" rel="noopener" href="https://www.ledepartement66.fr/les-ressources-sur-les-camps-dinternement/">Archives départementales des Pyrénées-Orientales — réfugiés et camps d'internement</a></li><li><a target="_blank" rel="noopener" href="https://www.histoire-immigration.fr/caracteristiques-migratoires-selon-les-pays-d-origine/la-retirada-ou-l-exil-republicain-espagnol-d-apres-guerre">Musée national de l'histoire de l'immigration — La Retirada</a></li><li><a target="_blank" rel="noopener" href="https://www.archives.toulouse.fr/service-educatif/e-ressources/dossiers-pedagogiques/ressources-pedagogiques">Archives municipales de Toulouse — dossier pédagogique « La Retirada »</a></li><li><a target="_blank" rel="noopener" href="https://girophares.archives-nationales.culture.gouv.fr/la-retirada-deuxieme-phase">Archives nationales — La Retirada, deuxième phase</a></li><li><a target="_blank" rel="noopener" href="https://www.memorialcamprivesaltes.eu/">Mémorial du Camp de Rivesaltes — histoire et mémoires des internements</a></li></ul><p class="small">Les chiffres varient selon la date, le périmètre et les catégories comptées ; la fiche privilégie les ordres de grandeur documentés par les archives. Cartes et schémas sont des illustrations pédagogiques, non à l'échelle.</p></div></section>
+</div>
+
+<aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Événement</span><span class="aside-val">Retirada</span></div><div class="aside-row"><span class="aside-label">Période centrale</span><span class="aside-val">janv. – févr. 1939</span></div><div class="aside-row"><span class="aside-label">Origine</span><span class="aside-val">Catalogne républicaine</span></div><div class="aside-row"><span class="aside-label">Ordre de grandeur</span><span class="aside-val">≈ 475 000 réfugiés</span></div><div class="aside-row"><span class="aside-label">Territoire clé</span><span class="aside-val">Pyrénées-Orientales</span></div><div class="aside-row"><span class="aside-label">Foyer de l'exil</span><span class="aside-val">Toulouse</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 Quelques repères</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>26 janv. 1939</b><span>chute de Barcelone</span></div><div class="chiffre"><b>≈ 475 000</b><span>réfugiés en quelques semaines</span></div><div class="chiffre"><b>≈ 81 000</b><span>internés à Argelès au 1<sup>er</sup> mars</span></div><div class="chiffre"><b>≈ 600</b><span>naissances à la maternité d'Elne</span></div><div class="chiffre"><b>1975</b><span>mort de Franco, fin de l'exil pour beaucoup</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🗺️ Lieux à retenir</div><div class="aside-card-body"><dl class="glossaire"><dt>Le Perthus</dt><dd>Grand passage routier, lieu du désarmement.</dd><dt>Cerbère</dt><dd>Passage littoral et ferroviaire.</dd><dt>Argelès · Saint-Cyprien · Le Barcarès</dt><dd>Les camps des plages du Roussillon.</dd><dt>Bram · Le Vernet · Septfonds · Agde</dt><dd>Camps de l'intérieur.</dd><dt>Toulouse</dt><dd>Capitale de l'exil républicain.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">📖 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Retirada</dt><dd>« Retraite » : nom donné à l'exode de 1939.</dd><dt>Républicains</dt><dd>Défenseurs de la République espagnole contre le soulèvement franquiste.</dd><dt>Internement</dt><dd>Maintien administratif dans un camp sous surveillance.</dd><dt>CTE / GTE</dt><dd>Compagnies (1939) puis Groupements (Vichy) de travailleurs étrangers.</dd><dt>Guérilleros</dt><dd>Résistants espagnols des maquis du Sud-Ouest.</dd><dt>La Nueve</dt><dd>Compagnie de la 2<sup>e</sup> DB composée surtout d'Espagnols.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">⚠️ Ne pas confondre</div><div class="aside-card-body"><dl class="glossaire"><dt>Retirada</dt><dd>L'exode de janvier – février 1939.</dd><dt>Rivesaltes</dt><dd>Le grand camp ouvre en 1941 : son histoire dépasse largement la Retirada.</dd><dt>« Camp de concentration » en 1939</dt><dd>Terme administratif français d'époque, distinct du système concentrationnaire nazi.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">🧠 Fil conducteur</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Une défaite, une marche d'hiver, des plages fermées de barbelés : la Retirada commence comme une tragédie. Elle se prolonge en une longue histoire d'exil, de résistance et d'intégration qui a profondément marqué l'Occitanie.</div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer></body></html>

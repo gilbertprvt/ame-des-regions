@@ -76,6 +76,13 @@
     .eclat-pt { fill: rgba(200,132,58,.25); stroke: #C8843A; stroke-width: 1.5; opacity: 0; transition: opacity .3s; pointer-events: none; }
     .eclat-pt.on-hover { opacity: 1; }
     .depart { fill: #B7A88F; } .depart.actif { fill: var(--ocre); }
+    /* Au repos, la carte reste entièrement dégagée : flèches, zones et éclats n'apparaissent qu'au survol du bouton */
+    .fleche, .depart, .zone, .zone-ligne, .hub, .zone-region, .eclat, .eclat-pt { opacity: 0; pointer-events: none; transition: opacity .3s, fill .25s, stroke .25s, stroke-width .25s; }
+    .fleche.on-hover, .depart.on-hover, .zone.on-hover, .zone-ligne.on-hover, .hub.on-hover, .zone-region.on-hover, .eclat.on-hover, .eclat-pt.on-hover { opacity: 1; }
+    .fleche.on-hover { animation: trace .45s ease-out; stroke-dasharray: 900; stroke-dashoffset: 0; }
+    .eclat.on-hover { animation: trace .5s ease-out .3s backwards; stroke-dasharray: 600; }
+    @keyframes trace { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .fleche.on-hover, .eclat.on-hover { animation: none; } }
     .marq { opacity: 0; transition: opacity .25s; pointer-events: none; }
     .marq rect { fill: #A0522D; stroke: white; stroke-width: 1.5; }
     .marq text { font: 600 11px var(--corps); fill: #7A3B1E; paint-order: stroke; stroke: white; stroke-width: 3px; }
@@ -199,17 +206,16 @@
 <path class="riviere" d="M913.0,268.0 Q913.0,268.0 916.2,284.0 Q919.4,300.0 920.7,315.1 Q922.0,330.3 916.8,343.6 Q911.7,357.0 909.1,374.8 L906.5,392.6"/>
 <path class="canal-trace" d="M499.2,392.6 Q499.2,392.6 517.9,413.0 Q536.6,433.5 550.7,437.9 Q564.9,442.4 590.7,452.2 Q616.5,462.0 642.3,458.4 Q668.0,454.9 690.6,450.4 Q713.2,446.0 720.9,443.3 Q728.6,440.6 745.4,442.4 Q762.1,444.2 776.3,436.2 L790.5,428.2"/>
 <path class="relief" d="M333.3,513.6 l6,-8 l6,8"/><path class="relief" d="M349.3,519.6 l6,-8 l6,8"/><path class="relief" d="M365.3,513.6 l6,-8 l6,8"/><path class="relief" d="M381.3,519.6 l6,-8 l6,8"/><path class="relief" d="M397.3,513.6 l6,-8 l6,8"/><path class="relief" d="M413.3,519.6 l6,-8 l6,8"/><path class="relief" d="M462.2,535.0 l6,-8 l6,8"/><path class="relief" d="M478.2,541.0 l6,-8 l6,8"/><path class="relief" d="M494.2,535.0 l6,-8 l6,8"/><path class="relief" d="M510.2,541.0 l6,-8 l6,8"/><path class="relief" d="M526.2,535.0 l6,-8 l6,8"/><path class="relief" d="M765.2,276.9 l6,-8 l6,8"/><path class="relief" d="M779.2,282.9 l6,-8 l6,8"/><path class="relief" d="M793.2,276.9 l6,-8 l6,8"/><path class="relief" d="M807.2,282.9 l6,-8 l6,8"/><path class="relief" d="M623.4,421.0 l6,-8 l6,8"/><path class="relief" d="M637.4,427.0 l6,-8 l6,8"/><path class="relief" d="M651.4,421.0 l6,-8 l6,8"/>
-<text class="lbl-relief" x="384.5" y="625.7" text-anchor="middle">P Y R É N É E S</text>
+<text class="lbl-relief" x="371.6" y="588.4" text-anchor="middle">P Y R É N É E S</text>
 <text class="lbl-relief" x="738.9" y="268.0" >Cévennes</text>
 <text class="lbl-relief" x="610.0" y="410.4" >Montagne Noire</text>
 <text class="lbl-mer" x="861.4" y="526.1" text-anchor="middle">Mer Méditerranée</text>
-<text class="lbl-pays" x="384.5" y="652.4" text-anchor="middle">ESPAGNE</text>
+<text class="lbl-pays" x="339.3" y="613.3" text-anchor="middle">ESPAGNE</text>
 <text class="lbl-pays small" x="513.4" y="597.3" text-anchor="middle">ANDORRE</text>
 <text class="lbl-riv" x="393.5" y="478.0" >Garonne</text>
 <text class="lbl-riv" x="896.2" y="246.6" >Rhône</text>
 <text class="lbl-riv" x="687.4" y="303.6" >Tarn</text>
 <ellipse class="zone actif" data-t="cathares" cx="597.1" cy="502.9" rx="72" ry="50" transform="rotate(-15 597.1 502.9)"/>
-<circle class="hub" data-t="langue" cx="448.9" cy="241.3" r="5"/>
 <ellipse class="zone actif" data-t="violette" cx="496.6" cy="369.4" rx="16" ry="24" transform="rotate(20 496.6 369.4)"/>
 <ellipse class="zone actif" data-t="pastel" cx="545.6" cy="401.5" rx="70" ry="40" transform="rotate(-20 545.6 401.5)"/>
 <path class="zone-ligne actif" data-t="canal" d="M499.2,392.6 Q499.2,392.6 517.9,413.0 Q536.6,433.5 550.7,437.9 Q564.9,442.4 590.7,452.2 Q616.5,462.0 642.3,458.4 Q668.0,454.9 690.6,450.4 Q713.2,446.0 720.9,443.3 Q728.6,440.6 745.4,442.4 Q762.1,444.2 776.3,436.2 L790.5,428.2"/>
@@ -268,9 +274,15 @@
 <g class="marq" data-t="soie"><rect x="773.6" y="319.1" width="8" height="8" transform="rotate(45 777.6 323.1)"/><text x="777.6" y="314.1" text-anchor="middle">Le Vigan</text></g>
 <g class="marq" data-t="rail"><rect x="496.5" y="386.8" width="8" height="8" transform="rotate(45 500.5 390.8)"/><text x="500.5" y="381.8" text-anchor="middle">Matabiau</text></g>
 <g class="marq" data-t="protestant"><rect x="818.7" y="299.6" width="8" height="8" transform="rotate(45 822.7 303.6)"/><text x="822.7" y="294.6" text-anchor="middle">Mialet</text></g>
+<g class="marq" data-t="retirada"><rect x="678.2" y="589.7" width="8" height="8" transform="rotate(45 682.2 593.7)"/><text x="682.2" y="613.7" text-anchor="middle">Le Perthus</text></g>
+<g class="marq" data-t="retirada"><rect x="700.1" y="563.0" width="8" height="8" transform="rotate(45 704.1 567.0)"/><text x="704.1" y="558.0" text-anchor="middle">Argelès</text></g>
+<g class="marq" data-t="retirada"><rect x="581.5" y="452.6" width="8" height="8" transform="rotate(45 585.5 456.6)"/><text x="585.5" y="447.6" text-anchor="middle">Bram</text></g>
+<g class="marq" data-t="retirada"><rect x="517.1" y="461.5" width="8" height="8" transform="rotate(45 521.1 465.5)"/><text x="521.1" y="485.5" text-anchor="middle">Le Vernet</text></g>
+<g class="marq" data-t="retirada"><rect x="518.4" y="285.3" width="8" height="8" transform="rotate(45 522.4 289.3)"/><text x="522.4" y="280.3" text-anchor="middle">Septfonds</text></g>
+<g class="marq" data-t="retirada"><rect x="756.9" y="440.2" width="8" height="8" transform="rotate(45 760.9 444.2)"/><text x="760.9" y="464.2" text-anchor="middle">Agde</text></g>
 <path class="fleche actif" data-t="cathares" d="M274.0,599.0 C421.4,599.0 501.7,544.0 541.9,514.3" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="cathares" cx="274.0" cy="599.0" r="4"/>
-<path class="fleche actif" data-t="langue" d="M274.0,63.0 C368.0,63.0 419.3,176.3 445.0,237.3" marker-end="url(#pointe-on)"/>
+<path class="fleche actif" data-t="langue" d="M274.0,63.0 C345.0,80.0 420.0,300.0 667.3,332.4" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="langue" cx="274.0" cy="63.0" r="4"/>
 <path class="fleche actif" data-t="violette" d="M274.0,239.0 C390.4,239.0 453.8,317.5 485.6,359.7" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="violette" cx="274.0" cy="239.0" r="4"/>
@@ -286,21 +298,53 @@
 <path class="fleche actif" data-t="rail" d="M930.0,599.0 C849.4,599.0 805.4,493.7 783.4,437.1" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="rail" cx="930.0" cy="599.0" r="4"/>
 <path class="fleche actif" data-t="protestant" d="M930.0,439.0 C889.2,439.0 866.9,381.1 855.8,350.0" marker-end="url(#pointe-on)"/>
+<path class="fleche actif" data-t="protestant" d="M930.0,439.0 C790.9,439.0 715.0,373.1 677.1,337.7" marker-end="url(#pointe-on)"/>
 <circle class="depart actif" data-t="protestant" cx="930.0" cy="439.0" r="4"/>
-<path class="fleche actif" data-t="vigne" d="M685.0,630.0 C685.0,538.7 702.4,489.0 711.8,464.1" marker-end="url(#pointe-on)"/>
-<circle class="depart actif" data-t="vigne" cx="685.0" cy="630.0" r="4"/>
-<path class="fleche secondaire actif" data-t="protestant" d="M930.0,439.0 C813.9,449.0 731.9,365.6 671.9,335.6"/>
-<circle class="hub" data-t="protestant" cx="671.9" cy="335.6" r="5"/>
-<path class="eclat" data-t="protestant" d="M671.9,335.6 Q584.2,313.1 496.5,318.7" marker-end="url(#pointe-eclat)"/>
+<path class="fleche actif" data-t="vigne" d="M715.0,632.0 C715.0,539.9 719.7,489.7 722.2,464.6" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="vigne" cx="715.0" cy="632.0" r="4"/>
+<path class="fleche actif" data-t="retirada" d="M435.0,632.0 C435.0,611.4 592.1,600.2 676.7,594.6" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="retirada" cx="435.0" cy="632.0" r="4"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q583.3,343.0 507.7,389.7" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="499.2" cy="392.6" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q529.6,326.1 398.5,382.1" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="389.6" cy="383.7" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q600.3,270.8 507.1,245.6" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="499.2" cy="241.3" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q668.0,298.7 647.8,267.5" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="644.8" cy="259.1" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q727.4,296.0 758.8,235.6" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="764.7" cy="228.8" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q732.4,377.6 805.3,387.5" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="813.7" cy="390.8" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q670.4,400.2 698.4,458.5" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="700.3" cy="467.3" r="6"/>
+<path class="eclat" data-t="langue" d="M671.9,335.6 Q579.8,400.3 527.0,499.7" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="langue" cx="521.1" cy="506.5" r="6"/>
+<circle class="hub" data-t="langue" cx="671.9" cy="335.6" r="5.5"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q586.3,306.1 496.5,318.7" marker-end="url(#pointe-eclat)"/>
 <circle class="eclat-pt" data-t="protestant" cx="487.6" cy="317.8" r="6"/>
-<path class="eclat" data-t="protestant" d="M671.9,335.6 Q589.8,348.7 507.7,389.7" marker-end="url(#pointe-eclat)"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q583.3,343.0 507.7,389.7" marker-end="url(#pointe-eclat)"/>
 <circle class="eclat-pt" data-t="protestant" cx="499.2" cy="392.6" r="6"/>
-<path class="eclat" data-t="protestant" d="M671.9,335.6 Q640.6,346.4 609.4,385.2" marker-end="url(#pointe-eclat)"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q634.7,352.9 609.4,385.2" marker-end="url(#pointe-eclat)"/>
 <circle class="eclat-pt" data-t="protestant" cx="602.3" cy="390.8" r="6"/>
-<path class="eclat" data-t="protestant" d="M671.9,335.6 Q687.8,308.5 703.7,309.3" marker-end="url(#pointe-eclat)"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q690.9,326.3 703.7,309.3" marker-end="url(#pointe-eclat)"/>
 <circle class="eclat-pt" data-t="protestant" cx="710.6" cy="303.6" r="6"/>
-<path class="eclat" data-t="protestant" d="M671.9,335.6 Q738.6,347.6 805.3,387.5" marker-end="url(#pointe-eclat)"/>
+<path class="eclat" data-t="protestant" d="M671.9,335.6 Q732.4,377.6 805.3,387.5" marker-end="url(#pointe-eclat)"/>
 <circle class="eclat-pt" data-t="protestant" cx="813.7" cy="390.8" r="6"/>
+<circle class="hub" data-t="protestant" cx="671.9" cy="335.6" r="5.5"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q692.7,585.8 698.4,574.0" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="704.1" cy="567.0" r="6"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q652.0,517.9 590.7,464.0" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="585.5" cy="456.6" r="6"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q619.9,513.9 528.1,471.1" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="521.1" cy="465.5" r="6"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q640.0,426.8 526.6,297.3" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="522.4" cy="289.3" r="6"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q736.4,531.9 756.7,452.1" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="760.9" cy="444.2" r="6"/>
+<path class="eclat" data-t="retirada" d="M682.2,593.7 Q617.1,475.2 505.2,399.2" marker-end="url(#pointe-eclat)"/>
+<circle class="eclat-pt" data-t="retirada" cx="499.2" cy="392.6" r="6"/>
+<circle class="hub" data-t="retirada" cx="682.2" cy="593.7" r="5.5"/>
 <a href="catharisme-forteresses-occitanie.html" class="bouton actif" data-t="cathares" aria-label="Cathares et forteresses — ouvrir la fiche"><rect class="btn-fond" x="24" y="560" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="574" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="608" text-anchor="middle">🏰</text><text class="btn-titre" x="98" y="590">Cathares &amp; forteresses</text><text class="btn-sous" x="98" y="608">XII<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan> – XIV<tspan dy='-5' font-size='8'>e</tspan><tspan dy='5'>​</tspan> siècle</text><text class="btn-etat on" x="98" y="626">Découvrir →</text></a>
 <a href="langue-oc-troubadours.html" class="bouton actif" data-t="langue" aria-label="La langue d'oc — ouvrir la fiche"><rect class="btn-fond" x="24" y="24" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="38" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="72" text-anchor="middle">🎼</text><text class="btn-titre" x="98" y="54">La langue d'oc</text><text class="btn-sous" x="98" y="72">Troubadours &amp; occitan</text><text class="btn-etat on" x="98" y="90">Découvrir →</text></a>
 <a href="violette-toulouse.html" class="bouton actif" data-t="violette" aria-label="La violette de Toulouse — ouvrir la fiche"><rect class="btn-fond" x="24" y="200" width="250" height="78" rx="14"/><rect class="btn-icone" x="36" y="214" width="50" height="50" rx="12"/><text class="btn-emoji" x="61" y="248" text-anchor="middle">💜</text><text class="btn-titre" x="98" y="230">La violette de Toulouse</text><text class="btn-sous" x="98" y="248">Une fleur d'hiver · depuis 1854</text><text class="btn-etat on" x="98" y="266">Découvrir →</text></a>
@@ -310,10 +354,11 @@
 <a href="soie-cevennes.html" class="bouton actif" data-t="soie" aria-label="La soie des Cévennes — ouvrir la fiche"><rect class="btn-fond" x="930" y="240" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="254" width="50" height="50" rx="12"/><g transform="translate(951,261)"><rect x="2" y="1" width="28" height="5" rx="2" fill="#A8743F"/><rect x="2" y="30" width="28" height="5" rx="2" fill="#A8743F"/><rect x="6" y="6" width="20" height="24" fill="#FFFFFF" stroke="#CBBFAE" stroke-width="1"/><rect x="9" y="7" width="3" height="22" fill="#F3EEE4"/><path d="M6 10.5h20M6 15h20M6 19.5h20M6 24h20" stroke="#E4DACB" stroke-width="1"/><path d="M26 20 C31 22 31 29 27 33" fill="none" stroke="#B9AD9A" stroke-width="1.3"/></g><text class="btn-titre" x="1004" y="270">La soie des Cévennes</text><text class="btn-sous" x="1004" y="288">Magnaneries &amp; bas de soie</text><text class="btn-etat on" x="1004" y="306">Découvrir →</text></a>
 <a href="chemin-de-fer-occitanie.html" class="bouton actif" data-t="rail" aria-label="Le chemin de fer — ouvrir la fiche"><rect class="btn-fond" x="930" y="560" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="574" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="608" text-anchor="middle">🚂</text><text class="btn-titre" x="1004" y="590">Le chemin de fer</text><text class="btn-sous" x="1004" y="608">Du charbon d'Alès au TGV</text><text class="btn-etat on" x="1004" y="626">Découvrir →</text></a>
 <a href="protestantisme-occitanie.html" class="bouton actif" data-t="protestant" aria-label="Le protestantisme — ouvrir la fiche"><rect class="btn-fond" x="930" y="400" width="250" height="78" rx="14"/><rect class="btn-icone" x="942" y="414" width="50" height="50" rx="12"/><text class="btn-emoji" x="967" y="448" text-anchor="middle">📖</text><text class="btn-titre" x="1004" y="430">Le protestantisme</text><text class="btn-sous" x="1004" y="448">Réforme, Camisards &amp; Désert</text><text class="btn-etat on" x="1004" y="466">Découvrir →</text></a>
-<a href="vigne-occitanie.html" class="bouton actif" data-t="vigne" aria-label="La vigne en révolte — ouvrir la fiche"><rect class="btn-fond" x="560" y="630" width="250" height="78" rx="14"/><rect class="btn-icone" x="572" y="644" width="50" height="50" rx="12"/><text class="btn-emoji" x="597" y="678" text-anchor="middle">🍇</text><text class="btn-titre" x="634" y="660">La vigne en révolte</text><text class="btn-sous" x="634" y="678">Phylloxéra &amp; révolte de 1907</text><text class="btn-etat on" x="634" y="696">Découvrir →</text></a>
+<a href="vigne-occitanie.html" class="bouton actif" data-t="vigne" aria-label="La vigne en révolte — ouvrir la fiche"><rect class="btn-fond" x="590" y="632" width="250" height="78" rx="14"/><rect class="btn-icone" x="602" y="646" width="50" height="50" rx="12"/><text class="btn-emoji" x="627" y="680" text-anchor="middle">🍇</text><text class="btn-titre" x="664" y="662">La vigne en révolte</text><text class="btn-sous" x="664" y="680">Phylloxéra &amp; révolte de 1907</text><text class="btn-etat on" x="664" y="698">Découvrir →</text></a>
+<a href="retirada-1939-occitanie.html" class="bouton actif" data-t="retirada" aria-label="La Retirada — ouvrir la fiche"><rect class="btn-fond" x="310" y="632" width="250" height="78" rx="14"/><rect class="btn-icone" x="322" y="646" width="50" height="50" rx="12"/><text class="btn-emoji" x="347" y="680" text-anchor="middle">🧳</text><text class="btn-titre" x="384" y="662">La Retirada</text><text class="btn-sous" x="384" y="680">L'exil républicain espagnol · 1939</text><text class="btn-etat on" x="384" y="698">Découvrir →</text></a>
         </svg>
       </div>
-      <p class="consigne">Survolez un bouton pour voir la région concernée · cliquez pour ouvrir la fiche</p>
+      <p class="consigne">Survolez un bouton : sa flèche apparaît et montre la région concernée · cliquez pour ouvrir la fiche<br><small>Les thèmes qui concernent toute l'Occitanie partent vers le centre de la carte puis éclatent vers leurs principaux foyers.</small></p>
     </div>
   </section>
 
@@ -332,6 +377,7 @@
 <a class="carte-theme actif" data-t="rail" href="chemin-de-fer-occitanie.html"><span class="ct-ico">🚂</span><span><span class="ct-titre">Le chemin de fer</span><span class="ct-sous">Du charbon d'Alès au TGV</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="protestant" href="protestantisme-occitanie.html"><span class="ct-ico">📖</span><span><span class="ct-titre">Le protestantisme</span><span class="ct-sous">Réforme, Camisards &amp; Désert</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
 <a class="carte-theme actif" data-t="vigne" href="vigne-occitanie.html"><span class="ct-ico">🍇</span><span><span class="ct-titre">La vigne en révolte</span><span class="ct-sous">Phylloxéra &amp; révolte de 1907</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="retirada" href="retirada-1939-occitanie.html"><span class="ct-ico">🧳</span><span><span class="ct-titre">La Retirada</span><span class="ct-sous">L'exil républicain espagnol · 1939</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
       </div>
     </div>
   </section>
@@ -371,6 +417,16 @@
         el.addEventListener('mouseleave', function () { allumer(t, false); });
         el.addEventListener('focus', function () { allumer(t, true); });
         el.addEventListener('blur', function () { allumer(t, false); });
+        // Écran tactile : un premier toucher sur un bouton de la carte montre la flèche, un second ouvre la fiche
+        if (el.classList.contains('bouton')) {
+          el.addEventListener('touchend', function (e) {
+            if (!el.classList.contains('on-hover')) {
+              e.preventDefault();
+              document.querySelectorAll('.on-hover').forEach(function (x) { x.classList.remove('on-hover'); });
+              allumer(t, true);
+            }
+          });
+        }
       });
     })();
   </script>
