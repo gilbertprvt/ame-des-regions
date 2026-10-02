@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'aviation en Occitanie — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+<style>
+.produit-hero{background-image:linear-gradient(rgba(16,32,52,.0),rgba(16,32,52,.0)),url('photo/panorama-aviation.jpg');background-size:cover;background-position:center 48%}
+
+.ouvrage-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}.ouvrage{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.ouvrage h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}.ouvrage p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028}
+.ouvrage .lieu{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:4px;font-family:var(--font-corps)}
+@media(max-width:640px){.ouvrage-grid{grid-template-columns:1fr}}
+.g-pion{color:#A0522D}.g-pil{color:#2C4A7C}.g-ing{color:#3E7C4A}.g-ess{color:#7A3E7C}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container"><div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div><div class="produit-hero-body"><div><h1><em>L</em>'aviation en Occitanie<br><span style="padding-left:40px">de <em>M</em>ontaudran aux étoiles</span></h1></div></div></div><div class="hero-label-bas">⟹ 1890 – aujourd'hui · Pionniers, industrie, espace &amp; société ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#origines" class="active">🛩️ Origines</a><a href="#guerre">⚙️ 1914-1918</a><a href="#aeropostale">✉️ Aéropostale</a><a href="#entredeux">🏭 1920-1945</a><a href="#apresguerre">🚀 Caravelle &amp; Concorde</a><a href="#airbus">✈️ Airbus</a><a href="#spatial">🛰️ Spatial &amp; recherche</a><a href="#territoires">📍 Territoires</a><a href="#ecosysteme">🏗️ Industrie</a><a href="#societe">👥 Société</a><a href="#crises">📉 Crises</a><a href="#avenir">🌱 Avenir</a><a href="#frise">⏳ Chronologie</a><a href="#personnes">👤 Personnages</a><a href="#mythes">🔎 Idées reçues</a><a href="#parcours">🚲 Circuit</a><a href="#infos-pratiques">ℹ️ Infos</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<section class="section" id="origines"><h2 class="section-titre"><div class="section-titre-icon">🛩️</div>Les origines : quand voler relevait encore du rêve</h2><div class="histoire-texte">
+<p class="doc-intro"><strong>L'histoire aéronautique de l'Occitanie ne commence pas avec Airbus.</strong> Elle s'est construite par couches successives : inventeurs, commandes militaires, constructeurs, lignes postales, écoles, recherche, puis coopération européenne. C'est cette accumulation qui a fait de Toulouse l'un des grands pôles aérospatiaux du monde.</p>
+<div class="repere-grid"><div class="repere"><strong>1917</strong><span>Latécoère ouvre son usine à Montaudran.</span></div><div class="repere"><strong>1970</strong><span>Création d'Airbus Industrie.</span></div><div class="repere"><strong>≈ 81 000</strong><span>emplois aérospatiaux dans l'ex-Midi-Pyrénées en 2022 (Insee).</span></div></div>
+<h3 class="sous-titre">Clément Ader, l'enfant de Muret</h3>
+<p>Né à <strong>Muret en 1841</strong>, Clément Ader est l'un des grands précurseurs français. Le <strong>9 octobre 1890</strong>, à Armainvilliers (Seine-et-Marne), son <em>Éole</em>, mû par une machine à vapeur et doté d'ailes inspirées de la chauve-souris, décolle brièvement sur une cinquantaine de mètres. C'est un saut plus qu'un vol : l'appareil n'est ni contrôlé ni durable, contrairement aux vols des frères Wright en 1903. Mais Ader invente le mot « avion » et fait entrer l'aviation dans l'imaginaire technique français.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · pourquoi Ader compte ici</div><p>Ader est une figure fondatrice régionale, mais l'industrie toulousaine ne descend pas directement de l'<em>Éole</em>. Sa vraie naissance économique a lieu pendant la Première Guerre mondiale.</p></div>
+<h3 class="sous-titre">Le temps des meetings</h3>
+<p>Dans les années 1900-1910, les démonstrations aériennes font de l'avion un spectacle populaire. Aéro-clubs, pilotes et mécaniciens diffusent une nouvelle culture de la machine volante. Le public découvre que l'avion peut devenir autre chose qu'une prouesse : un outil militaire, un moyen de transport et bientôt de communication.</p>
+</div></section>
+
+<section class="section" id="guerre"><h2 class="section-titre"><div class="section-titre-icon">⚙️</div>1914-1918 : la guerre fait naître l'industrie toulousaine</h2><div class="histoire-texte">
+<p>La Première Guerre mondiale transforme l'avion en outil stratégique : observation, photographie, réglage d'artillerie, chasse et bombardement. Les commandes publiques imposent la production en série. Toulouse, éloignée du front, offre un emplacement sûr, et la ville possède déjà la poudrerie et la cartoucherie.</p>
+<h3 class="sous-titre">Latécoère et Montaudran</h3>
+<p>En <strong>1917</strong>, l'industriel <strong>Pierre-Georges Latécoère</strong>, qui fabrique jusque-là des wagons, obtient une commande d'avions de reconnaissance Salmson 2A2. Il installe une usine à <strong>Montaudran</strong>, au sud-est de la ville. Selon l'histoire du groupe, le site emploie environ <strong>800 personnes</strong> en 1918 et peut sortir jusqu'à <strong>six avions par jour</strong>. Menuisiers, ajusteurs, mécaniciens, dessinateurs et ingénieurs y acquièrent des savoir-faire qui survivront à la guerre.</p>
+</div>
+<div class="schema"><span class="schema-titre">De la commande de guerre au pôle aéronautique</span><div class="schema-flow">
+<div class="schema-box">Commandes militaires<br><b>besoin massif d'avions</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Usines<br><b>machines &amp; main-d'œuvre</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Savoir-faire<br><b>construction &amp; essais</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">Après 1918<br><b>reconversion civile</b></div></div></div>
+<div class="histoire-texte"><p>La paix crée aussitôt un problème : que faire des usines quand les commandes militaires s'effondrent ? Latécoère répond par le transport aérien du courrier. Cette reconversion donne à Toulouse une vocation internationale très précoce.</p></div>
+</section>
+
+<section class="section" id="aeropostale"><h2 class="section-titre"><div class="section-titre-icon">✉️</div>Les Lignes Latécoère et l'Aéropostale : Toulouse s'ouvre au monde</h2><div class="histoire-texte">
+<p>L'Aéropostale est souvent racontée comme une épopée de pilotes. C'est aussi l'invention d'un <strong>réseau aérien régulier</strong> : horaires, escales, entretien, météo, radio, pièces détachées et organisation du courrier entre plusieurs continents.</p>
+<h3 class="sous-titre">De Toulouse à Dakar, puis à l'Amérique du Sud</h3>
+<p>Le <strong>25 décembre 1918</strong>, Latécoère vole lui-même de Toulouse à Barcelone. En 1919, la ligne atteint Rabat et Casablanca. Elle est prolongée jusqu'à <strong>Dakar</strong> en 1925. En <strong>1927</strong>, l'homme d'affaires Marcel Bouilloux-Lafont rachète les lignes, qui deviennent la <strong>Compagnie générale aéropostale</strong>. Les <strong>12 et 13 mai 1930</strong>, Jean Mermoz traverse l'Atlantique Sud en hydravion Latécoère 28, de Saint-Louis du Sénégal à Natal, au Brésil : le courrier peut désormais aller de Toulouse à Buenos Aires.</p>
+<p>Ruinée par la crise et par un scandale financier, l'Aéropostale est liquidée puis intégrée en <strong>1933</strong> à la nouvelle compagnie <strong>Air France</strong>.</p>
+</div>
+<div class="ouvrage-grid">
+<div class="ouvrage"><span class="lieu">Le chef d'exploitation</span><h4>Didier Daurat</h4><p>Organisateur exigeant, il transforme l'exploit individuel en service régulier : « le courrier doit passer ».</p></div>
+<div class="ouvrage"><span class="lieu">L'Atlantique Sud</span><h4>Jean Mermoz</h4><p>Figure des liaisons sud-américaines ; il disparaît en mer en 1936 à bord de l'hydravion <em>Croix-du-Sud</em>.</p></div>
+<div class="ouvrage"><span class="lieu">Les Andes</span><h4>Henri Guillaumet</h4><p>En juin 1930, après un accident dans la cordillère, il marche une semaine dans la neige avant d'être retrouvé.</p></div>
+<div class="ouvrage"><span class="lieu">Cap Juby, Buenos Aires</span><h4>Antoine de Saint-Exupéry</h4><p>Pilote et chef d'escale ; son expérience nourrit <em>Courrier sud</em>, <em>Vol de nuit</em> et <em>Terre des hommes</em>.</p></div>
+</div>
+<div class="histoire-texte"><p>Derrière eux travaillent mécaniciens, motoristes, menuisiers, entoileuses, radios, météorologistes, chefs d'escale et employés. La fiabilité du réseau dépend autant de ces métiers que des pilotes.</p>
+<div class="encadre"><strong>✉️ À retenir</strong><br>L'héritage de l'Aéropostale est une culture complète de l'aviation : <strong>concevoir, construire, essayer, exploiter et entretenir</strong> des avions sur un réseau international.</div></div>
+</section>
+
+<section class="section" id="entredeux"><h2 class="section-titre"><div class="section-titre-icon">🏭</div>1920-1945 : constructeurs, hydravions et nationalisations</h2><div class="histoire-texte">
+<p>L'entre-deux-guerres consolide les compétences régionales. Latécoère construit avions et grands hydravions transatlantiques. <strong>Émile Dewoitine</strong> fonde sa société à Toulouse en 1920 et accompagne le passage à la construction entièrement métallique.</p>
+<h3 class="sous-titre">Une industrie encore fragile</h3>
+<p>Les constructeurs français sont nombreux, souvent sous-capitalisés et dépendants des commandes publiques. En <strong>1936-1937</strong>, le Front populaire nationalise une grande partie de l'industrie aéronautique et la regroupe en sociétés nationales régionales. À Toulouse naît ainsi la <strong>SNCAM</strong> (Société nationale de constructions aéronautiques du Midi), à partir des usines Dewoitine. Elle produit notamment le chasseur <strong>Dewoitine D.520</strong>, l'un des meilleurs avions français de 1940.</p>
+<h3 class="sous-titre">Blagnac et la guerre</h3>
+<p>Le terrain de <strong>Blagnac</strong> est aménagé à la fin des années 1930 et devient l'aéroport principal de la ville. La Seconde Guerre mondiale bouleverse la filière : Occupation, réquisitions, bombardements alliés des usines en 1944. À la Libération, il faut reconstruire les installations et replacer la France dans la course technologique.</p>
+</div></section>
+
+<section class="section" id="apresguerre"><h2 class="section-titre"><div class="section-titre-icon">🚀</div>1945-1970 : Caravelle et Concorde, le saut technologique</h2><div class="histoire-texte">
+<h3 class="sous-titre">Caravelle : Toulouse entre dans l'âge du jet</h3>
+<p>La <strong>SE 210 Caravelle</strong>, conçue par la SNCASE, effectue son premier vol à Toulouse le <strong>27 mai 1955</strong>. Ce biréacteur moyen-courrier, aux moteurs placés à l'arrière, est une réussite technique et commerciale : 282 exemplaires sont construits et vendus dans le monde entier. Il prouve que Toulouse sait concevoir, assembler, tester et soutenir un avion de ligne moderne.</p>
+<h3 class="sous-titre">Concorde : apprendre à coopérer</h3>
+<p>Le programme franco-britannique <strong>Concorde</strong> pousse la coopération beaucoup plus loin. Le prototype <strong>001</strong> décolle de Toulouse-Blagnac le <strong>2 mars 1969</strong>, piloté par André Turcat. Le supersonique ne sera jamais un succès commercial (vingt exemplaires seulement), mais il laisse un capital technique considérable : aérodynamique, matériaux, commandes de vol, essais et gestion d'un programme international.</p>
+</div>
+<div class="schema"><span class="schema-titre">Une accumulation qui prépare Airbus</span><div class="schema-flow">
+<div class="schema-box">Aéropostale<br><b>réseau longue distance</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Caravelle<br><b>jet commercial</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Concorde<br><b>haute technologie &amp; coopération</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">Airbus<br><b>industrie européenne</b></div></div></div>
+</section>
+
+<section class="section" id="airbus"><h2 class="section-titre"><div class="section-titre-icon">✈️</div>Airbus : Toulouse change d'échelle</h2><div class="histoire-texte">
+<p>Dans les années 1960, les avionneurs européens ont des compétences reconnues mais restent dispersés face aux géants américains. Airbus repose sur un principe nouveau : <strong>partager le travail entre plusieurs pays</strong>, fabriquer les grands éléments sur différents sites, puis les réunir pour l'assemblage final.</p>
+<p><strong>Airbus Industrie</strong> est créé le <strong>18 décembre 1970</strong> par la France et l'Allemagne, rejointes ensuite par l'Espagne et le Royaume-Uni. Le premier <strong>A300B</strong> vole à Toulouse le <strong>28 octobre 1972</strong>. À l'époque, les constructeurs américains détiennent environ 90 % du marché mondial : le défi est immense.</p>
+<h3 class="sous-titre">Roger Béteille : construire une famille d'avions</h3>
+<p>L'ingénieur <strong>Roger Béteille</strong>, avec le premier administrateur gérant <strong>Henri Ziegler</strong>, définit l'organisation industrielle et l'idée d'une gamme cohérente. Après l'A300 et l'A310 vient l'<strong>A320</strong>, lancé en 1984, premier avion de ligne à commandes de vol entièrement électriques. Il devient l'un des avions les plus vendus de l'histoire.</p>
+</div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Programme</th><th>Premier vol</th><th>Importance</th></tr></thead><tbody>
+<tr><td><strong>A300</strong></td><td>1972</td><td>Premier biréacteur gros-porteur du monde ; point de départ d'Airbus.</td></tr>
+<tr><td><strong>A320</strong></td><td>1987</td><td>Monocouloir à commandes de vol électriques ; énorme succès mondial.</td></tr>
+<tr><td><strong>A330 / A340</strong></td><td>1992 / 1991</td><td>Extension de la gamme vers le long-courrier.</td></tr>
+<tr><td><strong>A380</strong></td><td>27 avril 2005</td><td>Plus gros avion de ligne du monde ; défi logistique européen. Production arrêtée en 2021.</td></tr>
+<tr><td><strong>A350 XWB</strong></td><td>2013</td><td>Nouvelle génération long-courrier, largement en matériaux composites.</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Les A320 sont aussi assemblés à Hambourg, Tianjin et Mobile ; Toulouse assemble notamment les A320, A330 et A350.</p>
+<div class="histoire-texte">
+<h3 class="sous-titre">Le « ballet » européen</h3>
+<p>Ailes britanniques, fuselages allemands, empennages espagnols et sections françaises convergent vers les chaînes d'assemblage final. Le Super Guppy, puis le Beluga et le BelugaXL, avions-cargos géants, deviennent les symboles visibles de cette logistique.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · « Fabriqué à Toulouse » ?</div><p>Plus exactement : plusieurs familles y sont assemblées, testées et livrées, mais leurs composants viennent d'un réseau européen et mondial. La force toulousaine vient justement de cette capacité à intégrer un système industriel multinational.</p></div>
+<h3 class="sous-titre">1977 : la percée américaine</h3>
+<p>Les débuts de l'A300 sont difficiles. L'engagement d'<strong>Eastern Airlines</strong> en 1977-1978 marque un tournant : un avion européen convainc une grande compagnie américaine. En <strong>1981</strong>, une autre coopération, franco-italienne cette fois, crée <strong>ATR</strong>, installé à Toulouse, leader mondial des avions régionaux à hélices.</p>
+</div></section>
+
+<section class="section" id="spatial"><h2 class="section-titre"><div class="section-titre-icon">🛰️</div>L'aviation devient aérospatiale : espace, recherche et formation</h2><div class="histoire-texte">
+<p>À partir des années 1960, Toulouse ne se contente plus de construire des avions. Elle devient aussi un lieu où l'on <strong>conçoit des satellites, développe des systèmes embarqués, traite des données spatiales, forme des ingénieurs et mène une recherche de haut niveau</strong>.</p>
+<h3 class="sous-titre">1968 : la grande décentralisation</h3>
+<p>L'État décide de décentraliser une partie de la recherche et de l'enseignement aérospatial. Le <strong>Centre spatial de Toulouse du CNES</strong> ouvre en <strong>1968</strong>, la même année où l'école <strong>SUPAERO</strong> et l'<strong>ENAC</strong> (École nationale de l'aviation civile) quittent Paris pour Toulouse. L'ONERA y installe aussi un centre. Le spatial ne remplace pas l'aéronautique : il profite d'un territoire qui possède déjà ingénieurs, techniciens et culture des systèmes complexes.</p>
+</div>
+<div class="schema"><span class="schema-titre">Comment se forme un écosystème de haute technologie</span><div class="schema-flow">
+<div class="schema-box">Aéronautique<br><b>usines, essais, ingénieurs</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">CNES · 1968<br><b>satellites &amp; opérations</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Recherche &amp; formation<br><b>laboratoires, écoles</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">Industrie spatiale<br><b>grands groupes, PME</b><br><span style="font-size:12px;opacity:.85">start-up</span></div></div></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Acteurs</th><th>Exemples</th><th>Fonction</th></tr></thead><tbody>
+<tr><td><strong>Agence spatiale</strong></td><td>CNES</td><td>Programmes, expertise, contrôle des satellites, données et coopération internationale.</td></tr>
+<tr><td><strong>Grands industriels</strong></td><td>Airbus Defence and Space · Thales Alenia Space</td><td>Satellites de télécommunications et d'observation, plateformes, charges utiles.</td></tr>
+<tr><td><strong>Recherche</strong></td><td>CNRS (LAAS) · ONERA · universités</td><td>Robotique, électronique, systèmes embarqués, matériaux, calcul.</td></tr>
+<tr><td><strong>Formation</strong></td><td>ISAE-SUPAERO · ENAC · INSA · Université de Toulouse</td><td>Ingénieurs, chercheurs, spécialistes du numérique et des systèmes.</td></tr>
+<tr><td><strong>PME et start-up</strong></td><td>Électronique · nanosatellites · logiciels · données</td><td>Composants, sous-systèmes et nouveaux services.</td></tr>
+</tbody></table></div>
+<div class="histoire-texte">
+<h3 class="sous-titre">Aerospace Valley et le « New Space »</h3>
+<p>Créé en <strong>2005</strong>, le pôle de compétitivité <strong>Aerospace Valley</strong> relie grands groupes, PME, laboratoires et écoles d'Occitanie et de Nouvelle-Aquitaine. Depuis les années 2010, le spatial change encore : satellites plus petits produits en série, constellations, Internet des objets par satellite, exploitation des données. Le spatial se rapproche ainsi de l'informatique et de l'intelligence artificielle.</p>
+</div>
+<div class="ouvrage-grid">
+<div class="ouvrage"><span class="lieu">Au quotidien</span><h4>🌦️ Météo &amp; climat</h4><p>Observation des nuages, des océans, des glaces et des températures.</p></div>
+<div class="ouvrage"><span class="lieu">Au quotidien</span><h4>🧭 Navigation</h4><p>Positionnement indispensable aux transports, aux téléphones et à de nombreux services.</p></div>
+<div class="ouvrage"><span class="lieu">Au quotidien</span><h4>📡 Télécommunications</h4><p>Télévision, transmission de données, connexion des territoires isolés.</p></div>
+<div class="ouvrage"><span class="lieu">Au quotidien</span><h4>🔥 Catastrophes &amp; agriculture</h4><p>Suivi des incendies, inondations, sécheresses, cultures et sols.</p></div>
+</div>
+</section>
+
+<section class="section" id="territoires"><h2 class="section-titre"><div class="section-titre-icon">📍</div>Toulouse au centre, mais une filière régionale</h2>
+<div class="ouvrage-grid">
+<div class="ouvrage"><span class="lieu">Haute-Garonne</span><h4>Toulouse, Blagnac, Colomiers</h4><p>Assemblage, essais, ingénierie : Airbus, ATR, équipementiers, services et aéroport.</p></div>
+<div class="ouvrage"><span class="lieu">Toulouse</span><h4>Montaudran</h4><p>Berceau de Latécoère et des lignes aériennes ; aujourd'hui lieu de mémoire et d'innovation.</p></div>
+<div class="ouvrage"><span class="lieu">Hautes-Pyrénées</span><h4>Tarbes</h4><p>Héritier de Morane-Saulnier, le site Daher assemble les avions d'affaires TBM.</p></div>
+<div class="ouvrage"><span class="lieu">Lot</span><h4>Figeac</h4><p>Bassin de mécanique de précision : hélices de Ratier-Figeac, pièces de Figeac Aéro.</p></div>
+<div class="ouvrage"><span class="lieu">Tarn, Aveyron, Gers, Ariège…</span><h4>Le réseau des PME</h4><p>Usinage, composites, électronique et ingénierie au service des grands donneurs d'ordres.</p></div>
+<div class="ouvrage"><span class="lieu">Hérault, Gard</span><h4>L'est de la région</h4><p>Aéroports, maintenance, formation de pilotes et activités technologiques complètent la carte.</p></div>
+</div>
+<div class="schema"><span class="schema-titre">Une géographie en réseau</span><div class="schema-flow">
+<div class="schema-box">Métropole toulousaine<br><b>conception &amp; assemblage</b></div><div class="schema-arrow">↔</div>
+<div class="schema-box">Villes industrielles<br><b>pièces &amp; équipements</b></div><div class="schema-arrow">↔</div>
+<div class="schema-box">Écoles &amp; laboratoires<br><b>compétences</b></div><div class="schema-arrow">↔</div>
+<div class="schema-box fort">Monde<br><b>fournisseurs &amp; clients</b></div></div></div>
+</section>
+
+<section class="section" id="ecosysteme"><h2 class="section-titre"><div class="section-titre-icon">🏗️</div>Naissance d'un écosystème industriel</h2><div class="histoire-texte">
+<p>Le changement le plus profond n'est pas la présence d'une grande usine. Un programme aéronautique entraîne toute une chaîne de fournisseurs, sous-traitants, bureaux d'études, logisticiens, sociétés informatiques et organismes de formation.</p>
+</div>
+<div class="schema"><span class="schema-titre">La chaîne de valeur</span><div class="schema-flow">
+<div class="schema-box">Recherche &amp; conception<br><b>aérodynamique, logiciel</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Fabrication<br><b>métal, composites</b><br><span class="small">électronique</span></div><div class="schema-arrow">→</div>
+<div class="schema-box">Assemblage &amp; essais<br><b>intégration, certification</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">Exploitation<br><b>maintenance, services</b></div></div></div>
+<div class="histoire-texte">
+<h3 class="sous-titre">Des métiers toujours plus qualifiés</h3>
+<p>Aux ajusteurs, chaudronniers, câbleurs et mécaniciens se sont ajoutés ingénieurs systèmes, automaticiens, spécialistes des composites, experts en cybersécurité, développeurs de logiciels embarqués et techniciens de maintenance. L'aéronautique stimule aussi la robotique, la simulation et la fabrication additive.</p>
+<h3 class="sous-titre">Une croissance spectaculaire</h3>
+<p>Selon l'Insee, l'emploi aérospatial de l'ancienne région Midi-Pyrénées est passé d'environ <strong>17 000 salariés au début des années 1980 à 81 000 en 2022</strong>. Son poids dans l'emploi a triplé, et la sous-traitance a progressé plus vite que les constructeurs.</p>
+</div>
+<div class="repere-grid"><div class="repere"><strong>17 000 → 81 000</strong><span>emplois aérospatiaux, ex-Midi-Pyrénées, années 1980 → 2022</span></div><div class="repere"><strong>817</strong><span>entreprises de la filière en Occitanie (périmètre Insee 2022)</span></div><div class="repere"><strong>26,4 %</strong><span>des postes de la filière occupés par des femmes en 2024</span></div></div>
+</section>
+
+<section class="section" id="societe"><h2 class="section-titre"><div class="section-titre-icon">👥</div>Population et société : quand l'avion transforme la ville</h2><div class="histoire-texte">
+<h3 class="sous-titre">Des migrations de travail</h3>
+<p>La croissance aéronautique attire ouvriers qualifiés, techniciens, ingénieurs, chercheurs et étudiants venus de toute la France et de l'étranger. Elle n'explique pas à elle seule la croissance de Toulouse, mais elle en est devenue un moteur majeur.</p>
+<h3 class="sous-titre">Une nouvelle géographie urbaine</h3>
+<p>Blagnac, Colomiers et les communes voisines accueillent usines, bureaux d'études, zones d'activités, logements et routes. Colomiers est d'ailleurs l'une des premières villes nouvelles de France, construite à partir des années 1960 pour loger les salariés de l'aéronautique. L'aéroport devient à la fois infrastructure de transport et voisin immédiat des chaînes d'assemblage.</p>
+<h3 class="sous-titre">Une identité sociale</h3>
+<p>Plusieurs générations d'une même famille travaillent parfois dans la filière. Les premiers vols sont des événements collectifs : Caravelle, Concorde, Beluga, A380 et A350 font partie de l'imaginaire toulousain.</p>
+<div class="notice"><strong>⚠️ La contrepartie : la dépendance.</strong> Une forte spécialisation rend le territoire sensible aux cycles de l'aviation mondiale. Quand les commandes chutent, les effets se diffusent chez les sous-traitants, dans l'intérim, l'ingénierie et les services.</div>
+</div></section>
+
+<section class="section" id="crises"><h2 class="section-titre"><div class="section-titre-icon">📉</div>Crises, conflits et fragilités</h2>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Période</th><th>Choc</th><th>Conséquence / réponse</th></tr></thead><tbody>
+<tr><td><strong>1918</strong></td><td>Fin des commandes militaires</td><td>Reconversion vers les lignes postales et le civil.</td></tr>
+<tr><td><strong>Années 1930</strong></td><td>Crise financière, dispersion des constructeurs</td><td>Faillite de l'Aéropostale, nationalisations.</td></tr>
+<tr><td><strong>1940-1944</strong></td><td>Occupation et guerre</td><td>Réquisitions, bombardements, puis reconstruction.</td></tr>
+<tr><td><strong>Années 1970</strong></td><td>Débuts difficiles de l'A300, choc pétrolier</td><td>Prospection mondiale et constitution d'une famille Airbus.</td></tr>
+<tr><td><strong>2001 / 2008</strong></td><td>Attentats, crise financière</td><td>Ajustements de production, pression sur la sous-traitance.</td></tr>
+<tr><td><strong>2020</strong></td><td>Covid-19 : effondrement du trafic</td><td>Chute d'activité, chômage partiel, soutien public, restructurations.</td></tr>
+</tbody></table></div>
+<div class="histoire-texte"><p>Selon l'Insee, le chiffre d'affaires de la filière aérospatiale occitane chute de <strong>33 % en 2020</strong> par rapport à 2019. La reprise est ensuite continue : en 2024, il progresse encore de 7 %, tout en restant légèrement sous son niveau de 2019. L'emploi, lui, dépasse dès 2022 son niveau d'avant la crise.</p></div>
+</section>
+
+<section class="section" id="avenir"><h2 class="section-titre"><div class="section-titre-icon">🌱</div>Aujourd'hui : produire davantage tout en décarbonant</h2><div class="histoire-texte">
+<p>Le défi est double : répondre à une forte demande mondiale et réduire l'impact climatique du transport aérien. Les pistes sont nombreuses : avions plus légers, moteurs plus sobres, carburants d'aviation durables, hybridation, électrification de certaines fonctions et recherche sur l'hydrogène.</p>
+<h3 class="sous-titre">L'usine numérique</h3>
+<p>Jumeaux numériques, robotique, intelligence artificielle, maintenance prédictive et fabrication additive transforment les méthodes. Mais chaque innovation doit satisfaire des exigences de sécurité et de certification extrêmement élevées.</p>
+<h3 class="sous-titre">Les tensions de la chaîne d'approvisionnement</h3>
+<p>La remontée des cadences après la crise sanitaire montre qu'un constructeur ne peut accélérer seul : moteurs, pièces, matières, électronique et main-d'œuvre doivent suivre. La compétitivité de Toulouse dépend de la solidité de centaines de fournisseurs.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · le nouveau défi</div><p>Au XX<sup>e</sup> siècle, Toulouse a appris à faire voler plus loin, plus vite et en plus grand nombre. Au XXI<sup>e</sup>, l'enjeu est de préserver cette puissance industrielle tout en réduisant fortement l'empreinte environnementale de l'aviation.</p></div>
+</div></section>
+
+<section class="section" id="frise"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Les grandes dates de l'aviation en Occitanie</h2><div class="frise">
+<div class="frise-periode">Les pionniers</div>
+<div class="frise-item"><div class="frise-date">1841</div><div class="frise-texte">Naissance de Clément Ader à Muret.</div></div>
+<div class="frise-item"><div class="frise-date">9 octobre 1890</div><div class="frise-texte">Saut de l'<em>Éole</em> d'Ader à Armainvilliers.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1917</div><div class="frise-texte">Latécoère ouvre son usine à Montaudran.</div></div>
+<div class="frise-item"><div class="frise-date">25 décembre 1918</div><div class="frise-texte">Premier vol Toulouse–Barcelone.</div></div>
+<div class="frise-periode">L'Aéropostale</div>
+<div class="frise-item"><div class="frise-date">1925</div><div class="frise-texte">La ligne atteint Dakar.</div></div>
+<div class="frise-item"><div class="frise-date">1927</div><div class="frise-texte">Naissance de la Compagnie générale aéropostale.</div></div>
+<div class="frise-item majeur"><div class="frise-date">12-13 mai 1930</div><div class="frise-texte">Mermoz traverse l'Atlantique Sud en hydravion.</div></div>
+<div class="frise-item"><div class="frise-date">1933</div><div class="frise-texte">L'Aéropostale est intégrée à Air France.</div></div>
+<div class="frise-item"><div class="frise-date">1937</div><div class="frise-texte">Création de la SNCAM à partir des usines Dewoitine.</div></div>
+<div class="frise-periode">L'âge du jet</div>
+<div class="frise-item majeur"><div class="frise-date">27 mai 1955</div><div class="frise-texte">Premier vol de la Caravelle.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1968</div><div class="frise-texte">Centre spatial du CNES ; arrivée de SUPAERO et de l'ENAC.</div></div>
+<div class="frise-item"><div class="frise-date">2 mars 1969</div><div class="frise-texte">Premier vol du Concorde 001.</div></div>
+<div class="frise-periode">Airbus</div>
+<div class="frise-item majeur"><div class="frise-date">18 décembre 1970</div><div class="frise-texte">Création d'Airbus Industrie.</div></div>
+<div class="frise-item"><div class="frise-date">28 octobre 1972</div><div class="frise-texte">Premier vol de l'A300B.</div></div>
+<div class="frise-item"><div class="frise-date">1981</div><div class="frise-texte">Création d'ATR.</div></div>
+<div class="frise-item"><div class="frise-date">1987</div><div class="frise-texte">Premier vol de l'A320.</div></div>
+<div class="frise-item"><div class="frise-date">27 avril 2005</div><div class="frise-texte">Premier vol de l'A380 ; création d'Aerospace Valley.</div></div>
+<div class="frise-item"><div class="frise-date">2013</div><div class="frise-texte">Premier vol de l'A350 XWB.</div></div>
+<div class="frise-periode">Aujourd'hui</div>
+<div class="frise-item"><div class="frise-date">2020</div><div class="frise-texte">Crise du Covid-19.</div></div>
+<div class="frise-item majeur"><div class="frise-date">depuis 2022</div><div class="frise-texte">Reprise des cadences et travaux sur une aviation plus sobre.</div></div>
+</div></section>
+
+<section class="section" id="personnes"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités marquantes</h2>
+<div class="perso-groupe g-pion"><div class="perso-groupe-titre">Pionniers et industriels</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Clément Ader</div><div class="perso-dates">1841 – 1925</div><div class="perso-desc">Inventeur né à Muret, père du mot « avion ».</div></div>
+<div class="perso"><div class="perso-nom">Pierre-Georges Latécoère</div><div class="perso-dates">1883 – 1943</div><div class="perso-desc">Industriel qui implante la production à Montaudran et lance les lignes postales.</div></div>
+<div class="perso"><div class="perso-nom">Émile Dewoitine</div><div class="perso-dates">1892 – 1979</div><div class="perso-desc">Constructeur toulousain, pionnier de l'avion entièrement métallique.</div></div>
+</div></div>
+<div class="perso-groupe g-pil"><div class="perso-groupe-titre">L'Aéropostale</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Didier Daurat</div><div class="perso-dates">1891 – 1969</div><div class="perso-desc">Chef d'exploitation rigoureux des lignes Latécoère puis de l'Aéropostale.</div></div>
+<div class="perso"><div class="perso-nom">Jean Mermoz</div><div class="perso-dates">1901 – 1936</div><div class="perso-desc">Pilote des grandes liaisons vers l'Amérique du Sud.</div></div>
+<div class="perso"><div class="perso-nom">Henri Guillaumet</div><div class="perso-dates">1902 – 1940</div><div class="perso-desc">Pilote de la ligne, survivant des Andes en 1930.</div></div>
+<div class="perso"><div class="perso-nom">Antoine de Saint-Exupéry</div><div class="perso-dates">1900 – 1944</div><div class="perso-desc">Aviateur et écrivain ; son expérience nourrit une œuvre universelle.</div></div>
+</div></div>
+<div class="perso-groupe g-ing"><div class="perso-groupe-titre">Ingénieurs et bâtisseurs d'Airbus</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Henri Ziegler</div><div class="perso-dates">1906 – 1998</div><div class="perso-desc">Premier administrateur gérant d'Airbus Industrie.</div></div>
+<div class="perso"><div class="perso-nom">Roger Béteille</div><div class="perso-dates">1921 – 2019</div><div class="perso-desc">L'un des pères d'Airbus, artisan du partage industriel européen.</div></div>
+</div></div>
+<div class="perso-groupe g-ess"><div class="perso-groupe-titre">Pilote d'essai</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">André Turcat</div><div class="perso-dates">1921 – 2016</div><div class="perso-desc">Aux commandes du premier vol de Concorde le 2 mars 1969.</div></div>
+</div></div>
+</section>
+
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues</h2>
+<div class="mythe"><strong>« Clément Ader a fait le premier vol de l'histoire. »</strong><br><span class="verdict nuance">À nuancer</span><br>L'<em>Éole</em> s'est soulevé brièvement en 1890, mais sans contrôle ni durée. Le premier vol motorisé et contrôlé revient aux frères Wright en 1903.</div>
+<div class="mythe"><strong>« Airbus est né de rien en 1970. »</strong><br><span class="verdict faux">Faux</span><br>Il hérite de décennies de savoir-faire : Latécoère, Dewoitine, Sud-Aviation, Caravelle, Concorde et de nombreux partenaires européens.</div>
+<div class="mythe"><strong>« Un Airbus est entièrement fabriqué à Toulouse. »</strong><br><span class="verdict faux">Faux</span><br>Toulouse assemble, teste et livre, mais les avions sont le produit d'un réseau européen et mondial.</div>
+<div class="mythe"><strong>« L'Aéropostale, c'était seulement des pilotes héroïques. »</strong><br><span class="verdict nuance">Trop simple</span><br>Sans mécaniciens, radios, météorologistes, chefs d'escale et logistique, aucune ligne régulière n'aurait existé.</div>
+<div class="mythe"><strong>« Concorde fut un échec sans héritage. »</strong><br><span class="verdict nuance">À nuancer</span><br>Son bilan commercial fut limité, mais son héritage technique et sa leçon de coopération ont préparé Airbus.</div>
+</section>
+
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🚲</div>Circuit conseillé : sur les traces des aviateurs</h2>
+<div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Muret</div><div class="etape-texte">La ville natale de Clément Ader, sa statue et le souvenir des origines de l'aviation.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">L'Envol des Pionniers · Montaudran</div><div class="etape-texte">Ouvert en 2018 sur la piste historique : Latécoère, l'Aéropostale, ses pilotes et ses mécaniciens.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Aeroscopia · Blagnac</div><div class="etape-texte">Le musée aéronautique ouvert en 2015 : deux Concorde, Caravelle, Super Guppy, A300, A380…</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Visite des chaînes Airbus</div><div class="etape-texte">Au départ d'Aeroscopia, une visite guidée permet de voir l'assemblage final des avions.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Cité de l'espace</div><div class="etape-texte">Ouverte en 1997 : fusée Ariane 5, station Mir, planétarium, et le prolongement spatial de l'histoire toulousaine.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Tarbes ou Figeac</div><div class="etape-texte">Pour voir l'autre visage de la filière : l'avion d'affaires TBM à Tarbes, la mécanique de précision à Figeac.</div></div></div>
+</div></section>
+
+<section class="section" id="infos-pratiques"><h2 class="section-titre"><div class="section-titre-icon">ℹ️</div>Infos pratiques</h2><div class="vins-liste">
+<div class="vin-item"><div class="vin-icon">✈️</div><div><div class="vin-nom">Visites Airbus</div><div class="vin-desc">Réservation obligatoire et pièce d'identité exigée ; programme soumis à l'activité industrielle.</div></div><div class="vin-badge">Sur réservation</div></div>
+<div class="vin-item"><div class="vin-icon">🎟️</div><div><div class="vin-nom">Billets combinés</div><div class="vin-desc">Des formules associent souvent Aeroscopia, L'Envol des Pionniers et la Cité de l'espace : à comparer avant de réserver.</div></div><div class="vin-badge">À vérifier</div></div>
+<div class="vin-item"><div class="vin-icon">🚋</div><div><div class="vin-nom">Se déplacer</div><div class="vin-desc">Le tramway relie le centre de Toulouse à Blagnac ; Montaudran et la Cité de l'espace sont accessibles en bus.</div></div><div class="vin-badge">Transports en commun</div></div>
+<div class="vin-item"><div class="vin-icon">👨‍👩‍👧</div><div><div class="vin-nom">En famille</div><div class="vin-desc">Prévoir une journée complète pour la Cité de l'espace ; les animations sont adaptées aux enfants.</div></div><div class="vin-badge">Toute l'année</div></div>
+</div></section>
+
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://www.insee.fr/fr/statistiques/8348898" target="_blank" rel="noopener">Insee — L'importance de l'aérospatiale a triplé en 40 ans</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/8617934" target="_blank" rel="noopener">Insee — Filière aéronautique et spatiale en Occitanie, données 2024</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/8561435" target="_blank" rel="noopener">Insee — Bilan économique 2024 de l'aéronautique et du spatial en Occitanie</a></li>
+<li><a href="https://cnes.fr/histoire" target="_blank" rel="noopener">CNES — 60 ans d'histoire</a></li>
+<li><a href="https://www.airbus.com/en/about-us/our-history" target="_blank" rel="noopener">Airbus — histoire et patrimoine</a></li>
+<li><a href="https://www.airbus.com/en/newsroom/stories/2022-10-28-october-50th-anniversary-of-the-first-flight-of-the-airbus-a300" target="_blank" rel="noopener">Airbus — 50 ans du premier vol de l'A300</a></li>
+<li><a href="https://www.daher.com/daher-histoire/" target="_blank" rel="noopener">Daher — histoire industrielle et héritage Morane-Saulnier</a></li>
+<li><a href="https://www.latecoere.aero/" target="_blank" rel="noopener">Latécoère — groupe et héritage aéronautique</a></li>
+<li><a href="https://www.laas.fr/fr/laboratoire/" target="_blank" rel="noopener">LAAS-CNRS — systèmes, robotique, informatique</a></li>
+<li><a href="https://www.aeroscopia.fr/" target="_blank" rel="noopener">Aeroscopia — musée aéronautique de Blagnac</a></li>
+<li><a href="https://www.lenvol-des-pionniers.com/" target="_blank" rel="noopener">L'Envol des Pionniers — Montaudran</a></li>
+</ul>
+<p class="small">Pour approfondir : Antoine de Saint-Exupéry, <em>Terre des hommes</em> ; Emmanuel Chadeau, <em>L'Industrie aéronautique en France 1900-1950</em>.</p><p class="small">L'Insee est privilégié pour l'emploi et l'activité ; les pages des constructeurs servent aux jalons de leurs programmes. Les chiffres contemporains évoluent. Les schémas sont pédagogiques.</p></div></section>
+</div>
+<aside class="produit-aside"><div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Cœur historique</span><span class="aside-val">Montaudran, Blagnac</span></div><div class="aside-row"><span class="aside-label">Autres pôles</span><span class="aside-val">Tarbes, Figeac, réseau de PME</span></div><div class="aside-row"><span class="aside-label">Période</span><span class="aside-val">1890 → aujourd'hui</span></div><div class="aside-row"><span class="aside-label">Grands noms</span><span class="aside-val">Latécoère, Airbus, CNES</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 En chiffres</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>81 000</b><span>emplois aérospatiaux (ex-Midi-Pyrénées, 2022)</span></div><div class="chiffre"><b>×3</b><span>poids de la filière en 40 ans</span></div><div class="chiffre"><b>817</b><span>entreprises de la filière</span></div><div class="chiffre"><b>−33 %</b><span>chiffre d'affaires en 2020</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📚 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Cellule</dt><dd>Structure de l'avion, hors moteurs.</dd><dt>Avionique</dt><dd>Électronique et systèmes embarqués de l'avion.</dd><dt>FAL</dt><dd><em>Final Assembly Line</em> : chaîne d'assemblage final.</dd><dt>Commandes électriques</dt><dd>Les gestes du pilote sont transmis par ordinateur et câbles électriques, non plus par des tringles.</dd><dt>Équipementier</dt><dd>Fournisseur de systèmes ou de sous-ensembles.</dd><dt>New Space</dt><dd>Nouvelle économie spatiale : petits satellites, constellations, entreprises privées.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">🔀 Toulouse et Montpellier</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Toulouse s'est développée par l'industrie et l'ingénierie ; Montpellier par la médecine, la botanique et l'agronomie. Voir la fiche <a href="montpellier-recherche.html">« Montpellier, huit siècles de savoir »</a>.</div></div>
+<div class="aside-card"><div class="aside-card-header">💡 À retenir</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Il n'y a pas de cause unique : <strong>commandes de guerre, Latécoère, Aéropostale, grands programmes, décentralisation de 1968, coopération européenne, écoles et sous-traitants</strong> se sont ajoutés les uns aux autres pendant un siècle.</div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+
+
+
+</body>
+</html>

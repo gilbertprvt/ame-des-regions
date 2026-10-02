@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Montpellier, huit siècles de savoir — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+<style>
+.produit-hero{background-image:linear-gradient(rgba(23,40,52,.0),rgba(23,40,52,.0)),url('photo/panorama-montpellier.jpg');background-size:cover;background-position:center 48%}
+
+.ouvrage-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}.ouvrage{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.ouvrage h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}.ouvrage p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028}
+.ouvrage .lieu{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:4px;font-family:var(--font-corps)}
+@media(max-width:640px){.ouvrage-grid{grid-template-columns:1fr}}
+.g-med{color:#9B2C2C}.g-bot{color:#3E7C4A}.g-chim{color:#7A3E7C}.g-agro{color:#A0522D}
+</style></head>
+<body class="produit-page">
+<div class="produit-hero"><div class="container"><div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div><div class="produit-hero-body"><div><h1><em>M</em>ontpellier<br><span style="padding-left:40px">huit siècles de <em>S</em>avoir</span></h1></div></div></div><div class="hero-label-bas">⟹ XII<sup>e</sup> siècle – aujourd'hui · Médecine, botanique, agronomie &amp; recherche ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a href="#origine" class="active">📖 Origines</a><a href="#medecine">🩺 Médecine</a><a href="#renaissance">📜 Renaissance</a><a href="#botanique">🌿 Jardin</a><a href="#pharmacie">💊 Pharmacie</a><a href="#hopitaux">🏥 CHU</a><a href="#agronomie">🌾 Agronomie</a><a href="#informatique">💻 Numérique</a><a href="#sante">🧬 Biotech</a><a href="#ville">🏙️ La ville</a><a href="#international">🌍 International</a><a href="#frise">⏳ Chronologie</a><a href="#figures">👤 Personnages</a><a href="#mythes">🔎 Idées reçues</a><a href="#parcours">🚶 Circuit</a><a href="#infos-pratiques">ℹ️ Infos</a><a href="#sources">📚 Sources</a>
+</div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<section class="section" id="origine"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Pourquoi Montpellier devient-elle une ville de savoir ?</h2><div class="histoire-texte">
+<p class="doc-intro"><strong>Montpellier n'est pas née du charbon, du fer ou d'un grand port.</strong> Pendant des siècles, sa principale richesse a été humaine : médecins, étudiants, maîtres, botanistes, apothicaires, puis agronomes, chercheurs et ingénieurs. Son histoire montre qu'une ville peut bâtir son développement sur la connaissance.</p>
+<div class="repere-grid"><div class="repere"><strong>1220</strong><span>Premiers statuts de l'école de médecine.</span></div><div class="repere"><strong>1593</strong><span>Création du Jardin des plantes, le plus ancien de France.</span></div><div class="repere"><strong>1965</strong><span>IBM s'installe : Montpellier entre dans l'ère du numérique.</span></div></div>
+<h3 class="sous-titre">Une ville jeune et commerçante</h3>
+<p>Montpellier apparaît dans les textes en <strong>985</strong>, bien plus tard que Nîmes, Narbonne ou Béziers. Sous les seigneurs <strong>Guilhem</strong>, elle grandit vite grâce au commerce méditerranéen, aux routes du pèlerinage et aux marchands venus d'Italie, d'Espagne et d'Orient. Des médecins chrétiens, juifs et formés aux savoirs arabes s'y côtoient. Les textes circulent, les maîtres attirent des élèves.</p>
+<p>En <strong>janvier 1181</strong>, Guilhem VIII proclame que chacun, d'où qu'il vienne, peut enseigner librement la médecine à Montpellier. En <strong>1220</strong>, le cardinal Conrad d'Urach donne à l'<em>Universitas medicorum</em> ses premiers statuts. En <strong>1289</strong>, la bulle <em>Quia sapientia</em> du pape Nicolas IV réunit médecine, droit et arts dans un <em>Studium generale</em> : l'université de Montpellier est née.</p>
+<div class="encadre"><strong>🔑 Le fil conducteur de la fiche</strong><br>Montpellier ne connaît pas de grande révolution industrielle comparable à l'aéronautique toulousaine. Elle accumule, siècle après siècle, des activités fondées sur le <strong>savoir, le soin, le vivant et la recherche</strong>. Chaque étape prépare la suivante.</div>
+</div></section>
+
+<section class="section" id="medecine"><h2 class="section-titre"><div class="section-titre-icon">🩺</div>La médecine : plus de huit siècles d'identité montpelliéraine</h2><div class="histoire-texte">
+<h3 class="sous-titre">Une école née avant ses statuts</h3>
+<p>Des médecins qui soignent et enseignent sont attestés dès le XII<sup>e</sup> siècle. Les statuts de 1220 donnent un cadre à une activité déjà vivante. L'enseignement s'appuie sur les auteurs antiques, Hippocrate et Galien, et sur les grands médecins du monde arabe, comme Avicenne, connus par des traductions latines.</p>
+<h3 class="sous-titre">Arnaud de Villeneuve et Gui de Chauliac</h3>
+<p><strong>Arnaud de Villeneuve</strong> (vers 1240–1311), médecin catalan, enseigne à Montpellier et soigne rois et papes. On lui attribue aussi le mutage des vins doux naturels. <strong>Gui de Chauliac</strong> (vers 1300–1368), formé à Montpellier, devient médecin des papes d'Avignon. Sa <em>Chirurgia magna</em> de <strong>1363</strong> reste une référence pendant près de trois siècles. Il y décrit aussi la Peste noire de 1348, qu'il a vécue.</p>
+</div>
+<div class="schema"><span class="schema-titre">Une longue chaîne de savoirs</span><div class="schema-flow">
+<div class="schema-box">Moyen Âge<br><b>textes &amp; maîtres</b><br><span class="small">Hippocrate, Galien, Avicenne</span></div><div class="schema-arrow">→</div>
+<div class="schema-box">Renaissance<br><b>anatomie &amp; botanique</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">XVIII<sup>e</sup>–XIX<sup>e</sup><br><b>clinique, chimie, pharmacie</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">XX<sup>e</sup>–XXI<sup>e</sup><br><b>biologie &amp; génétique</b><br><span style="font-size:12px;opacity:.85">imagerie, essais cliniques</span></div></div></div>
+<div class="histoire-texte">
+<h3 class="sous-titre">Le « vitalisme » de Montpellier</h3>
+<p>Au XVIII<sup>e</sup> siècle, <strong>Paul-Joseph Barthez</strong> défend l'idée d'un « principe vital » qui distinguerait le vivant de la simple mécanique. Cette doctrine, le <strong>vitalisme</strong>, donne à l'école de Montpellier une réputation propre face à celle de Paris. Elle sera dépassée par la physiologie et la biologie modernes, mais elle témoigne d'une tradition de réflexion sur ce qu'est le vivant.</p>
+<h3 class="sous-titre">La Révolution et le palais épiscopal</h3>
+<p>La Révolution supprime les universités en 1793. Dès <strong>1795</strong>, une École de santé est rouverte et s'installe dans l'ancien <strong>palais épiscopal</strong>, contigu à la cathédrale Saint-Pierre, où l'on enseigne encore aujourd'hui. Le bâtiment abrite le <strong>conservatoire d'anatomie</strong>, l'une des plus riches collections anatomiques d'Europe, et le <strong>musée Atger</strong>, consacré aux dessins anciens.</p>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une devise qui résume tout</div><p>La faculté a pour devise <em>Olim Cous nunc Monspeliensis Hippocrates</em> : « Autrefois Hippocrate était de Cos, maintenant il est de Montpellier ». La formule est ambitieuse, mais elle dit bien comment la ville s'est pensée pendant des siècles : comme l'héritière directe de la médecine antique.</p></div>
+</div></section>
+
+<section class="section" id="renaissance"><h2 class="section-titre"><div class="section-titre-icon">📜</div>Renaissance : Rabelais, Rondelet et la curiosité scientifique</h2><div class="histoire-texte">
+<p>Au XVI<sup>e</sup> siècle, Montpellier devient un foyer humaniste où médecine et sciences naturelles se rapprochent. <strong>François Rabelais</strong> s'y inscrit en <strong>1530</strong>, obtient son baccalauréat de médecine la même année, commente Hippocrate et Galien à partir du texte grec, puis revient y passer son doctorat en <strong>1537</strong>.</p>
+<p><strong>Guillaume Rondelet</strong> (1507–1566), médecin et naturaliste, fait construire en 1556 un amphithéâtre d'anatomie et publie une grande étude des poissons. Il forme toute une génération de naturalistes européens, dont Charles de l'Écluse.</p>
+<p><strong>Nostradamus</strong> s'inscrit lui aussi à Montpellier en 1529. Un registre semble montrer qu'il en fut rapidement exclu, et rien ne prouve qu'il y ait obtenu le doctorat. Son passage appartient à l'histoire, mais la légende a beaucoup brodé autour.</p>
+<div class="encadre"><strong>🌿 Une idée essentielle</strong><br>Pour soigner, il faut connaître le corps humain, mais aussi les plantes qui servent à préparer les remèdes. C'est ainsi que la médecine a fait de Montpellier une grande ville de botanique.</div>
+</div></section>
+
+<section class="section" id="botanique"><h2 class="section-titre"><div class="section-titre-icon">🌿</div>1593 : le Jardin des plantes, quand la médecine engendre la botanique</h2><div class="histoire-texte">
+<p>En <strong>1593</strong>, Henri IV confie à <strong>Pierre Richer de Belleval</strong> la création d'un jardin royal destiné à l'étude des « simples », c'est-à-dire des plantes médicinales. C'est le <strong>plus ancien jardin botanique de France</strong>, antérieur de près de quarante ans au Jardin du roi de Paris (1635).</p>
+<p>Richer de Belleval y recrée des milieux différents (secs, humides, ombragés, pierreux) pour observer les plantes dans des conditions variées. Le jardin dépasse vite sa fonction médicale et devient un laboratoire du monde végétal. <strong>Pierre Magnol</strong> y imagine, à la fin du XVII<sup>e</sup> siècle, de classer les plantes par <strong>familles</strong>, une notion que la botanique utilise toujours. Plus tard, <strong>Augustin-Pyramus de Candolle</strong> réorganise le jardin et enrichit ses collections.</p>
+</div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Étape</th><th>But initial</th><th>Élargissement</th></tr></thead><tbody>
+<tr><td><strong>Plantes médicinales</strong></td><td>Former médecins et apothicaires</td><td>Identifier les espèces et leurs propriétés</td></tr>
+<tr><td><strong>Jardin scientifique</strong></td><td>Cultiver et comparer</td><td>Étudier les milieux et la diversité</td></tr>
+<tr><td><strong>Herbiers</strong></td><td>Conserver des spécimens</td><td>Créer des collections de référence (l'herbier de l'université compte plusieurs millions de spécimens)</td></tr>
+<tr><td><strong>Botanique moderne</strong></td><td>Décrire et classer</td><td>Écologie, évolution, biodiversité</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Le Jardin des plantes est classé monument historique ; il appartient toujours à l'université.</p>
+</section>
+
+<section class="section" id="pharmacie"><h2 class="section-titre"><div class="section-titre-icon">💊</div>De l'apothicaire à la pharmacie et à la chimie</h2><div class="histoire-texte">
+<p>La proximité entre médecine, plantes et remèdes favorise la pharmacie. Les apothicaires montpelliérains sont réputés dès le Moyen Âge, notamment pour leurs préparations sucrées et leurs épices. Après la Révolution, la loi de <strong>1803</strong> crée une École de pharmacie à Montpellier, l'une des trois premières de France avec Paris et Strasbourg.</p>
+<p>Au XIX<sup>e</sup> siècle, chimie, physiologie, puis microbiologie prennent une place croissante. Formé à Montpellier, <strong>Jean-Antoine Chaptal</strong> y enseigne la chimie avant de devenir industriel et ministre de l'Intérieur de Napoléon ; son nom reste attaché à la « chaptalisation » des vins. La révolution pasteurienne transforme ensuite la compréhension des infections. Le médicament cesse peu à peu d'être une simple préparation de plantes : il devient un produit de la chimie, de la biologie et, plus tard, des biotechnologies.</p>
+</div>
+<div class="schema"><span class="schema-titre">Du remède à la biomédecine</span><div class="schema-flow">
+<div class="schema-box">Herbes<br><b>&amp; simples</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Apothicaires</div><div class="schema-arrow">→</div>
+<div class="schema-box">Pharmacie<br><b>&amp; chimie</b></div><div class="schema-arrow">→</div>
+<div class="schema-box">Microbiologie<br><b>&amp; biologie</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort"><b>Biotechnologies</b></div></div></div>
+</section>
+
+<section class="section" id="hopitaux"><h2 class="section-titre"><div class="section-titre-icon">🏥</div>De l'hôpital Saint-Éloi au grand CHU</h2><div class="histoire-texte">
+<p>L'hôpital Saint-Éloi est fondé dès le XII<sup>e</sup> siècle pour accueillir pauvres et malades. Pendant des siècles, l'hôpital reste au centre-ville, près de la faculté. Au XVIII<sup>e</sup> siècle, le chirurgien <strong>François Gigot de Lapeyronie</strong>, premier chirurgien de Louis XV, lègue sa fortune pour construire l'<strong>hôtel Saint-Côme</strong>, un amphithéâtre d'anatomie achevé en 1757.</p>
+<p>Au XX<sup>e</sup> siècle, l'hôpital se déplace vers le nord de la ville. Saint-Éloi, Gui-de-Chauliac, Lapeyronie, Arnaud-de-Villeneuve et La Colombière forment un vaste ensemble <strong>hospitalo-universitaire</strong>, relié depuis 2000 au centre par la première ligne de tramway. Le CHU annonce aujourd'hui environ <strong>12 000 professionnels</strong> et <strong>2 000 lits</strong>.</p>
+<h3 class="sous-titre">Soigner, former, chercher</h3>
+<p>Le CHU associe trois missions : le soin, la formation des médecins et la recherche clinique. Neurosciences, cancérologie, cardiologie, maladies infectieuses, génétique et imagerie y côtoient les laboratoires de l'université, de l'Inserm et du CNRS. En <strong>2017</strong>, une nouvelle faculté de médecine ouvre sur le campus Arnaud-de-Villeneuve, au cœur de ce quartier.</p>
+</div></section>
+
+<section class="section" id="agronomie"><h2 class="section-titre"><div class="section-titre-icon">🌾</div>L'autre grande aventure : l'agronomie</h2><div class="histoire-texte">
+<p>Après la médecine, l'agronomie est sans doute la dimension la plus importante du rayonnement scientifique montpelliérain. La ville est devenue l'un des premiers pôles mondiaux pour l'étude de l'<strong>agriculture, des plantes, de l'alimentation, de l'eau, des sols, des forêts et de la biodiversité</strong>, en particulier dans les milieux méditerranéens et tropicaux.</p>
+<h3 class="sous-titre">La vigne à l'origine</h3>
+<p>Tout commence avec la vigne. En <strong>1872</strong>, l'École d'agriculture de Montpellier s'installe au domaine de la Gaillarde. Elle joue un rôle décisif dans la lutte contre le <strong>phylloxéra</strong>, que le botaniste montpelliérain Jules-Émile Planchon a identifié en 1868 : ses chercheurs étudient les porte-greffes américains qui permettent de reconstituer le vignoble. Cette école est l'ancêtre de l'actuel <strong>Institut Agro Montpellier</strong>.</p>
+<h3 class="sous-titre">Du Languedoc aux pays du Sud</h3>
+<p>Au XX<sup>e</sup> siècle s'ajoute une vocation tropicale. Le <strong>CIRAD</strong>, créé en <strong>1984</strong> par la fusion d'instituts de recherche agronomique tropicale, a à Montpellier sa principale implantation. En <strong>1986</strong> naît <strong>Agropolis</strong>, qui fédère les établissements de recherche et d'enseignement agronomiques de la ville : INRAE, CIRAD, IRD, Institut Agro, CNRS, université, CIHEAM-IAMM et d'autres.</p>
+<div class="notice"><strong>Une ouverture mondiale :</strong> selon le CIRAD, le pôle agronomique montpelliérain réunit plus de <strong>2 700 chercheurs et enseignants-chercheurs</strong>. Ils travaillent sur l'agroécologie, le climat, la biodiversité, les systèmes alimentaires et l'agriculture méditerranéenne et tropicale.</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · le lien avec nos autres fiches</div><p>La vigne, l'eau, les maladies des plantes et les sols, racontés dans la fiche <a href="vigne-occitanie.html">« La vigne en Occitanie »</a>, deviennent ici des objets de science. Montpellier fait le lien entre l'histoire rurale de l'Occitanie et la recherche d'aujourd'hui.</p></div>
+</div></section>
+
+<section class="section" id="informatique"><h2 class="section-titre"><div class="section-titre-icon">💻</div>1965 : IBM et l'entrée dans le numérique</h2><div class="histoire-texte">
+<p>Une autre rupture intervient en <strong>1965</strong> avec l'implantation d'<strong>IBM</strong>, qui ouvre une usine à Montpellier. Elle change l'image d'une ville jusque-là surtout connue pour son université, sa médecine et ses services. L'informatique apporte ingénieurs, techniciens et culture technologique. En 1993, Dell choisit à son tour Montpellier.</p>
+<p>La création du <strong>BIC</strong> (Business &amp; Innovation Centre) en <strong>1987</strong>, l'un des premiers incubateurs d'entreprises de France, puis le label <strong>French Tech</strong> obtenu en <strong>2014</strong>, renforcent une économie fondée sur la création d'entreprises innovantes. Le numérique se croise ensuite avec les domaines historiques : santé numérique, données biologiques, agriculture de précision, environnement et intelligence artificielle.</p>
+</div>
+<div class="schema"><span class="schema-titre">Les deux racines technologiques de Montpellier</span><div class="schema-flow">
+<div class="schema-box">Racine historique<br><b>médecine · vivant · agronomie</b></div><div class="schema-arrow">+</div>
+<div class="schema-box">Racine numérique<br><b>IBM · informatique · start-up</b></div><div class="schema-arrow">→</div>
+<div class="schema-box fort">Convergence<br><b>biotech · e-santé · agtech</b><br><span style="font-size:12px;opacity:.85">données, IA</span></div></div></div>
+</section>
+
+<section class="section" id="sante"><h2 class="section-titre"><div class="section-titre-icon">🧬</div>XXI<sup>e</sup> siècle : biotechnologies, santé et innovation</h2><div class="histoire-texte">
+<p>La métropole prolonge son histoire médicale par un tissu de laboratoires, d'entreprises pharmaceutiques, de sociétés de diagnostic, de fabricants de dispositifs médicaux et de start-up. Selon la Métropole, la filière santé compte <strong>plus de 200 entreprises</strong> et environ <strong>7 500 emplois</strong>, aux côtés de plus de 1 000 chercheurs et enseignants en biologie-santé.</p>
+<p>Des groupes comme Sanofi, Bausch + Lomb ou HORIBA Medical côtoient des PME et de jeunes entreprises. La présence du CHU, de l'université et des laboratoires crée un continuum qui va de la recherche fondamentale jusqu'au patient et à l'entreprise.</p>
+<div class="encadre"><strong>🧩 Ce qui distingue Montpellier</strong><br>L'innovation récente ne remplace pas l'histoire ancienne : elle la prolonge. La botanique née de la médecine a préparé les sciences du vivant ; l'agronomie a renforcé l'étude des plantes et des écosystèmes ; l'informatique fournit aujourd'hui les outils pour analyser des masses de données.</div>
+</div></section>
+
+<section class="section" id="ville"><h2 class="section-titre"><div class="section-titre-icon">🏙️</div>Conséquences sur la ville et sa population</h2><div class="histoire-texte">
+<h3 class="sous-titre">Une ville façonnée par les étudiants</h3>
+<p>Depuis le Moyen Âge, étudiants et enseignants forment une population mobile. L'essor universitaire contemporain amplifie le phénomène : Montpellier compte aujourd'hui plus de 70 000 étudiants et figure parmi les villes les plus jeunes de France.</p>
+<h3 class="sous-titre">Le nord scientifique et hospitalier</h3>
+<p>À partir des années 1960, universités, laboratoires et hôpitaux structurent le nord de la ville. L'arrivée des rapatriés d'Algérie en 1962 accélère aussi la croissance urbaine. Campus, logements, transports et services accompagnent cette expansion.</p>
+<h3 class="sous-titre">Une économie moins industrielle, mais très qualifiée</h3>
+<p>Comparée à Toulouse, Montpellier compte peu de grandes usines. Son développement repose sur l'enseignement, l'hôpital, la recherche, l'ingénierie, l'informatique et les services. Cette structure attire une population diplômée, mais elle rend la ville dépendante des financements publics de la recherche et des cycles des entreprises technologiques.</p>
+</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une croissance spectaculaire</div><p>Ville moyenne d'environ 100 000 habitants au milieu du XX<sup>e</sup> siècle, Montpellier a presque triplé sa population depuis. Le savoir n'en est pas la seule cause (soleil, littoral, rapatriés, politique urbaine ont compté), mais il en a été l'un des moteurs les plus constants.</p></div>
+</section>
+
+<section class="section" id="international"><h2 class="section-titre"><div class="section-titre-icon">🌍</div>Un rayonnement international ancien… et renouvelé</h2><div class="histoire-texte">
+<p>Au Moyen Âge, les étudiants viennent déjà de Catalogne, d'Italie, d'Angleterre et d'Europe centrale. À la Renaissance, la réputation de la médecine et de la botanique attire savants et praticiens, souvent protestants, d'Allemagne, de Suisse ou des Pays-Bas. Aujourd'hui, ce rayonnement passe par les collaborations scientifiques, les étudiants étrangers, la recherche médicale et surtout l'agronomie internationale.</p>
+<p>Le CIRAD travaille avec plus d'une centaine de pays. En <strong>2011</strong>, Montpellier accueille le siège du consortium <strong>CGIAR</strong>, réseau mondial de centres de recherche agricole consacré à l'agriculture, à l'alimentation et au climat.</p>
+</div></section>
+
+<section class="section" id="frise"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Les grandes dates du savoir montpelliérain</h2><div class="frise">
+<div class="frise-periode">Moyen Âge</div>
+<div class="frise-item"><div class="frise-date">985</div><div class="frise-texte">Première mention de Montpellier dans un acte.</div></div>
+<div class="frise-item"><div class="frise-date">XII<sup>e</sup> siècle</div><div class="frise-texte">Premiers médecins enseignants attestés ; fondation de l'hôpital Saint-Éloi.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1181</div><div class="frise-texte">Guilhem VIII proclame la liberté d'enseigner la médecine.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1220</div><div class="frise-texte">Statuts de l'<em>Universitas medicorum</em>.</div></div>
+<div class="frise-item"><div class="frise-date">1289</div><div class="frise-texte">Bulle <em>Quia sapientia</em> : naissance de l'université.</div></div>
+<div class="frise-item"><div class="frise-date">1363</div><div class="frise-texte"><em>Chirurgia magna</em> de Gui de Chauliac.</div></div>
+<div class="frise-periode">Renaissance &amp; Lumières</div>
+<div class="frise-item"><div class="frise-date">1530–1537</div><div class="frise-texte">Études et doctorat de Rabelais.</div></div>
+<div class="frise-item"><div class="frise-date">1556</div><div class="frise-texte">Amphithéâtre d'anatomie de Rondelet.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1593</div><div class="frise-texte">Fondation du Jardin des plantes.</div></div>
+<div class="frise-item"><div class="frise-date">1757</div><div class="frise-texte">Achèvement de l'hôtel Saint-Côme, legs de Lapeyronie.</div></div>
+<div class="frise-periode">XIX<sup>e</sup> siècle</div>
+<div class="frise-item"><div class="frise-date">1795</div><div class="frise-texte">L'École de santé s'installe dans l'ancien palais épiscopal.</div></div>
+<div class="frise-item"><div class="frise-date">1803</div><div class="frise-texte">Création de l'École de pharmacie.</div></div>
+<div class="frise-item"><div class="frise-date">1868</div><div class="frise-texte">Planchon identifie le phylloxéra.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1872</div><div class="frise-texte">L'École d'agriculture s'installe à la Gaillarde.</div></div>
+<div class="frise-periode">XX<sup>e</sup>–XXI<sup>e</sup> siècles</div>
+<div class="frise-item"><div class="frise-date">années 1960</div><div class="frise-texte">Expansion universitaire et hospitalière au nord de la ville.</div></div>
+<div class="frise-item majeur"><div class="frise-date">1965</div><div class="frise-texte">Implantation d'IBM.</div></div>
+<div class="frise-item"><div class="frise-date">1984</div><div class="frise-texte">Création du CIRAD.</div></div>
+<div class="frise-item"><div class="frise-date">1986</div><div class="frise-texte">Création d'Agropolis.</div></div>
+<div class="frise-item"><div class="frise-date">1987</div><div class="frise-texte">Création du BIC de Montpellier.</div></div>
+<div class="frise-item"><div class="frise-date">2011</div><div class="frise-texte">Installation du siège du consortium CGIAR.</div></div>
+<div class="frise-item"><div class="frise-date">2014</div><div class="frise-texte">Label French Tech.</div></div>
+<div class="frise-item majeur"><div class="frise-date">2017</div><div class="frise-texte">Nouvelle faculté de médecine sur le campus Arnaud-de-Villeneuve.</div></div>
+</div></section>
+
+<section class="section" id="figures"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités à connaître</h2>
+<div class="perso-groupe g-med"><div class="perso-groupe-titre">Médecins et chirurgiens</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Arnaud de Villeneuve</div><div class="perso-dates">vers 1240 – 1311</div><div class="perso-desc">Médecin catalan, maître à Montpellier, conseiller des rois d'Aragon et des papes.</div></div>
+<div class="perso"><div class="perso-nom">Gui de Chauliac</div><div class="perso-dates">vers 1300 – 1368</div><div class="perso-desc">Chirurgien des papes d'Avignon, auteur de la <em>Chirurgia magna</em>.</div></div>
+<div class="perso"><div class="perso-nom">François Rabelais</div><div class="perso-dates">vers 1483/1494 – 1553</div><div class="perso-desc">Médecin, humaniste et écrivain, docteur de Montpellier en 1537.</div></div>
+<div class="perso"><div class="perso-nom">François Gigot de Lapeyronie</div><div class="perso-dates">1678 – 1747</div><div class="perso-desc">Premier chirurgien de Louis XV, il fait reconnaître la chirurgie comme science.</div></div>
+<div class="perso"><div class="perso-nom">Paul-Joseph Barthez</div><div class="perso-dates">1734 – 1806</div><div class="perso-desc">Théoricien du vitalisme, figure de l'« école de Montpellier ».</div></div>
+</div></div>
+<div class="perso-groupe g-bot"><div class="perso-groupe-titre">Naturalistes et botanistes</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Guillaume Rondelet</div><div class="perso-dates">1507 – 1566</div><div class="perso-desc">Médecin et naturaliste, maître de toute une génération de savants européens.</div></div>
+<div class="perso"><div class="perso-nom">Pierre Richer de Belleval</div><div class="perso-dates">vers 1564 – 1632</div><div class="perso-desc">Créateur du Jardin des plantes en 1593.</div></div>
+<div class="perso"><div class="perso-nom">Pierre Magnol</div><div class="perso-dates">1638 – 1715</div><div class="perso-desc">Inventeur de la notion de famille de plantes ; le magnolia porte son nom.</div></div>
+<div class="perso"><div class="perso-nom">Augustin-Pyramus de Candolle</div><div class="perso-dates">1778 – 1841</div><div class="perso-desc">Botaniste genevois, professeur à Montpellier, réorganisateur du Jardin.</div></div>
+</div></div>
+<div class="perso-groupe g-chim"><div class="perso-groupe-titre">Chimistes et agronomes</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Jean-Antoine Chaptal</div><div class="perso-dates">1756 – 1832</div><div class="perso-desc">Médecin et chimiste formé à Montpellier, industriel, puis ministre de Napoléon.</div></div>
+<div class="perso"><div class="perso-nom">Jules-Émile Planchon</div><div class="perso-dates">1823 – 1888</div><div class="perso-desc">Botaniste, il identifie le phylloxéra en 1868.</div></div>
+</div></div>
+</section>
+
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues</h2>
+<div class="mythe"><strong>« C'est la plus ancienne faculté de médecine du monde. »</strong><br><span class="verdict nuance">À nuancer</span><br>L'école de Salerne, en Italie, est plus ancienne. Montpellier se présente comme la plus ancienne faculté de médecine encore en activité du monde occidental.</div>
+<div class="mythe"><strong>« Nostradamus était docteur de Montpellier. »</strong><br><span class="verdict nuance">Non prouvé</span><br>Il s'y inscrit en 1529, mais un registre semble indiquer son exclusion ; aucun document ne confirme son doctorat.</div>
+<div class="mythe"><strong>« Rabelais n'a fait qu'y passer. »</strong><br><span class="verdict faux">Faux</span><br>Il y obtient son baccalauréat en 1530, y enseigne, et revient y passer son doctorat en 1537.</div>
+<div class="mythe"><strong>« Le Jardin des plantes est un simple parc. »</strong><br><span class="verdict faux">Faux</span><br>C'est un jardin scientifique, rattaché à l'université, créé pour la formation des médecins et toujours utilisé pour la recherche.</div>
+</section>
+
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🚶</div>Circuit conseillé : du centre historique au nord scientifique</h2>
+<div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Faculté de médecine et cathédrale Saint-Pierre</div><div class="etape-texte">L'ancien palais épiscopal, son amphithéâtre, le conservatoire d'anatomie et le musée Atger, à voir lors des visites guidées.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Le Jardin des plantes</div><div class="etape-texte">Juste en face de la faculté : la montagne de Richer de Belleval, les serres et l'école de botanique.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">L'hôtel Saint-Côme</div><div class="etape-texte">Grand-Rue Jean-Moulin : l'amphithéâtre d'anatomie voulu par Lapeyronie, sous sa coupole du XVIII<sup>e</sup> siècle.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Le Peyrou et l'Écusson</div><div class="etape-texte">La promenade royale et les hôtels particuliers, témoins de la ville des juristes, des marchands et des médecins.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Le quartier hospitalo-universitaire</div><div class="etape-texte">En tramway (ligne 1) : CHU, nouvelle faculté de médecine et campus scientifiques du nord de la ville.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">La Gaillarde et Agropolis</div><div class="etape-texte">Le domaine historique de l'école d'agriculture, aujourd'hui Institut Agro, puis le pôle agronomique international.</div></div></div>
+</div></section>
+
+<section class="section" id="infos-pratiques"><h2 class="section-titre"><div class="section-titre-icon">ℹ️</div>Infos pratiques</h2><div class="vins-liste">
+<div class="vin-item"><div class="vin-icon">🏛️</div><div><div class="vin-nom">Faculté de médecine</div><div class="vin-desc">Bâtiment en activité : visites guidées organisées notamment par l'Office de tourisme de Montpellier.</div></div><div class="vin-badge">Sur réservation</div></div>
+<div class="vin-item"><div class="vin-icon">🌿</div><div><div class="vin-nom">Jardin des plantes</div><div class="vin-desc">Entrée gratuite ; horaires saisonniers, fermé certains jours : vérifier avant de venir.</div></div><div class="vin-badge">Gratuit</div></div>
+<div class="vin-item"><div class="vin-icon">🚋</div><div><div class="vin-nom">Se déplacer</div><div class="vin-desc">Le centre historique se visite à pied ; le tramway relie l'Écusson au quartier hospitalo-universitaire.</div></div><div class="vin-badge">Tram ligne 1</div></div>
+<div class="vin-item"><div class="vin-icon">📅</div><div><div class="vin-nom">Journées du patrimoine</div><div class="vin-desc">En septembre, de nombreux lieux universitaires et hospitaliers s'ouvrent exceptionnellement au public.</div></div><div class="vin-badge">Septembre</div></div>
+</div></section>
+
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://facmedecine.umontpellier.fr/patrimoine-historique/son-histoire/" target="_blank" rel="noopener">Faculté de médecine Montpellier-Nîmes — parcours historique</a></li>
+<li><a href="https://archives.montpellier.fr/medecine" target="_blank" rel="noopener">Archives de Montpellier — 800 ans d'histoire de la médecine</a></li>
+<li><a href="https://www.umontpellier.fr/universite/patrimoine/jardin-des-plantes" target="_blank" rel="noopener">Université de Montpellier — Jardin des plantes</a></li>
+<li><a href="https://www.chu-montpellier.fr/fr/patients-visiteurs/votre-chu" target="_blank" rel="noopener">CHU de Montpellier — histoire et chiffres clés</a></li>
+<li><a href="https://www.inrae.fr/centres/occitanie-montpellier" target="_blank" rel="noopener">INRAE — centre Occitanie-Montpellier</a></li>
+<li><a href="https://www.cirad.fr/dans-le-monde/nos-directions-regionales/montpellier-occitanie/pole-international-de-recherche-agronomique" target="_blank" rel="noopener">CIRAD — pôle international de recherche agronomique</a></li>
+<li><a href="https://www.cirad.fr/nous-connaitre/notre-histoire" target="_blank" rel="noopener">CIRAD — histoire de l'établissement</a></li>
+<li><a href="https://www.entreprendre-montpellier.com/nos-filieres-economiques-strategiques/la-sante-une-histoire-millenaire" target="_blank" rel="noopener">Montpellier Méditerranée Métropole — filière santé</a></li>
+</ul>
+<p class="small">Pour approfondir : Louis Dulieu, <em>La Médecine à Montpellier</em> (plusieurs volumes) ; Jean Meyer (dir.), <em>Histoire de Montpellier</em>.</p><p class="small">Les chiffres contemporains (CHU, filière santé, pôle agronomique) proviennent des organismes cités et évoluent d'une année à l'autre. Les schémas sont pédagogiques.</p></div></section>
+</div>
+<aside class="produit-aside"><div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Ville</span><span class="aside-val">Montpellier (Hérault)</span></div><div class="aside-row"><span class="aside-label">Fil conducteur</span><span class="aside-val">Le savoir et le vivant</span></div><div class="aside-row"><span class="aside-label">Statuts médicaux</span><span class="aside-val">1220</span></div><div class="aside-row"><span class="aside-label">Jardin des plantes</span><span class="aside-val">1593</span></div><div class="aside-row"><span class="aside-label">Numérique</span><span class="aside-val">IBM, 1965</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 En chiffres</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>800 ans</b><span>d'enseignement de la médecine</span></div><div class="chiffre"><b>≈12 000</b><span>professionnels au CHU</span></div><div class="chiffre"><b>&gt;2 700</b><span>chercheurs en agronomie</span></div><div class="chiffre"><b>&gt;200</b><span>entreprises de santé</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📚 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Simples</dt><dd>Plantes médicinales utilisées telles quelles pour préparer des remèdes.</dd><dt><em>Studium generale</em></dt><dd>Au Moyen Âge, établissement d'enseignement reconnu par le pape : l'ancêtre de l'université.</dd><dt>Vitalisme</dt><dd>Doctrine de l'école de Montpellier selon laquelle le vivant obéit à un « principe vital ».</dd><dt>Herbier</dt><dd>Collection de plantes séchées servant de référence aux botanistes.</dd><dt>CHU</dt><dd>Centre hospitalier universitaire : il soigne, forme les médecins et fait de la recherche.</dd><dt>Agronomie</dt><dd>Science de l'agriculture : plantes, sols, eau, élevage et alimentation.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">🔀 Montpellier et Toulouse</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39"><strong>Toulouse :</strong> aviation → industrie → ingénierie → spatial (voir <a href="toulouse_industrie.html">la fiche sur l'aviation</a>).<br><br><strong>Montpellier :</strong> médecine → botanique → pharmacie → agronomie → biologie → numérique.</div></div>
+<div class="aside-card"><div class="aside-card-header">💡 À retenir</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Montpellier montre qu'une ville peut acquérir un rayonnement international sans grande industrie lourde : <strong>l'université, l'hôpital, les laboratoires et la recherche</strong> peuvent eux aussi devenir des moteurs économiques et démographiques.</div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+
+
+
+</body>
+</html>
