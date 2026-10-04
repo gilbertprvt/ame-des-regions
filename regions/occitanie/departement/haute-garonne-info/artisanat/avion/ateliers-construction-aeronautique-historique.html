@@ -1,18 +1,41 @@
 <!DOCTYPE html>
+<!--
+  ══════════════════════════════════════════════════════════════
+     Fiche « Les Ateliers de la Construction Aéronautique Historique » (Haute-Garonne)
+     De Clément Ader (1890) à la Caravelle et au Concorde.
+
+     Structure de la page :
+       1. <head>   : métadonnées, feuilles de style, styles du gabarit
+       2. HÉRO     : bandeau avec titre, carte, écusson et onglets
+       3. CORPS    : colonne principale (5 sections) + colonne latérale
+       4. Scripts  : onglets actifs et bouton « haut de page »
+
+     Chemins : les ../../../../../../ remontent à la racine du site
+     (style.css, fiche.css, index.html, dossier assets/).
+  ══════════════════════════════════════════════════════════════
+-->
 <html lang="fr">
 <head>
+  <!-- Encodage des caractères (accents) et adaptation à la largeur des écrans mobiles -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Titre affiché dans l'onglet du navigateur et dans les résultats de recherche -->
   <title>Les Ateliers de la Construction Aéronautique Historique — L'Âme des Régions</title>
+  <!-- Feuille de style globale du site (variables de couleurs et de polices, .container, etc.) -->
   <link rel="stylesheet" href="../../../../../../style.css" />
+  <!-- Polices Google : Playfair Display pour les titres, Source Sans 3 pour le texte -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Styles propres au gabarit « fiche » (communs à toutes les fiches de ce type) -->
   <style>
 
     /* ─── BASE ─────────────────────────────────── */
+    /* Fond ivoire de toute la page (la variable --ivoire est définie dans style.css) */
     .produit-page { background: var(--ivoire); }
 
     /* ─── BANDEAU HÉRO ─────────────────────────── */
+    /* Bandeau supérieur (héros) : fond bleu de secours, remplacé en bas du <head> par une photo.
+       overflow:hidden empêche l'écusson et les motifs décoratifs de déborder. */
     .produit-hero {
       background: #2C4A7C;
       color: white;
@@ -20,6 +43,8 @@
       position: relative;
       overflow: hidden;
     }
+    /* Motif décoratif : fines rayures diagonales semi-transparentes posées sur le bandeau.
+       pointer-events:none pour qu'il ne bloque aucun clic. */
     .produit-hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -30,6 +55,8 @@
     }
  
     /* Topbar */
+    /* Barre du haut : logo à gauche, bouton retour à droite.
+       z-index 3 = passe au-dessus de l'écusson (z-index 1) et du titre (z-index 2). */
     .produit-topbar {
       display: flex;
       justify-content: space-between;
@@ -38,6 +65,7 @@
       position: relative;
       z-index: 3;
     }
+    /* Logo texte « L'Âme des Régions » (lien vers l'accueil) */
     .produit-logo {
       font-family: var(--font-titre);
       font-size: 28px;
@@ -45,9 +73,12 @@
       color: white;
       text-decoration: none;
     }
+    /* Le mot « Âme » est coloré en cuivre */
     .produit-logo span { color: #C8843A; }
+    /* Conteneur des boutons de la topbar (espacés de 10px) */
     .produit-topbar-btns { display: flex; gap: 10px; }
 
+    /* Lien « ← Retour à la fiche Haute-Garonne » */
     .produit-btn-retour {
       display: inline-flex;
       align-items: center;
@@ -59,9 +90,12 @@
       text-decoration: none;
       transition: opacity 0.18s;
     }
+    /* Survol : léger fondu */
     .produit-btn-retour:hover { opacity: 0.7; }
 
     /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    /* Accroche centrée en bas du héros (ex. « ⟹ De Clément Ader à la Caravelle ⟸»).
+       Le margin-top négatif (-50px) remonte le texte pour le rapprocher du titre. */
     .hero-label-bas {
       color: white;
       font-family: var(--font-titre);
@@ -77,7 +111,8 @@
       z-index: 3;
     }
 
-    /* Titre héro */
+    /* Zone titre du héros, en grille :
+       colonne 1 = titre (prend toute la place restante), colonne 2 = carte du département (largeur auto). */
     .produit-hero-body {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -87,6 +122,8 @@
       position: relative;
       z-index: 2;
     }
+    /* Titre principal. clamp() fait varier la taille entre 28px et 52px selon la largeur d'écran.
+       Le margin-bottom de 90px laisse la place à l'accroche placée dessous. */
     .produit-hero-body h1 {
       font-family: var(--font-titre);
       font-size: clamp(28px, 5vw, 52px);
@@ -95,15 +132,20 @@
       color: white;
       margin-bottom: 90px;
     }
+    /* Lettrines du titre (balises <em>) : cuivre et italique */
     .produit-hero-body h1 em {
       color: #C8843A;
       font-style: italic;
     }
 
+    /* Classe prévue par le gabarit, non utilisée actuellement dans le HTML */
     .produit-hero-top {
       position: relative;
     }
 
+    /* Écusson du département, centré horizontalement en position absolue
+       (left:50% + translateX(-50%) = centrage parfait).
+       Sa distance au haut du bandeau se règle avec la variable --ecusson-top (30px par défaut). */
     .fiche-hero-ecusson {
       display: flex;
       align-items: center;
@@ -117,24 +159,27 @@
       z-index: 1;
       pointer-events: none;
     }
+    /* Taille de l'écusson + ombre portée pour le détacher de la photo */
     .fiche-hero-ecusson img {
        height: 200px;
       width: auto;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
     }
 
-    /* Barre de navigation interne */
+    /* Barre d'onglets en bas du héros (fond sombre semi-transparent) */
     .produit-nav {
       background: rgba(0,0,0,0.25);
       border-top: 1px solid rgba(255,255,255,0.1);
       position: relative;
       z-index: 3;
     }
+    /* Onglets alignés en ligne ; défilement horizontal si l'écran est trop étroit */
     .produit-nav-inner {
       display: flex;
       gap: 0;
       overflow-x: auto;
     }
+    /* Un onglet : texte blanc atténué, soulignement transparent par défaut */
     .produit-nav a {
       padding: 13px 22px;
       font-size: 13px;
@@ -145,11 +190,15 @@
       border-bottom: 2px solid transparent;
       transition: all 0.18s;
     }
+    /* Survol : texte blanc + soulignement discret.
+       Onglet actif (classe .active ajoutée par le script en bas de page) : texte doré + soulignement cuivre. */
     .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
     .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
 
     /* ─── CORPS ─────────────────────────────────── */
+    /* Marges haute et basse de la zone de contenu */
     .produit-body { padding: 48px 0 80px; }
+    /* Mise en page sur 2 colonnes : contenu principal (fluide) + colonne latérale de 340px */
     .produit-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
@@ -157,7 +206,9 @@
       align-items: start;
     }
 
+    /* Espace entre deux grandes sections */
     .section { margin-bottom: 40px; }
+    /* Titre de section (h2) : icône à gauche, texte bleu, filet beige en dessous */
     .section-titre {
       display: flex;
       align-items: center;
@@ -170,6 +221,7 @@
       padding-bottom: 10px;
       border-bottom: 2px solid #E8DEC8;
     }
+    /* Petit carré bleu arrondi qui contient l'emoji de la section */
     .section-titre-icon {
       width: 36px; height: 36px;
       background: #2C4A7C;
@@ -181,6 +233,7 @@
       flex-shrink: 0;
     }
 
+    /* Texte courant (sections Histoire, Créations & usages, Où découvrir) */
     .histoire-texte {
       font-size: 15px;
       line-height: 1.8;
@@ -189,6 +242,7 @@
     }
     .histoire-texte p { margin-bottom: 14px; }
 
+    /* Encadré de citation : fond crème, barre cuivre à gauche, coins droits arrondis */
     .citation-bloc {
       background: #F7F3EC;
       border-left: 4px solid #C8843A;
@@ -196,6 +250,7 @@
       margin: 22px 0;
       border-radius: 0 8px 8px 0;
     }
+    /* Texte de la citation, en italique */
     .citation-bloc p {
       font-family: var(--font-titre);
       font-style: italic;
@@ -204,6 +259,7 @@
       margin: 0 0 6px 0;
       line-height: 1.6;
     }
+    /* Auteur ou source de la citation */
     .citation-bloc cite {
       font-size: 12px;
       color: #8B7355;
@@ -211,12 +267,15 @@
       font-style: normal;
     }
 
+    /* Grille 2×2 des cartes de repères chiffrés
+       (nom de classe hérité du gabarit « recette », réutilisé ici pour les repères) */
     .recette-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
+    /* Une carte : icône + libellé + valeur */
     .recette-meta-card {
       background: white;
       border: 1px solid #E0DACE;
@@ -226,7 +285,9 @@
       align-items: center;
       gap: 12px;
     }
+    /* Emoji de la carte */
     .recette-meta-icon { font-size: 24px; }
+    /* Petit libellé en majuscules au-dessus de la valeur */
     .recette-meta-label {
       font-size: 10px;
       text-transform: uppercase;
@@ -235,6 +296,7 @@
       font-family: var(--font-corps);
       margin-bottom: 2px;
     }
+    /* Valeur mise en avant (date, chiffre…) */
     .recette-meta-val {
       font-size: 15px;
       font-weight: 700;
@@ -242,6 +304,8 @@
       font-family: var(--font-titre);
     }
 
+    /* Encadré blanc « matières et outils »
+       (nom de classe hérité du gabarit « ingrédients ») */
     .ingredients-bloc {
       background: white;
       border: 1px solid #E0DACE;
@@ -249,6 +313,7 @@
       padding: 20px 22px;
       margin-bottom: 20px;
     }
+    /* Titre de l'encadré, en petites majuscules */
     .ingredients-titre {
       font-size: 11px;
       text-transform: uppercase;
@@ -258,11 +323,13 @@
       margin-bottom: 14px;
       font-family: var(--font-corps);
     }
+    /* Liste présentée sur 2 colonnes */
     .ingredients-liste {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px 24px;
     }
+    /* Une ligne : étiquette + description, avec un filet pointillé dessous */
     .ingredient-item {
       display: flex;
       align-items: baseline;
@@ -273,6 +340,7 @@
       padding-bottom: 7px;
       border-bottom: 1px dashed #E8DEC8;
     }
+    /* Étiquette en cuivre (Matière, Outil, Étape…) ; largeur minimale pour aligner les textes */
     .ingredient-qte {
       font-weight: 600;
       color: #C8843A;
@@ -280,13 +348,16 @@
       flex-shrink: 0;
     }
 
+    /* Liste verticale des étapes numérotées */
     .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    /* Une étape : colonne de 40px pour la pastille numérotée + colonne pour le texte */
     .etape {
       display: grid;
       grid-template-columns: 40px 1fr;
       gap: 14px;
       align-items: start;
     }
+    /* Pastille ronde bleue contenant le numéro de l'étape */
     .etape-num {
       width: 40px; height: 40px;
       background: #2C4A7C;
@@ -300,7 +371,9 @@
       font-size: 15px;
       flex-shrink: 0;
     }
+    /* Décalage de 9px pour aligner le titre de l'étape avec le centre de la pastille */
     .etape-corps { padding-top: 9px; }
+    /* Titre de l'étape (cuivre, majuscules) */
     .etape-titre {
       font-size: 13px;
       font-weight: 600;
@@ -310,6 +383,7 @@
       font-family: var(--font-corps);
       margin-bottom: 4px;
     }
+    /* Description de l'étape */
     .etape-texte {
       font-size: 14px;
       line-height: 1.7;
@@ -317,7 +391,10 @@
       font-family: var(--font-corps);
     }
 
+    /* Liste des lieux à visiter
+       (nom de classe hérité du gabarit « vins ») */
     .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    /* Carte d'un lieu : icône, nom + description, badge à droite */
     .vin-item {
       background: white;
       border: 1px solid #E0DACE;
@@ -327,7 +404,9 @@
       align-items: center;
       gap: 14px;
     }
+    /* Emoji du lieu */
     .vin-icon { font-size: 22px; }
+    /* Nom du lieu */
     .vin-nom {
       font-family: var(--font-titre);
       font-size: 15px;
@@ -335,7 +414,9 @@
       color: #2C4A7C;
       margin-bottom: 2px;
     }
+    /* Courte description du lieu */
     .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    /* Pastille à droite (margin-left:auto la pousse contre le bord droit) */
     .vin-badge {
       margin-left: auto;
       background: rgba(44,74,124,0.08);
@@ -347,6 +428,7 @@
       white-space: nowrap;
     }
 
+    /* Colonne latérale « collante » : reste visible à 24px du haut pendant le défilement */
     .produit-aside {
       position: sticky;
       top: 24px;
@@ -354,12 +436,14 @@
       flex-direction: column;
       gap: 16px;
     }
+    /* Carte de la colonne latérale (bordure + coins arrondis) */
     .aside-card {
       background: white;
       border: 1px solid #E0DACE;
       border-radius: 14px;
       overflow: hidden;
     }
+    /* En-tête bleu de la carte (ex. « 📋 Carte d'identité ») */
     .aside-card-header {
       background: #2C4A7C;
       color: white;
@@ -371,7 +455,9 @@
       align-items: center;
       gap: 8px;
     }
+    /* Corps de la carte */
     .aside-card-body { padding: 16px 18px; }
+    /* Une ligne libellé / valeur, séparée de la suivante par un filet */
     .aside-row {
       display: flex;
       justify-content: space-between;
@@ -380,7 +466,9 @@
       border-bottom: 1px solid #F0EAD6;
       gap: 10px;
     }
+    /* Pas de filet sous la dernière ligne */
     .aside-row:last-child { border-bottom: none; }
+    /* Libellé à gauche (petites majuscules) */
     .aside-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -389,6 +477,7 @@
       font-family: var(--font-corps);
       flex-shrink: 0;
     }
+    /* Valeur à droite */
     .aside-val {
       font-size: 13px;
       font-weight: 600;
@@ -396,6 +485,7 @@
       font-family: var(--font-corps);
       text-align: right;
     }
+    /* Encadré « label AOP » prévu par le gabarit — non utilisé sur cette fiche */
     .aside-label-aop {
       background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
       border: 1px solid #F0C878;
@@ -417,6 +507,7 @@
       font-family: var(--font-corps);
       line-height: 1.5;
     }
+    /* Liste de liens latéraux prévue par le gabarit — non utilisée sur cette fiche */
     .aside-liens { display: flex; flex-direction: column; gap: 8px; }
     .aside-lien {
       display: flex;
@@ -436,6 +527,8 @@
     .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
     .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
 
+    /* Ancien bouton retour flottant (caché par défaut, visible avec .visible).
+       Non utilisé sur cette fiche : remplacé par le bouton .btn-haut-page (stylé dans fiche.css). */
     .btn-retour-fixe {
       display: none;
       position: fixed;
@@ -458,6 +551,7 @@
     .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
     .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
 
+    /* Bloc photo (<figure>) : image arrondie avec ombre + légende */
     .photo-bloc { margin: 24px 0; }
     .photo-bloc img {
       width: 100%;
@@ -467,6 +561,7 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
       display: block;
     }
+    /* Légende sous la photo (petite, italique) */
     .photo-bloc figcaption {
       font-size: 12px;
       color: #8B7355;
@@ -474,21 +569,28 @@
       font-family: var(--font-corps);
       margin-top: 8px;
     }
+    /* Placements possibles d'une photo : flottante à gauche, flottante à droite ou centrée.
+       .clearfix sert à annuler les flottements après la photo. */
     .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
     .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
     .photo-centre { margin: 24px auto; text-align: center; }
     .photo-centre img { max-width: 700px; }
     .clearfix::after { content: ''; display: block; clear: both; }
+    /* Mobile (≤ 680px) : les photos flottantes passent en pleine largeur, centrées */
     @media (max-width: 680px) {
       .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
     }
 
+    /* Tablette (≤ 860px) : une seule colonne, colonne latérale non collante,
+       liste des matières et outils sur 1 colonne */
     @media (max-width: 860px) {
       .produit-layout { grid-template-columns: 1fr; }
       .produit-aside { position: static; }
       .recette-grid { grid-template-columns: 1fr 1fr; }
       .ingredients-liste { grid-template-columns: 1fr; }
     }
+    /* Petit mobile (≤ 560px) : tout passe sur une colonne,
+       l'écusson revient dans le flux normal (plus de position absolue) */
     @media (max-width: 560px) {
       .recette-grid { grid-template-columns: 1fr; }
       .produit-hero-body { grid-template-columns: 1fr; }
@@ -510,9 +612,11 @@
   <!-- ══════════════════════════════════════════
        HÉRO
   ══════════════════════════════════════════ -->
+  <!-- Bandeau : photo de fond, topbar, titre, carte, écusson, accroche et onglets -->
   <div class="produit-hero">
     <div class="container">
 
+      <!-- Topbar : logo (lien vers l'accueil) + bouton retour vers la fiche du département -->
       <div class="produit-topbar">
         <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
         <div class="produit-topbar-btns">
@@ -522,12 +626,14 @@
         </div>
       </div>
 
+    <!-- Titre de la fiche (lettrines en <em>) + carte du département à droite -->
     <div class="produit-hero-body">
       <div>
 
           <h1><em>L</em>es <em>A</em>teliers<br>de la <em>C</em>onstruction <br><em>A</em>éronautique <em>H</em>istorique</h1>
 
         </div>
+         <!-- Carte du département ; les styles en ligne règlent taille, transparence et ombre -->
          <img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png"
                alt="Carte de la Haute-Garonne"
                style="height:220px; width:auto; opacity:0.85;
@@ -537,17 +643,21 @@
 
     </div>
 
+  <!-- Écusson du département, centré dans le bandeau (voir .fiche-hero-ecusson) -->
   <div class="fiche-hero-ecusson">
          <img src="../../../../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" />
         </div>
 
 
 
+    <!-- Accroche affichée sous le titre -->
     <div class="hero-label-bas">
     ⟹ De Clément Ader à la Caravelle ⟸
     </div>
 
 
+    <!-- Onglets de navigation interne : chaque href (#histoire, #savoir-faire…) pointe vers l'id
+         d'une section. L'onglet actif est mis à jour automatiquement par le script en bas de page. -->
     <div class="produit-nav">
       <div class="container">
         <div class="produit-nav-inner">
@@ -571,7 +681,9 @@
         <!-- ── COLONNE PRINCIPALE ── -->
         <div>
 
-          <!-- HISTOIRE -->
+          <!-- ═══ SECTION HISTOIRE ═══
+               id="histoire" = cible de l'onglet « 📖 Histoire ».
+               Contient : paragraphes, photo centrée, citation. -->
           <section class="section" id="histoire">
             <h2 class="section-titre">
               <div class="section-titre-icon">📖</div>
@@ -581,15 +693,18 @@
 
               <p>Le 9 octobre 1890, à Armainvilliers, l'ingénieur muretain Clément Ader décolle quelques instants à bord de son Éole, un étrange monomoteur inspiré du vol des chauves-souris : c'est le premier envol autopropulsé de l'histoire, et Toulouse peut revendiquer avec lui la paternité de l'aviation française. Il faut cependant attendre 1917 pour que la région se dote de véritables ateliers de construction, lorsque Pierre-Georges Latécoère installe à Montaudran une usine chargée de produire 1 000 avions Salmson 2A2 pour l'armée.</p>
 
+              <!-- Photo centrée ; le max-width en ligne limite sa largeur à 340px -->
               <figure class="photo-bloc photo-centre" style="max-width: 340px;">
                    <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/piste-montaudran.jpg"
                         alt="Ancienne piste de Toulouse-Montaudran" />
                     <figcaption>La Piste des Géants de Montaudran, berceau de l'aviation industrielle toulousaine</figcaption>
                   </figure>
+              <!-- Annule tout flottement avant le paragraphe suivant -->
               <div class="clearfix"></div>
 
               <p>Dès 1918, Latécoère fonde à Montaudran la Société des Lignes Latécoère, qui deviendra l'Aéropostale : ses avions, pilotés par Mermoz, Guillaumet ou Saint-Exupéry, ouvrent les liaisons postales vers l'Afrique puis l'Amérique du Sud. En 1920, l'ingénieur Émile Dewoitine, formé chez Latécoère, fonde à son tour sa propre société toulousaine et fait entrer la construction aéronautique dans l'ère du métal, avec trente-cinq types d'avions conçus entre 1920 et 1940.</p>
 
+              <!-- Citation : <p> = texte cité, <cite> = auteur / source -->
               <div class="citation-bloc">
                 <p>Il sera plat, aussi large que possible sans compromettre les lignes nautiques de la coque, et ressemblera à un terrain d'atterrissage.</p>
                 <cite>— Clément Ader, L'Aviation Militaire, 1909</cite>
@@ -600,13 +715,16 @@
             </div>
           </section>
 
-          <!-- SAVOIR-FAIRE -->
+          <!-- ═══ SECTION SAVOIR-FAIRE ═══
+               id="savoir-faire" = cible de l'onglet « Savoir-faire ».
+               Contient : 4 cartes de repères, encadré matières & outils, étapes numérotées. -->
           <section class="section" id="savoir-faire">
             <h2 class="section-titre">
               <div class="section-titre-icon">🔧</div>
               Savoir-faire & repères historiques
             </h2>
 
+            <!-- 4 cartes de repères chiffrés (icône / libellé / valeur) -->
             <div class="recette-grid">
               <div class="recette-meta-card">
                 <div class="recette-meta-icon">🦇</div>
@@ -638,6 +756,7 @@
               </div>
             </div>
 
+            <!-- Encadré matières & outils : chaque ligne = étiquette (.ingredient-qte) + description -->
             <div class="ingredients-bloc">
               <div class="ingredients-titre">✦ De la toile au duralumin — matières et outils</div>
               <div class="ingredients-liste">
@@ -652,6 +771,7 @@
               </div>
             </div>
 
+            <!-- Étapes numérotées. Pour en ajouter une : dupliquer un bloc .etape et changer le numéro -->
             <div class="etapes-liste">
               <div class="etape">
                 <div class="etape-num">1</div>
@@ -699,12 +819,14 @@
           </section>
 
 
-          <!-- PATRIMOINE À VISITER -->
+          <!-- ═══ SECTION PATRIMOINE À VISITER ═══
+               id="patrimoine" = cible de l'onglet « 🏛️ Patrimoine à visiter ». -->
           <section class="section" id="patrimoine">
             <h2 class="section-titre">
               <div class="section-titre-icon">🏛️</div>
               Patrimoine à visiter
             </h2>
+            <!-- Lieux à visiter : chaque .vin-item = icône, nom, description, badge -->
             <div class="vins-liste">
               <div class="vin-item">
                 <div class="vin-icon">🛫</div>
@@ -733,7 +855,8 @@
             </div>
           </section>
 
-          <!-- CRÉATIONS & USAGES -->
+          <!-- ═══ SECTION CRÉATIONS & USAGES ═══
+               id="variantes" = cible de l'onglet « 🔀 Créations & usages ». -->
           <section class="section" id="variantes">
             <h2 class="section-titre">
               <div class="section-titre-icon">🔀</div>
@@ -751,7 +874,9 @@
 
 
 
-          <!-- OÙ DÉCOUVRIR -->
+          <!-- ═══ SECTION OÙ DÉCOUVRIR ═══
+               id="ou-decouvrir" = cible de l'onglet « 📍 Où découvrir ».
+               Un paragraphe d'introduction puis un paragraphe par lieu (nom en gras). -->
           <section class="section" id="ou-decouvrir">
             <h2 class="section-titre">
               <div class="section-titre-icon">📍</div>
@@ -775,9 +900,11 @@
         </div>
 
         <!-- ── COLONNE DROITE ── -->
+        <!-- Colonne latérale (collante sur grand écran) -->
         <aside class="produit-aside">
 
-          <!-- Carte d'identité -->
+          <!-- Carte d'identité : une ligne .aside-row par information
+               (libellé .aside-label à gauche, valeur .aside-val à droite) -->
           <div class="aside-card">
             <div class="aside-card-header">📋 Carte d'identité</div>
             <div class="aside-card-body">
@@ -824,26 +951,40 @@
 
 
 
+  <!-- ══════════════════════════════════════════
+       SCRIPT : ONGLETS DE NAVIGATION
+       1) surligne l'onglet de la section visible à l'écran
+       2) fait défiler la page en douceur au clic sur un onglet
+  ══════════════════════════════════════════ -->
   <script>
+    // Tous les liens de la barre d'onglets
     const navLinks = document.querySelectorAll('.produit-nav a');
+    // Toutes les sections de contenu (Histoire, Savoir-faire, etc.)
     const sections = document.querySelectorAll('.section');
 
+    // IntersectionObserver « surveille » les sections et signale
+    // quand l'une d'elles entre dans la zone visible de l'écran
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // On retire la classe .active de tous les onglets…
           navLinks.forEach(l => l.classList.remove('active'));
+          // …puis on la remet sur l'onglet dont le href correspond
+          // à l'id de la section visible (ex. #patrimoine)
           const id = entry.target.id;
           const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
           if (active) active.classList.add('active');
         }
       });
-    }, { threshold: 0.4 });
+    }, { threshold: 0.4 }); // section considérée visible quand 40 % est à l'écran
 
+    // On lance la surveillance sur chaque section
     sections.forEach(s => observer.observe(s));
 
+    // Clic sur un onglet : défilement doux au lieu du saut brutal
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
-        e.preventDefault();
+        e.preventDefault(); // empêche le saut immédiat par défaut
         const target = document.querySelector(link.getAttribute('href'));
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -851,10 +992,14 @@
 
   </script>
 
+<!-- Lien de retour vers la fiche du département, en bas de page -->
 <div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
 
+<!-- Pied de page commun à tout le site -->
 <footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
-<!--  Retour flottant-->
+<!-- ═══ BOUTON « HAUT DE PAGE » ═══
+     Bouton flottant (flèche vers le haut) ; son style est dans fiche.css.
+     Il apparaît après 300px de défilement grâce au script ci-dessous. -->
 
 <button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -863,17 +1008,25 @@
 </button>
 <script>
   (function () {
+    // Fonction auto-exécutée : ses variables restent locales
+    // et n'entrent pas en conflit avec le script des onglets
     var btn = document.querySelector('.btn-haut-page');
     var seuil = 300; // distance de défilement (en pixels) avant apparition
 
+    // Affiche le bouton (classe .visible) seulement si on a défilé au-delà du seuil
     function majBouton() {
       btn.classList.toggle('visible', window.scrollY > seuil);
     }
 
+    // Vérification à chaque défilement ({ passive: true } = meilleure fluidité)
     window.addEventListener('scroll', majBouton, { passive: true });
+    // Vérification immédiate au chargement (page rechargée déjà défilée)
     majBouton();
 
+    // Clic : retour en haut de page
     btn.addEventListener('click', function () {
+      // Respecte le réglage « réduire les animations » du système :
+      // saut direct dans ce cas, défilement doux sinon
       var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
     });

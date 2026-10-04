@@ -1,35 +1,99 @@
 <!DOCTYPE html>
+<!-- ════════════════════════════════════════════════════════════════
+     FICHE PATRIMOINE — garonne-toulouse.html
+     Site « L'Âme des Régions » · Département : Haute-Garonne (Occitanie)
+     
+     Structure générale de la page :
+       1. <head>   : métadonnées, polices, feuilles de style
+       2. HÉRO     : bandeau avec photo, titre, carte, écusson et onglets
+       3. CORPS    : colonne principale (5 sections) + colonne latérale
+       4. Scripts  : onglet actif au défilement + bouton « haut de page »
+     
+     Les chemins « ../../../../../../ » remontent de 6 dossiers pour
+     revenir à la racine du site (où se trouvent style.css, fiche.css,
+     index.html et le dossier assets/).
+     ════════════════════════════════════════════════════════════════
+     lang="fr" : indique la langue aux navigateurs, lecteurs d'écran
+     et moteurs de recherche (prononciation, césure, référencement).
+-->
 <html lang="fr">
 <head>
+  <!-- Encodage UTF-8 : indispensable pour afficher correctement les accents (é, è, à, œ…) et les émojis. -->
   <meta charset="UTF-8" />
+  <!-- Adapte la page à la largeur de l'écran (mobile, tablette).
+       Sans cette ligne, les téléphones afficheraient la page en mode « bureau » réduit.
+  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Titre affiché dans l'onglet du navigateur et dans les résultats des moteurs de recherche. -->
   <title>La Garonne à Toulouse — L'Âme des Régions</title>
+  <!-- Feuille de style GLOBALE du site : variables (--ivoire, --font-titre,
+       --font-corps…), .container, pied de page, etc.
+  -->
   <link rel="stylesheet" href="../../../../../../style.css" />
+  <!-- Ouvre la connexion vers Google Fonts à l'avance pour charger les polices plus vite. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- Polices du site :
+         · Playfair Display (empattements, normal / gras / italique) → titres
+         · Source Sans 3 (sans empattements) → texte courant
+       display=swap : le texte s'affiche tout de suite avec une police de secours,
+       puis bascule sur la bonne police une fois téléchargée.
+  -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Styles propres au gabarit « fiche produit / patrimoine ».
+       Ce bloc est identique dans toutes les fiches : il pourrait à terme
+       être déplacé dans fiche.css pour éviter les copies.
+  -->
   <style>
 
+    /* ════════════════════════════════════════════════════
+       SOMMAIRE DES STYLES
+         1. Base de la page
+         2. Bandeau héro (topbar, titre, écusson, onglets)
+         3. Corps : sections, cartes chiffres, listes, étapes
+         4. Colonne latérale (carte d'identité)
+         5. Photos
+         6. Adaptations responsive (tablette / mobile)
+       
+       Couleurs récurrentes :
+         #2C4A7C bleu principal · #C8843A ocre (accent)
+         #3A3028 brun texte · #8B7355 brun clair (libellés)
+         #E0DACE / #E8DEC8 beiges (bordures)
+       ════════════════════════════════════════════════════
+    */
     /* ─── BASE ─────────────────────────────────── */
+    /* Fond ivoire de toute la page (variable --ivoire définie dans style.css). */
     .produit-page { background: var(--ivoire); }
 
     /* ─── BANDEAU HÉRO ─────────────────────────── */
+    /* Conteneur du bandeau supérieur.
+       Le bleu #2C4A7C sert de couleur de secours tant que la photo de fond
+       (définie dans le dernier <style> du <head>) n'est pas chargée.
+       position: relative = repère pour les éléments positionnés en absolu
+       (motif rayé ::before et écusson).
+    */
     .produit-hero {
       background: #2C4A7C;
       color: white;
-      padding: 22px 0 0;
+      padding: 22px 0 0; /* 22px en haut uniquement */
       position: relative;
-      overflow: hidden;
+      overflow: hidden; /* coupe tout ce qui déborde du bandeau */
     }
+    /* Texture décorative : fines rayures diagonales blanches à 2 % d'opacité,
+       posées par-dessus tout le bandeau grâce à un pseudo-élément.
+    */
     .produit-hero::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; /* inset: 0 = couvre tout le bandeau */
       background: repeating-linear-gradient(45deg,
         rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
         transparent 1px, transparent 12px);
-      pointer-events: none;
+      pointer-events: none; /* laisse passer les clics vers les liens dessous */
     }
  
     /* Topbar */
+    /* Barre du haut : logo à gauche, lien retour à droite (space-between).
+       z-index: 3 la place au-dessus de l'écusson (1) et du titre (2).
+    */
     .produit-topbar {
       display: flex;
       justify-content: space-between;
@@ -38,6 +102,7 @@
       position: relative;
       z-index: 3;
     }
+    /* Logo texte « L'Âme des Régions » en police de titre. */
     .produit-logo {
       font-family: var(--font-titre);
       font-size: 28px;
@@ -45,9 +110,14 @@
       color: white;
       text-decoration: none;
     }
+    /* Le mot « Âme » est coloré en ocre, couleur d'accent du site. */
     .produit-logo span { color: #C8843A; }
+    /* Zone des boutons de la topbar ; gap espace les boutons si on en ajoute. */
     .produit-topbar-btns { display: flex; gap: 10px; }
 
+    /* Lien « ← Retour à la fiche Haute-Garonne ».
+       inline-flex aligne la flèche et le texte ; transition = survol en douceur.
+    */
     .produit-btn-retour {
       display: inline-flex;
       align-items: center;
@@ -59,9 +129,14 @@
       text-decoration: none;
       transition: opacity 0.18s;
     }
+    /* Au survol, le lien devient semi-transparent. */
     .produit-btn-retour:hover { opacity: 0.7; }
 
     /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    /* Accroche centrée en bas du héro (ex. « ⟹ … ⟸ »).
+       Le margin-top négatif la fait remonter pour chevaucher le bas de la zone titre.
+       letter-spacing espace les lettres pour un effet « bandeau ».
+    */
     .hero-label-bas {
       color: white;
       font-family: var(--font-titre);
@@ -69,7 +144,7 @@
       letter-spacing: 0.15em;
       opacity: 1;
       text-align: center;
-      margin-top: -50px;
+      margin-top: -50px; /* valeur négative = le label remonte */
       margin-bottom: 14px;
       margin-left: 0px;
       margin-right: 0px;
@@ -78,6 +153,11 @@
     }
 
     /* Titre héro */
+    /* Zone titre + carte du département : grille à 2 colonnes.
+         1fr  → le titre prend toute la place disponible
+         auto → la carte garde sa largeur naturelle
+       align-items: end aligne les deux éléments sur leur bas.
+    */
     .produit-hero-body {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -87,23 +167,35 @@
       position: relative;
       z-index: 2;
     }
+    /* Grand titre de la fiche.
+       clamp(28px, 5vw, 52px) = taille fluide : 5 % de la largeur de l'écran,
+       jamais moins de 28px ni plus de 52px.
+    */
     .produit-hero-body h1 {
       font-family: var(--font-titre);
       font-size: clamp(28px, 5vw, 52px);
       font-weight: 700;
       line-height: 1.05;
       color: white;
-      margin-bottom: 90px;
+      margin-bottom: 90px; /* espace réservé à l'accroche du bas */
     }
+    /* Les initiales entourées de <em> dans le titre : ocre et italique. */
     .produit-hero-body h1 em {
       color: #C8843A;
       font-style: italic;
     }
 
+    /* ⚠ Classe absente du HTML de cette page (vestige d'un ancien gabarit) : peut être supprimée. */
     .produit-hero-top {
       position: relative;
     }
 
+    /* Écusson du département, centré horizontalement en position absolue :
+       left: 50% place son bord gauche au milieu du bandeau, puis
+       translateX(-50%) le recule de la moitié de sa propre largeur.
+       z-index: 1 → derrière le titre et la topbar.
+       pointer-events: none → l'écusson ne bloque jamais un clic.
+    */
     .fiche-hero-ecusson {
       display: flex;
       align-items: center;
@@ -112,11 +204,12 @@
 
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      top: var(--ecusson-top, 30px);
+      transform: translateX(-50%); /* recentre l'écusson sur lui-même */
+      top: var(--ecusson-top, 30px); /* 30px si --ecusson-top n'est pas définie */
       z-index: 1;
       pointer-events: none;
     }
+    /* Hauteur fixe, largeur proportionnelle ; ombre portée pour détacher l'écusson de la photo. */
     .fiche-hero-ecusson img {
        height: 200px;
       width: auto;
@@ -124,17 +217,24 @@
     }
 
     /* Barre de navigation interne */
+    /* Barre d'onglets en bas du héro : fond noir à 25 % et filet clair en haut. */
     .produit-nav {
       background: rgba(0,0,0,0.25);
       border-top: 1px solid rgba(255,255,255,0.1);
       position: relative;
       z-index: 3;
     }
+    /* Onglets alignés en ligne. overflow-x: auto permet de les faire défiler
+       horizontalement sur petit écran au lieu de les couper.
+    */
     .produit-nav-inner {
       display: flex;
       gap: 0;
       overflow-x: auto;
     }
+    /* Un onglet : texte blanc à 60 %, bordure basse transparente (réservée
+       à l'état actif). white-space: nowrap empêche le retour à la ligne.
+    */
     .produit-nav a {
       padding: 13px 22px;
       font-size: 13px;
@@ -145,19 +245,29 @@
       border-bottom: 2px solid transparent;
       transition: all 0.18s;
     }
+    /* Survol : texte blanc plein et léger soulignement. */
     .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    /* Onglet de la section visible à l'écran : texte doré + soulignement ocre.
+       La classe .active est ajoutée/retirée par le script en bas de page.
+    */
     .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
 
     /* ─── CORPS ─────────────────────────────────── */
+    /* Zone de contenu sous le héro : 48px de marge en haut, 80px en bas. */
     .produit-body { padding: 48px 0 80px; }
+    /* Mise en page en 2 colonnes : contenu flexible + colonne latérale de 340px.
+       align-items: start est nécessaire pour que la colonne « sticky » fonctionne.
+    */
     .produit-layout {
       display: grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 340px; /* contenu | colonne latérale */
       gap: 36px;
       align-items: start;
     }
 
+    /* Chaque grande section (Histoire, Portrait…) est espacée de 40px de la suivante. */
     .section { margin-bottom: 40px; }
+    /* Titre de section (<h2>) : icône + texte alignés en flex, soulignés d'un filet beige. */
     .section-titre {
       display: flex;
       align-items: center;
@@ -170,6 +280,9 @@
       padding-bottom: 10px;
       border-bottom: 2px solid #E8DEC8;
     }
+    /* Carré bleu arrondi contenant l'émoji de la section.
+       flex-shrink: 0 l'empêche de rétrécir quand le titre est long.
+    */
     .section-titre-icon {
       width: 36px; height: 36px;
       background: #2C4A7C;
@@ -181,14 +294,17 @@
       flex-shrink: 0;
     }
 
+    /* Texte courant : 15px avec un interligne généreux (1.8) pour le confort de lecture. */
     .histoire-texte {
       font-size: 15px;
       line-height: 1.8;
       color: #3A3028;
       font-family: var(--font-corps);
     }
+    /* Espace entre deux paragraphes. */
     .histoire-texte p { margin-bottom: 14px; }
 
+    /* Encadré de citation : fond crème et barre ocre à gauche. */
     .citation-bloc {
       background: #F7F3EC;
       border-left: 4px solid #C8843A;
@@ -196,6 +312,7 @@
       margin: 22px 0;
       border-radius: 0 8px 8px 0;
     }
+    /* Texte de la citation : italique, police de titre. */
     .citation-bloc p {
       font-family: var(--font-titre);
       font-style: italic;
@@ -204,6 +321,7 @@
       margin: 0 0 6px 0;
       line-height: 1.6;
     }
+    /* Source de la citation : plus petite, non italique. */
     .citation-bloc cite {
       font-size: 12px;
       color: #8B7355;
@@ -211,12 +329,17 @@
       font-style: normal;
     }
 
+    /* Grille des 4 « cartes chiffres » de la section Portrait (2 colonnes).
+       Le préfixe « recette » vient du gabarit des fiches gastronomiques,
+       réutilisé ici pour les fiches patrimoine.
+    */
     .recette-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
+    /* Une carte chiffre : icône à gauche, libellé + valeur à droite. */
     .recette-meta-card {
       background: white;
       border: 1px solid #E0DACE;
@@ -226,7 +349,9 @@
       align-items: center;
       gap: 12px;
     }
+    /* Taille de l'émoji dans la carte. */
     .recette-meta-icon { font-size: 24px; }
+    /* Petit libellé en majuscules (ex. « LONGUEUR »). */
     .recette-meta-label {
       font-size: 10px;
       text-transform: uppercase;
@@ -235,6 +360,7 @@
       font-family: var(--font-corps);
       margin-bottom: 2px;
     }
+    /* Valeur mise en avant en bleu (ex. « 240 km »). */
     .recette-meta-val {
       font-size: 15px;
       font-weight: 700;
@@ -242,6 +368,7 @@
       font-family: var(--font-titre);
     }
 
+    /* Encadré blanc « Signes distinctifs » (gabarit hérité des listes d'ingrédients). */
     .ingredients-bloc {
       background: white;
       border: 1px solid #E0DACE;
@@ -249,6 +376,7 @@
       padding: 20px 22px;
       margin-bottom: 20px;
     }
+    /* Titre de l'encadré : petites majuscules espacées. */
     .ingredients-titre {
       font-size: 11px;
       text-transform: uppercase;
@@ -258,11 +386,15 @@
       margin-bottom: 14px;
       font-family: var(--font-corps);
     }
+    /* Liste sur 2 colonnes ; gap: 8px entre lignes, 24px entre colonnes. */
     .ingredients-liste {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px 24px;
     }
+    /* Une ligne de la liste, séparée de la suivante par des pointillés.
+       align-items: baseline aligne mot-clé et description sur la même ligne de texte.
+    */
     .ingredient-item {
       display: flex;
       align-items: baseline;
@@ -273,6 +405,7 @@
       padding-bottom: 7px;
       border-bottom: 1px dashed #E8DEC8;
     }
+    /* Mot-clé en gras ocre ; min-width garde les descriptions alignées. */
     .ingredient-qte {
       font-weight: 600;
       color: #C8843A;
@@ -280,18 +413,21 @@
       flex-shrink: 0;
     }
 
+    /* Liste verticale d'étapes numérotées (frise, sites, faits marquants…). */
     .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    /* Une étape : colonne de 40px pour la pastille + colonne pour le texte. */
     .etape {
       display: grid;
       grid-template-columns: 40px 1fr;
       gap: 14px;
       align-items: start;
     }
+    /* Pastille ronde bleue contenant le numéro. */
     .etape-num {
       width: 40px; height: 40px;
       background: #2C4A7C;
       color: white;
-      border-radius: 50%;
+      border-radius: 50%; /* 50 % = cercle parfait */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -300,7 +436,9 @@
       font-size: 15px;
       flex-shrink: 0;
     }
+    /* Le padding-top aligne le titre de l'étape avec le centre de la pastille. */
     .etape-corps { padding-top: 9px; }
+    /* Titre d'étape en majuscules ocre. */
     .etape-titre {
       font-size: 13px;
       font-weight: 600;
@@ -310,6 +448,7 @@
       font-family: var(--font-corps);
       margin-bottom: 4px;
     }
+    /* Texte descriptif de l'étape. */
     .etape-texte {
       font-size: 14px;
       line-height: 1.7;
@@ -317,6 +456,10 @@
       font-family: var(--font-corps);
     }
 
+    /* ⚠ Styles « accords vins » hérités du gabarit gastronomique.
+       Non utilisés sur cette page : .vins-liste, .vin-item, .vin-icon,
+       .vin-nom, .vin-desc, .vin-badge.
+    */
     .vins-liste { display: flex; flex-direction: column; gap: 10px; }
     .vin-item {
       background: white;
@@ -347,19 +490,24 @@
       white-space: nowrap;
     }
 
+    /* Colonne latérale. position: sticky la garde visible à 24px du haut
+       de l'écran pendant que le contenu principal défile.
+    */
     .produit-aside {
       position: sticky;
-      top: 24px;
+      top: 24px; /* distance au haut de l'écran en mode collant */
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
+    /* Carte blanche arrondie ; overflow: hidden pour que l'en-tête bleu respecte les coins. */
     .aside-card {
       background: white;
       border: 1px solid #E0DACE;
       border-radius: 14px;
       overflow: hidden;
     }
+    /* En-tête bleu de la carte (« 📋 Carte d'identité »). */
     .aside-card-header {
       background: #2C4A7C;
       color: white;
@@ -371,7 +519,9 @@
       align-items: center;
       gap: 8px;
     }
+    /* Marges intérieures du contenu de la carte. */
     .aside-card-body { padding: 16px 18px; }
+    /* Une ligne libellé / valeur ; space-between pousse la valeur à droite. */
     .aside-row {
       display: flex;
       justify-content: space-between;
@@ -380,7 +530,11 @@
       border-bottom: 1px solid #F0EAD6;
       gap: 10px;
     }
+    /* Pas de filet sous la dernière ligne. */
     .aside-row:last-child { border-bottom: none; }
+    /* Libellé (à gauche) en petites majuscules.
+       flex-shrink: 0 empêche qu'il soit écrasé par une valeur longue.
+    */
     .aside-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -389,6 +543,7 @@
       font-family: var(--font-corps);
       flex-shrink: 0;
     }
+    /* Valeur (à droite), alignée à droite. */
     .aside-val {
       font-size: 13px;
       font-weight: 600;
@@ -396,6 +551,9 @@
       font-family: var(--font-corps);
       text-align: right;
     }
+    /* ⚠ Encadré « label AOP » du gabarit gastronomique : non utilisé ici,
+       tout comme .aside-aop-logo, .aside-aop-titre et .aside-aop-desc.
+    */
     .aside-label-aop {
       background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
       border: 1px solid #F0C878;
@@ -417,6 +575,7 @@
       font-family: var(--font-corps);
       line-height: 1.5;
     }
+    /* ⚠ Liste de liens latéraux (.aside-liens / .aside-lien) : non utilisée sur cette page. */
     .aside-liens { display: flex; flex-direction: column; gap: 8px; }
     .aside-lien {
       display: flex;
@@ -436,6 +595,10 @@
     .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
     .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
 
+    /* ⚠ Bouton retour flottant : absent du HTML de cette page.
+       Le bouton flottant réellement utilisé est .btn-haut-page (stylé dans fiche.css / style.css).
+       Caché par défaut (display: none), il n'apparaîtrait qu'avec la classe .visible.
+    */
     .btn-retour-fixe {
       display: none;
       position: fixed;
@@ -458,6 +621,7 @@
     .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
     .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
 
+    /* Bloc photo (<figure>) : image arrondie avec ombre, légende en italique dessous. */
     .photo-bloc { margin: 24px 0; }
     .photo-bloc img {
       width: 100%;
@@ -467,6 +631,7 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
       display: block;
     }
+    /* Légende sous la photo. */
     .photo-bloc figcaption {
       font-size: 12px;
       color: #8B7355;
@@ -474,21 +639,32 @@
       font-family: var(--font-corps);
       margin-top: 8px;
     }
+    /* Variantes de placement : photo flottante à gauche, à droite
+       (le texte l'entoure), ou centrée.
+    */
     .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
     .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
     .photo-centre { margin: 24px auto; text-align: center; }
     .photo-centre img { max-width: 700px; }
+    /* Astuce « clearfix » : oblige le conteneur à englober les éléments flottants. */
     .clearfix::after { content: ''; display: block; clear: both; }
+    /* Sous 680px : les photos ne flottent plus et prennent toute la largeur. */
     @media (max-width: 680px) {
       .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
     }
 
+    /* TABLETTE (≤ 860px) : la colonne latérale passe sous le contenu et n'est
+       plus collante ; la liste « signes distinctifs » passe sur une colonne.
+    */
     @media (max-width: 860px) {
       .produit-layout { grid-template-columns: 1fr; }
       .produit-aside { position: static; }
       .recette-grid { grid-template-columns: 1fr 1fr; }
       .ingredients-liste { grid-template-columns: 1fr; }
     }
+    /* MOBILE (≤ 560px) : cartes chiffres sur une colonne, titre et carte
+       empilés, écusson remis dans le flux normal (plus de position absolue).
+    */
     @media (max-width: 560px) {
       .recette-grid { grid-template-columns: 1fr; }
       .produit-hero-body { grid-template-columns: 1fr; }
@@ -501,33 +677,57 @@
 
   </style>
   <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <!-- fiche.css est chargée APRÈS le <style> ci-dessus : en cas de conflit,
+       ses règles l'emportent (à spécificité égale, la dernière déclarée gagne).
+  -->
   <link rel="stylesheet" href="../../../../../../fiche.css" />
   <!-- Photo du bandeau propre à cette page -->
+  <!-- SEULE ligne de style à modifier d'une fiche à l'autre : la photo du bandeau.
+       Elle complète la règle .produit-hero ; le fond bleu reste visible si l'image ne charge pas.
+  -->
   <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-haute-garonne.jpg'); }</style>
 </head>
+<!-- La classe produit-page applique le fond ivoire (voir .produit-page dans le CSS). -->
 <body class="produit-page">
 
   <!-- ══════════════════════════════════════════
        HÉRO
   ══════════════════════════════════════════ -->
+  <!-- Bandeau complet : photo de fond + topbar + titre + écusson + accroche + onglets.
+       Il se ferme juste après la barre d'onglets (.produit-nav).
+  -->
   <div class="produit-hero">
     <div class="container">
 
+      <!-- ── Topbar : logo (lien accueil) + lien retour vers la fiche du département ── -->
       <div class="produit-topbar">
+        <!-- Logo cliquable → page d'accueil du site (racine, 6 niveaux au-dessus). -->
         <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
         <div class="produit-topbar-btns">
+          <!-- Retour vers la fiche du département Haute-Garonne. -->
           <a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour">
             ← Retour à la fiche Haute-Garonne
           </a>
         </div>
       </div>
  
+    <!-- ── Zone titre : grille 2 colonnes ──
+           colonne 1 : le <h1> · colonne 2 : la carte du département
+    -->
     <div class="produit-hero-body">
       <div>
           
+          <!-- Titre principal de la fiche (un seul <h1> par page, important pour le référencement).
+               Chaque <em> colore une initiale en ocre ; le <br> et le <span> décalé de 60px
+               créent l'effet de titre « en escalier » sur deux lignes.
+          -->
           <h1><em>L</em>a <em>G</em>aronne <br><span style="padding-left: 60px;">à <em>T</em>oulouse</span></h1>
           
         </div>   
+         <!-- Carte du département (2e colonne de la grille).
+              Styles écrits en ligne (hauteur, transparence, ombre) : ils pourraient
+              être déplacés dans une classe CSS pour être modifiés en un seul endroit.
+         -->
          <img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png"
                alt="Carte de la Haute-Garonne"
                style="height:220px; width:auto; opacity:0.85;
@@ -537,19 +737,29 @@
 
     </div>
 
+  <!-- ── Écusson du département ──
+       Placé hors du .container mais dans .produit-hero : il est donc centré
+       par rapport à toute la largeur du bandeau (position absolue).
+  -->
   <div class="fiche-hero-ecusson">
          <img src="../../../../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" />
         </div>
 
     
 
+    <!-- ── Accroche courte résumant le sujet, centrée en bas du bandeau ── -->
     <div class="hero-label-bas">
     ⟹ Fleuve Emblématique de la Ville Rose ⟸
     </div>
 
 
+    <!-- ── Barre d'onglets : liens d'ancrage vers les sections de la page ── -->
     <div class="produit-nav">
       <div class="container">
+        <!-- Chaque href="#xxx" doit correspondre EXACTEMENT à l'id d'une <section>.
+             class="active" sur le premier onglet : état au chargement de la page,
+             ensuite c'est le script qui déplace cette classe au fil du défilement.
+        -->
         <div class="produit-nav-inner">
           <a href="#histoire"   class="active">📖 Histoire</a>
           <a href="#portrait"             >🌊 Portrait</a>
@@ -564,47 +774,70 @@
   <!-- ══════════════════════════════════════════
        CORPS
   ══════════════════════════════════════════ -->
+  <!-- Corps de la page, sous le bandeau. -->
   <div class="produit-body">
     <div class="container">
+      <!-- Grille 2 colonnes (voir .produit-layout) :
+             1er enfant  <div>   → colonne principale (sections)
+             2e enfant   <aside> → colonne latérale (carte d'identité)
+      -->
       <div class="produit-layout">
 
         <!-- ── COLONNE PRINCIPALE ── -->
         <div>
 
           <!-- HISTOIRE -->
+          <!-- Section 1 — HISTOIRE : récit chronologique du sujet.
+               L'id « histoire » est la cible de l'onglet href="#histoire".
+          -->
           <section class="section" id="histoire">
+            <!-- Titre de section : pastille avec émoji + intitulé. -->
             <h2 class="section-titre">
               <div class="section-titre-icon">📖</div>
               Histoire d'un fleuve toulousain
             </h2>
             <div class="histoire-texte">
               
-              <p>Née dans le massif de la Maladeta, en Espagne, la Garonne franchit les Pyrénées par le Val d'Aran avant de traverser la France du sud au nord-ouest. Toulouse doit sa naissance et son essor à ce fleuve capricieux, qui a longtemps constitué son unique voie d'échange avec le reste du royaume et l'Atlantique.</p>
+              <p>Née dans le massif de la Maladeta, en Espagne, la Garonne franchit les Pyrénées par le Val d'Aran avant de traverser la France du sud au nord-ouest. Toulouse doit sa naissance et son essor à ce fleuve capricieux : depuis sa fondation antique, la ville s'est développée en étroite relation avec lui, et il a longtemps constitué son principal axe de communication et d'échange commercial vers Bordeaux et l'océan Atlantique.</p>
 
+              <!-- Photo d'illustration centrée (max-width en ligne = 320px).
+                   Le texte alt décrit l'image : utile pour l'accessibilité et le référencement.
+                   La <figcaption> est la légende affichée sous la photo.
+              -->
               <figure class="photo-bloc photo-centre" style="max-width: 320px;">
-                   <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/garonne-toulouse.jpg"
+                   <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/rives-garonne-toulouse.jpg"
                         alt="La Garonne et ses quais de brique rose à Toulouse" />
-                    <figcaption>La Garonne au pied des quais de brique rose toulousains</figcaption>
+                    <figcaption>Les quais de la Garonne, entre le Pont Neuf et l'Hôtel-Dieu</figcaption>
                   </figure>
+              <!-- Annule les flottants éventuels avant de reprendre le texte. -->
               <div class="clearfix"></div>
 
-              <p>Dès le Moyen Âge, la batellerie prospère sur ses eaux : blé, vin et surtout pastel, cet or bleu qui a fait la fortune des marchands toulousains aux XVe et XVIe siècles, transitent par le port de la Daurade. La brique rose des hôtels particuliers de la ville témoigne encore de cette prospérité née du fleuve.</p>
+              <p>Dès le Moyen Âge, la batellerie prospère sur ses eaux : blé, vin et surtout pastel, cet or bleu qui a fait la fortune des marchands toulousains aux XVe et XVIe siècles, transitent par le port de la Daurade, faisant de la Garonne l'artère économique de ce qu'on appelait alors le « pays de cocagne ». La brique rose des hôtels particuliers de la ville témoigne encore de cette prospérité née du fleuve.</p>
+
+              <p>Le Pont Neuf, achevé en 1632 après près d'un siècle de travaux, demeure le plus ancien pont de la ville encore en usage et symbolise cette relation historique entre Toulouse et son fleuve.</p>
 
               <p>Le fleuve a aussi imposé son caractère indomptable : la terrible crue de 1875, la plus haute jamais enregistrée à Toulouse, a emporté des quartiers entiers et fait des centaines de victimes, laissant une empreinte durable dans la mémoire collective de la ville.</p>
 
-              <p>Aujourd'hui apaisée par des aménagements successifs, la Garonne demeure le fil conducteur de l'identité toulousaine, entre promenades sur ses berges réaménagées et projets de renaturation de ses rives urbaines.</p>
+              <p>Longtemps tournée vers l'industrie et le transport, puis apaisée par des aménagements successifs, la Garonne s'est progressivement réaffirmée comme un espace de promenade et de loisirs. Elle demeure le fil conducteur de l'identité toulousaine : les quais rénovés et la Prairie des Filtres comptent aujourd'hui parmi les lieux de vie les plus prisés des Toulousains, tandis que des projets de renaturation redessinent ses rives urbaines.</p>
             
             </div>
           </section>
 
           <!-- PORTRAIT -->
+          <!-- Section 2 — PORTRAIT : 4 cartes chiffres clés, encadré
+               « signes distinctifs », puis étapes ou citation selon la fiche.
+          -->
           <section class="section" id="portrait">
             <h2 class="section-titre">
               <div class="section-titre-icon">🔍</div>
               Portrait — le fleuve en chiffres
             </h2>
 
+            <!-- ── Cartes chiffres clés (grille 2 × 2) ── -->
             <div class="recette-grid">
+              <!-- Modèle d'une carte : émoji / libellé / valeur.
+                   Dupliquer ce bloc pour ajouter un chiffre (garder un nombre pair pour la grille).
+              -->
               <div class="recette-meta-card">
                 <div class="recette-meta-icon">📏</div>
                 <div>
@@ -623,6 +856,7 @@
                 <div class="recette-meta-icon">⛰️</div>
                 <div>
                   <div class="recette-meta-label">Source</div>
+                  <!-- ⚠ À harmoniser : la section Histoire situe la source dans le massif de la Maladeta. -->
                   <div class="recette-meta-val">Val d'Aran, Pyrénées</div>
                 </div>
               </div>
@@ -633,21 +867,44 @@
                   <div class="recette-meta-val">Estuaire de la Gironde</div>
                 </div>
               </div>
+              <!-- Cartes ajoutées depuis la fiche « Rives de la Garonne à Toulouse ». -->
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏛️</div>
+                <div>
+                  <div class="recette-meta-label">Repère</div>
+                  <div class="recette-meta-val">Hôtel-Dieu Saint-Jacques</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🌳</div>
+                <div>
+                  <div class="recette-meta-label">Espace vert</div>
+                  <div class="recette-meta-val">Prairie des Filtres</div>
+                </div>
+              </div>
             </div>
 
+            <!-- ── Encadré « signes distinctifs » (liste sur 2 colonnes) ── -->
             <div class="ingredients-bloc">
               <div class="ingredients-titre">✦ Repères sur les berges toulousaines</div>
               <div class="ingredients-liste">
+                <!-- Une ligne : le <span class="ingredient-qte"> est le mot-clé, suivi de sa description. -->
                 <div class="ingredient-item"><span class="ingredient-qte">Berges</span> Prairie des Filtres, quai de Tounis</div>
-                <div class="ingredient-item"><span class="ingredient-qte">Ponts</span> Pont Neuf, pont Saint-Pierre, pont Saint-Michel</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Ponts</span> Pont Neuf, pont Saint-Pierre, pont Saint-Michel, pont des Catalans</div>
                 <div class="ingredient-item"><span class="ingredient-qte">Couleur</span> Eaux teintées d'ocre après la fonte des neiges</div>
                 <div class="ingredient-item"><span class="ingredient-qte">Île</span> L'île du Ramier, grand poumon vert fluvial</div>
                 <div class="ingredient-item"><span class="ingredient-qte">Bâti</span> Brique rose des hôtels toulousains, tirée du limon</div>
                 <div class="ingredient-item"><span class="ingredient-qte">Crues</span> Repères historiques gravés sur les quais</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Hôtel-Dieu</span> Ancien hôpital fondé au XIIe siècle, dominant le fleuve</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Voie verte</span> Le chemin de Garonne longe le fleuve sur plusieurs kilomètres</div>
               </div>
             </div>
 
+            <!-- ── Liste d'étapes numérotées ── -->
             <div class="etapes-liste">
+              <!-- Une étape : pastille numérotée + titre + texte.
+                   Le numéro est écrit à la main : penser à renuméroter si on insère une étape.
+              -->
               <div class="etape">
                 <div class="etape-num">1</div>
                 <div class="etape-corps">
@@ -695,6 +952,9 @@
 
 
           <!-- LA TRAVERSÉE DE TOULOUSE -->
+          <!-- Section 3 — spécifique à ce sujet (id « traversee »).
+               Son id doit correspondre au 3e onglet de la barre de navigation.
+          -->
           <section class="section" id="traversee">
             <h2 class="section-titre">
               <div class="section-titre-icon">🏙️</div>
@@ -706,12 +966,17 @@
 
               <p>L'île du Ramier, entre les deux bras du fleuve, concentre équipements sportifs, prairies et espaces naturels protégés : c'est un véritable poumon vert au cœur de l'agglomération, refuge pour de nombreux oiseaux d'eau.</p>
 
-              <p>Le fleuve reste également un enjeu de biodiversité urbaine : silures, aloses, castors et parfois même des saumons remontant timidement le cours d'eau témoignent d'une amélioration progressive de la qualité des eaux toulousaines.</p>
+              <p>Malgré son caractère très urbain, la Garonne conserve un rôle écologique important : elle agit comme un corridor naturel qui traverse la ville et relie les espaces verts périphériques.</p>
+
+              <p>Le fleuve reste également un enjeu de biodiversité urbaine : silures, aloses, castors et parfois même des saumons remontant timidement le cours d'eau témoignent d'une amélioration progressive de la qualité des eaux toulousaines. Sur les berges et les îles, hérons cendrés, cormorans et quelques passages de loutres remontant depuis l'aval complètent cette richesse discrète.</p>
+
+              <p>La renaturation progressive de certaines portions de berges, engagée par la municipalité ces dernières années, vise à restaurer des habitats plus favorables à la faune tout en préservant les usages de promenade et de loisirs.</p>
 
             </div>
           </section>
 
           <!-- ENJEUX -->
+          <!-- Section 4 — ENJEUX : un paragraphe par menace, intitulé en gras (<strong>). -->
           <section class="section" id="enjeux">
             <h2 class="section-titre">
               <div class="section-titre-icon">⚠️</div>
@@ -722,7 +987,9 @@
               <p><strong>Étiages sévères :</strong> le réchauffement climatique accentue les basses eaux estivales, fragilisant la faune aquatique et l'irrigation des cultures riveraines.</p>
               <p><strong>Crues encore redoutées :</strong> malgré les aménagements, la mémoire des grandes crues historiques reste vive et guide la gestion urbaine des berges.</p>
               <p><strong>Espèces invasives :</strong> jussie, écrevisse de Louisiane et silure modifient l'équilibre écologique du fleuve et de ses annexes.</p>
-              <p><strong>Pression urbaine :</strong> l'imperméabilisation des sols et l'aménagement des berges réduisent les zones d'expansion naturelle des crues.</p>
+              <p><strong>Pression urbaine :</strong> l'imperméabilisation des sols et l'artificialisation des berges réduisent les zones d'expansion naturelle des crues et ont longtemps appauvri les habitats naturels, un constat qui motive aujourd'hui des projets de renaturation.</p>
+              <p><strong>Qualité de l'eau :</strong> les rejets urbains et le ruissellement en zone dense continuent de peser sur la qualité de l'eau du fleuve, malgré les efforts d'assainissement engagés.</p>
+              <p><strong>Fréquentation :</strong> la forte affluence sur les quais et la Prairie des Filtres, en particulier l'été, nécessite un entretien et une gestion adaptés des espaces publics.</p>
             
             </div>
           </section>
@@ -730,6 +997,7 @@
 
 
           <!-- OÙ FLÂNER -->
+          <!-- Section 5 — INFOS PRATIQUES : lieux à découvrir, nom du lieu en gras. -->
           <section class="section" id="ou-flaner">
             <h2 class="section-titre">
               <div class="section-titre-icon">📍</div>
@@ -741,24 +1009,78 @@
 
               <p><strong>La Prairie des Filtres</strong> vaste pelouse en bord de Garonne, lieu de rendez-vous incontournable des Toulousains les soirs d'été.</p>
 
-              <p><strong>Le quai de la Daurade et le Pont Neuf</strong> offrent la vue la plus emblématique sur les façades de brique rose se reflétant dans l'eau.</p>
+              <p><strong>Le quai de la Daurade, le Pont Neuf et le quai de Tounis</strong> offrent la vue la plus emblématique sur les façades de brique rose se reflétant dans l'eau, particulièrement recherchée au coucher du soleil.</p>
 
-              <p><strong>L'île du Ramier</strong> accessible par plusieurs passerelles, propose des sentiers ombragés et des points de vue sur les deux bras du fleuve.</p>
+              <p><strong>L'île du Ramier</strong> accessible par plusieurs passerelles, propose des sentiers ombragés et des points de vue sur les deux bras du fleuve, à l'écart de l'agitation du centre-ville.</p>
 
-              <p><strong>Le chemin de halage vers Ramonville</strong> permet de rejoindre à vélo la confluence avec le canal du Midi, à quelques kilomètres du centre.</p>
-            
+              <p><strong>Le chemin de Garonne et le chemin de halage vers Ramonville</strong> permettent de prolonger la balade à pied ou à vélo bien au-delà du centre historique, jusqu'à la confluence avec le canal du Midi.</p>
+
+            </div>
+
+            <!-- ── Parcours conseillé (repris de la fiche « Rives de la Garonne à Toulouse ») ── -->
+            <div class="ingredients-bloc" style="margin-top: 8px;">
+              <div class="ingredients-titre">✦ Parcours conseillé le long des berges</div>
+              <div class="etapes-liste">
+                <div class="etape">
+                  <div class="etape-num">1</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">Le Pont Neuf</div>
+                    <div class="etape-texte">Point de repère central, il offre l'une des plus belles vues sur la ville rose et ses reflets dans l'eau.</div>
+                  </div>
+                </div>
+                <div class="etape">
+                  <div class="etape-num">2</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">Le quai de Tounis</div>
+                    <div class="etape-texte">La promenade révèle la silhouette emblématique de l'Hôtel-Dieu Saint-Jacques face au fleuve.</div>
+                  </div>
+                </div>
+                <div class="etape">
+                  <div class="etape-num">3</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">La Prairie des Filtres</div>
+                    <div class="etape-texte">Vaste pelouse au bord de l'eau qui accueille pique-niques, sport et événements culturels toute l'année.</div>
+                  </div>
+                </div>
+                <div class="etape">
+                  <div class="etape-num">4</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">L'île du Ramier</div>
+                    <div class="etape-texte">Accessible notamment depuis le pont Saint-Michel, elle abrite parcs, équipements sportifs et espaces naturels préservés.</div>
+                  </div>
+                </div>
+                <div class="etape">
+                  <div class="etape-num">5</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">Le coucher de soleil sur les quais</div>
+                    <div class="etape-texte">En fin de journée, la lumière dorée sur les façades de brique rose attire promeneurs et photographes.</div>
+                  </div>
+                </div>
+                <div class="etape">
+                  <div class="etape-num">6</div>
+                  <div class="etape-corps">
+                    <div class="etape-titre">Les guinguettes et terrasses</div>
+                    <div class="etape-texte">De nombreux lieux de convivialité animent les rives, prolongeant la vocation sociale historique du fleuve dans la ville.</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
         </div>
 
         <!-- ── COLONNE DROITE ── -->
+        <!-- Colonne latérale (balise sémantique <aside> = contenu complémentaire).
+             Elle reste visible au défilement grâce à position: sticky.
+        -->
         <aside class="produit-aside">
 
           <!-- Carte d'identité -->
+          <!-- Carte d'identité : une ligne .aside-row par information. -->
           <div class="aside-card">
             <div class="aside-card-header">📋 Carte d'identité</div>
             <div class="aside-card-body">
+              <!-- Modèle d'une ligne : <span class="aside-label"> à gauche, <span class="aside-val"> à droite. -->
               <div class="aside-row">
                 <span class="aside-label">Région</span>
                 <span class="aside-val">Occitanie</span>
@@ -769,24 +1091,24 @@
               </div>
               <div class="aside-row">
                 <span class="aside-label">Catégorie</span>
-                <span class="aside-val">Fleuve · Patrimoine urbain et naturel</span>
+                <span class="aside-val">Fleuve · Site fluvial urbain · Patrimoine et nature</span>
               </div>
               <div class="aside-row">
                 <span class="aside-label">Saison</span>
-                <span class="aside-val">Toute l'année · crues possibles hiver/printemps</span>
+                <span class="aside-val">Toute l'année · ambiance estivale animée · crues possibles hiver/printemps</span>
               </div>
               <div class="aside-row">
                 <span class="aside-label">Occasion</span>
-                <span class="aside-val">Promenade urbaine · Balade à vélo</span>
+                <span class="aside-val">Promenade urbaine · Détente · Balade à vélo</span>
               </div>
               <div class="aside-row">
                 <span class="aside-label">LABEL / PROTECTION</span>
-                <span class="aside-val">Site Natura 2000 « Vallée de la Garonne »</span>
+                <span class="aside-val">Site Natura 2000 « Vallée de la Garonne » · Site patrimonial remarquable de Toulouse</span>
               </div>
 
               <div class="aside-row">
                 <span class="aside-label">RECONNU PAR</span>
-                <span class="aside-val">SMEAG · Agence de l'eau Adour-Garonne</span>
+                <span class="aside-val">SMEAG · Agence de l'eau Adour-Garonne · Mairie de Toulouse · Office de tourisme de Toulouse</span>
               </div>
 
             </div>
@@ -803,55 +1125,95 @@
 
 
   <script>
+    // ═══════════════════════════════════════════════════════════
+    // SCRIPT 1 — Barre d'onglets
+    //   a) Met en surbrillance l'onglet de la section visible à l'écran
+    //   b) Fait défiler la page en douceur au clic sur un onglet
+    // ═══════════════════════════════════════════════════════════
+    // 
+    // Récupère tous les liens de la barre d'onglets…
     const navLinks = document.querySelectorAll('.produit-nav a');
+    // … et toutes les sections de contenu (éléments portant la classe .section).
     const sections = document.querySelectorAll('.section');
 
+    // L'IntersectionObserver surveille quand une section entre dans l'écran.
+    // threshold: 0.4 → la section est considérée « visible » quand 40 % de sa
+    // hauteur est à l'écran. (Une section plus haute que 2,5 écrans pourrait
+    // ne jamais atteindre ce seuil : baisser la valeur si besoin.)
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // On retire d'abord .active de tous les onglets…
           navLinks.forEach(l => l.classList.remove('active'));
+          // … puis on retrouve l'onglet dont l'href vaut « #id-de-la-section »…
           const id = entry.target.id;
           const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          // … et on lui ajoute la classe .active (s'il existe).
           if (active) active.classList.add('active');
         }
       });
     }, { threshold: 0.4 });
 
+    // Lance la surveillance de chaque section.
     sections.forEach(s => observer.observe(s));
 
+    // Défilement fluide au clic sur un onglet :
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
+        // Empêche le saut brutal par défaut du navigateur vers l'ancre…
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
+        // … et fait défiler en douceur jusqu'au début de la section ciblée.
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
   </script>
 
+<!-- Lien de retour vers la fiche du département, en bas de page. -->
 <div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
 
+<!-- Pied de page commun à tout le site (styles dans style.css). -->
 <footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
 <!--  Retour flottant-->
 
+<!-- Bouton flottant « haut de page » : caché au départ, il apparaît après
+     300px de défilement (classe .visible ajoutée par le script ci-dessous).
+     aria-label et title décrivent le bouton (lecteurs d'écran / infobulle).
+-->
 <button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<!-- Flèche vers le haut dessinée en SVG. stroke="currentColor" reprend la
+     couleur du texte du bouton ; aria-hidden la masque aux lecteurs d'écran.
+-->
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
 </svg>
 </button>
 <script>
+  // ═══════════════════════════════════════════════════════════
+  // SCRIPT 2 — Bouton « haut de page »
+  // Fonction auto-exécutée (IIFE) : ses variables restent privées et
+  // n'entrent pas en conflit avec celles du script 1.
+  // ═══════════════════════════════════════════════════════════
   (function () {
+    // Le bouton flottant défini juste au-dessus.
     var btn = document.querySelector('.btn-haut-page');
     var seuil = 300; // distance de défilement (en pixels) avant apparition
 
+    // Affiche le bouton (classe .visible) si on a défilé de plus de « seuil » pixels, le cache sinon.
     function majBouton() {
       btn.classList.toggle('visible', window.scrollY > seuil);
     }
 
+    // Réévalue à chaque défilement ; passive: true = n'empêche jamais le scroll (plus fluide).
     window.addEventListener('scroll', majBouton, { passive: true });
+    // Vérification immédiate (utile si la page s'ouvre déjà défilée, ex. après rechargement).
     majBouton();
 
+    // Au clic : retour en haut de la page.
     btn.addEventListener('click', function () {
+      // Accessibilité : si l'utilisateur a demandé à réduire les animations dans
+      // son système, on remonte instantanément au lieu de défiler en douceur.
       var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
     });

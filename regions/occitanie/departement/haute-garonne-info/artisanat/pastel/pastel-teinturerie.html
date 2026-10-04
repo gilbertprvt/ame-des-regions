@@ -1,18 +1,52 @@
 <!DOCTYPE html>
+<!--
+  FICHE : La Teinturerie Traditionnelle au Bleu de Pastel
+  Site : L'Âme des Régions — Occitanie › Haute-Garonne › Pastel
+  Série pastel (même dossier) : pastel-culture.html,
+    pastel-teinturerie.html (cette page), pastel-maisons-renaissance.html
+
+  Structure de la page :
+    1. <head>  : métadonnées, polices, styles du gabarit, fiche.css, photo du bandeau
+    2. HÉRO    : logo, retour, titre, carte, écusson, sous-titre, navigation interne
+    3. CORPS   : 5 sections (Histoire, La cuve & le geste, Patrimoine, Créations & usages, Où découvrir)
+                 + colonne latérale (Carte d'identité, Voir aussi)
+    4. BAS     : lien retour, pied de page, bouton haut de page, scripts
+-->
 <html lang="fr">
 <head>
+  <!-- Encodage UTF-8 : indispensable pour afficher correctement les accents. -->
   <meta charset="UTF-8" />
+  <!-- Adaptation à la largeur de l'écran (mobile / tablette). -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Titre affiché dans l'onglet du navigateur et dans les résultats des moteurs de recherche. -->
   <title>Teinturerie Traditionnelle au Bleu de Pastel — L'Âme des Régions</title>
+  <!--
+    Feuille de style commune à tout le site (variables --ivoire, --font-titre, --font-corps, .container, pied de page…).
+    Les 6 « ../ » remontent de 6 dossiers jusqu'à la racine du site.
+  -->
   <link rel="stylesheet" href="../../../../../../style.css" />
+  <!-- Pré-connexion aux serveurs Google Fonts pour accélérer le chargement des polices. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- Polices : Playfair Display (titres, avec italique) et Source Sans 3 (texte courant). -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!--
+    Styles propres au gabarit « fiche produit ».
+    NB : ce bloc est identique dans les trois fiches pastel ; il pourrait à terme être
+    déplacé dans fiche.css pour éviter de le maintenir en triple.
+  -->
   <style>
 
     /* ─── BASE ─────────────────────────────────── */
+    /* Fond général de la page. La variable --ivoire est définie dans style.css (feuille commune du site). */
     .produit-page { background: var(--ivoire); }
 
     /* ─── BANDEAU HÉRO ─────────────────────────── */
+    /*
+       Conteneur du bandeau d'en-tête (héro).
+       Le bleu #2E3F6E sert de couleur de repli si la photo de fond (définie en fin de <head>) ne se charge pas.
+       position:relative = référence pour l'écusson positionné en absolu.
+       overflow:hidden = coupe tout ce qui dépasse du bandeau (motif, écusson).
+    */
     .produit-hero {
       background: #2E3F6E;
       color: white;
@@ -20,6 +54,10 @@
       position: relative;
       overflow: hidden;
     }
+    /*
+       Pseudo-élément décoratif : fines rayures diagonales très transparentes posées sur tout le bandeau.
+       pointer-events:none pour ne jamais bloquer les clics sur les liens situés dessous.
+    */
     .produit-hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -30,6 +68,10 @@
     }
  
     /* Topbar */
+    /*
+       Ligne du haut du bandeau : logo à gauche, bouton retour à droite (flex + space-between).
+       z-index:3 = passe au-dessus de l'écusson (z-index:1) et du titre (z-index:2).
+    */
     .produit-topbar {
       display: flex;
       justify-content: space-between;
@@ -38,6 +80,7 @@
       position: relative;
       z-index: 3;
     }
+    /* Logo texte « L'Âme des Régions », affiché dans la police des titres. */
     .produit-logo {
       font-family: var(--font-titre);
       font-size: 28px;
@@ -45,9 +88,12 @@
       color: white;
       text-decoration: none;
     }
+    /* Le mot « Âme » est mis en valeur en or (#C9A227), couleur d'accent du site. */
     .produit-logo span { color: #C9A227; }
+    /* Groupe de boutons à droite de la topbar (un seul pour l'instant, prévu pour en accueillir d'autres). */
     .produit-topbar-btns { display: flex; gap: 10px; }
 
+    /* Lien « ← Retour à la fiche Haute-Garonne » en haut à droite. */
     .produit-btn-retour {
       display: inline-flex;
       align-items: center;
@@ -59,9 +105,15 @@
       text-decoration: none;
       transition: opacity 0.18s;
     }
+    /* Au survol : léger effacement du lien. */
     .produit-btn-retour:hover { opacity: 0.7; }
 
     /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    /*
+       Sous-titre centré affiché juste au-dessus de la barre de navigation.
+       margin-top:-50px le fait remonter pour chevaucher le bas du bloc titre.
+       letter-spacing élargit l'espacement des lettres pour un effet « bandeau ».
+    */
     .hero-label-bas {
       color: white;
       font-family: var(--font-titre);
@@ -78,6 +130,10 @@
     }
 
     /* Titre héro */
+    /*
+       Grille à 2 colonnes : titre H1 (1fr, prend la place restante) + carte du département (auto, largeur de l'image).
+       align-items:end = les deux éléments sont alignés sur le bas.
+    */
     .produit-hero-body {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -87,6 +143,10 @@
       position: relative;
       z-index: 2;
     }
+    /*
+       Titre principal. clamp(28px, 5vw, 52px) = taille fluide : 28px minimum, 52px maximum, 5 % de la largeur d'écran entre les deux.
+       margin-bottom:90px libère de la place pour l'écusson et le sous-titre.
+    */
     .produit-hero-body h1 {
       font-family: var(--font-titre);
       font-size: clamp(28px, 5vw, 52px);
@@ -95,15 +155,24 @@
       color: white;
       margin-bottom: 90px;
     }
+    /* Lettrines et mots-clés du titre (balises <em>) : or et italique. */
     .produit-hero-body h1 em {
       color: #C9A227;
       font-style: italic;
     }
 
+    /* NB : classe non utilisée dans le HTML actuel – peut être supprimée sans effet. */
     .produit-hero-top {
       position: relative;
     }
 
+    /*
+       Écusson (blason) du département, centré horizontalement dans le bandeau :
+       left:50% + translateX(-50%) = centrage exact quelle que soit sa largeur.
+       Position verticale réglable via la variable --ecusson-top (30px par défaut),
+       modifiable page par page ou dans fiche.css.
+       z-index:1 = il passe DERRIÈRE le titre et la navigation.
+    */
     .fiche-hero-ecusson {
       display: flex;
       align-items: center;
@@ -117,6 +186,7 @@
       z-index: 1;
       pointer-events: none;
     }
+    /* Image de l'écusson : hauteur fixe 200px, largeur proportionnelle, ombre portée douce. */
     .fiche-hero-ecusson img {
        height: 200px;
       width: auto;
@@ -124,17 +194,23 @@
     }
 
     /* Barre de navigation interne */
+    /* Barre de navigation interne (ancres vers les sections), sur fond noir semi-transparent. */
     .produit-nav {
       background: rgba(0,0,0,0.25);
       border-top: 1px solid rgba(255,255,255,0.1);
       position: relative;
       z-index: 3;
     }
+    /* overflow-x:auto = sur petit écran, les onglets défilent horizontalement au lieu de passer à la ligne. */
     .produit-nav-inner {
       display: flex;
       gap: 0;
       overflow-x: auto;
     }
+    /*
+       Un onglet de navigation. white-space:nowrap empêche le texte de se couper.
+       La bordure basse transparente est réservée pour l'état actif / survol (évite un saut de mise en page).
+    */
     .produit-nav a {
       padding: 13px 22px;
       font-size: 13px;
@@ -145,11 +221,21 @@
       border-bottom: 2px solid transparent;
       transition: all 0.18s;
     }
+    /* Survol : texte blanc et soulignement discret. */
     .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    /*
+       Onglet de la section en cours de lecture : texte doré + soulignement or.
+       La classe .active est ajoutée / retirée automatiquement par le script en bas de page.
+    */
     .produit-nav a.active { color: #F0D98C; border-bottom-color: #C9A227; }
 
     /* ─── CORPS ─────────────────────────────────── */
+    /* Zone de contenu sous le bandeau : 48px d'espace en haut, 80px en bas. */
     .produit-body { padding: 48px 0 80px; }
+    /*
+       Mise en page à 2 colonnes : contenu principal (1fr) + colonne latérale de 340px.
+       align-items:start = indispensable pour que la colonne latérale « sticky » fonctionne.
+    */
     .produit-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
@@ -157,7 +243,12 @@
       align-items: start;
     }
 
+    /*
+       Chaque grande section de contenu (Histoire, Savoir-faire, Patrimoine…).
+       Son attribut id sert de cible aux liens de la barre de navigation.
+    */
     .section { margin-bottom: 40px; }
+    /* Titre H2 de section : icône + texte alignés, filet beige en dessous. */
     .section-titre {
       display: flex;
       align-items: center;
@@ -170,6 +261,7 @@
       padding-bottom: 10px;
       border-bottom: 2px solid #E8DEC8;
     }
+    /* Pastille carrée bleue (36×36px) contenant l'emoji de la section. */
     .section-titre-icon {
       width: 36px; height: 36px;
       background: #2E3F6E;
@@ -181,6 +273,7 @@
       flex-shrink: 0;
     }
 
+    /* Bloc de texte courant (paragraphes), utilisé dans les sections Histoire, Usages et Où découvrir. */
     .histoire-texte {
       font-size: 15px;
       line-height: 1.8;
@@ -189,6 +282,7 @@
     }
     .histoire-texte p { margin-bottom: 14px; }
 
+    /* Encadré de citation : fond crème, bordure dorée à gauche, coins arrondis à droite. */
     .citation-bloc {
       background: #F7F3EC;
       border-left: 4px solid #C9A227;
@@ -196,6 +290,7 @@
       margin: 22px 0;
       border-radius: 0 8px 8px 0;
     }
+    /* Texte de la citation : police des titres, italique, brun. */
     .citation-bloc p {
       font-family: var(--font-titre);
       font-style: italic;
@@ -204,6 +299,7 @@
       margin: 0 0 6px 0;
       line-height: 1.6;
     }
+    /* Source de la citation, en petit et non italique. */
     .citation-bloc cite {
       font-size: 12px;
       color: #8B7355;
@@ -211,12 +307,19 @@
       font-style: normal;
     }
 
+    /*
+       Grille 2×2 des cartes « chiffres clés ».
+       NB : les noms de classes recette-*, ingredients-* et vin-* sont hérités du gabarit
+       des fiches gastronomiques (recette, ingrédients, accords vins). Ils sont réutilisés ici
+       pour d'autres contenus : ne pas les renommer sans mettre à jour le HTML ET fiche.css.
+    */
     .recette-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
+    /* Une carte chiffre clé : icône à gauche, libellé + valeur à droite. */
     .recette-meta-card {
       background: white;
       border: 1px solid #E0DACE;
@@ -226,7 +329,9 @@
       align-items: center;
       gap: 12px;
     }
+    /* Emoji de la carte. */
     .recette-meta-icon { font-size: 24px; }
+    /* Petit libellé en majuscules au-dessus de la valeur. */
     .recette-meta-label {
       font-size: 10px;
       text-transform: uppercase;
@@ -235,6 +340,7 @@
       font-family: var(--font-corps);
       margin-bottom: 2px;
     }
+    /* Valeur mise en avant (gras, bleu, police des titres). */
     .recette-meta-val {
       font-size: 15px;
       font-weight: 700;
@@ -242,6 +348,7 @@
       font-family: var(--font-titre);
     }
 
+    /* Encadré blanc « matières et outils » / « éléments ». */
     .ingredients-bloc {
       background: white;
       border: 1px solid #E0DACE;
@@ -249,6 +356,7 @@
       padding: 20px 22px;
       margin-bottom: 20px;
     }
+    /* Titre de l'encadré, petites capitales espacées. */
     .ingredients-titre {
       font-size: 11px;
       text-transform: uppercase;
@@ -258,11 +366,13 @@
       margin-bottom: 14px;
       font-family: var(--font-corps);
     }
+    /* Liste sur 2 colonnes (1 seule colonne sous 860px). */
     .ingredients-liste {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px 24px;
     }
+    /* Une ligne : étiquette dorée + description, séparées des suivantes par un pointillé. */
     .ingredient-item {
       display: flex;
       align-items: baseline;
@@ -273,6 +383,7 @@
       padding-bottom: 7px;
       border-bottom: 1px dashed #E8DEC8;
     }
+    /* Étiquette dorée à gauche (Matière, Outil…). min-width:60px aligne toutes les descriptions. */
     .ingredient-qte {
       font-weight: 600;
       color: #C9A227;
@@ -280,13 +391,16 @@
       flex-shrink: 0;
     }
 
+    /* Liste verticale des étapes numérotées. */
     .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    /* Une étape : grille 40px (rond numéroté) + texte. */
     .etape {
       display: grid;
       grid-template-columns: 40px 1fr;
       gap: 14px;
       align-items: start;
     }
+    /* Rond bleu contenant le numéro de l'étape. */
     .etape-num {
       width: 40px; height: 40px;
       background: #2E3F6E;
@@ -300,7 +414,9 @@
       font-size: 15px;
       flex-shrink: 0;
     }
+    /* padding-top:9px aligne la première ligne de texte sur le centre du rond numéroté. */
     .etape-corps { padding-top: 9px; }
+    /* Titre de l'étape : petites majuscules dorées. */
     .etape-titre {
       font-size: 13px;
       font-weight: 600;
@@ -310,6 +426,7 @@
       font-family: var(--font-corps);
       margin-bottom: 4px;
     }
+    /* Description de l'étape. */
     .etape-texte {
       font-size: 14px;
       line-height: 1.7;
@@ -317,7 +434,9 @@
       font-family: var(--font-corps);
     }
 
+    /* Liste de cartes « lieux à visiter » (nom hérité des accords mets-vins du gabarit). */
     .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    /* Une carte lieu : icône, nom + description, badge à droite. */
     .vin-item {
       background: white;
       border: 1px solid #E0DACE;
@@ -327,7 +446,9 @@
       align-items: center;
       gap: 14px;
     }
+    /* Emoji du lieu. */
     .vin-icon { font-size: 22px; }
+    /* Nom du lieu. */
     .vin-nom {
       font-family: var(--font-titre);
       font-size: 15px;
@@ -335,7 +456,9 @@
       color: #2E3F6E;
       margin-bottom: 2px;
     }
+    /* Description courte du lieu. */
     .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    /* Pastille d'étiquette (Incontournable, Musée…). margin-left:auto la pousse tout à droite. */
     .vin-badge {
       margin-left: auto;
       background: rgba(46,63,110,0.08);
@@ -347,6 +470,7 @@
       white-space: nowrap;
     }
 
+    /* Colonne latérale. position:sticky + top:24px = elle reste visible en haut de l'écran pendant le défilement. */
     .produit-aside {
       position: sticky;
       top: 24px;
@@ -354,12 +478,14 @@
       flex-direction: column;
       gap: 16px;
     }
+    /* Carte de la colonne latérale (Carte d'identité, Voir aussi). */
     .aside-card {
       background: white;
       border: 1px solid #E0DACE;
       border-radius: 14px;
       overflow: hidden;
     }
+    /* En-tête bleu de la carte. */
     .aside-card-header {
       background: #2E3F6E;
       color: white;
@@ -371,7 +497,9 @@
       align-items: center;
       gap: 8px;
     }
+    /* Contenu de la carte. */
     .aside-card-body { padding: 16px 18px; }
+    /* Ligne « libellé / valeur » de la carte d'identité, séparée par un filet. */
     .aside-row {
       display: flex;
       justify-content: space-between;
@@ -380,7 +508,9 @@
       border-bottom: 1px solid #F0EAD6;
       gap: 10px;
     }
+    /* Pas de filet sous la dernière ligne. */
     .aside-row:last-child { border-bottom: none; }
+    /* Libellé à gauche (petites majuscules). flex-shrink:0 l'empêche de se compresser. */
     .aside-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -389,6 +519,7 @@
       font-family: var(--font-corps);
       flex-shrink: 0;
     }
+    /* Valeur à droite, alignée à droite. */
     .aside-val {
       font-size: 13px;
       font-weight: 600;
@@ -396,7 +527,9 @@
       font-family: var(--font-corps);
       text-align: right;
     }
+    /* Pile verticale des liens « Voir aussi ». */
     .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    /* Un lien vers une fiche sœur, présenté comme un bouton. */
     .aside-lien {
       display: flex;
       align-items: center;
@@ -412,9 +545,16 @@
       font-weight: 500;
       transition: all 0.18s;
     }
+    /* Survol : le bouton passe en bleu plein, texte blanc. */
     .aside-lien:hover { background: #2E3F6E; color: white; border-color: #2E3F6E; }
+    /* Petite flèche → poussée à droite du lien. */
     .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
 
+    /*
+       Bouton retour flottant en bas à gauche, caché par défaut (affiché avec la classe .visible).
+       NB : aucun élément du HTML actuel n'utilise cette classe – le bouton flottant réellement
+       présent est .btn-haut-page, stylé dans une feuille commune (style.css ou fiche.css).
+    */
     .btn-retour-fixe {
       display: none;
       position: fixed;
@@ -435,9 +575,12 @@
       transition: background 0.18s, transform 0.18s;
     }
     .btn-retour-fixe:hover { background: #1F2C4E; transform: translateY(-2px); }
+    /* État visible du bouton retour flottant. */
     .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
 
+    /* Bloc photo (<figure>) : image + légende. */
     .photo-bloc { margin: 24px 0; }
+    /* Image : largeur adaptative (max 600px), coins arrondis, ombre. */
     .photo-bloc img {
       width: 100%;
       max-width: 600px;
@@ -446,6 +589,7 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
       display: block;
     }
+    /* Légende de la photo, petite et en italique. */
     .photo-bloc figcaption {
       font-size: 12px;
       color: #8B7355;
@@ -453,21 +597,29 @@
       font-family: var(--font-corps);
       margin-top: 8px;
     }
+    /* Trois placements possibles : photo flottante à gauche, à droite (le texte l'entoure), ou centrée. */
     .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
     .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
     .photo-centre { margin: 24px auto; text-align: center; }
     .photo-centre img { max-width: 700px; }
+    /* Annule les flottants : le contenu suivant repasse sous la photo. */
     .clearfix::after { content: ''; display: block; clear: both; }
+    /* Sous 680px : les photos flottantes deviennent centrées et pleine largeur. */
     @media (max-width: 680px) {
       .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
     }
 
+    /* Tablette (≤ 860px) : une seule colonne, la colonne latérale passe sous le contenu et n'est plus collante. */
     @media (max-width: 860px) {
       .produit-layout { grid-template-columns: 1fr; }
       .produit-aside { position: static; }
       .recette-grid { grid-template-columns: 1fr 1fr; }
       .ingredients-liste { grid-template-columns: 1fr; }
     }
+    /*
+       Mobile (≤ 560px) : cartes chiffres clés sur 1 colonne, carte du département sous le titre,
+       écusson replacé dans le flux normal (plus de positionnement absolu).
+    */
     @media (max-width: 560px) {
       .recette-grid { grid-template-columns: 1fr; }
       .produit-hero-body { grid-template-columns: 1fr; }
@@ -480,10 +632,13 @@
 
   </style>
   <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <!-- fiche.css est chargé APRÈS le bloc <style> ci-dessus : en cas de conflit, ses règles l'emportent. -->
   <link rel="stylesheet" href="../../../../../../fiche.css" />
   <!-- Photo du bandeau propre à cette page -->
+  <!-- Pour changer la photo du bandeau de cette page, modifier uniquement ce chemin d'image. -->
   <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-haute-garonne.jpg'); }</style>
 </head>
+<!-- La classe produit-page applique le fond ivoire défini en tête de feuille. -->
 <body class="produit-page">
 
   <!-- ══════════════════════════════════════════
@@ -492,8 +647,11 @@
   <div class="produit-hero">
     <div class="container">
 
+      <!-- Barre supérieure : logo du site à gauche, retour à la fiche département à droite. -->
       <div class="produit-topbar">
+        <!-- Logo cliquable : renvoie à la page d'accueil du site. -->
         <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <!-- Bouton de retour vers la fiche départementale Haute-Garonne. -->
         <div class="produit-topbar-btns">
           <a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour">
             ← Retour à la fiche Haute-Garonne
@@ -501,12 +659,19 @@
         </div>
       </div>
 
+    <!-- Corps du bandeau : titre H1 à gauche + silhouette du département à droite. -->
     <div class="produit-hero-body">
       <div>
 
+          <!--
+            Titre principal de la page.
+            Les <em> colorent en or les initiales et mots-clés ; les <br> imposent les retours à la ligne ;
+            le <span> décalé de 100px crée l'effet « en escalier » sur la 2e ligne.
+          -->
           <h1><em>L</em>a <em>T</em>einturerie<br><span style="padding-left: 100px;">au</span> <br><em>B</em>leu de <em>P</em>astel</h1>
 
         </div>
+         <!-- Silhouette de la Haute-Garonne. Styles en ligne : 220px de haut, légère transparence, ombre portée. -->
          <img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png"
                alt="Carte de la Haute-Garonne"
                style="height:220px; width:auto; opacity:0.85;
@@ -516,17 +681,28 @@
 
     </div>
 
+  <!--
+    Écusson (blason) de la Haute-Garonne, centré dans le bandeau.
+    NB : le </div> juste au-dessus ferme le .container ; l'écusson est donc placé
+    par rapport à toute la largeur du bandeau (.produit-hero).
+  -->
   <div class="fiche-hero-ecusson">
          <img src="../../../../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" />
         </div>
 
 
 
+    <!-- Sous-titre décoratif encadré de flèches ⟹ ⟸. -->
     <div class="hero-label-bas">
     ⟹ La Cuve & l'Or Bleu du Teinturier ⟸
     </div>
 
 
+    <!--
+      Navigation interne : chaque lien pointe vers l'id d'une section (#histoire, #savoir-faire…).
+      La classe « active » est ajoutée / retirée automatiquement par le script en bas de page.
+      Pour ajouter un onglet : créer le lien ici ET une <section class="section" id="..."> correspondante.
+    -->
     <div class="produit-nav">
       <div class="container">
         <div class="produit-nav-inner">
@@ -545,12 +721,17 @@
   ══════════════════════════════════════════ -->
   <div class="produit-body">
     <div class="container">
+      <!-- Grille principale : colonne de contenu (sections) + colonne latérale (aside). -->
       <div class="produit-layout">
 
         <!-- ── COLONNE PRINCIPALE ── -->
         <div>
 
           <!-- HISTOIRE -->
+          <!--
+            id="histoire" : cible de l'onglet 📖 Histoire.
+            Contenu : paragraphes, une photo centrée avec légende et un encadré citation.
+          -->
           <section class="section" id="histoire">
             <h2 class="section-titre">
               <div class="section-titre-icon">📖</div>
@@ -558,17 +739,25 @@
             </h2>
             <div class="histoire-texte">
 
+              <!-- NB : « Bourgos » s'écrit normalement « Burgos » (ville de Castille, grand marché lainier). -->
               <p>Teindre en bleu fut longtemps le grand défi des artisans européens : jusqu'au XVIe siècle, le pastel des teinturiers reste, avec l'indigo importé d'Orient, la seule matière capable de fixer un bleu franc et durable sur laine, lin ou soie. Le Lauragais et le Toulousain, où la plante pousse en abondance, deviennent tout naturellement le foyer d'une véritable industrie de la teinture, alimentant les grandes draperies de Rouen, d'Anvers ou de Bourgos.</p>
 
+              <!--
+                Photo centrée avec légende (<figcaption>).
+                Placements possibles : photo-gauche / photo-droite (le texte l'entoure) ou photo-centre.
+                Le max-width en ligne limite ici la largeur à 340px.
+              -->
               <figure class="photo-bloc photo-centre" style="max-width: 340px;">
                    <img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/cuve-teinture-pastel.jpg"
                         alt="Cuve de teinture au bleu de pastel" />
                     <figcaption>Étoffe plongée dans une cuve de teinture au pastel, avant son oxydation à l'air</figcaption>
                   </figure>
+              <!-- Annule un éventuel flottant de la photo avant le paragraphe suivant. -->
               <div class="clearfix"></div>
 
               <p>Le métier de teinturier obéit à un vocabulaire et à des gestes précis, transmis d'atelier en atelier : en occitan, on dit baigna, recolgna et bira pour baigner, remuer et retourner la pâte de pastel, et pallier une cuve pour la brasser d'un mouvement horizontal, en évitant d'y introduire trop d'air. En 1669, dans son Instruction pour les teintures, Colbert lui-même codifie treize nuances de bleu, du « bleu naissant » au « bleu mourant », preuve de la sophistication atteinte par ce savoir-faire.</p>
 
+              <!-- Encadré citation : <p> = texte cité, <cite> = source. -->
               <div class="citation-bloc">
                 <p>Le tissu ressort de la cuve encore jaune-vert : c'est au contact de l'air, sous l'effet de l'oxydation, qu'il devient bleu comme par magie.</p>
                 <cite>— Tradition orale des teinturiers du pastel</cite>
@@ -579,13 +768,19 @@
             </div>
           </section>
 
+          <!-- NB : le commentaire ci-dessous vient du gabarit de la fiche « Culture » ; cette section est en réalité « La cuve & le geste du teinturier ». -->
           <!-- CULTURE & RÉCOLTE -->
+          <!--
+            id="savoir-faire" : cible du 2e onglet.
+            Contenu : 4 cartes chiffres clés, un encadré étiquettes/descriptions, puis 6 étapes numérotées.
+          -->
           <section class="section" id="savoir-faire">
             <h2 class="section-titre">
               <div class="section-titre-icon">⚗️</div>
               La cuve & le geste du teinturier
             </h2>
 
+            <!-- 4 cartes « chiffres clés » (grille 2×2, une seule colonne sur mobile). -->
             <div class="recette-grid">
               <div class="recette-meta-card">
                 <div class="recette-meta-icon">🧪</div>
@@ -617,6 +812,7 @@
               </div>
             </div>
 
+            <!-- Encadré : étiquette dorée + description, sur 2 colonnes. -->
             <div class="ingredients-bloc">
               <div class="ingredients-titre">✦ De l'agranat à l'étoffe teinte — matières et vocabulaire</div>
               <div class="ingredients-liste">
@@ -629,6 +825,7 @@
               </div>
             </div>
 
+            <!-- Étapes numérotées. Pour en ajouter une : copier un bloc <div class="etape"> et incrémenter le numéro. -->
             <div class="etapes-liste">
               <div class="etape">
                 <div class="etape-num">1</div>
@@ -677,6 +874,7 @@
 
 
           <!-- PATRIMOINE À VISITER -->
+          <!-- id="patrimoine" : cartes de lieux (icône, nom, description, badge à droite). -->
           <section class="section" id="patrimoine">
             <h2 class="section-titre">
               <div class="section-titre-icon">🏛️</div>
@@ -711,6 +909,10 @@
           </section>
 
           <!-- CRÉATIONS & USAGES -->
+          <!--
+            id="variantes" : nom hérité du gabarit (variantes de recette), conservé pour que l'onglet de la nav fonctionne.
+            Contenu : un paragraphe par usage, intitulé en gras.
+          -->
           <section class="section" id="variantes">
             <h2 class="section-titre">
               <div class="section-titre-icon">🔀</div>
@@ -728,6 +930,7 @@
 
 
           <!-- OÙ DÉCOUVRIR -->
+          <!-- id="ou-decouvrir" : paragraphe d'introduction puis un paragraphe par lieu (nom en gras). -->
           <section class="section" id="ou-decouvrir">
             <h2 class="section-titre">
               <div class="section-titre-icon">📍</div>
@@ -751,11 +954,16 @@
         </div>
 
         <!-- ── COLONNE DROITE ── -->
+        <!--
+          Colonne latérale « collante » : Carte d'identité + liens Voir aussi.
+          Sous 860px de large, elle passe sous le contenu principal.
+        -->
         <aside class="produit-aside">
 
           <!-- Carte d'identité -->
           <div class="aside-card">
             <div class="aside-card-header">📋 Carte d'identité</div>
+            <!-- Une ligne .aside-row par information : libellé à gauche, valeur à droite. -->
             <div class="aside-card-body">
               <div class="aside-row">
                 <span class="aside-label">Région</span>
@@ -794,6 +1002,7 @@
           <div class="aside-card">
             <div class="aside-card-header">🔗 Voir aussi</div>
             <div class="aside-card-body">
+              <!-- Liens vers les deux autres fiches de la série pastel (même dossier, d'où le « ./ »). -->
               <div class="aside-liens">
                 <a href="./pastel-culture.html" class="aside-lien">
                   🌱 Culture du pastel, « or bleu »
@@ -815,14 +1024,25 @@
 
 
 
+  <!--
+    SCRIPT 1 — Navigation interne :
+      1) surligne automatiquement l'onglet de la section visible à l'écran ;
+      2) remplace le saut brutal vers une ancre par un défilement doux.
+  -->
   <script>
+    // Tous les onglets de la barre de navigation
     const navLinks = document.querySelectorAll('.produit-nav a');
+    // Toutes les sections de contenu à surveiller
     const sections = document.querySelectorAll('.section');
 
+    // IntersectionObserver : prévient quand une section entre dans l'écran.
+    // threshold:0.4 = la section doit être visible à 40 % pour être considérée « en cours de lecture ».
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // On retire d'abord la classe active de tous les onglets…
           navLinks.forEach(l => l.classList.remove('active'));
+          // …puis on l'ajoute à l'onglet dont le href correspond à l'id de la section visible.
           const id = entry.target.id;
           const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
           if (active) active.classList.add('active');
@@ -830,10 +1050,13 @@
       });
     }, { threshold: 0.4 });
 
+    // Lancement de la surveillance sur chaque section.
     sections.forEach(s => observer.observe(s));
 
+    // Au clic sur un onglet : défilement doux jusqu'à la section au lieu du saut instantané.
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
+        // Bloque le comportement par défaut du lien (saut brutal + modification de l'URL).
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -842,29 +1065,45 @@
 
   </script>
 
+<!-- Lien de retour en bas de page vers la fiche départementale. -->
 <div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
 
+<!-- Pied de page commun à tout le site. -->
 <footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
 <!--  Retour flottant-->
 
+<!--
+  Bouton flottant « haut de page » (et non un bouton retour, malgré le commentaire ci-dessus).
+  Il apparaît après 300px de défilement : la classe .visible est ajoutée par le script suivant.
+  aria-label et title le rendent compréhensible pour les lecteurs d'écran et au survol.
+  L'icône est une flèche vers le haut dessinée en SVG (couleur = couleur du texte, via currentColor).
+-->
 <button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
 </svg>
 </button>
+<!-- SCRIPT 2 — Bouton « haut de page ». -->
 <script>
+  // Fonction auto-exécutée : isole ses variables du reste de la page.
   (function () {
+    // Le bouton à piloter
     var btn = document.querySelector('.btn-haut-page');
     var seuil = 300; // distance de défilement (en pixels) avant apparition
 
+    // Affiche le bouton si on a défilé de plus de « seuil » pixels, le masque sinon.
     function majBouton() {
       btn.classList.toggle('visible', window.scrollY > seuil);
     }
 
+    // Recalcul à chaque défilement. passive:true = ne ralentit pas le défilement.
     window.addEventListener('scroll', majBouton, { passive: true });
+    // Vérification immédiate au chargement (utile si la page s'ouvre déjà défilée).
     majBouton();
 
+    // Au clic : retour en haut de page.
     btn.addEventListener('click', function () {
+      // Respecte le réglage système « réduire les animations » : saut direct au lieu d'un défilement animé.
       var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
     });

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<!--
+  ════════════════════════════════════════════════════════════════
+  L'ÂME DES RÉGIONS — Fiche « Le Volvestre et les coteaux »
+  Fichier : volvestre-coteaux.html
+  Catégorie affichée : ⟹ Paysages emblématiques ⟸
+  ────────────────────────────────────────────────────────────────
+  STRUCTURE DE LA PAGE
+    1. <head>     : métadonnées, feuilles de style communes (style.css,
+                    fiche.css), styles propres au gabarit « fiche »,
+                    photo du bandeau.
+    2. HÉRO       : barre supérieure (logo + retour), titre, carte du
+                    département, écusson, bandeau de catégorie,
+                    barre de navigation interne (onglets).
+    3. CORPS      : colonne principale (5 sections : Histoire/Identité,
+                    Portrait, Paysage, Préservation, Où observer)
+                    + colonne de droite (Carte d'identité).
+    4. SCRIPT     : surbrillance de l'onglet actif + défilement fluide.
+    5. PIED       : lien retour, pied de page, bouton « haut de page ».
+  ────────────────────────────────────────────────────────────────
+  CHEMINS : tous les liens commencent par ../../../../../../ pour
+  remonter à la racine du site depuis le dossier de cette fiche.
+  Pour créer une nouvelle fiche : dupliquer ce fichier puis modifier
+  le <title>, la photo du bandeau, le <h1>, le bandeau de catégorie,
+  le contenu des 5 sections et la carte d'identité.
+  ════════════════════════════════════════════════════════════════
+-->
+<html lang="fr">
+<head>
+  <!-- Encodage UTF-8 : indispensable pour les accents et les émojis. -->
+  <meta charset="UTF-8" />
+  <!-- Adapte la page à la largeur de l'écran (mobiles, tablettes). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Titre affiché dans l'onglet du navigateur et dans les résultats de recherche. -->
+  <title>Le Volvestre et les coteaux — L'Âme des Régions</title>
+  <!-- Feuille de style générale du site : variables (couleurs, polices), .container, pied de page, bouton haut de page… -->
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <!-- Polices Google : Playfair Display (titres) et Source Sans 3 (texte courant).
+       preconnect ouvre la connexion au serveur de polices en avance pour accélérer l'affichage. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- STYLES DU GABARIT « FICHE »
+       Identiques dans toutes les fiches : toute modification ici doit être reportée dans les autres fiches
+       (ou, mieux, déplacée dans fiche.css). Les règles de fiche.css, chargée APRÈS, l'emportent en cas de conflit. -->
+  <style>
+    /* ─── BASE ─────────────────────────────────── */
+    /* Fond ivoire de toute la page (variable --ivoire définie dans style.css). */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    /* Bandeau du haut : fond bleu par défaut, remplacé par une photo via fiche.css et le <style> propre à la page.
+       position:relative sert de repère aux éléments positionnés en absolu (écusson, motif) ; overflow:hidden coupe ce qui déborde. */
+    .produit-hero {
+      background: #2C4A7C; /* couleur de secours si la photo ne charge pas */
+      color: white;
+      padding: 22px 0 0; /* 22 px en haut, rien en bas : la barre de navigation colle au bord */
+      position: relative;
+      overflow: hidden;
+    }
+    /* Motif décoratif de fines rayures diagonales (blanc à 2 % d'opacité) superposé au bandeau.
+       pointer-events:none : le motif ne bloque pas les clics sur les liens situés dessous. */
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    /* Barre supérieure : logo à gauche, bouton « Retour » à droite (flex + space-between).
+       z-index:3 la place au-dessus de l'écusson (z-index:1) et du titre (z-index:2). */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    /* Logo texte « L'Âme des Régions » en police de titre (Playfair Display). */
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    /* Le mot « Âme » est coloré en ocre, couleur d'accent du site. */
+    .produit-logo span { color: #C8843A; }
+    /* Conteneur des boutons de la barre supérieure (prévu pour en accueillir plusieurs). */
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    /* Lien « ← Retour à la fiche Haute-Garonne » : texte blanc sans soulignement. */
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    /* Au survol, le lien devient légèrement transparent (transition de 0,18 s). */
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    /* Bandeau-titre de catégorie (« ⟹ … ⟸ ») centré en bas du héro.
+       margin-top négatif (-50px) : il remonte pour chevaucher le bas de la zone titre. */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em; /* lettres espacées pour un effet « bandeau » */
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px; /* remonte le bandeau sous le titre */
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3; /* au-dessus de l'écusson */
+    }
+
+    /* Titre héro */
+    /* Zone titre du héro : grille à 2 colonnes → titre (1fr) | carte du département (largeur auto). */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto; /* titre | carte */
+      gap: 24px;
+      align-items: end; /* titre et carte alignés par le bas */
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    /* Titre principal de la fiche ; taille fluide entre 28 px et 52 px selon la largeur d'écran (clamp).
+       margin-bottom:90px laisse de la place au bandeau de catégorie en dessous. */
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px); /* min 28 px, idéal 5 % de la largeur, max 52 px */
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    /* Lettrines du titre (balises <em>) : ocre et italique. */
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    /* Réservé à une éventuelle zone supérieure du héro.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .produit-hero-top {
+      position: relative;
+    }
+
+    /* Écusson du département, centré horizontalement en position absolue (left 50% + translateX(-50%)).
+       La hauteur depuis le haut est réglable par la variable --ecusson-top (30 px par défaut).
+       z-index:1 : il passe derrière le texte ; pointer-events:none : il ne gêne pas les clics. */
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%); /* recentre l'écusson sur son milieu */
+      top: var(--ecusson-top, 30px); /* modifiable page par page avec --ecusson-top */
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Taille de l'écusson (200 px de haut) et ombre portée douce. */
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    /* Barre de navigation interne (ancres vers les sections), assombrie à 25 % pour rester lisible sur la photo. */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    /* Liens alignés en ligne ; défilement horizontal sur petit écran si les onglets ne tiennent pas. */
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    /* Onglet de navigation : blanc semi-transparent, bordure basse invisible qui s'allume au survol / quand actif. */
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap; /* un onglet ne passe jamais à la ligne */
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    /* Survol : texte blanc plein et soulignement léger. */
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    /* Onglet de la section visible à l'écran (classe ajoutée par le script en bas de page) : texte doré + soulignement ocre. */
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    /* Espacement vertical autour du contenu principal. */
+    .produit-body { padding: 48px 0 80px; }
+    /* Mise en page en 2 colonnes : contenu (1fr) | colonne latérale fixe de 340 px. */
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px; /* contenu | colonne latérale */
+      gap: 36px;
+      align-items: start; /* indispensable pour que position:sticky fonctionne à droite */
+    }
+
+    /* Chaque grande section de la fiche (Histoire, Portrait, …) est espacée de 40 px. */
+    .section { margin-bottom: 40px; }
+    /* Titre de section (h2) : icône + texte alignés, couleur bleue, filet beige en dessous. */
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    /* Pastille carrée bleue contenant l'émoji de la section. */
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    /* Texte courant des sections : 15 px, interligne aéré (1.8) pour le confort de lecture. */
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    /* Espace entre deux paragraphes. */
+    .histoire-texte p { margin-bottom: 14px; }
+
+    /* Encadré de citation (fond crème, filet ocre à gauche).
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    /* Texte de la citation en italique, police de titre.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    /* Source de la citation, en petit et en marron clair.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    /* Grille 2 × 2 des cartes de chiffres clés (nom hérité du gabarit « recette » du site). */
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    /* Carte blanche d'un chiffre clé : icône à gauche, libellé + valeur à droite. */
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    /* Émoji de la carte. */
+    .recette-meta-icon { font-size: 24px; }
+    /* Libellé de la carte (petites capitales marron). */
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    /* Valeur de la carte (gras, bleu, police de titre). */
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    /* Encadré blanc « ✦ … » listant les caractéristiques (nom hérité du gabarit « recette »). */
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    /* Titre de l'encadré en petites capitales. */
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    /* Liste des caractéristiques sur 2 colonnes. */
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    /* Une ligne de caractéristique, séparée de la suivante par un pointillé. */
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    /* Mot-clé en début de ligne (ocre, gras, largeur mini 60 px pour aligner les textes). */
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px; /* aligne les descriptions entre elles */
+      flex-shrink: 0;
+    }
+
+    /* Liste verticale des étapes numérotées. */
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    /* Une étape : pastille numérotée (40 px) | texte. */
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr; /* pastille | texte */
+      gap: 14px;
+      align-items: start;
+    }
+    /* Pastille ronde bleue portant le numéro de l'étape. */
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%; /* rond parfait */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    /* Petit décalage vers le bas pour aligner le titre de l'étape sur le centre de la pastille. */
+    .etape-corps { padding-top: 9px; }
+    /* Titre de l'étape en petites capitales ocre. */
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    /* Description de l'étape. */
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    /* Liste de cartes « accord / vin » (gabarit commun du site).
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    /* Carte d'un élément de la liste « vins ».
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    /* Émoji de la carte « vin ».
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vin-icon { font-size: 22px; }
+    /* Nom de l'élément « vin ».
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    /* Description courte de l'élément « vin ».
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    /* Pastille poussée à droite (margin-left:auto).
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    /* Colonne de droite « collante » : elle reste visible à 24 px du haut pendant le défilement. */
+    .produit-aside {
+      position: sticky; /* reste visible pendant le défilement */
+      top: 24px; /* distance au haut de l'écran une fois « collée » */
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    /* Carte blanche arrondie de la colonne de droite. */
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    /* En-tête bleu de la carte (« 📋 Carte d'identité »). */
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* Contenu de la carte. */
+    .aside-card-body { padding: 16px 18px; }
+    /* Une ligne libellé | valeur, séparée par un filet beige. */
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    /* Pas de filet sous la dernière ligne. */
+    .aside-row:last-child { border-bottom: none; }
+    /* Libellé à gauche (petites capitales marron, ne rétrécit jamais). */
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    /* Valeur alignée à droite. */
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    /* Encadré doré pour un label officiel (AOP, etc.).
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    /* Émoji / logo du label.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    /* Nom du label.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    /* Description du label.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    /* Liste de liens complémentaires dans la colonne de droite.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    /* Lien complémentaire en forme de bouton crème.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    /* Survol : le bouton passe en bleu, texte blanc.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    /* Petite flèche poussée à droite du lien.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    /* Bouton flottant de retour en bas à gauche, caché par défaut (display:none).
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    /* Survol : bleu plus foncé et léger soulèvement.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    /* Affichage du bouton quand la classe .visible est ajoutée.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* Bloc photo (<figure>) inséré dans le texte. */
+    .photo-bloc { margin: 24px 0; }
+    /* Image responsive : elle occupe la largeur disponible sans dépasser 600 px, coins arrondis + ombre. */
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px; /* ne dépasse jamais 600 px */
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    /* Légende de la photo, en italique. */
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    /* Variante : photo flottante à gauche, le texte l'entoure.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    /* Variante : photo flottante à droite, le texte l'entoure.
+       (Style du gabarit commun, non utilisé dans cette fiche.) */
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    /* Variante : photo centrée. */
+    .photo-centre { margin: 24px auto; text-align: center; }
+    /* Largeur maximale d'une photo centrée. */
+    .photo-centre img { max-width: 700px; }
+    /* Annule les flottants (photo-gauche / photo-droite) pour que la suite du texte reparte en dessous. */
+    .clearfix::after { content: ''; display: block; clear: both; }
+    /* RESPONSIVE ≤ 680 px (petites tablettes, mobiles) : les photos flottantes ne flottent plus,
+       elles passent en pleine largeur au-dessus / en dessous du texte. */
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    /* RESPONSIVE ≤ 860 px (tablettes) : une seule colonne, la carte d'identité passe sous le contenu
+       et n'est plus « collante » ; la liste des caractéristiques passe sur 1 colonne. */
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    /* RESPONSIVE ≤ 560 px (mobiles) : cartes de chiffres en 1 colonne, titre et carte du département
+       empilés, écusson remis dans le flux normal (plus en position absolue) et centré. */
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page : seule ligne de style à changer d'une fiche à l'autre.
+       Image actuelle : ../../../../../../assets/departement/occitanie/photo/haute-garonne/volvestre-coteaux.jpg
+       Elle remplace le fond bleu uni défini plus haut dans .produit-hero. -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/photo/haute-garonne/volvestre-coteaux.jpg'); }</style>
+</head>
+<!-- La classe produit-page applique le fond ivoire à toute la page. -->
+<body class="produit-page">
+<!-- HÉRO : grand bandeau photo en haut de page (tout ce qui suit jusqu'à la barre de navigation). -->
+<div class="produit-hero"><div class="container">
+<!-- Barre supérieure : logo (lien vers l'accueil) + bouton de retour à la fiche du département. -->
+<div class="produit-topbar">
+<!-- Logo texte : retour à la page d'accueil du site. -->
+<a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+<!-- Bouton « Retour » vers la fiche Haute-Garonne (chemin relatif à adapter si la fiche change de dossier). -->
+<div class="produit-topbar-btns"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour">← Retour à la fiche Haute-Garonne</a></div></div>
+<!-- Zone titre : grille à 2 colonnes → titre de la fiche | carte du département. -->
+<div class="produit-hero-body"><div>
+<!-- TITRE DE LA FICHE
+     Les <em> colorent les lettrines en ocre ; <br> force le retour à la ligne ;
+     le padding-left des <span> décale chaque ligne vers la droite (effet « escalier »). -->
+<h1><em>L</em>e Volvestre <br><span style="padding-left: 60px;">et les <em>c</em>oteaux</span></h1></div>
+<!-- Carte du département, à droite du titre (style en ligne : 220 px de haut, légère transparence, ombre). -->
+<img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png" alt="Carte de la Haute-Garonne" style="height:220px; width:auto; opacity:0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block;" /></div></div>
+<!-- ÉCUSSON du département : centré en position absolue au milieu du héro, derrière le texte.
+     Il est placé hors du .container pour se centrer sur toute la largeur du bandeau. -->
+<div class="fiche-hero-ecusson"><img src="../../../../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" /></div>
+<!-- Bandeau de catégorie (ex. « Paysages emblématiques ») : seul texte à changer selon le type de fiche. -->
+<div class="hero-label-bas">⟹ Paysages emblématiques ⟸</div>
+<!-- BARRE DE NAVIGATION INTERNE
+     Chaque lien pointe vers l'id d'une section (#histoire, #portrait…).
+     Ces id ne doivent pas être renommés : le script de bas de page s'en sert.
+     La classe « active » est mise à jour automatiquement pendant le défilement. -->
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a href="#histoire" class="active">📖 Identité</a><a href="#portrait">🔍 Portrait</a><a href="#ecosysteme">🌿 Paysage & relief</a><a href="#protection">⚠️ Préservation</a><a href="#ou-observer">📍 Où observer</a></div></div></div></div>
+<!-- CORPS DE LA FICHE -->
+<div class="produit-body"><div class="container">
+<!-- Mise en page 2 colonnes : 1re colonne = les 5 sections ; 2e colonne = <aside> (carte d'identité).
+     Sous 860 px de large, les deux colonnes s'empilent. -->
+<div class="produit-layout"><div>
+<!-- SECTION 1 — HISTOIRE / IDENTITÉ
+     Présentation générale du site + photo principale. L'id « histoire » est la cible du 1er onglet de navigation. -->
+<section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Entre Garonne, Ariège et Petites Pyrénées</h2><div class="histoire-texte"><p>Entre la vallée de la Garonne à l’ouest et celle de l’Ariège à l’est, le Volvestre forme un territoire de collines agricoles resserrées et souvent plus pentues que celles du Lauragais voisin. Au sud, il s’appuie sur les reliefs des Petites Pyrénées.</p><p>Les vallées de l’Arize et de la Lèze organisent le territoire. Villages, fermes isolées, cultures, ripisylves et coteaux composent un paysage rural varié où les vues s’ouvrent et se referment au rythme du relief.</p>
+<!-- PHOTO principale : centrée (photo-centre) ; le style max-width règle sa largeur.
+     Remplacer photo-centre par photo-gauche / photo-droite pour un texte qui l'entoure.
+     Le alt décrit l'image pour l'accessibilité et le référencement. -->
+<figure class="photo-bloc photo-centre" style="max-width: 320px;"><img src="../../../../../../assets/departement/occitanie/photo/haute-garonne/volvestre-coteaux.jpg" alt="Le Volvestre et les coteaux" /><figcaption>Le Volvestre et les coteaux — paysage caractéristique de la Haute-Garonne</figcaption></figure>
+<!-- clearfix : le texte suivant repart sous la photo (utile si elle est flottante). -->
+<div class="clearfix"></div></div></section>
+<!-- SECTION 2 — PORTRAIT
+     Contient 3 blocs : les 4 cartes de chiffres clés, l'encadré des caractéristiques, puis les étapes numérotées. -->
+<section class="section" id="portrait"><h2 class="section-titre"><div class="section-titre-icon">🔍</div>Portrait — des collines ciselées de vallées</h2>
+<!-- Chiffres clés : 4 cartes en grille 2 × 2 (1 colonne sur mobile). Chaque carte = icône + libellé + valeur. -->
+<div class="recette-grid">
+<!-- Carte 1 : Relief -->
+<div class="recette-meta-card"><div class="recette-meta-icon">🌄</div><div><div class="recette-meta-label">Relief</div><div class="recette-meta-val">Collines resserrées et pentues</div></div></div>
+<!-- Carte 2 : Vallées -->
+<div class="recette-meta-card"><div class="recette-meta-icon">💧</div><div><div class="recette-meta-label">Vallées</div><div class="recette-meta-val">Arize, Lèze, Volp et affluents</div></div></div>
+<!-- Carte 3 : Agriculture -->
+<div class="recette-meta-card"><div class="recette-meta-icon">🌾</div><div><div class="recette-meta-label">Agriculture</div><div class="recette-meta-val">Cultures et prairies</div></div></div>
+<!-- Carte 4 : Bourgs -->
+<div class="recette-meta-card"><div class="recette-meta-icon">🏘️</div><div><div class="recette-meta-label">Bourgs</div><div class="recette-meta-val">Rieux-Volvestre, Montesquieu-Volvestre</div></div></div></div>
+<!-- Encadré des caractéristiques : chaque ligne = mot-clé en ocre (ingredient-qte) + description. -->
+<div class="ingredients-bloc"><div class="ingredients-titre">✦ Les marqueurs du paysage</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">Relief</span> Collines arrondies aux pentes marquées</div><div class="ingredient-item"><span class="ingredient-qte">Vallées</span> Arize et Lèze structurent le territoire</div><div class="ingredient-item"><span class="ingredient-qte">Végétation</span> Ripisylves, haies et petits bois</div><div class="ingredient-item"><span class="ingredient-qte">Cultures</span> Paysage agricole largement ouvert</div><div class="ingredient-item"><span class="ingredient-qte">Habitat</span> Fermes isolées et villages de vallée</div><div class="ingredient-item"><span class="ingredient-qte">Couleurs</span> Verts, blonds, tournesols, briques et tuiles</div></div></div>
+<!-- Étapes numérotées : parcours de découverte du site, dans l'ordre. -->
+<div class="etapes-liste">
+<!-- Étape 1 — Suivre les vallées -->
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Suivre les vallées</div><div class="etape-texte">L’Arize et la Lèze offrent une lecture claire de l’organisation du territoire.</div></div></div>
+<!-- Étape 2 — Monter sur les coteaux -->
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Monter sur les coteaux</div><div class="etape-texte">Les routes de hauteur dévoilent une succession de collines cultivées.</div></div></div>
+<!-- Étape 3 — Observer les ripisylves -->
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Observer les ripisylves</div><div class="etape-texte">Les cordons boisés accompagnant les cours d’eau dessinent de longues lignes vertes.</div></div></div>
+<!-- Étape 4 — Entrer dans les bourgs -->
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Entrer dans les bourgs</div><div class="etape-texte">Rieux-Volvestre et Montesquieu-Volvestre associent patrimoine bâti et paysage de vallée.</div></div></div></div></section>
+<!-- SECTION 3 — PAYSAGE / NATURE
+     Lecture du paysage : relief, géologie, végétation, faune, usages. -->
+<section class="section" id="ecosysteme"><h2 class="section-titre"><div class="section-titre-icon">🌿</div>Un relief plus serré entre deux grandes vallées</h2><div class="histoire-texte"><p>Le Volvestre se distingue par un relief collinaire aux ondulations resserrées. Les multiples vallées secondaires découpent les coteaux et renforcent la diversité des orientations et des points de vue.</p><p>L’agriculture maintient de grands espaces ouverts. Le long des rivières et ruisseaux, les ripisylves forment des cordons végétaux très lisibles qui structurent le paysage.</p></div></section>
+<!-- SECTION 4 — PRÉSERVATION
+     Enjeux de protection : chaque paragraphe commence par le nom de l'enjeu en gras. -->
+<section class="section" id="protection"><h2 class="section-titre"><div class="section-titre-icon">⚠️</div>Préserver l'identité du paysage</h2><div class="histoire-texte"><p><strong>Maintien des ripisylves :</strong> les boisements de berge constituent des repères paysagers et des corridors écologiques importants.</p><p><strong>Étalement résidentiel :</strong> l’habitat dispersé peut modifier le caractère rural des coteaux et des entrées de bourgs.</p><p><strong>Évolution agricole :</strong> la simplification des parcelles et la disparition d’éléments végétaux peuvent réduire la diversité du paysage.</p></div></section>
+<!-- SECTION 5 — OÙ OBSERVER
+     Lieux et moments conseillés pour découvrir le site (nom du lieu en gras). -->
+<section class="section" id="ou-observer"><h2 class="section-titre"><div class="section-titre-icon">📍</div>Où découvrir ce paysage ?</h2><div class="histoire-texte"><p><strong>Rieux-Volvestre</strong> permet d’associer la découverte de la vallée de l’Arize à celle d’un bourg historique.</p><p><strong>Montesquieu-Volvestre</strong> constitue un bon point de départ pour parcourir les coteaux et la vallée de l’Arize.</p><p><strong>La vallée de la Lèze</strong>, vers Saint-Sulpice-sur-Lèze, offre une autre lecture du Volvestre entre cultures, villages et cordons boisés.</p></div></section>
+</div>
+<!-- COLONNE DE DROITE : reste visible pendant le défilement (position sticky). -->
+<aside class="produit-aside">
+<!-- CARTE D'IDENTITÉ : chaque ligne .aside-row = libellé (aside-label) | valeur (aside-val).
+     Ajouter ou retirer une ligne en dupliquant / supprimant un bloc .aside-row. -->
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Territoire</span><span class="aside-val">Volvestre, sud-ouest de la Haute-Garonne</span></div><div class="aside-row"><span class="aside-label">Catégorie</span><span class="aside-val">Collines agricoles · Vallées · Coteaux</span></div><div class="aside-row"><span class="aside-label">Saison</span><span class="aside-val">Printemps à automne</span></div><div class="aside-row"><span class="aside-label">Occasion</span><span class="aside-val">Balade · Patrimoine · Photographie</span></div><div class="aside-row"><span class="aside-label">IDENTITÉ</span><span class="aside-val">Collines entre Garonne, Ariège et Petites Pyrénées</span></div><div class="aside-row"><span class="aside-label">RÉFÉRENCE</span><span class="aside-val">Atlas des paysages de la Haute-Garonne</span></div></div></div></aside></div></div></div>
+  <script>
+    /* ══════════════════════════════════════════
+       NAVIGATION INTERNE
+       1) Met en surbrillance l'onglet de la section visible à l'écran.
+       2) Fait défiler la page en douceur au clic sur un onglet.
+    ══════════════════════════════════════════ */
+
+    // Tous les onglets de la barre de navigation et toutes les sections de la fiche
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    // IntersectionObserver : prévient quand une section entre dans la zone visible.
+    // threshold 0.4 = la section doit être visible à au moins 40 %.
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // On retire la classe "active" de tous les onglets…
+          navLinks.forEach(l => l.classList.remove('active'));
+          // …puis on l'ajoute à l'onglet dont le href correspond à l'id de la section visible
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    // On demande à l'observateur de surveiller chaque section
+    sections.forEach(s => observer.observe(s));
+
+    // Clic sur un onglet : défilement fluide au lieu du saut brutal par défaut
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault(); // empêche le saut immédiat vers l'ancre (et l'ajout de #… dans l'URL)
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+<!-- Lien de retour vers la fiche du département, en bas de page. -->
+<div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
+<!-- PIED DE PAGE commun à tout le site (logo + slogan). -->
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!-- BOUTON « HAUT DE PAGE » flottant : caché au départ, affiché par le script ci-dessous après 300 px de défilement.
+     aria-label : texte lu par les lecteurs d'écran ; l'icône SVG (flèche vers le haut) est masquée pour eux (aria-hidden). -->
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></button>
+<script>
+  /* ══════════════════════════════════════════
+     BOUTON « HAUT DE PAGE »
+     Apparaît après 300 px de défilement ; au clic, remonte en haut de la page.
+     Le style du bouton (.btn-haut-page et .visible) est défini dans fiche.css / style.css.
+  ══════════════════════════════════════════ */
+  (function () { // fonction auto-exécutée : les variables restent locales à ce bloc
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    // Affiche (classe "visible") ou masque le bouton selon la position de défilement
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    // Vérification à chaque défilement ({ passive: true } = n'empêche pas le défilement, plus fluide)
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton(); // vérification initiale (page rechargée déjà défilée)
+
+    btn.addEventListener('click', function () {
+      // Respecte le réglage système « réduire les animations » : saut direct au lieu d'un défilement animé
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+</body></html>
