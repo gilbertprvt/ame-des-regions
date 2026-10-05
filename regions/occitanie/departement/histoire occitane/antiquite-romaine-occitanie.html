@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L’Antiquité romaine en Occitanie — L'Âme des Régions</title>
+  <!-- Photo du bandeau chargée en priorité, avant les styles et les polices -->
+  <link rel="preload" as="image" href="photo/panorama-antique.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page : panorama-antique.jpg (même dossier photo que les autres fiches) -->
+  <style>
+    .produit-hero{background-image:linear-gradient(rgba(17,48,63,.0),rgba(17,48,63,.0)),url('photo/panorama-antique.jpg');background-size:cover;background-position:center 0%}
+    .verdict.vrai{background:#DDEFD9;color:#2E6B35}
+    .ouvrage-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}.ouvrage{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.ouvrage h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}.ouvrage p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028;font-family:var(--font-corps)}
+    .ouvrage .lieu{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:4px;font-family:var(--font-corps)}
+    @media(max-width:640px){.ouvrage-grid{grid-template-columns:1fr}}
+
+    
+  </style>
+</head>
+<body class="produit-page">
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a><div class="produit-topbar-btns"><a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a></div></div>
+      <div class="produit-hero-body"><div><h1><em>L</em>’Antiquité romaine<br><span style="padding-left:40px;">en <em>O</em>ccitanie</span></h1></div></div>
+    </div>
+    <div class="hero-label-bas">⟹ II<sup>e</sup> siècle av. J.-C. – V<sup>e</sup> siècle · Narbonnaise, cités &amp; romanisation ⟸</div>
+    <div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+      <a href="#conquete" class="active">🏛️ Comprendre</a><a href="#avant">🏺 Avant Rome</a><a href="#etapes">⚔️ Conquête</a><a href="#narbonnaise">🗺️ Provinces</a><a href="#villes">🏙️ Cités</a><a href="#eau">💧 Pont du Gard</a><a href="#routes">🛣️ Routes</a><a href="#campagnes">🌾 Villae</a><a href="#vie">🍞 Vie quotidienne</a><a href="#economie">🍇 Économie</a><a href="#religions">⚡ Religions</a><a href="#frise">⏳ Chronologie</a><a href="#personnalites">👤 Personnages</a><a href="#monuments">🏟️ Sites</a><a href="#fin">🛡️ Wisigoths</a><a href="#heritage">🧬 Héritage</a><a href="#mythes">🔎 Idées reçues</a><a href="#parcours">🚗 Circuit</a><a href="#infos-pratiques">ℹ️ Infos</a><a href="#sources">📚 Sources</a>
+    </div></div></div>
+  </div>
+  <div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<!-- ═══ COMPRENDRE ═══ -->
+<section class="section" id="conquete"><h2 class="section-titre"><div class="section-titre-icon">🏛️</div>De la Gaule méditerranéenne à Rome</h2><div class="histoire-texte">
+<p class="doc-intro"><strong>L’Occitanie romaine n’est pas née d’un seul coup.</strong> Entre la fin du II<sup>e</sup> siècle avant notre ère et la fin du V<sup>e</sup> siècle, le territoire de la région actuelle a été partagé entre des peuples, des cités et même deux provinces différentes. Le littoral languedocien et le Toulousain sont intégrés dès les années 120–100 av. J.-C. ; le Quercy, le Rouergue, le Gévaudan, la Gascogne et le Comminges ne le sont qu’avec la conquête de César (58–51 av. J.-C.). Routes, villes, campagnes, ports, vignobles, sanctuaires et monuments transforment profondément le pays, sans effacer d’un coup les héritages gaulois, ibères ou grecs.</p>
+<div class="repere-grid"><div class="repere"><strong>121–118 av. J.-C.</strong><span>Rome prend pied dans le Midi : Via Domitia et fondation de Narbo Martius.</span></div><div class="repere"><strong>I<sup>er</sup>–II<sup>e</sup> s.</strong><span>Apogée : Nemausus, Narbo, Baeterrae et Tolosa se couvrent de monuments.</span></div><div class="repere"><strong>418–507</strong><span>Toulouse devient la capitale du royaume wisigoth.</span></div></div>
+<div class="notice"><strong>À retenir :</strong> « romanisation » ne signifie pas remplacement d’une population par une autre. Les sociétés locales adoptent, adaptent et combinent le latin, le droit, les institutions, les techniques de construction, les cultes et les habitudes de consommation de l’Empire avec des traditions bien plus anciennes. Les colons venus d’Italie ne représentent qu’une petite minorité.</div>
+<h3 class="sous-titre">Pourquoi Rome s’intéresse-t-elle au Midi ?</h3><p>Depuis la deuxième guerre punique (218–201 av. J.-C.), Rome possède des provinces en Hispanie. Le couloir côtier qui va du Rhône aux Pyrénées est donc le seul passage terrestre entre l’Italie et ces territoires. Le contrôler permet de sécuriser le passage des armées, des marchands et des courriers. C’est d’ailleurs pour défendre son alliée <strong>Marseille</strong> (Massalia), menacée par les peuples gaulois de l’arrière-pays, que Rome intervient dans les années 120 av. J.-C. Vers <strong>118 av. J.-C.</strong>, <strong>Narbo Martius</strong> est fondée comme première colonie romaine hors d’Italie en Gaule ; la <strong>Via Domitia</strong>, aménagée sur des itinéraires bien plus anciens, devient l’épine dorsale du littoral.</p>
+<div class="citation-bloc"><p>« Par la culture de ses terres, le mérite de ses hommes et de ses mœurs, l’étendue de ses richesses, elle ne le cède à aucune autre province : c’est, en un mot, l’Italie plutôt qu’une province. »</p><cite>— Pline l’Ancien, <em>Histoire naturelle</em>, III, 31 (I<sup>er</sup> siècle), à propos de la Narbonnaise</cite></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · conquête et intégration</div><p>La conquête militaire est rapide ; l’intégration culturelle et sociale prend plusieurs générations. Les élites locales y jouent un rôle essentiel : elles obtiennent la citoyenneté romaine, siègent dans les conseils municipaux, financent des monuments et adoptent des formes romaines de représentation du pouvoir. Dès le I<sup>er</sup> siècle, des notables de Narbonnaise siègent au Sénat de Rome.</p></div>
+</div></section>
+
+<!-- ═══ AVANT ROME ═══ -->
+<section class="section" id="avant"><h2 class="section-titre"><div class="section-titre-icon">🏺</div>Avant Rome : un pays déjà ouvert sur la Méditerranée</h2><div class="histoire-texte">
+<p>Le territoire n’attend pas Rome pour entrer dans l’histoire. À l’âge du Fer, les habitants vivent dans des <strong>oppida</strong>, villages fortifiés perchés sur des hauteurs, comme <strong>Ensérune</strong> (Hérault), <strong>Pech Maho</strong> (Aude), <strong>Ruscino</strong> (Roussillon), <strong>Nages</strong> (Gard) ou <strong>Vieille-Toulouse</strong>. Ils commercent depuis le VI<sup>e</sup> siècle av. J.-C. avec les Étrusques, les Grecs et les Ibères : amphores, vaisselle peinte, monnaies et inscriptions en témoignent.</p>
+<h3 class="sous-titre">Grecs, Ibères et Gaulois</h3>
+<p>Les Grecs de Marseille fondent vers 400 av. J.-C. le comptoir d’<strong>Agathè</strong> (Agde) ; le port de <strong>Lattara</strong> (Lattes, près de Montpellier) accueille marchands étrusques puis grecs. À l’ouest de l’Hérault, la culture ibère domine : on y écrit dans un alphabet ibère, comme en témoignent les inscriptions d’Ensérune. Plus au nord et à l’ouest, des peuples gaulois s’installent ou s’affirment : <strong>Volques Arécomiques</strong> autour de Nîmes, <strong>Volques Tectosages</strong> dans le Toulousain, <strong>Cadurques</strong> en Quercy, <strong>Rutènes</strong> en Rouergue, <strong>Gabales</strong> en Gévaudan, peuples aquitains en Gascogne et dans les Pyrénées.</p>
+</div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Peuple</th><th>Territoire actuel</th><th>Chef-lieu à l’époque romaine</th><th>Particularité</th></tr></thead><tbody>
+<tr><td><strong>Volques Arécomiques</strong></td><td>Gard, est de l’Hérault</td><td>Nemausus (Nîmes)</td><td>Confédération de 24 bourgades rattachées à Nîmes, selon Strabon et Pline</td></tr>
+<tr><td><strong>Volques Tectosages</strong></td><td>Toulousain, Lauragais</td><td>Tolosa (Toulouse)</td><td>Célèbres pour le trésor sacré pillé en 106 av. J.-C.</td></tr>
+<tr><td><strong>Élisyques / populations ibéro-languedociennes</strong></td><td>Biterrois, Narbonnais</td><td>Narbo, Baeterrae</td><td>Culture mêlée d’influences ibères et gauloises</td></tr>
+<tr><td><strong>Sardones</strong></td><td>Roussillon</td><td>Ruscino (Château-Roussillon)</td><td>Accueillent Hannibal en 218 av. J.-C.</td></tr>
+<tr><td><strong>Cadurques</strong></td><td>Quercy (Lot)</td><td>Divona (Cahors)</td><td>Dernière résistance à César à Uxellodunum (51 av. J.-C.)</td></tr>
+<tr><td><strong>Rutènes</strong></td><td>Rouergue (Aveyron), Albigeois</td><td>Segodunum (Rodez)</td><td>Réputés pour leurs mines d’argent et leurs ateliers</td></tr>
+<tr><td><strong>Gabales</strong></td><td>Gévaudan (Lozère)</td><td>Anderitum (Javols)</td><td>Pays d’élevage et de fromages, vantés par Pline</td></tr>
+<tr><td><strong>Ausques, Lactorates, Convènes…</strong></td><td>Gers, Hautes-Pyrénées, Comminges</td><td>Auch, Lectoure, Saint-Bertrand</td><td>Peuples aquitains, de langue proche du basque ancien</td></tr>
+</tbody></table></div>
+<div class="encadre"><strong>🐘 Hannibal dans le Roussillon</strong><br>En 218 av. J.-C., le général carthaginois Hannibal franchit les Pyrénées avec son armée et ses éléphants pour attaquer l’Italie. Selon l’historien Tite-Live, il réunit les chefs locaux à <strong>Ruscino</strong> pour négocier un passage pacifique, puis traverse le Languedoc jusqu’au Rhône. Rome comprend alors la valeur stratégique de ce couloir.</div>
+</section>
+
+<!-- ═══ CONQUÊTE ═══ -->
+<section class="section" id="etapes"><h2 class="section-titre"><div class="section-titre-icon">⚔️</div>La conquête pas à pas (125 – 27 av. J.-C.)</h2><div class="histoire-texte">
+<h3 class="sous-titre">1. Les campagnes de 125–121 av. J.-C.</h3>
+<p>Appelée par Marseille, Rome bat les Salyens de Provence, puis les Allobroges et les Arvernes. Le proconsul <strong>Cneius Domitius Ahenobarbus</strong> remporte en 121 av. J.-C. une victoire décisive avec Quintus Fabius Maximus. Selon Suétone, Domitius parcourt ensuite la province monté sur un éléphant, à la tête de ses soldats. Il fait aménager la route qui portera son nom.</p>
+<h3 class="sous-titre">2. Narbonne, poste avancé de Rome (118 av. J.-C.)</h3>
+<p>Malgré l’opposition d’une partie du Sénat, l’orateur <strong>Lucius Licinius Crassus</strong> fait voter la fondation d’une colonie de citoyens romains à <strong>Narbo Martius</strong>. Placée au carrefour de la Via Domitia et de la route de l’Aquitaine, au bord de lagunes navigables, elle surveille à la fois les Pyrénées, le Toulousain et le littoral.</p>
+<h3 class="sous-titre">3. L’or de Toulouse et l’invasion des Cimbres (107–102 av. J.-C.)</h3>
+<p>Les migrations des <strong>Cimbres et des Teutons</strong>, peuples venus du nord de l’Europe, ébranlent la province. Les Tectosages de Tolosa se soulèvent. En 106 av. J.-C., le consul <strong>Quintus Servilius Caepio</strong> reprend la ville et s’empare de l’immense trésor de ses sanctuaires et de son lac sacré. L’or disparaît mystérieusement pendant son transport vers Marseille ; Caepio, écrasé à Orange (Arausio) en 105 av. J.-C., est condamné. « Avoir de l’or de Toulouse » devient chez les Romains une expression désignant une richesse mal acquise qui porte malheur.</p>
+<h3 class="sous-titre">4. Pompée, Fonteius et la guerre de Sertorius (80–71 av. J.-C.)</h3>
+<p>La province sert de base arrière à <strong>Pompée</strong> dans sa guerre contre le général rebelle Sertorius, en Hispanie. Le gouverneur <strong>Marcus Fonteius</strong> réquisitionne vivres, chevaux et main-d’œuvre ; accusé d’exactions par les Gaulois, il est défendu à Rome par Cicéron en 69 av. J.-C. Vainqueur, Pompée érige vers 71 av. J.-C. un grand <strong>trophée au col de Panissars</strong>, près du Perthus, dont les fondations ont été retrouvées en 1984. On lui attribue aussi le regroupement des « Convènes » à Lugdunum Convenarum (Saint-Bertrand-de-Comminges).</p>
+<div class="citation-bloc"><p>« Narbo Martius, colonie de nos citoyens, poste d’observation du peuple romain et rempart dressé face à ces nations. »</p><cite>— Cicéron, <em>Pour Fonteius</em>, 13 (69 av. J.-C.)</cite></div>
+<h3 class="sous-titre">5. César et la Gaule chevelue (58–45 av. J.-C.)</h3>
+<p>La province, que les Romains appellent simplement <em>Provincia</em> (d’où le mot « Provence »), sert de base à <strong>Jules César</strong> pour conquérir le reste de la Gaule. En 52 av. J.-C., le chef cadurque <strong>Lucterius</strong> menace Narbonne ; César accourt pour protéger la côte. En 51 av. J.-C., le dernier grand siège de la guerre des Gaules se déroule à <strong>Uxellodunum</strong>, dans le Lot (identifié au Puy d’Issolud, à Vayrac) : César coupe l’accès des assiégés à leur source. Après la guerre civile, il installe des vétérans de la X<sup>e</sup> légion à Narbonne (46–45 av. J.-C.).</p>
+<h3 class="sous-titre">6. Auguste organise (27–22 av. J.-C.)</h3>
+<p>En 27 av. J.-C., Auguste réunit à Narbonne une grande assemblée et fait recenser les Gaules. La province prend le nom de <strong>Gaule Narbonnaise</strong>. En 22 av. J.-C., jugée pacifiée, elle est confiée au Sénat et gouvernée par un proconsul ; aucune légion n’y stationne plus. Le reste de l’ouest de la région est rattaché à la province d’<strong>Aquitaine</strong>.</p>
+</div></section>
+
+<!-- ═══ PROVINCES ET CITÉS ═══ -->
+<section class="section" id="narbonnaise"><h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Deux provinces, une vingtaine de cités</h2><div class="histoire-texte"><p>La <strong>Gallia Narbonensis</strong> s’étend des Pyrénées au lac Léman ; sa capitale est Narbonne. L’ouest de l’Occitanie actuelle relève de l’<strong>Aquitania</strong>, dont les capitales successives sont Saintes, Poitiers puis Bordeaux. Chaque province est divisée en <strong>cités</strong> (<em>civitates</em>) : des communautés politiques formées d’un chef-lieu urbain et d’un vaste territoire rural. Ces cités ont souvent survécu sous forme de diocèses, puis de pays, jusqu’à nos jours.</p></div>
+<figure class="schema"><svg viewBox="250 110 700 520" role="img" aria-label="Carte des provinces, cités et voies romaines du territoire de l'Occitanie actuelle">
+<defs><marker id="fl-voie" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="3" markerHeight="3" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#C8843A"/></marker><marker id="fl-voie2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#A0522D"/></marker></defs>
+<rect x="250" y="110" width="700" height="520" fill="#FBF8F2"/>
+<polygon fill="#DCE7F2" points="922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 741.5,627.5 726.0,659.6 950,659.6 950,330.3"/>
+<polygon fill="#F4ECDD" stroke="#2C4A7C" stroke-width="2" stroke-linejoin="round" points="500.5,132.7 522.4,146.9 543.0,155.8 579.1,146.9 598.4,166.5 633.2,161.2 664.2,166.5 691.2,152.3 713.2,164.7 731.2,154.0 751.8,152.3 767.3,175.4 786.6,173.6 811.1,203.9 822.7,221.7 822.7,250.2 847.2,268.0 879.4,262.6 913.0,268.0 919.4,300.0 922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 693.8,595.5 661.6,602.6 635.8,615.1 597.1,609.7 564.9,600.8 536.6,588.4 500.5,570.6 461.8,549.2 436.0,535.0 403.8,526.1 384.5,552.8 352.2,554.5 313.6,552.8 296.8,538.5 272.3,527.8 274.9,490.5 300.7,449.5 277.5,415.7 281.3,389.0 300.7,371.2 307.1,333.8 339.3,323.1 384.5,308.9 414.1,307.1 425.7,276.9 450.2,255.5 439.9,223.5 455.4,211.0 481.1,179.0 494.0,152.3 500.5,132.7"/>
+<g fill="none" stroke="#8DB0D3" stroke-width="1.6" stroke-linecap="round"><path d="M311.0,543.9 Q347.7,519.8 384.5,495.8 Q410.2,479.8 436.0,463.8 Q458.6,441.5 481.1,419.3 Q496.6,389.0 482.4,364.1 Q468.2,339.2 452.1,321.4 Q436.0,303.6 414.1,307.1"/><path d="M777.6,259.1 Q732.5,289.3 709.9,300.9 Q687.4,312.5 655.2,319.6 Q622.9,326.7 603.6,331.1 Q584.3,335.6 558.5,332.9 Q532.7,330.3 510.1,324.0 Q487.6,317.8 452.8,307.1"/><path d="M584.3,570.6 Q603.6,520.7 600.4,505.6 Q597.1,490.5 606.8,476.2 Q616.5,462.0 642.3,460.2 Q684.2,457.5 728.6,456.6"/><path d="M913.0,268.0 Q919.4,300.0 920.7,315.1 Q922.0,330.3 916.8,343.6 Q911.7,357.0 906.5,392.6"/></g>
+<path d="M795,160 Q775,215 765,265 Q752,315 725,340 Q690,365 640,385 Q600,380 560,365 Q510,345 468,345 Q440,375 445,420 Q455,470 490,548" fill="none" stroke="#7A3E7C" stroke-width="1.8" stroke-dasharray="7 5" opacity=".8"/>
+<g font-family="Source Sans 3,sans-serif" font-weight="600" fill="#A89A86" letter-spacing="4" font-size="13"><text x="400" y="292" text-anchor="middle">AQUITAINE</text><text x="612" y="418" text-anchor="middle">NARBONNAISE</text><text x="360" y="604" text-anchor="middle" font-size="11">HISPANIE</text></g>
+<text x="855" y="530" text-anchor="middle" font-family="Playfair Display,serif" font-style="italic" font-size="15" fill="#2C4A7C" opacity=".8">Mare Nostrum</text>
+<g fill="none" stroke="#8B7355" stroke-width="1.3" stroke-dasharray="4 3"><path d="M499.2,392.6 Q440,440 387,494"/><path d="M499.2,392.6 Q505,320 499.2,241.3"/><path d="M728.6,438.8 Q735,400 741.7,369.5 Q720,300 644.8,259.1"/></g>
+<path d="M700.3,467.3 Q660,470 616.5,462 Q560,440 499.2,392.6 Q400,370 304,372" fill="none" stroke="#A0522D" stroke-width="3" marker-end="url(#fl-voie2)"/>
+<path d="M875.6,349.8 Q862,358 849,371 Q835,382 816.5,387 Q775,405 741,425 Q735,432 728.6,438.8 Q712,452 700.3,467.3 Q690,510 687.4,552.8 Q684,575 680,610" fill="none" stroke="#C8843A" stroke-width="4" stroke-linecap="round" marker-end="url(#fl-voie)"/>
+<path d="M875.6,349.8 Q900,350 936,346" fill="none" stroke="#C8843A" stroke-width="4" stroke-linecap="round" marker-end="url(#fl-voie)"/>
+<g font-family="Source Sans 3,sans-serif" font-size="10.5" font-style="italic" fill="#8B5E0A"><text x="946" y="394" text-anchor="end">vers Arelate et l’Italie →</text><text x="306" y="362">← vers Burdigala</text><text x="672" y="624" text-anchor="end">vers l’Hispanie ↓</text></g>
+<g font-family="Source Sans 3,sans-serif" font-size="11" fill="#3A3028" paint-order="stroke" stroke="#F4ECDD" stroke-width="3">
+<circle cx="875.6" cy="349.8" r="5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="884" y="364" font-weight="700" fill="#2C4A7C">Nemausus</text><text x="884" y="376" font-size="9.5">Nîmes</text>
+<circle cx="700.3" cy="467.3" r="6" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="692" y="482" text-anchor="end" font-weight="700" font-size="12.5" fill="#2C4A7C">Narbo Martius</text><text x="692" y="494" text-anchor="end" font-size="9.5">Narbonne · capitale</text>
+<circle cx="499.2" cy="392.6" r="5" fill="#2C4A7C" stroke="white" stroke-width="1.5"/><text x="507" y="408" font-weight="700" fill="#2C4A7C">Tolosa</text><text x="507" y="420" font-size="9.5">Toulouse</text>
+<circle cx="728.6" cy="438.8" r="3.5" fill="#3A3028"/><text x="722" y="430" text-anchor="end">Baeterrae</text>
+<circle cx="616.5" cy="462" r="3.5" fill="#3A3028"/><text x="609" y="476" text-anchor="end">Carcaso</text>
+<circle cx="687.4" cy="552.8" r="3.5" fill="#3A3028"/><text x="694" y="550">Ruscino</text>
+<circle cx="696.6" cy="570.6" r="3" fill="#3A3028"/><text x="703" y="574">Illiberis (Elne)</text>
+<circle cx="761" cy="444" r="3" fill="#3A3028"/><text x="768" y="452">Agathè (Agde)</text>
+<circle cx="741.7" cy="369.5" r="3" fill="#3A3028"/><text x="735" y="366" text-anchor="end">Luteva (Lodève)</text>
+<circle cx="816.5" cy="387" r="3" fill="#3A3028"/><text x="810" y="402" text-anchor="end">Sextantio</text>
+<circle cx="499.2" cy="241.3" r="3.5" fill="#3A3028"/><text x="506" y="245">Divona (Cahors)</text>
+<circle cx="644.8" cy="259.1" r="3.5" fill="#3A3028"/><text x="651" y="256">Segodunum (Rodez)</text>
+<circle cx="744" cy="198.6" r="3.5" fill="#3A3028"/><text x="751" y="202">Anderitum (Javols)</text>
+<circle cx="590.7" cy="333.8" r="3" fill="#3A3028"/><text x="597" y="348">Albiga (Albi)</text>
+<circle cx="393" cy="334" r="3" fill="#3A3028"/><text x="386" y="338" text-anchor="end">Lactora</text>
+<circle cx="389.6" cy="383.7" r="3.5" fill="#3A3028"/><text x="383" y="388" text-anchor="end">Elimberris (Auch)</text>
+<circle cx="387" cy="494" r="3.5" fill="#3A3028"/><text x="394" y="508">Lugdunum Convenarum</text>
+<path d="M898,325 l5,9 h-10z" fill="#C8843A"/><text x="898" y="318" text-anchor="middle" fill="#8B5E0A">Pont du Gard</text>
+<path d="M849,365 l5,9 h-10z" fill="#C8843A"/><text x="852" y="386" text-anchor="middle" fill="#8B5E0A">Ambrussum</text>
+<path d="M711,298 l5,9 h-10z" fill="#C8843A"/><text x="719" y="300" fill="#8B5E0A">La Graufesenque</text>
+<path d="M682,588 l5,9 h-10z" fill="#C8843A"/><text x="690" y="603" fill="#8B5E0A">Trophée de Pompée</text>
+<path d="M532.7,143 l5,9 h-10z" fill="#C8843A"/><text x="540" y="152" fill="#8B5E0A">Uxellodunum</text>
+<path d="M443.7,458 l5,9 h-10z" fill="#C8843A"/><text x="437" y="470" text-anchor="end" fill="#8B5E0A">Chiragan</text>
+<path d="M714.6,439 l5,9 h-10z" fill="#C8843A"/>
+</g>
+<g font-family="Source Sans 3,sans-serif" font-size="10.5" fill="#3A3028"><rect x="258" y="118" width="178" height="112" rx="8" fill="white" stroke="#E0DACE"/>
+<line x1="268" y1="134" x2="292" y2="134" stroke="#C8843A" stroke-width="4"/><text x="300" y="138">Via Domitia</text>
+<line x1="268" y1="150" x2="292" y2="150" stroke="#A0522D" stroke-width="3"/><text x="300" y="154">Via Aquitania</text>
+<line x1="268" y1="166" x2="292" y2="166" stroke="#8B7355" stroke-width="1.3" stroke-dasharray="4 3"/><text x="300" y="170">Autres voies</text>
+<line x1="268" y1="182" x2="292" y2="182" stroke="#7A3E7C" stroke-width="1.8" stroke-dasharray="7 5"/><text x="300" y="186">Limite des provinces (approx.)</text>
+<circle cx="280" cy="198" r="3.5" fill="#3A3028"/><text x="300" y="202">Chef-lieu de cité</text>
+<path d="M280,209 l5,9 h-10z" fill="#C8843A"/><text x="300" y="218">Site, atelier, monument</text></g>
+</svg><figcaption>Le territoire de l’Occitanie actuelle (contour bleu) dans l’Empire romain. Noms antiques ; positions et limites approximatives. Le triangle sans nom entre Béziers et Narbonne marque l’oppidum d’Ensérune.</figcaption></figure>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Nom antique</th><th>Ville actuelle</th><th>Province</th><th>Rôle</th><th>Vestiges / héritage</th></tr></thead><tbody>
+<tr><td><strong>Narbo Martius</strong></td><td>Narbonne (Aude)</td><td>Narbonnaise</td><td>Colonie (118 av. J.-C.), capitale provinciale, grand port et carrefour routier</td><td>Via Domitia, Horreum, Clos de la Lombarde, musée Narbo Via</td></tr>
+<tr><td><strong>Nemausus</strong></td><td>Nîmes (Gard)</td><td>Narbonnaise</td><td>Colonie latine puis grande cité monumentale</td><td>Maison Carrée, Arènes, tour Magne, porte d’Auguste, castellum, Musée de la Romanité</td></tr>
+<tr><td><strong>Baeterrae</strong></td><td>Béziers (Hérault)</td><td>Narbonnaise</td><td>Colonie de vétérans de la VII<sup>e</sup> légion, étape de la Via Domitia</td><td>Tracé de l’amphithéâtre dans le quartier Saint-Jacques, musée du Biterrois</td></tr>
+<tr><td><strong>Tolosa</strong></td><td>Toulouse (Haute-Garonne)</td><td>Narbonnaise</td><td>Carrefour de la Garonne, des routes de l’Aquitaine et des Pyrénées</td><td>Rempart de brique, amphithéâtre et thermes de Purpan-Ancely, musée Saint-Raymond</td></tr>
+<tr><td><strong>Carcaso</strong></td><td>Carcassonne (Aude)</td><td>Narbonnaise</td><td>Agglomération fortifiée sur la route de l’Aquitaine</td><td>Bases de l’enceinte de l’Antiquité tardive sous les remparts de la Cité</td></tr>
+<tr><td><strong>Luteva</strong></td><td>Lodève (Hérault)</td><td>Narbonnaise</td><td>Chef-lieu de cité sur la route des Causses</td><td>Collections du musée de Lodève</td></tr>
+<tr><td><strong>Ruscino</strong></td><td>Perpignan (Château-Roussillon)</td><td>Narbonnaise</td><td>Ancien oppidum devenu petite ville romaine</td><td>Forum dégagé, site archéologique</td></tr>
+<tr><td><strong>Lugdunum Convenarum</strong></td><td>Saint-Bertrand-de-Comminges</td><td>Aquitaine</td><td>Cité au pied des Pyrénées</td><td>Forum, temple, théâtre, thermes, marché, basilique chrétienne</td></tr>
+<tr><td><strong>Divona Cadurcorum</strong></td><td>Cahors (Lot)</td><td>Aquitaine</td><td>Chef-lieu des Cadurques</td><td>« Arc de Diane » (vestige des thermes)</td></tr>
+<tr><td><strong>Segodunum</strong></td><td>Rodez (Aveyron)</td><td>Aquitaine</td><td>Chef-lieu des Rutènes</td><td>Traces de l’amphithéâtre, musée Fenaille</td></tr>
+<tr><td><strong>Anderitum</strong></td><td>Javols (Lozère)</td><td>Aquitaine</td><td>Chef-lieu des Gabales</td><td>Site archéologique et espace d’interprétation</td></tr>
+<tr><td><strong>Elimberris / Augusta Auscorum</strong></td><td>Auch (Gers)</td><td>Aquitaine</td><td>Chef-lieu des Ausques</td><td>Collections du musée des Amériques-Auch</td></tr>
+<tr><td><strong>Lactora</strong></td><td>Lectoure (Gers)</td><td>Aquitaine</td><td>Chef-lieu des Lactorates</td><td>Exceptionnelle collection d’autels tauroboliques</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Liste non exhaustive. Albi, Elne, Agde et Carcassonne ne deviennent des chefs-lieux de cité, ou de diocèse, qu’à la fin de l’Antiquité.</p>
+<div class="encadre"><strong>🔎 Narbonne, porte de Rome</strong><br>Narbo Martius devient un nœud entre l’Italie, l’Hispanie, l’Atlantique et l’arrière-pays gaulois. Son port lagunaire, ses entrepôts et son réseau de voies expliquent sa richesse : c’est l’une des plus grandes villes de Gaule au I<sup>er</sup> siècle. Ses monuments ont presque entièrement disparu en élévation, démontés au Moyen Âge pour bâtir les remparts ; mais des milliers de blocs sculptés et d’inscriptions remployés ont été récupérés au XIX<sup>e</sup> siècle et sont aujourd’hui exposés au musée Narbo Via.</div>
+</section>
+
+<!-- ═══ CITÉS ═══ -->
+<section class="section" id="villes"><h2 class="section-titre"><div class="section-titre-icon">🏙️</div>Les villes : vitrines de la romanité</h2><div class="histoire-texte"><p>La ville romaine concentre administration, justice, commerce, religion et spectacles. Son centre s’organise autour du <strong>forum</strong>, bordé de temples, d’une basilique civile (tribunal et lieu d’affaires) et de boutiques. Les rues, souvent tracées en damier, sont équipées de fontaines, d’égouts et de trottoirs ; les quartiers mêlent boutiques, ateliers, demeures et édifices publics. Les notables locaux, élus magistrats, financent de leur poche une partie de ces équipements : c’est l’<strong>évergétisme</strong>.</p>
+<h3 class="sous-titre">Nemausus, la ville monumentale</h3><p>Nîmes offre aujourd’hui l’ensemble antique le plus spectaculaire de la région. La cité reçoit d’Auguste, vers 16–15 av. J.-C., une enceinte de près de 6 km, dont témoignent la <strong>porte d’Auguste</strong> et la <strong>tour Magne</strong>, ancienne tour gauloise surélevée par les Romains. La <strong>Maison Carrée</strong>, temple du culte impérial dédié aux petits-fils d’Auguste, Caius et Lucius César, est l’un des temples romains les mieux conservés au monde ; elle est inscrite au patrimoine mondial de l’UNESCO depuis 2023. L’<strong>amphithéâtre</strong>, bâti à la fin du I<sup>er</sup> siècle, mesure environ 133 m sur 101 m et accueillait quelque 24 000 spectateurs. Au pied du mont Cavalier, le <strong>sanctuaire de la Fontaine</strong> honore le dieu Nemausus et l’empereur ; le « temple de Diane » en est un vestige.</p>
+<h3 class="sous-titre">Narbo Martius, la capitale</h3><p>Narbonne possède un capitole, l’un des plus grands temples de Gaule, un amphithéâtre, des thermes et un port relié à la mer par les étangs. Sous la ville actuelle, l’<strong>Horreum</strong> conserve des galeries souterraines, probablement des entrepôts du I<sup>er</sup> siècle av. J.-C. Au <strong>Clos de la Lombarde</strong>, les archéologues ont dégagé un quartier de riches maisons aux peintures murales remarquables. En 1997, un tronçon de la <strong>Via Domitia</strong> a été mis au jour place de l’Hôtel-de-Ville, où il reste visible.</p>
+<div class="citation-bloc"><p>« Et toi non plus, Narbonne de Mars, je ne te passerai pas sous silence. »</p><cite>— Ausone, <em>Ordo urbium nobilium</em> (IV<sup>e</sup> siècle), qui range Narbonne et Toulouse parmi les villes illustres de l’Empire</cite></div>
+<h3 class="sous-titre">Tolosa, une ville de la Garonne</h3><p>La Tolosa des Tectosages se trouvait sans doute en partie sur l’oppidum de <strong>Vieille-Toulouse</strong>, sur les hauteurs. Au début de l’Empire, la ville romaine est construite dans la plaine, sur la rive droite de la Garonne. Elle reçoit une enceinte de brique et de pierre d’environ 3 km, un théâtre, un grand temple découvert sous la place Esquirol, des thermes et un aqueduc. À l’ouest, dans le secteur de <strong>Purpan-Ancely</strong>, un ensemble monumental associe amphithéâtre et thermes. Le poète Ausone vante sa grande enceinte de brique et la Garonne qui la baigne. Au IV<sup>e</sup> siècle, Toulouse est un centre d’enseignement réputé : on l’appelle parfois la « ville de Pallas », déesse de la sagesse.</p>
+<h3 class="sous-titre">Des villes loin du littoral</h3><p>La romanisation ne se limite pas à la côte. Au pied des Pyrénées, <strong>Lugdunum Convenarum</strong> (Saint-Bertrand-de-Comminges) possède forum, temple, théâtre, thermes, marché couvert et, plus tard, une basilique chrétienne. Sur le Lot, <strong>Divona</strong> (Cahors) doit son nom à une source sacrée, la fontaine des Chartreux. En Rouergue, <strong>Segodunum</strong> (Rodez) et, en Gévaudan, <strong>Anderitum</strong> (Javols) sont de petites capitales régionales dotées de leurs propres monuments. Dans les Pyrénées, des stations thermales comme <strong>Bagnères-de-Luchon</strong>, <strong>Bagnères-de-Bigorre</strong> ou <strong>Amélie-les-Bains</strong> sont déjà fréquentées à l’époque romaine.</p></div>
+<div class="schema"><span class="schema-titre">Les grands équipements d’une cité romaine</span><div class="schema-flow"><div class="schema-box fort">Forum<br><span style="font-size:12px">politique · justice · commerce</span></div><div class="schema-arrow">→</div><div class="schema-box">Temples<br><span class="small">cultes civiques et impérial</span></div><div class="schema-box">Thermes<br><span class="small">hygiène · sociabilité</span></div><div class="schema-box">Amphithéâtre / théâtre<br><span class="small">spectacles</span></div><div class="schema-box">Aqueduc<br><span class="small">eau · fontaines</span></div><div class="schema-box">Enceinte<br><span class="small">prestige · défense</span></div></div></div>
+<div class="encadre"><strong>🐊 Le crocodile de Nîmes</strong><br>Les monnaies frappées à Nîmes vers 20 av. J.-C.–10 ap. J.-C., les « as de Nîmes », montrent au revers un <strong>crocodile enchaîné à un palmier</strong>, avec l’inscription COL NEM (« colonie de Nîmes »). Il rappelle la conquête de l’Égypte par Auguste en 30 av. J.-C. Au XVI<sup>e</sup> siècle, François I<sup>er</sup> donne ce motif pour armoiries à la ville, qui l’a gardé jusqu’à aujourd’hui.</div>
+</section>
+
+<!-- ═══ EAU ═══ -->
+<section class="section" id="eau"><h2 class="section-titre"><div class="section-titre-icon">💧</div>L’eau des villes : l’aqueduc de Nîmes et le Pont du Gard</h2><div class="histoire-texte">
+<p>Une grande ville romaine se doit d’offrir de l’eau courante à ses fontaines, ses thermes et ses notables. Au milieu du I<sup>er</sup> siècle, Nîmes fait construire un aqueduc d’environ <strong>50 km</strong> qui capte les sources de l’Eure, près d’Uzès. Or Uzès n’est qu’à une vingtaine de kilomètres à vol d’oiseau : le tracé contourne les garrigues pour garder une pente régulière. La différence d’altitude entre la source et Nîmes n’est que d’une douzaine de mètres, soit une pente moyenne de l’ordre de <strong>25 cm par kilomètre</strong>. Un tour de force de nivellement.</p>
+<p>Pour franchir la vallée du Gardon, les ingénieurs construisent le <strong>Pont du Gard</strong>, le plus haut pont-aqueduc connu du monde romain. Ses blocs, extraits d’une carrière voisine, sont assemblés à sec, sans mortier, pour les deux premiers niveaux. Le canal, ou <em>specus</em>, court au sommet, sous des dalles de couverture.</p></div>
+<figure class="schema"><svg viewBox="0 0 700 285" role="img" aria-label="Schéma des trois niveaux du Pont du Gard"><g font-family="Source Sans 3,sans-serif"><text x="350" y="20" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="16" fill="#2C4A7C">Le Pont du Gard : trois étages d’arches</text><rect x="10" y="240" width="480" height="10" fill="#C9B58F"/><rect x="195" y="234" width="110" height="16" fill="#7FB3D5"/><text x="250" y="266" text-anchor="middle" font-size="11" font-style="italic" fill="#2C4A7C">le Gardon</text><rect x="136.4" y="159.3" width="227.2" height="80.7" fill="#E3CFA6" stroke="#B89A6A"/><path d="M141.7,240.0 V187.4 A13.6,13.6 0 0 1 169.0,187.4 V240.0 Z" fill="#EEF2F8"/><path d="M179.6,240.0 V187.4 A13.6,13.6 0 0 1 206.8,187.4 V240.0 Z" fill="#EEF2F8"/><path d="M217.4,240.0 V187.4 A13.6,13.6 0 0 1 244.7,187.4 V240.0 Z" fill="#EEF2F8"/><path d="M255.3,240.0 V187.4 A13.6,13.6 0 0 1 282.6,187.4 V240.0 Z" fill="#EEF2F8"/><path d="M293.2,240.0 V187.4 A13.6,13.6 0 0 1 320.4,187.4 V240.0 Z" fill="#EEF2F8"/><path d="M331.0,240.0 V187.4 A13.6,13.6 0 0 1 358.3,187.4 V240.0 Z" fill="#EEF2F8"/><text x="690" y="199" text-anchor="end" font-size="10.5" fill="#3A3028">1<tspan dy="-4" font-size="8">er</tspan><tspan dy="4"> niveau · 6 arches · ≈ 142 m · ≈ 22 m</tspan></text><rect x="56.4" y="85.9" width="387.2" height="73.4" fill="#E3CFA6" stroke="#B89A6A"/><path d="M61.3,159.3 V111.7 A12.7,12.7 0 0 1 86.7,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M96.5,159.3 V111.7 A12.7,12.7 0 0 1 121.9,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M131.7,159.3 V111.7 A12.7,12.7 0 0 1 157.1,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M166.9,159.3 V111.7 A12.7,12.7 0 0 1 192.3,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M202.1,159.3 V111.7 A12.7,12.7 0 0 1 227.5,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M237.3,159.3 V111.7 A12.7,12.7 0 0 1 262.7,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M272.5,159.3 V111.7 A12.7,12.7 0 0 1 297.9,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M307.7,159.3 V111.7 A12.7,12.7 0 0 1 333.1,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M342.9,159.3 V111.7 A12.7,12.7 0 0 1 368.3,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M378.1,159.3 V111.7 A12.7,12.7 0 0 1 403.5,111.7 V159.3 Z" fill="#EEF2F8"/><path d="M413.3,159.3 V111.7 A12.7,12.7 0 0 1 438.7,111.7 V159.3 Z" fill="#EEF2F8"/><text x="690" y="122" text-anchor="end" font-size="10.5" fill="#3A3028">2<tspan dy="-4" font-size="8">e</tspan><tspan dy="4"> niveau · 11 arches · ≈ 242 m · ≈ 20 m</tspan></text><rect x="30.0" y="60.2" width="440.0" height="25.7" fill="#E3CFA6" stroke="#B89A6A"/><path d="M31.8,85.9 V69.3 A4.5,4.5 0 0 1 40.8,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M44.3,85.9 V69.3 A4.5,4.5 0 0 1 53.4,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M56.9,85.9 V69.3 A4.5,4.5 0 0 1 66.0,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M69.5,85.9 V69.3 A4.5,4.5 0 0 1 78.5,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M82.0,85.9 V69.3 A4.5,4.5 0 0 1 91.1,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M94.6,85.9 V69.3 A4.5,4.5 0 0 1 103.7,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M107.2,85.9 V69.3 A4.5,4.5 0 0 1 116.2,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M119.8,85.9 V69.3 A4.5,4.5 0 0 1 128.8,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M132.3,85.9 V69.3 A4.5,4.5 0 0 1 141.4,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M144.9,85.9 V69.3 A4.5,4.5 0 0 1 154.0,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M157.5,85.9 V69.3 A4.5,4.5 0 0 1 166.5,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M170.0,85.9 V69.3 A4.5,4.5 0 0 1 179.1,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M182.6,85.9 V69.3 A4.5,4.5 0 0 1 191.7,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M195.2,85.9 V69.3 A4.5,4.5 0 0 1 204.2,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M207.8,85.9 V69.3 A4.5,4.5 0 0 1 216.8,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M220.3,85.9 V69.3 A4.5,4.5 0 0 1 229.4,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M232.9,85.9 V69.3 A4.5,4.5 0 0 1 242.0,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M245.5,85.9 V69.3 A4.5,4.5 0 0 1 254.5,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M258.0,85.9 V69.3 A4.5,4.5 0 0 1 267.1,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M270.6,85.9 V69.3 A4.5,4.5 0 0 1 279.7,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M283.2,85.9 V69.3 A4.5,4.5 0 0 1 292.2,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M295.8,85.9 V69.3 A4.5,4.5 0 0 1 304.8,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M308.3,85.9 V69.3 A4.5,4.5 0 0 1 317.4,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M320.9,85.9 V69.3 A4.5,4.5 0 0 1 330.0,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M333.5,85.9 V69.3 A4.5,4.5 0 0 1 342.5,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M346.0,85.9 V69.3 A4.5,4.5 0 0 1 355.1,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M358.6,85.9 V69.3 A4.5,4.5 0 0 1 367.7,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M371.2,85.9 V69.3 A4.5,4.5 0 0 1 380.2,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M383.8,85.9 V69.3 A4.5,4.5 0 0 1 392.8,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M396.3,85.9 V69.3 A4.5,4.5 0 0 1 405.4,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M408.9,85.9 V69.3 A4.5,4.5 0 0 1 418.0,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M421.5,85.9 V69.3 A4.5,4.5 0 0 1 430.5,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M434.0,85.9 V69.3 A4.5,4.5 0 0 1 443.1,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M446.6,85.9 V69.3 A4.5,4.5 0 0 1 455.7,69.3 V85.9 Z" fill="#EEF2F8"/><path d="M459.2,85.9 V69.3 A4.5,4.5 0 0 1 468.2,69.3 V85.9 Z" fill="#EEF2F8"/><text x="690" y="77" text-anchor="end" font-size="10.5" fill="#3A3028">3<tspan dy="-4" font-size="8">e</tspan><tspan dy="4"> niveau · 35 arches · ≈ 275 m · ≈ 7 m</tspan></text><line x1="30.0" y1="62.16999999999999" x2="470.0" y2="62.16999999999999" stroke="#2C4A7C" stroke-width="3"/><text x="250" y="54.16999999999999" text-anchor="middle" font-size="10.5" fill="#2C4A7C">canal (specus) : l’eau coule au sommet</text><line x1="490" y1="60.16999999999999" x2="490" y2="240" stroke="#C8843A" stroke-width="1.5"/><path d="M486,66.16999999999999 l4,-6 l4,6 M486,234 l4,6 l4,-6" fill="none" stroke="#C8843A" stroke-width="1.5"/><text x="496" y="232" font-size="12" font-weight="700" fill="#C8843A">≈ 49 m</text></g></svg><figcaption>Les trois niveaux du Pont du Gard. Dimensions arrondies, schéma simplifié et non à l’échelle exacte.</figcaption></figure>
+<div class="histoire-texte"><p>Arrivée à Nîmes, l’eau aboutit au <strong>castellum aquae</strong>, un bassin circulaire de 5,5 m de diamètre d’où partaient dix canalisations de plomb vers les différents quartiers. C’est l’un des deux seuls répartiteurs de ce type conservés dans le monde romain, avec celui de Pompéi. L’aqueduc pouvait livrer plusieurs dizaines de milliers de mètres cubes par jour. Mal entretenu, encroûté de calcaire, il cesse de fonctionner vers le VI<sup>e</sup> siècle ; le Pont du Gard, lui, sert ensuite de pont routier, ce qui explique sa conservation.</p></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · un monument d’abord utilitaire</div><p>Le Pont du Gard fascine par sa beauté, mais c’est d’abord un ouvrage technique au service du confort urbain. Il montre l’ampleur des moyens qu’une cité de province pouvait mobiliser, et l’importance de l’eau dans le mode de vie romain : bains publics, fontaines de quartier, latrines et égouts.</p></div>
+</section>
+
+<!-- ═══ ROUTES ═══ -->
+<section class="section" id="routes"><h2 class="section-titre"><div class="section-titre-icon">🛣️</div>Routes, ports et circulation</h2><div class="histoire-texte"><p><strong>La Via Domitia</strong> relie l’Italie à l’Hispanie par le littoral : elle franchit le Rhône à Beaucaire, passe par Nemausus, Ambrussum, Sextantio, Baeterrae, Narbo et Ruscino, puis franchit les Pyrénées au col de Panissars, près du Perthus. Son tracé reprend en partie une très ancienne voie que les Grecs rattachaient au mythe d’Héraclès. La plus ancienne <strong>borne milliaire</strong> connue en Gaule, retrouvée à Treilles (Aude), porte le nom de Cneius Domitius ; elle est exposée à Narbo Via.</p>
+<p>La <strong>Via Aquitania</strong> part de Narbonne vers Carcassonne, Toulouse et Bordeaux, reliant la Méditerranée à l’Atlantique. D’autres routes rejoignent Rodez, Cahors, Lodève, le Gévaudan ou Saint-Bertrand-de-Comminges. Les <strong>gobelets de Vicarello</strong>, quatre gobelets d’argent retrouvés en Italie en 1852, portent gravée la liste des étapes de Cadix à Rome : un véritable guide de voyage antique, qui cite les relais de la Narbonnaise.</p>
+<p>À ces axes terrestres s’ajoutent les fleuves, les étangs littoraux et les ports. Narbonne est reliée à un vaste système lagunaire ; la Garonne fait de Tolosa un point de passage vers l’Atlantique. Les marchandises voyagent dans des amphores : vin, huile, sauces de poisson, olives, fruits secs.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Axe</th><th>Fonction</th><th>Étapes régionales</th><th>Ce qu’il transporte</th></tr></thead><tbody><tr><td><strong>Via Domitia</strong></td><td>Italie ↔ Hispanie</td><td>Beaucaire, Nîmes, Ambrussum, Béziers, Narbonne, Ruscino, Le Perthus</td><td>Armées, voyageurs, courrier officiel, marchandises</td></tr><tr><td><strong>Via Aquitania</strong></td><td>Méditerranée ↔ Atlantique</td><td>Narbonne, Carcassonne, Toulouse, puis Agen et Bordeaux</td><td>Vin, céramiques, métaux, voyageurs</td></tr><tr><td><strong>Garonne</strong></td><td>Toulouse ↔ Bordeaux</td><td>Toulouse et vallée garonnaise</td><td>Produits agricoles, amphores, matériaux, marbre</td></tr><tr><td><strong>Ports narbonnais</strong></td><td>Commerce maritime</td><td>Lagunes et avant-ports de Narbonne, Agde</td><td>Vin, huile, céramiques, produits méditerranéens</td></tr><tr><td><strong>Routes pyrénéennes et des Causses</strong></td><td>Passages et échanges</td><td>Comminges, Couserans, Roussillon, Lodève, Rodez</td><td>Hommes, bétail, laine, minerais, poteries</td></tr></tbody></table></div>
+<div class="encadre"><strong>🛞 Comment voyage-t-on ?</strong><br>À pied, on parcourt une trentaine de kilomètres par jour ; à cheval ou en voiture légère, deux fois plus. Le service de poste officiel (<em>cursus publicus</em>) dispose de relais réguliers où l’on change de chevaux, comme celui d’Ambrussum, avec auberge, écuries et forge. Sur la route, les ornières creusées par les roues des chariots sont encore visibles par endroits.</div>
+</section>
+
+<!-- ═══ CAMPAGNES ═══ -->
+<section class="section" id="campagnes"><h2 class="section-titre"><div class="section-titre-icon">🌾</div>Les campagnes : cadastres et villae</h2><div class="histoire-texte">
+<p>Autour des colonies, les arpenteurs romains divisent la terre en grands carrés réguliers de 710 m de côté environ : c’est la <strong>centuriation</strong>. Les terres sont distribuées aux colons ou louées. Autour de Béziers et de Narbonne, la photographie aérienne révèle encore des chemins et des limites de champs qui suivent ces trames vieilles de deux mille ans.</p>
+<p>Les grands propriétaires vivent dans des <strong>villae</strong>, domaines associant une résidence parfois luxueuse (<em>pars urbana</em>) et des bâtiments d’exploitation (<em>pars rustica</em>) : chais, pressoirs, greniers, étables, logements des ouvriers et des esclaves. Les plus riches se multiplient dans le Toulousain, le Comminges et le Gers, surtout à la fin de l’Antiquité.</p></div>
+<div class="fort-grid">
+<div class="fort"><div class="fort-head">Chiragan <small>Martres-Tolosane</small></div><div class="fort-body"><span class="tag">Sculptures</span><span class="tag">Musée Saint-Raymond</span><br>Une villa immense sur la Garonne d’où proviennent des centaines de sculptures de marbre : portraits d’empereurs, dieux, reliefs des travaux d’Hercule. L’un des plus riches ensembles de sculpture romaine en France.</div></div>
+<div class="fort"><div class="fort-head">Montmaurin <small>Haute-Garonne</small></div><div class="fort-body"><span class="tag">Villa</span><span class="tag">IV<sup>e</sup> siècle</span><br>Une résidence aristocratique parmi les plus vastes de Gaule, avec cours, galeries et thermes, au cœur d’un domaine agricole.</div></div>
+<div class="fort"><div class="fort-head">Séviac <small>Montréal-du-Gers</small></div><div class="fort-body"><span class="tag">Mosaïques</span><span class="tag">Thermes</span><br>Villa de l’Antiquité tardive aux mosaïques géométriques et végétales colorées, avec une piscine et un ensemble thermal.</div></div>
+<div class="fort"><div class="fort-head">Loupian <small>Hérault</small></div><div class="fort-body"><span class="tag">Mosaïques</span><span class="tag">Étang de Thau</span><br>Domaine viticole au bord de l’étang, dont la résidence a reçu au V<sup>e</sup> siècle de somptueuses mosaïques, protégées aujourd’hui par un musée.</div></div>
+</div>
+</section>
+
+<!-- ═══ VIE QUOTIDIENNE ═══ -->
+<section class="section" id="vie"><h2 class="section-titre"><div class="section-titre-icon">🍞</div>Vivre en Occitanie il y a 2 000 ans</h2><div class="histoire-texte"><p>La grande majorité de la population vit de la terre, dans des fermes, des villages (<em>vici</em>) ou sur les domaines des villae. Dans les villes, artisans, commerçants, notables, esclaves et affranchis composent une société très hiérarchisée. Le latin gagne du terrain dans l’administration, le commerce et les inscriptions, tandis que les noms de personnes et de divinités montrent la persistance des langues gauloise, ibère et aquitaine.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Groupe</th><th>Statut</th><th>Exemples dans la région</th></tr></thead><tbody>
+<tr><td><strong>Citoyens romains</strong></td><td>Droits politiques complets ; portent les trois noms (prénom, nom, surnom)</td><td>Colons de Narbonne et de Béziers, notables municipaux</td></tr>
+<tr><td><strong>Citoyens de droit latin</strong></td><td>Statut intermédiaire ; les magistrats locaux deviennent citoyens romains</td><td>Habitants de Nîmes et de nombreuses cités de Narbonnaise</td></tr>
+<tr><td><strong>Pérégrins</strong></td><td>Hommes libres non citoyens</td><td>Majorité de la population rurale avant 212</td></tr>
+<tr><td><strong>Affranchis</strong></td><td>Anciens esclaves libérés, souvent actifs dans le commerce</td><td>Nombreux dans les inscriptions de Narbonne ; certains très riches</td></tr>
+<tr><td><strong>Esclaves</strong></td><td>Sans droits, propriété d’un maître</td><td>Domestiques, ouvriers agricoles, artisans, secrétaires</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">En 212, l’édit de Caracalla accorde la citoyenneté romaine à presque tous les hommes libres de l’Empire.</p>
+<div class="histoire-texte"><h3 class="sous-titre">La maison</h3><p>Les plus riches habitent des <strong>domus</strong> organisées autour d’un atrium ou d’un jardin à péristyle, décorées d’enduits peints et de mosaïques. Dans les campagnes, la villa associe résidence et exploitation agricole. Les habitats modestes utilisent la pierre, la terre crue, le bois et la tuile selon les régions ; dans les villes, beaucoup vivent dans une pièce au-dessus de leur boutique.</p>
+<h3 class="sous-titre">Manger et boire</h3><p>Céréales (sous forme de pain ou de bouillie), légumineuses, légumes, fruits, huile d’olive, vin, fromages, charcuteries et poissons composent l’alimentation. Les Romains apprécient le <em>garum</em>, sauce de poisson fermenté, importée dans des amphores. Le vin, souvent coupé d’eau et parfois aromatisé de miel ou d’épices, accompagne tous les repas.</p>
+<h3 class="sous-titre">Thermes, théâtres et amphithéâtres</h3><p>Les <strong>thermes</strong> sont des lieux d’hygiène mais aussi de rencontre, de sport et d’affaires : on y passe de la salle froide (<em>frigidarium</em>) à la salle tiède puis à l’étuve (<em>caldarium</em>), chauffée par le sol. Au théâtre, on joue comédies, pantomimes et spectacles musicaux. À l’amphithéâtre se déroulent les <strong>combats de gladiateurs</strong> et les chasses aux bêtes sauvages, offerts par les magistrats et les prêtres du culte impérial. Des stèles de gladiateurs ont été retrouvées à Nîmes, qui possédait une véritable école de gladiature.</p>
+<h3 class="sous-titre">Écrire et compter</h3><p>Les inscriptions funéraires, les graffitis sur céramique, les tablettes et les comptes de potiers montrent qu’une partie de la population sait lire et écrire. À La Graufesenque, les potiers notaient leurs fournées sur des plats en mêlant latin et gaulois.</p></div></section>
+
+<!-- ═══ ÉCONOMIE ═══ -->
+<section class="section" id="economie"><h2 class="section-titre"><div class="section-titre-icon">🍇</div>Une économie connectée à tout l’Empire</h2><div class="histoire-texte"><p>La paix romaine (<em>pax romana</em>), les routes, la monnaie unique et les ports ouvrent les productions régionales au marché de l’Empire. L’archéologie des campagnes révèle parcellaires, chemins, fermes, pressoirs et ateliers ; celle des épaves montre la circulation des marchandises en Méditerranée.</p>
+<h3 class="sous-titre">Le vin, déjà</h3><p>Avant la conquête, le vin est importé d’Italie en grandes quantités. Au I<sup>er</sup> siècle, la viticulture s’étend dans les plaines du Languedoc ; les potiers fabriquent des amphores à fond plat, dites « gauloises », que l’on retrouve jusqu’à Rome et Ostie. Pline l’Ancien cite le vin de la région de Béziers parmi les crus réputés. Vers 92, l’empereur Domitien ordonne d’arracher une partie des vignes des provinces pour protéger l’Italie et favoriser le blé, mesure sans doute peu appliquée et abolie par l’empereur Probus vers 280.</p>
+<h3 class="sous-titre">La Graufesenque, capitale de la vaisselle</h3><p>Près de Millau, l’atelier de <strong>Condatomagus</strong> (La Graufesenque) devient au I<sup>er</sup> siècle le premier centre de production de <strong>céramique sigillée</strong>, une vaisselle rouge brillante décorée en relief. Des centaines de potiers y cuisent, dans d’immenses fours, des dizaines de milliers de vases par fournée. On en retrouve dans tout l’Empire, de la Bretagne romaine à l’Afrique ; à Pompéi, une caisse de vases sigillés encore emballés, venus de La Graufesenque, a été découverte. Montans, dans le Tarn, est un autre grand centre.</p>
+<h3 class="sous-titre">Pierre, marbre et métaux</h3><p>Les carrières alimentent les grands chantiers : calcaire du Bois des Lens et de Barutel pour Nîmes, carrière de l’Estel pour le Pont du Gard, marbre blanc de <strong>Saint-Béat</strong> (Haute-Garonne) employé pour les sculptures et les décors. La Montagne Noire produit du fer en grande quantité, notamment au site des Martys (Aude) ; les Rutènes exploitent l’argent et le plomb. Le sel des lagunes, la laine, les fromages du Gévaudan et les jambons des Pyrénées complètent ces richesses.</p></div>
+<div class="repere-grid"><div class="repere"><strong>Vin</strong><span>Plaines du Languedoc ; amphores gauloises exportées jusqu’à Rome.</span></div><div class="repere"><strong>Céramique</strong><span>Sigillée de La Graufesenque et de Montans, amphores, tuiles et briques.</span></div><div class="repere"><strong>Pierre &amp; métaux</strong><span>Marbre de Saint-Béat, fer de la Montagne Noire, argent du Rouergue.</span></div></div>
+</section>
+
+<!-- ═══ RELIGIONS ═══ -->
+<section class="section" id="religions"><h2 class="section-titre"><div class="section-titre-icon">⚡</div>Dieux, cultes et christianisation</h2><div class="histoire-texte"><p>La religion romaine est plurielle et tolérante tant que l’on honore les dieux de la cité et l’empereur. Jupiter, Junon, Minerve, Mars, Mercure, Vénus ou Apollon côtoient des divinités locales, souvent assimilées à des dieux romains. À Nîmes, le nom même de <strong>Nemausus</strong> désigne le dieu de la source. Dans les Pyrénées, des centaines de petits autels votifs portent les noms de dieux aquitains, comme <strong>Abellio</strong>, ou d’<strong>Ilixo</strong>, dieu des eaux chaudes de Luchon. Le <strong>culte impérial</strong>, rendu à Rome et à l’empereur divinisé, cimente la loyauté des provinces : la Maison Carrée lui est consacrée.</p>
+<p>Des cultes venus d’Orient se répandent aussi : à <strong>Lectoure</strong>, une vingtaine d’autels célèbrent des <strong>tauroboles</strong>, sacrifices de taureaux en l’honneur de Cybèle, la Grande Mère des dieux. Isis, Mithra ou Sérapis ont également leurs fidèles, surtout dans les villes portuaires.</p>
+<p>Le <strong>christianisme</strong> s’implante au III<sup>e</sup> siècle. Vers 250, <strong>Saturnin</strong> (Sernin), premier évêque de Toulouse, refuse de sacrifier aux dieux et meurt traîné par un taureau ; la basilique Saint-Sernin s’élève plus tard sur son tombeau. Paul, premier évêque de Narbonne, est fêté à la même époque. Après la conversion de Constantin (312) et l’interdiction des cultes païens par Théodose (391–392), les évêques deviennent des personnages essentiels des cités. Vers 441–445, l’évêque <strong>Rusticus</strong> fait reconstruire la cathédrale de Narbonne, comme le rappelle une inscription conservée.</p></div>
+<div class="compare"><div class="compare-col compare-cath"><h4>Traditions locales et romaines</h4><ul><li>Divinités civiques et familiales (Lares)</li><li>Culte impérial</li><li>Dieux des sources et des montagnes</li><li>Cultes orientaux : Cybèle, Isis, Mithra</li><li>Offrandes, autels votifs, inscriptions</li></ul></div><div class="compare-col compare-rom"><h4>Antiquité tardive chrétienne</h4><ul><li>Communautés chrétiennes urbaines</li><li>Évêchés installés dans les chefs-lieux de cité</li><li>Basiliques et baptistères</li><li>Culte des martyrs (Saturnin)</li><li>Transformation des pratiques funéraires</li></ul></div></div></section>
+
+<!-- ═══ CHRONOLOGIE ═══ -->
+<section class="section" id="frise"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Chronologie : six siècles d’histoire romaine</h2><div class="frise">
+<div class="frise-periode">Avant la conquête</div>
+<div class="frise-item"><div class="frise-date">VI<sup>e</sup> s. av. J.-C.</div><div class="frise-texte">Essor des oppida (Ensérune, Pech Maho) et du commerce avec Étrusques et Grecs.</div></div>
+<div class="frise-item"><div class="frise-date">vers 400 av. J.-C.</div><div class="frise-texte">Fondation grecque d’Agathè (Agde) par les Massaliotes.</div></div>
+<div class="frise-item majeur"><div class="frise-date">218 av. J.-C.</div><div class="frise-texte">Hannibal traverse le Roussillon et le Languedoc pour marcher sur l’Italie.</div></div>
+<div class="frise-periode">La conquête du Midi</div>
+<div class="frise-item majeur"><div class="frise-date">125–121 av. J.-C.</div><div class="frise-texte">Campagnes romaines dans le sud de la Gaule ; victoire de Domitius Ahenobarbus et Fabius Maximus (121).</div></div>
+<div class="frise-item majeur"><div class="frise-date">vers 120–118 av. J.-C.</div><div class="frise-texte">Aménagement de la Via Domitia.</div></div>
+<div class="frise-item majeur"><div class="frise-date">118 av. J.-C.</div><div class="frise-texte">Fondation de Narbo Martius, première colonie romaine en Gaule.</div></div>
+<div class="frise-item"><div class="frise-date">106 av. J.-C.</div><div class="frise-texte">Caepio prend Tolosa et s’empare de « l’or de Toulouse ».</div></div>
+<div class="frise-item"><div class="frise-date">105 av. J.-C.</div><div class="frise-texte">Désastre romain d’Arausio (Orange) face aux Cimbres et aux Teutons.</div></div>
+<div class="frise-item"><div class="frise-date">77–71 av. J.-C.</div><div class="frise-texte">Guerre de Sertorius ; gouvernement de Fonteius ; trophée de Pompée à Panissars.</div></div>
+<div class="frise-periode">De César à Auguste</div>
+<div class="frise-item majeur"><div class="frise-date">58–51 av. J.-C.</div><div class="frise-texte">Guerre des Gaules ; le Quercy, le Rouergue, le Gévaudan et l’Aquitaine sont conquis.</div></div>
+<div class="frise-item"><div class="frise-date">51 av. J.-C.</div><div class="frise-texte">Siège d’Uxellodunum (Lot), dernière grande résistance gauloise.</div></div>
+<div class="frise-item"><div class="frise-date">46–45 av. J.-C.</div><div class="frise-texte">Vétérans de la X<sup>e</sup> légion installés à Narbonne.</div></div>
+<div class="frise-item"><div class="frise-date">vers 36–35 av. J.-C.</div><div class="frise-texte">Fondation de la colonie de Béziers avec des vétérans de la VII<sup>e</sup> légion.</div></div>
+<div class="frise-item majeur"><div class="frise-date">27 av. J.-C.</div><div class="frise-texte">Auguste réunit à Narbonne l’assemblée des Gaules ; création de la Gaule Narbonnaise.</div></div>
+<div class="frise-item"><div class="frise-date">22 av. J.-C.</div><div class="frise-texte">La Narbonnaise devient une province sénatoriale, gouvernée par un proconsul.</div></div>
+<div class="frise-item"><div class="frise-date">16–15 av. J.-C.</div><div class="frise-texte">Auguste offre à Nîmes son enceinte et ses portes.</div></div>
+<div class="frise-periode">Le Haut-Empire</div>
+<div class="frise-item"><div class="frise-date">vers 2 av. – 5 ap. J.-C.</div><div class="frise-texte">Dédicace de la Maison Carrée à Caius et Lucius César.</div></div>
+<div class="frise-item majeur"><div class="frise-date">milieu du I<sup>er</sup> siècle</div><div class="frise-texte">Construction de l’aqueduc de Nîmes et du Pont du Gard. Apogée de La Graufesenque.</div></div>
+<div class="frise-item"><div class="frise-date">69</div><div class="frise-texte">Antonius Primus, né à Toulouse, conduit les troupes de Vespasien à la victoire.</div></div>
+<div class="frise-item"><div class="frise-date">fin du I<sup>er</sup> siècle</div><div class="frise-texte">Construction de l’amphithéâtre de Nîmes.</div></div>
+<div class="frise-item"><div class="frise-date">138–161</div><div class="frise-texte">Règne d’Antonin le Pieux, dont la famille paternelle est originaire de Nîmes.</div></div>
+<div class="frise-item"><div class="frise-date">212</div><div class="frise-texte">Édit de Caracalla : presque tous les hommes libres deviennent citoyens romains.</div></div>
+<div class="frise-periode">L’Antiquité tardive</div>
+<div class="frise-item"><div class="frise-date">III<sup>e</sup> siècle</div><div class="frise-texte">Crises politiques et militaires de l’Empire ; martyre de saint Saturnin à Toulouse (vers 250).</div></div>
+<div class="frise-item"><div class="frise-date">IV<sup>e</sup> siècle</div><div class="frise-texte">Christianisation ; réorganisation des provinces (Narbonnaise première, Aquitaine première, Novempopulanie).</div></div>
+<div class="frise-item"><div class="frise-date">407–409</div><div class="frise-texte">Vandales, Alains et Suèves traversent la Gaule ; Toulouse résiste.</div></div>
+<div class="frise-item majeur"><div class="frise-date">414</div><div class="frise-texte">À Narbonne, le roi wisigoth Athaulf épouse Galla Placidia, sœur de l’empereur Honorius.</div></div>
+<div class="frise-item majeur"><div class="frise-date">418</div><div class="frise-texte">Les Wisigoths s’installent en Aquitaine avec l’accord de Rome ; Toulouse devient leur capitale.</div></div>
+<div class="frise-item"><div class="frise-date">462</div><div class="frise-texte">Narbonne passe sous contrôle wisigoth.</div></div>
+<div class="frise-item"><div class="frise-date">476</div><div class="frise-texte">Fin de l’Empire romain d’Occident ; le roi Euric règne de la Loire à l’Hispanie.</div></div>
+<div class="frise-item"><div class="frise-date">506</div><div class="frise-texte">Bréviaire d’Alaric (droit romain pour les sujets gallo-romains) et concile d’Agde.</div></div>
+<div class="frise-item majeur"><div class="frise-date">507</div><div class="frise-texte">Défaite de Vouillé face à Clovis ; les Wisigoths perdent Toulouse mais gardent la Septimanie autour de Narbonne.</div></div>
+</div></section>
+
+<!-- ═══ PERSONNAGES ═══ -->
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnages et figures de l’Occitanie romaine</h2>
+<div class="perso-groupe"><div class="perso-groupe-titre g-crois">Conquérants et gouverneurs</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Cn. Domitius Ahenobarbus</div><div class="perso-dates">consul en 122 av. J.-C.</div><div class="perso-desc">Vainqueur des Allobroges et des Arvernes, il organise la province et la voie qui porte son nom, la Via Domitia.</div></div>
+<div class="perso"><div class="perso-nom">Lucius Licinius Crassus</div><div class="perso-dates">140 – 91 av. J.-C.</div><div class="perso-desc">Grand orateur, il obtient la fondation de la colonie de Narbo Martius en 118 av. J.-C.</div></div>
+<div class="perso"><div class="perso-nom">Quintus Servilius Caepio</div><div class="perso-dates">consul en 106 av. J.-C.</div><div class="perso-desc">Il prend Tolosa et son trésor, qui disparaît ; vaincu à Orange en 105, il est condamné et exilé.</div></div>
+<div class="perso"><div class="perso-nom">Pompée</div><div class="perso-dates">106 – 48 av. J.-C.</div><div class="perso-desc">Il traverse la province pour combattre Sertorius et élève un trophée au col de Panissars.</div></div>
+<div class="perso"><div class="perso-nom">Jules César</div><div class="perso-dates">100 – 44 av. J.-C.</div><div class="perso-desc">Il conquiert la Gaule depuis la Narbonnaise, assiège Uxellodunum et installe ses vétérans à Narbonne.</div></div>
+<div class="perso"><div class="perso-nom">Auguste</div><div class="perso-dates">63 av. J.-C. – 14 ap. J.-C.</div><div class="perso-desc">Premier empereur ; il réorganise les provinces et offre à Nîmes ses remparts.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-occ">Enfants du pays</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Domitius Afer</div><div class="perso-dates">mort en 59</div><div class="perso-desc">Né à Nîmes, l’un des plus grands orateurs de Rome sous Tibère et Claude ; maître du rhéteur Quintilien.</div></div>
+<div class="perso"><div class="perso-nom">Marcus Antonius Primus</div><div class="perso-dates">I<sup>er</sup> siècle</div><div class="perso-desc">Né à Toulouse, surnommé dans son enfance « Becco » (bec de coq, en gaulois) ; général décisif de la victoire de Vespasien en 69.</div></div>
+<div class="perso"><div class="perso-nom">Plotine</div><div class="perso-dates">morte vers 122</div><div class="perso-desc">Épouse de l’empereur Trajan, sans doute originaire de Nîmes ; Hadrien y fait élever une basilique en son honneur.</div></div>
+<div class="perso"><div class="perso-nom">Antonin le Pieux</div><div class="perso-dates">86 – 161</div><div class="perso-desc">Empereur de 138 à 161, issu d’une famille paternelle nîmoise ; son règne est l’un des plus paisibles de l’Empire.</div></div>
+</div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-egl">Chrétiens et rois de l’Antiquité tardive</div><div class="perso-grid">
+<div class="perso"><div class="perso-nom">Saint Saturnin (Sernin)</div><div class="perso-dates">mort vers 250</div><div class="perso-desc">Premier évêque de Toulouse, martyr ; son culte donne naissance à la basilique Saint-Sernin.</div></div>
+<div class="perso"><div class="perso-nom">Rusticus de Narbonne</div><div class="perso-dates">évêque vers 427 – 461</div><div class="perso-desc">Il reconstruit la cathédrale de Narbonne ; ses inscriptions éclairent la vie de l’Église au V<sup>e</sup> siècle.</div></div>
+<div class="perso"><div class="perso-nom">Athaulf et Galla Placidia</div><div class="perso-dates">mariés à Narbonne en 414</div><div class="perso-desc">Le roi wisigoth épouse la sœur de l’empereur Honorius, symbole de l’alliance entre Goths et Romains.</div></div>
+<div class="perso"><div class="perso-nom">Euric</div><div class="perso-dates">roi de 466 à 484</div><div class="perso-desc">Depuis Toulouse, il fait du royaume wisigoth la principale puissance d’Occident et publie un code de lois écrit en latin.</div></div>
+<div class="perso"><div class="perso-nom">Alaric II</div><div class="perso-dates">roi de 484 à 507</div><div class="perso-desc">Il fait rédiger le Bréviaire d’Alaric, compilation de droit romain, avant d’être tué par Clovis à Vouillé.</div></div>
+</div></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une histoire faite aussi d’anonymes</div><p>Les inscriptions livrent des milliers de noms de notables, artisans, affranchis, soldats, potiers et familles. Pour raconter la région romaine, ces anonymes ou quasi-anonymes sont souvent plus représentatifs que quelques personnages célèbres : ce sont eux qui ont construit, financé, cultivé, commercé et fait vivre les cités.</p></div></section>
+
+<!-- ═══ SITES ═══ -->
+<section class="section" id="monuments"><h2 class="section-titre"><div class="section-titre-icon">🏟️</div>Les grands sites antiques à découvrir</h2><div class="fort-grid">
+<div class="fort"><div class="fort-head">Nîmes <small>Gard</small></div><div class="fort-body"><span class="tag">Maison Carrée</span><span class="tag">Arènes</span><span class="tag">Tour Magne</span><span class="tag">Castellum</span><span class="tag">UNESCO 2023</span><br>La meilleure introduction urbaine à la romanité : monuments, Jardins de la Fontaine, porte d’Auguste et Musée de la Romanité (ouvert en 2018).</div></div>
+<div class="fort"><div class="fort-head">Pont du Gard <small>Gard</small></div><div class="fort-body"><span class="tag">Aqueduc</span><span class="tag">I<sup>er</sup> siècle</span><span class="tag">UNESCO 1985</span><br>Près de 49 m de haut, trois niveaux d’arches : l’ouvrage majeur de l’aqueduc de Nîmes, avec musée et sentiers.</div></div>
+<div class="fort"><div class="fort-head">Narbonne <small>Aude</small></div><div class="fort-body"><span class="tag">Narbo Via</span><span class="tag">Horreum</span><span class="tag">Via Domitia</span><span class="tag">Clos de la Lombarde</span><br>Capitale de la Narbonnaise ; le musée Narbo Via (2021) expose un mur de près de 800 blocs sculptés remployés.</div></div>
+<div class="fort"><div class="fort-head">Ambrussum <small>Villetelle, Hérault</small></div><div class="fort-body"><span class="tag">Oppidum</span><span class="tag">Via Domitia</span><span class="tag">Pont Ambroix</span><br>Rencontre entre oppidum gaulois, voie romaine pavée et relais routier ; une arche du pont sur le Vidourle subsiste.</div></div>
+<div class="fort"><div class="fort-head">Ensérune <small>Nissan-lez-Ensérune, Hérault</small></div><div class="fort-body"><span class="tag">Oppidum</span><span class="tag">Âge du Fer</span><span class="tag">Musée</span><br>Un balcon archéologique sur la longue durée, des sociétés de l’âge du Fer à l’époque romaine, face à l’étang asséché de Montady.</div></div>
+<div class="fort"><div class="fort-head">Lattes <small>Hérault</small></div><div class="fort-body"><span class="tag">Lattara</span><span class="tag">Port antique</span><br>Le site et le musée Henri-Prades racontent un port ouvert aux Étrusques, aux Grecs puis aux Romains.</div></div>
+<div class="fort"><div class="fort-head">Agde <small>Hérault</small></div><div class="fort-body"><span class="tag">Agathè</span><span class="tag">Éphèbe</span><br>Le musée de l’Éphèbe présente les découvertes sous-marines, dont un célèbre bronze hellénistique repêché dans l’Hérault en 1964.</div></div>
+<div class="fort"><div class="fort-head">Toulouse <small>Haute-Garonne</small></div><div class="fort-body"><span class="tag">Saint-Raymond</span><span class="tag">Purpan-Ancely</span><span class="tag">Rempart</span><br>Le musée Saint-Raymond conserve les sculptures de Chiragan ; amphithéâtre et thermes de Purpan-Ancely, vestiges du rempart.</div></div>
+<div class="fort"><div class="fort-head">Saint-Bertrand-de-Comminges <small>Haute-Garonne</small></div><div class="fort-body"><span class="tag">Lugdunum</span><span class="tag">Forum</span><span class="tag">Théâtre</span><br>Au pied des Pyrénées, les vestiges d’une véritable ville romaine, voisine de la basilique paléochrétienne Saint-Just de Valcabrère.</div></div>
+<div class="fort"><div class="fort-head">Montmaurin <small>Haute-Garonne</small></div><div class="fort-body"><span class="tag">Villa</span><span class="tag">Antiquité tardive</span><br>Une grande résidence rurale pour aborder la richesse des campagnes et des élites à la fin de l’Antiquité.</div></div>
+<div class="fort"><div class="fort-head">Millau – La Graufesenque <small>Aveyron</small></div><div class="fort-body"><span class="tag">Sigillée</span><span class="tag">Fours</span><br>Le site des potiers et le musée de Millau présentent la plus grande fabrique de vaisselle du monde romain au I<sup>er</sup> siècle.</div></div>
+<div class="fort"><div class="fort-head">Lectoure et Séviac <small>Gers</small></div><div class="fort-body"><span class="tag">Tauroboles</span><span class="tag">Mosaïques</span><br>Autels tauroboliques au musée de Lectoure ; mosaïques et thermes de la villa de Séviac à Montréal-du-Gers.</div></div>
+</div></section>
+
+<!-- ═══ FIN DE L'EMPIRE ═══ -->
+<section class="section" id="fin"><h2 class="section-titre"><div class="section-titre-icon">🛡️</div>Du monde romain au monde wisigoth</h2><div class="histoire-texte"><p>À partir du III<sup>e</sup> siècle, l’Empire connaît des crises politiques, militaires et économiques, mais il serait faux d’imaginer un effondrement immédiat. Les villes se resserrent souvent derrière des enceintes plus courtes, comme à Carcassonne ou Narbonne ; les campagnes continuent de produire et les grandes villae connaissent même leur apogée au IV<sup>e</sup> siècle. L’administration est réorganisée : la région se partage alors entre la <strong>Narbonnaise première</strong> (capitale Narbonne), l’<strong>Aquitaine première</strong> et la <strong>Novempopulanie</strong> (capitale Eauze, puis Auch).</p>
+<p>Au début du V<sup>e</sup> siècle, Vandales, Alains et Suèves traversent la Gaule (407–409) ; l’évêque Exupère organise la résistance de Toulouse. Les <strong>Wisigoths</strong>, peuple germanique chrétien de confession arienne, prennent Narbonne en 413. En 418, un traité avec Rome les installe en Aquitaine comme alliés (<em>fédérés</em>) : <strong>Toulouse devient la capitale de leur royaume</strong>. Sous Euric, ce royaume s’étend de la Loire au sud de l’Hispanie. Les élites gallo-romaines, les évêques catholiques et les rois goths coexistent ; le latin et le droit romain restent en usage.</p>
+<p>En 507, Clovis et les Francs battent Alaric II à Vouillé. Toulouse est perdue, mais les Wisigoths conservent le littoral, des Pyrénées au Rhône : la <strong>Septimanie</strong>, avec Narbonne pour capitale, jusqu’à la conquête arabe de 719–720. L’Antiquité ne « s’arrête » donc pas à une date : elle se transforme progressivement en haut Moyen Âge.</p></div>
+<div class="schema"><span class="schema-titre">D’un monde à l’autre</span><div class="schema-flow"><div class="schema-box">III<sup>e</sup> s.<br><b>Crises</b><br><span class="small">enceintes resserrées</span></div><div class="schema-arrow">→</div><div class="schema-box">IV<sup>e</sup> s.<br><b>Empire chrétien</b><br><span class="small">évêchés, grandes villae</span></div><div class="schema-arrow">→</div><div class="schema-box fort">418 – 507<br><b>Royaume de Toulouse</b><br><span style="font-size:12px;opacity:.85">Wisigoths</span></div><div class="schema-arrow">→</div><div class="schema-box">507 – 720<br><b>Septimanie</b><br><span class="small">Narbonne wisigothe</span></div></div></div>
+<div class="encadre"><strong>🔎 Une transition, pas une disparition</strong><br>Les pierres des monuments sont réemployées, certains édifices changent de fonction, des quartiers se contractent ; mais le latin, le droit, les routes, les cadres urbains, les diocèses et le christianisme transmettent une part considérable de l’héritage romain aux siècles suivants.</div></section>
+
+<!-- ═══ HÉRITAGE ═══ -->
+<section class="section" id="heritage"><h2 class="section-titre"><div class="section-titre-icon">🧬</div>Ce que l’Occitanie doit à Rome</h2><div class="ouvrage-grid">
+<div class="ouvrage"><span class="lieu">Langue</span><h4>Du latin à l’occitan</h4><p>Le latin parlé dans la région est devenu l’occitan et le catalan. « Oc », qui a donné son nom à la langue d’oc, vient du latin <em>hoc</em> (« cela »).</p></div>
+<div class="ouvrage"><span class="lieu">Territoire</span><h4>Cités, diocèses et pays</h4><p>Les limites de nombreux diocèses médiévaux reprennent celles des cités antiques : Narbonne, Toulouse, Nîmes, Cahors, Rodez, Lodève…</p></div>
+<div class="ouvrage"><span class="lieu">Routes</span><h4>La Via Domitia sous l’A9</h4><p>L’autoroute A9 et la voie ferrée suivent de près le couloir ouvert par la Via Domitia il y a plus de deux mille ans.</p></div>
+<div class="ouvrage"><span class="lieu">Paysages</span><h4>Vignes et noms de lieux</h4><p>Le vignoble languedocien plonge ses racines dans l’Antiquité ; les noms en <em>-an</em> et en <em>-ac</em> dérivent souvent d’anciens domaines gallo-romains.</p></div>
+<div class="ouvrage"><span class="lieu">Fêtes</span><h4>Les arènes vivantes</h4><p>Les arènes de Nîmes accueillent toujours spectacles, ferias et, chaque printemps, de grands jeux romains reconstitués.</p></div>
+<div class="ouvrage"><span class="lieu">Symboles</span><h4>Le crocodile de Nîmes</h4><p>Le crocodile nîmois des monnaies d’Auguste orne toujours les armoiries et le mobilier urbain de la ville.</p></div>
+</div></section>
+
+<!-- ═══ IDÉES REÇUES ═══ -->
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues sur la Gaule romaine</h2>
+<div class="mythe"><strong>« Les Romains ont civilisé une Gaule sans villes ni commerce. »</strong><br><span class="verdict faux">FAUX</span><br>Le Midi possédait avant la conquête des oppida, des sanctuaires, des monnaies et des réseaux commerciaux méditerranéens. Rome transforme et amplifie ces structures.</div>
+<div class="mythe"><strong>« Tous les habitants deviennent Romains du jour au lendemain. »</strong><br><span class="verdict faux">FAUX</span><br>La romanisation est progressive et varie selon les lieux et les groupes sociaux. Il faut attendre 212 pour que presque tous les hommes libres deviennent citoyens.</div>
+<div class="mythe"><strong>« Le Pont du Gard est un pont routier construit pour franchir le Gardon. »</strong><br><span class="verdict faux">FAUX</span><br>C’est un pont-aqueduc portant le canal qui alimente Nîmes. Il n’a servi de passage routier qu’après l’Antiquité.</div>
+<div class="mythe"><strong>« La Maison Carrée est carrée. »</strong><br><span class="verdict faux">FAUX</span><br>Elle est rectangulaire (environ 26 m sur 15 m). Son nom vient de l’ancien français « carré long », qui désignait un rectangle.</div>
+<div class="mythe"><strong>« Les arènes de Nîmes n’ont servi qu’aux jeux romains. »</strong><br><span class="verdict faux">FAUX</span><br>Au Moyen Âge, l’amphithéâtre devient une forteresse, puis un véritable quartier avec maisons, rues et chapelles. Il n’a été dégagé qu’au début du XIX<sup>e</sup> siècle.</div>
+<div class="mythe"><strong>« Les gladiateurs combattaient toujours jusqu’à la mort. »</strong><br><span class="verdict faux">FAUX</span><br>Formés longtemps et coûteux, les gladiateurs étaient souvent épargnés. Les stèles de Nîmes montrent des combattants ayant mené de nombreux combats.</div>
+<div class="mythe"><strong>« Hannibal a traversé la région avec ses éléphants. »</strong><br><span class="verdict vrai">VRAI</span><br>En 218 av. J.-C., son armée et ses éléphants franchissent les Pyrénées et traversent le Roussillon et le Languedoc vers le Rhône.</div>
+<div class="mythe"><strong>« Après le III<sup>e</sup> siècle, tout s’effondre. »</strong><br><span class="verdict nuance">À NUANCER</span><br>La période connaît de profondes mutations, mais l’archéologie montre de nombreuses continuités : riches villae, cités épiscopales, droit romain sous les Wisigoths.</div></section>
+
+<!-- ═══ CIRCUIT ═══ -->
+<section class="section" id="parcours"><h2 class="section-titre"><div class="section-titre-icon">🚗</div>Circuit conseillé : sur les routes de la Narbonnaise</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Nîmes</div><div class="etape-texte">Maison Carrée, Arènes, tour Magne, Jardins de la Fontaine, castellum, porte d’Auguste et Musée de la Romanité. Prévoir une journée.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Pont du Gard</div><div class="etape-texte">Découvrir l’aqueduc, le musée du site et le paysage du Gardon ; les sentiers permettent de suivre des tronçons du canal.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Ambrussum et Lattes</div><div class="etape-texte">Marcher sur la Via Domitia à Ambrussum, puis découvrir le port antique de Lattara et son musée.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Agde, Loupian, Ensérune et Béziers</div><div class="etape-texte">L’Éphèbe d’Agde, les mosaïques de Loupian, l’oppidum d’Ensérune et le musée du Biterrois : de la Grèce à Rome.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Narbonne</div><div class="etape-texte">Narbo Via, Horreum, Clos de la Lombarde et fragment de Via Domitia : étape essentielle pour comprendre la capitale provinciale et son port.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Toulouse et Comminges</div><div class="etape-texte">Musée Saint-Raymond, amphithéâtre de Purpan-Ancely, puis Montmaurin et Lugdunum Convenarum à Saint-Bertrand-de-Comminges.</div></div></div>
+<div class="etape"><div class="etape-num">7</div><div class="etape-corps"><div class="etape-titre">Variante nord : Millau et Cahors</div><div class="etape-texte">Les fours de La Graufesenque à Millau, l’arc de Diane à Cahors et, pour les curieux, le Puy d’Issolud, site présumé d’Uxellodunum.</div></div></div>
+</div></section>
+
+<!-- ═══ INFOS ═══ -->
+<section class="section" id="infos-pratiques"><h2 class="section-titre"><div class="section-titre-icon">ℹ️</div>Infos pratiques</h2><div class="vins-liste">
+<div class="vin-item"><div class="vin-icon">🏛️</div><div><div class="vin-nom">Musées</div><div class="vin-desc">Narbo Via (Narbonne), Musée de la Romanité (Nîmes), Saint-Raymond (Toulouse), Henri-Prades (Lattes), Éphèbe (Agde), musée de Millau : les meilleures clés avant ou après la visite des vestiges.</div></div><div class="vin-badge">Toute l’année</div></div>
+<div class="vin-item"><div class="vin-icon">🎫</div><div><div class="vin-nom">Billets combinés</div><div class="vin-desc">À Nîmes, un billet commun donne accès aux monuments romains et au Musée de la Romanité. Renseignez-vous sur les formules du moment.</div></div><div class="vin-badge">Nîmes</div></div>
+<div class="vin-item"><div class="vin-icon">⚔️</div><div><div class="vin-nom">Reconstitutions</div><div class="vin-desc">Chaque printemps, les Grands Jeux romains de Nîmes font revivre gladiateurs et légionnaires dans les Arènes ; d’autres sites proposent des journées d’archéologie vivante.</div></div><div class="vin-badge">Printemps</div></div>
+<div class="vin-item"><div class="vin-icon">☀️</div><div><div class="vin-nom">Saison</div><div class="vin-desc">Printemps et automne sont particulièrement agréables pour les sites de plein air ; prévoir eau, chapeau et protection solaire en été.</div></div><div class="vin-badge">Sites extérieurs</div></div>
+<div class="vin-item"><div class="vin-icon">🎟️</div><div><div class="vin-nom">Horaires et billets</div><div class="vin-desc">Les conditions changent selon la saison et les travaux. Vérifier les sites officiels avant le départ.</div></div><div class="vin-badge">À vérifier</div></div>
+<div class="vin-item"><div class="vin-icon">🧭</div><div><div class="vin-nom">Lire le paysage</div><div class="vin-desc">Sur les sites archéologiques, l’essentiel de ce que l’on voit est au niveau des fondations : plans, maquettes et restitutions numériques sont indispensables pour imaginer les volumes.</div></div><div class="vin-badge">Prendre son temps</div></div>
+</div></section>
+
+<!-- ═══ SOURCES ═══ -->
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://multimedia.inrap.fr/atlas/Nimes-et-Montpellier/Syntheses/periodes-chronologiques/p-20803-L-Antiquite-romaine.htm" target="_blank" rel="noopener">Inrap — L’Antiquité romaine à Nîmes et Montpellier</a></li>
+<li><a href="https://multimedia.inrap.fr/atlas/Nimes-et-Montpellier/Syntheses/themes/La-voie-Domitienne" target="_blank" rel="noopener">Inrap — La voie Domitienne</a></li>
+<li><a href="https://www.narbonne.fr/musee-narbo-via" target="_blank" rel="noopener">Ville de Narbonne — Musée Narbo Via</a></li>
+<li><a href="https://museedelaromanite.fr/" target="_blank" rel="noopener">Musée de la Romanité — Nîmes</a></li>
+<li><a href="https://saintraymond.toulouse.fr/" target="_blank" rel="noopener">Musée Saint-Raymond — musée d’Archéologie de Toulouse</a></li>
+<li><a href="https://pontdugard.fr/fr/decouvrir/monument" target="_blank" rel="noopener">Pont du Gard — Le monument et l’aqueduc antique</a></li>
+<li><a href="https://whc.unesco.org/fr/list/344/" target="_blank" rel="noopener">UNESCO — Pont du Gard</a></li>
+<li><a href="https://whc.unesco.org/fr/list/1569/" target="_blank" rel="noopener">UNESCO — La Maison Carrée de Nîmes</a></li>
+<li><a href="https://pop.culture.gouv.fr/notice/merimee/PA00103760" target="_blank" rel="noopener">Ministère de la Culture — Oppidum d’Ambrussum</a></li>
+<li><a href="https://pop.culture.gouv.fr/notice/merimee/PA00103617" target="_blank" rel="noopener">Ministère de la Culture — Oppidum d’Ensérune</a></li>
+</ul>
+<p class="small">Textes antiques cités (traductions libres) : Pline l’Ancien, <em>Histoire naturelle</em>, III ; Cicéron, <em>Pour Fonteius</em> ; Ausone, <em>Ordo urbium nobilium</em> ; César, <em>Guerre des Gaules</em>, VIII ; Tite-Live, XXI ; Suétone, <em>Néron</em> et <em>Vitellius</em>. Pour aller plus loin : Michel Christol, <em>Une histoire provinciale. La Gaule narbonnaise</em> ; collection <em>Carte archéologique de la Gaule</em> (volumes Gard, Hérault, Aude, Haute-Garonne…).</p>
+<p class="small">Pour une publication définitive, compléter les crédits photographiques et vérifier les horaires, tarifs et conditions de visite directement auprès de chaque site. Les cartes et schémas de cette fiche sont pédagogiques et non à l’échelle ; dimensions et dates sont arrondies.</p></div></section>
+
+</div><aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Période</span><span class="aside-val">II<sup>e</sup> s. av. J.-C. – V<sup>e</sup> s.</span></div><div class="aside-row"><span class="aside-label">Provinces</span><span class="aside-val">Narbonnaise (est et Toulousain) · Aquitaine (ouest et nord)</span></div><div class="aside-row"><span class="aside-label">Capitale</span><span class="aside-val">Narbo Martius · Narbonne</span></div><div class="aside-row"><span class="aside-label">Grands centres</span><span class="aside-val">Nîmes · Narbonne · Béziers · Toulouse</span></div><div class="aside-row"><span class="aside-label">Grande voie</span><span class="aside-val">Via Domitia</span></div><div class="aside-row"><span class="aside-label">Catégorie</span><span class="aside-val">Histoire · Archéologie · Patrimoine</span></div><div class="aside-row"><span class="aside-label">Héritage</span><span class="aside-val">Routes · villes · droit · langue · vigne · monuments</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 En chiffres</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>118 av.</b><span>fondation de Narbo Martius</span></div><div class="chiffre"><b>≈ 50 km</b><span>aqueduc de Nîmes</span></div><div class="chiffre"><b>≈ 49 m</b><span>hauteur du Pont du Gard</span></div><div class="chiffre"><b>≈ 25 cm</b><span>de pente par km pour l’aqueduc</span></div><div class="chiffre"><b>≈ 24 000</b><span>spectateurs aux Arènes de Nîmes</span></div><div class="chiffre"><b>≈ 6 km</b><span>d’enceinte augustéenne à Nîmes</span></div><div class="chiffre"><b>1985</b><span>Pont du Gard à l’UNESCO</span></div><div class="chiffre"><b>2023</b><span>Maison Carrée à l’UNESCO</span></div><div class="chiffre"><b>418–507</b><span>Toulouse capitale wisigothe</span></div><div class="chiffre"><b>6 siècles</b><span>d’histoire romaine régionale</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">💡 Point de méthode</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39;">Les frontières de l’Occitanie actuelle n’existaient pas. La fiche utilise la région moderne comme cadre de visite, tout en replaçant chaque site dans les provinces et les cités de l’Empire romain.</div></div>
+<div class="aside-card"><div class="aside-card-header">📚 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Cité</dt><dd>Communauté politique antique formée d’un chef-lieu et de son territoire.</dd><dt>Colonie</dt><dd>Ville dotée d’un statut romain privilégié, souvent liée à l’installation de citoyens ou de vétérans.</dd><dt>Proconsul</dt><dd>Gouverneur d’une province sénatoriale, comme la Narbonnaise après 22 av. J.-C.</dd><dt>Forum</dt><dd>Centre civique, religieux et commercial de la ville.</dd><dt>Évergétisme</dt><dd>Générosité des notables qui financent monuments, jeux et banquets pour leur cité.</dd><dt>Domus</dt><dd>Maison urbaine d’une famille aisée.</dd><dt>Villa</dt><dd>Domaine rural associant exploitation agricole et résidence parfois luxueuse.</dd><dt>Centuriation</dt><dd>Découpage régulier des terres en carrés par les arpenteurs romains.</dd><dt>Romanisation</dt><dd>Processus d’intégration et d’appropriation des pratiques, institutions et cultures de l’Empire.</dd><dt>Via</dt><dd>Route aménagée ; la Via Domitia traverse le Languedoc et le Roussillon.</dd><dt>Milliaire</dt><dd>Borne de pierre indiquant les distances en milles romains (≈ 1,48 km).</dd><dt>Castellum aquae</dt><dd>Réservoir répartissant l’eau d’un aqueduc dans la ville.</dd><dt>Sigillée</dt><dd>Vaisselle de table rouge vernissée, souvent décorée en relief et marquée du nom du potier.</dd><dt>Taurobole</dt><dd>Sacrifice d’un taureau en l’honneur de Cybèle.</dd><dt>Oppidum</dt><dd>Agglomération fortifiée de l’âge du Fer, souvent perchée.</dd><dt>Septimanie</dt><dd>Nom donné au littoral entre Pyrénées et Rhône resté wisigoth après 507.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">📖 Pour aller plus loin</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.6;color:#3A3028;">• Musée Narbo Via, Narbonne<br>• Musée de la Romanité, Nîmes<br>• Musée Saint-Raymond, Toulouse<br>• Site et musée du Pont du Gard<br>• Musée Henri-Prades, Lattes<br>• Musée de l’Éphèbe, Agde<br>• Oppida d’Ambrussum et d’Ensérune<br>• Inrap, atlas archéologiques de Nîmes–Montpellier et Toulouse</div></div>
+</aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active');}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>{link.addEventListener('click',e=>{e.preventDefault();const target=document.querySelector(link.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'});});});</script>
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div>
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></button><script>(function(){var btn=document.querySelector('.btn-haut-page');var seuil=300;function majBouton(){btn.classList.toggle('visible',window.scrollY>seuil)}window.addEventListener('scroll',majBouton,{passive:true});majBouton();btn.addEventListener('click',function(){var reduit=window.matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:reduit?'auto':'smooth'});});})();</script>
+</body></html>
