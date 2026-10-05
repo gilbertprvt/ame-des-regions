@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'Occitanie, identité &amp; repères d'une région — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+
+    /* Repères chiffrés */
+    .repere-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+    .repere-grid.trois { grid-template-columns: repeat(3, 1fr); }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 20px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 560px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-conc{color:#2C4A7C}.g-tech{color:#3E7C4A}.g-pouv{color:#7A3E7C}.g-vis{color:#A0522D}
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Liste des vice-présidents */
+    .vp-liste { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; }
+    .vp-liste span {
+      background: white; border: 1px solid #E0DACE; border-radius: 20px;
+      padding: 5px 12px; font-size: 13px; font-family: var(--font-corps); color: #3A3028;
+    }
+
+    /* Encadrés */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+
+    /* Cartes « ouvrage » réutilisées pour pôles, stations, parcs */
+    .ouvrage-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+    .ouvrage{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}
+    .ouvrage h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}
+    .ouvrage p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028;font-family:var(--font-corps)}
+    .ouvrage .lieu{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:4px;font-family:var(--font-corps)}
+
+    /* Schéma en flux */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Comparaison deux colonnes */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Listes de villages en étiquettes */
+    .village-dept { margin-bottom: 10px; font-family: var(--font-corps); font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .village-dept b { color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); }
+    .tag {
+      display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0; font-family: var(--font-corps);
+    }
+
+    /* Infos pratiques (blocs « vin » repris) */
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+
+    /* Frise chronologique (reprise de la fiche Canal du Midi) */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700; color: white; background: #2C4A7C; display: inline-block; padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px; }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before { content: ''; position: absolute; left: -34px; top: 5px; width: 13px; height: 13px; border-radius: 50%; background: white; border: 3px solid #C8843A; }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+    @media (max-width: 640px) { .compare[style] { grid-template-columns: 1fr !important; } }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    /* Colonne de droite : reste visible et défile dans son propre ascenseur */
+    .produit-aside {
+      position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px;
+      max-height: calc(100vh - 48px); overflow-y: auto; overscroll-behavior: contain;
+      padding-right: 6px;
+      scrollbar-width: thin; scrollbar-color: #C8843A #F0EAD6;
+    }
+    .produit-aside > .aside-card { flex-shrink: 0; }
+    .produit-aside::-webkit-scrollbar { width: 8px; }
+    .produit-aside::-webkit-scrollbar-track { background: #F0EAD6; border-radius: 8px; }
+    .produit-aside::-webkit-scrollbar-thumb { background: #C8843A; border-radius: 8px; }
+    .produit-aside::-webkit-scrollbar-thumb:hover { background: #A86A28; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 20px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; max-height: none; overflow: visible; padding-right: 0; }
+      .repere-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .compare, .perso-grid, .ouvrage-grid, .repere-grid.trois { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- ══════════ BANDEAU : mêmes caractéristiques que celui de carte-occitanie.html ══════════ -->
+  <style>
+    /* Photo : panorama-info.jpg, sinon la photo de l'Aude utilisée sur la carte */
+    .produit-hero.carte-hero {
+      max-width: 1400px; margin: 0 auto; border-radius: 0 0 16px 16px; overflow: hidden;
+      position: relative; padding: 0; min-height: 0; color: white;
+      background-color: #2C4A7C;
+      background-image: url('panorama-info.jpg'),
+                        url('../../assets/departement/occitanie/panorama-aude.jpg');
+      background-size: cover; background-position: center;
+    }
+    /* Voile sombre : plus foncé sur les bords et en bas, plus clair au centre */
+    .produit-hero.carte-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.20) 40%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.60) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.45) 100%);
+    }
+    .carte-hero > .container { position: relative; z-index: 1; max-width: 1400px; padding: 0 48px; }
+
+    /* Barre du haut (logo + lien vers la carte) posée sur la photo */
+    .carte-hero .produit-topbar { padding-top: 18px; margin-bottom: 0; }
+    .carte-hero .produit-logo, .carte-hero .produit-btn-retour { text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+
+    /* Zone photo : titre à gauche, écusson au centre, chiffres clés à droite */
+    .carte-hero-inner {
+      min-height: 330px; padding: 10px 0 30px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .carte-hero h1 {
+      font-family: var(--font-titre); font-size: 70px; font-weight: 700; color: white;
+      line-height: 1.25; margin: 0;   /* ← réglez margin-top pour monter/descendre le titre */
+      text-shadow: 3px 3px 0 #2C4A7C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6);
+    }
+    .carte-hero .titre-initial { color: #FAC775; text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55); }
+
+    .carte-hero .fiche-hero-ecusson {
+      display: flex; flex-direction: column; align-items: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: 90px;   /* ← augmenter pour descendre l'écusson et le sous-titre */
+      z-index: 1; pointer-events: none;
+    }
+    .carte-hero .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .carte-hero-sub {
+      font-size: 22px; color: rgba(255,255,255,0.85); font-style: italic; font-family: var(--font-titre);
+      text-align: center; white-space: nowrap;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.9); margin-top: 14px; margin-bottom: 18px;
+    }
+
+    /* Chiffres clés : libellés à gauche, valeurs à côté */
+    .carte-hero-infos { margin: 0; display: flex; flex-direction: column; }
+    .carte-hero-infos div { display: flex; align-items: baseline; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.25); }
+    .carte-hero-infos dt, .carte-hero-infos dd { line-height: 1.3; font-variant-numeric: lining-nums; }
+    .carte-hero-infos dt {
+      width: 205px; flex-shrink: 0;   /* ← largeur de la colonne des libellés */
+      font-family: var(--font-corps); font-size: 19px;
+      color: rgba(255,255,255,0.92); text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+    }
+    .carte-hero-infos dd {
+      margin: 0; font-family: var(--font-titre); font-size: 21px; font-weight: 700; color: #FAC775;
+      text-shadow: 2px 2px 0 #2C4A7C, 0 0 12px rgba(0,0,0,0.6); white-space: nowrap;
+    }
+
+    /* Barre des chapitres intégrée au bas du bandeau, comme la légende de la carte */
+    .carte-hero .produit-nav {
+      position: relative; z-index: 1;
+      background: rgba(0,0,0,0.35); border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .carte-hero .produit-nav .container { max-width: 1400px; padding: 0 48px; }
+    .carte-hero .produit-nav a { color: rgba(255,255,255,0.8); }
+
+    @media (max-width: 860px) {
+      .carte-hero > .container, .carte-hero .produit-nav .container { padding: 0 16px; }
+      .carte-hero-inner { flex-direction: column; align-items: flex-start; gap: 16px; min-height: 0; padding-top: 270px; }
+      .carte-hero .fiche-hero-ecusson { top: 100px; }
+      .carte-hero .fiche-hero-ecusson img { height: 150px; }
+      .carte-hero h1 { font-size: 52px; }
+      .carte-hero-sub { white-space: normal; font-size: 17px; }
+      .carte-hero-infos dt { width: 190px; }
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+<div class="produit-hero carte-hero"><div class="container">
+  <div class="produit-topbar">
+    <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+    <div class="produit-topbar-btns"><a href="carte-occitanie.html" class="produit-btn-retour">Vers la carte Occitanie</a></div>
+  </div>
+  <div class="carte-hero-inner">
+    <div class="carte-hero-left">
+      <h1>L'<span class="titre-initial">O</span>ccitanie</h1>
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+      <p class="carte-hero-sub">Identité &amp; repères d'une région</p>
+    </div>
+
+    <!-- Chiffres clés de la région -->
+    <dl class="carte-hero-infos">
+      <div><dt>Présidente</dt><dd>Carole Delga</dd></div>
+      <div><dt>Population</dt><dd>6,25 millions</dd></div>
+      <div><dt>Biens UNESCO</dt><dd>11</dd></div>
+    </dl>
+  </div>
+</div>
+<!-- Barre des chapitres, intégrée au bas du bandeau -->
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+  <a href="#administration" class="active">🏛️ Administration</a><a href="#departements">🗺️ Départements</a><a href="#geographie">⛰️ Géographie</a><a href="#economie">📊 Économie</a><a href="#industrie">✈️ Industrie</a><a href="#agriculture">🍇 Agriculture</a><a href="#recherche">🔬 Recherche</a><a href="#sante">🩺 Santé &amp; éducation</a><a href="#spatial">🚀 Spatial</a><a href="#infrastructures">🛤️ Infrastructures</a><a href="#tourisme">🏖️ Tourisme</a><a href="#parcs">🌲 Parcs</a><a href="#labels">🏅 Labels</a><a href="#culture">✠ Culture</a><a href="#frise">⏳ Dates</a><a href="#sources">📚 Sources</a>
+</div></div></div>
+</div>
+
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<!-- ═══════════════ 1. ADMINISTRATION ═══════════════ -->
+<section class="section" id="administration"><h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Administration : une région née en 2016</h2><div class="histoire-texte">
+<p class="doc-intro"><strong>L'Occitanie est née le 1<sup>er</sup> janvier 2016</strong> de la fusion de deux anciennes régions, Midi-Pyrénées et Languedoc-Roussillon. D'abord baptisée provisoirement « Languedoc-Roussillon-Midi-Pyrénées », elle prend son nom actuel la même année. C'est aujourd'hui la deuxième plus vaste région de France métropolitaine, et l'une des plus dynamiques sur le plan démographique.</p>
+<div class="repere-grid">
+  <div class="repere"><strong>13</strong><span>départements, 36 arrondissements et 249 cantons.</span></div>
+  <div class="repere"><strong>72 724 km²</strong><span>2<sup>e</sup> région métropolitaine par la superficie, plus vaste que l'Irlande.</span></div>
+  <div class="repere"><strong>6 247 000</strong><span>habitants estimés au 1<sup>er</sup> janvier 2026 (Insee).</span></div>
+  <div class="repere"><strong>4 446</strong><span>communes au 1<sup>er</sup> janvier 2025.</span></div>
+</div>
+
+<h3 class="sous-titre">Qui gouverne la région ?</h3>
+<p>Le <strong>conseil régional</strong> compte 158 élus. Pour équilibrer les deux anciennes capitales, les rôles ont été partagés lors de la fusion : <strong>Toulouse</strong> est le chef-lieu de région et accueille l'Hôtel de Région et la préfecture de région, tandis que l'assemblée régionale se réunit à <strong>Montpellier</strong>. La majorité est une union de la gauche.</p>
+</div>
+
+<div class="perso-groupe g-pouv"><div class="perso-groupe-titre">L'exécutif régional</div><div class="perso-grid">
+  <div class="perso"><div class="perso-nom">Carole Delga</div><div class="perso-dates">Présidente depuis 2016 · réélue en 2021</div><div class="perso-desc">Socialiste, ancienne maire de Martres-Tolosane et secrétaire d'État ; elle a aussi présidé l'association Régions de France.</div></div>
+  <div class="perso"><div class="perso-nom">Didier Codorniou</div><div class="perso-dates">Premier vice-président</div><div class="perso-desc">Ancien international de rugby, maire de Gruissan (Aude) depuis 2001.</div></div>
+  <div class="perso"><div class="perso-nom">Jalil Benabdillah</div><div class="perso-dates">Vice-président</div><div class="perso-desc">Économie, emploi, innovation et réindustrialisation.</div></div>
+  <div class="perso"><div class="perso-nom">Kamel Chibli</div><div class="perso-dates">Vice-président</div><div class="perso-desc">Éducation, orientation, jeunesse et sports.</div></div>
+  <div class="perso"><div class="perso-nom">Marie Castro</div><div class="perso-dates">Vice-présidente</div><div class="perso-desc">Formation professionnelle.</div></div>
+</div></div>
+
+<div class="histoire-texte"><p>L'exécutif compte <strong>15 vice-présidents</strong>. Outre ceux présentés ci-dessus, en font partie :</p></div>
+<div class="vp-liste">
+  <span>Muriel Abadie</span><span>Vincent Bounes</span><span>Florence Brutus</span><span>Jean-Louis Cazaubon</span><span>Claire Fita</span><span>Jean-Luc Gibelin</span><span>Vincent Labarthe</span><span>Agnès Langevine</span><span>Marie-Alice Pelé</span><span>Nadia Pellefigue</span><span>Marie Piqué</span>
+</div>
+<div class="notice"><strong>À vérifier avant publication :</strong> les délégations des vice-présidents évoluent en cours de mandat. La liste officielle et à jour se trouve sur <a href="https://www.laregion.fr" target="_blank" rel="noopener" style="color:#2C4A7C">laregion.fr</a>.</div>
+
+<div class="perso-groupe g-tech"><div class="perso-groupe-titre">Les représentants de l'État</div><div class="perso-grid">
+  <div class="perso"><div class="perso-nom">Fabrice Rigoulet-Roze</div><div class="perso-dates">Préfet de région depuis le 29 juin 2026</div><div class="perso-desc">Préfet de la région Occitanie et de la Haute-Garonne, il représente l'État dans la région.</div></div>
+  <div class="perso"><div class="perso-nom">Carole Drucker-Godard</div><div class="perso-dates">Rectrice de région académique</div><div class="perso-desc">Elle coordonne les deux académies de la région, Toulouse et Montpellier.</div></div>
+</div></div>
+
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une région qui attire</div><p>Entre 2016 et 2026, la population progresse d'environ 0,7 % par an, deux fois plus vite que la moyenne métropolitaine. Cette croissance repose uniquement sur l'arrivée de nouveaux habitants : les décès dépassent désormais les naissances. L'Occitanie est devenue la 3<sup>e</sup> région la plus peuplée de France métropolitaine, derrière l'Île-de-France et Auvergne-Rhône-Alpes. Un habitant sur quatre a 65 ans ou plus.</p></div>
+</section>
+
+<!-- ═══════════════ DÉPARTEMENTS ═══════════════ -->
+<section class="section" id="departements"><h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Les 13 départements</h2>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>N°</th><th>Département</th><th>Préfecture</th><th>Ancienne région</th></tr></thead><tbody>
+<tr><td>09</td><td><strong>Ariège</strong></td><td>Foix</td><td>Midi-Pyrénées</td></tr>
+<tr><td>11</td><td><strong>Aude</strong></td><td>Carcassonne</td><td>Languedoc-Roussillon</td></tr>
+<tr><td>12</td><td><strong>Aveyron</strong></td><td>Rodez</td><td>Midi-Pyrénées</td></tr>
+<tr><td>30</td><td><strong>Gard</strong></td><td>Nîmes</td><td>Languedoc-Roussillon</td></tr>
+<tr><td>31</td><td><strong>Haute-Garonne</strong></td><td>Toulouse</td><td>Midi-Pyrénées</td></tr>
+<tr><td>32</td><td><strong>Gers</strong></td><td>Auch</td><td>Midi-Pyrénées</td></tr>
+<tr><td>34</td><td><strong>Hérault</strong></td><td>Montpellier</td><td>Languedoc-Roussillon</td></tr>
+<tr><td>46</td><td><strong>Lot</strong></td><td>Cahors</td><td>Midi-Pyrénées</td></tr>
+<tr><td>48</td><td><strong>Lozère</strong></td><td>Mende</td><td>Languedoc-Roussillon</td></tr>
+<tr><td>65</td><td><strong>Hautes-Pyrénées</strong></td><td>Tarbes</td><td>Midi-Pyrénées</td></tr>
+<tr><td>66</td><td><strong>Pyrénées-Orientales</strong></td><td>Perpignan</td><td>Languedoc-Roussillon</td></tr>
+<tr><td>81</td><td><strong>Tarn</strong></td><td>Albi</td><td>Midi-Pyrénées</td></tr>
+<tr><td>82</td><td><strong>Tarn-et-Garonne</strong></td><td>Montauban</td><td>Midi-Pyrénées</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Huit départements viennent de Midi-Pyrénées, cinq de Languedoc-Roussillon.</p>
+<div class="histoire-texte"><p>Le territoire est organisé autour de <strong>deux métropoles</strong>, Toulouse et Montpellier, et compte <strong>quatre communes de plus de 100 000 habitants</strong> (Toulouse, Montpellier, Nîmes, Perpignan). À l'opposé, la Lozère reste le département le moins peuplé de France.</p></div>
+</section>
+
+<!-- ═══════════════ GÉOGRAPHIE PHYSIQUE ═══════════════ -->
+<section class="section" id="geographie"><h2 class="section-titre"><div class="section-titre-icon">⛰️</div>Géographie : des Pyrénées à la Méditerranée</h2><div class="histoire-texte">
+<p class="doc-intro">Peu de régions françaises offrent de tels contrastes : on passe en quelques heures des sommets pyrénéens à plus de 3 000 m aux lagunes du littoral, en traversant les plateaux calcaires des Causses, les vallées de la Garonne et les coteaux du Gers.</p></div>
+<div class="repere-grid">
+  <div class="repere"><strong>3 298 m</strong><span>au Vignemale (Hautes-Pyrénées), point culminant de la région et des Pyrénées françaises.</span></div>
+  <div class="repere"><strong>≈ 220 km</strong><span>de côte méditerranéenne, de la Camargue gardoise à la frontière espagnole.</span></div>
+  <div class="repere"><strong>2 pays</strong><span>frontaliers : l'Espagne et l'Andorre.</span></div>
+  <div class="repere"><strong>3 régions</strong><span>voisines : Nouvelle-Aquitaine, Auvergne-Rhône-Alpes, Provence-Alpes-Côte d'Azur.</span></div>
+</div>
+<div class="histoire-texte"><h3 class="sous-titre">Les grands ensembles naturels</h3></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Au sud</span><h4>Les Pyrénées</h4><p>Une barrière montagneuse de l'Atlantique à la Méditerranée : Vignemale, Néouvielle, Pic du Midi, Canigou. Le massif abrite le parc national, les stations de ski et de nombreuses sources thermales.</p></div>
+  <div class="ouvrage"><span class="lieu">Au nord-est</span><h4>Le Massif central</h4><p>Aubrac, Margeride, mont Lozère, Cévennes et Montagne Noire : des plateaux d'altitude, peu peuplés, qui forment le rebord sud du massif.</p></div>
+  <div class="ouvrage"><span class="lieu">Au centre</span><h4>Les Causses et les gorges</h4><p>Hauts plateaux calcaires entaillés de gorges spectaculaires (Tarn, Jonte, Lot), avec un réseau souterrain de grottes et d'avens.</p></div>
+  <div class="ouvrage"><span class="lieu">À l'ouest</span><h4>Le bassin aquitain</h4><p>Plaines et coteaux de la Garonne, du Gers, du Lauragais et du Quercy : le grand espace agricole de l'ancienne Midi-Pyrénées.</p></div>
+  <div class="ouvrage"><span class="lieu">Au sud-est</span><h4>La plaine et le littoral</h4><p>Plaine viticole du Languedoc et du Roussillon, chapelet d'étangs (Thau, Bages-Sigean, Leucate) séparés de la mer par des cordons de sable.</p></div>
+  <div class="ouvrage"><span class="lieu">À l'est</span><h4>La Camargue gardoise</h4><p>Marais, salins et rizières autour d'Aigues-Mortes, aux confins de la Provence.</p></div>
+</div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Bassin</th><th>Principaux cours d'eau</th><th>Débouché</th></tr></thead><tbody>
+<tr><td><strong>Garonne</strong></td><td>Garonne, Ariège, Tarn, Aveyron, Lot, Gers, Save</td><td>Océan Atlantique, par Bordeaux</td></tr>
+<tr><td><strong>Fleuves côtiers</strong></td><td>Aude, Orb, Hérault, Têt, Tech, Agly, Vidourle</td><td>Mer Méditerranée</td></tr>
+<tr><td><strong>Rhône</strong></td><td>Gardon, Cèze, Ardèche (en limite)</td><td>Méditerranée, par le Rhône</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">La ligne de partage des eaux entre Atlantique et Méditerranée traverse la région : c'est elle que franchit le canal du Midi au seuil de Naurouze.</p>
+<div class="histoire-texte"><h3 class="sous-titre">Trois climats</h3></div>
+<div class="compare" style="grid-template-columns:repeat(3,1fr)">
+  <div class="compare-col compare-cath"><h4>☀️ Méditerranéen</h4><ul><li>Étés chauds et secs</li><li>Pluies brèves mais violentes à l'automne (épisodes cévenols)</li><li>Vents : tramontane, cers, marin</li></ul></div>
+  <div class="compare-col compare-rom"><h4>🌦️ Océanique dégradé</h4><ul><li>Toulouse, Gers, Quercy</li><li>Pluies mieux réparties</li><li>Vent d'autan, chaud et sec</li></ul></div>
+  <div class="compare-col compare-cath"><h4>❄️ Montagnard</h4><ul><li>Pyrénées, Aubrac, Lozère</li><li>Hivers longs et enneigés</li><li>Fortes amplitudes de température</li></ul></div>
+</div>
+<div class="encadre"><strong>⚠️ Une région exposée aux risques naturels</strong><br>Les <strong>épisodes cévenols</strong> provoquent des crues soudaines dans le Gard, l'Hérault et l'Aude ; les étés secs favorisent les <strong>incendies</strong> et les <strong>sécheresses</strong>, qui pèsent sur l'agriculture et la ressource en eau.</div>
+</section>
+
+<!-- ═══════════════ ÉCONOMIE GÉNÉRALE ═══════════════ -->
+<section class="section" id="economie"><h2 class="section-titre"><div class="section-titre-icon">📊</div>Économie générale : dynamique mais contrastée</h2><div class="histoire-texte">
+<p class="doc-intro">L'Occitanie combine une forte croissance démographique, une industrie de pointe et un effort de recherche record, mais aussi un chômage et une pauvreté supérieurs à la moyenne nationale. Les écarts sont marqués entre la Haute-Garonne, riche et diplômée, et plusieurs départements du littoral ou ruraux.</p></div>
+<div class="repere-grid">
+  <div class="repere"><strong>213 Md€</strong><span>de PIB en 2023 : 4<sup>e</sup> économie régionale de France.</span></div>
+  <div class="repere"><strong>34 800 €</strong><span>de PIB par habitant (2023), sous la moyenne nationale.</span></div>
+  <div class="repere"><strong>9,7 %</strong><span>de taux de chômage au 2<sup>e</sup> trimestre 2026, contre 8,3 % en France.</span></div>
+  <div class="repere"><strong>2,5 M</strong><span>d'emplois en 2023, dont 80 % dans les services.</span></div>
+</div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Indicateur</th><th>Occitanie</th><th>Commentaire</th></tr></thead><tbody>
+<tr><td><strong>Effort de recherche (R&amp;D)</strong></td><td>3,5 % du PIB</td><td>1<sup>re</sup> région française, seule au-dessus de l'objectif européen de 3 %.</td></tr>
+<tr><td><strong>Niveau de vie médian</strong></td><td>22 010 € par an</td><td>Environ 990 € de moins que la moyenne nationale.</td></tr>
+<tr><td><strong>Taux de pauvreté</strong></td><td>17,5 %</td><td>3<sup>e</sup> plus élevé de France métropolitaine.</td></tr>
+<tr><td><strong>Diplômés du supérieur</strong></td><td>33,6 %</td><td>Forte concentration à Toulouse et Montpellier.</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Sources : Insee (« L'essentiel sur l'Occitanie », R&amp;D 2017, chômage T2 2026).</p>
+<div class="histoire-texte"><h3 class="sous-titre">Le budget de la Région</h3>
+<p>En 2026, le conseil régional dispose d'un budget de <strong>3,54 milliards d'euros</strong>, dont 1,15 milliard d'investissement. Les transports en représentent environ un tiers (1,2 milliard), devant l'économie et l'emploi (335 M€), l'éducation et les lycées (335 M€), l'agriculture (140 M€) et la santé (130 M€). La Région doit composer avec une baisse de 144 M€ des dotations de l'État.</p></div>
+</section>
+
+<!-- ═══════════════ 2. INDUSTRIE ═══════════════ -->
+<section class="section" id="industrie"><h2 class="section-titre"><div class="section-titre-icon">✈️</div>Industrie : la capitale européenne de l'aéronautique</h2><div class="histoire-texte">
+<p class="doc-intro">L'Occitanie concentre à elle seule une part considérable de l'industrie aérospatiale française : <strong>trois salariés de la filière aéronautique sur dix</strong> et <strong>quatre sur dix pour le spatial</strong> travaillent dans la région. Presque tout cet écosystème se trouve autour de Toulouse, dans l'ancienne région Midi-Pyrénées.</p>
+<div class="repere-grid trois">
+  <div class="repere"><strong>≈ 820</strong><span>entreprises dans la filière aéronautique et spatiale (817 en 2022).</span></div>
+  <div class="repere"><strong>+ 8 %</strong><span>de chiffre d'affaires en 2025 : la filière dépasse enfin son niveau de 2019.</span></div>
+  <div class="repere"><strong>+ 800</strong><span>emplois nets créés dans la filière en 2025 (+ 0,7 %).</span></div>
+</div>
+<h3 class="sous-titre">L'aéronautique</h3>
+<p>Toulouse est le siège d'<strong>Airbus</strong>, dont les chaînes d'assemblage final de Blagnac et Colomiers produisent notamment des appareils de la famille A320 et l'A350. Autour de l'avionneur gravitent <strong>ATR</strong> (avions régionaux), des équipementiers comme <strong>Safran</strong>, <strong>Thales</strong>, <strong>Liebherr-Aerospace</strong> ou <strong>Latécoère</strong>, et des centaines de sous-traitants, bureaux d'études et sociétés d'ingénierie. À Tarbes, <strong>Daher</strong> construit les avions d'affaires TBM.</p>
+<p>La filière s'est fortement transformée : les constructeurs ne représentent plus qu'environ la moitié des salariés, le reste se répartissant entre fournisseurs, ingénierie et informatique. En 2025, la production d'Airbus reste freinée par des tensions d'approvisionnement, notamment sur les moteurs.</p></div>
+
+<div class="schema"><span class="schema-titre">Comment s'organise la filière</span><div class="schema-flow">
+  <div class="schema-box fort"><b>Donneurs d'ordres</b><br><span style="font-size:12px;opacity:.85">Airbus, ATR, Thales Alenia Space</span></div><div class="schema-arrow">→</div>
+  <div class="schema-box"><b>Équipementiers</b><br><span class="small">moteurs, systèmes, aérostructures</span></div><div class="schema-arrow">→</div>
+  <div class="schema-box"><b>Sous-traitants</b><br><span class="small">usinage, câblage, composites</span></div><div class="schema-arrow">→</div>
+  <div class="schema-box"><b>Services</b><br><span class="small">ingénierie, informatique, essais</span></div>
+</div><p class="small" style="text-align:center;margin-top:10px">Le pôle de compétitivité Aerospace Valley fédère ces acteurs entre Occitanie et Nouvelle-Aquitaine.</p></div>
+
+<div class="histoire-texte"><h3 class="sous-titre">Les autres piliers de l'économie</h3></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Santé</span><h4>Pharmacie et cosmétique</h4><p>Les Laboratoires Pierre Fabre, nés à Castres, restent l'un des grands employeurs industriels du Tarn. Toulouse développe l'Oncopole, campus dédié à la lutte contre le cancer.</p></div>
+  <div class="ouvrage"><span class="lieu">Agriculture</span><h4>Agroalimentaire et vin</h4><p>L'Occitanie est l'une des premières régions agricoles de France : vignoble languedocien, Roquefort, Armagnac, élevage de l'Aveyron et de la Lozère. Elle est la première région bio en nombre d'exploitations.</p></div>
+  <div class="ouvrage"><span class="lieu">Numérique</span><h4>Logiciel et données</h4><p>Toulouse et Montpellier accueillent un écosystème dense de sociétés informatiques, souvent liées à l'aérospatial, au spatial et à la santé.</p></div>
+  <div class="ouvrage"><span class="lieu">Énergie</span><h4>Transition énergétique</h4><p>La Région affiche l'objectif de devenir la première région à énergie positive d'Europe : éolien en mer dans le golfe du Lion, solaire, hydrogène.</p></div>
+</div>
+</section>
+
+<!-- ═══════════════ AGRICULTURE & GASTRONOMIE ═══════════════ -->
+<section class="section" id="agriculture"><h2 class="section-titre"><div class="section-titre-icon">🍇</div>Agriculture et gastronomie</h2><div class="histoire-texte">
+<p class="doc-intro">L'Occitanie est la première région française pour le nombre et la diversité des produits sous signe officiel de qualité. Ces produits représentent environ 40 % du chiffre d'affaires des exploitations, et une ferme sur deux en produit au moins un.</p></div>
+<div class="repere-grid">
+  <div class="repere"><strong>261</strong><span>produits sous signe officiel de qualité (AOP, IGP, Label Rouge, STG).</span></div>
+  <div class="repere"><strong>≈ 263 000 ha</strong><span>de vignes : le plus vaste vignoble de France.</span></div>
+  <div class="repere"><strong>54 + 34</strong><span>vins en AOP et en IGP, dont l'IGP Pays d'Oc.</span></div>
+  <div class="repere"><strong>1<sup>re</sup></strong><span>région bio de France, en surface comme en nombre de fermes.</span></div>
+</div>
+<div class="histoire-texte"><h3 class="sous-titre">Deux grands vignobles</h3></div>
+<div class="compare">
+  <div class="compare-col compare-cath"><h4>🍷 Languedoc-Roussillon</h4><ul><li>Corbières, Minervois, Fitou, Pic Saint-Loup, Faugères, Saint-Chinian</li><li>Vins doux naturels : Banyuls, Maury, Rivesaltes</li><li>Blanquette et crémant de Limoux, IGP Pays d'Oc</li></ul></div>
+  <div class="compare-col compare-rom"><h4>🍷 Sud-Ouest</h4><ul><li>Cahors, Gaillac, Fronton, Madiran, Marcillac</li><li>Côtes de Gascogne, Saint-Mont</li><li>Armagnac et Floc de Gascogne</li></ul></div>
+</div>
+<div class="histoire-texte"><h3 class="sous-titre">Produits emblématiques</h3></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Famille</th><th>Produits</th></tr></thead><tbody>
+<tr><td><strong>Fromages</strong></td><td>Roquefort (le plus ancien fromage AOP), Laguiole, Pélardon, Rocamadour, Bleu des Causses</td></tr>
+<tr><td><strong>Viandes</strong></td><td>Agneau de l'Aveyron, bœuf Fleur d'Aubrac, porc noir de Bigorre, veau d'Aveyron et du Ségala, canard à foie gras du Sud-Ouest</td></tr>
+<tr><td><strong>Fruits et légumes</strong></td><td>Ail rose de Lautrec, ail blanc de Lomagne, chasselas de Moissac, oignon doux des Cévennes, haricot tarbais</td></tr>
+<tr><td><strong>Mer et lagunes</strong></td><td>Huîtres de Bouzigues (étang de Thau), anchois de Collioure</td></tr>
+<tr><td><strong>Huile et sel</strong></td><td>Olive de Nîmes et Lucques du Languedoc, sel de Camargue</td></tr>
+<tr><td><strong>Plats</strong></td><td>Cassoulet (Castelnaudary, Carcassonne, Toulouse), aligot, tielle sétoise, brandade de Nîmes, saucisse de Toulouse</td></tr>
+</tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Une agriculture sous pression</div><p>Sécheresses répétées, crise viticole et arrachages de vignes, concurrence internationale : l'agriculture régionale traverse une période difficile. La Région a engagé un plan de soutien à la viticulture et alerte sur la baisse annoncée des aides européennes.</p></div>
+</section>
+
+<!-- ═══════════════ RECHERCHE ═══════════════ -->
+<section class="section" id="recherche"><h2 class="section-titre"><div class="section-titre-icon">🔬</div>Recherche et enseignement supérieur</h2><div class="histoire-texte">
+<p>L'Occitanie est la <strong>première région française pour l'effort de recherche</strong> : 3,5 % de son PIB y est consacré, la seule au-dessus de l'objectif européen de 3 %. Cet effort est porté par l'aérospatial et par un réseau dense d'universités, d'écoles et d'organismes nationaux. Deux grands pôles se partagent l'essentiel de l'activité : <strong>Toulouse</strong>, tournée vers l'ingénierie, l'aéronautique, l'espace et la santé, et <strong>Montpellier</strong>, spécialisée dans l'agronomie, l'environnement, la biologie et la médecine.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Pôle</th><th>Établissements et organismes</th><th>Spécialités</th></tr></thead><tbody>
+<tr><td><strong>Toulouse</strong></td><td>Université de Toulouse, ISAE-SUPAERO, ENAC, INSA, ONERA, CNRS, Météo-France (centre national)</td><td>Aéronautique, espace, mathématiques, économie (Toulouse School of Economics), météorologie</td></tr>
+<tr><td><strong>Toulouse Oncopole</strong></td><td>Institut universitaire du cancer, laboratoires publics et privés</td><td>Recherche et soins contre le cancer</td></tr>
+<tr><td><strong>Montpellier</strong></td><td>Université de Montpellier, CIRAD, INRAE, IRD, CNRS, CHU</td><td>Agronomie, agriculture tropicale, écologie, eau, biologie-santé</td></tr>
+<tr><td><strong>Perpignan, Nîmes, Albi, Tarbes…</strong></td><td>Universités de Perpignan et de Nîmes, IMT Mines Albi, ENI Tarbes, INU Champollion</td><td>Énergie solaire, matériaux, procédés, sciences humaines</td></tr>
+</tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · deux métropoles complémentaires</div><p>La fusion de 2016 a réuni deux traditions scientifiques très différentes. Toulouse s'est construite autour de l'avion et de l'espace ; Montpellier, autour de la terre, de l'eau et du vivant, avec l'un des plus grands rassemblements mondiaux de chercheurs en agronomie. Leur complémentarité est l'un des atouts de la région.</p></div>
+</section>
+
+<!-- ═══════════════ SANTÉ & ÉDUCATION ═══════════════ -->
+<section class="section" id="sante"><h2 class="section-titre"><div class="section-titre-icon">🩺</div>Santé et éducation</h2>
+<div class="repere-grid trois">
+  <div class="repere"><strong>280 426</strong><span>étudiants à la rentrée 2025, soit 9,2 % des étudiants de France.</span></div>
+  <div class="repere"><strong>153 114</strong><span>dans l'académie de Toulouse.</span></div>
+  <div class="repere"><strong>127 312</strong><span>dans l'académie de Montpellier, en plus forte hausse (+ 1,7 %).</span></div>
+</div>
+<div class="histoire-texte"><p>L'Occitanie accueille la <strong>3<sup>e</sup> population étudiante de France</strong>, derrière l'Île-de-France et Auvergne-Rhône-Alpes. Toulouse et Montpellier concentrent plus des trois quarts des étudiants ; le reste se répartit entre une vingtaine de villes universitaires (Perpignan, Nîmes, Albi, Rodez, Tarbes, Castres, Foix…).</p>
+<h3 class="sous-titre">Les grands hôpitaux</h3></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Toulouse</span><h4>CHU de Toulouse</h4><p>L'un des plus grands centres hospitaliers universitaires de France, associé à l'Oncopole pour la cancérologie.</p></div>
+  <div class="ouvrage"><span class="lieu">Montpellier</span><h4>CHU de Montpellier</h4><p>Héritier de la plus ancienne faculté de médecine en activité du monde occidental, fondée au XII<sup>e</sup>-XIII<sup>e</sup> siècle.</p></div>
+  <div class="ouvrage"><span class="lieu">Nîmes</span><h4>CHU de Nîmes</h4><p>Troisième CHU de la région, il couvre le Gard et l'est de la région.</p></div>
+  <div class="ouvrage"><span class="lieu">Partout</span><h4>Lutter contre les déserts médicaux</h4><p>La Région salarie directement des médecins dans des centres de santé : elle a signé son 150<sup>e</sup> contrat début 2026.</p></div>
+</div>
+<div class="encadre"><strong>🎓 Une compétence régionale : les lycées</strong><br>La Région construit, entretient et équipe les lycées publics. Elle finance aussi l'apprentissage et la formation professionnelle, et propose des tarifs de train réduits pour les jeunes.</div>
+</section>
+
+<!-- ═══════════════ SPATIAL ═══════════════ -->
+<section class="section" id="spatial"><h2 class="section-titre"><div class="section-titre-icon">🚀</div>Le spatial : la première concentration française</h2><div class="histoire-texte">
+<p>Toulouse est la capitale française du spatial. Selon la Région, le secteur réunit environ <strong>260 entreprises</strong> et <strong>15 000 emplois</strong> (industrie, formation, recherche), soit près de la moitié des emplois de la filière en France.</p></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Toulouse</span><h4>CNES</h4><p>Le Centre spatial de Toulouse est le plus grand établissement de l'agence spatiale française : conception de satellites, contrôle en orbite, observation de la Terre.</p></div>
+  <div class="ouvrage"><span class="lieu">Toulouse</span><h4>Airbus Defence and Space</h4><p>Constructeur de satellites de télécommunications, d'observation et de sondes scientifiques.</p></div>
+  <div class="ouvrage"><span class="lieu">Toulouse</span><h4>Thales Alenia Space</h4><p>Satellites et systèmes orbitaux, modules pour l'exploration spatiale.</p></div>
+  <div class="ouvrage"><span class="lieu">Toulouse</span><h4>Cité de l'espace</h4><p>Parc de culture scientifique ouvert en 1997, avec des répliques grandeur nature de la fusée Ariane 5 et de la station Mir.</p></div>
+</div>
+<div class="encadre"><strong>🛰️ Un écosystème en mutation</strong><br>Au-delà des grands groupes, le « New Space » fait émerger à Toulouse des start-up spécialisées dans les petits satellites, les données d'observation de la Terre ou les services en orbite.</div>
+</section>
+
+<!-- ═══════════════ 3. INFRASTRUCTURES ═══════════════ -->
+<section class="section" id="infrastructures"><h2 class="section-titre"><div class="section-titre-icon">🛤️</div>Infrastructures et communications</h2><div class="histoire-texte">
+<p class="doc-intro">Région très étendue, l'Occitanie doit relier des métropoles en forte croissance, un littoral touristique et de vastes espaces de montagne peu peuplés. Son réseau s'organise autour de deux grands axes : le <strong>couloir Garonne – Méditerranée</strong> (Bordeaux – Toulouse – Narbonne) et l'<strong>arc méditerranéen</strong> (Nîmes – Montpellier – Perpignan – Espagne).</p>
+<h3 class="sous-titre">Les aéroports</h3></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Aéroport</th><th>Trafic</th><th>Particularités</th></tr></thead><tbody>
+<tr><td><strong>Toulouse-Blagnac</strong></td><td>7,62 millions de passagers en 2025 (− 2,8 %)</td><td>Premier aéroport de la région ; 79 % de son niveau de 2019. Recul lié à la fermeture de la base easyJet en avril 2025.</td></tr>
+<tr><td><strong>Montpellier-Méditerranée</strong></td><td>≈ 1,7 million de passagers en 2025</td><td>Base de Transavia depuis 2020 ; trafic majoritairement à bas coût.</td></tr>
+<tr><td><strong>Perpignan, Carcassonne, Béziers, Nîmes</strong></td><td>Plateformes régionales</td><td>Desserte surtout européenne, souvent par des compagnies à bas coût.</td></tr>
+<tr><td><strong>Tarbes-Lourdes-Pyrénées</strong></td><td>Plateforme régionale</td><td>Vols de pèlerinage vers Lourdes.</td></tr>
+<tr><td><strong>Rodez-Aveyron, Castres-Mazamet</strong></td><td>Lignes d'aménagement du territoire</td><td>Liaisons vers Paris pour désenclaver l'intérieur.</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Montpellier : total arrondi des quatre trimestres 2025 publiés par l'Observatoire régional des transports.</p>
+
+<div class="histoire-texte"><h3 class="sous-titre">Le réseau ferré</h3>
+<p>Toulouse est la seule grande métropole française encore privée de ligne à grande vitesse : il faut environ 2 h 50 pour rejoindre Bordeaux. À l'est, le contournement Nîmes – Montpellier est une ligne nouvelle, et la ligne internationale Perpignan – Figueras relie la France au réseau à grande vitesse espagnol. Les trains régionaux circulent sous la marque <strong>liO</strong>, gérée par la Région, qui exploite aussi des lignes de montagne emblématiques comme le <strong>Train jaune</strong> en Cerdagne, la ligne de l'<strong>Aubrac</strong> ou le <strong>Cévenol</strong>.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Projet</th><th>Tracé</th><th>Où en est-on ?</th></tr></thead><tbody>
+<tr><td><strong>LGV Bordeaux – Toulouse</strong></td><td>≈ 220 km de ligne nouvelle (Grand projet du Sud-Ouest)</td><td>Protocole de financement signé à Toulouse le 7 mai 2026, avec 500 M€ débloqués par l'État. Mise en service envisagée vers 2032-2033, un glissement vers 2035 restant possible.</td></tr>
+<tr><td><strong>Ligne nouvelle Montpellier – Perpignan</strong></td><td>Phase 1 : Montpellier – Béziers ; phase 2 : Béziers – Perpignan</td><td>Travaux de la phase 1 prévus à partir de 2029, mise en service visée vers 2034 ; concertation sur la phase 2 depuis 2026.</td></tr>
+</tbody></table></div>
+
+<div class="histoire-texte"><h3 class="sous-titre">Les autoroutes</h3></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Axe</th><th>Itinéraire</th><th>À savoir</th></tr></thead><tbody>
+<tr><td><strong>A9 « La Languedocienne »</strong></td><td>Orange – Nîmes – Montpellier – Narbonne – Le Perthus</td><td>Grand axe méditerranéen vers l'Espagne, très chargé en été.</td></tr>
+<tr><td><strong>A61 « Autoroute des Deux Mers »</strong></td><td>Toulouse – Carcassonne – Narbonne</td><td>Prolonge l'A62 vers la Méditerranée.</td></tr>
+<tr><td><strong>A62</strong></td><td>Bordeaux – Agen – Toulouse</td><td>Liaison avec la façade atlantique.</td></tr>
+<tr><td><strong>A20 « L'Occitane »</strong></td><td>Paris – Brive – Cahors – Montauban – Toulouse</td><td>Gratuite au nord de Brive, à péage ensuite.</td></tr>
+<tr><td><strong>A75 « La Méridienne »</strong></td><td>Clermont-Ferrand – Millau – Béziers</td><td>Gratuite, sauf le viaduc de Millau (2004), plus haut pont à haubans du monde à son ouverture.</td></tr>
+<tr><td><strong>A64 « La Pyrénéenne »</strong></td><td>Toulouse – Tarbes – Pau – Bayonne</td><td>Longe le piémont pyrénéen.</td></tr>
+<tr><td><strong>A66 et A68</strong></td><td>Toulouse – Pamiers ; Toulouse – Albi</td><td>Desserte de l'Ariège et du Tarn.</td></tr>
+<tr><td><strong>A69</strong></td><td>Toulouse – Castres (53 km)</td><td>Projet très contesté. Le Conseil d'État a validé l'autorisation environnementale le 29 juin 2026 ; le concessionnaire annonce une mise en service à l'automne 2026.</td></tr>
+</tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · des ports aussi</div><p>La région dispose de trois ports de commerce sur la Méditerranée : <strong>Sète</strong> (né du canal du Midi, voir la fiche dédiée), <strong>Port-La Nouvelle</strong>, en plein agrandissement pour l'éolien en mer, et <strong>Port-Vendres</strong>, spécialisé dans les fruits. Le littoral compte en outre une cinquantaine de ports de plaisance.</p></div>
+</section>
+
+<!-- ═══════════════ 4. TOURISME ═══════════════ -->
+<section class="section" id="tourisme"><h2 class="section-titre"><div class="section-titre-icon">🏖️</div>Tourisme : mer, montagne et thermalisme</h2><div class="histoire-texte">
+<p class="doc-intro">Peu de régions offrent une telle variété : 220 km de plages, deux massifs montagneux, des gorges, des causses, des cités médiévales. L'Occitanie est l'une des toutes premières régions touristiques de France.</p></div>
+<div class="repere-grid">
+  <div class="repere"><strong>≈ 44</strong><span>stations de montagne, des Pyrénées au Massif central.</span></div>
+  <div class="repere"><strong>1<sup>re</sup></strong><span>région thermale de France, avec 28 établissements.</span></div>
+  <div class="repere"><strong>+ de 50</strong><span>ports de plaisance sur le littoral.</span></div>
+  <div class="repere"><strong>41</strong><span>« Grands Sites Occitanie », collection créée par la Région.</span></div>
+</div>
+
+<div class="histoire-texte"><h3 class="sous-titre">⛷️ Les stations de ski</h3></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Massif</th><th>Département</th><th>Principales stations</th></tr></thead><tbody>
+<tr><td><strong>Pyrénées catalanes</strong></td><td>Pyrénées-Orientales</td><td>Font-Romeu – Pyrénées 2000, Les Angles, Formiguères, Porté-Puymorens, Cambre d'Aze</td></tr>
+<tr><td><strong>Pyrénées ariégeoises</strong></td><td>Ariège</td><td>Ax 3 Domaines, Guzet, Ascou-Pailhères, Monts d'Olmes</td></tr>
+<tr><td><strong>Pyrénées centrales</strong></td><td>Haute-Garonne</td><td>Luchon-Superbagnères, Le Mourtis, Bourg-d'Oueil</td></tr>
+<tr><td><strong>Pyrénées bigourdanes</strong></td><td>Hautes-Pyrénées</td><td>Grand Tourmalet (La Mongie – Barèges), Saint-Lary, Peyragudes, Piau-Engaly, Cauterets, Luz-Ardiden, Gavarnie</td></tr>
+<tr><td><strong>Massif central</strong></td><td>Gard, Lozère, Aveyron</td><td>Mont Aigoual – Prat Peyrot, Mont Lozère, Laguiole, Brameloup</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Sélection indicative ; certaines petites stations ouvrent selon l'enneigement.</p>
+
+<div class="histoire-texte"><h3 class="sous-titre">🏖️ Les stations balnéaires</h3>
+<p>Une grande partie du littoral a été aménagée dans les années 1960-1970 par la <strong>mission Racine</strong>, voulue par l'État pour démoustiquer la côte et créer de nouvelles stations. On lui doit les pyramides de La Grande-Motte ou le Cap d'Agde.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Département</th><th>Stations</th></tr></thead><tbody>
+<tr><td><strong>Gard</strong></td><td>Le Grau-du-Roi – Port-Camargue</td></tr>
+<tr><td><strong>Hérault</strong></td><td>La Grande-Motte, Carnon, Palavas-les-Flots, Sète, Marseillan, Le Cap d'Agde, Valras-Plage</td></tr>
+<tr><td><strong>Aude</strong></td><td>Narbonne-Plage, Gruissan, Port-la-Nouvelle, Leucate – Port-Leucate</td></tr>
+<tr><td><strong>Pyrénées-Orientales</strong></td><td>Le Barcarès, Canet-en-Roussillon, Argelès-sur-Mer, Collioure, Port-Vendres, Banyuls-sur-Mer</td></tr>
+</tbody></table></div>
+
+<div class="histoire-texte"><h3 class="sous-titre">♨️ Les villes thermales</h3>
+<p>Première région thermale de France, l'Occitanie doit cette place aux sources chaudes des Pyrénées et aux eaux du Languedoc. <strong>Balaruc-les-Bains</strong>, au bord de l'étang de Thau, est la station qui accueille le plus de curistes en France.</p></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Hérault</span><h4>Balaruc, Lamalou, Avène</h4><p>Rhumatologie à Balaruc, neurologie à Lamalou-les-Bains, dermatologie à Avène, dont l'eau a donné une marque connue dans le monde entier.</p></div>
+  <div class="ouvrage"><span class="lieu">Hautes-Pyrénées</span><h4>Cauterets, Bagnères, Capvern</h4><p>Bagnères-de-Bigorre, Argelès-Gazost, Barèges, Luz-Saint-Sauveur : la plus forte densité de stations du massif.</p></div>
+  <div class="ouvrage"><span class="lieu">Haute-Garonne · Ariège</span><h4>Luchon et Ax-les-Thermes</h4><p>Bagnères-de-Luchon, « reine des Pyrénées », et Ax-les-Thermes, aux dizaines de sources chaudes.</p></div>
+  <div class="ouvrage"><span class="lieu">Pyrénées-Orientales</span><h4>Amélie, Vernet, Molitg</h4><p>Amélie-les-Bains, Vernet-les-Bains et Molitg-les-Bains, dans les vallées du Tech et de la Têt.</p></div>
+  <div class="ouvrage"><span class="lieu">Gers</span><h4>Barbotan et Castéra-Verduzan</h4><p>Les boues de Barbotan-les-Thermes et les eaux de Lectoure et Castéra-Verduzan.</p></div>
+  <div class="ouvrage"><span class="lieu">Aveyron · Lozère · Aude</span><h4>Cransac, La Chaldette, Rennes-les-Bains</h4><p>Les stations de l'intérieur, plus confidentielles, avec Bagnols-les-Bains en Lozère.</p></div>
+</div>
+
+<div class="histoire-texte"><h3 class="sous-titre">🏞️ Sites classés et sites inscrits</h3>
+<p>Ces deux protections, issues d'une loi de 1930, s'appliquent aux paysages et aux sites naturels d'intérêt artistique, historique, scientifique, légendaire ou pittoresque.</p></div>
+<div class="compare"><div class="compare-col compare-cath"><h4>Site classé</h4><ul><li>Protection la plus forte</li><li>Tout changement de l'aspect des lieux nécessite une autorisation spéciale du préfet ou du ministre</li><li>Réservé aux sites les plus remarquables</li></ul></div><div class="compare-col compare-rom"><h4>Site inscrit</h4><ul><li>Protection plus souple</li><li>Les travaux doivent être déclarés à l'avance à l'architecte des Bâtiments de France</li><li>Souvent une première étape avant le classement</li></ul></div></div>
+<div class="histoire-texte"><p>L'Occitanie compte plusieurs centaines de sites protégés. Parmi les plus célèbres : les <strong>gorges du Tarn</strong> et de la Jonte, le <strong>cirque de Navacelles</strong>, le <strong>Pic du Midi de Bigorre</strong>, le cirque de <strong>Gavarnie</strong>, le site de <strong>Rocamadour</strong>, les <strong>gorges de l'Hérault</strong> à Saint-Guilhem-le-Désert, le massif du <strong>Canigou</strong> ou le <strong>Pont du Gard</strong>. Les plus fréquentés sont gérés selon le label national <strong>Grand Site de France</strong>, à ne pas confondre avec la collection régionale des Grands Sites Occitanie.</p></div>
+</section>
+
+<!-- ═══════════════ PARCS ═══════════════ -->
+<section class="section" id="parcs"><h2 class="section-titre"><div class="section-titre-icon">🌲</div>Parcs nationaux et parcs naturels régionaux</h2><div class="histoire-texte">
+<p>Les espaces protégés couvrent plus du tiers du territoire régional. La différence est importante : un <strong>parc national</strong> protège strictement un cœur de nature, avec une réglementation nationale ; un <strong>parc naturel régional</strong> (PNR) est un projet de territoire, porté par les communes, qui concilie préservation et développement.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Parc</th><th>Création</th><th>Départements</th></tr></thead><tbody>
+<tr><td><strong>Parc national des Pyrénées</strong></td><td>1967</td><td>Hautes-Pyrénées (et Pyrénées-Atlantiques)</td></tr>
+<tr><td><strong>Parc national des Cévennes</strong></td><td>1970</td><td>Lozère, Gard (et Ardèche)</td></tr>
+<tr><td><strong>PNR du Haut-Languedoc</strong></td><td>1973</td><td>Tarn, Hérault</td></tr>
+<tr><td><strong>PNR des Grands Causses</strong></td><td>1995</td><td>Aveyron</td></tr>
+<tr><td><strong>PNR des Causses du Quercy</strong></td><td>1999</td><td>Lot</td></tr>
+<tr><td><strong>PNR de la Narbonnaise en Méditerranée</strong></td><td>2003</td><td>Aude</td></tr>
+<tr><td><strong>PNR des Pyrénées catalanes</strong></td><td>2004</td><td>Pyrénées-Orientales</td></tr>
+<tr><td><strong>PNR des Pyrénées ariégeoises</strong></td><td>2009</td><td>Ariège</td></tr>
+<tr><td><strong>PNR de l'Aubrac</strong></td><td>2018</td><td>Aveyron, Lozère (et Cantal)</td></tr>
+<tr><td><strong>PNR Corbières-Fenouillèdes</strong></td><td>2021</td><td>Aude, Pyrénées-Orientales</td></tr>
+<tr><td><strong>PNR Comminges Barousse Pyrénées</strong></td><td>2026</td><td>Haute-Garonne, Hautes-Pyrénées</td></tr>
+</tbody></table></div>
+<p class="tableau-legende">Le 9<sup>e</sup> PNR d'Occitanie, Comminges Barousse Pyrénées, a été créé par décret du 9 juillet 2026 : c'est le 60<sup>e</sup> parc naturel régional de France.</p>
+<div class="encadre"><strong>🌊 Et en mer ?</strong><br>Le <strong>Parc naturel marin du golfe du Lion</strong> protège les fonds marins au large de la côte catalane, entre Leucate et la frontière espagnole. Le Pic du Midi et le parc national des Cévennes sont par ailleurs reconnus <strong>réserves internationales de ciel étoilé</strong>.</div>
+</section>
+
+<!-- ═══════════════ 5. LABELS ═══════════════ -->
+<section class="section" id="labels"><h2 class="section-titre"><div class="section-titre-icon">🏅</div>Labellisation : la région la plus titrée de France</h2>
+
+<div class="histoire-texte"><h3 class="sous-titre">🌍 Le patrimoine mondial de l'UNESCO</h3>
+<p>Avec <strong>11 biens inscrits</strong> en 2026 (9 culturels, 1 naturel, 1 mixte), l'Occitanie est la région française qui en compte le plus.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Année</th><th>Bien</th><th>Type</th><th>Département(s)</th></tr></thead><tbody>
+<tr><td>1985</td><td><strong>Pont du Gard</strong></td><td>Culturel</td><td>Gard</td></tr>
+<tr><td>1996</td><td><strong>Canal du Midi</strong></td><td>Culturel</td><td>Haute-Garonne, Aude, Hérault, Tarn</td></tr>
+<tr><td>1997</td><td><strong>Ville fortifiée historique de Carcassonne</strong></td><td>Culturel</td><td>Aude</td></tr>
+<tr><td>1997</td><td><strong>Pyrénées – Mont Perdu</strong> (cirque de Gavarnie)</td><td>Mixte</td><td>Hautes-Pyrénées</td></tr>
+<tr><td>1998</td><td><strong>Chemins de Saint-Jacques-de-Compostelle en France</strong></td><td>Culturel</td><td>Plusieurs (Conques, Moissac, Saint-Gilles…)</td></tr>
+<tr><td>2008</td><td><strong>Fortifications de Vauban</strong></td><td>Culturel</td><td>Pyrénées-Orientales (Villefranche-de-Conflent, Mont-Louis)</td></tr>
+<tr><td>2010</td><td><strong>Cité épiscopale d'Albi</strong></td><td>Culturel</td><td>Tarn</td></tr>
+<tr><td>2011</td><td><strong>Causses et Cévennes</strong></td><td>Culturel</td><td>Lozère, Gard, Aveyron, Hérault</td></tr>
+<tr><td>2021</td><td><strong>Forêts primaires de hêtres</strong> (forêt de la Massane)</td><td>Naturel</td><td>Pyrénées-Orientales</td></tr>
+<tr><td>2023</td><td><strong>Maison Carrée de Nîmes</strong></td><td>Culturel</td><td>Gard</td></tr>
+<tr><td>2026</td><td><strong>Forteresses royales capétiennes du Languedoc</strong></td><td>Culturel</td><td>Aude, Pyrénées-Orientales</td></tr>
+</tbody></table></div>
+<div class="commentaire"><div class="commentaire-titre">💬 Au-delà de la liste</div><p>L'UNESCO distingue aussi Toulouse comme <strong>« Ville créative » pour la musique</strong>, deux <strong>Géoparcs mondiaux</strong> (Causses du Quercy et Hérault) et, au titre du patrimoine immatériel, les <strong>fêtes de l'ours</strong> des Pyrénées. En 2026, la région célèbre aussi les 30 ans de l'inscription du canal du Midi.</p></div>
+
+<div class="histoire-texte"><h3 class="sous-titre">🏘️ Les Plus Beaux Villages de France</h3>
+<p>Créée en 1982, l'association réserve son label aux villages de moins de 2 000 habitants possédant au moins deux sites ou monuments protégés. Avec <strong>51 villages labellisés</strong>, soit environ 28 % du total national, l'Occitanie occupe la première place, et l'<strong>Aveyron</strong> est le département le mieux représenté. En juin 2026, le congrès national s'est tenu à Najac, et le Petit Futé a classé <strong>Conques</strong> plus beau village du monde.</p></div>
+<div class="village-dept"><b>Aveyron</b><br><span class="tag">Conques</span><span class="tag">Najac</span><span class="tag">Belcastel</span><span class="tag">Estaing</span><span class="tag">Saint-Côme-d'Olt</span><span class="tag">Sainte-Eulalie-d'Olt</span><span class="tag">Sauveterre-de-Rouergue</span><span class="tag">La Couvertoirade</span><span class="tag">Brousse-le-Château</span><span class="tag">Peyre</span></div>
+<div class="village-dept"><b>Lot</b><br><span class="tag">Saint-Cirq-Lapopie</span><span class="tag">Autoire</span><span class="tag">Carennac</span><span class="tag">Loubressac</span><span class="tag">Capdenac-le-Haut</span><span class="tag">Cardaillac</span></div>
+<div class="village-dept"><b>Tarn</b><br><span class="tag">Cordes-sur-Ciel</span><span class="tag">Castelnau-de-Montmiral</span><span class="tag">Puycelsi</span><span class="tag">Lautrec</span><span class="tag">Monestiés</span></div>
+<div class="village-dept"><b>Gers</b><br><span class="tag">Larressingle</span><span class="tag">Fourcès</span><span class="tag">Montréal</span><span class="tag">Sarrant</span><span class="tag">Lavardens</span></div>
+<div class="village-dept"><b>Tarn-et-Garonne</b><br><span class="tag">Auvillar</span><span class="tag">Lauzerte</span><span class="tag">Bruniquel</span></div>
+<div class="village-dept"><b>Pyrénées-Orientales</b><br><span class="tag">Villefranche-de-Conflent</span><span class="tag">Castelnou</span><span class="tag">Eus</span><span class="tag">Évol</span><span class="tag">Mosset</span></div>
+<div class="village-dept"><b>Hérault · Aude · Gard · Lozère · Ariège · Haute-Garonne</b><br><span class="tag">Saint-Guilhem-le-Désert</span><span class="tag">Minerve</span><span class="tag">Olargues</span><span class="tag">Lagrasse</span><span class="tag">Aiguèze</span><span class="tag">Montclus</span><span class="tag">La Roque-sur-Cèze</span><span class="tag">Sainte-Enimie</span><span class="tag">La Garde-Guérin</span><span class="tag">Camon</span><span class="tag">Saint-Bertrand-de-Comminges</span></div>
+<p class="tableau-legende" style="margin-top:6px">Sélection : la liste complète et à jour figure sur le site de l'association.</p>
+
+<div class="histoire-texte"><h3 class="sous-titre">🏰 Les Petites Cités de Caractère</h3>
+<p>Né en Bretagne en 1976, ce label distingue des communes de moins de 6 000 habitants, rurales par leur taille mais urbaines par leur histoire et leur patrimoine bâti. Il n'est arrivé en Occitanie qu'en 2015, avec <strong>Combret-sur-Rance</strong> (Aveyron) ; une association régionale existe depuis 2019. En 2023, <strong>16 communes</strong> étaient homologuées :</p></div>
+<div class="village-dept"><b>Aveyron</b><br><span class="tag">Combret-sur-Rance</span><span class="tag">Peyreleau</span><span class="tag">Saint-Geniez-d'Olt-et-d'Aubrac</span><span class="tag">Sévérac-d'Aveyron</span><span class="tag">Villecomtal</span></div>
+<div class="village-dept"><b>Gers</b><br><span class="tag">Cologne</span><span class="tag">Lupiac</span><span class="tag">Lombez</span></div>
+<div class="village-dept"><b>Tarn</b><br><span class="tag">Ambialet</span><span class="tag">Lacaze</span><span class="tag">Lisle-sur-Tarn</span></div>
+<div class="village-dept"><b>Gard · Lozère · Pyrénées-Orientales</b><br><span class="tag">Sommières</span><span class="tag">Vénéjan</span><span class="tag">La Malène</span><span class="tag">Collioure</span><span class="tag">Ille-sur-Têt</span></div>
+<div class="notice"><strong>Réseau en expansion :</strong> Martres-Tolosane, Saint-Lizier et Bram ont présenté leur candidature en 2023, et d'autres communes ont suivi depuis. Vérifier la liste actuelle sur <a href="https://www.petitescitesdecaractere.com/" target="_blank" rel="noopener" style="color:#2C4A7C">petitescitesdecaractere.com</a> avant publication.</div>
+<div class="encadre"><strong>🔎 Et aussi…</strong><br>Le Gard a créé son propre label « Villages de caractère », et plus de 240 communes d'Occitanie sont labellisées Villes et Villages Fleuris. Plusieurs villes portent par ailleurs le label Ville d'art et d'histoire (Auch, Carcassonne, Uzès…).</div>
+</section>
+
+<!-- ═══════════════ IDENTITÉ CULTURELLE ═══════════════ -->
+<section class="section" id="culture"><h2 class="section-titre"><div class="section-titre-icon">✠</div>Identité culturelle</h2><div class="histoire-texte">
+<p class="doc-intro">Le nom même de la région renvoie à la <strong>langue d'oc</strong>, parlée au Moyen Âge dans tout le sud de la France, celle des troubadours. Cette mémoire, la culture catalane du Roussillon, les traditions taurines et une passion pour le rugby forgent une identité forte.</p></div>
+<div class="ouvrage-grid">
+  <div class="ouvrage"><span class="lieu">Langue</span><h4>L'occitan</h4><p>Langue romane aux variantes languedocienne et gasconne. Elle est enseignée dans des écoles bilingues et associatives (Calandretas), et apparaît sur de nombreux panneaux d'entrée de ville.</p></div>
+  <div class="ouvrage"><span class="lieu">Pyrénées-Orientales</span><h4>Le catalan</h4><p>Le Roussillon forme la « Catalogne du Nord » : langue, sardane, fêtes de la Sant Joan et feux du Canigou y restent vivants.</p></div>
+  <div class="ouvrage"><span class="lieu">Symbole</span><h4>La croix occitane</h4><p>Croix d'or à douze pommettes sur fond rouge, héritée des comtes de Toulouse. Elle figure sur le logo de la Région.</p></div>
+  <div class="ouvrage"><span class="lieu">Gard · Hérault</span><h4>Traditions taurines</h4><p>Course camarguaise, abrivados, manades : les férias de Nîmes et de Béziers attirent chacune des centaines de milliers de visiteurs.</p></div>
+  <div class="ouvrage"><span class="lieu">Sport</span><h4>Terre d'ovalie</h4><p>Stade toulousain, Castres olympique, Montpellier Hérault Rugby, USA Perpignan : le rugby à XV et à XIII fait partie de la culture populaire.</p></div>
+  <div class="ouvrage"><span class="lieu">Pyrénées</span><h4>Les fêtes de l'ours</h4><p>Carnavals de Prats-de-Mollo, Arles-sur-Tech et Saint-Laurent-de-Cerdans, inscrits au patrimoine immatériel de l'UNESCO.</p></div>
+</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Une mémoire médiévale</div><p>Le catharisme, la croisade des Albigeois et les châteaux qui en gardent le souvenir (Montségur, Quéribus, Peyrepertuse) restent des marqueurs forts de l'identité régionale. Plusieurs de ces forteresses sont inscrites au patrimoine mondial depuis 2026.</p></div>
+</section>
+
+<!-- ═══════════════ MINI-FRISE ═══════════════ -->
+<section class="section" id="frise"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>La région en quelques dates</h2>
+<div class="frise">
+  <div class="frise-periode">Naissance</div>
+  <div class="frise-item"><div class="frise-date">16 janvier 2015</div><div class="frise-texte">La loi relative à la délimitation des régions décide la fusion de Midi-Pyrénées et Languedoc-Roussillon.</div></div>
+  <div class="frise-item majeur"><div class="frise-date">1<sup>er</sup> janvier 2016</div><div class="frise-texte">Naissance de la région « Languedoc-Roussillon-Midi-Pyrénées », 13 départements.</div></div>
+  <div class="frise-item"><div class="frise-date">4 janvier 2016</div><div class="frise-texte">Carole Delga est élue présidente du conseil régional.</div></div>
+  <div class="frise-item"><div class="frise-date">Printemps 2016</div><div class="frise-texte">Consultation citoyenne sur le nom : « Occitanie » arrive en tête.</div></div>
+  <div class="frise-item majeur"><div class="frise-date">28 septembre 2016</div><div class="frise-texte">Décrets fixant le nom « Occitanie » et Toulouse comme chef-lieu ; l'assemblée régionale siège à Montpellier.</div></div>
+  <div class="frise-periode">Affirmation</div>
+  <div class="frise-item"><div class="frise-date">2021</div><div class="frise-texte">Réélection de Carole Delga ; création du PNR Corbières-Fenouillèdes et inscription de la forêt de la Massane à l'UNESCO.</div></div>
+  <div class="frise-item"><div class="frise-date">2023</div><div class="frise-texte">La Maison Carrée de Nîmes rejoint le patrimoine mondial.</div></div>
+  <div class="frise-periode">Aujourd'hui</div>
+  <div class="frise-item majeur"><div class="frise-date">2026</div><div class="frise-texte">10 ans de la région ; 11<sup>e</sup> bien UNESCO (forteresses royales du Languedoc), 9<sup>e</sup> PNR (Comminges Barousse Pyrénées), protocole de la LGV Bordeaux – Toulouse et validation de l'A69.</div></div>
+</div>
+</section>
+
+<!-- ═══════════════ SOURCES ═══════════════ -->
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://www.insee.fr/fr/statistiques/8950129" target="_blank" rel="noopener">Insee Flash Occitanie n° 153 — bilan démographique 2025 (avril 2026)</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/fichier/8646254/lm_ind_29_2.pdf" target="_blank" rel="noopener">Insee — L'essentiel des zonages en Occitanie (superficie, communes, cantons)</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/9031891" target="_blank" rel="noopener">Insee Flash Occitanie n° 157 — filière aéronautique et spatiale en 2025 (septembre 2026)</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/8348898" target="_blank" rel="noopener">Insee Analyses Occitanie n° 159 — Toulouse, capitale de l'aéronautique et du spatial</a></li>
+<li><a href="https://www.laregion.fr" target="_blank" rel="noopener">Région Occitanie — site officiel</a></li>
+<li><a href="https://www.culture.gouv.fr/regions/drac-occitanie/La-Direction-regionale-des-affaires-culturelles-DRAC-Occitanie/Patrimoines-et-architecture/Patrimoine-mondial-en-region" target="_blank" rel="noopener">DRAC Occitanie — le patrimoine mondial en région</a></li>
+<li><a href="https://www.banquedesterritoires.fr/un-nouveau-parc-naturel-regional-en-occitanie" target="_blank" rel="noopener">Banque des Territoires — création du PNR Comminges Barousse Pyrénées</a></li>
+<li><a href="https://ort-occitanie.developpement-durable.gouv.fr/" target="_blank" rel="noopener">Observatoire régional des transports d'Occitanie — notes de conjoncture</a></li>
+<li><a href="https://www.toulouse.aeroport.fr/" target="_blank" rel="noopener">Aéroport Toulouse-Blagnac — dossier de presse 2026</a></li>
+<li><a href="https://presse.tourisme-occitanie.com/" target="_blank" rel="noopener">Comité régional du tourisme — dossiers de presse 2025 et 2026</a></li>
+<li><a href="https://pro.tourisme-occitanie.com/veille-economique/suivi-de-l-activite/informations/les-petites-cites-de-caractere-se-developpent-en-occitanie/" target="_blank" rel="noopener">CRTL Occitanie — les Petites Cités de Caractère en Occitanie (2023)</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/4301249" target="_blank" rel="noopener">Insee — L'essentiel sur l'Occitanie (PIB, emploi, niveau de vie)</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/9051943" target="_blank" rel="noopener">Insee Conjoncture Occitanie — chômage au 2<sup>e</sup> trimestre 2026</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/5209675" target="_blank" rel="noopener">Insee — R&amp;D : l'Occitanie au premier rang des régions françaises</a></li>
+<li><a href="https://www.objectifsud.fr/actualites/occitanie-budget-2026-baisse-des-dotations-mais-volonte-dinvestir-159452.php" target="_blank" rel="noopener">Objectif Sud — le budget 2026 de la Région</a></li>
+<li><a href="https://www.inao.gouv.fr/sites/default/files/2025-09/memento_siqo_occitanie_2025.pdf" target="_blank" rel="noopener">INAO — mémento des signes de qualité en Occitanie (2025)</a></li>
+<li><a href="https://www.agence-adocc.com/wp-content/uploads/2023/02/DP-Les-VignoblesdOccitanie-FR1.pdf" target="_blank" rel="noopener">AD'OCC — les vignobles d'Occitanie</a></li>
+<li><a href="https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2026-07/nf-sies-2026-17-40878.pdf" target="_blank" rel="noopener">Ministère de l'Enseignement supérieur — effectifs étudiants 2025-2026</a></li>
+<li><a href="https://www.les-plus-beaux-villages-de-france.org/" target="_blank" rel="noopener">Les Plus Beaux Villages de France</a></li>
+</ul>
+<p class="small">Données à jour en octobre 2026. Les chiffres de population sont des estimations provisoires de l'Insee ; les compositions d'exécutifs et les listes de labels évoluent régulièrement.</p></div></section>
+</div>
+
+<!-- ═══════════════ ASIDE ═══════════════ -->
+<aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body">
+  <div class="aside-row"><span class="aside-label">Création</span><span class="aside-val">1<sup>er</sup> janvier 2016</span></div>
+  <div class="aside-row"><span class="aside-label">Chef-lieu</span><span class="aside-val">Toulouse</span></div>
+  <div class="aside-row"><span class="aside-label">Assemblée</span><span class="aside-val">Montpellier</span></div>
+  <div class="aside-row"><span class="aside-label">Présidente</span><span class="aside-val">Carole Delga</span></div>
+  <div class="aside-row"><span class="aside-label">Préfet</span><span class="aside-val">Fabrice Rigoulet-Roze</span></div>
+  <div class="aside-row"><span class="aside-label">Départements</span><span class="aside-val">13</span></div>
+  <div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">72 724 km²</span></div>
+  <div class="aside-row"><span class="aside-label">Population</span><span class="aside-val">≈ 6,25 millions (2026)</span></div>
+  <div class="aside-row"><span class="aside-label">Densité</span><span class="aside-val">≈ 86 hab./km²</span></div>
+</div></div>
+
+<div class="aside-card"><div class="aside-card-header">🔢 En chiffres</div><div class="aside-card-body"><div class="chiffres">
+  <div class="chiffre"><b>2<sup>e</sup></b><span>région la plus vaste de métropole</span></div>
+  <div class="chiffre"><b>3<sup>e</sup></b><span>région la plus peuplée de métropole</span></div>
+  <div class="chiffre"><b>158</b><span>conseillers régionaux</span></div>
+  <div class="chiffre"><b>4 446</b><span>communes</span></div>
+  <div class="chiffre"><b>≈ 820</b><span>entreprises aérospatiales</span></div>
+  <div class="chiffre"><b>7,6 M</b><span>passagers à Toulouse-Blagnac (2025)</span></div>
+  <div class="chiffre"><b>11</b><span>biens UNESCO</span></div>
+  <div class="chiffre"><b>51</b><span>Plus Beaux Villages</span></div>
+  <div class="chiffre"><b>2 + 9</b><span>parcs nationaux + PNR</span></div>
+  <div class="chiffre"><b>≈ 44</b><span>stations de montagne</span></div>
+  <div class="chiffre"><b>3 298 m</b><span>Vignemale, point culminant</span></div>
+  <div class="chiffre"><b>≈ 220 km</b><span>de littoral</span></div>
+  <div class="chiffre"><b>213 Md€</b><span>PIB (2023)</span></div>
+  <div class="chiffre"><b>9,7 %</b><span>chômage (T2 2026)</span></div>
+  <div class="chiffre"><b>261</b><span>produits sous SIQO</span></div>
+  <div class="chiffre"><b>≈ 280 000</b><span>étudiants</span></div>
+</div></div></div>
+
+<div class="aside-card"><div class="aside-card-header">📚 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire">
+  <dt>Conseil régional</dt><dd>Assemblée élue au suffrage universel pour six ans ; elle gère notamment les lycées, les trains régionaux et le développement économique.</dd>
+  <dt>Préfet de région</dt><dd>Représentant de l'État, nommé par le gouvernement.</dd>
+  <dt>Région académique</dt><dd>Regroupement des académies d'une même région, ici Toulouse et Montpellier.</dd>
+  <dt>Métropole</dt><dd>Intercommunalité regroupant une grande agglomération : Toulouse et Montpellier.</dd>
+  <dt>Site classé</dt><dd>Paysage protégé au titre de la loi de 1930 ; tout changement requiert une autorisation spéciale.</dd>
+  <dt>PNR</dt><dd>Parc naturel régional : territoire rural remarquable engagé dans une charte de développement durable.</dd>
+  <dt>Grand Site Occitanie</dt><dd>Collection de sites touristiques promue par la Région, distincte du label national Grand Site de France.</dd>
+  <dt>Bien en série</dt><dd>Inscription UNESCO regroupant plusieurs sites qui forment un ensemble, comme les forteresses capétiennes.</dd>
+</dl></div></div>
+
+<div class="aside-card"><div class="aside-card-header">💡 À retenir</div><div class="aside-card-body" style="font-family:var(--font-corps);font-size:13px;line-height:1.65;color:#5a4a39">Jeune région née d'une fusion, l'Occitanie conjugue une <strong>industrie de pointe</strong> (avions, satellites), une <strong>démographie dynamique</strong> et un <strong>patrimoine sans équivalent</strong> en France : plus de biens UNESCO et de Plus Beaux Villages qu'aucune autre région.</div></div>
+</aside>
+</div></div></div>
+
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script>
+<div class="retour-haut"><a href="carte-occitanie.html">Vers la carte Occitanie</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
+    

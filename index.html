@@ -9,25 +9,50 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; background: #14202b; }
     body { display: grid; place-items: center; min-height: 100vh; }
-    .accueil { position: relative; width: 100%; max-width: 1920px; aspect-ratio: 1536 / 1024; overflow: hidden; }
+    .accueil {
+      position: relative; width: 100%; max-width: 1920px; aspect-ratio: 1536 / 1024; overflow: hidden;
+      container-type: inline-size;   /* les tailles en « cqw » suivent la largeur de l'image */
+    }
     .accueil img { display: block; width: 100%; height: 100%; object-fit: contain; }
-    /* Zone transparente superposée exactement au bouton rouge du visuel. */
-    .bouton-carte { position: absolute; left: 7.1%; top: 65.7%; width: 37.2%; height: 7.6%; border-radius: 999px; cursor: pointer; text-decoration: none; }
-    .bouton-carte:focus-visible { outline: 4px solid white; outline-offset: 3px; background: rgba(255,255,255,.14); }
-    .bouton-carte:hover { background: rgba(255,255,255,.10); }
+
+    /* ── Les deux boutons, à l'emplacement de l'ancien bouton rouge (effacé de l'image) ── */
+    .boutons {
+      position: absolute; left: 15%; top: 66.6%;   /* ← position du groupe de boutons */
+      display: flex; gap: 1.1cqw;
+    }
+    .bouton {
+      display: inline-flex; align-items: center; gap: .7cqw;
+      padding: .75cqw 1.6cqw;                        /* ← taille des boutons */
+      font-family: Georgia, "Times New Roman", serif; font-size: 1.35cqw; letter-spacing: .02em;
+      color: #fff; text-decoration: none; white-space: nowrap;
+      background: rgba(12, 20, 30, .45);
+      border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .bouton span { transition: transform .2s; }
+    .bouton:hover { background: rgba(12, 20, 30, .65); border-color: #FAC775; color: #FAC775; }
+    .bouton:hover span { transform: translateX(3px); }
+    .bouton:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
     @media (max-width: 650px) {
       body { align-items: start; }
       .accueil { min-height: 100svh; aspect-ratio: auto; }
       .accueil img { width: 100%; height: auto; }
-      .bouton-carte { top: auto; /* recalculated from image width, preserving the original button location */
-        top: calc(100vw * 1024 / 1536 * .657); height: calc(100vw * 1024 / 1536 * .076); }
+      /* même emplacement, recalculé à partir de la largeur de l'image */
+      .boutons { top: calc(100vw * 1024 / 1536 * .655); gap: 6px; }
+      .bouton { font-size: 9.5px; padding: 4px 9px; gap: 4px; }
     }
   </style>
 </head>
 <body>
   <main class="accueil">
-    <img src="accueil-occitanie.png" alt="L'Âme des Régions : L'Occitane, terre d'émotions. Paysages, patrimoine, traditions et découverte des 13 départements d'Occitanie." width="1536" height="1024">
-    <a class="bouton-carte" href="regions/occitanie/carte-occitanie.html" aria-label="Découvrir la carte des 13 départements d'Occitanie" title="Découvrir la carte des départements"></a>
+    <img src="accueil-occitanie-sans-bouton.png" alt="L'Âme des Régions : L'Occitane, terre d'émotions. Paysages, patrimoine, traditions et découverte des 13 départements d'Occitanie." width="1536" height="1024">
+    <nav class="boutons" aria-label="Découvrir l'Occitanie">
+      <a class="bouton" href="regions/occitanie/carte-occitanie.html" title="Découvrir la carte des 13 départements">Carte des départements <span aria-hidden="true">→</span></a>
+      <a class="bouton" href="regions/occitanie/occitanie-info.html" title="Identité et repères de la région">Identité &amp; repères <span aria-hidden="true">→</span></a>
+    </nav>
   </main>
 </body>
 </html>
