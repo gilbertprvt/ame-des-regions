@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fronton — Haute-Garonne — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+           font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1      font-size: clamp(26px, 4.4vw, 48px);;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-haute-garonne.jpg'); }</style>
+</head>
+<body class="produit-page">
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div><h1><span style="padding-left: 80px;"><em>F</em>ronton</span><br/><span style="padding-left: 0px;"><em>L</em>e <em>V</em>ignoble de la</span><br/><span style="padding-left: 60px;"><em>N</em>égrette</span></h1></div>
+<img alt="Carte de la Haute-Garonne" src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png" style="height:220px; width:auto; opacity:0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Fronton" src="../blason/fronton.png"/>
+</div>
+<div class="hero-label-bas">⟹ Vignoble · Négrette · Hospitaliers ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#incontournables">🏛️ Incontournables</a>
+<a href="#terroir">🍽️ Terroir &amp; gastronomie</a>
+<a href="#personnages">🎨 Personnages &amp; traditions</a>
+<a href="#infos-pratiques">📍 Infos pratiques</a>
+</div></div></div>
+</div>
+<div class="produit-body"><div class="container"><div class="produit-layout">
+<div>
+<section class="section" id="histoire">
+<h2 class="section-titre"><div class="section-titre-icon">📖</div>Histoire &amp; origines</h2>
+<div class="histoire-texte">
+<p><strong>Avant Fronton : des terrasses caillouteuses entre Garonne et Tarn.</strong> Le Frontonnais s'étage sur une succession de terrasses anciennes, faites de graves, de boulbènes et de « rougets », qui dominent la vallée du Tarn. Ces sols pauvres et bien drainés, peu propices aux grandes cultures, ont très tôt été voués à la vigne : la tradition attribue aux Romains les premiers ceps plantés sur les hauteurs du pays.</p>
+<p><strong>XIIe siècle : le village des Hospitaliers.</strong> Fronton naît véritablement autour de l'ordre de Saint-Jean de Jérusalem. Selon la tradition, le pape Calixte II vient consacrer l'église en 1119. Les Hospitaliers reçoivent de nombreuses donations, organisent le vignoble et fondent une commanderie dirigée par un commandeur, à la fois religieux et seigneur du lieu. Le village se construit autour de l'église Saint-Jean-Baptiste, à l'abri de fossés, de remparts et du château seigneurial ; en 1400, la commanderie relève directement du grand prieuré de Toulouse.</p>
+<p><strong>Une étape sur la route des rois.</strong> Placé entre Toulouse et Montauban, Fronton voit passer les grands de ce monde : Philippe le Bel, Charles IX et son cousin le futur Henri IV, puis Louis XIII, qui y touche les malades des écrouelles en 1632. Ces visites rappellent l'importance stratégique du bourg sur l'axe reliant la capitale languedocienne au Quercy.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Fronton" src="../../../../../../assets/departement/occitanie/photo/haute-garonne/fronton1.jpg"/>
+<figcaption>Le marché couvert</figcaption>
+</figure>
+<p><strong>XVIe-XVIIe siècles : les guerres de Religion.</strong> La proximité de Montauban, place forte protestante, place Fronton en première ligne. Passages de troupes, attaques, épidémies de peste et intempéries marquent durablement la cité, dont l'importance décline ; les troubles restent latents jusqu'en 1628.</p>
+<p><strong>XVIIIe siècle : l'âge d'or des vins de Fronton.</strong> Longtemps freinés par les privilèges accordés aux vins bordelais, les vins du Frontonnais trouvent enfin le chemin de Bordeaux et, de là, de toute l'Europe lorsque ce protectionnisme prend fin. Le vignoble connaît alors sa plus belle prospérité et fait la richesse des familles vigneronnes.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Vignoble de Fronton" src="../../../../../../assets/departement/occitanie/photo/haute-garonne/fronton2.jpg"/>
+<figcaption>Les vignes de négrette</figcaption>
+</figure>
+<p><strong>Phylloxéra, reconstruction et appellation.</strong> À la fin du XIXe siècle, le phylloxéra anéantit le vignoble. Il faut des générations d'efforts pour le reconstituer autour de son cépage emblématique, la négrette. La reconnaissance arrive en 1975 avec l'appellation d'origine contrôlée « Côtes du Frontonnais », devenue depuis l'AOC Fronton, l'un des vignobles phares du Sud-Ouest.</p>
+<p><strong>La négrette, cépage unique au monde.</strong> Cultivée presque exclusivement ici, la négrette donne des rouges et des rosés souples, aux arômes de violette, de fruits rouges et de réglisse. Une légende tenace veut que les Hospitaliers l'aient rapportée de Chypre au retour des croisades ; quoi qu'il en soit, elle est devenue l'identité même du Frontonnais.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 300px;">
+<img alt="Église de Fronton" src="../../../../../../assets/departement/occitanie/photo/haute-garonne/fronton3.jpg"/>
+<figcaption>Église Notre-Dame-de-l'Assomption</figcaption>
+</figure>
+<p><strong>XXe siècle : du bourg rural à la petite ville.</strong> De 1912 à 1937, un petit train des chemins de fer du Sud-Ouest relie Fronton à Toulouse et à Villemur-sur-Tarn. Après 1980, la périurbanisation toulousaine transforme la commune : la population double en une trentaine d'années, passant d'environ 3 000 habitants au début des années 1980 à plus de 6 600 aujourd'hui.</p>
+<p><strong>Une commune-centre pour le nord toulousain.</strong> Avec le lycée Pierre-Bourdieu — premier lycée de France à porter le nom du sociologue —, le collège Alain-Savary, ses commerces et ses services, Fronton est devenue la ville-centre d'un bassin de vie. Le vignoble occupe toutefois encore près de 40 % du territoire communal, en cultures permanentes.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 360px;">
+<img alt="Château de Capdeville" src="../../../../../../assets/departement/occitanie/photo/haute-garonne/fronton4.jpg"/>
+<figcaption>Château de Capdeville — Maison des vins</figcaption>
+</figure>
+<div class="citation-bloc">
+<p>Fronton est une ville née de la vigne : les Hospitaliers lui ont donné son plan et son église, la négrette lui a donné son nom dans le monde du vin, et Toulouse, toute proche, lui donne aujourd'hui son nouvel élan.</p>
+<cite>Repère synthétique — L'Âme des Régions</cite>
+</div>
+
+<p><strong>Pour aller plus loin — sources et documentation :</strong><br/>
+          • <a href="https://www.mairie-fronton.fr/" rel="noopener noreferrer" target="_blank">Ville de Fronton — histoire, patrimoine et Maison des vins</a><br/>
+          • <a href="http://www.cc-dufrontonnais.fr/" rel="noopener noreferrer" target="_blank">Communauté de communes du Frontonnais</a><br/>
+          • <a href="https://www.pop.culture.gouv.fr/notice/merimee/PA00094335" rel="noopener noreferrer" target="_blank">Église Notre-Dame-de-l'Assomption — base Mérimée (POP)</a><br/>
+          • <a href="https://archives.haute-garonne.fr/" rel="noopener noreferrer" target="_blank">Archives départementales de la Haute-Garonne</a><br/>
+          • <a href="https://www.hautegaronnetourisme.com/" rel="noopener noreferrer" target="_blank">Haute-Garonne Tourisme — découvrir le nord toulousain</a><br/>
+          • <a href="https://www.insee.fr/fr/statistiques/2011101?geo=COM-31202" rel="noopener noreferrer" target="_blank">INSEE — Fronton</a></p>
+</div>
+</section>
+<section class="section" id="incontournables">
+<h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Le cœur patrimonial de Fronton</h2>
+<div class="recette-grid">
+<div class="recette-meta-card"><div class="recette-meta-icon">🍇</div><div><div class="recette-meta-label">Identité</div><div class="recette-meta-val">Capitale du vignoble AOC Fronton</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">👥</div><div><div class="recette-meta-label">Population</div><div class="recette-meta-val">6 671 hab. (2023)</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">✝️</div><div><div class="recette-meta-label">Repère</div><div class="recette-meta-val">Ancienne commanderie des Hospitaliers</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">🌿</div><div><div class="recette-meta-label">Patrimoine naturel</div><div class="recette-meta-val">Terrasses du Frontonnais &amp; landes</div></div></div>
+</div>
+<div class="ingredients-bloc"><div class="ingredients-titre">✦ Sites à ne pas manquer</div><div class="ingredients-liste"><div class="ingredient-item"><span class="ingredient-qte">★★★</span> Vignoble &amp; domaines de négrette</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★★</span> Château de Capdeville — Maison des vins</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Église Notre-Dame-de-l'Assomption</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Marché couvert &amp; centre ancien</div>
+<div class="ingredient-item"><span class="ingredient-qte">★★</span> Friches &amp; landes du Frontonnais</div>
+<div class="ingredient-item"><span class="ingredient-qte">★</span> Esplanade &amp; monument aux morts</div></div></div>
+<div class="etapes-liste"><div class="etape"><div class="etape-num">1</div><div class="etape-corps">
+<div class="etape-titre">La Maison des vins</div><div class="etape-texte">Commencez au château de Capdeville, qui accueille la Maison des vins et du tourisme : dégustations, conseils et cartes des domaines.</div>
+</div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps">
+<div class="etape-titre">Le centre ancien</div><div class="etape-texte">Flânez autour du marché couvert et des rues qui rappellent le plan du bourg des Hospitaliers.</div>
+</div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps">
+<div class="etape-titre">L'église</div><div class="etape-texte">Visitez l'église Notre-Dame-de-l'Assomption, inscrite aux monuments historiques en 1981, édifiée sur l'emplacement de l'église primitive.</div>
+</div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps">
+<div class="etape-titre">Les domaines</div><div class="etape-texte">Partez sur les routes du vignoble à la rencontre des vignerons et de la négrette, entre terrasses et coteaux.</div>
+</div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps">
+<div class="etape-titre">Les landes du Frontonnais</div><div class="etape-texte">Terminez par une balade dans les friches et landes classées en ZNIEFF, refuge d'une flore et d'une faune remarquables.</div>
+</div></div></div>
+</section>
+<section class="section" id="terroir">
+<h2 class="section-titre"><div class="section-titre-icon">🍽️</div>Terroir &amp; gastronomie locale</h2>
+<div class="vins-liste"><div class="vin-item"><div class="vin-icon">🍷</div><div>
+<div class="vin-nom">AOC Fronton rouge</div><div class="vin-desc">Vins souples et fruités dominés par la négrette, aux notes de violette, de fruits rouges et de réglisse.</div>
+</div><div class="vin-badge">⭐ Incontournable</div></div>
+<div class="vin-item"><div class="vin-icon">🌸</div><div>
+<div class="vin-nom">Rosé de Fronton</div><div class="vin-desc">Rosés frais et aromatiques, l'une des grandes fiertés de l'appellation.</div>
+</div><div class="vin-badge">Terroir</div></div>
+<div class="vin-item"><div class="vin-icon">🍇</div><div>
+<div class="vin-nom">La négrette</div><div class="vin-desc">Cépage autochtone cultivé presque uniquement dans le Frontonnais, cœur de l'identité locale.</div>
+</div><div class="vin-badge">Unique</div></div>
+<div class="vin-item"><div class="vin-icon">🍑</div><div>
+<div class="vin-nom">Fruits du Frontonnais</div><div class="vin-desc">Les terrasses caillouteuses entre Garonne et Tarn sont aussi réputées pour leurs vergers.</div>
+</div><div class="vin-badge">Tradition</div></div>
+<div class="vin-item"><div class="vin-icon">🌭</div><div>
+<div class="vin-nom">Saucisse de Toulouse &amp; cassoulet</div><div class="vin-desc">Les accords classiques du Fronton rouge avec la cuisine du pays toulousain.</div>
+</div><div class="vin-badge">Accord</div></div></div>
+</section>
+<section class="section" id="personnages">
+<h2 class="section-titre"><div class="section-titre-icon">🎨</div>Personnages, traditions &amp; mémoire locale</h2>
+<div class="histoire-texte">
+<p>François Gauzi (1862-1933), peintre né et mort à Fronton, fut l'ami intime d'Henri de Toulouse-Lautrec, dont il devint l'un des premiers historiographes. Arnaud Baville (1757-1813), enfant du pays, fut général des armées de la République et de l'Empire.</p>
+<p>La vie politique locale a été marquée par André Rey (1905-1995), maire de 1945 à 1971 et député, puis par le viticulteur Jean Tissonnières, maire de 1971 à 2001, qui a donné son nom à la halle des sports. Jean-François Joseph Marcorelle (1760-1829) a laissé le sien à l'esplanade de la mairie.</p>
+<p>Le calendrier frontonnais vit au rythme de la vigne : le festival « Musique en vignes » et le festival Vill'O Rock animent le mois de juillet, tandis que la fête locale, avec ses attractions foraines, se tient le premier week-end de septembre. Les armoiries de la ville rappellent les commandeurs hospitaliers qui eurent longtemps la charge de la paroisse.</p>
+</div>
+</section>
+<section class="section" id="infos-pratiques">
+<h2 class="section-titre"><div class="section-titre-icon">📍</div>Infos pratiques</h2>
+<div class="histoire-texte">
+<p><strong>Accès :</strong> Fronton se trouve à 27 km au nord de Toulouse et à une vingtaine de kilomètres de Montauban. L'autoroute A62 est accessible par la sortie 10.1 (Eurocentre). Les gares les plus proches sont Castelnau-d'Estrétefonds (8 km) et Grisolles (9 km). La ligne express Hop!301 relie le centre-ville au métro Borderouge à Toulouse.</p>
+<p><strong>Office de tourisme :</strong> La Maison des vins et du tourisme, installée au château de Capdeville, renseigne sur les domaines viticoles, les visites et les manifestations du Frontonnais.</p>
+<p><strong>Conseil de visite :</strong> privilégiez la fin de l'été et l'automne pour vivre les vendanges, et prenez rendez-vous avant de visiter les domaines ; pensez à alterner caves, centre ancien et balades dans les landes.</p>
+</div>
+</section>
+</div>
+<aside class="produit-aside">
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+<div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Haute-Garonne</span></div>
+<div class="aside-row"><span class="aside-label">Population</span><span class="aside-val">6 671 hab. (2023)</span></div>
+<div class="aside-row"><span class="aside-label">Gentilé</span><span class="aside-val">Frontonnais · Frontonnaises</span></div>
+<div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">45,8 km²</span></div>
+<div class="aside-row"><span class="aside-label">Situation</span><span class="aside-val">≈ 27 km de Toulouse</span></div>
+<div class="aside-row"><span class="aside-label">REPÈRE</span><span class="aside-val">Ancienne commanderie hospitalière</span></div>
+<div class="aside-row"><span class="aside-label">NATURE</span><span class="aside-val">Terrasses &amp; landes du Frontonnais</span></div>
+<div class="aside-row"><span class="aside-label">RECONNU POUR</span><span class="aside-val">AOC Fronton · négrette · vignoble</span></div>
+</div>
+</div>
+</aside>
+</div></div></div>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
