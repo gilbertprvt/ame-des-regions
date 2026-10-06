@@ -19,27 +19,34 @@
     /* Même largeur que les fiches : c'est .container (style.css / fiche.css) qui fixe la largeur */
     .wrap { margin-left: auto; margin-right: auto; }
 
-    /* ─── BANDEAU ─── */
-    .hero {
-      /* La première photo trouvée s'affiche ; les autres noms servent de secours */
-      background-color: var(--bleu);
-      background-image: linear-gradient(rgba(24,28,38,.55), rgba(24,28,38,.70)),
+    /* ─── BANDEAU (même format que les fiches, ex. vigne-occitanie) ─── */
+    .produit-hero {
+      background-color: #2C4A7C;
+      background-image: linear-gradient(rgba(24,28,38,.40), rgba(24,28,38,.50)),
         url('photo/panorama-occitane.jpg'), url('photo/panorama-occitane.jpeg'),
         url('photo/panorama-occitanie.jpg'), url('photo/panorama-occitanie.jpeg'),
         url('photo/panorama-occitane.JPG'), url('photo/panorama-occitane.png');
-      background-size: cover; background-position: center center; background-repeat: no-repeat;
-      color: white; padding: 22px 0 34px; position: relative;
+      background-size: cover; background-position: center 48%; background-repeat: no-repeat;
+      color: white; padding: 22px 0 0; position: relative; overflow: hidden;
     }
-    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .logo { font-family: var(--titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
-    .logo span { color: var(--ocre); }
-    .retour { color: white; text-decoration: none; font-size: 17px; }
-    .retour:hover { opacity: .75; }
-    .hero h1 { font-family: var(--titre); font-size: clamp(30px, 5vw, 54px); margin: 34px 0 4px; line-height: 1.05; }
-    .hero h1 em { color: var(--ocre); }
-    .sous-titre-oc { font-family: var(--titre); font-style: italic; font-size: clamp(20px, 2.6vw, 28px); color: var(--or); margin: 0 0 14px; letter-spacing: .04em; }
-    .hero p { font-size: 17px; max-width: 720px; line-height: 1.6; margin: 0; color: rgba(255,255,255,.88); }
-    .hero-label { font-family: var(--titre); letter-spacing: .15em; font-size: 16px; margin-top: 18px; color: var(--or); }
+    .produit-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+    }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; }
+    .produit-logo { font-family: var(--titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: var(--ocre); }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; font-family: var(--corps); text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .hero-topic { font-family: var(--titre); font-size: clamp(30px, 5vw, 52px); font-weight: 700; line-height: 1.05; color: white; margin: 0 0 70px; }
+    .hero-topic em { color: var(--ocre); font-style: italic; }
+    .topic-map { font-size: 110px; opacity: .82; filter: drop-shadow(0 4px 12px rgba(0,0,0,.3)); align-self: flex-start; }
+    .hero-label-bas { color: white; font-family: var(--titre); font-size: 20px; letter-spacing: 0.15em; text-align: center; margin: -50px 0 0; padding-bottom: 28px; position: relative; z-index: 3; }
+    .hero-label-bas em { color: var(--or); }
+    .intro-histoire { font-size: 17px; line-height: 1.65; color: var(--texte); max-width: 860px; margin: 0 auto 22px; text-align: center; }
+    @media (max-width: 640px) { .produit-hero-body { grid-template-columns: 1fr; } .topic-map { font-size: 70px; } .hero-label-bas { margin-top: -30px; font-size: 16px; } }
 
     /* ─── CARTE ─── */
     .carte-section { padding: 34px 0 10px; }
@@ -160,7 +167,7 @@
     @media (max-width: 600px) { .dep-carte .dep-go { display: none; } .dep-carte .dep-texte { right: 16px; } .dep-carte .dep-nom { font-size: 21px; } }
 
     footer.pied { background: var(--bleu); color: white; text-align: center; padding: 26px 16px; }
-    footer.pied .logo { font-size: 22px; }
+    footer.pied .logo { font-family: var(--titre); font-size: 22px; font-weight: 700; color: white; }
     footer.pied p { margin: 6px 0 0; opacity: .75; font-size: 14px; }
 
     @media (max-width: 900px) { .themes-grid { grid-template-columns: 1fr 1fr; } }
@@ -195,28 +202,25 @@
     .carte-theme .ct-sous, .carte-theme .ct-etat { text-shadow: 0 1px 2px rgba(0,0,0,.95), 0 0 6px rgba(0,0,0,.7), 0 0 14px rgba(0,0,0,.45); }
     .carte-theme .ct-sous { color: white; }
     .carte-theme .ct-etat, .carte-theme.actif .ct-etat { color: var(--or); }
-    /* ─── BANDEAU CENTRÉ SUR LA CARTE ─── */
-    .hero h1, .hero .sous-titre-oc, .hero-label { text-align: center; }
-    .hero p { text-align: center; margin-left: auto; margin-right: auto; }
   </style>
 </head>
-<body class="accueil-histoire">
+<body class="accueil-histoire produit-page">
 
-  <header class="hero">
+  <header class="produit-hero">
     <div class="wrap container">
-      <div class="topbar">
-        <a href="../../../../index.html" class="logo">L'<span>Âme</span> des Régions</a>
-        <a href="../../carte-occitanie.html" class="retour">← Carte de l'Occitanie</a>
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns"><a href="../../carte-occitanie.html" class="produit-btn-retour">← Carte de l'Occitanie</a></div>
       </div>
-      <h1><em>S</em>i l'<em>O</em>ccitanie m'était contée…</h1>
-      <div class="sous-titre-oc">Istòria d'Occitània</div>
-      <p>Des arènes de Nîmes aux bûchers cathares, des puits de mine à l'or bleu du pastel, des vendanges en révolte aux amphithéâtres de Montpellier et aux ailes d'Airbus : une série de fiches pour comprendre les grandes époques qui ont façonné le pays d'oc.</p>
-      <div class="hero-label">⟹ Choisissez une époque sur la carte ⟸</div>
-    </div>
+      <div class="produit-hero-body">
+        <div><h1 class="hero-topic"><em>S</em>i l'<em>O</em>ccitanie<br><span style="padding-left:40px">m'était <em>c</em>ontée…</span></h1></div>      </div>
+    </div>. <br><br>
+    <div class="hero-label-bas">⟹ <em>Istòria d'Occitània</em> · choisissez une époque sur la carte ⟸</div>
   </header>
 
   <section class="carte-section">
     <div class="wrap container">
+      <p class="intro-histoire">Des arènes de Nîmes aux bûchers cathares, des puits de mine à l'or bleu du pastel, des vendanges en révolte aux amphithéâtres de Montpellier et aux ailes d'Airbus : une série de fiches pour comprendre les grandes époques qui ont façonné le pays d'oc.</p>
       <div class="carte-cadre">
         <svg viewBox="0 0 1200 720" role="img" aria-labelledby="carte-titre">
           <title id="carte-titre">Carte de l'Occitanie et des grandes époques de son histoire</title>
