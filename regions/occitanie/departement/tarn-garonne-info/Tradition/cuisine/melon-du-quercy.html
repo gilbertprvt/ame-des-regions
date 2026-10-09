@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Melon du Quercy — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-tarn-et-garonne.jpg'); }</style>
+</head>
+<body class="produit-page">
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns"><a class="produit-btn-retour" href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">← Retour à la fiche Tarn-et-Garonne</a></div>
+</div>
+<div class="produit-hero-body"><div><h1><em>M</em>elon<br/><span style="padding-left:60px;"><em>d</em>u Quercy</span><span class="sous-titre">Culture d'un fruit gorgé de soleil</span></h1></div>
+<img alt="Carte Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/carte-tarn-et-garonne.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson"><img alt="Écusson Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/tarn-et-garonne.png"/></div>
+<div class="hero-label-bas">⟹ Savoir-faire &amp; terroir ⟸</div>
+<div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a class="active" href="#histoire">📖 Histoire</a><a href="#caracteres">🍈 Le fruit &amp; l'IGP</a><a href="#culture">🌱 Calendrier de culture</a><a href="#patrimoine">🏛️ Patrimoine</a></div></div></div>
+</div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+<section class="section" id="histoire"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Un melon de coteaux calcaires</h2><div class="histoire-texte"><p>Le Melon du Quercy est un melon de type charentais à chair orange, cultivé sur les coteaux argilo-calcaires du Quercy, à cheval sur le Lot, le Tarn-et-Garonne et une petite partie du Lot-et-Garonne. Récolté à pleine maturité et trié à la main, il est réputé pour sa chair fondante, sucrée et très parfumée.</p>
+<p><strong>Un fruit venu d'Italie.</strong> Le melon arrive en France à la fin du XVe siècle, dans le sillage des guerres d'Italie et de l'expédition vers le royaume de Naples. Il gagne rapidement les jardins du Sud-Ouest. Dans le Quercy, sa culture est attestée dès le XVIe siècle, d'abord dans les potagers puis sur des parcelles de plein champ.</p>
+<p><strong>De la polyculture à la spécialisation.</strong> Longtemps intégré à la polyculture quercynoise, à côté de la vigne, des céréales, des prunes et de l'élevage, le melon devient au XXe siècle une culture de rente. Les producteurs s'organisent autour de stations de conditionnement et d'expédition, notamment dans le secteur de Montpezat-de-Quercy, Castelnau-Montratier et Lauzerte.</p>
+<p><strong>Une indication géographique protégée.</strong> Dès 2002, l'usage du mot « Quercy » est réservé, sur décision ministérielle, aux melons conformes au cahier des charges transmis à Bruxelles. L'IGP « Melon du Quercy » est obtenue en 2004 et célébrée pour ses vingt ans en 2024. Elle est défendue par le Syndicat interprofessionnel du Melon du Quercy, basé à Montpezat-de-Quercy, et contrôlée par un organisme certificateur indépendant.</p>
+<p><strong>Une filière rurale structurante.</strong> Selon le syndicat, environ 90 producteurs cultivent le melon du Quercy sur des parcelles de taille raisonnable, pour une production totale de 10 000 à 12 000 tonnes par an, dont une bonne part est labellisée IGP. La culture fait vivre aussi saisonniers, techniciens et personnels des stations de conditionnement.</p></div></section>
+<section class="section" id="caracteres"><h2 class="section-titre"><div class="section-titre-icon">🍈</div>Le fruit &amp; l'IGP</h2><div class="vins-liste"><div class="vin-item"><div class="vin-icon">🟠</div><div><div class="vin-nom">Type charentais</div><div class="vin-desc">Melons de type charentais (écorce lisse ou brodée selon les variétés retenues), à chair orange vif, sélectionnés par les producteurs pour leur goût et leur adaptation au terroir.</div></div><div class="vin-badge">Variétés</div></div>
+<div class="vin-item"><div class="vin-icon">🪨</div><div><div class="vin-nom">Sols argilo-calcaires</div><div class="vin-desc">Les argiles riches en illite des causses et coteaux du Quercy retiennent l'eau en profondeur tout en restituant la chaleur : un équilibre favorable à la concentration en sucres et en arômes.</div></div><div class="vin-badge">Terroir</div></div>
+<div class="vin-item"><div class="vin-icon">🌤️</div><div><div class="vin-nom">Climat de transition</div><div class="vin-desc">Influences océaniques et méditerranéennes se croisent : printemps doux, étés chauds et ensoleillés, nuits plus fraîches qui préservent les parfums.</div></div><div class="vin-badge">Climat</div></div>
+<div class="vin-item"><div class="vin-icon">✋</div><div><div class="vin-nom">Récolte à pleine maturité</div><div class="vin-desc">Le melon est cueilli mûr, à la main, puis agréé : poids, aspect, absence de défauts et taux de sucre sont vérifiés avant l'étiquetage IGP.</div></div><div class="vin-badge">Qualité</div></div>
+<div class="vin-item"><div class="vin-icon">🏷️</div><div><div class="vin-nom">Identification individuelle</div><div class="vin-desc">Les melons sont vendus entiers et conditionnés ; chaque fruit porte un sticker « Melon du Quercy », et les colis sont eux aussi identifiés.</div></div><div class="vin-badge">Traçabilité</div></div></div></section>
+<section class="section" id="culture"><h2 class="section-titre"><div class="section-titre-icon">🌱</div>Du semis à la station</h2><div class="recette-grid">
+<div class="recette-meta-card"><div class="recette-meta-icon">🌱</div><div><div class="recette-meta-label">Plantation</div><div class="recette-meta-val">À partir de mars</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">🧺</div><div><div class="recette-meta-label">Récolte</div><div class="recette-meta-val">Juin → septembre</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">👨‍🌾</div><div><div class="recette-meta-label">Producteurs</div><div class="recette-meta-val">≈ 90</div></div></div>
+<div class="recette-meta-card"><div class="recette-meta-icon">⚖️</div><div><div class="recette-meta-label">Production</div><div class="recette-meta-val">10 à 12 000 t / an</div></div></div></div>
+<div class="etapes-liste"><div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Choix et enregistrement des parcelles</div><div class="etape-texte">Chaque parcelle destinée à l'IGP est inscrite au cahier cultural (commune, références cadastrales, surface). Une rotation des cultures est pratiquée pour éviter la fatigue des sols et limiter les maladies.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Semis et élevage des plants</div><div class="etape-texte">Les plants sont élevés en mottes, sous abri chauffé, à la fin de l'hiver. Le greffage sur porte-greffe vigoureux est parfois utilisé pour renforcer la résistance aux maladies du sol.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Plantation échelonnée</div><div class="etape-texte">Dès mars, les plants sont repiqués sur buttes paillées. Les premières plantations sont protégées par des petits tunnels ou des voiles ; les suivantes, en plein champ, s'échelonnent jusqu'au début de l'été pour étaler la récolte.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Conduite et pollinisation</div><div class="etape-texte">Taille éventuelle des tiges, désherbage, irrigation raisonnée au goutte-à-goutte. Des ruches sont souvent installées à proximité : les abeilles assurent la pollinisation des fleurs femelles.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Cueillette à la main</div><div class="etape-texte">La récolte se fait tôt le matin, par passages répétés, quand le pédoncule commence à se décoller et que le fruit dégage son parfum. Le cueilleur juge la maturité au toucher, à la couleur et à l'odeur.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Agréage et conditionnement</div><div class="etape-texte">En station agréée, les melons sont triés, calibrés, contrôlés en sucre, puis étiquetés individuellement et mis en colis. Ils partent rapidement vers les marchés, la distribution et l'export.</div></div></div></div></section>
+<section class="section" id="patrimoine"><h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Un patrimoine vivant</h2><div class="histoire-texte"><p>Le melon rythme l'été quercynois : étals des marchés de Caussade, Lauzerte ou Cahors, vente directe à la ferme et fêtes locales qui lui sont consacrées. Il participe au maintien d'une agriculture diversifiée sur des coteaux où alternent vignes, vergers, céréales et prairies.</p>
+<p>En cuisine, il se déguste nature, en entrée avec le jambon ou le magret séché, en salade, en soupe froide, en confiture ou en sorbet. Il s'accorde volontiers avec un vin doux ou un rosé du Sud-Ouest.</p></div></section>
+</div><aside class="produit-aside">
+<div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie · Nouvelle-Aquitaine</span></div>
+<div class="aside-row"><span class="aside-label">Territoire</span><span class="aside-val">Lot · Tarn-et-Garonne · Lot-et-Garonne</span></div>
+<div class="aside-row"><span class="aside-label">Produit</span><span class="aside-val">Melon type charentais</span></div>
+<div class="aside-row"><span class="aside-label">Sols</span><span class="aside-val">Argilo-calcaires</span></div>
+<div class="aside-row"><span class="aside-label">Saison</span><span class="aside-val">Juin à septembre</span></div>
+<div class="aside-row"><span class="aside-label">Organisme</span><span class="aside-val">Syndicat interprofessionnel (Montpezat-de-Quercy)</span></div>
+<div class="aside-row"><span class="aside-label">Statut</span><span class="aside-val">IGP depuis 2004</span></div></div></div>
+<div class="aside-label-aop"><div class="aside-aop-logo">🏅</div><div class="aside-aop-titre">Indication géographique protégée</div><div class="aside-aop-desc">Origine Quercy, récolte à pleine maturité, agréage en station habilitée.</div></div>
+<div class="aside-card"><div class="aside-card-header">🔎 Sources &amp; ressources</div><div class="aside-card-body"><div class="aside-liens"><a class="aside-lien" href="https://www.inao.gouv.fr/produit/melon-du-quercy-14227" rel="noopener noreferrer" target="_blank"><span>INAO — fiche Melon du Quercy</span><span class="aside-lien-arrow">↗</span></a>
+<a class="aside-lien" href="https://info.agriculture.gouv.fr/boagri/document_administratif-ee6007c6-614f-4272-9a69-50b9fd97853b/telechargement" rel="noopener noreferrer" target="_blank"><span>Cahier des charges de l'IGP</span><span class="aside-lien-arrow">↗</span></a>
+<a class="aside-lien" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000000773243" rel="noopener noreferrer" target="_blank"><span>Légifrance — protection du nom « Quercy »</span><span class="aside-lien-arrow">↗</span></a>
+<a class="aside-lien" href="https://www.tendancehotellerie.fr/articles-breves/communique-de-presse/21706-article/l-igp-melon-du-quercy-fete-ses-vingt-ans" rel="noopener noreferrer" target="_blank"><span>Les 20 ans de l'IGP</span><span class="aside-lien-arrow">↗</span></a></div></div></div>
+</aside></div></div></div>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+  </script>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">← Retour à la fiche Tarn-et-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

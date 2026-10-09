@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toulouse, circuit découverte — L'Âme des Régions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* Label bas du héro */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin: -50px 0 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px;
+      align-items: start;
+    }
+    .section { margin-bottom: 40px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+
+    /* Carte */
+    .carte-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .carte-outils {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px 16px;
+      border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .carte-btns { display: flex; gap: 8px; }
+    .btn {
+      border: 1px solid #2C4A7C;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: var(--font-corps);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .btn:disabled { opacity: .6; cursor: wait; }
+    #map { height: 600px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px;
+      background: #C8843A;
+      border: 2px solid white;
+      color: white;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    /* Étapes */
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 6px;
+      margin: -6px;
+      transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Parcours rue par rue */
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 15px;
+      color: #5A3E1B;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Bas de page */
+    .retour-haut { text-align: center; padding: 0 0 30px; }
+    .retour-haut a { color: #2C4A7C; font-family: var(--font-titre); font-style: italic; text-decoration: none; }
+    .retour-haut a:hover { text-decoration: underline; }
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: none; background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+      #map { height: 480px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+    }
+  </style>
+  <!-- Une fois la page intégrée au site, ajouter ici les feuilles communes :
+       <link rel="stylesheet" href="…/style.css" /> et <link rel="stylesheet" href="…/fiche.css" />
+       Photo du bandeau (facultatif) :
+       <style>.produit-hero { background-image: url('…/assets/departement/occitanie/panorama-toulouse.jpg'); }</style> -->
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour">
+            ← Retour à la fiche Haute-Garonne
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>T</em>oulouse,<br><span style="padding-left: 20px;">au cœur de la <em>V</em>ille <em>R</em>ose</span><span class="sous-titre">Circuit découverte de la préfecture</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../../../../assets/departement/occitanie/carte-haute-garonne.png"
+             alt="Carte Haute-Garonne" onerror="this.remove()" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" onerror="this.parentElement.remove()" />
+    </div>
+
+    <div class="hero-label-bas">
+      ⟹ Circuits Découverte ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#carte" class="active">🗺️ Carte du circuit</a>
+          <a href="#etapes">📍 Les étapes</a>
+          <a href="#parcours">🚶 Parcours rue par rue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- CARTE -->
+          <section class="section" id="carte">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Carte du circuit
+            </h2>
+            <div class="histoire-texte">
+              <p id="intro">Un circuit pédestre dans le centre historique, entre basilique romane, places emblématiques, architecture Renaissance et berges de la Garonne.</p>
+            </div>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut" id="status">Chargement du tracé…</span>
+                <div class="carte-btns">
+                  <button class="btn secondaire" id="reset">Voir tout</button>
+                  <button class="btn" id="download">Télécharger (PDF)</button>
+                </div>
+              </div>
+              <div id="map" aria-label="Carte interactive du parcours à Toulouse"></div>
+              <div class="carte-note">Le tracé bleu suit les rues, places et quais praticables à pied, d’après les données OpenStreetMap. Cliquez sur les repères numérotés pour découvrir les étapes. Tracé à vérifier sur place (travaux, accès fermés).</div>
+            </div>
+          </section>
+
+          <!-- ÉTAPES -->
+          <section class="section" id="etapes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              <span id="etapes-titre">Les étapes</span>
+            </h2>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+          <!-- PARCOURS -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours, rue par rue
+            </h2>
+            <div class="histoire-texte">
+              <p>Le tracé de la carte suit le réseau piéton réel. Voici les grands axes du parcours ; les traversées exactes restent à vérifier sur place.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Itinéraire</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Saint-Sernin → Capitole :</strong> rejoindre la rue du Taur, puis la place du Capitole.</span></li>
+                <li><span><strong>Capitole → Jacobins :</strong> passer par la rue Gambetta et rejoindre la rue Lakanal.</span></li>
+                <li><span><strong>Jacobins → Hôtel d'Assézat :</strong> traverser le quartier historique vers la rue de Metz, puis la rue de l'Écharpe.</span></li>
+                <li><span><strong>Hôtel d'Assézat → Pont-Neuf :</strong> rejoindre la rue des Couteliers puis la place du Pont-Neuf.</span></li>
+                <li><span><strong>Pont-Neuf → Saint-Étienne :</strong> traverser le centre ancien en direction de la rue de Metz et de la place Saint-Étienne.</span></li>
+                <li><span><strong>Saint-Étienne → Capitole :</strong> revenir par le secteur des rues Croix-Baragnon et Saint-Rome.</span></li>
+              </ol>
+            </div>
+            <div class="citation-bloc">
+              <p>À savoir : ce circuit est une maquette. Les distances, la durée précise et l'accessibilité ne sont pas garanties tant que le parcours piéton n'a pas été vérifié sur le terrain.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body" id="identite">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Haute-Garonne (31)</span></div>
+              <div class="aside-row"><span class="aside-label">Type</span><span class="aside-val">Circuit pédestre en boucle</span></div>
+              <div class="aside-row"><span class="aside-label">Départ</span><span class="aside-val">Basilique Saint-Sernin</span></div>
+              <div class="aside-row"><span class="aside-label">Distance</span><span class="aside-val" id="val-distance">Calcul en cours…</span></div>
+              <div class="aside-row"><span class="aside-label">Marche effective</span><span class="aside-val" id="val-marche">—</span></div>
+              <div class="aside-row"><span class="aside-label">Durée conseillée</span><span class="aside-val">2 h 30 à 3 h avec arrêts</span></div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DU CIRCUIT — seule partie à modifier pour une autre ville
+   ============================================================ */
+// Nom de la ville (utilisé pour le nom du fichier PDF)
+const VILLE='Toulouse';
+const stops=[
+{name:'Basilique Saint-Sernin',lat:43.608316,lng:1.441804,desc:'Chef-d’œuvre de l’art roman, la basilique est l’un des grands monuments du patrimoine toulousain.'},
+{name:'Place du Capitole',lat:43.60438,lng:1.443339,desc:'La place emblématique de Toulouse, dominée par la façade du Capitole et ses arcades.'},
+{name:'Couvent des Jacobins',lat:43.603482,lng:1.440485,desc:'Ensemble gothique méridional célèbre pour sa voûte en palmier et son cloître.'},
+{name:'Hôtel d’Assézat',lat:43.600148,lng:1.442192,desc:'Magnifique hôtel particulier de la Renaissance, lié à la prospérité des marchands de pastel.'},
+{name:'Pont-Neuf et quais de Garonne',lat:43.599248,lng:1.438557,desc:'Le plus ancien pont conservé de Toulouse offre un beau panorama sur le fleuve.'},
+{name:'Cathédrale Saint-Étienne',lat:43.599905,lng:1.450518,desc:'Cathédrale au plan singulier, marquée par plusieurs siècles de construction.'},
+{name:'Retour place du Capitole',lat:43.60438,lng:1.443339,desc:'Fin de la boucle, au cœur de la Ville Rose.'}
+];
+// Tracé de secours très approximatif, utilisé seulement si aucun calcul n'est possible.
+const traceSecours=[
+[43.608316,1.441804],[43.60775,1.44192],[43.6068,1.44235],[43.6057,1.44286],[43.60438,1.443339],
+[43.6042,1.44265],[43.60403,1.4418],[43.603482,1.440485],
+[43.6027,1.4408],[43.6018,1.4412],[43.6008,1.4417],[43.600148,1.442192],
+[43.5998,1.4411],[43.5995,1.4398],[43.599248,1.438557],
+[43.5997,1.4404],[43.60025,1.4423],[43.60075,1.4442],[43.6012,1.4462],[43.6005,1.4483],[43.599905,1.450518],
+[43.6007,1.4495],[43.6017,1.4483],[43.6025,1.4468],[43.6033,1.4451],[43.60438,1.443339]
+];
+/* ============================================================ */
+
+const BLEU='#2C4A7C', OCRE='#C8843A';
+const map=L.map('map',{scrollWheelZoom:false}).setView([43.6035,1.443],15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(stops.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.22));
+let allBounds=bounds;
+let routeLayer=null, routeData=null;
+const statusEl=document.getElementById('status');
+document.getElementById('etapes-titre').textContent=`Les ${stops.length} étapes`;
+
+// Marqueurs et liste des étapes
+const markers=[];
+stops.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon,zIndexOffset:1000+(i===stops.length-1?100:0)}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ markers.push(m);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg" data-i="${i}">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],17);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+// Départ et arrivée au même endroit : léger décalage visuel pour voir les deux repères
+function separerDepartArrivee(){
+ const a=stops[1],b=stops[stops.length-1];
+ if(a.lat!==b.lat||a.lng!==b.lng)return;
+ const c=map.latLngToLayerPoint([a.lat,a.lng]);
+ markers[1].setLatLng(map.layerPointToLatLng(c.add(L.point(-19,0))));
+ markers[stops.length-1].setLatLng(map.layerPointToLatLng(c.add(L.point(19,0))));
+}
+map.on('zoomend',separerDepartArrivee);separerDepartArrivee();
+
+// Décodage des polylignes Valhalla (précision 6)
+function decodePolyline(str,prec=6){let i=0,lat=0,lng=0,out=[],f=Math.pow(10,prec);
+ while(i<str.length){let b,sh=0,r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lat+=(r&1?~(r>>1):(r>>1));
+ sh=0;r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lng+=(r&1?~(r>>1):(r>>1));out.push([lat/f,lng/f])}return out}
+
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('délai dépassé')),ms))]);
+
+// Moteur 1 : OSRM profil piéton (FOSSGIS / openstreetmap.de)
+async function routeOSRM(){
+ const coords=stops.map(s=>`${s.lng},${s.lat}`).join(';');
+ const r=await withTimeout(fetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${coords}?overview=full&geometries=geojson&steps=false`),15000);
+ if(!r.ok)throw new Error('OSRM '+r.status);
+ const j=await r.json(); if(j.code!=='Ok')throw new Error('OSRM '+j.code);
+ const rt=j.routes[0];
+ return {source:'OSRM (piéton)',coords:rt.geometry.coordinates.map(([x,y])=>[y,x]),distance:rt.distance,legs:rt.legs.map(l=>l.distance)};
+}
+// Moteur 2 : Valhalla profil piéton (secours)
+async function routeValhalla(){
+ const body={locations:stops.map(s=>({lat:s.lat,lon:s.lng,type:'break'})),costing:'pedestrian',units:'kilometers',language:'fr-FR'};
+ const r=await withTimeout(fetch('https://valhalla1.openstreetmap.de/route?json='+encodeURIComponent(JSON.stringify(body))),15000);
+ if(!r.ok)throw new Error('Valhalla '+r.status);
+ const j=await r.json(); const legs=j.trip.legs;
+ let coords=[];legs.forEach(l=>{const c=decodePolyline(l.shape);coords=coords.concat(coords.length?c.slice(1):c)});
+ return {source:'Valhalla (piéton)',coords,distance:j.trip.summary.length*1000,legs:legs.map(l=>l.summary.length*1000)};
+}
+
+const fmtKm=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+' km':Math.round(m/10)*10+' m';
+const cacheKey='circuit-trace-'+stops.map(s=>s.lat.toFixed(5)+','+s.lng.toFixed(5)).join('|');
+
+function dessiner(data,estSecours){
+ routeData=data;
+ if(routeLayer)map.removeLayer(routeLayer);
+ routeLayer=L.layerGroup([
+  L.polyline(data.coords,{color:'#ffffff',weight:9,opacity:.9,lineJoin:'round',lineCap:'round'}),
+  L.polyline(data.coords,{color:BLEU,weight:5,opacity:.92,lineJoin:'round',lineCap:'round',dashArray:estSecours?'8 8':null})
+ ]).addTo(map);
+ allBounds=L.latLngBounds(data.coords).extend(bounds);
+ map.fitBounds(allBounds.pad(.08));
+ if(data.distance){
+  // Distance et durée réelles (marche ≈ 4,5 km/h)
+  const minutes=Math.round(data.distance/1000/4.5*60);
+  document.getElementById('val-distance').textContent=fmtKm(data.distance);
+  document.getElementById('val-marche').textContent=`≈ ${Math.floor(minutes/60)} h ${String(minutes%60).padStart(2,'0')}`;
+  document.querySelectorAll('.etape-leg').forEach(el=>{const i=+el.dataset.i;if(i<data.legs.length)el.textContent=`${fmtKm(data.legs[i])} jusqu’à l’étape ${i+2} · voir sur la carte ↗`});
+ } else {
+  document.getElementById('val-distance').textContent='Non disponible';
+ }
+}
+
+async function init(){
+ try{const c=JSON.parse(localStorage.getItem(cacheKey));if(c&&c.coords){dessiner(c,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${c.source}).`;return}}catch(e){}
+ statusEl.textContent='Calcul du chemin piéton sur les rues…';
+ for(const moteur of [routeOSRM,routeValhalla]){
+  try{const d=await moteur();dessiner(d,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${d.source}).`;
+   try{localStorage.setItem(cacheKey,JSON.stringify(d))}catch(e){}return}
+  catch(e){console.warn(e)}
+ }
+ dessiner({coords:traceSecours},true);
+ statusEl.textContent='Calcul d’itinéraire indisponible : tracé approximatif en pointillés.';
+}
+init();
+document.getElementById('reset').onclick=()=>map.fitBounds(allBounds.pad(.08));
+
+/* ============================================================
+   TÉLÉCHARGEMENT PDF : carte + étapes + parcours rue par rue
+   ============================================================ */
+function chargerScript(src){return new Promise((ok,ko)=>{if(window.jspdf)return ok();const sc=document.createElement('script');sc.src=src;sc.onload=ok;sc.onerror=()=>ko(new Error('jsPDF'));document.head.appendChild(sc)})}
+// Texte compatible avec les polices standard du PDF
+const txt=t=>(t||'').replace(/[’‘]/g,"'").replace(/[“”«»]/g,'"').replace(/œ/g,'oe').replace(/Œ/g,'OE').replace(/→/g,'>').replace(/[–—]/g,'-').replace(/ | /g,' ').replace(/[^\x00-\xFF]/g,'').replace(/\s+/g,' ').trim();
+const hex=h=>[1,3,5].map(k=>parseInt(h.slice(k,k+2),16));
+
+// Dessine la carte (fond OpenStreetMap + tracé + repères) dans une image
+async function imageCarte(){
+ const W=1800,H=1500,pad=90,crs=L.CRS.EPSG3857;
+ const b=allBounds;let z=18;
+ for(;z>10;z--){const a=crs.latLngToPoint(b.getNorthWest(),z),c=crs.latLngToPoint(b.getSouthEast(),z);if(c.x-a.x<=W-2*pad&&c.y-a.y<=H-2*pad)break}
+ const centre=crs.latLngToPoint(b.getCenter(),z),orig=centre.subtract(L.point(W/2,H/2));
+ const px=ll=>crs.latLngToPoint(L.latLng(ll),z).subtract(orig);
+ const cv=document.createElement('canvas');cv.width=W;cv.height=H;const ctx=cv.getContext('2d');
+ ctx.fillStyle='#e9ece7';ctx.fillRect(0,0,W,H);
+ const x0=Math.floor(orig.x/256),y0=Math.floor(orig.y/256),x1=Math.floor((orig.x+W)/256),y1=Math.floor((orig.y+H)/256);
+ const tuiles=[];
+ for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++)tuiles.push(new Promise(ok=>{const im=new Image();im.crossOrigin='anonymous';
+  im.onload=()=>{ctx.drawImage(im,x*256-orig.x,y*256-orig.y,256,256);ok()};im.onerror=()=>ok();
+  im.src=`https://tile.openstreetmap.org/${z}/${x}/${y}.png`}));
+ await Promise.all(tuiles);
+ const pts=(routeData?routeData.coords:traceSecours).map(px);
+ const trait=(c,w,dash)=>{ctx.beginPath();pts.forEach((p,k)=>k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=c;ctx.lineWidth=w;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(dash||[]);ctx.stroke()};
+ trait('rgba(255,255,255,.9)',13);trait(BLEU,7,routeData&&routeData.distance?[]:[14,14]);ctx.setLineDash([]);
+ const dern=stops.length-1,meme=stops[1].lat===stops[dern].lat&&stops[1].lng===stops[dern].lng;
+ stops.forEach((s,k)=>{let p=px([s.lat,s.lng]);if(meme&&(k===1||k===dern))p=p.add(L.point(k===1?-24:24,0));
+  ctx.beginPath();ctx.arc(p.x,p.y,22,0,2*Math.PI);ctx.fillStyle=OCRE;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='bold 23px Georgia, serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(k+1,p.x,p.y+1)});
+ const att='© contributeurs OpenStreetMap';ctx.font='20px sans-serif';const tw=ctx.measureText(att).width;
+ ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(W-tw-20,H-34,tw+20,34);ctx.fillStyle='#333';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(att,W-10,H-17);
+ return {data:cv.toDataURL('image/jpeg',.9),ratio:H/W};
+}
+
+async function telechargerPDF(){
+ const btn=document.getElementById('download');btn.disabled=true;btn.textContent='Préparation du PDF…';
+ try{
+  await chargerScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const PW=210,PH=297,M=15,LW=PW-2*M,cBLEU=hex(BLEU),cOCRE=hex(OCRE),BRUN=[139,115,85],TEXTE=[58,48,40];
+  let y=0;
+  const saut=h=>{if(y+h>PH-18){doc.addPage();y=M+3}};
+  const para=(t,size,color,style,indent=0,lh=1.45,font='helvetica')=>{doc.setFont(font,style||'normal');doc.setFontSize(size);doc.setTextColor(...color);
+   const l=doc.splitTextToSize(txt(t),LW-indent);const h=size*.3528*lh;l.forEach(li=>{saut(h);doc.text(li,M+indent,y+h*.75);y+=h})};
+  const titre=(t,ico)=>{saut(18);y+=3;doc.setFillColor(...cBLEU);doc.roundedRect(M,y,8,8,1.5,1.5,'F');
+   doc.setFont('times','bold');doc.setFontSize(16);doc.setTextColor(...cBLEU);doc.text(txt(t),M+11,y+6);y+=11;
+   doc.setDrawColor(232,222,200);doc.setLineWidth(.6);doc.line(M,y,PW-M,y);y+=6};
+
+  // Bandeau (à rayures, comme sur la fiche)
+  const h1=document.querySelector('h1').cloneNode(true);const st=h1.querySelector('.sous-titre');const sousTitre=st?st.textContent:'';if(st)st.remove();
+  h1.querySelectorAll('br').forEach(b=>b.replaceWith(' '));const titreH1=txt(h1.textContent);
+  const HB=46;
+  doc.setFillColor(...cBLEU);doc.rect(0,0,PW,HB,'F');
+  doc.setDrawColor(70,98,145);doc.setLineWidth(.15);for(let k=-HB;k<PW;k+=4)doc.line(k,HB,k+HB,0);
+  doc.setFont('times','bold');doc.setFontSize(14);doc.setTextColor(255,255,255);doc.text("L'",M,13);
+  doc.setTextColor(...cOCRE);doc.text('Âme',M+doc.getTextWidth("L'"),13);
+  doc.setTextColor(255,255,255);doc.text(' des Régions',M+doc.getTextWidth("L'Âme"),13);
+  doc.setFontSize(23);doc.text(titreH1,M,27);
+  doc.setFont('times','italic');doc.setFontSize(12);doc.setTextColor(230,230,230);doc.text(txt(sousTitre),M,35);
+  doc.setFillColor(0,0,0);doc.setGState(new doc.GState({opacity:.25}));doc.rect(0,HB-6,PW,6,'F');doc.setGState(new doc.GState({opacity:1}));
+  doc.setFont('times','normal');doc.setFontSize(9);doc.setTextColor(255,255,255);doc.text(txt('Circuits Découverte'),PW/2,HB-2,{align:'center',charSpace:.6});
+  y=HB+6;
+
+  // Introduction + carte d'identité
+  para(document.getElementById('intro').textContent,10,TEXTE,'normal');y+=2;
+  const infos=[...document.querySelectorAll('#identite .aside-row')].map(r=>`${r.children[0].textContent} : ${r.children[1].textContent}`);
+  doc.setFillColor(247,243,236);const lignes=Math.ceil(infos.length/2);const hb=lignes*5.2+6;saut(hb);doc.roundedRect(M,y,LW,hb,2,2,'F');
+  doc.setFillColor(...cOCRE);doc.rect(M,y,1.2,hb,'F');
+  infos.forEach((t,k)=>{const col=k%2,row=Math.floor(k/2);doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...TEXTE);doc.text(txt(t),M+5+col*LW/2,y+5.5+row*5.2)});
+  y+=hb+4;
+
+  // Carte
+  const img=await imageCarte();const ih=Math.min(LW*img.ratio,PH-18-y-8);const iw=ih/img.ratio;
+  saut(ih);doc.addImage(img.data,'JPEG',M+(LW-iw)/2,y,iw,ih);doc.setDrawColor(224,218,206);doc.setLineWidth(.3);doc.rect(M+(LW-iw)/2,y,iw,ih);y+=ih+3;
+  para('Tracé calculé sur le réseau piéton OpenStreetMap, à vérifier sur place (travaux, accès fermés).',8,BRUN,'italic');
+
+  // Étapes
+  doc.addPage();y=M;
+  titre(`Les ${stops.length} étapes`);
+  stops.forEach((s,k)=>{
+   saut(18);
+   doc.setFillColor(...cBLEU);doc.circle(M+4.5,y+4,4.5,'F');doc.setFont('times','bold');doc.setFontSize(10);doc.setTextColor(255,255,255);doc.text(String(k+1),M+4.5,y+5.4,{align:'center'});
+   const y0=y;y+=1;
+   para(s.name.toUpperCase(),9.5,cOCRE,'bold',13);para(s.desc,10,TEXTE,'normal',13);
+   if(routeData&&routeData.legs&&k<routeData.legs.length)para(`${fmtKm(routeData.legs[k])} jusqu'à l'étape ${k+2}`,8.5,BRUN,'normal',13);
+   y=Math.max(y,y0+10)+4;
+  });
+
+  // Parcours rue par rue
+  const sec=document.getElementById('parcours');
+  titre(sec.querySelector('h2').textContent.trim());
+  para(sec.querySelector('.histoire-texte p').textContent,10,TEXTE,'normal');y+=3;
+  [...sec.querySelectorAll('.parcours-liste li')].forEach((li,k)=>{saut(6);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...cOCRE);doc.text(`${k+1}.`,M+1,y+4);
+   const strong=li.querySelector('strong');const reste=li.textContent.replace(strong.textContent,'');
+   const y0=y;para(strong.textContent,10,cBLEU,'bold',7);para(reste,10,TEXTE,'normal',7);y+=2});
+  y+=3;
+  const cit=sec.querySelector('.citation-bloc p').textContent;
+  doc.setFont('times','italic');doc.setFontSize(10.5);const lc=doc.splitTextToSize(txt(cit),LW-10);const hc=lc.length*5+6;saut(hc);
+  doc.setFillColor(247,243,236);doc.rect(M,y,LW,hc,'F');doc.setFillColor(...cOCRE);doc.rect(M,y,1.4,hc,'F');
+  doc.setTextColor(90,62,27);lc.forEach((l,k)=>doc.text(l,M+6,y+5.5+k*5));y+=hc;
+
+  // Pied de page
+  const n=doc.getNumberOfPages();
+  for(let k=1;k<=n;k++){doc.setPage(k);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,150,150);
+   doc.text(txt(`L'Âme des Régions - ${titreH1}`),M,PH-8);doc.text(`${k} / ${n}`,PW-M,PH-8,{align:'right'})}
+  const slug=VILLE.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  doc.save(`circuit-${slug}.pdf`);
+ }catch(e){console.error(e);alert('Le PDF n’a pas pu être créé (connexion Internet nécessaire).')}
+ finally{btn.disabled=false;btn.textContent='Télécharger (PDF)'}
+}
+document.getElementById('download').onclick=telechargerPDF;
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.3});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

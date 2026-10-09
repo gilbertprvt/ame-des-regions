@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Faïence d'Auvillar — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-tarn-et-garonne.jpg'); }</style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">
+            ← Retour à la fiche Tarn-et-Garonne
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>F</em>aïence<br/><span style="padding-left: 30px;">d'<em>A</em>uvillar</span><span class="sous-titre">Tradition séculaire des bords de Garonne</span></h1>
+</div>
+<img alt="Carte Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/carte-tarn-et-garonne.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/tarn-et-garonne.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Savoir-Faire &amp; Artisanat ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#visite">🏺 Visite pratique</a>
+<a href="#patrimoine">🏆 Reconnaissance</a>
+<a href="#legendes">🎨 Savoir-faire</a>
+<a href="#alentours">📍 Aux alentours</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p>Perché sur un éperon rocheux dominant la vallée de la Garonne, Auvillar, l'antique <em>Alta Villa</em>, fut au Moyen Âge le siège d'une vicomté rattachée à la Lomagne. Cité fortifiée dotée d'un château, détruit en 1572, le village tenait aussi un port fluvial actif : un péage sur la Garonne y est mentionné dès 1204. Après les troubles des guerres de Religion, la cité se relève en misant sur deux activités qui feront sa prospérité : la préparation des plumes d'oie pour l'écriture et la fabrication de faïences.</p>
+<p>La production faïencière débute en 1739 et devient rapidement la principale richesse de la cité. Elle tient à la qualité de la terre locale, mais plus encore au savoir-faire des fabricants, épaulés par des peintres de talent. Le plus célèbre, Mathieu Rigal, quitte la manufacture voisine d'Ardus, près de Montauban, pour venir travailler à Auvillar, où il signe des décors polychromes d'une grande finesse, dont le musée conserve des pièces exceptionnelles.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Faïences anciennes d'Auvillar exposées au Musée du Vieil Auvillar" src="../../../../../../assets/departement/occitanie/photo/tarn-et-garonne/faience-auvillar.jpg"/>
+<figcaption>Faïences auvillaraises des XVIIIe et XIXe siècles au Musée du Vieil Auvillar</figcaption>
+</figure>
+<div class="clearfix"></div>
+<p>Au XVIIIe siècle, la faïence stannifère d'Auvillar, robuste et résistante au feu, ambitionne de rivaliser avec les grands centres de Rouen, Moustiers ou Strasbourg. Assiettes, plats, terrines, saladiers et pièces de forme quittent le port à bord des gabares et se vendent dans les foires échelonnées le long du fleuve jusqu'à Bordeaux. De là, une partie de la production gagne l'Angleterre, le Nouveau Monde et les colonies.</p>
+<p>La fin du XVIIIe siècle et le XIXe siècle marquent l'âge d'or de la faïencerie auvillaraise. Les ateliers se multiplient : on en compte sept en 1834, et une vingtaine de petites fabriques se succèdent au total entre 1739 et 1909. Selon Tarn-et-Garonne Tourisme, le village aurait compté à son apogée jusqu'à 400 potiers et ouvriers de la terre, ce qui en faisait l'un des pôles céramiques majeurs de la moyenne Garonne.</p>
+<p>Vers 1840-1845, face à la concurrence de la porcelaine de Limoges et des faïences fines industrielles de Bordeaux, les faïenciers d'Auvillar s'adaptent : ils abandonnent progressivement l'émail stannifère pour produire de la terre vernissée, plus simple et moins coûteuse. Cette production populaire se maintient jusqu'en 1909, date de la fermeture du dernier atelier, tandis que le déclin de la batellerie, concurrencée par le rail, prive le village de son débouché naturel.</p>
+<p>La mémoire de ce savoir-faire est sauvée en 1930, lorsqu'André Barié et l'association des Amis du Vieil Auvillar créent un musée à partir des dons des habitants. Aujourd'hui labellisé Musée de France, il réunit plusieurs centaines de faïences locales. Depuis plus de trente ans, le Marché Potier d'octobre fait revivre la tradition en invitant chaque année une soixantaine de céramistes sous la célèbre halle circulaire.</p>
+</div>
+</section>
+<!-- VISITE PRATIQUE -->
+<section class="section" id="visite">
+<h2 class="section-titre">
+<div class="section-titre-icon">🏺</div>
+              Visite pratique
+            </h2>
+<div class="recette-grid">
+<div class="recette-meta-card">
+<div class="recette-meta-icon">⏱️</div>
+<div>
+<div class="recette-meta-label">Durée</div>
+<div class="recette-meta-val">1h de musée, 2h avec le village</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">📊</div>
+<div>
+<div class="recette-meta-label">Difficulté</div>
+<div class="recette-meta-val">Facile, accessible à tous</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🚗</div>
+<div>
+<div class="recette-meta-label">Accès</div>
+<div class="recette-meta-val">À 6 km de Valence-d'Agen, sur le GR 65</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🎟️</div>
+<div>
+<div class="recette-meta-label">Tarif</div>
+<div class="recette-meta-val">Musée 3 €, gratuit pour les moins de 12 ans</div>
+</div>
+</div>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Infos pratiques</div>
+<div class="ingredients-liste">
+<div class="ingredient-item"><span class="ingredient-qte">Musée</span> Du 15 avril au 15 octobre, tous les jours sauf mardi, 14h30-18h30</div>
+<div class="ingredient-item"><span class="ingredient-qte">Hors saison</span> Du 16 octobre au 14 avril, le week-end, 14h30-17h30</div>
+<div class="ingredient-item"><span class="ingredient-qte">Groupes</span> Visite commentée village + musée sur rendez-vous, dès 10 personnes</div>
+<div class="ingredient-item"><span class="ingredient-qte">Marché potier</span> Deuxième week-end d'octobre, entrée gratuite</div>
+<div class="ingredient-item"><span class="ingredient-qte">Accessibilité</span> Ascenseur vers l'étage des faïences</div>
+<div class="ingredient-item"><span class="ingredient-qte">Contact</span> Musée du Vieil Auvillar : 07 82 86 66 15</div>
+</div>
+</div>
+<div class="etapes-liste">
+<div class="etape">
+<div class="etape-num">1</div>
+<div class="etape-corps">
+<div class="etape-titre">Musée du Vieil Auvillar</div>
+<div class="etape-texte">Place de la Halle, le musée présente à l'étage plus de 500 faïences auvillaraises des XVIIIe et XIXe siècles, ainsi qu'un livre de gouaches du XIXe siècle recensant les décors. Au rez-de-chaussée : plumes d'oie, horloges anciennes et batellerie.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">2</div>
+<div class="etape-corps">
+<div class="etape-titre">La halle circulaire</div>
+<div class="etape-texte">Construite en 1825 sur les restes d'une halle carrée, cette halle aux grains sur colonnes trône au centre d'une place triangulaire bordée de couverts. Elle accueille chaque automne le marché potier.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">3</div>
+<div class="etape-corps">
+<div class="etape-titre">Ruelles et céramiques de façade</div>
+<div class="etape-texte">Depuis la tour de l'Horloge, bâtie sous Louis XIV, les ruelles de brique rose révèlent des sculptures en céramique sur les façades : œuvres primées lors du concours du marché potier, sur le thème du chemin de Saint-Jacques.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">4</div>
+<div class="etape-corps">
+<div class="etape-titre">Le port et la chapelle Sainte-Catherine</div>
+<div class="etape-texte">En contrebas, l'ancien port où s'embarquaient les faïences conserve les demeures des maîtres de bateaux et la chapelle Sainte-Catherine du XIVe siècle, dédiée aux mariniers.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">5</div>
+<div class="etape-corps">
+<div class="etape-titre">Le Marché Potier</div>
+<div class="etape-texte">Chaque année en octobre, une soixantaine de potiers et céramistes sélectionnés exposent sous la halle et place du Château. La 33e édition se tient les 10 et 11 octobre 2026, avec concours de sculpture et ateliers de modelage.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RECONNAISSANCE -->
+<section class="section" id="patrimoine">
+<h2 class="section-titre">
+<div class="section-titre-icon">🏆</div>
+              Reconnaissance &amp; patrimoine
+            </h2>
+<div class="vins-liste">
+<div class="vin-item">
+<div class="vin-icon">🏘️</div>
+<div>
+<div class="vin-nom">Plus Beaux Villages de France</div>
+<div class="vin-desc">Auvillar est classé parmi les Plus Beaux Villages de France depuis 1994 pour son ensemble de brique rose, sa halle et son panorama sur la Garonne.</div>
+</div>
+<div class="vin-badge">⭐ Depuis 1994</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🏛️</div>
+<div>
+<div class="vin-nom">Musée de France</div>
+<div class="vin-desc">Le Musée du Vieil Auvillar, géré depuis 1930 par les Amis du Vieil Auvillar, porte l'appellation Musée de France et la marque Qualité Tourisme depuis 2019.</div>
+</div>
+<div class="vin-badge">Musée de France</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🏞️</div>
+<div>
+<div class="vin-nom">Grand Site Occitanie</div>
+<div class="vin-desc">Le village fait partie du Grand Site Occitanie « Moissac – Lauzerte – Auvillar », au cœur du Bas-Quercy et de la Lomagne.</div>
+</div>
+<div class="vin-badge">Grand Site</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🐚</div>
+<div>
+<div class="vin-nom">Chemin de Saint-Jacques</div>
+<div class="vin-desc">Étape de la via Podiensis (GR 65), Auvillar accueille les pèlerins entre Moissac et Lectoure ; la céramique y célèbre le chemin à travers ses sculptures de façade.</div>
+</div>
+<div class="vin-badge">GR 65</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🏺</div>
+<div>
+<div class="vin-nom">Tradition faïencière</div>
+<div class="vin-desc">Près de deux siècles de production continue, de 1739 à 1909, dans une vingtaine de fabriques successives.</div>
+</div>
+<div class="vin-badge">1739 – 1909</div>
+</div>
+</div>
+</section>
+<!-- SAVOIR-FAIRE -->
+<section class="section" id="legendes">
+<h2 class="section-titre">
+<div class="section-titre-icon">🎨</div>
+              Savoir-faire &amp; céramique
+            </h2>
+<div class="histoire-texte">
+<p>La faïence d'Auvillar est une faïence stannifère : la pièce, tournée ou moulée dans l'argile locale, subit une première cuisson qui la transforme en biscuit. Elle est ensuite trempée dans un émail blanc opacifié à l'oxyde d'étain, sur lequel le peintre pose ses couleurs avant une seconde cuisson à grand feu, qui fixe définitivement le décor dans l'émail.</p>
+<div class="citation-bloc">
+<p>« Solide sans être fine », bien résistante au feu : telle est la formule consacrée pour décrire la faïence d'Auvillar, pensée pour l'usage quotidien autant que pour l'apparat.</p>
+<cite>— Formule traditionnelle reprise par le Musée du Vieil Auvillar</cite>
+</div>
+<p>Les ateliers puisent leur inspiration dans les grandes manufactures françaises du XVIIIe siècle : décors floraux et polychromes à la manière de Strasbourg, motifs délicats rappelant Moustiers ou Rouen. Sous le pinceau de Mathieu Rigal, ces modèles prennent une couleur locale et une liberté qui font aujourd'hui la valeur des pièces auvillaraises auprès des collectionneurs. Un livre de gouaches du XIXe siècle, conservé au musée, recense les différents décors employés par les fabriques.</p>
+<p>À partir des années 1840, la terre vernissée prend le relais : une glaçure plombifère transparente ou colorée recouvre la terre rouge, pour une vaisselle plus rustique destinée aux foyers de la vallée. Aujourd'hui, ce savoir-faire revit grâce aux céramistes du Marché Potier, dont les pièces lauréates enrichissent la collection contemporaine de la commune, prolongeant ainsi le fil de près de trois siècles de terre cuite à Auvillar.</p>
+</div>
+</section>
+<!-- AUX ALENTOURS -->
+<section class="section" id="alentours">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+<div class="histoire-texte">
+<p><strong>Moissac</strong> abbaye Saint-Pierre et son cloître roman, joyau du chemin de Saint-Jacques inscrit au patrimoine mondial de l'UNESCO, à une vingtaine de kilomètres.</p>
+<p><strong>Conservatoire des métiers d'autrefois de Donzac</strong> musée de la vie rurale de l'autre rive de la Garonne, qui expose lui aussi des faïences d'Auvillar.</p>
+<p><strong>Abbaye de Belleperche</strong> à Cordes-Tolosannes, ancienne abbaye cistercienne devenue musée des arts de la table, qui a consacré en 2026 une grande exposition aux faïences d'Ardus et de Nègrepelisse.</p>
+<p><strong>Lauzerte</strong> bastide perchée du Quercy Blanc, autre étape du GR 65, qui accueille chaque été son propre marché des potiers.</p>
+</div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Région</span>
+<span class="aside-val">Occitanie</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Territoire</span>
+<span class="aside-val">Tarn-et-Garonne (vallée de la Garonne, Lomagne)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Catégorie</span>
+<span class="aside-val">Artisanat d'art · Faïence stannifère</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Origine</span>
+<span class="aside-val">Production attestée dès 1739</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Période</span>
+<span class="aside-val">1739 – 1909 (terre vernissée après 1840)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">LABEL / PROTECTION</span>
+<span class="aside-val">Plus Beaux Villages de France (1994) · Musée de France</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">RECONNU PAR</span>
+<span class="aside-val">Association des Amis du Vieil Auvillar · Musée du Vieil Auvillar</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+  </script>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">← Retour à la fiche Tarn-et-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

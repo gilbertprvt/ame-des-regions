@@ -1,0 +1,213 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Toulouse à pied — L'Âme des Régions</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>:root{--bleu:#2c4a7c;--ocre:#a56b20;--fond:#faf7f0}*{box-sizing:border-box}body{margin:0;background:var(--fond);font-family:'Source Sans 3',sans-serif;color:#273241}header{background:linear-gradient(110deg,#233e6a,#3c6091);color:white;padding:26px max(22px,calc((100vw - 1180px)/2)) 34px}header .brand{font:700 23px 'Playfair Display',serif}header .brand span{color:#e5a557}h1,h2,h3{font-family:'Playfair Display',serif}h1{font-size:clamp(34px,5vw,55px);margin:22px 0 8px}header p{max-width:760px;line-height:1.6;margin:0}.wrap{max-width:1220px;margin:auto;padding:26px 20px 60px}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px}.chip{background:#f0e4d2;color:#76501b;border-radius:22px;padding:7px 13px;font-weight:600;font-size:13px}.layout{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(300px,1fr);gap:22px;align-items:start}.panel{background:white;border:1px solid #e6dfd4;border-radius:14px;overflow:hidden;box-shadow:0 3px 18px #172a3a0b}.map-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 20px}.map-head h2{margin:0;font-size:21px;color:var(--bleu)}#map{height:660px;width:100%;background:#e9ece7}.map-note{padding:13px 19px;font-size:13px;color:#596373;line-height:1.5}.steps{padding:7px 18px 18px}.steps h2{color:var(--bleu);font-size:23px;margin:12px 0 16px}.step{border-bottom:1px solid #eee6dc;padding:13px 0;display:grid;grid-template-columns:32px 1fr;gap:11px;cursor:pointer}.step:last-child{border:0}.num{border-radius:50%;background:#f6e7c9;color:#805418;width:29px;height:29px;display:grid;place-items:center;font-weight:700}.step h3{font:700 16px 'Source Sans 3',sans-serif;margin:1px 0 5px;color:var(--bleu)}.step p{font-size:13px;line-height:1.55;margin:0;color:#59616b}.step small{display:block;color:#98621c;font-weight:700;margin-top:6px}.btn{background:var(--bleu);color:white;border:0;border-radius:22px;padding:9px 14px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;font-size:13px}.btn.secondary{background:#f3e6d1;color:#704912}.controls{display:flex;gap:7px;flex-wrap:wrap}.marker{width:28px;height:28px;background:#8b5e0a;border:2px solid white;color:white;border-radius:50%;display:grid;place-items:center;font-weight:700;box-shadow:0 1px 6px #0006}.instructions{margin-top:22px;padding:22px}.instructions h2{color:var(--bleu);margin:0 0 10px}.instructions ol{line-height:1.85;padding-left:23px}.instructions li{padding-left:5px}.chip[hidden]{display:none}.btn:disabled{opacity:.6;cursor:wait}.status{font-size:12px;color:#596373;padding:0 20px 12px}@media(max-width:850px){.layout{grid-template-columns:1fr}#map{height:510px}}@media print{header{padding:15px}#map{height:500px}.btn{display:none}.layout{display:block}.steps{break-before:page}}</style></head><body><header><div class="brand">L'<span>Âme</span> des Régions</div><h1>Toulouse, au cœur de la Ville Rose</h1><p>Un circuit pédestre dans le centre historique, entre basilique romane, places emblématiques, architecture Renaissance et berges de la Garonne.</p></header><main class="wrap"><div class="chips"><span class="chip">📍 Toulouse · Haute-Garonne (31)</span><span class="chip">🚶 À pied</span><span class="chip">⏱️ Environ 2 h 30 à 3 h avec arrêts</span><span class="chip">🔁 Boucle dans le centre historique</span><span class="chip" id="chip-distance" hidden></span></div><div class="layout"><section class="panel"><div class="map-head"><h2>Carte détaillée du circuit</h2><div class="controls"><button class="btn secondary" id="reset">Voir tout</button><button class="btn" id="download">Télécharger (PDF)</button></div></div><div id="map" aria-label="Carte interactive du parcours à Toulouse"></div><div class="map-note">Agrandissez la carte pour voir le nom des rues et les passages piétons. Cliquez sur les repères numérotés pour découvrir les étapes. Le tracé bleu suit les rues, places et quais praticables à pied, d’après les données OpenStreetMap. Il reste à vérifier sur place (travaux, accès fermés).</div><div class="status" id="status">Chargement du tracé…</div></section><aside class="panel steps"><h2>Les 7 étapes</h2><div id="steps"></div></aside></div><section class="panel instructions"><h2>Le parcours, rue par rue</h2><p>Le tracé de la carte suit le réseau piéton réel. Voici les grands axes du parcours ; les traversées exactes restent à vérifier sur place.</p><ol><li><strong>Saint-Sernin → Capitole :</strong> rejoindre la rue du Taur, puis la place du Capitole.</li><li><strong>Capitole → Jacobins :</strong> passer par la rue Gambetta et rejoindre la rue Lakanal.</li><li><strong>Jacobins → Hôtel d'Assézat :</strong> traverser le quartier historique vers la rue de Metz, puis la rue de l'Écharpe.</li><li><strong>Hôtel d'Assézat → Pont-Neuf :</strong> rejoindre la rue des Couteliers puis la place du Pont-Neuf.</li><li><strong>Pont-Neuf → Saint-Étienne :</strong> traverser le centre ancien en direction de la rue de Metz et de la place Saint-Étienne.</li><li><strong>Saint-Étienne → Capitole :</strong> revenir par le secteur des rues Croix-Baragnon et Saint-Rome.</li></ol><p><strong>À savoir :</strong> ce circuit est une maquette. Les distances, la durée précise et l'accessibilité ne sont pas garanties tant que le parcours piéton n'a pas été vérifié sur le terrain.</p></section></main><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+/* ============================================================
+   CONFIGURATION DU CIRCUIT — seule partie à modifier pour une autre ville
+   ============================================================ */
+const stops=[
+{name:'Basilique Saint-Sernin',lat:43.608316,lng:1.441804,desc:'Chef-d’œuvre de l’art roman, la basilique est l’un des grands monuments du patrimoine toulousain.'},
+{name:'Place du Capitole',lat:43.60438,lng:1.443339,desc:'La place emblématique de Toulouse, dominée par la façade du Capitole et ses arcades.'},
+{name:'Couvent des Jacobins',lat:43.603482,lng:1.440485,desc:'Ensemble gothique méridional célèbre pour sa voûte en palmier et son cloître.'},
+{name:'Hôtel d’Assézat',lat:43.600148,lng:1.442192,desc:'Magnifique hôtel particulier de la Renaissance, lié à la prospérité des marchands de pastel.'},
+{name:'Pont-Neuf et quais de Garonne',lat:43.599248,lng:1.438557,desc:'Le plus ancien pont conservé de Toulouse offre un beau panorama sur le fleuve.'},
+{name:'Cathédrale Saint-Étienne',lat:43.599905,lng:1.450518,desc:'Cathédrale au plan singulier, marquée par plusieurs siècles de construction.'},
+{name:'Retour place du Capitole',lat:43.60438,lng:1.443339,desc:'Fin de la boucle, au cœur de la Ville Rose.'}
+];
+// Nom de la ville (utilisé pour le nom du fichier PDF)
+const VILLE='Toulouse';
+// Tracé de secours très approximatif, utilisé seulement si aucun calcul n'est possible.
+const traceSecours=[
+[43.608316,1.441804],[43.60775,1.44192],[43.6068,1.44235],[43.6057,1.44286],[43.60438,1.443339],
+[43.6042,1.44265],[43.60403,1.4418],[43.603482,1.440485],
+[43.6027,1.4408],[43.6018,1.4412],[43.6008,1.4417],[43.600148,1.442192],
+[43.5998,1.4411],[43.5995,1.4398],[43.599248,1.438557],
+[43.5997,1.4404],[43.60025,1.4423],[43.60075,1.4442],[43.6012,1.4462],[43.6005,1.4483],[43.599905,1.450518],
+[43.6007,1.4495],[43.6017,1.4483],[43.6025,1.4468],[43.6033,1.4451],[43.60438,1.443339]
+];
+/* ============================================================ */
+
+const map=L.map('map',{scrollWheelZoom:false}).setView([43.6035,1.443],15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(stops.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.22));
+let allBounds=bounds;
+let routeLayer=null, routeData=null;
+const statusEl=document.getElementById('status');
+
+// Marqueurs et liste des étapes
+const markers=[];
+stops.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[28,28],iconAnchor:[14,14]});
+ const m=L.marker([s.lat,s.lng],{icon,zIndexOffset:1000+(i===stops.length-1?100:0)}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ markers.push(m);
+ const el=document.createElement('div');el.className='step';
+ el.innerHTML=`<div class="num">${i+1}</div><div><h3>${s.name}</h3><p>${s.desc}</p><small class="leg" data-i="${i}">Voir sur la carte ↗</small></div>`;
+ el.onclick=()=>{map.setView([s.lat,s.lng],17);m.openPopup();document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'})};
+ document.getElementById('steps').appendChild(el);
+});
+// Départ et arrivée au même endroit : léger décalage visuel pour voir les deux repères
+function separerDepartArrivee(){
+ const a=stops[1],b=stops[stops.length-1];
+ if(a.lat!==b.lat||a.lng!==b.lng)return;
+ const c=map.latLngToLayerPoint([a.lat,a.lng]);
+ markers[1].setLatLng(map.layerPointToLatLng(c.add(L.point(-19,0))));
+ markers[stops.length-1].setLatLng(map.layerPointToLatLng(c.add(L.point(19,0))));
+}
+map.on('zoomend',separerDepartArrivee);separerDepartArrivee();
+
+// Décodage des polylignes Valhalla (précision 6)
+function decodePolyline(str,prec=6){let i=0,lat=0,lng=0,out=[],f=Math.pow(10,prec);
+ while(i<str.length){let b,sh=0,r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lat+=(r&1?~(r>>1):(r>>1));
+ sh=0;r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lng+=(r&1?~(r>>1):(r>>1));out.push([lat/f,lng/f])}return out}
+
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('délai dépassé')),ms))]);
+
+// Moteur 1 : OSRM profil piéton (FOSSGIS / openstreetmap.de)
+async function routeOSRM(){
+ const coords=stops.map(s=>`${s.lng},${s.lat}`).join(';');
+ const r=await withTimeout(fetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${coords}?overview=full&geometries=geojson&steps=false`),15000);
+ if(!r.ok)throw new Error('OSRM '+r.status);
+ const j=await r.json(); if(j.code!=='Ok')throw new Error('OSRM '+j.code);
+ const rt=j.routes[0];
+ return {source:'OSRM (piéton)',coords:rt.geometry.coordinates.map(([x,y])=>[y,x]),distance:rt.distance,legs:rt.legs.map(l=>l.distance)};
+}
+// Moteur 2 : Valhalla profil piéton (secours)
+async function routeValhalla(){
+ const body={locations:stops.map((s,i)=>({lat:s.lat,lon:s.lng,type:'break'})),costing:'pedestrian',units:'kilometers',language:'fr-FR'};
+ const r=await withTimeout(fetch('https://valhalla1.openstreetmap.de/route?json='+encodeURIComponent(JSON.stringify(body))),15000);
+ if(!r.ok)throw new Error('Valhalla '+r.status);
+ const j=await r.json(); const legs=j.trip.legs;
+ let coords=[];legs.forEach(l=>{const c=decodePolyline(l.shape);coords=coords.concat(coords.length?c.slice(1):c)});
+ return {source:'Valhalla (piéton)',coords,distance:j.trip.summary.length*1000,legs:legs.map(l=>l.summary.length*1000)};
+}
+
+const fmtKm=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+' km':Math.round(m/10)*10+' m';
+const cacheKey='circuit-trace-'+stops.map(s=>s.lat.toFixed(5)+','+s.lng.toFixed(5)).join('|');
+
+function dessiner(data,estSecours){
+ routeData=data;
+ if(routeLayer)map.removeLayer(routeLayer);
+ routeLayer=L.layerGroup([
+  L.polyline(data.coords,{color:'#ffffff',weight:9,opacity:.9,lineJoin:'round',lineCap:'round'}),
+  L.polyline(data.coords,{color:'#2c4a7c',weight:5,opacity:.92,lineJoin:'round',lineCap:'round',dashArray:estSecours?'8 8':null})
+ ]).addTo(map);
+ allBounds=L.latLngBounds(data.coords).extend(bounds);
+ map.fitBounds(allBounds.pad(.08));
+ if(data.distance){
+  // Distance et durée réelles (marche ≈ 4,5 km/h)
+  const minutes=Math.round(data.distance/1000/4.5*60);
+  const chip=document.getElementById('chip-distance');
+  chip.textContent=`📏 ${fmtKm(data.distance)} · ≈ ${Math.floor(minutes/60)} h ${String(minutes%60).padStart(2,'0')} de marche effective`;
+  chip.hidden=false;
+  document.querySelectorAll('small.leg').forEach(el=>{const i=+el.dataset.i;if(i<data.legs.length)el.textContent=`Voir sur la carte ↗ · ${fmtKm(data.legs[i])} jusqu’à l’étape ${i+2}`});
+ }
+}
+
+async function init(){
+ try{const c=JSON.parse(localStorage.getItem(cacheKey));if(c&&c.coords){dessiner(c,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${c.source}, mémorisé dans ce navigateur).`;return}}catch(e){}
+ statusEl.textContent='Calcul du chemin piéton sur les rues…';
+ for(const moteur of [routeOSRM,routeValhalla]){
+  try{const d=await moteur();dessiner(d,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${d.source}, données OpenStreetMap).`;
+   try{localStorage.setItem(cacheKey,JSON.stringify(d))}catch(e){}return}
+  catch(e){console.warn(e)}
+ }
+ dessiner({coords:traceSecours},true);
+ statusEl.textContent='Calcul d’itinéraire indisponible : tracé approximatif affiché en pointillés.';
+}
+init();
+
+document.getElementById('reset').onclick=()=>map.fitBounds(allBounds.pad(.08));
+/* ============================================================
+   TÉLÉCHARGEMENT PDF : carte + étapes + parcours rue par rue
+   ============================================================ */
+function chargerScript(src){return new Promise((ok,ko)=>{if(window.jspdf)return ok();const sc=document.createElement('script');sc.src=src;sc.onload=ok;sc.onerror=()=>ko(new Error('jsPDF'));document.head.appendChild(sc)})}
+// Texte compatible avec les polices standard du PDF
+const txt=t=>(t||'').replace(/[’‘]/g,"'").replace(/[“”«»]/g,'"').replace(/œ/g,'oe').replace(/Œ/g,'OE').replace(/→/g,'>').replace(/[–—]/g,'-').replace(/ | /g,' ').replace(/[^\x00-\xFF]/g,'').replace(/\s+/g,' ').trim();
+
+// Dessine la carte (fond OpenStreetMap + tracé + repères) dans une image
+async function imageCarte(){
+ const W=1800,H=1500,pad=90,crs=L.CRS.EPSG3857;
+ const b=allBounds;let z=18;
+ for(;z>10;z--){const a=crs.latLngToPoint(b.getNorthWest(),z),c=crs.latLngToPoint(b.getSouthEast(),z);if(c.x-a.x<=W-2*pad&&c.y-a.y<=H-2*pad)break}
+ const centre=crs.latLngToPoint(b.getCenter(),z),orig=centre.subtract(L.point(W/2,H/2));
+ const px=ll=>crs.latLngToPoint(L.latLng(ll),z).subtract(orig);
+ const cv=document.createElement('canvas');cv.width=W;cv.height=H;const ctx=cv.getContext('2d');
+ ctx.fillStyle='#e9ece7';ctx.fillRect(0,0,W,H);
+ const x0=Math.floor(orig.x/256),y0=Math.floor(orig.y/256),x1=Math.floor((orig.x+W)/256),y1=Math.floor((orig.y+H)/256);
+ const tuiles=[];
+ for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++)tuiles.push(new Promise(ok=>{const im=new Image();im.crossOrigin='anonymous';
+  im.onload=()=>{ctx.drawImage(im,x*256-orig.x,y*256-orig.y,256,256);ok()};im.onerror=()=>ok();
+  im.src=`https://tile.openstreetmap.org/${z}/${x}/${y}.png`}));
+ await Promise.all(tuiles);
+ // Tracé
+ const pts=(routeData?routeData.coords:traceSecours).map(px);
+ const trait=(c,w,dash)=>{ctx.beginPath();pts.forEach((p,k)=>k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=c;ctx.lineWidth=w;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(dash||[]);ctx.stroke()};
+ trait('rgba(255,255,255,.9)',13);trait('#2c4a7c',7,routeData&&routeData.distance?[]:[14,14]);ctx.setLineDash([]);
+ // Repères numérotés (départ/arrivée confondus : léger décalage)
+ const dern=stops.length-1,meme=stops[1].lat===stops[dern].lat&&stops[1].lng===stops[dern].lng;
+ stops.forEach((s,k)=>{let p=px([s.lat,s.lng]);if(meme&&(k===1||k===dern))p=p.add(L.point(k===1?-24:24,0));
+  ctx.beginPath();ctx.arc(p.x,p.y,21,0,2*Math.PI);ctx.fillStyle='#8b5e0a';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='bold 22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(k+1,p.x,p.y+1)});
+ // Attribution
+ const att='© contributeurs OpenStreetMap';ctx.font='20px sans-serif';const tw=ctx.measureText(att).width;
+ ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(W-tw-20,H-34,tw+20,34);ctx.fillStyle='#333';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(att,W-10,H-17);
+ return {data:cv.toDataURL('image/jpeg',.9),ratio:H/W};
+}
+
+async function telechargerPDF(){
+ const btn=document.getElementById('download');btn.disabled=true;btn.textContent='Préparation du PDF…';
+ try{
+  await chargerScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const PW=210,PH=297,M=15,LW=PW-2*M,BLEU=[44,74,124],OCRE=[165,107,32],GRIS=[89,97,107];
+  let y=0;
+  const saut=h=>{if(y+h>PH-18){doc.addPage();y=M+3}};
+  const para=(t,size,color,style,indent=0,lh=1.45)=>{doc.setFont('helvetica',style||'normal');doc.setFontSize(size);doc.setTextColor(...color);
+   const l=doc.splitTextToSize(txt(t),LW-indent);const h=size*.3528*lh;l.forEach(li=>{saut(h);doc.text(li,M+indent,y+h*.75);y+=h})};
+  const titre=t=>{saut(16);y+=3;doc.setFont('times','bold');doc.setFontSize(17);doc.setTextColor(...BLEU);doc.text(txt(t),M,y+6);y+=9;doc.setDrawColor(...OCRE);doc.setLineWidth(.6);doc.line(M,y,M+28,y);y+=5};
+
+  // Bandeau
+  doc.setFillColor(...BLEU);doc.rect(0,0,PW,44,'F');
+  doc.setFont('times','bold');doc.setFontSize(13);doc.setTextColor(255,255,255);doc.text("L'",M,12);
+  doc.setTextColor(229,165,87);doc.text('Âme',M+doc.getTextWidth("L'"),12);
+  doc.setTextColor(255,255,255);doc.text(' des Régions',M+doc.getTextWidth("L'Âme"),12);
+  doc.setFontSize(22);doc.text(txt(document.querySelector('h1').textContent),M,25);
+  doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+  doc.splitTextToSize(txt(document.querySelector('header p').textContent),LW).slice(0,2).forEach((l,k)=>doc.text(l,M,32+k*4.6));
+  y=50;
+  // Informations pratiques
+  const infos=[...document.querySelectorAll('.chip')].filter(c=>!c.hidden).map(c=>txt(c.textContent)).join('   |   ');
+  para(infos,9,OCRE,'bold');y+=2;
+  // Carte
+  const img=await imageCarte();const ih=LW*img.ratio;
+  saut(ih);doc.addImage(img.data,'JPEG',M,y,LW,ih);doc.setDrawColor(220,214,204);doc.setLineWidth(.3);doc.rect(M,y,LW,ih);y+=ih+3;
+  para('Tracé calculé sur le réseau piéton OpenStreetMap, à vérifier sur place (travaux, accès fermés).',8,GRIS,'italic');
+
+  // Étapes
+  doc.addPage();y=M;
+  titre(`Les ${stops.length} étapes`);
+  stops.forEach((s,k)=>{
+   saut(18);
+   doc.setFillColor(246,231,201);doc.circle(M+4,y+3.6,4,'F');doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(128,84,24);doc.text(String(k+1),M+4,y+5,{align:'center'});
+   const y0=y;para(s.name,12,BLEU,'bold',12);para(s.desc,10,GRIS,'normal',12);
+   if(routeData&&routeData.legs&&k<routeData.legs.length)para(`${fmtKm(routeData.legs[k])} jusqu'à l'étape ${k+2}`,9,OCRE,'bold',12);
+   y=Math.max(y,y0+9)+4;
+  });
+
+  // Parcours rue par rue
+  const sec=document.querySelector('.instructions');
+  titre(sec.querySelector('h2').textContent);
+  sec.querySelectorAll(':scope > p, :scope > ol').forEach(el=>{
+   if(el.tagName==='OL'){[...el.children].forEach((li,k)=>{saut(6);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...OCRE);doc.text(`${k+1}.`,M+1,y+4);para(li.textContent,10,[39,50,65],'normal',7);y+=1.5});y+=2}
+   else{para(el.textContent,10,GRIS,el.querySelector('strong')?'italic':'normal');y+=3}
+  });
+
+  // Pied de page
+  const n=doc.getNumberOfPages();
+  for(let k=1;k<=n;k++){doc.setPage(k);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,150,150);
+   doc.text(txt(`L'Âme des Régions - ${document.querySelector('h1').textContent}`),M,PH-8);doc.text(`${k} / ${n}`,PW-M,PH-8,{align:'right'})}
+  const slug=VILLE.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  doc.save(`circuit-${slug}.pdf`);
+ }catch(e){console.error(e);alert('Le PDF n’a pas pu être créé (connexion Internet nécessaire).')}
+ finally{btn.disabled=false;btn.textContent='Télécharger (PDF)'}
+}
+document.getElementById('download').onclick=telechargerPDF;
+</script></body></html>

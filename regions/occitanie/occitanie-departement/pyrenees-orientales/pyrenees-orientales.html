@@ -124,7 +124,15 @@
       transition: all 0.18s;
     }
     .fiche-tab:hover { border-color: var(--bleu-profond); color: var(--bleu-profond); }
-    .fiche-tab.active { background: var(--bleu-profond); color: white; border-color: var(--bleu-profond); }
+    /* Onglet actif : reste en surbrillance (même au survol / focus) tant qu'un autre onglet n'est pas choisi */
+    .fiche-tabs .fiche-tab.active,
+    .fiche-tabs .fiche-tab.active:hover,
+    .fiche-tabs .fiche-tab.active:focus,
+    .fiche-tabs .fiche-tab.active:focus-visible {
+      background: var(--bleu-profond) !important;
+      color: white !important;
+      border-color: var(--bleu-profond) !important;
+    }
 
     .fiche-body { padding: 40px 0 60px; }
     .fiche-panel { display: none; }
@@ -3196,7 +3204,8 @@
 </footer>
 <script src="../../../../script.js"></script>
 <script>
-    const tabs   = document.querySelectorAll('.fiche-tab');
+    // Seuls les vrais onglets (avec data-panel) changent le chapitre actif ; les liens Identité / Bonnes Adresses ne le désactivent plus
+    const tabs   = document.querySelectorAll('.fiche-tab[data-panel]');
     const panels = document.querySelectorAll('.fiche-panel');
     const ficheTabStorageKey = 'ficheActiveTab:' + window.location.pathname;
 

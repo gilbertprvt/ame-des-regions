@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Melon du Quercy — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+      transform: translateY(-60px);
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-tarn-et-garonne.jpg'); }</style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero">
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../../../index.html">L'<span>Âme</span> des Régions</a>
+<div class="produit-topbar-btns">
+<a class="produit-btn-retour" href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">
+            ← Retour à la fiche Tarn-et-Garonne
+          </a>
+</div>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>M</em>elon<br/><span style="padding-left: 60px;">du <em>Q</em>uercy</span></h1>
+</div>
+<img alt="Carte Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/carte-tarn-et-garonne.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Tarn-et-Garonne" src="../../../../../../assets/departement/occitanie/tarn-et-garonne.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Produits du Terroir ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#recette">👨‍🍳 Recette</a>
+<a href="#vins">🍷 Accords vins</a>
+<a href="#variantes">🔀 Variétés</a>
+<a href="#ou-manger">📍 Où acheter</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p>Le melon du Quercy est le fruit d’été emblématique des coteaux qui s’étendent entre <strong>Montauban et Cahors</strong>, autour de Lauzerte, Montpezat-de-Quercy et Lafrançaise. C’est un melon de <strong>type charentais jaune</strong>, à l’écorce lisse ou légèrement brodée et à la chair d’un orange profond, réputé pour sa douceur sucrée et son parfum intense.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 280px;"><img alt="Melon du Quercy" src="../../../../../../assets/departement/occitanie/photo/tarn-et-garonne/melon-du-quercy.jpg"/><figcaption>Melons du Quercy à pleine maturité, récoltés à la main</figcaption></figure><div class="clearfix"></div>
+<p>L’histoire du melon en France remonte à la fin du XVe siècle : les expéditions de Charles VIII dans le royaume de Naples ramènent dans leurs bagages jardiniers italiens et graines de cucurbitacées. D’abord fruit des potagers royaux et ecclésiastiques, le melon gagne peu à peu les campagnes du Midi, où le soleil et la chaleur lui conviennent mieux qu’ailleurs.</p>
+<p>En Quercy, sa culture s’inscrit dans une longue tradition de <strong>polyculture familiale</strong> attestée dès le XVIIIe siècle. Sur les fermes des coteaux, quelques rangs de melons voisinent avec la vigne de chasselas, les vergers de pruniers, les céréales et l’élevage. Les sols <strong>argilo-calcaires</strong>, bien drainés, se réchauffent vite au printemps et emmagasinent la chaleur de l’été : des conditions idéales pour une maturation lente et une forte concentration en sucres.</p>
+<p>Pendant longtemps, la production reste dispersée et vendue sans mention d’origine. Au début des années 1990, les producteurs subissent des années de mévente : leur melon est payé quelques francs le kilo alors qu’il se revend bien plus cher en grande surface. Ils décident alors de se regrouper, recensent les melonniers des communes du Quercy et créent une association de producteurs, puis, en <strong>1997</strong>, le <strong>Syndicat interprofessionnel du Melon du Quercy</strong>, installé à Montpezat-de-Quercy.</p>
+<p>La filière s’engage dans une démarche qualité ambitieuse qui aboutit, le <strong>24 juin 2004</strong>, à l’enregistrement européen de l’<strong>Indication géographique protégée (IGP) « Melon du Quercy »</strong>. L’aire couvre une partie du Tarn-et-Garonne, du Lot et du Lot-et-Garonne, au sein de la région naturelle du Quercy. Chaque fruit certifié porte un sticker individuel « Melon du Quercy », et sa conformité est vérifiée par un organisme certificateur indépendant.</p>
+<p>Le cahier des charges insiste sur la <strong>récolte à pleine maturité</strong> : le melonnier passe plusieurs fois dans la même parcelle et cueille à la main les fruits dont le pédoncule commence à se décoller, signe que le melon a atteint son optimum. Les melons sont ensuite rapidement acheminés vers les stations de conditionnement habilitées, où ils sont triés, calibrés et contrôlés, notamment sur leur taux de sucre (indice Brix).</p>
+<div class="citation-bloc"><p>Un bon melon se choisit lourd dans la main, avec un parfum sucré discret et un pédoncule légèrement craquelé : c’est la promesse d’une chair fondante.</p><cite>Conseil de melonnier quercynois</cite></div>
+<p>La notoriété du melon du Quercy est rapidement devenue nationale : dès le début des années 2000, il figure parmi les premières marques de melon identifiées par les consommateurs français. La production certifiée dépasse régulièrement les <strong>10 000 tonnes</strong> par an, ce qui en fait l’un des piliers de l’économie agricole du nord du Tarn-et-Garonne.</p>
+<p>Pour protéger cette filière, plusieurs expéditeurs du Tarn-et-Garonne et du Lot se sont engagés, aux côtés de la Chambre d’agriculture et du syndicat, à ne pas importer de melons pendant la pleine saison locale, de la fin juin au début octobre, afin d’éviter toute concurrence avec la production départementale.</p>
+<p>Aujourd’hui, le melon du Quercy est un symbole de l’été dans le Sud-Ouest : servi en entrée avec le jambon de pays, en dessert, en sorbet ou en confiture, il accompagne les marchés estivaux des bastides et les repas de fête. Il participe aussi à entretenir les paysages de coteaux et à maintenir une agriculture familiale vivante dans le Quercy blanc.</p></div>
+</section>
+<!-- RECETTE -->
+<section class="section" id="recette">
+<h2 class="section-titre">
+<div class="section-titre-icon">👨‍🍳</div>
+              La recette — Soupe glacée de melon du Quercy, jambon croustillant
+            </h2>
+<div class="recette-grid">
+<div class="recette-meta-card">
+<div class="recette-meta-icon">⏱️</div>
+<div>
+<div class="recette-meta-label">Préparation</div>
+<div class="recette-meta-val">20 min</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🔥</div>
+<div>
+<div class="recette-meta-label">Cuisson</div>
+<div class="recette-meta-val">10 min</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">👥</div>
+<div>
+<div class="recette-meta-label">Pour</div>
+<div class="recette-meta-val">4 personnes</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">📊</div>
+<div>
+<div class="recette-meta-label">Difficulté</div>
+<div class="recette-meta-val">Facile</div>
+</div>
+</div>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Ingrédients</div>
+<div class="ingredients-liste">
+<div class="ingredient-item"><span class="ingredient-qte">2</span> Melons du Quercy bien mûrs</div>
+<div class="ingredient-item"><span class="ingredient-qte">4 tranches</span> Jambon de pays (ou jambon noir de Bigorre)</div>
+<div class="ingredient-item"><span class="ingredient-qte">10 cl</span> Floc de Gascogne ou muscat</div>
+<div class="ingredient-item"><span class="ingredient-qte">1 c.s.</span> Huile d’olive</div>
+<div class="ingredient-item"><span class="ingredient-qte">8 feuilles</span> Menthe fraîche</div>
+<div class="ingredient-item"><span class="ingredient-qte">6 feuilles</span> Basilic</div>
+<div class="ingredient-item"><span class="ingredient-qte">1 pincée</span> Piment d’Espelette</div>
+<div class="ingredient-item"><span class="ingredient-qte">QS</span> Sel, poivre du moulin</div>
+</div>
+</div>
+<div class="etapes-liste">
+<div class="etape">
+<div class="etape-num">1</div>
+<div class="etape-corps">
+<div class="etape-titre">Préparer les melons</div>
+<div class="etape-texte">Coupez les melons en deux, retirez les graines à la cuillère, puis prélevez la chair. Réservez quelques billes de melon faites à la cuillère parisienne pour le dressage.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">2</div>
+<div class="etape-corps">
+<div class="etape-titre">Mixer</div>
+<div class="etape-texte">Mixez finement la chair avec le Floc de Gascogne, la moitié de la menthe et du basilic, une pincée de sel et le piment d’Espelette jusqu’à obtenir un velouté lisse.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">3</div>
+<div class="etape-corps">
+<div class="etape-titre">Rafraîchir</div>
+<div class="etape-texte">Placez la soupe au réfrigérateur au moins 2 heures. Elle doit être servie bien froide pour révéler tous les arômes du melon.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">4</div>
+<div class="etape-corps">
+<div class="etape-titre">Croustiller le jambon</div>
+<div class="etape-texte">Disposez les tranches de jambon sur une plaque recouverte de papier cuisson et passez-les 8 à 10 minutes au four à 180 °C. Laissez refroidir : elles deviennent croustillantes.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">5</div>
+<div class="etape-corps">
+<div class="etape-titre">Dresser</div>
+<div class="etape-texte">Versez la soupe dans des assiettes creuses ou des verrines, ajoutez les billes de melon, un filet d’huile d’olive, les herbes ciselées et un tour de moulin à poivre.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">6</div>
+<div class="etape-corps">
+<div class="etape-titre">Servir</div>
+<div class="etape-texte">Plantez les éclats de jambon croustillant au moment de servir. Accompagnez de pain de campagne grillé.</div>
+</div>
+</div>
+</div>
+<div class="citation-bloc" style="margin-top:24px;"><p>Ne conservez jamais le melon entier au réfrigérateur à côté d’autres fruits : il dégage de l’éthylène qui accélère leur maturation. Sortez-le du froid une demi-heure avant dégustation.</p><cite>Le conseil de la fiche</cite></div>
+</section>
+<!-- ACCORDS VINS -->
+<section class="section" id="vins">
+<h2 class="section-titre">
+<div class="section-titre-icon">🍷</div>
+              Accords vins
+            </h2>
+<div class="vins-liste">
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Coteaux du Quercy rosé</div>
+<div class="vin-desc">Rosé fruité et frais issu du cabernet franc, parfait voisin de terroir pour l’entrée melon-jambon.</div>
+</div>
+<div class="vin-badge">⭐ Accord idéal</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Floc de Gascogne blanc</div>
+<div class="vin-desc">Mistelle d’armagnac et de moût de raisin, l’apéritif traditionnel servi avec le melon dans tout le Sud-Ouest.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Côtes de Gascogne blanc moelleux</div>
+<div class="vin-desc">Notes de fruits exotiques et d’agrumes qui prolongent la douceur du melon.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Saint-Sardos rosé</div>
+<div class="vin-desc">Petite appellation du Tarn-et-Garonne, rosé léger et désaltérant pour les repas d’été.</div>
+</div>
+<div class="vin-badge">Local</div>
+</div>
+</div>
+</section>
+<!-- VARIANTES -->
+<section class="section" id="variantes">
+<h2 class="section-titre">
+<div class="section-titre-icon">🔀</div>
+              Variétés & façons de le déguster
+            </h2>
+<div class="histoire-texte">
+<p><strong>Charentais jaune :</strong> type variétal principal du Quercy, écorce lisse virant au jaune à maturité, chair orange vif très sucrée.</p>
+<p><strong>Charentais brodé :</strong> écorce couverte d’un fin réseau liégeux (« broderie »), chair ferme et parfumée, bonne tenue après récolte.</p>
+<p><strong>Melon de pleine terre ou sous abri :</strong> les premiers fruits arrivent fin juin sous petits tunnels, la grande saison de plein champ s’étend de juillet à septembre.</p>
+<p><strong>Melon au jambon :</strong> l’entrée estivale incontournable, souvent arrosée d’un trait de Floc de Gascogne ou de muscat dans la cavité.</p>
+<p><strong>Confiture et sorbet :</strong> en fin de saison, le melon du Quercy se transforme en confitures (parfois au chasselas ou à la vanille) et en sorbets au basilic.</p>
+</div>
+</section>
+<!-- OÙ DÉGUSTER -->
+<section class="section" id="ou-manger">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              Où acheter et déguster dans le Tarn-et-Garonne ?
+            </h2>
+<div class="histoire-texte">
+<p>La saison du melon du Quercy s’étend de fin juin à fin septembre, avec un pic en juillet et en août. On le trouve sur tous les marchés de plein vent du nord du département.</p>
+<p><strong>Montpezat-de-Quercy</strong> siège du Syndicat interprofessionnel du Melon du Quercy, au cœur de la zone de production.</p>
+<p><strong>Lauzerte</strong> bastide perchée du Quercy blanc, entourée de coteaux de melons et de vergers ; son marché estival met le melon à l’honneur.</p>
+<p><strong>Montauban</strong> les marchés de la préfecture rassemblent chaque semaine les producteurs des coteaux du nord du département.</p>
+<p><strong>Moissac et Lafrançaise</strong> marchés de producteurs et vente directe à la ferme le long des routes des coteaux.</p>
+<p><strong>Fermes « Bienvenue à la ferme »</strong> de nombreux melonniers proposent la vente directe sur l’exploitation pendant la saison.</p>
+</div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Région</span>
+<span class="aside-val">Occitanie (et Nouvelle-Aquitaine pour le Lot-et-Garonne)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Territoire</span>
+<span class="aside-val">Quercy · Tarn-et-Garonne · Lot · Lot-et-Garonne</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Catégorie</span>
+<span class="aside-val">Fruit frais · Melon de type charentais</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Saison</span>
+<span class="aside-val">Fin juin à fin septembre · Pic juillet-août</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Occasion</span>
+<span class="aside-val">Entrée · Dessert · Apéritif</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">LABEL / PROTECTION</span>
+<span class="aside-val">IGP Melon du Quercy (2004)</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">RECONNU PAR</span>
+<span class="aside-val">Union européenne · INAO · Syndicat interprofessionnel du Melon du Quercy</span>
+</div>
+</div>
+</div>
+<!-- Label officiel -->
+<div class="aside-label-aop">
+<div class="aside-aop-logo">🏅</div>
+<div class="aside-aop-titre">IGP Melon du Quercy</div>
+<div class="aside-aop-desc">Indication géographique protégée depuis le 24 juin 2004 : origine Quercy, récolte manuelle à pleine maturité, identification individuelle par sticker.</div>
+</div>
+<div class="aside-card">
+<div class="aside-card-header">📊 Chiffres clés</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Volume certifié</span>
+<span class="aside-val">Plus de 10 000 t / an</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Aire</span>
+<span class="aside-val">3 départements</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Sucre</span>
+<span class="aside-val">Environ 15 à 16 °Brix</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Siège</span>
+<span class="aside-val">Montpezat-de-Quercy</span>
+</div>
+</div>
+</div>
+<div class="aside-card">
+<div class="aside-card-header">🧺 Autres produits du Tarn-et-Garonne</div>
+<div class="aside-card-body">
+<div class="aside-liens">
+<a class="aside-lien" href="chasselas-de-moissac.html">Chasselas de Moissac<span class="aside-lien-arrow">→</span></a>
+<a class="aside-lien" href="confit-de-canard.html">Confit de canard<span class="aside-lien-arrow">→</span></a>
+<a class="aside-lien" href="foie-gras-du-quercy.html">Foie gras du Quercy<span class="aside-lien-arrow">→</span></a>
+<a class="aside-lien" href="fraises-du-tarn-et-garonne.html">Fraises du Tarn-et-Garonne<span class="aside-lien-arrow">→</span></a>
+<a class="aside-lien" href="ail-blanc-de-lomagne.html">Ail blanc de Lomagne<span class="aside-lien-arrow">→</span></a>
+<a class="aside-lien" href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">Fiche Tarn-et-Garonne<span class="aside-lien-arrow">→</span></a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+  </script>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/tarn-et-garonne/tarn-et-garonne.html">← Retour à la fiche Tarn-et-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
