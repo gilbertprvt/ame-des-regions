@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Au Fil des Villes, flâneries urbaines — L'Âme des Régions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .produit-hero-body { padding: 30px 0 70px; position: relative; z-index: 2; }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(32px, 5.5vw, 60px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: white;
+      margin: 0;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-intro {
+      max-width: 620px; margin: 16px 0 0;
+      font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.85);
+    }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -30px 0 14px; position: relative; z-index: 3;
+      padding: 0 16px;
+    }
+
+    /* Barre de navigation interne : un lien par département */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; flex-direction: column; align-items: center; padding: 4px 0; }
+    .nav-ligne { display: flex; flex-wrap: wrap; justify-content: center; }
+    .nav-ligne + .nav-ligne { border-top: 1px solid rgba(255,255,255,0.08); }
+    .produit-nav a {
+      padding: 11px 16px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .region-titre {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #8B7355; letter-spacing: 0.12em; text-transform: uppercase;
+      margin: 0 0 22px;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 24px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .section-titre .num-dept { font-weight: 400; color: #8B7355; font-size: 18px; }
+
+    /* Cartes des circuits */
+    .circuits-grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .circuit-carte {
+      display: flex; flex-direction: column;
+      background: white; border: 1px solid #E0DACE; border-radius: 14px;
+      overflow: hidden; text-decoration: none; color: inherit;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .circuit-carte:hover, .circuit-carte:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(44,74,124,0.14);
+      border-color: #C8843A;
+      outline: none;
+    }
+    .circuit-entete {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 18px; font-weight: 700;
+    }
+    .circuit-entete em { color: #C8843A; font-style: italic; }
+    /* Couleurs de bandeau en alternance d'un département à l'autre */
+    .couleur-1 .circuit-entete { background: #2C4A7C; }               /* bleu du site */
+    .couleur-2 .circuit-entete { background: #8A4F2A; }               /* terre cuite */
+    .couleur-2 .circuit-entete em { color: #FAC775; }
+    .couleur-3 .circuit-entete { background: #3E6650; }               /* vert olive */
+    .couleur-3 .circuit-entete em { color: #FAC775; }
+    .circuit-corps { padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .circuit-desc { font-size: 14px; line-height: 1.65; margin: 0; flex: 1; }
+    .circuit-infos { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      font-size: 11.5px; font-weight: 600; color: #5A3E1B;
+      background: #F7F3EC; border: 1px solid #E8DEC8;
+      border-radius: 20px; padding: 4px 10px;
+    }
+    .circuit-lien {
+      font-family: var(--font-titre); font-style: italic; color: #2C4A7C; font-size: 14px;
+    }
+
+    /* Bas de page */
+    .retour-haut { text-align: center; padding: 0 0 30px; }
+    .retour-haut a { color: #2C4A7C; font-family: var(--font-titre); font-style: italic; text-decoration: none; }
+    .retour-haut a:hover { text-decoration: underline; }
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: none; background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 560px) {
+      .produit-nav a { padding: 9px 10px; font-size: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; letter-spacing: 0.08em; }
+      .circuits-grille { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Menu des départements sur deux lignes (après fiche.css pour garder la priorité) -->
+  <style>
+    .produit-nav-inner { display: flex; flex-direction: column; align-items: center; padding: 4px 0; overflow: visible; gap: 0; }
+    .nav-ligne { display: flex; flex-wrap: wrap; justify-content: center; }
+    .nav-ligne + .nav-ligne { border-top: 1px solid rgba(255,255,255,0.08); }
+    .produit-nav a { padding: 11px 16px; }
+    @media (max-width: 560px) { .produit-nav a { padding: 9px 10px; font-size: 12px; } }
+    /* Devise « Flâneries Urbaines » sous le texte d'introduction (fiche.css réduit l'espace du bandeau) */
+    .hero-label-bas-circuit { margin-top: 6px; }
+
+ 
+/* Titre + badges */
+    .fiche-hero-ecusson {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+   top: 10px !important; /* ← réglez la position verticale ici (valeur négative possible) */
+    }
+    .fiche-hero-ecusson img {
+      height: 270px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* ── Liens en haut à droite du bandeau ──
+       Mêmes règles que « Identité & repères de la région » sur carte-occitanie.html */
+    .produit-hero .produit-topbar-btns {
+      position: absolute; top: 80px; right: 48px; z-index: 4;   /* ← position des liens */
+      display: flex; flex-direction: column; align-items: flex-start; gap: 18px;   /* ← un lien sous l'autre */
+    }
+       .produit-hero .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px;                          /* ← taille de la pastille */
+      color: white; font-size: 18px; font-weight: 600;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      background: rgba(44,74,124,0.75);           /* ← fond bleu du site, semi-transparent */
+      border: 1px solid rgba(255,255,255,0.5);    /* ← fin contour blanc */
+      border-radius: 20px;                        /* ← coins arrondis */
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      transition: background 0.18s, border-color 0.18s;
+    }
+    .produit-hero .produit-btn-retour:hover {
+      background: #C8843A;                        /* ← ocre au survol */
+      border-color: white;
+    }
+
+    /* ── Photo du bandeau ── */
+    .produit-hero {
+      background-color: #2C4A7C;   /* bleu de secours si l'image ne se charge pas */
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),   /* ← voile sombre pour la lisibilité du texte */
+        url('../../../assets/departement/occitanie/panorama-index2.jpg');
+      background-size: cover;
+      background-position: center;   /* ← cadrage de la photo */
+    }
+
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+
+      <!-- Liens en haut à droite du bandeau (même style que « Identité & repères de la région » sur carte-occitanie.html) -->
+      <div class="produit-topbar-btns">
+        <a href="../essai-circuit/circuits-a-pied.html" class="produit-btn-retour">Tous les circuits à pied</a>
+        <a href="../carte-occitanie.html" class="produit-btn-retour">Carte Occitanie</a>
+      </div>
+
+
+<div class="fiche-hero-ecusson">
+          <img src="../../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+       
+        </div>
+
+      <div class="produit-hero-body">
+        <h1><em>A</em>u <em>F</em>il des <em>R</em>outes</h1>
+        <p class="hero-intro">Des circuits en voiture pour découvrir nos paysages autrement.<br> Classés par département : villages, sites remarquables,<br> points de vue et pauses, carte et parcours route par route à l'appui.</p>
+      </div>
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>E</em>scapades en <em>V</em>oiture <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner" id="nav"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS : rempli automatiquement depuis la liste ci-dessous
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container" id="index"></div>
+  </div>
+
+<div class="retour-haut"><a href="#">↑ Haut de page</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script>
+/* ============================================================
+   LISTE DES CIRCUITS EN VOITURE — seule partie à modifier
+   Pour ajouter un circuit : ajouter une ligne dans le bon département.
+   Pour ajouter un département : copier un bloc { region, departement, … }.
+   « lien » = chemin du fichier du circuit, depuis l'emplacement de cette page.
+   Les départements sont triés automatiquement par numéro (du plus petit au plus grand).
+   Un circuit qui traverse plusieurs départements est rangé dans celui de son départ.
+   Un département sans circuit (circuits:[]) affiche « Circuits en préparation ».
+   ============================================================ */
+const DEPARTEMENTS=[
+ {region:'Occitanie',departement:'Hérault',numero:'34',circuits:[
+  {titre:'Cirque de Navacelles',sousTitre:'et Causses du Larzac',lien:'circuit-navacelles-larzac.html',
+   desc:'Au départ de Ganges : Saint-Maurice-Navacelles, belvédères de la Baume Auriol et de Blandas, descente au fond du cirque et retour par Le Vigan.',
+   infos:['Boucle','≈ 100 km','7 étapes','2 h à 2 h 30 de route']},
+  {titre:'Lac du Salagou',sousTitre:'et Gorges de l’Hérault',lien:'circuit-salagou-gorges-herault.html',
+   desc:'Au départ de Ganges : pont d’Issensac, Saint-Guilhem-le-Désert, pont du Diable, lac du Salagou et cirque de Mourèze.',
+   infos:['Boucle','≈ 130 km','7 étapes','2 h 30 à 3 h de route']},
+  {titre:'Route des villages cathares',sousTitre:'Minerve et Olargues',lien:'circuit-villages-cathares-minerve-olargues.html',
+   desc:'Au départ d’Olargues : Saint-Pons-de-Thomières, la cité cathare de Minerve, le village circulaire d’Aigne et Roquebrun au bord de l’Orb.',
+   infos:['Boucle','≈ 120 km','6 étapes','2 h 30 à 3 h de route']},
+  {titre:'Route des vignobles',sousTitre:'de Saint-Chinian et du canal du Midi',lien:'circuit-saint-chinian-canal-du-midi.html',
+   desc:'Au départ des écluses de Fonseranes : oppidum d’Ensérune, Capestang au bord du canal, abbatiale de Quarante et vignoble de Saint-Chinian.',
+   infos:['Boucle','≈ 90 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Route de la Grande-Motte',sousTitre:'et de la Petite Camargue héraultaise',lien:'circuit-grande-motte-petite-camargue.html',
+   desc:'Au départ de La Grande-Motte : Mauguio, l’étang de l’Or à Candillargues, Lunel et le château de Marsillargues.',
+   infos:['Boucle','≈ 60 km','6 étapes','1 h à 1 h 30 de route']},
+  {titre:'Boucle des plages et lagunes',sousTitre:'de Palavas à Frontignan',lien:'circuit-plages-lagunes-palavas-frontignan.html',
+   desc:'Au départ de Palavas-les-Flots : cathédrale de Maguelone, Vic-la-Gardiole et les Aresquiers, Frontignan, puis Lattes et le site de Lattara.',
+   infos:['Boucle','≈ 70 km','6 étapes','1 h à 1 h 30 de route']},
+  {titre:'Route des vins',sousTitre:'Pic Saint-Loup et Terrasses du Larzac',lien:'circuit-pic-saint-loup-terrasses-du-larzac.html',
+   desc:'Au départ de Saint-Mathieu-de-Tréviers : Saint-Martin-de-Londres, Aniane, Saint-Jean-de-Fos, Montpeyroux et Saint-Saturnin-de-Lucian.',
+   infos:['Boucle','≈ 100 km','7 étapes','1 h 45 à 2 h 15 de route']}
+ ]},
+ {region:'Occitanie',departement:'Tarn',numero:'81',circuits:[
+  {titre:'Route des villages',sousTitre:'de la Montagne Noire',lien:'circuit-montagne-noire.html',
+   desc:'Au départ de Sorèze : abbayes de Dourgne, voûte de Vauban, bassin de Saint-Ferréol, bastide de Revel et Durfort, le village du cuivre.',
+   infos:['Boucle','≈ 60 km','7 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route du pays de Cocagne',sousTitre:'de Lavaur à Castres',lien:'circuit-pays-de-cocagne.html',
+   desc:'Au départ de Lavaur : Lautrec et son ail rose, Castres et les maisons sur l’Agout, Puylaurens et le château de Magrin, musée du pastel.',
+   infos:['Boucle','≈ 115 km','6 étapes','2 h à 2 h 30 de route']},
+  {titre:'Grande route des vins',sousTitre:'de Gaillac',lien:'circuit-vins-de-gaillac.html',
+   desc:'Au départ de Gaillac : archéosite de Montans, bastide de Lisle-sur-Tarn, coteaux de Cahuzac-sur-Vère et tour de Castelnau-de-Lévis.',
+   infos:['Boucle','≈ 75 km','6 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Boucle patrimoniale',sousTitre:'Albi, Cordes et Monestiés',lien:'circuit-albi-cordes-monesties.html',
+   desc:'Au départ d’Albi : Cordes-sur-Ciel, la vallée du Cérou, Monestiés et sa Mise au tombeau, puis le musée-mine de Cagnac.',
+   infos:['Boucle','≈ 70 km','5 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route des bastides',sousTitre:'et Gorges de l’Aveyron',lien:'circuit-bastides-gorges-aveyron.html',
+   desc:'Au départ de Castelnau-de-Montmiral : Puycelsi, les châteaux de Bruniquel et de Penne, puis les gorges de l’Aveyron jusqu’à Saint-Antonin-Noble-Val.',
+   infos:['Boucle','≈ 95 km','6 étapes','1 h 45 à 2 h 15 de route']}
+ ]},
+ {region:'Occitanie',departement:'Ariège',numero:'09',circuits:[
+  {titre:'Vallée de la Lèze',sousTitre:'et coteaux',lien:'circuit-vallee-de-la-leze.html',
+   desc:'Au départ de Pamiers : Pailhès, Artigat et l’affaire Martin Guerre, Le Fossat, Lézat-sur-Lèze et Saverdun.',
+   infos:['Boucle','≈ 75 km','7 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Bastides',sousTitre:'du nord ariégeois',lien:'circuit-bastides-nord-ariegeois.html',
+   desc:'Au départ de Mirepoix : Camon, l’église rupestre de Vals, Pamiers et la bastide de Mazères.',
+   infos:['Boucle','≈ 100 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Couserans',sousTitre:'roman',lien:'circuit-couserans-roman.html',
+   desc:'Au départ de Saint-Girons : Audressein, la chapelle de Castillon, la chapelle d’Ourjout et l’église fortifiée de Sentein.',
+   infos:['Boucle','≈ 75 km','7 étapes','1 h 30 à 2 h de route']},
+  {titre:'Cols du Couserans',sousTitre:'Seix, Aulus et Port de Lers',lien:'circuit-cols-du-couserans.html',
+   desc:'Au départ de Saint-Girons : Seix, Aulus-les-Bains, le col d’Agnès, l’étang de Lers et Massat.',
+   infos:['Boucle','≈ 95 km','7 étapes','2 h 15 à 2 h 45 de route']},
+  {titre:'Route cathare',sousTitre:'Foix, Roquefixade et Montségur',lien:'circuit-route-cathare-ariege.html',
+   desc:'Au départ de Foix : les ruines de Roquefixade, le château de Montségur et la fontaine de Fontestorbes.',
+   infos:['Boucle','≈ 90 km','5 étapes','1 h 30 à 2 h de route']},
+  {titre:'Couserans',sousTitre:'Saint-Girons, Saint-Lizier et Bethmale',lien:'circuit-couserans-bethmale.html',
+   desc:'Au départ de Saint-Girons : la cité de Saint-Lizier, la vallée et le lac de Bethmale, le col de la Core et Seix.',
+   infos:['Boucle','≈ 65 km','7 étapes','1 h 30 à 2 h de route']}
+ ]},
+ {region:'Occitanie',departement:'Aude',numero:'11',circuits:[
+  {titre:'Abbayes de l’Aude',sousTitre:'Lagrasse, Fontfroide et Caunes',lien:'circuit-abbayes-de-l-aude.html',
+   desc:'Au départ de Carcassonne : abbaye de Caunes-Minervois, église ronde de Rieux-Minervois, abbaye de Fontfroide et Lagrasse.',
+   infos:['Boucle','≈ 150 km','6 étapes','2 h 30 à 3 h de route']},
+  {titre:'Haute vallée de l’Aude',sousTitre:'Limoux, Alet et Rennes-le-Château',lien:'circuit-haute-vallee-de-l-aude.html',
+   desc:'Au départ de Limoux : Alet-les-Bains, Rennes-le-Château et l’abbé Saunière, le donjon d’Arques et l’abbaye de Saint-Hilaire.',
+   infos:['Boucle','≈ 95 km','6 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Corbières maritimes',sousTitre:'Leucate, Fitou, La Palme et Gruissan',lien:'circuit-corbieres-maritimes.html',
+   desc:'Au départ de Gruissan : La Palme et ses salins, cap Leucate, le village vigneron de Fitou et les étangs de Peyriac-de-Mer.',
+   infos:['Boucle','≈ 100 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Pays de Sault',sousTitre:'panoramique',lien:'circuit-pays-de-sault.html',
+   desc:'Au départ de Quillan : défilé de Pierre-Lys, gorges de Saint-Georges, plateau de Sault et lac de Belcaire, château de Puivert.',
+   infos:['Boucle','≈ 110 km','6 étapes','2 h 15 à 2 h 45 de route']},
+  {titre:'Montagne Noire',sousTitre:'villages et châteaux du Cabardès',lien:'circuit-montagne-noire-cabardes.html',
+   desc:'Au départ de Montolieu : château de Saissac, pic de Nore, Mas-Cabardès et les quatre châteaux de Lastours.',
+   infos:['Boucle','≈ 100 km','6 étapes','2 h à 2 h 30 de route']},
+  {titre:'Canal du Midi',sousTitre:'de Trèbes à Naurouze, par Carcassonne et Castelnaudary',lien:'circuit-canal-du-midi-aude.html',
+   desc:'Au départ de Trèbes, d’est en ouest : port de Carcassonne, circulade de Bram, Grand Bassin de Castelnaudary et seuil de Naurouze.',
+   infos:['Boucle','≈ 125 km','6 étapes','1 h 45 à 2 h 15 de route']}
+ ]},
+ {region:'Occitanie',departement:'Aveyron',numero:'12',circuits:[
+  {titre:'Route du Roquefort et du viaduc',sousTitre:'Larzac, Couvertoirade et commanderies templières',lien:'circuit-roquefort-viaduc-larzac.html',
+   desc:'Au départ de Millau : Peyre et le viaduc, les caves de Roquefort, Sainte-Eulalie-de-Cernon, La Couvertoirade et La Cavalerie.',
+   infos:['Boucle','≈ 125 km','7 étapes','2 h à 2 h 30 de route']},
+  {titre:'Gorges du Tarn et de la Jonte',sousTitre:'la route des vautours',lien:'circuit-gorges-tarn-jonte.html',
+   desc:'Au départ de Millau : Peyreleau, le belvédère des vautours, Meyrueis, Sainte-Enimie, La Malène et le Pas de Souci.',
+   infos:['Boucle','≈ 135 km','8 étapes','2 h 30 à 3 h de route']}
+ ]},
+ {region:'Occitanie',departement:'Gard',numero:'30',circuits:[
+  {titre:'Route romaine',sousTitre:'de Nîmes au Pont du Gard',lien:'circuit-nimes-pont-du-gard.html',
+   desc:'Au départ de Nîmes : le Pont du Gard, les vestiges de l’aqueduc à Vers et Uzès, près de la source de l’Eure.',
+   infos:['Boucle','≈ 70 km','5 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Boucle de la Petite Camargue',sousTitre:'gardoise',lien:'circuit-petite-camargue-gardoise.html',
+   desc:'Au départ de Saint-Gilles : les marais du Scamandre, Le Cailar, Saint-Laurent-d’Aigouze et la tour Carbonnière.',
+   infos:['Boucle','≈ 80 km','6 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route du mont Aigoual',sousTitre:'et des grands panoramas',lien:'circuit-mont-aigoual.html',
+   desc:'Au départ du Vigan : le col du Minier, le sommet du mont Aigoual, l’abîme de Bramabiau et Valleraugue.',
+   infos:['Boucle','≈ 95 km','6 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route du Rhône gardois',sousTitre:'de Beaucaire à Pont-Saint-Esprit',lien:'circuit-rhone-gardois.html',
+   desc:'Au départ de Beaucaire : abbaye de Saint-Roman, fort Saint-André à Villeneuve-lès-Avignon, Roquemaure et Pont-Saint-Esprit.',
+   infos:['Boucle','≈ 135 km','6 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route des salins',sousTitre:'et du littoral',lien:'circuit-salins-et-littoral.html',
+   desc:'Au départ du Grau-du-Roi : phare et plage de l’Espiguette, salins d’Aigues-Mortes et remparts de la cité de Saint Louis.',
+   infos:['Boucle','≈ 35 km','5 étapes','45 min à 1 h de route']},
+  {titre:'Route des abbayes',sousTitre:'et chartreuses gardoises',lien:'circuit-abbayes-chartreuses-gardoises.html',
+   desc:'Au départ de Villeneuve-lès-Avignon : la chartreuse du Val-de-Bénédiction, la chartreuse de Valbonne et la cité épiscopale d’Uzès.',
+   infos:['Boucle','≈ 130 km','4 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route du patrimoine protestant',sousTitre:'cévenol',lien:'circuit-patrimoine-protestant-cevenol.html',
+   desc:'Au départ d’Anduze : le musée du Désert, la Maison rouge de Saint-Jean-du-Gard, Lasalle et le musée de la soie de Saint-Hippolyte-du-Fort.',
+   infos:['Boucle','≈ 80 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Grande traversée du Gard',sousTitre:'de Camargue aux Cévennes',lien:'circuit-grande-traversee-du-gard.html',
+   desc:'Au départ d’Aigues-Mortes : Sommières, Sauve et la Mer des rochers, Anduze et le village perché de Vézénobres.',
+   infos:['Boucle','≈ 180 km','6 étapes','2 h 30 à 3 h de route']}
+ ]},
+ {region:'Occitanie',departement:'Haute-Garonne',numero:'31',circuits:[
+  {titre:'Route du Comminges',sousTitre:'antique',lien:'circuit-comminges-antique.html',
+   desc:'Au départ de Saint-Gaudens : Saint-Bertrand-de-Comminges et Lugdunum Convenarum, la basilique de Valcabrère et la villa gallo-romaine de Montmaurin.',
+   infos:['Boucle','≈ 85 km','5 étapes','1 h 30 à 2 h de route']},
+  {titre:'Route du Lauragais',sousTitre:'de Toulouse à Revel, par le canal du Midi',lien:'circuit-lauragais-canal-du-midi.html',
+   desc:'Au départ de Toulouse : le canal du Midi, Villefranche-de-Lauragais, Avignonet, le seuil de Naurouze, Revel et Saint-Félix-Lauragais.',
+   infos:['Boucle','≈ 135 km','7 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route du Volvestre',sousTitre:'et de la vallée de la Garonne',lien:'circuit-volvestre-garonne.html',
+   desc:'Au départ de Muret : Carbonne, la cité épiscopale de Rieux-Volvestre, Montesquieu-Volvestre, Cazères et Martres-Tolosane.',
+   infos:['Boucle','≈ 110 km','7 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Route des vallées pyrénéennes',sousTitre:'de Saint-Béat à Luchon',lien:'circuit-vallees-pyreneennes-luchon.html',
+   desc:'Au départ de Saint-Béat : Luchon, la vallée du Lys et ses cascades, l’église de Saint-Aventin et les granges d’Astau, au pied du lac d’Oô.',
+   infos:['Boucle','≈ 95 km','6 étapes','2 h à 2 h 30 de route']}
+ ]},
+ {region:'Occitanie',departement:'Gers',numero:'32',circuits:[
+  {titre:'Route des bastides',sousTitre:'de Fourcès à Lectoure',lien:'circuit-bastides-fources-lectoure.html',
+   desc:'Au départ de Lectoure : la collégiale de La Romieu, Larressingle, la bastide ronde de Fourcès et Montréal-du-Gers avec la villa de Séviac.',
+   infos:['Boucle','≈ 100 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Route des châteaux gascons',sousTitre:'d’Auch à Bassoues',lien:'circuit-chateaux-gascons.html',
+   desc:'Au départ d’Auch : le château de Lavardens, Lupiac et d’Artagnan, le donjon de Bassoues, Montesquiou et le clocher tordu de Barran.',
+   infos:['Boucle','≈ 105 km','7 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Route de l’Armagnac',sousTitre:'de Condom à Flaran',lien:'circuit-route-armagnac.html',
+   desc:'Au départ de Condom : l’abbaye de Flaran, le château de Cassaigne et Eauze, capitale de l’Armagnac.',
+   infos:['Boucle','≈ 85 km','5 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route du jazz et de l’Astarac',sousTitre:'de Marciac à Mirande, par Simorre et Bassoues',lien:'circuit-astarac-marciac-mirande.html',
+   desc:'Au départ de Mirande : l’église fortifiée de Simorre, le donjon de Bassoues et Marciac, la bastide du jazz.',
+   infos:['Boucle','≈ 105 km','5 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Route des halles',sousTitre:'et marchés du Gers',lien:'circuit-halles-marches-gers.html',
+   desc:'Au départ de Fleurance : Saint-Clar et son ail blanc, la grande halle de Mauvezin, Cologne et Gimont.',
+   infos:['Boucle','≈ 115 km','6 étapes','1 h 45 à 2 h 15 de route']}
+ ]},
+ {region:'Occitanie',departement:'Lot',numero:'46',circuits:[
+  {titre:'Vallée de la Dordogne',sousTitre:'quercynoise',lien:'circuit-vallee-dordogne-quercynoise.html',
+   desc:'Au départ de Souillac : château de Belcastel, Creysse, Gluges, prieuré de Carennac et Martel, la ville aux sept tours.',
+   infos:['Boucle','≈ 80 km','7 étapes','1 h 30 à 2 h de route']},
+  {titre:'Route des châteaux',sousTitre:'du Haut-Quercy',lien:'circuit-chateaux-haut-quercy.html',
+   desc:'Au départ de Saint-Céré : château de Montal, forteresse de Castelnau-Bretenoux, château d’Assier et château de Lacapelle-Marival.',
+   infos:['Boucle','≈ 85 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Gourdon',sousTitre:'et la Bouriane',lien:'circuit-gourdon-bouriane.html',
+   desc:'Au départ de Gourdon : grottes de Cougnac, Salviac, Cazals, musée Zadkine aux Arques et collégiale du Vigan.',
+   infos:['Boucle','≈ 65 km','7 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Du causse de Limogne',sousTitre:'aux gorges du Lot',lien:'circuit-causse-limogne-gorges-du-lot.html',
+   desc:'Au départ de Cahors : Lalbenque et ses truffes, le causse de Limogne, Cajarc, Saint-Cirq-Lapopie et le chemin de halage de Bouziès.',
+   infos:['Boucle','≈ 110 km','7 étapes','2 h à 2 h 30 de route']},
+  {titre:'Boucle des Plus Beaux Villages',sousTitre:'du Haut-Quercy',lien:'circuit-plus-beaux-villages-haut-quercy.html',
+   desc:'Au départ de Rocamadour : gouffre de Padirac, Loubressac, Autoire et sa cascade, puis Carennac au bord de la Dordogne.',
+   infos:['Boucle','≈ 75 km','6 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route des villages',sousTitre:'du Quercy blanc',lien:'circuit-quercy-blanc.html',
+   desc:'Au départ de Montcuq : la bastide de Lauzerte, la collégiale de Montpezat-de-Quercy et Castelnau-Montratier avec son moulin.',
+   infos:['Boucle','≈ 80 km','5 étapes','1 h 30 à 2 h de route']}
+ ]},
+ {region:'Occitanie',departement:'Lozère',numero:'48',circuits:[
+  {titre:'Route des gorges du Tarn',sousTitre:'d’Ispagnac au Rozier',lien:'circuit-gorges-du-tarn-ispagnac-rozier.html',
+   desc:'Au départ d’Ispagnac : Castelbouc, Sainte-Enimie, Saint-Chély-du-Tarn, La Malène, Le Rozier et le belvédère du Point Sublime.',
+   infos:['Boucle','≈ 125 km','8 étapes','2 h 30 à 3 h de route']},
+  {titre:'Route du causse Méjean',sousTitre:'et de l’Aven Armand',lien:'circuit-causse-mejean-aven-armand.html',
+   desc:'Au départ de Florac : la ferme caussenarde d’Hyelzas, l’Aven Armand, Meyrueis et le chaos de Nîmes-le-Vieux.',
+   infos:['Boucle','≈ 85 km','6 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Route du lac de Villefort',sousTitre:'et des hautes Cévennes',lien:'circuit-villefort-hautes-cevennes.html',
+   desc:'Au départ de Villefort : le château de Castanet, le col de Finiels, Le Pont-de-Montvert et le village de Vialas.',
+   infos:['Boucle','≈ 110 km','6 étapes','2 h 30 à 3 h de route']},
+  {titre:'Route de Langogne',sousTitre:'et du lac de Naussac',lien:'circuit-langogne-naussac.html',
+   desc:'Au départ de Langogne : le lac de Naussac, Châteauneuf-de-Randon et les ruines du château de Luc.',
+   infos:['Boucle','≈ 65 km','5 étapes','1 h à 1 h 30 de route']},
+  {titre:'Route du Gévaudan historique',sousTitre:'de Mende à Saint-Chély',lien:'circuit-gevaudan-historique.html',
+   desc:'Au départ de Mende : Marvejols, le parc des loups du Gévaudan, Saint-Chély-d’Apcher et Saint-Alban-sur-Limagnole.',
+   infos:['Boucle','≈ 120 km','6 étapes','2 h à 2 h 30 de route']}
+ ]},
+ {region:'Occitanie',departement:'Hautes-Pyrénées',numero:'65',circuits:[
+  {titre:'Grands sites',sousTitre:'Lourdes, Gavarnie et Cauterets',lien:'circuit-lourdes-gavarnie-cauterets.html',
+   desc:'Au départ de Lourdes : Luz-Saint-Sauveur, le cirque de Gavarnie et sa grande cascade, puis la ville thermale de Cauterets.',
+   infos:['Boucle','≈ 130 km','5 étapes','2 h 30 à 3 h de route']},
+  {titre:'Lourdes, Saint-Savin',sousTitre:'et Argelès-Gazost',lien:'circuit-lourdes-saint-savin-argeles.html',
+   desc:'Au départ de Lourdes : Argelès-Gazost et son parc animalier, l’abbatiale de Saint-Savin, le donjon des aigles de Beaucens et le lac de Lourdes.',
+   infos:['Boucle','≈ 55 km','6 étapes','1 h à 1 h 30 de route']},
+  {titre:'Cirques pyrénéens',sousTitre:'Gavarnie, Troumouse et Estaubé',lien:'circuit-cirques-pyreneens.html',
+   desc:'Au départ de Luz-Saint-Sauveur : le cirque de Troumouse, le lac des Gloriettes au pied d’Estaubé et le cirque de Gavarnie.',
+   infos:['En étoile','≈ 90 km','5 étapes','2 h à 2 h 30 de route']},
+  {titre:'Val d’Azun',sousTitre:'panoramique',lien:'circuit-val-d-azun.html',
+   desc:'Au départ d’Argelès-Gazost : Arras-en-Lavedan, Aucun, la chapelle dorée de Pouey-Laün, le col du Soulor et le col d’Aubisque.',
+   infos:['Boucle','≈ 70 km','7 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Route thermale',sousTitre:'pyrénéenne',lien:'circuit-route-thermale-pyreneenne.html',
+   desc:'Au départ de Bagnères-de-Bigorre : le col du Tourmalet, Barèges, Luz-Saint-Sauveur et Argelès-Gazost.',
+   infos:['Boucle','≈ 105 km','6 étapes','2 h 15 à 2 h 45 de route']},
+  {titre:'Plateau de Lannemezan',sousTitre:'et Baronnies',lien:'circuit-lannemezan-baronnies.html',
+   desc:'Au départ de Lannemezan : le gouffre d’Esparros, l’abbaye de l’Escaladieu, le château de Mauvezin et Capvern-les-Bains.',
+   infos:['Boucle','≈ 55 km','6 étapes','1 h à 1 h 30 de route']}
+ ]},
+ {region:'Occitanie',departement:'Pyrénées-Orientales',numero:'66',circuits:[
+  {titre:'Route du Conflent',sousTitre:'et du Train Jaune',lien:'circuit-conflent-train-jaune.html',
+   desc:'Au départ de Prades : abbaye de Cuxa, Vernet-les-Bains, Villefranche-de-Conflent, pont Séjourné, Mont-Louis et le village d’Eus.',
+   infos:['Boucle','≈ 95 km','8 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route de Cerdagne',sousTitre:'le haut plateau ensoleillé',lien:'circuit-cerdagne.html',
+   desc:'Au départ de Font-Romeu : four solaire d’Odeillo, bains de Dorres, l’enclave espagnole de Llívia, Llo et la citadelle de Mont-Louis.',
+   infos:['Boucle','≈ 60 km','7 étapes','1 h 15 à 1 h 45 de route']},
+  {titre:'Route du Vallespir',sousTitre:'d’Amélie-les-Bains à Prats-de-Mollo',lien:'circuit-vallespir.html',
+   desc:'Au départ de Céret : Amélie-les-Bains, Arles-sur-Tech et son abbaye, Prats-de-Mollo et Saint-Laurent-de-Cerdans.',
+   infos:['Boucle','≈ 95 km','6 étapes','2 h à 2 h 30 de route']},
+  {titre:'Route du prieuré de Serrabone',sousTitre:'et des Aspres',lien:'circuit-serrabone-aspres.html',
+   desc:'Au départ de Thuir et des caves Byrrh : Castelnou, le prieuré roman de Serrabone et les orgues d’Ille-sur-Têt.',
+   infos:['Boucle','≈ 70 km','5 étapes','1 h 30 à 2 h de route']},
+  {titre:'Route des Albères',sousTitre:'de Collioure au Perthus',lien:'circuit-alberes.html',
+   desc:'Au départ de Collioure : Saint-Génis-des-Fontaines, Laroque-des-Albères, la chapelle de Fenollar et le fort de Bellegarde au Perthus.',
+   infos:['Boucle','≈ 85 km','6 étapes','1 h 30 à 2 h de route']}
+ ]},
+ {region:'Occitanie',departement:'Tarn-et-Garonne',numero:'82',circuits:[
+  {titre:'Gorges de l’Aveyron',sousTitre:'Bruniquel, Saint-Antonin et Caylus',lien:'circuit-gorges-aveyron-caylus.html',
+   desc:'Au départ de Bruniquel : les gorges de l’Aveyron, Saint-Antonin-Noble-Val, la bastide de Caylus, Lacapelle-Livron et Montricoux.',
+   infos:['Boucle','≈ 85 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Canal et Garonne',sousTitre:'Montech, Castelsarrasin, Moissac et Quercy blanc',lien:'circuit-canal-garonne-quercy-blanc.html',
+   desc:'Au départ de Montech : la pente d’eau, Castelsarrasin, l’abbaye de Moissac, puis Lauzerte, Molières et le belvédère de Lafrançaise.',
+   infos:['Boucle','≈ 105 km','7 étapes','1 h 45 à 2 h 15 de route']},
+  {titre:'Lomagne',sousTitre:'tarn-et-garonnaise',lien:'circuit-lomagne-tarn-et-garonnaise.html',
+   desc:'Au départ de Beaumont-de-Lomagne : Saint-Nicolas-de-la-Grave, l’église baroque de Lachapelle, le château de Gramont et Lavit.',
+   infos:['Boucle','≈ 95 km','6 étapes','1 h 30 à 2 h de route']},
+  {titre:'Villages',sousTitre:'de la vallée de la Garonne',lien:'circuit-villages-vallee-garonne.html',
+   desc:'Au départ d’Auvillar : la bastide de Dunes, Donzac, Valence-d’Agen et ses lavoirs, puis le belvédère de Boudou.',
+   infos:['Boucle','≈ 60 km','6 étapes','1 h à 1 h 30 de route']}
+ ]}
+];
+/* ============================================================ */
+
+const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// Met l'initiale de chaque mot en ocre, comme dans les titres du site
+const initiales=t=>esc(t).replace(/(^|[\s’'-])([A-Za-zÀ-ÿ])/g,'$1<em>$2</em>');
+
+// Navigation : nombre de départements par ligne (ici 8 sur la 1re ligne, le reste sur la 2e)
+const NAV_LIGNES=[8];
+// Nombre de couleurs de bandeau utilisées en alternance (voir .couleur-1, -2, -3 dans le style)
+const NB_COULEURS=3;
+const deps=[...DEPARTEMENTS].sort((a,b)=>a.numero.localeCompare(b.numero,'fr',{numeric:true})||a.departement.localeCompare(b.departement,'fr'));
+const nav=document.getElementById('nav'),index=document.getElementById('index');
+const lignes=[];let reste=deps.length;
+NAV_LIGNES.forEach(n=>{if(reste>0){const l=document.createElement('div');l.className='nav-ligne';nav.appendChild(l);lignes.push([l,Math.min(n,reste)]);reste-=n}});
+if(reste>0){const l=document.createElement('div');l.className='nav-ligne';nav.appendChild(l);lignes.push([l,reste])}
+const ligneDe=i=>{let k=i;for(const [l,n] of lignes){if(k<n)return l;k-=n}return lignes[lignes.length-1][0]};
+deps.forEach((d,i)=>{
+ const id='dep-'+slug(d.departement);
+ ligneDe(i).insertAdjacentHTML('beforeend',`<a href="#${id}"${i===0?' class="active"':''}>📍 ${esc(d.numero)} · ${esc(d.departement)}</a>`);
+ const cartes=d.circuits.map(c=>`
+  <a class="circuit-carte" href="${esc(c.lien)}">
+   <div class="circuit-entete">${initiales(c.titre)}${c.sousTitre?`, <span style="font-weight:400">${esc(c.sousTitre)}</span>`:''}</div>
+   <div class="circuit-corps">
+    <p class="circuit-desc">${esc(c.desc||'')}</p>
+    <div class="circuit-infos">${(c.infos||[]).map(x=>`<span class="badge">${esc(x)}</span>`).join('')}</div>
+    <span class="circuit-lien">Voir le circuit →</span>
+   </div>
+  </a>`).join('');
+ index.insertAdjacentHTML('beforeend',`
+  <section class="section couleur-${i%NB_COULEURS+1}" id="${id}">
+   <h2 class="section-titre"><div class="section-titre-icon">🚗</div>${esc(d.departement)} <span class="num-dept">(${esc(d.numero)}) · ${esc(d.region)}</span></h2>
+   ${cartes?`<div class="circuits-grille">${cartes}</div>`:'<p class="circuits-vide">🚧 Circuits en préparation.</p>'}
+  </section>`);
+});
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.3});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ const haut=()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+ btn.addEventListener('click',haut);
+ document.querySelector('.retour-haut a').addEventListener('click',e=>{e.preventDefault();haut()})})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Au Fil des Villes, flâneries urbaines — L'Âme des Régions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .produit-hero-body { padding: 30px 0 70px; position: relative; z-index: 2; }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(32px, 5.5vw, 60px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: white;
+      margin: 0;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-intro {
+      max-width: 620px; margin: 16px 0 0;
+      font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.85);
+    }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -30px 0 14px; position: relative; z-index: 3;
+      padding: 0 16px;
+    }
+
+    /* Barre de navigation interne : un lien par département */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; flex-direction: column; align-items: center; padding: 4px 0; }
+    .nav-ligne { display: flex; flex-wrap: wrap; justify-content: center; }
+    .nav-ligne + .nav-ligne { border-top: 1px solid rgba(255,255,255,0.08); }
+    .produit-nav a {
+      padding: 11px 16px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .region-titre {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #8B7355; letter-spacing: 0.12em; text-transform: uppercase;
+      margin: 0 0 22px;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 24px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .section-titre .num-dept { font-weight: 400; color: #8B7355; font-size: 18px; }
+
+    /* Cartes des circuits */
+    .circuits-grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .circuit-carte {
+      display: flex; flex-direction: column;
+      background: white; border: 1px solid #E0DACE; border-radius: 14px;
+      overflow: hidden; text-decoration: none; color: inherit;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .circuit-carte:hover, .circuit-carte:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(44,74,124,0.14);
+      border-color: #C8843A;
+      outline: none;
+    }
+    .circuit-entete {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 18px; font-weight: 700;
+    }
+    .circuit-entete em { color: #C8843A; font-style: italic; }
+    /* Couleurs de bandeau en alternance d'un département à l'autre */
+    .couleur-1 .circuit-entete { background: #2C4A7C; }               /* bleu du site */
+    .couleur-2 .circuit-entete { background: #8A4F2A; }               /* terre cuite */
+    .couleur-2 .circuit-entete em { color: #FAC775; }
+    .couleur-3 .circuit-entete { background: #3E6650; }               /* vert olive */
+    .couleur-3 .circuit-entete em { color: #FAC775; }
+    .circuit-corps { padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .circuit-desc { font-size: 14px; line-height: 1.65; margin: 0; flex: 1; }
+    .circuit-infos { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      font-size: 11.5px; font-weight: 600; color: #5A3E1B;
+      background: #F7F3EC; border: 1px solid #E8DEC8;
+      border-radius: 20px; padding: 4px 10px;
+    }
+    .circuit-lien {
+      font-family: var(--font-titre); font-style: italic; color: #2C4A7C; font-size: 14px;
+    }
+
+    /* Bas de page */
+    .retour-haut { text-align: center; padding: 0 0 30px; }
+    .retour-haut a { color: #2C4A7C; font-family: var(--font-titre); font-style: italic; text-decoration: none; }
+    .retour-haut a:hover { text-decoration: underline; }
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: none; background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 560px) {
+      .produit-nav a { padding: 9px 10px; font-size: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; letter-spacing: 0.08em; }
+      .circuits-grille { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Menu des départements sur deux lignes (après fiche.css pour garder la priorité) -->
+  <style>
+    .produit-nav-inner { display: flex; flex-direction: column; align-items: center; padding: 4px 0; overflow: visible; gap: 0; }
+    .nav-ligne { display: flex; flex-wrap: wrap; justify-content: center; }
+    .nav-ligne + .nav-ligne { border-top: 1px solid rgba(255,255,255,0.08); }
+    .produit-nav a { padding: 11px 16px; }
+    @media (max-width: 560px) { .produit-nav a { padding: 9px 10px; font-size: 12px; } }
+    /* Devise « Flâneries Urbaines » sous le texte d'introduction (fiche.css réduit l'espace du bandeau) */
+    .hero-label-bas-circuit { margin-top: 6px; }
+
+ 
+/* Titre + badges */
+    .fiche-hero-ecusson {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+   top: 10px !important; /* ← réglez la position verticale ici (valeur négative possible) */
+    }
+    .fiche-hero-ecusson img {
+      height: 270px; /* ← réglez la hauteur de l'écusson ici */
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* ── Liens en haut à droite du bandeau ──
+       Mêmes règles que « Identité & repères de la région » sur carte-occitanie.html */
+    .produit-hero .produit-topbar-btns {
+      position: absolute; top: 80px; right: 48px; z-index: 4;   /* ← position des liens */
+      display: flex; flex-direction: column; align-items: flex-start; gap: 18px;   /* ← un lien sous l'autre */
+    }
+       .produit-hero .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px;                          /* ← taille de la pastille */
+      color: white; font-size: 18px; font-weight: 600;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      background: rgba(44,74,124,0.75);           /* ← fond bleu du site, semi-transparent */
+      border: 1px solid rgba(255,255,255,0.5);    /* ← fin contour blanc */
+      border-radius: 20px;                        /* ← coins arrondis */
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      transition: background 0.18s, border-color 0.18s;
+    }
+    .produit-hero .produit-btn-retour:hover {
+      background: #C8843A;                        /* ← ocre au survol */
+      border-color: white;
+    }
+
+    /* ── Photo du bandeau ── */
+    .produit-hero {
+      background-color: #2C4A7C;   /* bleu de secours si l'image ne se charge pas */
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),   /* ← voile sombre pour la lisibilité du texte */
+        url('../../../assets/departement/occitanie/panorama-index.jpg');
+      background-size: cover;
+      background-position: center;   /* ← cadrage de la photo */
+    }
+
+
+
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+
+      <!-- Liens en haut à droite du bandeau (même style que « Identité & repères de la région » sur carte-occitanie.html) -->
+      <div class="produit-topbar-btns">
+        <a href="../essai-circuit2/circuits-en-voiture.html" class="produit-btn-retour">Tous les circuits voiture</a>
+        <a href="../carte-occitanie.html" class="produit-btn-retour">Carte Occitanie</a>
+      </div>
+
+
+<div class="fiche-hero-ecusson">
+          <img src="../../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+       
+        </div>
+
+ 
+
+
+
+      <div class="produit-hero-body">
+        <h1><em>A</em>u <em>F</em>il des <em>V</em>illes</h1>
+        <p class="hero-intro">Des circuits à pied pour découvrir nos villes autrement : <br>monuments, jardins, berges et ruelles,<br> carte et parcours rue par rue à l'appui.</p>
+      </div>
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>F</em>lâneries <em>U</em>rbaines <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner" id="nav"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS : rempli automatiquement depuis la liste ci-dessous
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container" id="index"></div>
+  </div>
+
+<div class="retour-haut"><a href="#">↑ Haut de page</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script>
+/* ============================================================
+   LISTE DES CIRCUITS — seule partie à modifier
+   Pour ajouter un circuit : ajouter une ligne dans le bon département.
+   Pour ajouter un département : copier un bloc { region, departement, … }.
+   « lien » = chemin du fichier du circuit, depuis l'emplacement de cette page.
+   Les départements sont triés automatiquement par numéro (du plus petit au plus grand).
+   ============================================================ */
+const DEPARTEMENTS=[
+ {region:'Occitanie',departement:'Ariège',numero:'09',circuits:[
+  {titre:'Foix',sousTitre:'Au pied du château',lien:'circuit-foix.html',
+   desc:'Abbatiale Saint-Volusien, halle aux grains, fontaine de l’Oie et château des comtes de Foix.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Ax-les-Thermes',sousTitre:'La cité des eaux chaudes',lien:'circuit-ax-les-thermes.html',
+   desc:'Bassin des Ladres, église Saint-Vincent, bains du Couloubret et thermes du Teich.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Mirepoix',sousTitre:'La bastide aux couverts',lien:'circuit-mirepoix.html',
+   desc:'Place des Couverts, maison des Consuls, cathédrale Saint-Maurice et porte d’Aval.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Saint-Lizier',sousTitre:'La cité des évêques',lien:'circuit-saint-lizier.html',
+   desc:'Cathédrale et cloître roman, pharmacie du XVIIIe siècle, remparts gallo-romains et palais des évêques.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Carla-Bayle',sousTitre:'Le village d’artistes',lien:'circuit-carla-bayle.html',
+   desc:'Galeries d’artistes, maison natale de Pierre Bayle, église et promenade des remparts.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Aude',numero:'11',circuits:[
+  {titre:'Carcassonne',sousTitre:'La Cité médiévale',lien:'circuit-carcassonne.html',
+   desc:'Une boucle au fil des remparts : portes fortifiées, château comtal, lices et basilique Saint-Nazaire.',
+   infos:['Boucle','≈ 2,5 à 3 km','2 h à 2 h 30']},
+  {titre:'Narbonne',sousTitre:'Au fil de la Robine',lien:'circuit-narbonne.html',
+   desc:'De la cathédrale Saint-Just à la Via Domitia, l’Horreum romain, le pont des Marchands, la basilique Saint-Paul et les Halles.',
+   infos:['Boucle','7 étapes','2 h à 2 h 30']},
+  {titre:'Castelnaudary',sousTitre:'Au fil du canal du Midi',lien:'circuit-castelnaudary.html',
+   desc:'Grand Bassin, collégiale Saint-Michel, moulin de Cugarel et écluse quadruple Saint-Roch.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Caunes-Minervois',sousTitre:'Le village de marbre',lien:'circuit-caunes-minervois.html',
+   desc:'Abbaye bénédictine, hôtels Renaissance d’Alibert et Sicard, rives de l’Argent-Double.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Aveyron',numero:'12',circuits:[
+  {titre:'Rodez',sousTitre:'La cité de grès rose',lien:'circuit-rodez.html',
+   desc:'Cathédrale Notre-Dame, musée Fenaille, église Saint-Amans, place du Bourg et musée Soulages.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Conques',sousTitre:'Sur le chemin de Saint-Jacques',lien:'circuit-conques.html',
+   desc:'Abbatiale Sainte-Foy, cloître et trésor, pont roman sur le Dourdou et belvédère sur le village.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Najac',sousTitre:'La bastide du ciel',lien:'circuit-najac.html',
+   desc:'Place du Faubourg, fontaine des Consuls, forteresse royale et église Saint-Jean.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Millau',sousTitre:'Au bord du Tarn',lien:'circuit-millau.html',
+   desc:'Place Foch et musée, beffroi, lavoir de l’Ayrolle, vieux moulin et église de l’Espinasse.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Estaing',sousTitre:'Au bord du Lot',lien:'circuit-estaing.html',
+   desc:'Pont gothique, château des comtes d’Estaing et église Saint-Fleuret.',
+   infos:['Boucle','4 étapes','45 min à 1 h 30']},
+  {titre:'Belcastel',sousTitre:'Au creux de l’Aveyron',lien:'circuit-belcastel.html',
+   desc:'Pont du XVe siècle, église Sainte-Madeleine, ruelles du village et château.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Espalion',sousTitre:'La perle du Lot',lien:'circuit-espalion.html',
+   desc:'Pont-Vieux, Vieux Palais, musée du Scaphandre et église romane de Perse.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Villefranche-de-Rouergue',sousTitre:'La bastide du Rouergue',lien:'circuit-villefranche-de-rouergue.html',
+   desc:'Place Notre-Dame et collégiale, chapelle des Pénitents noirs, pont des Consuls et chartreuse Saint-Sauveur.',
+   infos:['Boucle','5 étapes','2 h à 2 h 30']},
+  {titre:'Laguiole',sousTitre:'Au cœur de l’Aubrac',lien:'circuit-laguiole.html',
+   desc:'Taureau du Foirail, église Saint-Mathieu, forge de Laguiole et point de vue sur le bourg.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Bozouls',sousTitre:'Au bord du Trou',lien:'circuit-bozouls.html',
+   desc:'Belvédère sur le canyon, Terra Memoria et église romane Sainte-Fauste.',
+   infos:['Boucle','4 étapes','1 h à 1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Lot',numero:'46',circuits:[
+  {titre:'Cahors',sousTitre:'Au fil du Lot',lien:'circuit-cahors.html',
+   desc:'Cathédrale Saint-Étienne, tour du pape Jean XXII, pont Valentré et boulevard Gambetta.',
+   infos:['Boucle','5 étapes','2 h à 2 h 30']},
+  {titre:'Rocamadour',sousTitre:'La cité suspendue',lien:'circuit-rocamadour.html',
+   desc:'Rue de la Couronnerie, grand escalier, sanctuaires et Vierge noire, château et remparts.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Saint-Cirq-Lapopie',sousTitre:'Au-dessus du Lot',lien:'circuit-saint-cirq-lapopie.html',
+   desc:'Église fortifiée, maison André Breton, ruelles et rocher de la Popie.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Figeac',sousTitre:'La ville de Champollion',lien:'circuit-figeac.html',
+   desc:'Hôtel de la Monnaie, place Carnot, musée Champollion et place des Écritures, Notre-Dame-du-Puy et Saint-Sauveur.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Lozère',numero:'48',circuits:[
+  {titre:'Mende',sousTitre:'Au pied du mont Mimat',lien:'circuit-mende.html',
+   desc:'Cathédrale Notre-Dame-et-Saint-Privat, tour des Pénitents, pont Notre-Dame et ancienne synagogue.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Sainte-Enimie',sousTitre:'Au cœur des gorges du Tarn',lien:'circuit-sainte-enimie.html',
+   desc:'Place au Beurre, église Notre-Dame-du-Gourg, source de Burle et pont sur le Tarn.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Marvejols',sousTitre:'La cité royale du Gévaudan',lien:'circuit-marvejols.html',
+   desc:'Portes du Soubeyran, de Chanelles et du Théron, collégiale et statue de la Bête du Gévaudan.',
+   infos:['Boucle','6 étapes','1 h à 1 h 30']},
+  {titre:'Florac',sousTitre:'Une source dans la ville',lien:'circuit-florac.html',
+   desc:'Ancienne gare, esplanade et temple, château du Parc national, source du Pêcher et Grand-Rue.',
+   infos:['Boucle','≈ 2,4 km','1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Hautes-Pyrénées',numero:'65',circuits:[
+  {titre:'Tarbes',sousTitre:'Entre Adour et Pyrénées',lien:'circuit-tarbes.html',
+   desc:'Jardin Massey, maison natale du maréchal Foch, place de Verdun, cathédrale de la Sède et haras national.',
+   infos:['Boucle','6 étapes','2 h 30 à 3 h']},
+  {titre:'Lourdes',sousTitre:'Au pied des Pyrénées',lien:'circuit-lourdes.html',
+   desc:'Hôtel de ville, Cachot, château fort, moulin de Boly, basilique et grotte de Massabielle.',
+   infos:['Boucle','7 étapes','2 h à 2 h 30']},
+  {titre:'Bagnères-de-Bigorre',sousTitre:'La cité thermale',lien:'circuit-bagneres-de-bigorre.html',
+   desc:'Grands Thermes, musée Salies, allées des Coustous, église Saint-Vincent et tour des Jacobins.',
+   infos:['Boucle','6 étapes','1 h à 1 h 30']},
+  {titre:'Gavarnie',sousTitre:'Au pied du cirque',lien:'circuit-gavarnie.html',
+   desc:'Village, église et cimetière des pyrénéistes, chemin du cirque jusqu’à l’Hôtellerie.',
+   infos:['Aller-retour','≈ 8 km','3 h 30 à 4 h']},
+  {titre:'Arreau',sousTitre:'Au confluent des Nestes',lien:'circuit-arreau.html',
+   desc:'Halle et maison du Lys, chapelle Saint-Exupère, confluent des Nestes, église et château des Nestes.',
+   infos:['Boucle','6 étapes','1 h à 1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Pyrénées-Orientales',numero:'66',circuits:[
+  {titre:'Perpignan',sousTitre:'La catalane',lien:'circuit-perpignan.html',
+   desc:'Castillet, Loge de Mer, cathédrale Saint-Jean-Baptiste, Campo Santo, palais des rois de Majorque et musée Rigaud.',
+   infos:['Boucle','7 étapes','2 h 30 à 3 h']},
+  {titre:'Collioure',sousTitre:'La perle de la Côte Vermeille',lien:'circuit-collioure.html',
+   desc:'Château royal, Notre-Dame-des-Anges, chapelle Saint-Vincent, quartier du Mouré et moulin.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Villefranche-de-Conflent',sousTitre:'La citadelle de Vauban',lien:'circuit-villefranche-de-conflent.html',
+   desc:'Porte de France, église Saint-Jacques, porte d’Espagne et fort Libéria.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Gard',numero:'30',circuits:[
+  {titre:'Nîmes',sousTitre:'La Rome française',lien:'circuit-nimes.html',
+   desc:'Arènes, Maison Carrée, jardins de la Fontaine, tour Magne, cathédrale et porte d’Auguste.',
+   infos:['Boucle','7 étapes','3 h à 3 h 30']},
+  {titre:'Uzès',sousTitre:'Le premier duché de France',lien:'circuit-uzes.html',
+   desc:'Le Duché, place aux Herbes, tour Fenestrelle et jardin médiéval.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Aigues-Mortes',sousTitre:'La cité de Saint Louis',lien:'circuit-aigues-mortes.html',
+   desc:'Tour de Constance, place Saint-Louis, Notre-Dame-des-Sablons et porte de la Marine.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Beaucaire',sousTitre:'Au bord du Rhône',lien:'circuit-beaucaire.html',
+   desc:'Château, collégiale Notre-Dame-des-Pommiers, hôtel de ville et port.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Sommières',sousTitre:'Au bord du Vidourle',lien:'circuit-sommieres.html',
+   desc:'Pont romain, tour de l’Horloge, place du Marché et château.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Sauve',sousTitre:'Au pied des Cévennes',lien:'circuit-sauve.html',
+   desc:'Pont sur le Vidourle, conservatoire de la fourche, ancien prieuré et Mer des Rochers.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Vézénobres',sousTitre:'Le village perché',lien:'circuit-vezenobres.html',
+   desc:'Centre historique, église, maisons romanes et point de vue du château.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Saint-Gilles',sousTitre:'Porte de la Camargue',lien:'circuit-saint-gilles.html',
+   desc:'Abbatiale romane, vis de Saint-Gilles, maison romane et port.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Villeneuve-lès-Avignon',sousTitre:'La cité des cardinaux',lien:'circuit-villeneuve-les-avignon.html',
+   desc:'Tour Philippe-le-Bel, collégiale, chartreuse du Val-de-Bénédiction et fort Saint-André.',
+   infos:['Boucle','5 étapes','2 h 30 à 3 h']},
+  {titre:'Le Grau-du-Roi',sousTitre:'Entre mer et Camargue',lien:'circuit-le-grau-du-roi.html',
+   desc:'Phare, pont tournant, port de pêche et plage rive gauche.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Remoulins',sousTitre:'Au bord du Gardon',lien:'circuit-remoulins.html',
+   desc:'Vestiges du pont suspendu, bords du Gardon, église et remparts.',
+   infos:['Boucle','5 étapes','45 min à 1 h 15']},
+  {titre:'Pont-Saint-Esprit',sousTitre:'Au bord du Rhône',lien:'circuit-pont-saint-esprit.html',
+   desc:'Pont médiéval, musée d’art sacré, escalier monumental et citadelle.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Gers',numero:'32',circuits:[
+  {titre:'Auch',sousTitre:'Sur les pas de d’Artagnan',lien:'circuit-auch.html',
+   desc:'Cathédrale Sainte-Marie, tour d’Armagnac, escalier monumental et pousterles de la ville haute.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Condom',sousTitre:'Au cœur de l’Armagnac',lien:'circuit-condom.html',
+   desc:'Cathédrale Saint-Pierre et mousquetaires, cloître, musée de l’Armagnac et port sur la Baïse.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Marciac',sousTitre:'La bastide du jazz',lien:'circuit-marciac.html',
+   desc:'Place à couverts, église Notre-Dame, Territoires du Jazz et lac.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']},
+  {titre:'Lectoure',sousTitre:'La cité perchée',lien:'circuit-lectoure.html',
+   desc:'Cathédrale Saint-Gervais, musée archéologique, bastion, fontaine de Diane et château des comtes d’Armagnac.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Mirande',sousTitre:'La bastide de l’Astarac',lien:'circuit-mirande.html',
+   desc:'Place d’Astarac, église Sainte-Marie, musée des Beaux-Arts et bords de la Baïse.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'L’Isle-Jourdain',sousTitre:'Porte de la Gascogne',lien:'circuit-l-isle-jourdain.html',
+   desc:'Collégiale Saint-Martin, musée campanaire, centre-ville, Véloscope et lac.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Hérault',numero:'34',circuits:[
+  {titre:'Montpellier',sousTitre:'Au cœur de l’Écusson',lien:'circuit-montpellier.html',
+   desc:'Place de la Comédie, musée Fabre, cathédrale Saint-Pierre, jardin des plantes et promenade du Peyrou.',
+   infos:['Boucle','7 étapes','2 h 30 à 3 h']},
+  {titre:'Sète',sousTitre:'La Venise du Languedoc',lien:'circuit-sete.html',
+   desc:'Halles, canal Royal, vieux port, cimetière marin et belvédère du mont Saint-Clair.',
+   infos:['Boucle','6 étapes','2 h 30 à 3 h']},
+  {titre:'Pézenas',sousTitre:'La ville de Molière',lien:'circuit-pezenas.html',
+   desc:'Place Gambetta, Scénovision Molière, hôtel de Lacoste, ancien ghetto juif et collégiale Saint-Jean.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Béziers',sousTitre:'Au bord de l’Orb',lien:'circuit-beziers.html',
+   desc:'Cathédrale Saint-Nazaire, Pont Vieux, église de la Madeleine, allées Paul-Riquet et plateau des Poètes.',
+   infos:['Boucle','6 étapes','2 h à 2 h 30']},
+  {titre:'Saint-Guilhem-le-Désert',sousTitre:'Au cœur des gorges de l’Hérault',lien:'circuit-saint-guilhem-le-desert.html',
+   desc:'Abbaye de Gellone, place de la Liberté et rue du Bout-du-Monde.',
+   infos:['Boucle','4 étapes','1 h à 1 h 30']},
+  {titre:'Agde',sousTitre:'La perle noire de la Méditerranée',lien:'circuit-agde.html',
+   desc:'Cathédrale Saint-Étienne, quais de l’Hérault, place de la Marine et musée agathois.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Minerve',sousTitre:'La citadelle du Minervois',lien:'circuit-minerve.html',
+   desc:'Église Saint-Étienne, rue des Martyrs, tour Candela et ponts naturels de la Cesse.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Lodève',sousTitre:'Cité épiscopale',lien:'circuit-lodeve.html',
+   desc:'Cathédrale Saint-Fulcran, musée de Lodève, pont de Montifort et ruelles du centre.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Clermont-l’Hérault',sousTitre:'Au pays du Salagou',lien:'circuit-clermont-l-herault.html',
+   desc:'Collégiale Saint-Paul, ruelles du vieux Clermont et château.',
+   infos:['Boucle','4 étapes','1 h à 1 h 30']}
+ ]},
+ {region:'Occitanie',departement:'Tarn',numero:'81',circuits:[
+  {titre:'Albi',sousTitre:'La cité épiscopale',lien:'circuit-albi.html',
+   desc:'Cathédrale Sainte-Cécile, palais de la Berbie, Pont Vieux, collégiale Saint-Salvi et vieil Albi.',
+   infos:['Boucle','7 étapes','1 h 30 à 2 h']},
+  {titre:'Cordes-sur-Ciel',sousTitre:'La cité gothique',lien:'circuit-cordes-sur-ciel.html',
+   desc:'Porte des Ormeaux, jardin des Paradis, halle et puits, maison du Grand Fauconnier, église Saint-Michel et porte de la Jane.',
+   infos:['Boucle','7 étapes','1 h 30 à 2 h']},
+  {titre:'Castres',sousTitre:'Au fil de l’Agout',lien:'circuit-castres.html',
+   desc:'Maisons sur l’Agout, jardin de l’Évêché, musée Goya, cathédrale Saint-Benoît et place Jean-Jaurès.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Gaillac',sousTitre:'Au cœur du vignoble',lien:'circuit-gaillac.html',
+   desc:'Abbaye Saint-Michel, maison Pierre de Brens, place du Griffoul, église Saint-Pierre et parc de Foucaud.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Tarn-et-Garonne',numero:'82',circuits:[
+  {titre:'Montauban',sousTitre:'La cité d’Ingres',lien:'circuit-montauban.html',
+   desc:'Les arcades de la place Nationale, l’église Saint-Jacques, le musée Ingres Bourdelle, le Pont Vieux et la cathédrale.',
+   infos:['Boucle','6 étapes','1 h 30 à 2 h']},
+  {titre:'Bruniquel',sousTitre:'Le village aux deux châteaux',lien:'circuit-bruniquel.html',
+   desc:'Porte de l’Horloge, ruelles et maison Payrol, châteaux de Bruniquel.',
+   infos:['Boucle','4 étapes','1 h à 1 h 30']},
+  {titre:'Lauzerte',sousTitre:'La bastide du Quercy blanc',lien:'circuit-lauzerte.html',
+   desc:'Place des Cornières, église Saint-Barthélemy, jardin du Pèlerin et faubourg d’Auriac.',
+   infos:['Boucle','5 étapes','1 h à 1 h 30']},
+  {titre:'Saint-Antonin-Noble-Val',sousTitre:'Au pied des gorges de l’Aveyron',lien:'circuit-saint-antonin-noble-val.html',
+   desc:'Maison romane, halle, rues des tanneurs et quais de l’Aveyron.',
+   infos:['Boucle','5 étapes','1 h 30 à 2 h']}
+ ]},
+ {region:'Occitanie',departement:'Haute-Garonne',numero:'31',circuits:[
+  {titre:'Toulouse',sousTitre:'Circuit découverte',lien:'circuit-toulouse.html',
+   desc:'Au cœur de la Ville Rose : basilique Saint-Sernin, Capitole, Jacobins, hôtel d’Assézat et cathédrale Saint-Étienne.',
+   infos:['Boucle','6 étapes','2 h 30 à 3 h']},
+  {titre:'Toulouse',sousTitre:'Circuit paisible',lien:'circuit-toulouse-paisible.html',
+   desc:'Jardins, berges de la Garonne, canal du Midi et canal de Brienne, au départ du jardin japonais.',
+   infos:['Boucle','≈ 6,5 à 7 km','3 h à 3 h 30']},
+  {titre:'Saint-Bertrand-de-Comminges',sousTitre:'La cité perchée du Comminges',lien:'circuit-saint-bertrand-de-comminges.html',
+   desc:'Cathédrale Sainte-Marie et cloître, cité haute, vestiges de Lugdunum et basilique de Valcabrère.',
+   infos:['Boucle','5 étapes','2 h à 2 h 30']},
+  {titre:'Luchon',sousTitre:'La reine des Pyrénées',lien:'circuit-luchon.html',
+   desc:'Allées d’Étigny, thermes Chambert, parc des Quinconces, casino et église Notre-Dame.',
+   infos:['Boucle','6 étapes','1 h à 1 h 30']},
+  {titre:'Aurignac',sousTitre:'Berceau de l’Aurignacien',lien:'circuit-aurignac.html',
+   desc:'Église Saint-Pierre, donjon, vieux bourg, musée-forum de l’Aurignacien et abri préhistorique.',
+   infos:['Boucle','6 étapes','1 h à 1 h 30']}
+ ]}
+];
+/* ============================================================ */
+
+const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// Met l'initiale de chaque mot en ocre, comme dans les titres du site
+const initiales=t=>esc(t).replace(/(^|[\s’'-])([A-Za-zÀ-ÿ])/g,'$1<em>$2</em>');
+
+// Tri par numéro de département (09, 11, 12… 82) ; « numeric » gère aussi les numéros comme 2A/2B
+// Navigation : nombre de départements par ligne (ici 8 sur la 1re ligne, le reste sur la 2e)
+const NAV_LIGNES=[8];
+// Nombre de couleurs de bandeau utilisées en alternance (voir .couleur-1, -2, -3 dans le style)
+const NB_COULEURS=3;
+const deps=[...DEPARTEMENTS].sort((a,b)=>a.numero.localeCompare(b.numero,'fr',{numeric:true})||a.departement.localeCompare(b.departement,'fr'));
+const nav=document.getElementById('nav'),index=document.getElementById('index');
+// Prépare les lignes de la navigation
+const lignes=[];let reste=deps.length;
+NAV_LIGNES.forEach(n=>{if(reste>0){const l=document.createElement('div');l.className='nav-ligne';nav.appendChild(l);lignes.push([l,Math.min(n,reste)]);reste-=n}});
+if(reste>0){const l=document.createElement('div');l.className='nav-ligne';nav.appendChild(l);lignes.push([l,reste])}
+const ligneDe=i=>{let k=i;for(const [l,n] of lignes){if(k<n)return l;k-=n}return lignes[lignes.length-1][0]};
+deps.forEach((d,i)=>{
+ const id='dep-'+slug(d.departement);
+ ligneDe(i).insertAdjacentHTML('beforeend',`<a href="#${id}"${i===0?' class="active"':''}>📍 ${esc(d.numero)} · ${esc(d.departement)}</a>`);
+ const cartes=d.circuits.map(c=>`
+  <a class="circuit-carte" href="${esc(c.lien)}">
+   <div class="circuit-entete">${initiales(c.titre)}${c.sousTitre?`, <span style="font-weight:400">${esc(c.sousTitre)}</span>`:''}</div>
+   <div class="circuit-corps">
+    <p class="circuit-desc">${esc(c.desc||'')}</p>
+    <div class="circuit-infos">${(c.infos||[]).map(x=>`<span class="badge">${esc(x)}</span>`).join('')}</div>
+    <span class="circuit-lien">Voir le circuit →</span>
+   </div>
+  </a>`).join('');
+ index.insertAdjacentHTML('beforeend',`
+  <section class="section couleur-${i%NB_COULEURS+1}" id="${id}">
+   <h2 class="section-titre"><div class="section-titre-icon">🚶</div>${esc(d.departement)} <span class="num-dept">(${esc(d.numero)}) · ${esc(d.region)}</span></h2>
+   <div class="circuits-grille">${cartes}</div>
+  </section>`);
+});
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.3});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ const haut=()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+ btn.addEventListener('click',haut);
+ document.querySelector('.retour-haut a').addEventListener('click',e=>{e.preventDefault();haut()})})();
+</script>
+
+</body>
+</html>

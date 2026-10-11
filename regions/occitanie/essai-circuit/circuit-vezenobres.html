@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vézénobres, circuit découverte — L'Âme des Régions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* Label bas du héro */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin: -50px 0 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+ /* Label bas du héro circuit*/
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit{
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 30px;  /* hauteur police */
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin: -50px 0 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+
+
+
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px;
+      align-items: start;
+    }
+    .section { margin-bottom: 40px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+
+    /* Carte */
+    .carte-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .carte-outils {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px 16px;
+      border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .carte-btns { display: flex; gap: 8px; }
+    .btn {
+      border: 1px solid #2C4A7C;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: var(--font-corps);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .btn:disabled { opacity: .6; cursor: wait; }
+    #map { height: 600px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px;
+      background: #C8843A;
+      border: 2px solid white;
+      color: white;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    /* Étapes */
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 6px;
+      margin: -6px;
+      transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Étapes et parcours côte à côte */
+    .deux-colonnes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .deux-colonnes .section-titre { font-size: 20px; }
+    .deux-colonnes .ingredients-bloc { padding: 16px 18px; }
+
+    /* Parcours rue par rue */
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 15px;
+      color: #5A3E1B;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Bas de page */
+    .retour-haut { text-align: center; padding: 0 0 30px; }
+    .retour-haut a { color: #2C4A7C; font-family: var(--font-titre); font-style: italic; text-decoration: none; }
+    .retour-haut a:hover { text-decoration: underline; }
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: none; background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 700px) {
+      .deux-colonnes { grid-template-columns: 1fr; gap: 0; }
+    }
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+      #map { height: 480px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à ce circuit (après fiche.css pour garder la priorité) -->
+  <style>
+    /* COULEUR-BANDEAU : même couleur que le département dans l'index (couleur 1) */
+    .produit-hero { background-color: #2C4A7C; }
+    .produit-logo span, .hero-label-bas-circuit em { color: #C8843A; }
+    /* COULEURS-ELEMENTS : mêmes couleurs que le bandeau supérieur */
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page { background: #2C4A7C; }
+    .btn { background: #2C4A7C; border-color: #2C4A7C; }
+    .btn:hover { background: #1E3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .footer-logo span { color: #C8843A; }
+    /* AJUSTEMENTS-FICHE : accords avec fiche.css */
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #2C4A7C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- Photo du bandeau (facultatif), comme sur les fiches :
+       <style>.produit-hero { background-image: url('…/assets/departement/occitanie/panorama-vezenobres.jpg'); }</style> -->
+  <!-- PHOTO-BANDEAU-INDEX : même photo et mêmes réglages que le bandeau de index.html -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),   /* ← voile sombre pour la lisibilité du texte */
+        url('../../../assets/departement/occitanie/panorama-index.jpg');
+      background-size: cover;
+      background-position: center;   /* ← cadrage de la photo */
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="index.html" class="produit-btn-retour">
+            Tous les circuits à pied
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>V</em>ézénobres,  <br>
+            <span style="padding-left: 20px;"><em>C</em>ircuit <em>d</em>écouverte </span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../../../../../assets/departement/occitanie/carte-gard.png"
+             alt="Carte Gard" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../../../../../assets/departement/occitanie/gard.png" alt="Écusson Gard" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>L</em>e <em>v</em>illage <em>p</em>erché <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#carte" class="active">🗺️ Carte du circuit</a>
+          <a href="#etapes">📍 Les étapes</a>
+          <a href="#parcours">🚶 Parcours rue par rue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- CARTE -->
+          <section class="section" id="carte">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Carte du circuit
+            </h2>
+            <div class="histoire-texte">
+              <p id="intro">Une courte flânerie dans le village perché de Vézénobres, ses maisons romanes, ses portes médiévales et ses points de vue sur la plaine du Gardon.</p>
+            </div>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut" id="status">Chargement du tracé…</span>
+                <div class="carte-btns">
+                  <button class="btn secondaire" id="reset">Voir tout</button>
+                  <button class="btn" id="download">Télécharger (PDF)</button>
+                </div>
+              </div>
+              <div id="map" aria-label="Carte interactive du parcours à Vézénobres"></div>
+              <div class="carte-note">Le tracé bleu suit les rues, places et quais praticables à pied, d’après les données OpenStreetMap. Cliquez sur les repères numérotés pour découvrir les étapes. Tracé à vérifier sur place (travaux, accès fermés).</div>
+            </div>
+          </section>
+
+          <div class="deux-colonnes">
+          <!-- ÉTAPES -->
+          <section class="section" id="etapes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              <span id="etapes-titre">Les étapes</span>
+            </h2>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+          <!-- PARCOURS -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🚶</div>
+              Le parcours, rue par rue
+            </h2>
+            <div class="histoire-texte">
+              <p>Le tracé de la carte suit le réseau piéton réel. Voici les grands axes du parcours ; les traversées exactes restent à vérifier sur place.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Itinéraire</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Centre → Église :</strong> descendre vers l'église.</span></li>
+                <li><span><strong>Église → Maisons romanes :</strong> remonter par les calades.</span></li>
+                <li><span><strong>Maisons romanes → Château :</strong> gagner le sommet du village.</span></li>
+                <li><span><strong>Château → Centre :</strong> redescendre par les ruelles.</span></li>
+              </ol>
+            </div>
+            <div class="citation-bloc">
+              <p>À savoir : ce circuit est une maquette. Les distances, la durée précise et l'accessibilité ne sont pas garanties tant que le parcours piéton n'a pas été vérifié sur le terrain.</p>
+            </div>
+          </section>
+          </div>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body" id="identite">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Gard (30)</span></div>
+              <div class="aside-row"><span class="aside-label">Type</span><span class="aside-val">Circuit pédestre en boucle</span></div>
+              <div class="aside-row"><span class="aside-label">Départ</span><span class="aside-val">Centre historique</span></div>
+              <div class="aside-row"><span class="aside-label">Distance</span><span class="aside-val" id="val-distance">Calcul en cours…</span></div>
+              <div class="aside-row"><span class="aside-label">Marche effective</span><span class="aside-val" id="val-marche">—</span></div>
+              <div class="aside-row"><span class="aside-label">Durée conseillée</span><span class="aside-val">1 h à 1 h 30 avec arrêts</span></div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DU CIRCUIT — seule partie à modifier pour une autre ville
+   ============================================================ */
+// Nom de la ville (utilisé pour le nom du fichier PDF)
+const VILLE='Vézénobres';
+const stops=[
+{name:'Centre historique',lat:44.052579,lng:4.136484,desc:'Ruelles en calades et maisons de pierre du village médiéval.'},
+{name:'Église',lat:44.052,lng:4.137,desc:'Église du village au pied des remparts.'},
+{name:'Maisons romanes',lat:44.053,lng:4.1362,desc:'Rare ensemble de façades romanes du XIIe siècle.'},
+{name:'Ruines du château et point de vue',lat:44.0538,lng:4.1355,desc:'Panorama sur la plaine du Gardon et les Cévennes.'},
+{name:'Retour au centre',lat:44.052579,lng:4.136484,desc:'Fin de la boucle au point de départ.'}
+];
+// Tracé de secours très approximatif, utilisé seulement si aucun calcul n'est possible.
+const traceSecours=[
+[44.052579,4.136484],[44.052,4.137],[44.053,4.1362],[44.0538,4.1355],[44.052579,4.136484]
+];
+/* ============================================================ */
+
+const BLEU='#2C4A7C', OCRE='#C8843A';
+// Couleur du bandeau (identique à l'index) et de ses initiales
+const BANDEAU='#2C4A7C', INITIALES='#C8843A';
+const map=L.map('map',{scrollWheelZoom:false}).setView([44.05284,4.1363],15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(stops.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.22));
+let allBounds=bounds;
+let routeLayer=null, routeData=null;
+const statusEl=document.getElementById('status');
+document.getElementById('etapes-titre').textContent=`Les ${stops.length} étapes`;
+
+// Marqueurs et liste des étapes
+const markers=[];
+stops.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon,zIndexOffset:1000+(i===stops.length-1?100:0)}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ markers.push(m);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg" data-i="${i}">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],17);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+// Départ et arrivée au même endroit : léger décalage visuel pour voir les deux repères
+// Repère d'arrivée identique à une étape précédente (n'importe laquelle)
+const dernier=stops.length-1;
+const jumeau=stops.findIndex((s,k)=>k<dernier&&s.lat===stops[dernier].lat&&s.lng===stops[dernier].lng);
+function separerDepartArrivee(){
+ if(jumeau<0)return;
+ const b=stops[dernier];
+ const c=map.latLngToLayerPoint([b.lat,b.lng]);
+ markers[jumeau].setLatLng(map.layerPointToLatLng(c.add(L.point(-19,0))));
+ markers[dernier].setLatLng(map.layerPointToLatLng(c.add(L.point(19,0))));
+}
+map.on('zoomend',separerDepartArrivee);separerDepartArrivee();
+
+// Décodage des polylignes Valhalla (précision 6)
+function decodePolyline(str,prec=6){let i=0,lat=0,lng=0,out=[],f=Math.pow(10,prec);
+ while(i<str.length){let b,sh=0,r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lat+=(r&1?~(r>>1):(r>>1));
+ sh=0;r=0;do{b=str.charCodeAt(i++)-63;r|=(b&31)<<sh;sh+=5}while(b>=32);lng+=(r&1?~(r>>1):(r>>1));out.push([lat/f,lng/f])}return out}
+
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('délai dépassé')),ms))]);
+
+// Moteur 1 : OSRM profil piéton (FOSSGIS / openstreetmap.de)
+async function routeOSRM(){
+ const coords=stops.map(s=>`${s.lng},${s.lat}`).join(';');
+ const r=await withTimeout(fetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${coords}?overview=full&geometries=geojson&steps=false`),15000);
+ if(!r.ok)throw new Error('OSRM '+r.status);
+ const j=await r.json(); if(j.code!=='Ok')throw new Error('OSRM '+j.code);
+ const rt=j.routes[0];
+ return {source:'OSRM (piéton)',coords:rt.geometry.coordinates.map(([x,y])=>[y,x]),distance:rt.distance,legs:rt.legs.map(l=>l.distance)};
+}
+// Moteur 2 : Valhalla profil piéton (secours)
+async function routeValhalla(){
+ const body={locations:stops.map(s=>({lat:s.lat,lon:s.lng,type:'break'})),costing:'pedestrian',units:'kilometers',language:'fr-FR'};
+ const r=await withTimeout(fetch('https://valhalla1.openstreetmap.de/route?json='+encodeURIComponent(JSON.stringify(body))),15000);
+ if(!r.ok)throw new Error('Valhalla '+r.status);
+ const j=await r.json(); const legs=j.trip.legs;
+ let coords=[];legs.forEach(l=>{const c=decodePolyline(l.shape);coords=coords.concat(coords.length?c.slice(1):c)});
+ return {source:'Valhalla (piéton)',coords,distance:j.trip.summary.length*1000,legs:legs.map(l=>l.summary.length*1000)};
+}
+
+const fmtKm=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+' km':Math.round(m/10)*10+' m';
+const cacheKey='circuit-trace-'+stops.map(s=>s.lat.toFixed(5)+','+s.lng.toFixed(5)).join('|');
+
+function dessiner(data,estSecours){
+ routeData=data;
+ if(routeLayer)map.removeLayer(routeLayer);
+ routeLayer=L.layerGroup([
+  L.polyline(data.coords,{color:'#ffffff',weight:9,opacity:.9,lineJoin:'round',lineCap:'round'}),
+  L.polyline(data.coords,{color:BLEU,weight:5,opacity:.92,lineJoin:'round',lineCap:'round',dashArray:estSecours?'8 8':null})
+ ]).addTo(map);
+ allBounds=L.latLngBounds(data.coords).extend(bounds);
+ map.fitBounds(allBounds.pad(.08));
+ if(data.distance){
+  // Distance et durée réelles (marche ≈ 4,5 km/h)
+  const minutes=Math.round(data.distance/1000/4.5*60);
+  document.getElementById('val-distance').textContent=fmtKm(data.distance);
+  document.getElementById('val-marche').textContent=`≈ ${Math.floor(minutes/60)} h ${String(minutes%60).padStart(2,'0')}`;
+  document.querySelectorAll('.etape-leg').forEach(el=>{const i=+el.dataset.i;if(i<data.legs.length)el.textContent=`${fmtKm(data.legs[i])} jusqu’à l’étape ${i+2} · voir sur la carte ↗`});
+ } else {
+  document.getElementById('val-distance').textContent='Non disponible';
+ }
+}
+
+async function init(){
+ try{const c=JSON.parse(localStorage.getItem(cacheKey));if(c&&c.coords){dessiner(c,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${c.source}).`;return}}catch(e){}
+ statusEl.textContent='Calcul du chemin piéton sur les rues…';
+ for(const moteur of [routeOSRM,routeValhalla]){
+  try{const d=await moteur();dessiner(d,false);statusEl.textContent=`Tracé piéton calculé sur les rues (${d.source}).`;
+   try{localStorage.setItem(cacheKey,JSON.stringify(d))}catch(e){}return}
+  catch(e){console.warn(e)}
+ }
+ dessiner({coords:traceSecours},true);
+ statusEl.textContent='Calcul d’itinéraire indisponible : tracé approximatif en pointillés.';
+}
+init();
+document.getElementById('reset').onclick=()=>map.fitBounds(allBounds.pad(.08));
+
+/* ============================================================
+   TÉLÉCHARGEMENT PDF : carte + étapes + parcours rue par rue
+   ============================================================ */
+function chargerScript(src){return new Promise((ok,ko)=>{if(window.jspdf)return ok();const sc=document.createElement('script');sc.src=src;sc.onload=ok;sc.onerror=()=>ko(new Error('jsPDF'));document.head.appendChild(sc)})}
+// Texte compatible avec les polices standard du PDF
+const txt=t=>(t||'').replace(/[’‘]/g,"'").replace(/[“”«»]/g,'"').replace(/œ/g,'oe').replace(/Œ/g,'OE').replace(/→/g,'>').replace(/[–—]/g,'-').replace(/ | /g,' ').replace(/[^\x00-\xFF]/g,'').replace(/\s+/g,' ').trim();
+const hex=h=>[1,3,5].map(k=>parseInt(h.slice(k,k+2),16));
+
+// Dessine la carte (fond OpenStreetMap + tracé + repères) dans une image
+async function imageCarte(){
+ const W=1800,H=1500,pad=90,crs=L.CRS.EPSG3857;
+ const b=allBounds;let z=18;
+ for(;z>10;z--){const a=crs.latLngToPoint(b.getNorthWest(),z),c=crs.latLngToPoint(b.getSouthEast(),z);if(c.x-a.x<=W-2*pad&&c.y-a.y<=H-2*pad)break}
+ const centre=crs.latLngToPoint(b.getCenter(),z),orig=centre.subtract(L.point(W/2,H/2));
+ const px=ll=>crs.latLngToPoint(L.latLng(ll),z).subtract(orig);
+ const cv=document.createElement('canvas');cv.width=W;cv.height=H;const ctx=cv.getContext('2d');
+ ctx.fillStyle='#e9ece7';ctx.fillRect(0,0,W,H);
+ const x0=Math.floor(orig.x/256),y0=Math.floor(orig.y/256),x1=Math.floor((orig.x+W)/256),y1=Math.floor((orig.y+H)/256);
+ const tuiles=[];
+ for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++)tuiles.push(new Promise(ok=>{const im=new Image();im.crossOrigin='anonymous';
+  im.onload=()=>{ctx.drawImage(im,x*256-orig.x,y*256-orig.y,256,256);ok()};im.onerror=()=>ok();
+  im.src=`https://tile.openstreetmap.org/${z}/${x}/${y}.png`}));
+ await Promise.all(tuiles);
+ const pts=(routeData?routeData.coords:traceSecours).map(px);
+ const trait=(c,w,dash)=>{ctx.beginPath();pts.forEach((p,k)=>k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=c;ctx.lineWidth=w;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(dash||[]);ctx.stroke()};
+ trait('rgba(255,255,255,.9)',13);trait(BLEU,7,routeData&&routeData.distance?[]:[14,14]);ctx.setLineDash([]);
+ stops.forEach((s,k)=>{let p=px([s.lat,s.lng]);if(jumeau>=0&&(k===jumeau||k===dernier))p=p.add(L.point(k===jumeau?-24:24,0));
+  ctx.beginPath();ctx.arc(p.x,p.y,22,0,2*Math.PI);ctx.fillStyle=OCRE;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='bold 23px Georgia, serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(k+1,p.x,p.y+1)});
+ const att='© contributeurs OpenStreetMap';ctx.font='20px sans-serif';const tw=ctx.measureText(att).width;
+ ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(W-tw-20,H-34,tw+20,34);ctx.fillStyle='#333';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(att,W-10,H-17);
+ return {data:cv.toDataURL('image/jpeg',.9),ratio:H/W};
+}
+
+async function telechargerPDF(){
+ const btn=document.getElementById('download');btn.disabled=true;btn.textContent='Préparation du PDF…';
+ try{
+  await chargerScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const PW=210,PH=297,M=15,LW=PW-2*M,cBLEU=hex(BLEU),cOCRE=hex(OCRE),BRUN=[139,115,85],TEXTE=[58,48,40];
+  let y=0;
+  const saut=h=>{if(y+h>PH-18){doc.addPage();y=M+3}};
+  const para=(t,size,color,style,indent=0,lh=1.45,font='helvetica')=>{doc.setFont(font,style||'normal');doc.setFontSize(size);doc.setTextColor(...color);
+   const l=doc.splitTextToSize(txt(t),LW-indent);const h=size*.3528*lh;l.forEach(li=>{saut(h);doc.text(li,M+indent,y+h*.75);y+=h})};
+  const titre=(t,ico)=>{saut(18);y+=3;doc.setFillColor(...hex(BANDEAU));doc.roundedRect(M,y,8,8,1.5,1.5,'F');
+   doc.setFont('times','bold');doc.setFontSize(16);doc.setTextColor(...cBLEU);doc.text(txt(t),M+11,y+6);y+=11;
+   doc.setDrawColor(232,222,200);doc.setLineWidth(.6);doc.line(M,y,PW-M,y);y+=6};
+
+  // Bandeau (à rayures, comme sur la fiche)
+  const h1=document.querySelector('h1').cloneNode(true);const st=h1.querySelector('.sous-titre');const sousTitre=st?st.textContent:'';if(st)st.remove();
+  h1.querySelectorAll('br').forEach(b=>b.replaceWith(' '));const titreH1=txt(h1.textContent);
+  const HB=46;
+  doc.setFillColor(...hex(BANDEAU));doc.rect(0,0,PW,HB,'F');
+  doc.setDrawColor(70,98,145);doc.setLineWidth(.15);for(let k=-HB;k<PW;k+=4)doc.line(k,HB,k+HB,0);
+  doc.setFont('times','bold');doc.setFontSize(14);doc.setTextColor(255,255,255);doc.text("L'",M,13);
+  doc.setTextColor(...hex(INITIALES));doc.text('Âme',M+doc.getTextWidth("L'"),13);
+  doc.setTextColor(255,255,255);doc.text(' des Régions',M+doc.getTextWidth("L'Âme"),13);
+  doc.setFontSize(23);doc.text(titreH1,M,26);
+  doc.setFont('times','italic');doc.setFontSize(12);doc.setTextColor(230,230,230);doc.text(txt(sousTitre),M,35);
+  // Bande du bas : reprend le sous-titre du bandeau de la page (initiales en ocre)
+  const HS=9;
+  doc.setFillColor(0,0,0);doc.setGState(new doc.GState({opacity:.25}));doc.rect(0,HB-HS,PW,HS,'F');doc.setGState(new doc.GState({opacity:1}));
+  const label=document.querySelector('.hero-label-bas-circuit');
+  if(label){
+   const segs=[...label.childNodes].map(n=>({t:(n.textContent||'').replace(/[⟹⟸]/g,'').replace(/œ/g,'oe').replace(/Œ/g,'OE').replace(/[’‘]/g,"'").replace(/\s+/g,' '),ocre:n.nodeName==='EM'}));
+   // supprime les espaces en trop au début et à la fin
+   while(segs.length&&!segs[0].t.trim())segs.shift();while(segs.length&&!segs[segs.length-1].t.trim())segs.pop();
+   if(segs.length){segs[0].t=segs[0].t.replace(/^\s+/,'');segs[segs.length-1].t=segs[segs.length-1].t.replace(/\s+$/,'')}
+   doc.setFont('times','italic');doc.setFontSize(14);const CS=.5;
+   const larg=t=>doc.getTextWidth(t)+t.length*CS;
+   let x=(PW-segs.reduce((a,g)=>a+larg(g.t),0))/2;
+   segs.forEach(g=>{doc.setTextColor(...(g.ocre?hex(INITIALES):[255,255,255]));doc.text(g.t,x,HB-2.8,{charSpace:CS});x+=larg(g.t)});
+  }
+  y=HB+6;
+
+  // Introduction + carte d'identité
+  para(document.getElementById('intro').textContent,10,TEXTE,'normal');y+=2;
+  const infos=[...document.querySelectorAll('#identite .aside-row')].map(r=>`${r.children[0].textContent} : ${r.children[1].textContent}`);
+  doc.setFillColor(247,243,236);const lignes=Math.ceil(infos.length/2);const hb=lignes*5.2+6;saut(hb);doc.roundedRect(M,y,LW,hb,2,2,'F');
+  doc.setFillColor(...cOCRE);doc.rect(M,y,1.2,hb,'F');
+  infos.forEach((t,k)=>{const col=k%2,row=Math.floor(k/2);doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...TEXTE);doc.text(txt(t),M+5+col*LW/2,y+5.5+row*5.2)});
+  y+=hb+4;
+
+  // Carte
+  const img=await imageCarte();const ih=Math.min(LW*img.ratio,PH-18-y-8);const iw=ih/img.ratio;
+  saut(ih);doc.addImage(img.data,'JPEG',M+(LW-iw)/2,y,iw,ih);doc.setDrawColor(224,218,206);doc.setLineWidth(.3);doc.rect(M+(LW-iw)/2,y,iw,ih);y+=ih+3;
+  para('Tracé calculé sur le réseau piéton OpenStreetMap, à vérifier sur place (travaux, accès fermés).',8,BRUN,'italic');
+
+  // Étapes (colonne gauche) et parcours rue par rue (colonne droite)
+  doc.addPage();const pageDebut=doc.getNumberOfPages();
+  const GAP=8,CW=(LW-GAP)/2;
+  // Une colonne garde sa propre position (page + hauteur) pour pouvoir continuer sur la page suivante
+  const colonne=x=>({x,w:CW,y:M,page:pageDebut});
+  const place=(c,h)=>{if(c.y+h>PH-18){c.page++;if(c.page>doc.getNumberOfPages())doc.addPage();c.y=M+3}doc.setPage(c.page)};
+  const cpara=(c,t,size,color,style,indent=0,lh=1.45,font='helvetica')=>{doc.setFont(font,style||'normal');doc.setFontSize(size);
+   const l=doc.splitTextToSize(txt(t),c.w-indent);const h=size*.3528*lh;l.forEach(li=>{place(c,h);doc.setFont(font,style||'normal');doc.setFontSize(size);doc.setTextColor(...color);doc.text(li,c.x+indent,c.y+h*.75);c.y+=h})};
+  const ctitre=(c,t)=>{place(c,18);doc.setFillColor(...hex(BANDEAU));doc.roundedRect(c.x,c.y,7,7,1.5,1.5,'F');
+   doc.setFont('times','bold');doc.setFontSize(14);doc.setTextColor(...cBLEU);doc.text(txt(t),c.x+10,c.y+5.4);c.y+=10;
+   doc.setDrawColor(232,222,200);doc.setLineWidth(.6);doc.line(c.x,c.y,c.x+c.w,c.y);c.y+=6};
+
+  const g=colonne(M);
+  ctitre(g,`Les ${stops.length} étapes`);
+  stops.forEach((s,k)=>{
+   place(g,16);
+   doc.setFillColor(...hex(BANDEAU));doc.circle(g.x+4,g.y+3.6,4,'F');doc.setFont('times','bold');doc.setFontSize(9.5);doc.setTextColor(255,255,255);doc.text(String(k+1),g.x+4,g.y+4.9,{align:'center'});
+   const p0=g.page,y0=g.y;g.y+=.5;
+   cpara(g,s.name.toUpperCase(),9,cOCRE,'bold',11);cpara(g,s.desc,9.5,TEXTE,'normal',11);
+   if(routeData&&routeData.legs&&k<routeData.legs.length)cpara(g,`${fmtKm(routeData.legs[k])} jusqu'à l'étape ${k+2}`,8,BRUN,'normal',11);
+   if(g.page===p0)g.y=Math.max(g.y,y0+9);g.y+=3.5;
+  });
+
+  const d=colonne(M+CW+GAP);
+  const sec=document.getElementById('parcours');
+  ctitre(d,sec.querySelector('h2').textContent.trim());
+  cpara(d,sec.querySelector('.histoire-texte p').textContent,9.5,TEXTE,'normal');d.y+=3;
+  [...sec.querySelectorAll('.parcours-liste li')].forEach((li,k)=>{place(d,10);doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...cOCRE);doc.text(`${k+1}.`,d.x+1,d.y+3.8);
+   const strong=li.querySelector('strong');const reste=strong?li.textContent.replace(strong.textContent,''):li.textContent;
+   if(strong)cpara(d,strong.textContent,9.5,cBLEU,'bold',6);cpara(d,reste,9.5,TEXTE,'normal',6);
+   doc.setDrawColor(232,222,200);doc.setLineWidth(.2);doc.setLineDashPattern([1,1],0);doc.line(d.x,d.y+1.5,d.x+d.w,d.y+1.5);doc.setLineDashPattern([],0);d.y+=4});
+  d.y+=2;
+  const citEl=sec.querySelector('.citation-bloc p');
+  if(citEl){doc.setFont('times','italic');doc.setFontSize(10);const lc=doc.splitTextToSize(txt(citEl.textContent),d.w-9);const hc=lc.length*4.6+6;place(d,hc);
+   doc.setFillColor(247,243,236);doc.rect(d.x,d.y,d.w,hc,'F');doc.setFillColor(...cOCRE);doc.rect(d.x,d.y,1.4,hc,'F');
+   doc.setTextColor(90,62,27);lc.forEach((l,k)=>doc.text(l,d.x+5,d.y+5.3+k*4.6));d.y+=hc}
+
+  // Pied de page
+  const n=doc.getNumberOfPages();
+  for(let k=1;k<=n;k++){doc.setPage(k);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,150,150);
+   doc.text(txt(`L'Âme des Régions - ${titreH1}`),M,PH-8);doc.text(`${k} / ${n}`,PW-M,PH-8,{align:'right'})}
+  const slug=VILLE.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  doc.save(`circuit-${slug}.pdf`);
+ }catch(e){console.error(e);alert('Le PDF n’a pas pu être créé (connexion Internet nécessaire).')}
+ finally{btn.disabled=false;btn.textContent='Télécharger (PDF)'}
+}
+document.getElementById('download').onclick=telechargerPDF;
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.3});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

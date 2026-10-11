@@ -15,34 +15,76 @@
     }
     .accueil img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
-    /* ── Les deux boutons, à l'emplacement de l'ancien bouton rouge (effacé de l'image) ── */
+    /* ── Les boutons, à l'emplacement de l'ancien bouton rouge (effacé de l'image) ── */
     .boutons {
-      position: absolute; left: 15%; top: 66.6%;   /* ← position du groupe de boutons */
-      display: flex; gap: 1.1cqw;
+      position: absolute; left: 4.6%; top: 66.6%;   /* ← position du groupe de boutons */
+      display: flex; gap: 1.1cqw; align-items: flex-start;
     }
     .bouton {
       display: inline-flex; align-items: center; gap: .7cqw;
       padding: .75cqw 1.6cqw;                        /* ← taille des boutons */
       font-family: Georgia, "Times New Roman", serif; font-size: 1.35cqw; letter-spacing: .02em;
-      color: #fff; text-decoration: none; white-space: nowrap;
+      color: #fff; text-decoration: none; white-space: nowrap; cursor: pointer;
       background: rgba(12, 20, 30, .45);
       border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      /* ← liseré doré discret, légèrement détaché de la bordure */
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .25), 0 0 0 3px rgba(250, 199, 117, .5);
       backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
       text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
       transition: background .2s, border-color .2s, color .2s;
     }
     .bouton span { transition: transform .2s; }
-    .bouton:hover { background: rgba(12, 20, 30, .65); border-color: #FAC775; color: #FAC775; }
+    .bouton:hover {
+      background: rgba(12, 20, 30, .65); border-color: #FAC775; color: #FAC775;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .3), 0 0 0 3px rgba(250, 199, 117, .9);
+    }
     .bouton:hover span { transform: translateX(3px); }
     .bouton:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+    /* ── Bouton « Visite guidée » et son sous-menu ── */
+    .visite { position: relative; }
+    button.bouton { margin: 0; }
+    .visite > .bouton .fleche { display: inline-block; transition: transform .25s; }
+    .visite > .bouton:hover .fleche { transform: none; }
+
+    .sous-menu {
+      position: absolute; left: 0; top: 100%;
+      padding-top: .7cqw;                 /* zone « pont » : la souris ne perd pas le survol */
+      display: flex; gap: .8cqw;
+      opacity: 0; visibility: hidden; transform: translateY(-4px);
+      transition: opacity .2s, transform .2s, visibility 0s .2s;
+    }
+    .sous-menu .bouton { font-size: 1.2cqw; padding: .6cqw 1.3cqw; }
+
+    /* ouvert : au clic (classe .ouvert), au clavier (focus-within) ou au survol (souris uniquement) */
+    .visite.ouvert .sous-menu,
+    .visite:focus-within .sous-menu {
+      opacity: 1; visibility: visible; transform: none;
+      transition: opacity .2s, transform .2s, visibility 0s;
+    }
+    .visite.ouvert > .bouton,
+    .visite:focus-within > .bouton { border-color: #FAC775; color: #FAC775; }
+    .visite.ouvert > .bouton .fleche,
+    .visite:focus-within > .bouton .fleche { transform: rotate(180deg); }
+
+    @media (hover: hover) {
+      .visite:hover .sous-menu {
+        opacity: 1; visibility: visible; transform: none;
+        transition: opacity .2s, transform .2s, visibility 0s;
+      }
+      .visite:hover > .bouton { border-color: #FAC775; color: #FAC775; }
+      .visite:hover > .bouton .fleche { transform: rotate(180deg); }
+    }
 
     @media (max-width: 650px) {
       body { align-items: start; }
       .accueil { min-height: 100svh; aspect-ratio: auto; }
       .accueil img { width: 100%; height: auto; }
       /* même emplacement, recalculé à partir de la largeur de l'image */
-      .boutons { top: calc(100vw * 1024 / 1536 * .655); gap: 6px; }
+      .boutons { top: calc(100vw * 1024 / 1536 * .655); gap: 6px; left: 4%; }
       .bouton { font-size: 9.5px; padding: 4px 9px; gap: 4px; }
+      .sous-menu { padding-top: 5px; gap: 5px; }
+      .sous-menu .bouton { font-size: 9px; padding: 4px 8px; }
     }
   </style>
 </head>
@@ -50,9 +92,41 @@
   <main class="accueil">
     <img src="accueil-occitanie-sans-bouton.png" alt="L'Âme des Régions : L'Occitane, terre d'émotions. Paysages, patrimoine, traditions et découverte des 13 départements d'Occitanie." width="1536" height="1024">
     <nav class="boutons" aria-label="Découvrir l'Occitanie">
-      <a class="bouton" href="regions/occitanie/carte-occitanie.html" title="Découvrir la carte des 13 départements">Carte des départements <span aria-hidden="true">→</span></a>
-      <a class="bouton" href="regions/occitanie/occitanie-info.html" title="Identité et repères de la région">Identité &amp; repères <span aria-hidden="true">→</span></a>
+      <a class="bouton" href="regions/occitanie/carte-occitanie.html" title="Découvrir la carte des 13 départements">Carte des départements </a>
+      <a class="bouton" href="regions/occitanie/occitanie-info.html" title="Identité et repères de la région">Identité &amp; repères </a>
+
+      <div class="visite">
+        <button class="bouton" type="button" aria-expanded="false" aria-controls="menu-visite" title="Choisir une visite guidée">
+          Visites guidées <span class="fleche" aria-hidden="true">▾</span>
+        </button>
+        <div class="sous-menu" id="menu-visite">
+          <!-- ↓ À ADAPTER : nom (et dossier) du fichier des circuits à pied, une fois renommé -->
+          <a class="bouton" href="regions/occitanie/essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied </a>
+          <a class="bouton" href="regions/occitanie/essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
+        </div>
+      </div>
     </nav>
   </main>
+
+  <script>
+    // Ouverture / fermeture du menu « Visite guidée » au clic (utile sur mobile et tablette)
+    const visite = document.querySelector('.visite');
+    const declencheur = visite.querySelector('button');
+
+    function basculer(ouvrir) {
+      visite.classList.toggle('ouvert', ouvrir);
+      declencheur.setAttribute('aria-expanded', ouvrir);
+    }
+    declencheur.addEventListener('click', (e) => {
+      e.stopPropagation();
+      basculer(!visite.classList.contains('ouvert'));
+    });
+    document.addEventListener('click', (e) => {
+      if (!visite.contains(e.target)) { basculer(false); declencheur.blur(); }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { basculer(false); declencheur.blur(); }
+    });
+  </script>
 </body>
 </html>
