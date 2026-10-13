@@ -321,18 +321,37 @@
     @media (max-width: 860px) {
       .circuit-option { font-size: 14px; padding: 5px 12px; }
     }
+/* ── « Départements voisins » : les choix s'empilent en colonne ── */
+.circuit-sous-menu.vertical {
+  flex-direction: column; align-items: flex-end; gap: 6px;
+  top: 0; transform: translate(4px, 0);
+}
+.circuit-menu.ouvert .circuit-sous-menu.vertical,
+.circuit-menu:focus-within .circuit-sous-menu.vertical { transform: translate(0, 0); }
+@media (hover: hover) {
+  .circuit-menu:hover .circuit-sous-menu.vertical { transform: translate(0, 0); }
+}
+
+.circuit-sous-menu.vertical {
+  flex-direction: column; align-items: flex-end; gap: 6px;
+  top: -80px;   /* ← remonte la liste : augmentez (-100px, -120px…) si le dernier nom est encore coupé */
+  transform: translate(4px, 0);
+}
+
+
   </style>
 </head>
 <body class="carte-page">
 
   <div class="carte-hero">
+    
     <!-- Lien vers la fiche d'identité de la région (même style que « Vers la carte Occitanie ») -->
     <div class="produit-topbar-btns">
       <a href="occitanie-info.html" class="produit-btn-retour">Identité &amp; repères de la région</a>
       <!-- « Circuit découverte » : un clic ouvre deux choix, comme « Visites guidées » sur la page d'accueil -->
       <div class="circuit-menu">
         <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
-          Circuit découverte <span class="fleche" aria-hidden="true">▾</span>
+          Circuits découvertes <span class="fleche" aria-hidden="true">▾</span>
         </button>
         <div class="circuit-sous-menu" id="menu-circuit">
           <a class="circuit-option" href="essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
@@ -340,6 +359,22 @@
         </div>
       </div>
       <a href="histoires-de-clocher/histoires-de-clocher.html" class="produit-btn-retour">Histoires de clocher</a>
+       
+      <!-- « Départements voisins » : un clic ouvre les 5 départements -->
+<div class="circuit-menu">
+  <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-voisins" title="Voir les départements voisins">
+    Départements voisins <span class="fleche" aria-hidden="true">▾</span>
+  </button>
+  <div class="circuit-sous-menu vertical" id="menu-voisins">
+    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/dordogne/dordogne.html">Dordogne</a>
+    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/correze/correze.html">Corrèze</a>
+    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/lot-et-garonne/lot-et-garonne.html">Lot-et-Garonne</a>
+    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/landes/landes.html">Landes</a>
+    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/pyrenees-atlantiques/pyrenees-atlantiques.html">Pyrénées-Atlantiques</a>
+  </div>
+</div>
+      
+ 
     </div>
     <div class="container">
       <div class="carte-hero-inner">
@@ -446,26 +481,35 @@
   </footer>
 
   <script>
-    // Ouverture / fermeture du menu « Circuit découverte » au clic (utile sur mobile et tablette)
-    (function () {
-      const menu = document.querySelector('.circuit-menu');
+  // Ouverture / fermeture des menus déroulants (« Circuit découverte », « Départements voisins »)
+  (function () {
+    const menus = document.querySelectorAll('.circuit-menu');
+    function basculer(menu, ouvrir) {
+      menu.classList.toggle('ouvert', ouvrir);
+      menu.querySelector('button').setAttribute('aria-expanded', ouvrir);
+    }
+    menus.forEach(menu => {
       const declencheur = menu.querySelector('button');
-      function basculer(ouvrir) {
-        menu.classList.toggle('ouvert', ouvrir);
-        declencheur.setAttribute('aria-expanded', ouvrir);
-      }
       declencheur.addEventListener('click', (e) => {
         e.stopPropagation();
-        basculer(!menu.classList.contains('ouvert'));
+        const ouvrir = !menu.classList.contains('ouvert');
+        menus.forEach(m => basculer(m, false));   // ferme l'autre menu s'il était ouvert
+        basculer(menu, ouvrir);
       });
-      document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target)) { basculer(false); declencheur.blur(); }
+    });
+    document.addEventListener('click', (e) => {
+      menus.forEach(menu => {
+        if (!menu.contains(e.target)) { basculer(menu, false); }
       });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') { basculer(false); declencheur.blur(); }
-      });
-    })();
-  </script>
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        menus.forEach(menu => basculer(menu, false));
+        if (document.activeElement) document.activeElement.blur();
+      }
+    });
+  })();
+</script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <script>
