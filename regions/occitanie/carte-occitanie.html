@@ -269,6 +269,58 @@
       .carte-hero .fiche-hero-ecusson { top: 140px; }
       .carte-hero-inner { padding-top: 399px; }
     }
+
+    /* ── « Circuit découverte » et son sous-menu (À pied / En voiture) ── */
+    .circuit-menu { position: relative; }
+    button.circuit-declencheur {
+      background: none; border: none; cursor: pointer; margin: 0; line-height: inherit;
+    }
+    .circuit-declencheur .fleche { display: inline-block; font-size: 0.8em; transition: transform .25s; }
+    /* les deux choix s'ouvrent à gauche du bouton, pour ne pas cacher « Histoires de clocher » */
+    .circuit-sous-menu {
+      position: absolute; right: 100%; top: 50%;
+      padding-right: 10px;                 /* zone « pont » : la souris ne perd pas le survol */
+      display: flex; gap: 8px;
+      opacity: 0; visibility: hidden; transform: translate(4px, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s .2s;
+    }
+    .circuit-option {
+      display: inline-flex; align-items: center; padding: 6px 16px;
+      font-family: var(--font-corps); font-size: 16px; color: #fff; text-decoration: none; white-space: nowrap;
+      background: rgba(12, 20, 30, .55);
+      border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .25), 0 0 0 3px rgba(250, 199, 117, .5);   /* liseré doré */
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .circuit-option:hover {
+      background: rgba(12, 20, 30, .75); border-color: #FAC775; color: #FAC775;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .3), 0 0 0 3px rgba(250, 199, 117, .9);
+    }
+    .circuit-option:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+    /* ouvert : au clic (classe .ouvert), au clavier (focus-within) ou au survol (souris uniquement) */
+    .circuit-menu.ouvert .circuit-sous-menu,
+    .circuit-menu:focus-within .circuit-sous-menu {
+      opacity: 1; visibility: visible; transform: translate(0, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s;
+    }
+    .circuit-menu.ouvert .circuit-declencheur,
+    .circuit-menu:focus-within .circuit-declencheur { color: #FAC775; opacity: 1; }
+    .circuit-menu.ouvert .fleche,
+    .circuit-menu:focus-within .fleche { transform: rotate(180deg); }
+    @media (hover: hover) {
+      .circuit-menu:hover .circuit-sous-menu {
+        opacity: 1; visibility: visible; transform: translate(0, -50%);
+        transition: opacity .2s, transform .2s, visibility 0s;
+      }
+      .circuit-menu:hover .circuit-declencheur { color: #FAC775; opacity: 1; }
+      .circuit-menu:hover .fleche { transform: rotate(180deg); }
+    }
+    @media (max-width: 860px) {
+      .circuit-option { font-size: 14px; padding: 5px 12px; }
+    }
   </style>
 </head>
 <body class="carte-page">
@@ -277,8 +329,17 @@
     <!-- Lien vers la fiche d'identité de la région (même style que « Vers la carte Occitanie ») -->
     <div class="produit-topbar-btns">
       <a href="occitanie-info.html" class="produit-btn-retour">Identité &amp; repères de la région</a>
-      <a href="essai-circuit/circuits-a-pied.html" class="produit-btn-retour">Circuit à pied</a>
-      <a href="essai-circuit2/circuits-en-voiture.html" class="produit-btn-retour">Circuit en voiture</a>
+      <!-- « Circuit découverte » : un clic ouvre deux choix, comme « Visites guidées » sur la page d'accueil -->
+      <div class="circuit-menu">
+        <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
+          Circuit découverte <span class="fleche" aria-hidden="true">▾</span>
+        </button>
+        <div class="circuit-sous-menu" id="menu-circuit">
+          <a class="circuit-option" href="essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
+          <a class="circuit-option" href="essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
+        </div>
+      </div>
+      <a href="histoires-de-clocher/histoires-de-clocher.html" class="produit-btn-retour">Histoires de clocher</a>
     </div>
     <div class="container">
       <div class="carte-hero-inner">
@@ -383,6 +444,28 @@
       
     </div>
   </footer>
+
+  <script>
+    // Ouverture / fermeture du menu « Circuit découverte » au clic (utile sur mobile et tablette)
+    (function () {
+      const menu = document.querySelector('.circuit-menu');
+      const declencheur = menu.querySelector('button');
+      function basculer(ouvrir) {
+        menu.classList.toggle('ouvert', ouvrir);
+        declencheur.setAttribute('aria-expanded', ouvrir);
+      }
+      declencheur.addEventListener('click', (e) => {
+        e.stopPropagation();
+        basculer(!menu.classList.contains('ouvert'));
+      });
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) { basculer(false); declencheur.blur(); }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { basculer(false); declencheur.blur(); }
+      });
+    })();
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <script>

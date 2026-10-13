@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mérens, le château devenu ferme — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Mérens (Gers), village de 68 habitants et son château gascon de la fin du XIIIe siècle, remanié au XVIIe puis converti à l&#x27;agriculture." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- COULEUR-BANDEAU : vert des coteaux de Gascogne -->
+  <style>
+    .produit-hero { background-color: #6B7A3A; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #6B7A3A; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #4C5729; }
+    .lettrine::first-letter, .chiffre .val { color: #6B7A3A; }
+    .btn { background: #6B7A3A; border-color: #6B7A3A; }
+    .btn:hover { background: #4C5729; }
+    .btn.secondaire { background: #F7F3EC; color: #6B7A3A; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #6B7A3A; color: white; border-color: #6B7A3A; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #6B7A3A, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #6B7A3A, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du village si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+           url('../../../assets/departement/occitanie/panorama-clocher.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>M</em>érens<br>
+            <span style="padding-left: 20px;"><em>l</em>e <em>c</em>hâteau <em>d</em>evenu <em>f</em>erme</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-gers.png" alt="Carte Gers" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/gers.png" alt="Écusson Gers" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#focus">⛪ L'église</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Soixante-huit habitants, deux exploitations agricoles, une église au clocher-mur et, au milieu des champs, un château gascon de la fin du XIIIe siècle. Il a été forteresse, demeure de gouverneurs, puis bâtiment agricole. Aujourd'hui, c'est un monument historique presque inconnu.</p>
+              <h3>Un village du Haut-Armagnac</h3>
+              <p class="lettrine">Mérens est une petite commune rurale du centre du Gers, à une quinzaine de kilomètres au nord d'Auch, dans le Haut-Armagnac. Ses voisines s'appellent Lavardens, Peyrusse-Massas et Roquefort. Le paysage est celui des coteaux gascons : des champs de céréales et d'oléagineux, l'Ourlan qui serpente, des fermes isolées. La commune a compté jusqu'à 161 habitants en 1821 ; elle en a 68 aujourd'hui.</p>
+              <h3>Un château gascon</h3>
+              <p>Le château est bâti à la fin du XIIIe siècle ou au tout début du XIVe. C'est un <strong>château gascon</strong>, un type très répandu dans le Sud-Ouest à cette époque : un logis rectangulaire massif, haut et fermé, flanqué d'une tour. De cette première époque, Mérens garde le noyau central et la tour carrée du sud-ouest.</p>
+           
+                
+           <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/eglise_de_merens.jpg"
+                        alt="merrens" />
+                    <figcaption>L'église de Mérens</figcaption>
+          </figure>
+           
+           
+              <p>Une famille seigneuriale de Mérens, parfois écrite Mérenx, est attestée en Armagnac. Aux XVIe et XVIIe siècles, ses membres exercent des charges de gouverneur pour le roi à Fleurance et à Layrac. Cette famille était protestante avant la révocation de l'édit de Nantes ; elle est aujourd'hui éteinte.</p>
+              <h3>Le grand remaniement du XVIIe siècle</h3>
+              <p>Vers 1600, le château est modernisé. On lui ajoute un nouveau système de défense, avec un chemin de ronde circulaire. Entre 1604 et 1613, de grands travaux percent des fenêtres, réorganisent les pièces et doublent la hauteur de la façade est. La forteresse médiévale devient une demeure, à l'heure où les guerres de Religion s'achèvent.</p>
+              <h3>De la demeure à l'exploitation agricole</h3>
+              <p>Comme beaucoup de châteaux de campagne, Mérens est ensuite transformé pour des usages agricoles. Il sert de bâtiment d'exploitation. C'est d'ailleurs dans le <strong>chai</strong>, à l'ouest, que subsistent des éléments de l'enceinte médiévale. Cette reconversion lui a sans doute épargné le sort des châteaux démontés pour leurs pierres : utile, il a été entretenu.</p>
+              <div class="citation-bloc">
+                <p>Château fort, demeure de gouverneurs, puis chai et granges : à Mérens, c'est l'agriculture qui a sauvé le monument.</p>
+              </div>
+              <p>En 2003, le château est inscrit en totalité au titre des monuments historiques. Il est resté une propriété privée et ne se visite pas, mais on l'aperçoit depuis le village.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li class="fort"><span class="date">Fin XIIIe</span><span>Construction du <strong>château gascon</strong> et de sa tour carrée.</span></li>
+              <li><span class="date">Début XIVe</span><span>Fin de la première campagne de construction.</span></li>
+              <li><span class="date">1504</span><span>Fondation de l'<strong>église Saint-Antoine</strong>, sans doute ancienne chapelle castrale.</span></li>
+              <li><span class="date">XVIe-XVIIe</span><span>Les seigneurs de Mérens sont gouverneurs pour le roi à Fleurance et à Layrac.</span></li>
+              <li><span class="date">≈ 1600</span><span>Nouveau système défensif avec chemin de ronde circulaire.</span></li>
+              <li class="fort"><span class="date">1604-1613</span><span>Grands travaux : fenêtres, nouvelle distribution, <strong>façade est doublée</strong>.</span></li>
+              <li><span class="date">1821</span><span>Population maximale : <strong>161 habitants</strong>.</span></li>
+              <li><span class="date">1862</span><span>Disparition du cimetière voisin de l'église.</span></li>
+              <li><span class="date">XIXe-XXe</span><span>Le château sert de bâtiment agricole ; le chai conserve l'enceinte médiévale.</span></li>
+              <li class="fort"><span class="date">2003</span><span>Le château est <strong>inscrit monument historique</strong> en totalité.</span></li>
+              <li><span class="date">2009</span><span>La tempête Klaus abat un cèdre du village.</span></li>
+              <li><span class="date">2010</span><span>Le clocher de l'église est restauré avec le bois de ce cèdre.</span></li>
+            </ol>
+          </section>
+
+          <!-- L'ÉGLISE -->
+          <section class="section" id="focus">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⛪</div>
+              L'église Saint-Antoine et le clocher du cèdre
+            </h2>
+            <div class="histoire-texte">
+              <p>L'<strong>église Saint-Antoine</strong> est fondée en 1504. Elle aurait d'abord été la chapelle du château. Remaniée au XVIIe siècle, elle est bâtie en pierres du pays et pavée de carreaux venus d'une ancienne tuilerie voisine.</p>
+              <p>Elle porte un <strong>clocher-mur</strong>, typique du Sud-Ouest : un simple mur percé de deux baies pour les cloches, au sommet en « queue d'aronde ». Une croix en fer forgé se dresse à côté.</p>
+              <p>En janvier 2009, la tempête Klaus abat un cèdre du village. Plutôt que de le débiter en bois de chauffage, on utilise son bois pour restaurer le clocher en 2010. L'arbre veille désormais sur le village d'une autre manière.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les visages du château</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Fin XIIIe siècle :</strong> forteresse gasconne avec sa tour carrée.</span></li>
+                <li><span><strong>Vers 1600 :</strong> renforcée d'un chemin de ronde circulaire.</span></li>
+                <li><span><strong>1604-1613 :</strong> transformée en demeure, façade est doublée.</span></li>
+                <li><span><strong>Ensuite :</strong> bâtiment agricole, avec chai et granges.</span></li>
+                <li><span><strong>Depuis 2003 :</strong> monument historique, propriété privée.</span></li>
+              </ol>
+            </div>
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">XIIIe s.</div><div class="lib">construction du château</div></div>
+              <div class="chiffre"><div class="val">1504</div><div class="lib">fondation de l'église</div></div>
+              <div class="chiffre"><div class="val">161</div><div class="lib">habitants en 1821</div></div>
+              <div class="chiffre"><div class="val">68</div><div class="lib">habitants en 2022</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Architecture</div>
+                <h4>Qu'est-ce qu'un château gascon ?</h4>
+                <p>Un type de château très répandu en Gascogne aux XIIIe et XIVe siècles : un grand logis rectangulaire, haut et peu percé, souvent flanqué d'une ou deux tours, à mi-chemin entre la forteresse et la maison forte.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Religion</div>
+                <h4>Des seigneurs protestants</h4>
+                <p>La famille de Mérens était protestante avant la révocation de l'édit de Nantes (1685), un choix courant dans la noblesse gasconne de l'époque d'Henri IV.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Agriculture</div>
+                <h4>De 8 à 2 fermes</h4>
+                <p>Mérens comptait 8 exploitations agricoles en 1988, et 2 seulement en 2020, pour environ 215 hectares cultivés.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Voisinage</div>
+                <h4>À deux pas de Lavardens</h4>
+                <p>Mérens est voisine de Lavardens et de son imposant château, l'un des plus connus du Gers. Une bonne idée de visite combinée.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Mérens, Haut-Armagnac (Gers)</span>
+                <button class="btn secondaire" id="reset">Recentrer</button>
+              </div>
+              <div id="map" aria-label="Carte de Mérens"></div>
+              <div class="carte-note">Position indicative, d'après OpenStreetMap. Le château est une propriété privée : merci de respecter les lieux.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Gers (32)</span></div>
+              <div class="aside-row"><span class="aside-label">Pays</span><span class="aside-val">Pays d'Auch, Haut-Armagnac</span></div>
+              <div class="aside-row"><span class="aside-label">Habitants</span><span class="aside-val">68 (2022)</span></div>
+              <div class="aside-row"><span class="aside-label">Record</span><span class="aside-val">161 (1821)</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude</span><span class="aside-val">126 à 244 m</span></div>
+              <div class="aside-row"><span class="aside-label">Monument</span><span class="aside-val">Château (MH 2003)</span></div>
+              <div class="aside-row"><span class="aside-label">Statut du château</span><span class="aside-val">Propriété privée</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution du nombre d'habitants"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Recensements ; seuls le maximum de 1821 et la valeur de 2022 sont repris ici.</p>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9rens_(Gers)" target="_blank" rel="noopener">Wikipédia, Mérens (Gers)</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Ch%C3%A2teau_de_M%C3%A9rens" target="_blank" rel="noopener">Wikipedia, château de Mérens</a></li>
+                <li><a href="https://pop.culture.gouv.fr/notice/merimee/PA32000013" target="_blank" rel="noopener">Base Mérimée, notice PA32000013</a></li>
+                <li><a href="https://www.tourisme-gers.com/patrimoine-culturel/village-de-merens/" target="_blank" rel="noopener">Tourisme Gers, village de Mérens</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   (un lieu sans lat/lng apparaît dans la liste mais pas sur la carte)
+   ============================================================ */
+const lieux=[{"name": "Le village de Mérens", "lat": 43.754, "lng": 0.539, "desc": "Église Saint-Antoine et son clocher-mur ; le château (privé) se voit depuis la route."}, {"name": "Lavardens", "desc": "Commune voisine, avec son grand château ouvert à la visite."}, {"name": "Auch", "desc": "À une quinzaine de kilomètres : cathédrale Sainte-Marie et escalier monumental."}];
+// Population (recensements)
+const population=[[1821, 161], [2022, 68]];
+// Repère à mettre en avant sur la courbe : [année début, année fin, texte] ou null
+const periodeMarquee=null;
+/* ============================================================ */
+
+const COUL='#6B7A3A', COUL_FONCE='#4C5729';
+const surCarte=lieux.map((s,i)=>({...s,n:i+1})).filter(s=>s.lat!=null);
+let recentrer=()=>{};
+if(window.L){
+ const map=L.map('map',{scrollWheelZoom:false});
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+ const bounds=L.latLngBounds(surCarte.map(s=>[s.lat,s.lng]));
+ recentrer=()=>surCarte.length>1?map.fitBounds(bounds.pad(.35)):map.setView([surCarte[0].lat,surCarte[0].lng],14);
+ recentrer();
+ window._markers={};
+ surCarte.forEach(s=>{
+  const icon=L.divIcon({className:'',html:`<div class="marker">${s.n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  window._markers[s.n]=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${s.n}. ${s.name}</strong><p>${s.desc}</p>`);
+ });
+ window._map=map;
+} else {
+ document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>';
+}
+lieux.forEach((s,i)=>{
+ const el=document.createElement('div');el.className='etape';
+ const surLaCarte=s.lat!=null;
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div>${surLaCarte?'<div class="etape-leg">Voir sur la carte ↗</div>':''}</div>`;
+ if(surLaCarte)el.onclick=()=>{if(!window._map)return;document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});window._map.setView([s.lat,s.lng],15);window._markers[i+1].openPopup()};
+ else el.style.cursor='default';
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>recentrer();
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph');if(!svg||!population.length)return;
+ const W=300,H=150,g={l:32,r:12,t:14,b:22};
+ const annees=population.map(p=>p[0]),vals=population.map(p=>p[1]);
+ const x0=Math.floor((Math.min(...annees)-5)/10)*10,x1=Math.max(2025,Math.max(...annees));
+ const pas=[10,20,25,50,100,200,250,500][[10,20,25,50,100,200,250,500].findIndex(p=>Math.max(...vals)/p<=5)];
+ const yMax=Math.ceil(Math.max(...vals)*1.1/pas)*pas;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ for(let v=0;v<=yMax;v+=pas)s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`;
+ const ecart=(x1-x0)>120?50:20;
+ for(let a=Math.ceil(x0/ecart)*ecart;a<=x1;a+=ecart)s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`;
+ if(periodeMarquee){const[a,b,t]=periodeMarquee;s+=`<rect x="${X(a)}" y="${g.t}" width="${Math.max(3,X(b)-X(a))}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/><text x="${X((a+b)/2)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">${t}</text>`}
+ s+=`<polyline points="${population.map(([a,v])=>X(a)+','+Y(v)).join(' ')}" fill="none" stroke="${COUL}" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="${COUL}"><title>${a} : ${v} habitants</title></circle>`});
+ const iMax=vals.indexOf(Math.max(...vals)),iMin=vals.indexOf(Math.min(...vals));
+ s+=`<text x="${X(annees[iMax])+6}" y="${Y(vals[iMax])+3}" style="fill:${COUL_FONCE};font-weight:700">${vals[iMax]}</text>`;
+ if(iMin!==iMax)s+=`<text x="${X(annees[iMin])}" y="${Y(vals[iMin])-7}" text-anchor="middle" style="fill:${COUL_FONCE};font-weight:700">${vals[iMin]}</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

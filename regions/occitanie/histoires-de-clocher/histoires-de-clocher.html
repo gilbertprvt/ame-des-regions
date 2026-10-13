@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Histoires de clocher — L'Âme des Régions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+    :root { --font-titre: 'Playfair Display', Georgia, serif; --font-corps: 'Source Sans 3', Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #FAF7F0; font-family: var(--font-corps); color: #3A3028; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Bandeau : même largeur et même ombrage que celui de carte-occitanie.html ── */
+    .produit-hero {
+      /* ← même largeur que la colonne des textes et des fiches (1180 px − 2 × 24 px de marge) */
+      max-width: 1132px; width: calc(100% - 48px); margin: 0 auto; border-radius: 0 0 16px 16px;
+      background-color: #9A3F2C; color: white; padding: 22px 0 0; position: relative; overflow: hidden;
+      background-image: url('../../../assets/departement/occitanie/panorama-clocher.jpg');
+      background-size: cover; background-position: center;
+    }
+    /* voile sombre sur la photo pour faire ressortir les textes (plus foncé sur les bords) */
+    .produit-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.20) 40%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.60) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.45) 100%);
+    }
+    .produit-hero > .container { position: relative; z-index: 1; max-width: none; padding: 0 32px; }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 3; }
+    .produit-logo { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+    .produit-logo span { color: #FAC775; }
+
+    /* Liens en haut à droite, l'un sous l'autre */
+    .produit-topbar-btns {
+      position: absolute; top: 18px; right: 32px; z-index: 4;   /* ← position des liens */
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 6px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; text-shadow: 0 2px 6px rgba(0,0,0,0.8); transition: opacity 0.18s, color 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: .7; }
+
+    /* ── « Circuit découverte » et son sous-menu (À pied / En voiture) ── */
+    .circuit-menu { position: relative; }
+    button.circuit-declencheur { background: none; border: none; cursor: pointer; margin: 0; line-height: inherit; }
+    .circuit-declencheur .fleche { display: inline-block; font-size: 0.8em; transition: transform .25s; }
+    /* les deux choix s'ouvrent à gauche du bouton */
+    .circuit-sous-menu {
+      position: absolute; right: 100%; top: 50%;
+      padding-right: 12px;                 /* zone « pont » : la souris ne perd pas le survol */
+      display: flex; gap: 8px;
+      opacity: 0; visibility: hidden; transform: translate(4px, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s .2s;
+    }
+    .circuit-option {
+      display: inline-flex; align-items: center; padding: 6px 16px;
+      font-family: var(--font-corps); font-size: 16px; color: #fff; text-decoration: none; white-space: nowrap;
+      background: rgba(12, 20, 30, .55);
+      border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .25), 0 0 0 3px rgba(250, 199, 117, .5);   /* liseré doré */
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .circuit-option:hover {
+      background: rgba(12, 20, 30, .75); border-color: #FAC775; color: #FAC775;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .3), 0 0 0 3px rgba(250, 199, 117, .9);
+    }
+    .circuit-option:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    /* ouvert : au clic (classe .ouvert), au clavier (focus-within) ou au survol (souris uniquement) */
+    .circuit-menu.ouvert .circuit-sous-menu,
+    .circuit-menu:focus-within .circuit-sous-menu {
+      opacity: 1; visibility: visible; transform: translate(0, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s;
+    }
+    .circuit-menu.ouvert .circuit-declencheur,
+    .circuit-menu:focus-within .circuit-declencheur { color: #FAC775; opacity: 1; }
+    .circuit-menu.ouvert .fleche,
+    .circuit-menu:focus-within .fleche { transform: rotate(180deg); }
+    @media (hover: hover) {
+      .circuit-menu:hover .circuit-sous-menu {
+        opacity: 1; visibility: visible; transform: translate(0, -50%);
+        transition: opacity .2s, transform .2s, visibility 0s;
+      }
+      .circuit-menu:hover .circuit-declencheur { color: #FAC775; opacity: 1; }
+      .circuit-menu:hover .fleche { transform: rotate(180deg); }
+    }
+
+    .hero-titre { position: relative; z-index: 2; padding: 40px 0 46px; }
+    .hero-titre h1 {
+      font-family: var(--font-titre); font-size: clamp(30px, 5vw, 54px); margin: 0 0 14px; line-height: 1.15;
+      text-shadow: 3px 3px 0 #9A3F2C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6);
+    }
+    .hero-titre h1 em { color: #FAC775; font-style: italic; }
+    .hero-titre p { max-width: 640px; font-size: 17px; line-height: 1.6; margin: 0; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+
+    .liste { padding: 48px 0 80px; }
+    .intro { max-width: 760px; font-size: 15.5px; line-height: 1.8; margin: 0 0 32px; }
+    .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .carte {
+      background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden;
+      display: flex; flex-direction: column; text-decoration: none; color: inherit;
+      transition: transform .18s, box-shadow .18s;
+    }
+    a.carte:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(90,62,27,.14); }
+    .carte-tete { background: #9A3F2C; color: white; padding: 14px 18px; }
+    .carte-tete .dept { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; opacity: .85; }
+    .carte-tete h2 { font-family: var(--font-titre); font-size: 22px; margin: 2px 0 0; }
+    .carte-corps { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+    .accroche { font-family: var(--font-titre); font-style: italic; color: #C8843A; font-size: 16px; margin: 0 0 8px; }
+    .carte-corps p.resume { font-size: 14px; line-height: 1.65; margin: 0 0 14px; flex: 1; }
+    .statut { font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+    .statut.dispo { color: #9A3F2C; }
+    .statut.bientot { color: #8B7355; font-weight: 600; }
+    .carte.a-venir { opacity: .82; }
+    .carte.a-venir .carte-tete { background: #8B7355; }
+
+    .site-footer { background: #9A3F2C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #FAC775; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    @media (max-width: 860px) {
+      .produit-hero > .container { padding: 0 16px; }
+      /* sur téléphone et tablette, les liens passent sous le logo */
+      .produit-topbar-btns { position: static; margin-top: 10px; }
+      .produit-btn-retour { font-size: 16px; }
+      /* les deux choix s'affichent sous « Circuit découverte » au lieu d'à gauche */
+      .circuit-sous-menu { position: static; transform: none; padding: 4px 0 6px; display: none; }
+      .circuit-menu.ouvert .circuit-sous-menu,
+      .circuit-menu:focus-within .circuit-sous-menu { display: flex; transform: none; }
+      .circuit-option { font-size: 14px; padding: 5px 12px; }
+    }
+    @media (max-width: 560px) { .container { padding: 0 16px; } .produit-hero { width: calc(100% - 32px); } .grille { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+      <!-- Liens en haut à droite, l'un sous l'autre -->
+      <nav class="produit-topbar-btns" aria-label="Navigation Occitanie">
+        <a href="../carte-occitanie.html" class="produit-btn-retour">Carte Occitanie</a>
+        <a href="../occitanie-info.html" class="produit-btn-retour">Identité &amp; repères de la région</a>
+        <!-- « Circuit découverte » : un clic ouvre deux choix, comme sur la carte -->
+        <div class="circuit-menu">
+          <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
+            Circuit découverte <span class="fleche" aria-hidden="true">▾</span>
+          </button>
+          <div class="circuit-sous-menu" id="menu-circuit">
+            <a class="circuit-option" href="../essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
+            <a class="circuit-option" href="../essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
+          </div>
+        </div>
+      </nav>
+      <div class="hero-titre">
+        <h1><em>H</em>istoires <em>d</em>e <em>c</em>locher</h1>
+        <p>De tout petits villages, souvent inconnus, dont l'histoire dépasse de loin la taille. Une fiche par village, pour raconter ce qui les rend uniques.</p>
+      </div>
+    </div>
+  </div>
+
+  <main class="liste">
+    <div class="container">
+      <p class="intro">Un village évacué pour un lac qui ne l'a jamais englouti, une communauté de chevaliers égaux, un curé qui perce la montagne, des nobles qui soufflent le verre, une commune qui refuse de mourir avec cinq habitants… Ces histoires se cachent derrière des clochers que l'on traverse sans s'arrêter.</p>
+
+      <div class="grille">
+        <a class="carte" href="histoire-celles.html">
+          <div class="carte-tete" style="background:#9A3F2C"><div class="dept">Hérault (34)</div><h2>Celles</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le village sauvé des eaux</p>
+            <p class="resume">Évacué en 1969 pour le lac du Salagou, que l'eau n'a jamais atteint. Après cinquante ans d'abandon, il renaît sans qu'aucune maison ne soit vendue.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-la-garde-guerin.html">
+          <div class="carte-tete" style="background:#4F5D73"><div class="dept">Lozère (48)</div><h2>La Garde-Guérin</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le village des chevaliers égaux</p>
+            <p class="resume">Sur la voie Régordane, des chevaliers « pariers » se partageaient la seigneurie à parts égales, avec des représentants élus.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-lercoul.html">
+          <div class="carte-tete" style="background:#3F6A5A"><div class="dept">Ariège (09)</div><h2>Lercoul</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le village qui refuse de disparaître</p>
+            <p class="resume">329 habitants en 1836, cinq en 1975. La petite commune de montagne a pourtant gardé sa mairie et son identité.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-saint-martin-lys.html">
+          <div class="carte-tete" style="background:#2F5E7A"><div class="dept">Aude (11)</div><h2>Saint-Martin-Lys</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le curé qui perça la montagne</p>
+            <p class="resume">L'abbé Félix Armand et ses paroissiens taillent à la pioche un passage dans le défilé de Pierre-Lys : le « Trou du Curé ».</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-larressingle.html">
+          <div class="carte-tete" style="background:#9A6B2F"><div class="dept">Gers (32)</div><h2>Larressingle</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">La minuscule cité fortifiée</p>
+            <p class="resume">La « petite Carcassonne » des évêques de Condom, sauvée dans les années 1920 par un duc à bicyclette et des mécènes de Boston.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-montbrun.html">
+          <div class="carte-tete" style="background:#7A5236"><div class="dept">Lot (46)</div><h2>Montbrun</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le nid d'aigle de la vallée du Lot</p>
+            <p class="resume">Une famille cathare dépossédée, le château des Cardaillac et, en face, la légende du Saut de la Mounine.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-merens.html">
+          <div class="carte-tete" style="background:#6B7A3A"><div class="dept">Gers (32)</div><h2>Mérens</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le château devenu ferme</p>
+            <p class="resume">Un château gascon de la fin du XIIIe siècle, transformé en demeure au XVIIe puis en bâtiment agricole. Monument historique presque confidentiel.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-belbeze-en-comminges.html">
+          <div class="carte-tete" style="background:#5A5F8C"><div class="dept">Haute-Garonne (31)</div><h2>Belbèze-en-Comminges</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Le sanctuaire des 220 autels</p>
+            <p class="resume">1 096 habitants en 1846, 108 aujourd'hui, et sur ses collines un temple gallo-romain aux centaines d'autels votifs.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+        <a class="carte" href="histoire-ferrieres-les-verreries.html">
+          <div class="carte-tete" style="background:#2E6F78"><div class="dept">Hérault (34)</div><h2>Ferrières-les-Verreries</h2></div>
+          <div class="carte-corps">
+            <p class="accroche">Où les nobles soufflaient le verre</p>
+            <p class="resume">47 habitants, et cinq siècles de gentilshommes verriers autorisés à travailler le verre sans perdre leur noblesse.</p>
+            <span class="statut dispo">Lire l'histoire →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+  <script>
+    // Ouverture / fermeture du menu « Circuit découverte » au clic (utile sur mobile et tablette)
+    (function () {
+      const menu = document.querySelector('.circuit-menu');
+      const declencheur = menu.querySelector('button');
+      function basculer(ouvrir) {
+        menu.classList.toggle('ouvert', ouvrir);
+        declencheur.setAttribute('aria-expanded', ouvrir);
+      }
+      declencheur.addEventListener('click', (e) => {
+        e.stopPropagation();
+        basculer(!menu.classList.contains('ouvert'));
+      });
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) { basculer(false); declencheur.blur(); }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { basculer(false); declencheur.blur(); }
+      });
+    })();
+  </script>
+</body>
+</html>

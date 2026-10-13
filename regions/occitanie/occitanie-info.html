@@ -284,6 +284,77 @@
   <style>
     .produit-hero{background-image:url('panorama-info.jpg');background-size:cover;background-position:center 30%}
     .hero-topic{font-size:clamp(30px,5vw,52px);font-family:var(--font-titre);font-weight:700;color:white;margin-bottom:70px}.hero-topic em{color:#C8843A}
+
+    /* ── Liens du bandeau : l'un sous l'autre, en haut à droite ── */
+    .produit-topbar-btns.liens-empiles {
+      position: absolute; top: 18px; right: 0; z-index: 4;   /* ← position des liens : augmenter pour descendre */
+      display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+    }
+    .liens-empiles .produit-btn-retour { padding: 5px 4px; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+
+    /* ── « Circuit découverte » et son sous-menu (À pied / En voiture) ── */
+    .circuit-menu { position: relative; }
+    button.circuit-declencheur { background: none; border: none; cursor: pointer; margin: 0; line-height: inherit; }
+    .circuit-declencheur .fleche { display: inline-block; font-size: 0.8em; transition: transform .25s; }
+    .circuit-sous-menu {                    /* les deux choix s'ouvrent à gauche du bouton */
+      position: absolute; right: 100%; top: 50%;
+      padding-right: 12px;                 /* zone « pont » : la souris ne perd pas le survol */
+      display: flex; gap: 8px;
+      opacity: 0; visibility: hidden; transform: translate(4px, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s .2s;
+    }
+    .circuit-option {
+      display: inline-flex; align-items: center; padding: 6px 16px;
+      font-family: var(--font-corps); font-size: 16px; color: #fff; text-decoration: none; white-space: nowrap;
+      background: rgba(12, 20, 30, .55);
+      border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .25), 0 0 0 3px rgba(250, 199, 117, .5);   /* liseré doré */
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .circuit-option:hover {
+      background: rgba(12, 20, 30, .75); border-color: #FAC775; color: #FAC775;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .3), 0 0 0 3px rgba(250, 199, 117, .9);
+    }
+    .circuit-option:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .circuit-menu.ouvert .circuit-sous-menu,
+    .circuit-menu:focus-within .circuit-sous-menu {
+      opacity: 1; visibility: visible; transform: translate(0, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s;
+    }
+    .circuit-menu.ouvert .circuit-declencheur,
+    .circuit-menu:focus-within .circuit-declencheur { color: #FAC775; opacity: 1; }
+    .circuit-menu.ouvert .fleche,
+    .circuit-menu:focus-within .fleche { transform: rotate(180deg); }
+    @media (hover: hover) {
+      .circuit-menu:hover .circuit-sous-menu {
+        opacity: 1; visibility: visible; transform: translate(0, -50%);
+        transition: opacity .2s, transform .2s, visibility 0s;
+      }
+      .circuit-menu:hover .circuit-declencheur { color: #FAC775; opacity: 1; }
+      .circuit-menu:hover .fleche { transform: rotate(180deg); }
+    }
+
+    /* ── Index des chapitres : 7 sur la 1re ligne, 3 sur la 2e, centrés, sans ascenseur ── */
+    .produit-nav-inner { display: flex; flex-wrap: wrap; justify-content: center; overflow: visible; }
+    .produit-nav-inner a:nth-child(n+8) { order: 2; }          /* ← « n+8 » : les chapitres à partir du 8e passent sur la 2e ligne */
+    .produit-nav-inner::after { content: ''; flex-basis: 100%; order: 1; }   /* saut de ligne */
+    .produit-nav a { padding: 9px 18px; text-align: center; }
+
+    @media (max-width: 860px) {
+      /* sur téléphone et tablette, les liens passent sous le logo */
+      .produit-topbar { flex-wrap: wrap; }
+      .produit-topbar-btns.liens-empiles { position: static; width: 100%; margin-top: 8px; }
+      .liens-empiles .produit-btn-retour { font-size: 16px; }
+      .circuit-sous-menu { position: static; transform: none; padding: 4px 0 6px; display: none; }
+      .circuit-menu.ouvert .circuit-sous-menu,
+      .circuit-menu:focus-within .circuit-sous-menu { display: flex; transform: none; }
+      .circuit-option { font-size: 14px; padding: 5px 12px; }
+      /* index : les chapitres passent à la ligne selon la place disponible */
+      .produit-nav-inner::after { display: none; }   /* sur téléphone : retour à la ligne automatique */
+      .produit-nav a { padding: 8px 12px; }
+    }
   </style>
 </head>
 <body class="produit-page">
@@ -291,8 +362,23 @@
 <div class="produit-hero"><div class="container">
   <div class="produit-topbar">
     <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
-    <div class="produit-topbar-btns"><a href="carte-occitanie.html" class="produit-btn-retour">Vers la carte Occitanie</a></div>
+    <!-- Liens en haut à droite, l'un sous l'autre -->
+    <nav class="produit-topbar-btns liens-empiles" aria-label="Navigation Occitanie">
+      <a href="carte-occitanie.html" class="produit-btn-retour">Carte Occitanie</a>
+      <a href="histoires-de-clocher/histoires-de-clocher.html" class="produit-btn-retour">Histoires de clocher</a>
+      <!-- « Circuit découverte » : un clic ouvre deux choix, comme sur les autres pages -->
+      <div class="circuit-menu">
+        <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
+          Circuit découverte <span class="fleche" aria-hidden="true">▾</span>
+        </button>
+        <div class="circuit-sous-menu" id="menu-circuit">
+          <a class="circuit-option" href="essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
+          <a class="circuit-option" href="essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
+        </div>
+      </div>
+    </nav>
   </div>
+  
   <div class="produit-hero-body"><div><h1 class="hero-topic"><em>L</em>'Occitanie<br><span style="padding-left:40px">carte d'<em>i</em>dentité d'une <em>r</em>égion</span></h1></div></div>
 </div>
 <div class="hero-label-bas">⟹ 13 départements · des Pyrénées à la Méditerranée ⟸</div>
@@ -745,6 +831,21 @@
       var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
     });
+  })();
+</script>
+
+<script>
+  // Ouverture / fermeture du menu « Circuit découverte » au clic (utile sur mobile et tablette)
+  (function () {
+    const menu = document.querySelector('.circuit-menu');
+    const declencheur = menu.querySelector('button');
+    function basculer(ouvrir) {
+      menu.classList.toggle('ouvert', ouvrir);
+      declencheur.setAttribute('aria-expanded', ouvrir);
+    }
+    declencheur.addEventListener('click', (e) => { e.stopPropagation(); basculer(!menu.classList.contains('ouvert')); });
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target)) { basculer(false); declencheur.blur(); } });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { basculer(false); declencheur.blur(); } });
   })();
 </script>
 
