@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La croisade des Albigeois — L'Âme des Régions</title>
+  <!-- Photo du bandeau chargée en priorité, avant les styles et les polices -->
+  <link rel="preload" as="image" href="photo/panorama-cathare.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches (réutilisées pour les clauses du traité) */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* Repères, notices, flux */
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+
+    /* Bandeau de phase */
+    .phase-bandeau {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: #F7F3EC; border: 1px solid #E8DEC8; border-radius: 10px;
+      padding: 10px 14px; margin: 0 0 18px; font-family: var(--font-corps); font-size: 13px; color: #5A3E1B;
+    }
+    .phase-bandeau b { color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; }
+    .phase-bandeau .pastille { background: #C8843A; color: white; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+
+    @media (max-width: 760px) {
+      .repere-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .aside-lien { display: block; font-family: var(--font-corps); font-size: 13.5px; color: #2C4A7C; font-weight: 600; text-decoration: none; line-height: 1.5; }
+    .aside-lien:hover { text-decoration: underline; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau : à remplacer par une photo propre à cette page (ex. Cité de Carcassonne, Minerve) -->
+  <style>
+    .produit-hero{background-image:url('photo/panorama-cathare.jpg');background-size:cover;background-position:center 0%}
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="occitanie-histoire-accueil.html" class="produit-btn-retour">
+            ← Retour à l'accueil
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>a croisade<br><span style="padding-left: 40px;">des <em>A</em>lbigeois</span></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-label-bas">
+      ⟹ 1209 – 1229 · Vingt ans de guerre dans le Midi ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#contexte" class="active">🗺️ Contexte</a>
+          <a href="#causes">📜 Causes</a>
+          <a href="#armees">🛡️ Les armées</a>
+          <a href="#phase1">⚔️ 1209-1215</a>
+          <a href="#phase2">🔥 1216-1224</a>
+          <a href="#phase3">👑 1226-1229</a>
+          <a href="#sieges">🏰 Sièges</a>
+          <a href="#frise">⏳ Chronologie</a>
+          <a href="#personnalites">👤 Personnages</a>
+          <a href="#consequences">⚖️ Conséquences</a>
+          <a href="#plans">🧭 Cartes &amp; plans</a>
+          <a href="#recits">✒️ Les chroniqueurs</a>
+          <a href="#mythes">🔎 Idées reçues</a>
+          <a href="#parcours">🥾 Circuit</a>
+          <a href="#infos-pratiques">ℹ️ Infos</a>
+          <a href="#sources">📚 Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- ═══ CONTEXTE ═══ -->
+          <section class="section" id="contexte">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Le Midi à la veille de la croisade
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>La croisade contre les Albigeois</strong> est une guerre de vingt ans (1209-1229) lancée par le pape <strong>Innocent III</strong> contre les hérétiques du Languedoc, que l'on appelle aujourd'hui les cathares, et surtout contre les seigneurs qui les protégeaient. C'est la première croisade prêchée <strong>contre des chrétiens, en terre chrétienne</strong>. Commencée comme une expédition religieuse, elle s'achève en conquête politique : le Languedoc entre dans l'orbite du roi de France.</p>
+
+              <div class="repere-grid">
+                <div class="repere"><strong>1209 – 1215</strong><span>Croisade des barons : Simon de Montfort conquiert le pays.</span></div>
+                <div class="repere"><strong>1216 – 1224</strong><span>Reconquête occitane : les comtes de Toulouse reprennent leurs terres.</span></div>
+                <div class="repere"><strong>1226 – 1229</strong><span>Croisade royale : Louis VIII puis Blanche de Castille imposent la paix.</span></div>
+              </div>
+
+              <h3 class="sous-titre">Un pays sans maître unique</h3>
+              <p>Vers 1200, le Midi n'est pas un État. Le pouvoir y est partagé entre plusieurs grandes maisons aux fidélités croisées. Le <strong>comte de Toulouse</strong>, Raymond VI, domine un vaste ensemble allant de l'Agenais à la Provence rhodanienne, et se reconnaît vassal du roi de France pour l'essentiel de ses terres. Les vicomtes <strong>Trencavel</strong> tiennent Béziers, Carcassonne, Albi et le Razès. Le <strong>comte de Foix</strong> règne sur les vallées pyrénéennes. Enfin, le <strong>roi d'Aragon</strong>, comte de Barcelone, est suzerain de nombreux seigneurs du Languedoc, y compris des Trencavel pour Carcassonne, et possède Montpellier par mariage.</p>
+              <p>Le roi de France, <strong>Philippe Auguste</strong>, est loin : il est absorbé par sa lutte contre les Plantagenêts (conquête de la Normandie en 1204, Bouvines en 1214). Les grands féodaux du Midi se combattent souvent entre eux, et l'autorité épiscopale est faible. Pour Rome, ce morcellement explique que l'hérésie y prospère sans obstacle.</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 290" role="img" aria-label="Les liens de vassalité dans le Midi vers 1200">
+                <g font-family="Source Sans 3, sans-serif" text-anchor="middle">
+                  <rect x="60" y="14" width="200" height="50" rx="9" fill="#2C4A7C"/>
+                  <text x="160" y="36" fill="white" font-size="14" font-weight="700">Roi de France</text>
+                  <text x="160" y="53" fill="#FAC775" font-size="11">Philippe Auguste</text>
+                  <rect x="380" y="14" width="200" height="50" rx="9" fill="#A0522D"/>
+                  <text x="480" y="36" fill="white" font-size="14" font-weight="700">Roi d'Aragon</text>
+                  <text x="480" y="53" fill="#FFE6CC" font-size="11">Pierre II, comte de Barcelone</text>
+
+                  <rect x="40" y="120" width="190" height="56" rx="9" fill="#3E7C4A"/>
+                  <text x="135" y="142" fill="white" font-size="14" font-weight="700">Comte de Toulouse</text>
+                  <text x="135" y="160" fill="#E2F0E4" font-size="11">Raymond VI</text>
+                  <rect x="250" y="120" width="160" height="56" rx="9" fill="#3E7C4A"/>
+                  <text x="330" y="142" fill="white" font-size="14" font-weight="700">Trencavel</text>
+                  <text x="330" y="160" fill="#E2F0E4" font-size="11">Béziers, Carcassonne, Albi</text>
+                  <rect x="430" y="120" width="170" height="56" rx="9" fill="#3E7C4A"/>
+                  <text x="515" y="142" fill="white" font-size="14" font-weight="700">Comte de Foix</text>
+                  <text x="515" y="160" fill="#E2F0E4" font-size="11">Raymond-Roger</text>
+
+                  <rect x="40" y="226" width="560" height="50" rx="9" fill="#F7F3EC" stroke="#E0DACE"/>
+                  <text x="320" y="248" fill="#3A3028" font-size="13" font-weight="700">Seigneurs des castra, consulats urbains, petite noblesse</text>
+                  <text x="320" y="265" fill="#8B7355" font-size="11">Lauragais, Minervois, Cabardès, Termenès… : c'est à ce niveau que se jouent les protections</text>
+                </g>
+                <defs><marker id="fv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B7355"/></marker></defs>
+                <g stroke="#8B7355" stroke-width="1.6" fill="none" marker-end="url(#fv)">
+                  <line x1="140" y1="64" x2="138" y2="118"/>
+                  <line x1="470" y1="64" x2="360" y2="118"/>
+                  <line x1="500" y1="64" x2="512" y2="118"/>
+                  <line x1="135" y1="176" x2="180" y2="224"/>
+                  <line x1="330" y1="176" x2="330" y2="224"/>
+                  <line x1="515" y1="176" x2="470" y2="224"/>
+                </g>
+                <line x1="230" y1="148" x2="250" y2="148" stroke="#C8843A" stroke-width="2" stroke-dasharray="3 3"/>
+                <text x="320" y="96" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#8B7355" font-style="italic">flèches : hommage et suzeraineté (simplifié)</text>
+              </svg>
+              <figcaption>Les grands pouvoirs du Midi vers 1200 : un écheveau de fidélités où le roi d'Aragon pèse autant, sinon plus, que le roi de France.</figcaption>
+            </figure>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une guerre qui aurait pu être aragonaise</div>
+              <p>On oublie souvent qu'en 1200 l'avenir du Languedoc semblait se jouer vers le sud. Par les mariages et les hommages, la maison de Barcelone construisait un ensemble de part et d'autre des Pyrénées, de la Provence à la Catalogne. La croisade, puis la défaite de Muret en 1213, brisent ce projet : c'est l'un de ses effets les plus durables, et le moins visible pour le visiteur d'aujourd'hui.</p>
+            </div>
+          </section>
+
+          <!-- ═══ CAUSES ═══ -->
+          <section class="section" id="causes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              Pourquoi une croisade ?
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">L'échec de la persuasion</h3>
+              <p>Depuis le milieu du XII<sup>e</sup> siècle, l'Église tente de ramener le Midi à l'orthodoxie : prédication de Bernard de Clairvaux (1145), condamnation des hérétiques et de leurs protecteurs au concile de Latran III (1179), expédition du légat Henri de Marcy contre Lavaur (1181). Élu en 1198, <strong>Innocent III</strong> fait de la lutte contre l'hérésie une priorité. Il envoie des légats cisterciens, dont <strong>Pierre de Castelnau</strong> et <strong>Arnaud Amaury</strong>, abbé de Cîteaux, puis soutient à partir de 1206 la prédication pauvre de l'évêque Diègue d'Osma et de <strong>Dominique de Guzmán</strong>. Les conversions restent rares, et surtout les seigneurs refusent de chasser les bons hommes.</p>
+
+              <h3 class="sous-titre">Le meurtre du légat (14 janvier 1208)</h3>
+              <p>En 1207, Pierre de Castelnau excommunie Raymond VI, qu'il accuse de protéger les hérétiques et de refuser la paix. Après une entrevue orageuse à Saint-Gilles, le légat est tué d'un coup de lance au bord du Rhône par un écuyer du comte, le <strong>14 janvier 1208</strong>. La responsabilité directe de Raymond VI n'a jamais été prouvée, mais Innocent III la tient pour acquise.</p>
+              <p>Le <strong>10 mars 1208</strong>, le pape appelle à la croisade. Il en fixe les règles : les croisés recevront la même <strong>indulgence</strong> que pour la Terre sainte en échange d'un service de <strong>quarante jours</strong>, et les terres des protecteurs d'hérétiques pourront être saisies par des catholiques. C'est le principe de l'<strong>« exposition en proie »</strong>, qui transforme une affaire religieuse en question foncière.</p>
+            </div>
+
+            <div class="citation-bloc">
+              <p>« En avant, chevaliers du Christ ! En avant, courageuses recrues de l'armée chrétienne ! »</p>
+              <cite>— Lettre d'Innocent III appelant à la croisade, mars 1208 (traduction libre de l'appel aux barons du royaume)</cite>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">De la mission à la guerre</span>
+              <div class="schema-flow">
+                <div class="schema-box">1145 – 1206<br><b>Prédications</b><br><span class="small">Bernard, légats, Dominique</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1207<br><b>Excommunication</b><br><span class="small">de Raymond VI</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">14 janv. 1208<br><b>Meurtre du légat</b><br><span class="small">Pierre de Castelnau</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">10 mars 1208<br><b>Appel à la croisade</b><br><span style="font-size:12px;opacity:.85">indulgence, quarantaine</span></div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · des motivations mêlées</div>
+              <p>Pour Innocent III, l'enjeu est d'abord religieux : l'hérésie est une « contagion » qui menace toute la chrétienté, et les princes qui la tolèrent manquent à leur devoir. Mais en offrant les terres des « fauteurs d'hérésie » à qui saura les prendre, le pape attire des barons pour qui la croisade est aussi une affaire de terres et de rang.</p>
+              <p>Philippe Auguste, sollicité, refuse de conduire l'expédition : il laisse partir ses vassaux, mais conteste le droit du pape à disposer des fiefs relevant de sa couronne. Ce principe pèsera lourd à la fin de la guerre.</p>
+            </div>
+          </section>
+
+          <!-- ═══ ARMÉES ═══ -->
+          <section class="section" id="armees">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🛡️</div>
+              Deux camps, deux façons de faire la guerre
+            </h2>
+
+            <div class="compare">
+              <div class="compare-col compare-rom">
+                <h4>Le camp croisé</h4>
+                <ul>
+                  <li>Barons et chevaliers du Nord, de Bourgogne, d'Allemagne, des Flandres</li>
+                  <li>Service limité à une <strong>quarantaine</strong> : l'armée gonfle au printemps et fond en hiver</li>
+                  <li>Un noyau permanent réduit autour de Simon de Montfort, payé sur les terres conquises</li>
+                  <li>Des <strong>légats pontificaux</strong> qui fixent les objectifs et lèvent les excommunications</li>
+                  <li>Des « ribauds » et routiers, troupes à pied peu contrôlables</li>
+                  <li>Une cavalerie lourde redoutable en bataille rangée</li>
+                </ul>
+              </div>
+              <div class="compare-col compare-cath">
+                <h4>Le camp méridional</h4>
+                <ul>
+                  <li>Comtes de Toulouse et de Foix, vicomtes, seigneurs des castra</li>
+                  <li><strong>Milices urbaines</strong> de Toulouse, nombreuses mais peu aguerries</li>
+                  <li><strong>Faydits</strong>, seigneurs dépossédés qui mènent une guérilla</li>
+                  <li>L'appui du <strong>roi d'Aragon</strong> jusqu'en 1213</li>
+                  <li>Des routiers basques, aragonais, navarrais à la solde des comtes</li>
+                  <li>La connaissance du terrain et le soutien des populations</li>
+                </ul>
+              </div>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 230" role="img" aria-label="Effectifs croisés selon les saisons">
+                <rect width="640" height="230" fill="#FBF8F2"/>
+                <line x1="60" y1="190" x2="620" y2="190" stroke="#8B7355"/>
+                <line x1="60" y1="20" x2="60" y2="190" stroke="#8B7355"/>
+                <text x="30" y="105" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8B7355" transform="rotate(-90 30 105)" text-anchor="middle">effectifs</text>
+                <path d="M60 175 C 110 175, 130 60, 180 50 C 230 45, 250 150, 300 172 C 350 178, 380 70, 430 58 C 480 50, 500 160, 560 174 L 620 176" fill="none" stroke="#C8843A" stroke-width="3"/>
+                <line x1="60" y1="168" x2="620" y2="168" stroke="#2C4A7C" stroke-width="2" stroke-dasharray="6 4"/>
+                <g font-family="Source Sans 3, sans-serif" font-size="11">
+                  <text x="180" y="40" text-anchor="middle" fill="#C8843A" font-weight="700">printemps – été</text>
+                  <text x="180" y="28" text-anchor="middle" fill="#8B7355">arrivée des « quarantaines »</text>
+                  <text x="300" y="160" text-anchor="middle" fill="#8B7355">hiver</text>
+                  <text x="430" y="48" text-anchor="middle" fill="#C8843A" font-weight="700">année suivante</text>
+                  <text x="470" y="185" fill="#2C4A7C" font-weight="600">noyau permanent de Montfort</text>
+                  <text x="120" y="206" fill="#3A3028">An 1</text><text x="420" y="206" fill="#3A3028">An 2</text>
+                </g>
+              </svg>
+              <figcaption>Schéma illustratif (non chiffré) : l'armée croisée « respire » au rythme des quarantaines. Les sièges doivent aboutir avant le départ des contingents.</figcaption>
+            </figure>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · la quarantaine, force et faiblesse</div>
+              <p>Le système de la quarantaine fournit chaque printemps des milliers d'hommes sans qu'il faille les payer. Mais à la fin des quarante jours, l'indulgence est acquise et chacun rentre chez soi, parfois au milieu d'un siège. Simon de Montfort passe ainsi plusieurs hivers presque seul, avec quelques dizaines de chevaliers, au milieu d'un pays hostile.</p>
+              <p>Cela explique sa stratégie : frapper vite et fort pendant la belle saison, faire des exemples terrifiants pour obtenir des redditions sans combat, puis tenir les places conquises avec de petites garnisons.</p>
+            </div>
+
+            <h3 class="sous-titre">Prendre une place forte</h3>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Moyen</th><th>Principe</th><th>Exemple</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Blocus et soif</strong></td><td>Couper l'accès à l'eau, attendre l'épuisement des citernes</td><td>Carcassonne (1209), Minerve et Termes (1210)</td></tr>
+                  <tr><td><strong>Pierrière, mangonneau</strong></td><td>Engins de jet à traction humaine, tir rapide de pierres moyennes</td><td>Minerve : la « Malvoisine » brise le puits du village</td></tr>
+                  <tr><td><strong>Trébuchet à contrepoids</strong></td><td>Engin plus lent mais très puissant, capable d'ouvrir une brèche</td><td>Sièges de Toulouse (1217-1218)</td></tr>
+                  <tr><td><strong>« Chat » ou galerie</strong></td><td>Abri roulant couvert de peaux, pour combler les fossés et saper le pied du mur</td><td>Lavaur (1211), Toulouse (1218)</td></tr>
+                  <tr><td><strong>Sape et mine</strong></td><td>Creuser sous une tour, étayer puis brûler les étais pour la faire s'effondrer</td><td>Carcassonne (1240, révolte Trencavel)</td></tr>
+                  <tr><td><strong>Assaut et escalade</strong></td><td>Échelles, attaque surprise d'un point faible</td><td>Béziers (1209)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 240" role="img" aria-label="Dessin schématique d'un trébuchet à contrepoids">
+                <rect width="640" height="240" fill="#EEF2F8"/>
+                <rect x="0" y="210" width="640" height="30" fill="#CDBFA5"/>
+                <!-- châssis -->
+                <rect x="190" y="200" width="200" height="10" fill="#8B7355"/>
+                <path d="M210 200 L 290 70 L 370 200" fill="none" stroke="#8B7355" stroke-width="8"/>
+                <circle cx="290" cy="70" r="6" fill="#5A3E1B"/>
+                <!-- verge -->
+                <line x1="230" y1="100" x2="420" y2="40" stroke="#5A3E1B" stroke-width="7" transform="rotate(0)"/>
+                <!-- contrepoids -->
+                <line x1="250" y1="94" x2="250" y2="118" stroke="#3A3028" stroke-width="2"/>
+                <rect x="222" y="118" width="56" height="44" rx="4" fill="#5A3E1B"/>
+                <text x="250" y="145" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white">caisse</text>
+                <!-- fronde -->
+                <path d="M420 40 Q 440 110 400 190" fill="none" stroke="#C8843A" stroke-width="2"/>
+                <circle cx="400" cy="194" r="9" fill="#9a8f80"/>
+                <!-- trajectoire -->
+                <path d="M420 40 Q 520 -10 610 120" fill="none" stroke="#B03A2E" stroke-width="1.5" stroke-dasharray="5 4"/>
+                <g font-family="Source Sans 3, sans-serif" font-size="11" fill="#2C2418">
+                  <line x1="230" y1="140" x2="120" y2="150" stroke="#5A3E1B"/><text x="20" y="146">Contrepoids (pierres,</text><text x="20" y="160">terre, plusieurs tonnes)</text>
+                  <line x1="290" y1="70" x2="150" y2="60" stroke="#5A3E1B"/><text x="40" y="58">Axe de rotation</text>
+                  <line x1="350" y1="70" x2="420" y2="110" stroke="#5A3E1B"/><text x="430" y="115">Verge (bras)</text>
+                  <line x1="405" y1="190" x2="470" y2="175" stroke="#5A3E1B"/><text x="475" y="178">Boulet dans la fronde</text>
+                  <text x="530" y="60" fill="#B03A2E" font-style="italic">tir en cloche</text>
+                </g>
+              </svg>
+              <figcaption>Le trébuchet à contrepoids, arme de pointe au début du XIII<sup>e</sup> siècle (dessin schématique, non à l'échelle).</figcaption>
+            </figure>
+          </section>
+
+          <!-- ═══ PHASE 1 ═══ -->
+          <section class="section" id="phase1">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⚔️</div>
+              1. La croisade des barons (1209 – 1215)
+            </h2>
+            <div class="phase-bandeau"><span class="pastille">Phase 1</span><b>La conquête</b> Chef militaire : Simon de Montfort · Chef spirituel : Arnaud Amaury</div>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card"><div class="recette-meta-icon">📍</div><div><div class="recette-meta-label">Rassemblement</div><div class="recette-meta-val">Lyon · juin 1209</div></div></div>
+              <div class="recette-meta-card"><div class="recette-meta-icon">🎯</div><div><div class="recette-meta-label">Première cible</div><div class="recette-meta-val">Terres Trencavel</div></div></div>
+              <div class="recette-meta-card"><div class="recette-meta-icon">⚔️</div><div><div class="recette-meta-label">Bataille décisive</div><div class="recette-meta-val">Muret · 12 sept. 1213</div></div></div>
+              <div class="recette-meta-card"><div class="recette-meta-icon">📜</div><div><div class="recette-meta-label">Consécration</div><div class="recette-meta-val">Latran IV · nov. 1215</div></div></div>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">1209 : Béziers et Carcassonne</h3>
+              <p>À l'été 1209, une armée importante se rassemble à Lyon et descend la vallée du Rhône : le duc de Bourgogne Eudes III, le comte de Nevers, le comte de Saint-Pol, de nombreux évêques et barons, sous la direction du légat <strong>Arnaud Amaury</strong>. <strong>Raymond VI</strong> a pris les devants : le 18 juin, à Saint-Gilles, il fait pénitence publique, est fouetté devant l'église, puis prend lui-même la croix. Ses terres étant protégées, l'armée se tourne vers celles du jeune vicomte <strong>Raymond-Roger Trencavel</strong>, qui n'a pas su négocier à temps.</p>
+              <p>Le <strong>22 juillet 1209</strong>, jour de la Sainte-Madeleine, l'armée arrive devant <strong>Béziers</strong>. L'évêque a présenté aux habitants une liste d'environ 220 hérétiques à livrer ; ils refusent. Une sortie mal conduite des Biterrois permet aux « ribauds » de l'armée de s'engouffrer dans la ville. Le massacre est général, jusque dans l'église de la Madeleine, et la ville est incendiée. Les chroniqueurs avancent des chiffres considérables, sans doute exagérés ; mais la volonté de terroriser est claire.</p>
+            </div>
+
+            <div class="citation-bloc">
+              <p>« Tuez-les. Car le Seigneur connaît ceux qui sont à lui. »</p>
+              <cite>— Paroles attribuées à Arnaud Amaury par le moine Césaire de Heisterbach, une douzaine d'années plus tard. Leur authenticité est douteuse ; le légat, dans son rapport au pape, se félicite en revanche du massacre.</cite>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Quelques jours plus tard, l'armée assiège <strong>Carcassonne</strong> (à partir du 1<sup>er</sup> août). Les faubourgs tombent ; la Cité, privée d'eau en plein été, est vite à bout. Le roi Pierre II d'Aragon tente une médiation, en vain. Trencavel, venu négocier, est retenu prisonnier : la ville capitule le <strong>15 août</strong> et les habitants doivent la quitter avec leurs seuls vêtements. Le vicomte meurt dans sa prison le <strong>10 novembre 1209</strong>, à 24 ans.</p>
+              <p>Les grands barons refusant la vicomté, elle est confiée à un seigneur d'Île-de-France d'environ 45 ans, vétéran de la quatrième croisade : <strong>Simon de Montfort</strong>. À l'automne, la plupart des croisés rentrent chez eux ; Montfort reste avec une petite troupe, et de nombreux castra conquis en été se révoltent.</p>
+
+              <h3 class="sous-titre">1210 – 1211 : la guerre des castra</h3>
+              <p>Montfort mène une guerre méthodique de sièges. À <strong>Bram</strong> (1210), en représailles d'atrocités commises contre ses hommes, il fait crever les yeux et couper le nez à une centaine de défenseurs, laissant un œil au dernier pour guider les autres jusqu'à Cabaret. À <strong>Minerve</strong> (juin-juillet 1210), les pierrières détruisent l'accès au puits ; la place se rend et environ <strong>140 bons hommes et bonnes femmes</strong> qui refusent d'abjurer sont brûlés : c'est le premier grand bûcher de la croisade. <strong>Termes</strong>, perchée au-dessus de ses gorges, résiste près de quatre mois (août-novembre 1210) ; ses défenseurs, frappés par la dysenterie après des pluies qui ont rempli des citernes souillées, s'enfuient de nuit.</p>
+              <p>En 1211, <strong>Cabaret</strong> (Lastours) se rend. À <strong>Lavaur</strong>, prise le 3 mai après un long siège, le seigneur Aimery de Montréal est pendu avec ses chevaliers, sa sœur <strong>Guiraude</strong>, dame du lieu, est jetée dans un puits et lapidée, et quelque 300 à 400 hérétiques sont brûlés. Peu avant, le comte de Foix avait massacré un contingent de croisés allemands à Montgey. Rompant avec Raymond VI, Montfort s'attaque désormais au comté de Toulouse : il échoue devant <strong>Toulouse</strong> (juin 1211), puis résiste à la contre-offensive comtale à <strong>Castelnaudary</strong> (septembre 1211).</p>
+
+              <h3 class="sous-titre">1212 : la mise en ordre du pays conquis</h3>
+              <p>Montfort conquiert le Quercy, l'Agenais et une partie de l'Albigeois. En décembre 1212, les <strong>statuts de Pamiers</strong> organisent sa domination : les fiefs sont donnés à des chevaliers venus du Nord, la coutume de Paris s'applique pour les successions nobles, l'Église retrouve ses dîmes, et les hérétiques sont exclus des charges. C'est un véritable programme de colonisation seigneuriale.</p>
+
+              <h3 class="sous-titre">12 septembre 1213 : Muret</h3>
+              <p>Le roi <strong>Pierre II d'Aragon</strong>, auréolé de la victoire chrétienne de Las Navas de Tolosa contre les Almohades (1212), ne peut laisser détruire ses vassaux et son beau-frère Raymond VI. Après l'échec de ses démarches auprès du pape, il franchit les Pyrénées et, avec les comtes de Toulouse, de Foix et de Comminges, assiège <strong>Muret</strong>, au sud de Toulouse, où Montfort s'enferme. Le 12 septembre, Montfort sort avec quelques centaines de cavaliers et charge l'armée coalisée, bien plus nombreuse mais mal coordonnée. Pierre II, combattant en première ligne, est tué ; la coalition se débande et les milices toulousaines sont massacrées ou se noient dans la Garonne.</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 330" role="img" aria-label="Plan schématique de la bataille de Muret">
+                <rect width="640" height="330" fill="#FBF8F2"/>
+                <!-- Garonne -->
+                <path d="M520 0 Q 500 80 470 150 Q 445 220 470 330" fill="none" stroke="#7FA3C8" stroke-width="14" opacity="0.8"/>
+                <text x="520" y="40" font-family="Playfair Display, serif" font-style="italic" font-size="13" fill="#2C4A7C">Garonne</text>
+                <!-- Louge -->
+                <path d="M120 320 Q 250 260 360 220 Q 420 195 462 182" fill="none" stroke="#7FA3C8" stroke-width="5" opacity="0.8"/>
+                <text x="200" y="300" font-family="Source Sans 3, sans-serif" font-style="italic" font-size="11" fill="#5A7FA8">la Louge</text>
+                <!-- Muret -->
+                <rect x="400" y="185" width="56" height="42" rx="6" fill="#2C4A7C"/>
+                <text x="428" y="211" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="700">Muret</text>
+                <!-- camp coalisé -->
+                <rect x="150" y="40" width="160" height="56" rx="10" fill="#E2F0E4" stroke="#3E7C4A" stroke-width="1.5" stroke-dasharray="5 3"/>
+                <text x="230" y="64" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="#3E7C4A" font-weight="700">Camp de la coalition</text>
+                <text x="230" y="80" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#3E7C4A">Aragon, Toulouse, Foix, Comminges</text>
+                <!-- lignes coalisées -->
+                <g fill="#3E7C4A">
+                  <rect x="250" y="130" width="70" height="14" rx="3"/><text x="285" y="124" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#3E7C4A">1<tspan baseline-shift="super" font-size="7">re</tspan> ligne (Foix)</text>
+                  <rect x="190" y="160" width="70" height="14" rx="3"/><text x="160" y="196" font-family="Source Sans 3, sans-serif" font-size="10" fill="#3E7C4A">2<tspan baseline-shift="super" font-size="7">e</tspan> ligne : Pierre II ✝</text>
+                </g>
+                <!-- milices -->
+                <g fill="#9BC09F"><circle cx="365" cy="160" r="5"/><circle cx="378" cy="168" r="5"/><circle cx="360" cy="174" r="5"/><circle cx="374" cy="182" r="5"/></g>
+                <text x="300" y="250" font-family="Source Sans 3, sans-serif" font-size="10" fill="#3E7C4A">milices toulousaines</text>
+                <line x1="340" y1="244" x2="365" y2="185" stroke="#3E7C4A" stroke-width="1"/>
+                <!-- charges croisées -->
+                <defs><marker id="fm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#B03A2E"/></marker></defs>
+                <g stroke="#B03A2E" stroke-width="3" fill="none" marker-end="url(#fm)">
+                  <path d="M400 200 Q 350 165 322 140"/>
+                  <path d="M400 210 Q 320 190 265 170"/>
+                  <path d="M410 228 Q 300 260 200 220 Q 170 200 180 178"/>
+                </g>
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#B03A2E" font-weight="600">
+                  <text x="20" y="250">3<tspan baseline-shift="super" font-size="7">e</tspan> escadron de Montfort :</text>
+                  <text x="20" y="264">attaque de flanc</text>
+                </g>
+                <!-- déroute -->
+                <path d="M370 150 Q 420 120 470 110" fill="none" stroke="#3E7C4A" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <text x="540" y="140" font-family="Source Sans 3, sans-serif" font-size="10" fill="#3E7C4A" text-anchor="middle">fuite vers</text>
+                <text x="540" y="153" font-family="Source Sans 3, sans-serif" font-size="10" fill="#3E7C4A" text-anchor="middle">le fleuve</text>
+                <!-- légende -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#3A3028">
+                  <rect x="20" y="10" width="110" height="64" rx="8" fill="white" stroke="#E0DACE"/>
+                  <line x1="30" y1="30" x2="50" y2="30" stroke="#B03A2E" stroke-width="3"/><text x="56" y="34">Croisés</text>
+                  <rect x="30" y="42" width="20" height="8" fill="#3E7C4A"/><text x="56" y="50">Coalition</text>
+                  <text x="30" y="66" font-size="10" fill="#8B7355">↑ N approximatif</text>
+                </g>
+              </svg>
+              <figcaption>La bataille de Muret, 12 septembre 1213 (schéma très simplifié : le déroulement exact et l'emplacement du camp restent débattus par les historiens).</figcaption>
+            </figure>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · pourquoi Muret change tout</div>
+              <p>En quelques heures, le camp occitan perd son meilleur chef, son allié le plus puissant et l'essentiel de ses forces. L'Aragon, dont l'héritier, le petit Jacques, est alors entre les mains de Montfort, se détourne durablement des affaires du Languedoc pour se tourner vers la reconquête de Majorque et de Valence.</p>
+              <p>La victoire semble aussi « prouver » le jugement de Dieu : les chroniqueurs croisés y voient un miracle, ce qui renforce la légitimité de Montfort auprès du pape.</p>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">1215 : le triomphe de Montfort</h3>
+              <p>Toulouse ouvre ses portes en 1215 au prince <strong>Louis</strong>, fils de Philippe Auguste, venu accomplir sa quarantaine. En novembre, le <strong>concile de Latran IV</strong> dépossède Raymond VI : ses terres conquises sont attribuées à Simon de Montfort, tandis que son fils, le futur Raymond VII, ne conserve que les terres à l'est du Rhône (marquisat de Provence). En avril 1216, Philippe Auguste reçoit l'hommage de Montfort pour le comté de Toulouse. Le vainqueur semble avoir tout gagné.</p>
+            </div>
+          </section>
+
+          <!-- ═══ PHASE 2 ═══ -->
+          <section class="section" id="phase2">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔥</div>
+              2. La reconquête occitane (1216 – 1224)
+            </h2>
+            <div class="phase-bandeau"><span class="pastille">Phase 2</span><b>Le retournement</b> Chefs : Raymond VI, puis Raymond VII et le comte de Foix</div>
+
+            <div class="histoire-texte">
+              <p>La victoire de Montfort est fragile. Les nouveaux seigneurs venus du Nord sont peu nombreux, les faydits tiennent la campagne, et les villes supportent mal la présence croisée. Le mouvement part de la vallée du Rhône : en 1216, le jeune <strong>Raymond VII</strong>, âgé de 19 ans, accueilli en libérateur à Avignon, assiège la garnison croisée enfermée dans le château de <strong>Beaucaire</strong>. Montfort accourt mais ne parvient pas à dégager ses hommes, qui se rendent en août : c'est sa première grande défaite.</p>
+              <p>En <strong>septembre 1217</strong>, Raymond VI rentre par surprise dans <strong>Toulouse</strong>, acclamé par la population, qui relève en hâte ses défenses. Montfort met le siège devant la ville pendant neuf mois. Le <strong>25 juin 1218</strong>, lors d'une sortie des assiégés, il est tué net par une pierre lancée depuis les remparts.</p>
+            </div>
+
+            <div class="citation-bloc">
+              <p>La pierre vint droit où il fallait, et frappa le comte sur son heaume d'acier.</p>
+              <cite>— D'après la <em>Chanson de la croisade albigeoise</em> (continuation anonyme, favorable aux Toulousains), qui précise que l'engin était servi par des dames, des jeunes filles et des femmes de la ville. Traduction libre.</cite>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Son fils <strong>Amaury de Montfort</strong> lève le siège un mois plus tard. Malgré l'arrivée du prince Louis en 1219, qui fait massacrer la population de <strong>Marmande</strong> puis échoue à son tour devant Toulouse après six semaines, les Occitans regagnent pas à pas le terrain : victoire de <strong>Baziège</strong> (1219), reprise de Castelnaudary, puis de la plupart des places du Lauragais et du Carcassès. Raymond VI meurt en 1222, encore excommunié ; son corps ne reçoit pas de sépulture chrétienne. Raymond VII et le comte de Foix poursuivent la reconquête.</p>
+              <p>En janvier 1224, à court d'argent et d'hommes, Amaury quitte <strong>Carcassonne</strong> en emportant les restes de son père. Il cède ses droits sur le Languedoc au roi de France, désormais <strong>Louis VIII</strong>. Un jeune Trencavel, Raimond II, rentre dans la Cité de ses ancêtres. Le pays semble revenu à la situation de 1209.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une reconquête populaire</div>
+              <p>La continuation anonyme de la <em>Chanson</em> donne à cette période des accents de résistance collective : consuls, bourgeois, chevaliers faydits et femmes de Toulouse défendent ensemble leur ville. On y voit se dessiner la valeur de <em>Paratge</em>, l'honneur et la noblesse d'âme du monde méridional, opposé à l'orgueil des conquérants.</p>
+              <p>Il faut se garder d'y lire un sentiment national au sens moderne ; mais la croisade a bien fait naître, chez une partie des Méridionaux, une conscience commune face à « ceux de France ».</p>
+            </div>
+          </section>
+
+          <!-- ═══ PHASE 3 ═══ -->
+          <section class="section" id="phase3">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👑</div>
+              3. La croisade royale (1226 – 1229)
+            </h2>
+            <div class="phase-bandeau"><span class="pastille">Phase 3</span><b>L'intervention du roi</b> Chefs : Louis VIII, puis Humbert de Beaujeu et Blanche de Castille</div>
+
+            <div class="histoire-texte">
+              <p>Fin 1225, au concile de Bourges, le légat Romain Frangipani refuse d'absoudre Raymond VII, qui est excommunié à nouveau en janvier 1226. <strong>Louis VIII</strong> prend alors la croix, cette fois au nom de la couronne. Une énorme armée royale descend la vallée du Rhône au printemps 1226. Seule <strong>Avignon</strong> ferme ses portes : elle résiste trois mois (juin-septembre) avant de se rendre. Partout ailleurs, villes et seigneurs se soumettent sans combattre, jusqu'à Carcassonne et Pamiers. Le jeune Trencavel s'enfuit en Aragon.</p>
+              <p>Malade, le roi meurt sur le chemin du retour, à Montpensier en Auvergne, le <strong>8 novembre 1226</strong>. Son fils, le futur Saint Louis, n'a que 12 ans. La régente <strong>Blanche de Castille</strong> maintient l'effort de guerre. Son lieutenant <strong>Humbert de Beaujeu</strong> mène une guerre d'usure : siège et massacre de la garnison de <strong>Labécède</strong> (1227), puis, en 1228, destruction systématique des vignes, des vergers et des récoltes autour de Toulouse.</p>
+              <p>Épuisé et ruiné, Raymond VII accepte de négocier. Le <strong>12 avril 1229</strong>, Jeudi saint, il fait amende honorable à Notre-Dame de Paris, en chemise et pieds nus, et le traité négocié à Meaux est ratifié : c'est le <strong>traité de Meaux-Paris</strong>.</p>
+            </div>
+
+            <h3 class="sous-titre">Les clauses du traité de Meaux-Paris (1229)</h3>
+            <div class="fort-grid">
+              <div class="fort">
+                <div class="fort-head">Territoires <small>cession</small></div>
+                <div class="fort-body"><span class="tag">Au roi</span><br>Les anciennes terres Trencavel et le Bas-Languedoc passent au domaine royal : naissent les <strong>sénéchaussées de Carcassonne et de Beaucaire</strong>. Le marquisat de Provence (futur Comtat Venaissin) est remis à l'Église.</div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Succession <small>mariage</small></div>
+                <div class="fort-body"><span class="tag">Annexion différée</span><br>Raymond VII garde Toulouse sa vie durant. Sa fille unique <strong>Jeanne</strong>, 9 ans, épousera <strong>Alphonse de Poitiers</strong>, frère du roi. Sans enfant du couple, le comté reviendra à la couronne (ce qui arrive en 1271).</div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Désarmement <small>garanties</small></div>
+                <div class="fort-body"><span class="tag">Murailles abattues</span><br>Toulouse doit raser ses fortifications ; une trentaine de places fortes sont démantelées. Le château Narbonnais de Toulouse est remis au roi pour dix ans.</div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Religion <small>pénitence</small></div>
+                <div class="fort-body"><span class="tag">Lutte contre l'hérésie</span><br>Le comte doit poursuivre les hérétiques, payer des indemnités aux églises, partir cinq ans en Terre sainte (il n'ira jamais) et financer des maîtres pour fonder l'<strong>université de Toulouse</strong>.</div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une victoire capétienne</div>
+              <p>Le traité de 1229 est d'abord une victoire du roi. Rome obtient l'engagement de lutter contre l'hérésie ; la famille Montfort n'obtient rien ; mais la couronne gagne une façade méditerranéenne, deux sénéchaussées et, à terme, le comté de Toulouse tout entier. Le pouvoir capétien, à peu près absent du Midi en 1209, en est devenu le maître en vingt ans, sans que le roi ait eu à combattre longtemps lui-même.</p>
+            </div>
+          </section>
+
+          <!-- ═══ SIÈGES ═══ -->
+          <section class="section" id="sieges">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏰</div>
+              Les grands sièges, batailles et massacres
+            </h2>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Date</th><th>Lieu</th><th>Assaillant</th><th>Issue</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>22 juillet 1209</td><td><strong>Béziers</strong></td><td>Arnaud Amaury, barons croisés</td><td>Assaut, massacre de la population, incendie</td></tr>
+                  <tr><td>1<sup>er</sup> – 15 août 1209</td><td><strong>Carcassonne</strong></td><td>Croisés</td><td>Reddition faute d'eau ; Trencavel emprisonné</td></tr>
+                  <tr><td>Printemps 1210</td><td><strong>Bram</strong></td><td>Simon de Montfort</td><td>Défenseurs mutilés, envoyés à Cabaret</td></tr>
+                  <tr><td>Juin – juillet 1210</td><td><strong>Minerve</strong></td><td>Simon de Montfort</td><td>Reddition ; environ 140 cathares brûlés</td></tr>
+                  <tr><td>Août – novembre 1210</td><td><strong>Termes</strong></td><td>Simon de Montfort</td><td>Fuite des défenseurs ; Raymond de Termes capturé</td></tr>
+                  <tr><td>Mars – mai 1211</td><td><strong>Lavaur</strong></td><td>Simon de Montfort</td><td>Aimery de Montréal pendu, Guiraude tuée, 300 à 400 brûlés</td></tr>
+                  <tr><td>Avril 1211</td><td><strong>Montgey</strong></td><td>Comte de Foix</td><td>Massacre d'un contingent de croisés allemands</td></tr>
+                  <tr><td>Juin 1211</td><td><strong>Toulouse</strong> (1<sup>er</sup> siège)</td><td>Simon de Montfort</td><td>Échec, levée du siège</td></tr>
+                  <tr><td>Septembre 1211</td><td><strong>Castelnaudary</strong></td><td>Raymond VI, comte de Foix</td><td>Montfort tient la place ; combat indécis de Saint-Martin-Lalande</td></tr>
+                  <tr><td>12 septembre 1213</td><td><strong>Muret</strong> (bataille)</td><td>Simon de Montfort</td><td>Mort de Pierre II d'Aragon ; déroute occitane</td></tr>
+                  <tr><td>Juin – août 1216</td><td><strong>Beaucaire</strong></td><td>Raymond VII</td><td>Reddition de la garnison croisée</td></tr>
+                  <tr><td>Oct. 1217 – juillet 1218</td><td><strong>Toulouse</strong> (2<sup>e</sup> siège)</td><td>Simon de Montfort</td><td>Mort de Montfort (25 juin) ; échec</td></tr>
+                  <tr><td>Juin 1219</td><td><strong>Marmande</strong></td><td>Prince Louis, Amaury de Montfort</td><td>Massacre de la population après reddition</td></tr>
+                  <tr><td>Juin – août 1219</td><td><strong>Toulouse</strong> (3<sup>e</sup> siège)</td><td>Prince Louis</td><td>Échec après environ six semaines</td></tr>
+                  <tr><td>Juin – septembre 1226</td><td><strong>Avignon</strong></td><td>Louis VIII</td><td>Reddition ; murailles abattues</td></tr>
+                  <tr><td>1227</td><td><strong>Labécède</strong></td><td>Humbert de Beaujeu</td><td>Garnison massacrée, bons hommes brûlés</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Les chiffres de victimes proviennent des chroniques médiévales et doivent être lus comme des ordres de grandeur.</p>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · la terreur comme méthode</div>
+              <p>Béziers, Bram, Minerve, Lavaur, Marmande : la violence spectaculaire vise à obtenir la reddition des places voisines sans combat, et elle y parvient souvent à court terme. Mais elle nourrit une haine durable qui explique la facilité du soulèvement de 1216-1217. Les deux camps commettent d'ailleurs des atrocités : Montgey ou le traitement des prisonniers de Puisserguier rappellent que la violence n'est pas l'apanage des croisés.</p>
+            </div>
+          </section>
+
+          <!-- ═══ FRISE ═══ -->
+          <section class="section" id="frise">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗓️</div>
+              Frise chronologique
+            </h2>
+
+            <div class="frise">
+              <div class="frise-periode">Avant la guerre</div>
+              <div class="frise-item"><span class="frise-date">1179</span> <span class="frise-texte">— Le concile de Latran III condamne les hérétiques du Midi et leurs protecteurs.</span></div>
+              <div class="frise-item"><span class="frise-date">1198</span> <span class="frise-texte">— Élection d'Innocent III.</span></div>
+              <div class="frise-item"><span class="frise-date">1206 – 1207</span> <span class="frise-texte">— Prédication de Diègue d'Osma et de Dominique ; fondation de Prouille.</span></div>
+              <div class="frise-item"><span class="frise-date">1207</span> <span class="frise-texte">— Excommunication de Raymond VI par Pierre de Castelnau.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">14 janvier 1208</span> <span class="frise-texte">— Assassinat du légat Pierre de Castelnau près de Saint-Gilles.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">10 mars 1208</span> <span class="frise-texte">— Innocent III appelle à la croisade.</span></div>
+
+              <div class="frise-periode">Croisade des barons</div>
+              <div class="frise-item"><span class="frise-date">18 juin 1209</span> <span class="frise-texte">— Pénitence publique de Raymond VI à Saint-Gilles.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">22 juillet 1209</span> <span class="frise-texte">— Sac de Béziers.</span></div>
+              <div class="frise-item"><span class="frise-date">15 août 1209</span> <span class="frise-texte">— Reddition de Carcassonne ; Montfort devient vicomte.</span></div>
+              <div class="frise-item"><span class="frise-date">10 novembre 1209</span> <span class="frise-texte">— Mort de Raymond-Roger Trencavel en captivité.</span></div>
+              <div class="frise-item"><span class="frise-date">1210</span> <span class="frise-texte">— Bram, Minerve (premier grand bûcher), Termes.</span></div>
+              <div class="frise-item"><span class="frise-date">1211</span> <span class="frise-texte">— Cabaret, Lavaur, Montgey ; échec devant Toulouse ; Castelnaudary.</span></div>
+              <div class="frise-item"><span class="frise-date">16 juillet 1212</span> <span class="frise-texte">— Pierre II d'Aragon vainqueur des Almohades à Las Navas de Tolosa.</span></div>
+              <div class="frise-item"><span class="frise-date">Décembre 1212</span> <span class="frise-texte">— Statuts de Pamiers.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">12 septembre 1213</span> <span class="frise-texte">— Bataille de Muret : mort de Pierre II.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">Novembre 1215</span> <span class="frise-texte">— Latran IV attribue les terres de Raymond VI à Montfort.</span></div>
+
+              <div class="frise-periode">Reconquête occitane</div>
+              <div class="frise-item"><span class="frise-date">1216</span> <span class="frise-texte">— Raymond VII prend Beaucaire.</span></div>
+              <div class="frise-item"><span class="frise-date">Septembre 1217</span> <span class="frise-texte">— Raymond VI rentre dans Toulouse.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">25 juin 1218</span> <span class="frise-texte">— Mort de Simon de Montfort devant Toulouse.</span></div>
+              <div class="frise-item"><span class="frise-date">1219</span> <span class="frise-texte">— Baziège ; massacre de Marmande ; échec du prince Louis devant Toulouse.</span></div>
+              <div class="frise-item"><span class="frise-date">1222</span> <span class="frise-texte">— Mort de Raymond VI.</span></div>
+              <div class="frise-item"><span class="frise-date">1223</span> <span class="frise-texte">— Mort de Philippe Auguste ; Louis VIII roi.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">Janvier 1224</span> <span class="frise-texte">— Amaury de Montfort quitte Carcassonne et cède ses droits au roi.</span></div>
+
+              <div class="frise-periode">Croisade royale</div>
+              <div class="frise-item"><span class="frise-date">Janvier 1226</span> <span class="frise-texte">— Louis VIII prend la croix.</span></div>
+              <div class="frise-item"><span class="frise-date">Juin – sept. 1226</span> <span class="frise-texte">— Siège d'Avignon ; soumission de la plupart du Languedoc.</span></div>
+              <div class="frise-item"><span class="frise-date">8 novembre 1226</span> <span class="frise-texte">— Mort de Louis VIII à Montpensier ; régence de Blanche de Castille.</span></div>
+              <div class="frise-item"><span class="frise-date">1227 – 1228</span> <span class="frise-texte">— Humbert de Beaujeu : Labécède, ravage du Toulousain.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">12 avril 1229</span> <span class="frise-texte">— Traité de Meaux-Paris.</span></div>
+
+              <div class="frise-periode">Après la croisade</div>
+              <div class="frise-item"><span class="frise-date">Novembre 1229</span> <span class="frise-texte">— Concile de Toulouse : organisation de la recherche des hérétiques.</span></div>
+              <div class="frise-item"><span class="frise-date">1233</span> <span class="frise-texte">— Grégoire IX confie l'Inquisition aux Dominicains.</span></div>
+              <div class="frise-item"><span class="frise-date">1240</span> <span class="frise-texte">— Révolte de Raimond II Trencavel, échec devant Carcassonne.</span></div>
+              <div class="frise-item"><span class="frise-date">1242 – 1243</span> <span class="frise-texte">— Massacre d'Avignonet, soulèvement de Raymond VII, paix de Lorris.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">16 mars 1244</span> <span class="frise-texte">— Bûcher de Montségur.</span></div>
+              <div class="frise-item"><span class="frise-date">1255</span> <span class="frise-texte">— Chute de Quéribus.</span></div>
+              <div class="frise-item"><span class="frise-date">1258</span> <span class="frise-texte">— Traité de Corbeil : l'Aragon renonce à ses droits au nord des Corbières.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1271</span> <span class="frise-texte">— Le comté de Toulouse entre dans le domaine royal.</span></div>
+            </div>
+          </section>
+
+          <!-- ═══ PERSONNALITÉS ═══ -->
+          <section class="section" id="personnalites">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👤</div>
+              Les acteurs de la croisade
+            </h2>
+
+            <div class="perso-groupe g-crois">
+              <div class="perso-groupe-titre">Croisés et monarchie</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Simon de Montfort</div><div class="perso-dates">vers 1165 – 1218</div><div class="perso-desc">Seigneur de Montfort-l'Amaury et comte de Leicester par sa mère. Chef militaire tenace et impitoyable, vainqueur de Muret, il devient comte de Toulouse avant d'être tué devant la ville.</div></div>
+                <div class="perso"><div class="perso-nom">Alix de Montmorency</div><div class="perso-dates">morte en 1221</div><div class="perso-desc">Épouse de Simon, elle conduit des renforts depuis le Nord et tient Carcassonne ou Narbonnais pendant les absences de son mari.</div></div>
+                <div class="perso"><div class="perso-nom">Amaury de Montfort</div><div class="perso-dates">1192 – 1241</div><div class="perso-desc">Fils aîné de Simon, incapable de garder les conquêtes, il cède ses droits au roi en 1224 et devient connétable de France.</div></div>
+                <div class="perso"><div class="perso-nom">Guy de Montfort</div><div class="perso-dates">mort en 1228</div><div class="perso-desc">Frère de Simon, l'un de ses principaux lieutenants ; il est tué au siège de Varilhes.</div></div>
+                <div class="perso"><div class="perso-nom">Philippe Auguste</div><div class="perso-dates">1165 – 1223</div><div class="perso-desc">Roi de France, il refuse de mener la croisade mais protège les droits de sa couronne sur les fiefs du Midi.</div></div>
+                <div class="perso"><div class="perso-nom">Louis VIII</div><div class="perso-dates">1187 – 1226</div><div class="perso-desc">Fait deux quarantaines comme prince (1215, 1219), puis conduit la croisade royale de 1226. Meurt au retour.</div></div>
+                <div class="perso"><div class="perso-nom">Blanche de Castille</div><div class="perso-dates">1188 – 1252</div><div class="perso-desc">Régente, elle poursuit la guerre et impose le traité de Meaux-Paris.</div></div>
+                <div class="perso"><div class="perso-nom">Humbert de Beaujeu</div><div class="perso-dates">vers 1198 – 1250</div><div class="perso-desc">Lieutenant du roi en Languedoc après 1226, il mène la guerre d'usure qui force Raymond VII à négocier.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-occ">
+              <div class="perso-groupe-titre">Princes et seigneurs du Midi</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Raymond VI de Toulouse</div><div class="perso-dates">1156 – 1222</div><div class="perso-desc">Comte de Toulouse, catholique mais tolérant envers les cathares. Tour à tour pénitent, croisé, adversaire et proscrit, il reprend Toulouse en 1217.</div></div>
+                <div class="perso"><div class="perso-nom">Raymond VII de Toulouse</div><div class="perso-dates">1197 – 1249</div><div class="perso-desc">Héros de Beaucaire et de la reconquête, il doit signer le traité de 1229. Dernier comte de sa lignée.</div></div>
+                <div class="perso"><div class="perso-nom">Raymond-Roger Trencavel</div><div class="perso-dates">1185 – 1209</div><div class="perso-desc">Vicomte de Béziers et Carcassonne, première victime politique de la croisade, mort en captivité.</div></div>
+                <div class="perso"><div class="perso-nom">Raimond II Trencavel</div><div class="perso-dates">vers 1207 – vers 1263</div><div class="perso-desc">Son fils, brièvement restauré en 1224, exilé en 1226, il échoue devant Carcassonne en 1240 et finit par se soumettre.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre II d'Aragon</div><div class="perso-dates">1178 – 1213</div><div class="perso-desc">Roi catholique, vassal du pape, vainqueur de Las Navas de Tolosa ; il défend ses vassaux et meurt à Muret.</div></div>
+                <div class="perso"><div class="perso-nom">Raymond-Roger de Foix</div><div class="perso-dates">vers 1152 – 1223</div><div class="perso-desc">Comte de Foix, adversaire acharné des croisés, frère de la bonne femme Esclarmonde.</div></div>
+                <div class="perso"><div class="perso-nom">Aimery de Montréal</div><div class="perso-dates">mort en 1211</div><div class="perso-desc">Seigneur du Lauragais, rallié puis révolté, pendu à Lavaur avec ses chevaliers.</div></div>
+                <div class="perso"><div class="perso-nom">Guiraude de Laurac</div><div class="perso-dates">morte en 1211</div><div class="perso-desc">Dame de Lavaur, sœur d'Aimery, protectrice des bons hommes, jetée dans un puits après la prise de la ville.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre-Roger de Cabaret</div><div class="perso-dates">XIII<sup>e</sup> siècle</div><div class="perso-desc">Seigneur de Lastours, il tient tête aux croisés jusqu'en 1211 et accueille faydits et troubadours.</div></div>
+                <div class="perso"><div class="perso-nom">Raymond de Termes</div><div class="perso-dates">mort vers 1213</div><div class="perso-desc">Défenseur de Termes en 1210, capturé, il meurt dans une prison de Carcassonne.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-egl">
+              <div class="perso-groupe-titre">Hommes d'Église</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Innocent III</div><div class="perso-dates">1160 – 1216</div><div class="perso-desc">Pape de 1198 à 1216. Il lance la croisade, hésite parfois devant les excès de Montfort, et préside Latran IV.</div></div>
+                <div class="perso"><div class="perso-nom">Arnaud Amaury</div><div class="perso-dates">mort en 1225</div><div class="perso-desc">Abbé de Cîteaux et légat, chef spirituel de la croisade en 1209, puis archevêque de Narbonne, en conflit avec Montfort.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre de Castelnau</div><div class="perso-dates">mort en 1208</div><div class="perso-desc">Moine de Fontfroide, légat pontifical ; son assassinat déclenche la croisade.</div></div>
+                <div class="perso"><div class="perso-nom">Foulque de Marseille</div><div class="perso-dates">vers 1155 – 1231</div><div class="perso-desc">Ancien troubadour, évêque de Toulouse, ardent soutien de Montfort et protecteur de Dominique.</div></div>
+                <div class="perso"><div class="perso-nom">Dominique de Guzmán</div><div class="perso-dates">1170 – 1221</div><div class="perso-desc">Prédicateur en Lauragais, il fonde à Toulouse l'ordre des Frères prêcheurs (1215-1216). Il n'a pas dirigé l'Inquisition, créée après sa mort.</div></div>
+                <div class="perso"><div class="perso-nom">Romain Frangipani</div><div class="perso-dates">mort en 1243</div><div class="perso-desc">Cardinal-légat, il pousse Louis VIII à la croisade et négocie le traité de 1229.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-cath">
+              <div class="perso-groupe-titre">Cathares dans la tourmente</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Guilhabert de Castres</div><div class="perso-dates">mort vers 1240</div><div class="perso-desc">Dignitaire cathare du Toulousain, il traverse toute la guerre en clandestinité et fait de Montségur le refuge de l'Église cathare.</div></div>
+                <div class="perso"><div class="perso-nom">Esclarmonde de Foix</div><div class="perso-dates">vers 1155 – vers 1215</div><div class="perso-desc">Sœur du comte de Foix, bonne femme depuis 1204, figure réelle devenue légendaire au XIX<sup>e</sup> siècle.</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ CONSÉQUENCES ═══ -->
+          <section class="section" id="consequences">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⚖️</div>
+              Les conséquences de la croisade
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Politiques : le Midi devient capétien</h3>
+              <p>La croisade fait entrer le Languedoc dans le royaume de France. Dès 1229, les sénéchaussées de Carcassonne et de Beaucaire sont administrées par des officiers royaux ; en 1271, le comté de Toulouse rejoint le domaine. Le roi gagne un accès à la Méditerranée, qui servira de base à Saint Louis pour fonder Aigues-Mortes et partir en croisade. Le traité de <strong>Corbeil (1258)</strong> règle la question aragonaise et fixe une frontière sur les Corbières, gardée par les forteresses royales.</p>
+
+              <h3 class="sous-titre">Religieuses : de la guerre à l'Inquisition</h3>
+              <p>La croisade n'a pas éteint le catharisme : elle l'a privé de ses protecteurs et l'a poussé dans la clandestinité. L'Église passe alors à une autre méthode : l'<strong>Inquisition</strong>, confiée aux Dominicains à partir de 1233, enquête de paroisse en paroisse. Montségur tombe en 1244, Quéribus en 1255, et les derniers bons hommes sont brûlés au début du XIV<sup>e</sup> siècle. La croisade a aussi fait naître deux institutions durables à Toulouse : l'<strong>ordre dominicain</strong> et l'<strong>université</strong>.</p>
+
+              <h3 class="sous-titre">Sociales et culturelles</h3>
+              <p>Beaucoup de lignages méridionaux sont ruinés ou dépossédés et deviennent <strong>faydits</strong> ; des familles venues du Nord, comme les Lévis à Mirepoix, s'installent pour des siècles. La cour brillante des comtes et vicomtes, qui faisait vivre les <strong>troubadours</strong>, disparaît : nombre de poètes s'exilent en Catalogne ou en Italie, et certains, comme Guilhem Figueira, composent des sirventès violents contre Rome. La langue d'oc demeure la langue du pays, mais le français progresse lentement dans l'administration royale.</p>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">Ce que la croisade a changé</span>
+              <div class="schema-flow">
+                <div class="schema-box">Avant 1209<br><b>Midi morcelé</b><br><span class="small">Toulouse, Trencavel, Foix, Aragon</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1229<br><b>Sénéchaussées royales</b><br><span class="small">Carcassonne, Beaucaire</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1258<br><b>Frontière fixée</b><br><span class="small">traité de Corbeil</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">1271<br><b>Languedoc royal</b><br><span style="font-size:12px;opacity:.85">rattachement du comté de Toulouse</span></div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une mémoire disputée</div>
+              <p>Au XIX<sup>e</sup> siècle, l'historien protestant Napoléon Peyrat, puis le Félibrige et les mouvements occitanistes, font de la croisade la fin tragique d'une civilisation méridionale libre et raffinée, écrasée par le Nord et par Rome. Cette lecture a profondément marqué l'imaginaire régional, du « Pays cathare » touristique aux chansons occitanes.</p>
+              <p>Les historiens d'aujourd'hui la nuancent : le Midi de 1200 n'était pas un paradis tolérant, les violences ont été commises des deux côtés, et l'intégration au royaume s'est aussi faite par des ralliements. Mais ils confirment l'ampleur du traumatisme et la rupture politique de 1229.</p>
+            </div>
+
+            <p class="small">Pour la suite de l'histoire (Inquisition, Montségur, forteresses royales des Corbières), voir la fiche <a href="catharisme-forteresses-occitanie.html" style="color:#2C4A7C;">Forteresses royales &amp; Cathares</a>.</p>
+          </section>
+
+          <!-- ═══ CARTES & PLANS ═══ -->
+          <section class="section" id="plans">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧭</div>
+              Carte : les théâtres de la croisade
+            </h2>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 460" role="img" aria-label="Carte des principaux lieux de la croisade des Albigeois">
+                <defs>
+                  <pattern id="montagne" width="18" height="12" patternUnits="userSpaceOnUse">
+                    <path d="M0 12 L6 4 L12 12" fill="none" stroke="#B8A58A" stroke-width="1"/>
+                  </pattern>
+                  <marker id="fc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2C4A7C"/></marker>
+                </defs>
+                <rect x="0" y="0" width="640" height="460" fill="#FBF8F2"/>
+                <!-- Mer -->
+                <path d="M640 170 L605 196 L593 236 L565 280 L540 320 L526 360 L520 410 L526 460 L640 460 Z" fill="#D8E4F0"/>
+                <text x="585" y="360" font-family="Playfair Display, serif" font-style="italic" font-size="14" fill="#2C4A7C" text-anchor="middle">Mer</text>
+                <text x="585" y="377" font-family="Playfair Display, serif" font-style="italic" font-size="14" fill="#2C4A7C" text-anchor="middle">Méditerranée</text>
+                <!-- Pyrénées -->
+                <path d="M20 420 Q 200 400 330 405 T 520 420 L 520 460 L 20 460 Z" fill="url(#montagne)" opacity="0.9"/>
+                <text x="200" y="448" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8B7355" font-style="italic">Pyrénées</text>
+                <ellipse cx="410" cy="330" rx="70" ry="38" fill="url(#montagne)" opacity="0.7"/>
+                <ellipse cx="330" cy="205" rx="70" ry="18" fill="url(#montagne)" opacity="0.6"/>
+                <text x="330" y="190" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B7355" text-anchor="middle" font-style="italic">Montagne Noire</text>
+                <text x="470" y="300" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B7355" text-anchor="middle" font-style="italic">Corbières</text>
+                <!-- Garonne / Aude -->
+                <path d="M30 250 Q 60 200 85 140 T 150 20" fill="none" stroke="#7FA3C8" stroke-width="2"/>
+                <text x="40" y="232" font-family="Source Sans 3, sans-serif" font-size="9" fill="#5A7FA8" font-style="italic">Garonne</text>
+                <path d="M320 380 Q 330 320 334 257 Q 400 250 450 260 Q 490 270 560 290" fill="none" stroke="#7FA3C8" stroke-width="1.6"/>
+                <text x="365" y="250" font-family="Source Sans 3, sans-serif" font-size="9" fill="#5A7FA8" font-style="italic">l'Aude</text>
+
+                <!-- Route des croisés 1209 -->
+                <path d="M630 120 Q 600 170 575 210" fill="none" stroke="#2C4A7C" stroke-width="2.5" stroke-dasharray="7 4" marker-end="url(#fc)"/>
+                <path d="M565 222 Q 470 245 345 255" fill="none" stroke="#2C4A7C" stroke-width="2.5" stroke-dasharray="7 4" marker-end="url(#fc)"/>
+                <text x="520" y="110" font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#2C4A7C" font-weight="600">← depuis Lyon, Saint-Gilles,</text>
+                <text x="520" y="124" font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#2C4A7C" font-weight="600">Beaucaire, Avignon (été 1209)</text>
+                <text x="15" y="18" font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#8B7355">↖ vers Marmande, Moissac (Agenais, Quercy)</text>
+
+                <!-- Villes -->
+                <g font-family="Source Sans 3, sans-serif" font-size="11" fill="#2C2418">
+                  <circle cx="85" cy="140" r="6" fill="#3E7C4A"/><text x="94" y="144" font-weight="700">Toulouse</text>
+                  <text x="94" y="157" font-size="9.5" fill="#3E7C4A">sièges 1211, 1217-18, 1219</text>
+                  <circle cx="279" cy="41" r="4" fill="#2C2418"/><text x="287" y="45">Albi</text>
+                  <circle cx="511" cy="266" r="4" fill="#2C2418"/><text x="519" y="270">Narbonne</text>
+                  <circle cx="132" cy="329" r="4" fill="#2C2418"/><text x="100" y="322">Foix</text>
+                  <circle cx="142" cy="290" r="4" fill="#2C2418"/><text x="150" y="294">Pamiers 1212</text>
+                </g>
+
+                <!-- Massacres / sièges croisés (losanges rouges) -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#9B2C2C">
+                  <rect x="567" y="214" width="9" height="9" transform="rotate(45 571 218)" fill="#B03A2E"/><text x="535" y="205" font-weight="700">Béziers 1209</text>
+                  <rect x="185" y="106" width="8" height="8" transform="rotate(45 189 110)" fill="#B03A2E"/><text x="196" y="113">Lavaur 1211</text>
+                  <rect x="439" y="211" width="8" height="8" transform="rotate(45 443 215)" fill="#B03A2E"/><text x="420" y="198">Minerve 1210</text>
+                  <rect x="262" y="243" width="8" height="8" transform="rotate(45 266 247)" fill="#B03A2E"/><text x="250" y="238">Bram</text>
+                  <rect x="387" y="319" width="8" height="8" transform="rotate(45 391 323)" fill="#B03A2E"/><text x="345" y="316">Termes 1210</text>
+                  <rect x="338" y="217" width="8" height="8" transform="rotate(45 342 221)" fill="#B03A2E"/><text x="352" y="225">Cabaret</text>
+                  <rect x="160" y="80" width="8" height="8" transform="rotate(45 164 84)" fill="#B03A2E"/><text x="120" y="76">Montgey</text>
+                </g>
+
+                <!-- Batailles (étoiles) -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" font-weight="700" fill="#5A3E1B">
+                  <text x="48" y="188" font-size="16" fill="#C8843A">✦</text><text x="20" y="205">Muret 1213</text>
+                  <text x="198" y="218" font-size="16" fill="#C8843A">✦</text><text x="176" y="236" font-weight="400">Castelnaudary 1211</text>
+                  <text x="120" y="178" font-size="16" fill="#C8843A">✦</text><text x="128" y="176" font-weight="400">Baziège 1219</text>
+                </g>
+
+                <!-- Carcassonne -->
+                <g transform="translate(334 257)"><path d="M-9 7 V-7 H-6 V-3 H-2 V-7 H2 V-3 H6 V-7 H9 V7 Z" fill="#2C4A7C"/></g>
+                <text x="282" y="276" font-family="Source Sans 3, sans-serif" font-size="12" font-weight="700" fill="#2C4A7C">Carcassonne 1209</text>
+
+                <!-- Légende -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#3A3028">
+                  <rect x="440" y="20" width="190" height="78" rx="8" fill="white" stroke="#E0DACE"/>
+                  <text x="452" y="38" font-weight="700" fill="#2C4A7C">Légende</text>
+                  <rect x="456" y="45" width="8" height="8" transform="rotate(45 460 49)" fill="#B03A2E"/><text x="476" y="53">Siège, massacre</text>
+                  <text x="453" y="72" font-size="14" fill="#C8843A">✦</text><text x="476" y="70">Bataille</text>
+                  <line x1="452" y1="85" x2="470" y2="85" stroke="#2C4A7C" stroke-width="2.5" stroke-dasharray="6 4"/><text x="476" y="89">Marche des croisés, 1209</text>
+                </g>
+              </svg>
+              <figcaption>Carte schématique (positions approximatives, échelle non respectée). Beaucaire et Avignon, à l'est, sont hors du cadre.</figcaption>
+            </figure>
+          </section>
+
+          <!-- ═══ CHRONIQUEURS ═══ -->
+          <section class="section" id="recits">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">✒️</div>
+              Raconter la croisade : les chroniqueurs
+            </h2>
+            <div class="histoire-texte">
+              <p>La croisade est l'un des événements les mieux documentés du XIII<sup>e</sup> siècle, grâce à trois récits contemporains aux points de vue très différents, auxquels s'ajoutent les lettres pontificales et les actes de la chancellerie royale.</p>
+            </div>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Œuvre</th><th>Auteur</th><th>Langue</th><th>Point de vue</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong><em>Hystoria albigensis</em></strong></td><td>Pierre des Vaux-de-Cernay, moine cistercien, neveu de l'abbé Guy, compagnon de Montfort</td><td>Latin</td><td>Résolument croisé : Montfort est un héros chrétien, les hérétiques des suppôts du diable. Témoin direct jusqu'en 1218.</td></tr>
+                  <tr><td><strong><em>Chanson de la croisade</em></strong> (1<sup>re</sup> partie)</td><td>Guillaume de Tudèle, clerc navarrais installé à Montauban</td><td>Occitan, en vers</td><td>Favorable aux croisés mais sans haine, attentif aux souffrances des populations. Couvre 1208-1213.</td></tr>
+                  <tr><td><strong><em>Chanson de la croisade</em></strong> (continuation)</td><td>Auteur anonyme, sans doute toulousain</td><td>Occitan, en vers</td><td>Ardemment favorable aux comtes de Toulouse ; exalte le <em>Paratge</em>. Couvre 1213-1219 ; récit inachevé.</td></tr>
+                  <tr><td><strong><em>Chronique</em></strong></td><td>Guillaume de Puylaurens, clerc toulousain, proche de l'évêque Foulque puis de Raymond VII</td><td>Latin</td><td>Rédigée vers 1250-1275, plus distanciée ; catholique mais compréhensive envers les comtes.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · un même événement, deux regards</div>
+              <p>La mort de Simon de Montfort en 1218 illustre le contraste. Pour Pierre des Vaux-de-Cernay, c'est la mort d'un martyr, presque un saint. Pour l'auteur anonyme de la <em>Chanson</em>, c'est une délivrance accueillie par des cris de joie dans Toulouse, et l'occasion d'une épitaphe ironique sur ce « saint » qui a tué tant d'innocents.</p>
+              <p>Croiser les sources permet de dépasser ces partis pris. C'est ce qu'a fait Michel Roquebert dans <em>L'Épopée cathare</em>, qui reste la grande synthèse en français.</p>
+            </div>
+          </section>
+
+          <!-- ═══ IDÉES REÇUES ═══ -->
+          <section class="section" id="mythes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔎</div>
+              Idées reçues sur la croisade
+            </h2>
+            <div class="mythe"><strong>« C'était une guerre du Nord contre le Sud. »</strong><br><span class="verdict nuance">À nuancer</span><br>Raymond VI a d'abord marché avec les croisés, des seigneurs méridionaux se sont ralliés à Montfort, et le roi de France a longtemps refusé d'intervenir. Le conflit mêle religion, rivalités féodales et ambitions dynastiques.</div>
+            <div class="mythe"><strong>« Tuez-les tous, Dieu reconnaîtra les siens. »</strong><br><span class="verdict nuance">Douteux</span><br>La phrase n'est rapportée que par Césaire de Heisterbach, un moine allemand qui n'était pas présent et écrit une douzaine d'années après. Le massacre de Béziers, lui, est bien réel.</div>
+            <div class="mythe"><strong>« Les seigneurs occitans étaient cathares. »</strong><br><span class="verdict faux">Faux</span><br>Raymond VI, Raymond VII ou Pierre II étaient catholiques. Ce qu'on leur reprochait, c'était de tolérer et de protéger les hérétiques, parfois leurs propres parents.</div>
+            <div class="mythe"><strong>« Saint Dominique a dirigé l'Inquisition contre les cathares. »</strong><br><span class="verdict faux">Faux</span><br>Dominique prêchait et débattait ; il meurt en 1221. L'Inquisition est confiée à son ordre en 1233, douze ans après sa mort.</div>
+            <div class="mythe"><strong>« La croisade a anéanti les cathares. »</strong><br><span class="verdict nuance">Trop simple</span><br>Elle les a privés de leurs protecteurs, mais l'Église cathare survit jusqu'aux années 1240 et des réseaux clandestins jusqu'au début du XIV<sup>e</sup> siècle. C'est l'Inquisition, plus que la guerre, qui en vient à bout.</div>
+            <div class="mythe"><strong>« Le Languedoc est devenu français en 1229. »</strong><br><span class="verdict nuance">Progressif</span><br>En 1229, seule la partie orientale passe au roi. Le comté de Toulouse n'est rattaché qu'en 1271, et la frontière avec l'Aragon n'est fixée qu'en 1258.</div>
+          </section>
+
+          <!-- ═══ PARCOURS ═══ -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥾</div>
+              Circuit conseillé : sur les pas de la croisade
+            </h2>
+            <div class="etapes-liste">
+              <div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Béziers</div><div class="etape-texte">La cathédrale Saint-Nazaire domine l'Orb ; l'église de la Madeleine, reconstruite après 1209, rappelle le massacre. Belle vue depuis le Pont-Vieux.</div></div></div>
+              <div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Carcassonne</div><div class="etape-texte">La Cité, capitale des Trencavel perdue en 1209 ; château comtal et tour des lices. Prévoir une demi-journée.</div></div></div>
+              <div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Minerve et Lastours</div><div class="etape-texte">À Minerve, la stèle de la colombe rappelle le bûcher de 1210 et une réplique de la « Malvoisine » se dresse face au village. Lastours et ses quatre châteaux de Cabaret se découvrent depuis le belvédère.</div></div></div>
+              <div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Termes</div><div class="etape-texte">Les ruines dominant les gorges du Terminet permettent de comprendre le siège de 1210 et le rôle de l'eau.</div></div></div>
+              <div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Fanjeaux, Bram, Castelnaudary</div><div class="etape-texte">Le Lauragais, cœur du conflit : point de vue du « Seignadou » à Fanjeaux, monastère de Prouille, plan circulaire du village de Bram.</div></div></div>
+              <div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Lavaur, Muret et Toulouse</div><div class="etape-texte">À Lavaur, le jardin de l'Évêché domine l'Agout. À Muret, un monument rappelle la bataille de 1213. À Toulouse, la basilique Saint-Sernin et le couvent des Jacobins, berceau dominicain, ferment la boucle.</div></div></div>
+            </div>
+          </section>
+
+          <!-- ═══ INFOS PRATIQUES ═══ -->
+          <section class="section" id="infos-pratiques">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">ℹ️</div>
+              Infos pratiques
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🚗</div>
+                <div>
+                  <div class="vin-nom">Organisation</div>
+                  <div class="vin-desc">Le circuit complet de Béziers à Toulouse représente environ 300 km : compter trois ou quatre jours pour en profiter.</div>
+                </div>
+                <div class="vin-badge">3 à 4 jours</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎟️</div>
+                <div>
+                  <div class="vin-nom">Pass Sites du Pays cathare</div>
+                  <div class="vin-desc">Réductions sur Lastours, Termes et les autres sites du réseau départemental ; se renseigner sur place pour les conditions en vigueur.</div>
+                </div>
+                <div class="vin-badge">Réseau de l'Aude</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Pour approfondir</div>
+                  <div class="vin-desc">Le Centre national d'études cathares (Carcassonne) et le musée du Catharisme de Mazamet proposent ressources et expositions.</div>
+                </div>
+                <div class="vin-badge">Centres de ressources</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">💨</div>
+                <div>
+                  <div class="vin-nom">Météo</div>
+                  <div class="vin-desc">Chaleur forte l'été et vent (cers, tramontane) sur les sites perchés : chaussures fermées et eau indispensables.</div>
+                </div>
+                <div class="vin-badge">Printemps, automne</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ SOURCES ═══ -->
+          <section class="section" id="sources">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📚</div>
+              Sources et pistes documentaires
+            </h2>
+            <div class="histoire-texte">
+              <ul class="source-list">
+                <li><a href="https://www.larousse.fr/encyclopedie/divers/croisade_des_albigeois/105079" target="_blank" rel="noopener">Encyclopédie Larousse — croisade des Albigeois</a></li>
+                <li><a href="https://www.larousse.fr/encyclopedie/divers/cathare/31438" target="_blank" rel="noopener">Encyclopédie Larousse — Cathares</a></li>
+                <li><a href="https://gallica.bnf.fr" target="_blank" rel="noopener">Gallica (BnF) — éditions anciennes de la <em>Chanson de la croisade</em> et des chroniques</a></li>
+                <li><a href="https://www.cathares.org" target="_blank" rel="noopener">Centre national d'études cathares — René Nelli</a></li>
+                <li><a href="https://commons.wikimedia.org/wiki/Category:Albigensian_Crusade" target="_blank" rel="noopener">Wikimedia Commons — iconographie de la croisade</a></li>
+              </ul>
+              <p class="small">Les cartes, plans et schémas de cette fiche sont des dessins simplifiés, non à l'échelle. Les citations médiévales sont données en traduction libre.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Territoire</span><span class="aside-val">Aude · Hérault · Tarn · Haute-Garonne · Ariège</span></div>
+              <div class="aside-row"><span class="aside-label">Catégorie</span><span class="aside-val">Histoire · Guerre médiévale</span></div>
+              <div class="aside-row"><span class="aside-label">Période</span><span class="aside-val">1209 – 1229</span></div>
+              <div class="aside-row"><span class="aside-label">Belligérants</span><span class="aside-val">Croisés, roi de France / Toulouse, Trencavel, Foix, Aragon</span></div>
+              <div class="aside-row"><span class="aside-label">Issue</span><span class="aside-val">Traité de Meaux-Paris</span></div>
+              <div class="aside-row"><span class="aside-label">Saison de visite</span><span class="aside-val">Printemps et automne</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔢 En chiffres</div>
+            <div class="aside-card-body">
+              <div class="chiffres">
+                <div class="chiffre"><b>20 ans</b><span>de guerre (1209-1229)</span></div>
+                <div class="chiffre"><b>40 jours</b><span>de service pour l'indulgence</span></div>
+                <div class="chiffre"><b>3</b><span>phases de la croisade</span></div>
+                <div class="chiffre"><b>3</b><span>sièges de Toulouse</span></div>
+                <div class="chiffre"><b>1213</b><span>Muret, mort de Pierre II</span></div>
+                <div class="chiffre"><b>1271</b><span>Toulouse au domaine royal</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">💡 Point de méthode</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size:13px; line-height:1.65; color:#5a4a39;">Les récits de la croisade sont presque tous engagés dans un camp. La fiche signale les chiffres incertains, les paroles douteuses et les lectures historiographiques divergentes.</div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📚 Petit glossaire</div>
+            <div class="aside-card-body">
+              <dl class="glossaire">
+                <dt>Croisade</dt><dd>Expédition armée prêchée par le pape, ouvrant droit à des privilèges spirituels.</dd>
+                <dt>Indulgence</dt><dd>Remise des peines dues pour les péchés, accordée aux croisés.</dd>
+                <dt>Quarantaine</dt><dd>Service de quarante jours exigé pour gagner l'indulgence de la croisade albigeoise.</dd>
+                <dt>Légat</dt><dd>Représentant du pape, investi de son autorité.</dd>
+                <dt>Exposition en proie</dt><dd>Droit donné aux catholiques de saisir les terres des protecteurs d'hérétiques.</dd>
+                <dt>Faydit</dt><dd>Seigneur méridional dépossédé par la croisade.</dd>
+                <dt>Routier</dt><dd>Mercenaire, souvent basque, navarrais ou brabançon.</dd>
+                <dt>Ribauds</dt><dd>Valets et pillards suivant l'armée, à l'origine du sac de Béziers.</dd>
+                <dt>Paratge</dt><dd>Valeur occitane de noblesse, d'honneur et d'égalité entre pairs.</dd>
+                <dt>Sénéchaussée</dt><dd>Circonscription administrée par un sénéchal au nom du roi.</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔗 À lire aussi</div>
+            <div class="aside-card-body">
+              <a class="aside-lien" href="catharisme-forteresses-occitanie.html">Forteresses royales &amp; Cathares →</a>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📖 Pour aller plus loin</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size: 13px; line-height: 1.6; color:#3A3028;">
+              • Michel Roquebert, <em>L'Épopée cathare</em><br>
+              • Michel Roquebert, <em>Simon de Montfort, bourreau et martyr</em><br>
+              • Martín Alvira Cabrer, <em>Muret 1213</em><br>
+              • Jean-Louis Biget, <em>Hérésie et inquisition dans le Midi de la France</em><br>
+              • <em>La Chanson de la croisade albigeoise</em>, trad. Henri Gougaud (Livre de Poche)
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<!--  Retour flottant-->
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300;
+    function majBouton() { btn.classList.toggle('visible', window.scrollY > seuil); }
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
