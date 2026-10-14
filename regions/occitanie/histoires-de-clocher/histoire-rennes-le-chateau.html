@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rennes-le-Château, le village du curé aux milliards — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Rennes-le-Château (Aude), 89 habitants, un curé dépensier, un hôtelier inventif et la légende de trésor la plus célèbre de France." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Encadré à puces numérotées */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à cette fiche : violet nuit des mystères -->
+  <style>
+    .produit-hero { background-color: #3A2E4F; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #3A2E4F; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #2A2139; }
+    .lettrine::first-letter, .chiffre .val { color: #3A2E4F; }
+    .btn { background: #3A2E4F; border-color: #3A2E4F; }
+    .btn:hover { background: #2A2139; }
+    .btn.secondaire { background: #F7F3EC; color: #3A2E4F; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #3A2E4F; color: white; border-color: #3A2E4F; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #3A2E4F, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #3A2E4F, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du village si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+          url('../../../assets/departement/occitanie/panorama-clocher.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>R</em>ennes-le-<em>C</em>hâteau,<br>
+            <span style="padding-left: 20px;"><em>l</em>e <em>v</em>illage <em>d</em>u <em>c</em>uré <br><em>a</em>ux <em>m</em>illiards</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-aude.png" alt="Carte Aude" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/aude.png" alt="Écusson Aude" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#legende">🔎 Naissance d'une légende</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Moins de cent habitants, une église, un château, une tour. Et plus de huit cents livres. Rennes-le-Château doit sa célébrité mondiale à un curé qui dépensait plus qu'il ne gagnait, puis à un hôtelier qui avait besoin de clients. Derrière la légende du trésor, il y a l'histoire, bien réelle, d'un village perché.</p>
+
+              <h3>Un nid d'aigle sur le Razès</h3>
+              <p class="lettrine">Le bourg occupe le sommet d'une colline, à environ 500 mètres d'altitude, au-dessus de la haute vallée de l'Aude et de Couiza. Le site, qui offre une vue à 360 degrés jusqu'aux sommets des Pyrénées, a été occupé dès le Néolithique. On y place l'ancienne <em>Rhedae</em>, chef-lieu du pays de Razès, que cite l'évêque Théodulf, envoyé de Charlemagne, en 798. Ce n'était qu'un bourg modeste, mais placé à un carrefour stratégique.</p>
+              <p>Au Moyen Âge, la place forte change souvent de maîtres : comtes de Carcassonne, de Barcelone, Trencavel, puis la famille de Voisins après la croisade contre les Albigeois. En 1361, des routiers venus de Castille prennent et ruinent la ville. Elle ne s'en relèvera pas : il ne reste qu'un village. En 1422, la seigneurie passe aux Hautpoul, dont le château, remanié aux XVIe et XVIIe siècles, domine toujours le bourg. En 1578, une grande partie de l'église s'effondre sous les coups des protestants, maîtres provisoires du village.</p>
+
+              <!-- PHOTO : déposer rennes1.jpg dans le dossier photo/ -->
+              <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                <img src="photo/rennes1.jpg" alt="Le village de Rennes-le-Château" />
+                <figcaption>Le village de Rennes-le-Château</figcaption>
+              </figure>
+
+              <h3>Un village qui se vide</h3>
+              <p>Au milieu du XIXe siècle, Rennes compte 474 habitants (1851). Quarante ans plus tard, ils ne sont plus que 241 (1891) : l'exode rural frappe durement les Hautes Corbières. En 1883, le conseil général de l'Aude note que le clocher de l'église est « lézardé sur ses quatre faces » et que toitures de l'église et du presbytère sont à refaire.</p>
+
+              <h3>L'abbé Saunière</h3>
+              <p>C'est dans cette paroisse pauvre qu'arrive, en juin 1885, un prêtre de 33 ans né à Montazels, dans la vallée voisine : <strong>Bérenger Saunière</strong>. Ses premiers sermons contre la République lui valent quelques mois de suspension par le ministre des Cultes. À son retour, il se lance dans la restauration de son église. Entre 1887 et 1897, d'après ses propres comptes, il y dépense 11 605 francs. Il choisit sur catalogue, chez le fabricant toulousain Giscard, un décor d'un goût très sulpicien : statues, chemin de croix et, à l'entrée, un diable qui porte le bénitier. Au-dessus de la porte, il fait inscrire <em>Terribilis est locus iste</em>, « ce lieu est redoutable ». En 1897, l'évêque, Mgr Billard, bénit l'église rénovée.</p>
+              <p>Puis le curé voit plus grand. Entre 1898 et 1905, sur des terrains achetés au nom de sa servante, Marie Dénarnaud, il fait bâtir la villa Béthania, un jardin, une orangerie, un belvédère et la tour Magdala, une petite tour néogothique où il installe sa bibliothèque. Coût : 26 417 francs. Les villageois s'interrogent, d'autant qu'en 1895 ils s'étaient déjà plaints auprès du préfet des fouilles nocturnes de leur curé dans le cimetière.</p>
+
+              <div class="citation-bloc">
+                <p>D'où venait l'argent ? Le seul fait établi, c'est que l'abbé Saunière vendait des messes, beaucoup de messes, à des fidèles de toute la France.</p>
+              </div>
+
+              <h3>La chute</h3>
+              <p>Le nouvel évêque de Carcassonne, Mgr de Beauséjour, demande des comptes. En 1910, le curé est traduit devant un tribunal ecclésiastique pour trafic de messes. Il refuse de produire ses livres de comptes et, en 1911, il est suspendu de ses fonctions de prêtre. Endetté, il emprunte au Crédit foncier en 1913, sans jamais rembourser. Il meurt à Rennes le 22 janvier 1917.</p>
+              <p>Marie Dénarnaud, propriétaire en titre du domaine, y vit encore plus de trente ans, puis le cède en viager à un homme d'affaires, Noël Corbu. Elle meurt en 1953. C'est alors que commence la seconde histoire de Rennes-le-Château : celle du trésor.</p>
+
+              <!-- PHOTO : déposer rennes2.jpg dans le dossier photo/ -->
+              <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                <img src="photo/rennes2.jpg" alt="La tour Magdala" />
+                <figcaption>La tour Magdala, bibliothèque de l'abbé Saunière</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li><span class="date">798</span><span>Théodulf, envoyé de Charlemagne, cite <strong>Rhedae</strong> parmi les chefs-lieux audois.</span></li>
+              <li><span class="date">1361</span><span>Des routiers castillans prennent et <strong>détruisent la ville</strong>.</span></li>
+              <li><span class="date">1422</span><span>La seigneurie passe à la famille d'<strong>Hautpoul</strong>.</span></li>
+              <li><span class="date">1578</span><span>L'église est en grande partie détruite pendant les guerres de Religion.</span></li>
+              <li><span class="date">1851</span><span>Population maximale : <strong>474 habitants</strong>.</span></li>
+              <li class="fort"><span class="date">1885</span><span>Arrivée de l'abbé <strong>Bérenger Saunière</strong>.</span></li>
+              <li><span class="date">1897</span><span>L'église restaurée est bénie par Mgr Billard.</span></li>
+              <li><span class="date">1898-1905</span><span>Construction de la villa Béthania et de la <strong>tour Magdala</strong>.</span></li>
+              <li class="fort"><span class="date">1911</span><span>Condamné pour <strong>trafic de messes</strong>, Saunière est suspendu.</span></li>
+              <li><span class="date">1917</span><span>Mort de l'abbé Saunière, le 22 janvier.</span></li>
+              <li class="fort"><span class="date">1956</span><span>La Dépêche du Midi lance l'histoire du « <strong>curé aux milliards</strong> ».</span></li>
+              <li><span class="date">1965</span><span>Le 28 juillet, la mairie <strong>interdit les fouilles</strong>.</span></li>
+              <li><span class="date">1967</span><span>Parution de <em>L'Or de Rennes</em>, de Gérard de Sède.</span></li>
+              <li><span class="date">1982</span><span><em>L'Énigme sacrée</em> donne à l'affaire un écho mondial.</span></li>
+              <li><span class="date">1994</span><span>L'église Sainte-Marie-Madeleine est inscrite aux monuments historiques.</span></li>
+              <li><span class="date">2000</span><span>Le domaine de l'abbé devient propriété de la commune.</span></li>
+              <li><span class="date">2003</span><span><em>Da Vinci Code</em> ; fouille sous la tour Magdala : rien.</span></li>
+              <li><span class="date">2023</span><span><strong>89 habitants</strong>.</span></li>
+            </ol>
+          </section>
+
+          <!-- NAISSANCE D'UNE LÉGENDE -->
+          <section class="section" id="legende">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔎</div>
+              Naissance d'une légende
+            </h2>
+            <div class="histoire-texte">
+              <p>De son vivant, l'abbé Saunière n'est qu'un curé de campagne au train de vie suspect. Le trésor apparaît quarante ans après sa mort, et l'on peut suivre pas à pas sa fabrication.</p>
+              <p>Noël Corbu a transformé la villa Béthania en « Hôtel de la Tour ». Pour attirer les clients, il raconte que le curé aurait découvert sous son église un trésor caché par Blanche de Castille. Les 12, 13 et 14 janvier 1956, <em>La Dépêche du Midi</em> publie trois pages sur « le curé aux milliards ». La télévision suit en 1961, l'essayiste Robert Charroux en 1962. Les chercheurs de trésor affluent, pioche à la main, au point que la mairie interdit les fouilles en 1965 pour éviter que le sous-sol ne devienne un gruyère.</p>
+              <p>Arrivent alors Pierre Plantard et son ami Philippe de Chérisey. Ils fabriquent de faux parchemins et déposent à la Bibliothèque nationale de prétendus « dossiers secrets » sur un « Prieuré de Sion ». Le romancier Gérard de Sède en tire en 1967 <em>L'Or de Rennes</em>, un succès national. En 1982, trois auteurs britanniques ajoutent Marie-Madeleine, le Graal et une descendance de Jésus. En 2003, Dan Brown s'en inspire pour <em>Da Vinci Code</em>.</p>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Ce que l'on sait vraiment</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Les dépenses :</strong> environ 38 000 francs entre l'église (1887-1897) et le domaine (1898-1905), d'après les comptes de l'abbé.</span></li>
+                <li><span><strong>Les revenus :</strong> un important trafic de messes, sanctionné par l'Église en 1911.</span></li>
+                <li><span><strong>Les fouilles :</strong> celles de l'église (1956, 1959-1963) et de la tour Magdala (2003) n'ont rien trouvé.</span></li>
+                <li><span><strong>Les parchemins :</strong> ceux publiés en 1967 sont des faux fabriqués dans les années 1960.</span></li>
+              </ol>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Le vrai trésor est peut-être ailleurs : la légende a fait vivre le village. Depuis 2000, la commune est propriétaire du domaine, devenu musée. On y voit le presbytère, la villa, la tour, le jardin et la « dalle des chevaliers » découverte par l'abbé dans son église.</p>
+            </div>
+
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">474</div><div class="lib">habitants en 1851</div></div>
+              <div class="chiffre"><div class="val">89</div><div class="lib">habitants en 2023</div></div>
+              <div class="chiffre"><div class="val">800+</div><div class="lib">livres et études depuis 1956</div></div>
+              <div class="chiffre"><div class="val">1965</div><div class="lib">fouilles interdites par arrêté</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Patrimoine</div>
+                <h4>Le diable au bénitier</h4>
+                <p>À l'entrée de l'église, le démon Asmodée ploie sous le bénitier, écrasé par quatre anges. Commandé sur catalogue chez Giscard, il a été vandalisé plusieurs fois : sa tête d'origine a disparu dans les années 1990.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Lumière</div>
+                <h4>Les « pommes bleues »</h4>
+                <p>Certains matins de la seconde quinzaine de janvier, le soleil bas projette à travers un vitrail des taches bleues sur les piliers. Un simple jeu de lumière, que des visiteurs viennent pourtant guetter chaque année.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Mystère résolu</div>
+                <h4>Le crâne percé</h4>
+                <p>En 1956, un médecin découvre sous l'église un crâne entaillé. Rendu au village en 2014 après des années de procédure, il a été daté : il appartient à un homme mort entre 1281 et 1396, sans lien avec un quelconque trésor.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Mémoire du village</div>
+                <h4>« Le vieux curé changé en diable »</h4>
+                <p>En 1948, avant toute légende, un journaliste belge recueille les souvenirs des villageois. Une vieille femme lui montre le diable du bénitier : selon elle, c'est l'ancien curé, transformé en démon.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Rennes-le-Château, au-dessus de Couiza (Aude)</span>
+                <button class="btn secondaire" id="reset">Recentrer</button>
+              </div>
+              <div id="map" aria-label="Carte de Rennes-le-Château"></div>
+              <div class="carte-note">Position indicative, d'après OpenStreetMap. Le bourg est piéton du 15 juin au 15 septembre : parkings à l'entrée du village. Toute fouille est interdite.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Aude (11)</span></div>
+              <div class="aside-row"><span class="aside-label">Intercommunalité</span><span class="aside-val">Limouxin</span></div>
+              <div class="aside-row"><span class="aside-label">Habitants</span><span class="aside-val">89 (2023)</span></div>
+              <div class="aside-row"><span class="aside-label">Record</span><span class="aside-val">474 (1851)</span></div>
+              <div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">14,68 km²</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude</span><span class="aside-val">272 à 568 m</span></div>
+              <div class="aside-row"><span class="aside-label">Église</span><span class="aside-val">Inscrite MH (1994)</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution de la population de Rennes-le-Château"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Recensements (Insee et séries historiques). En orange, les années de l'abbé Saunière (1885-1917).</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/Rennes-le-Ch%C3%A2teau" target="_blank" rel="noopener">Wikipédia, Rennes-le-Château</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Rennes-le-Ch%C3%A2teau" target="_blank" rel="noopener">Wikipedia, Rennes-le-Château (recensements)</a></li>
+                <li><a href="https://books.openedition.org/editionsmsh/3414" target="_blank" rel="noopener">Christiane Amiel, « L'abîme au trésor » (OpenEdition)</a></li>
+                <li><a href="https://www.rennes-le-chateau.fr/" target="_blank" rel="noopener">Site de la mairie et du musée</a></li>
+                <li>René Descadeillas, <em>Mythologie du trésor de Rennes</em>, 1974</li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   (un lieu sans lat/lng apparaît dans la liste mais pas sur la carte)
+   ============================================================ */
+const lieux=[
+{name:'Le bourg de Rennes-le-Château',lat:42.9281,lng:2.2633,desc:'Village perché à environ 500 m, vue sur la vallée de l\'Aude et les Pyrénées. Piéton en été.'},
+{name:'Église Sainte-Marie-Madeleine',desc:'Le diable au bénitier, l\'inscription « Terribilis est locus iste » et le décor choisi par l\'abbé Saunière. Inscrite monument historique en 1994.'},
+{name:'Domaine de l\'abbé Saunière',desc:'Musée municipal : presbytère, villa Béthania, jardin, belvédère, tour Magdala et dalle des chevaliers. Entrée payante.'},
+{name:'Château des Hautpoul',desc:'Dernier vestige de la place forte médiévale, remanié aux XVIe-XVIIe siècles. Propriété privée, visible de l\'extérieur seulement.'}
+];
+// Population (recensements)
+const population=[[1851,474],[1891,241],[1968,90],[1975,80],[1982,63],[1990,88],[1999,111],[2007,91],[2012,60],[2017,80],[2023,89]];
+// Repère à mettre en avant sur la courbe : [année début, année fin, texte] ou null
+const periodeMarquee=[1885,1917,"Saunière"];
+/* ============================================================ */
+
+const COUL='#3A2E4F', COUL_FONCE='#2A2139';
+const surCarte=lieux.map((s,i)=>({...s,n:i+1})).filter(s=>s.lat!=null);
+let recentrer=()=>{};
+if(window.L){
+ const map=L.map('map',{scrollWheelZoom:false});
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+ const bounds=L.latLngBounds(surCarte.map(s=>[s.lat,s.lng]));
+ recentrer=()=>surCarte.length>1?map.fitBounds(bounds.pad(.35)):map.setView([surCarte[0].lat,surCarte[0].lng],13);
+ recentrer();
+ window._markers={};
+ surCarte.forEach(s=>{
+  const icon=L.divIcon({className:'',html:`<div class="marker">${s.n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  window._markers[s.n]=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${s.n}. ${s.name}</strong><p>${s.desc}</p>`);
+ });
+ window._map=map;
+} else {
+ document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>';
+}
+lieux.forEach((s,i)=>{
+ const el=document.createElement('div');el.className='etape';
+ const surLaCarte=s.lat!=null;
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div>${surLaCarte?'<div class="etape-leg">Voir sur la carte ↗</div>':''}</div>`;
+ if(surLaCarte)el.onclick=()=>{if(!window._map)return;document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});window._map.setView([s.lat,s.lng],15);window._markers[i+1].openPopup()};
+ else el.style.cursor='default';
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>recentrer();
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph');if(!svg||!population.length)return;
+ const W=300,H=150,g={l:32,r:12,t:14,b:22};
+ const annees=population.map(p=>p[0]),vals=population.map(p=>p[1]);
+ const x0=Math.floor((Math.min(...annees)-5)/10)*10,x1=Math.max(2025,Math.max(...annees));
+ const pas=[10,20,25,50,100,200,250,500][[10,20,25,50,100,200,250,500].findIndex(p=>Math.max(...vals)/p<=5)];
+ const yMax=Math.ceil(Math.max(...vals)*1.1/pas)*pas;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ for(let v=0;v<=yMax;v+=pas)s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`;
+ const ecart=(x1-x0)>120?50:20;
+ for(let a=Math.ceil(x0/ecart)*ecart;a<=x1;a+=ecart)s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`;
+ if(periodeMarquee){const[a,b,t]=periodeMarquee;s+=`<rect x="${X(a)}" y="${g.t}" width="${Math.max(3,X(b)-X(a))}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/><text x="${X((a+b)/2)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">${t}</text>`}
+ s+=`<polyline points="${population.map(([a,v])=>X(a)+','+Y(v)).join(' ')}" fill="none" stroke="${COUL}" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="${COUL}"><title>${a} : ${v} habitants</title></circle>`});
+ const iMax=vals.indexOf(Math.max(...vals)),iMin=vals.indexOf(Math.min(...vals));
+ s+=`<text x="${X(annees[iMax])+6}" y="${Y(vals[iMax])+3}" style="fill:${COUL_FONCE};font-weight:700">${vals[iMax]}</text>`;
+ if(iMin!==iMax)s+=`<text x="${X(annees[iMin])}" y="${Y(vals[iMin])-7}" text-anchor="middle" style="fill:${COUL_FONCE};font-weight:700">${vals[iMin]}</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>
