@@ -156,6 +156,28 @@
     }
   </style>
   <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Lecteur « Écouter le conte » -->
+  <style>
+    .lecteur-conte { background: white; border: 1px solid #E0DACE; border-left: 4px solid var(--lc-c, #5C3A6E); border-radius: 12px;
+      padding: 14px 18px; margin: 0 0 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+    .lc-tete { display: flex; align-items: center; gap: 12px; flex: 1 1 220px; }
+    .lc-icone { font-size: 26px; line-height: 1; }
+    .lc-titre { font-family: var(--font-titre); font-weight: 700; font-size: 16px; color: var(--lc-c, #5C3A6E); }
+    .lc-etat { font-size: 13px; color: #8B7355; margin-top: 2px; }
+    .lc-commandes { display: flex; gap: 8px; }
+    .lc-btn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--lc-c, #5C3A6E); background: var(--lc-c, #5C3A6E);
+      color: white; border-radius: 22px; padding: 9px 18px; font-family: var(--font-corps); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .18s; }
+    .lc-btn:hover { opacity: .85; }
+    .lc-btn:disabled { opacity: .4; cursor: default; }
+    .lc-stop { background: #F7F3EC; color: var(--lc-c, #5C3A6E); border-color: #E0DACE; padding: 9px 14px; }
+    .lc-options { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: #8B7355; }
+    .lc-options[hidden], .lc-voix-wrap[hidden] { display: none; }
+    .lc-voix { margin-left: 6px; font-family: var(--font-corps); font-size: 12.5px; padding: 3px 6px; border: 1px solid #E0DACE; border-radius: 6px; background: #FAF7F0; color: #3A3028; max-width: 220px; }
+    .lc-suivre input { vertical-align: -2px; margin-right: 4px; }
+    .conte-texte p, .conte-texte h3, .conte-ouverture, .conte-fermeture { transition: background-color .3s, box-shadow .3s; border-radius: 6px; }
+    .lecture-en-cours { background-color: rgba(250,199,117,.25); box-shadow: 0 0 0 6px rgba(250,199,117,.25); }
+    @media print { .lecteur-conte { display: none !important; } }
+  </style>
   <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du lieu si vous en avez une -->
   <style>
     .produit-hero {
@@ -212,6 +234,20 @@
           <!-- LE CONTE -->
           <section class="section" id="conte">
             <h2 class="section-titre"><div class="section-titre-icon">🕯️</div>Le conte</h2>
+            <div class="lecteur-conte" id="lecteur-conte" data-voix="f" data-audio="audio/conte-dame-carcas.mp3">
+              <div class="lc-tete">
+                <span class="lc-icone" aria-hidden="true">🎧</span>
+                <div><div class="lc-titre">Écouter le conte</div><div class="lc-etat" aria-live="polite">Raconté par une voix féminine</div></div>
+              </div>
+              <div class="lc-commandes">
+                <button type="button" class="lc-btn lc-play"><span class="lc-ico" aria-hidden="true">▶</span><span class="lc-txt">Écouter</span></button>
+                <button type="button" class="lc-btn lc-stop" disabled aria-label="Arrêter la lecture">■</button>
+              </div>
+              <div class="lc-options">
+                <label class="lc-voix-wrap" hidden>Voix<select class="lc-voix"></select></label>
+                <label class="lc-suivre"><input type="checkbox" checked />Suivre le texte</label>
+              </div>
+            </div>
             <div class="conte">
               <p class="conte-ouverture">Mettez une bûche de plus dans le feu.<br>Ce soir, on raconte comment une ville a été sauvée par un cochon.</p>
               <div class="conte-texte">
@@ -417,6 +453,160 @@ navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();cons
 (function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
  window.addEventListener('scroll',maj,{passive:true});maj();
  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+<script>
+/* ============================================================
+   LECTEUR « ÉCOUTER LE CONTE »
+   - Si un fichier audio/<nom-de-la-fiche>.mp3 existe à côté de la page, il est utilisé.
+   - Sinon, le texte est lu par la voix de synthèse du navigateur (voix féminine ou masculine).
+   ============================================================ */
+(function () {
+  const bloc = document.getElementById('lecteur-conte');
+  if (!bloc) return;
+  const genre = bloc.dataset.voix === 'm' ? 'm' : 'f';
+  const btnPlay = bloc.querySelector('.lc-play'), ico = btnPlay.querySelector('.lc-ico'), txt = btnPlay.querySelector('.lc-txt');
+  const btnStop = bloc.querySelector('.lc-stop'), etat = bloc.querySelector('.lc-etat');
+  const selWrap = bloc.querySelector('.lc-voix-wrap'), sel = bloc.querySelector('.lc-voix');
+  const suivre = bloc.querySelector('.lc-suivre input'), options = bloc.querySelector('.lc-options');
+  const libelleGenre = 'Raconté par une voix ' + (genre === 'f' ? 'féminine' : 'masculine');
+
+  function boutons(lecture, actif) {
+    ico.textContent = lecture ? '❚❚' : '▶';
+    txt.textContent = lecture ? 'Pause' : (actif ? 'Reprendre' : 'Écouter');
+    btnStop.disabled = !actif;
+  }
+
+  /* ── 1. Fichier audio enregistré (prioritaire s'il existe) ── */
+  let audio = null;
+  if (bloc.dataset.audio && location.protocol !== 'file:') {
+    const a = new Audio(); a.preload = 'metadata';
+    a.addEventListener('loadedmetadata', () => {
+      audio = a; options.hidden = true;
+      etat.textContent = 'Enregistrement audio · ' + Math.round(a.duration / 60) + ' min';
+    });
+    a.addEventListener('play', () => boutons(true, true));
+    a.addEventListener('pause', () => boutons(false, a.currentTime > 0));
+    a.addEventListener('ended', () => { a.currentTime = 0; boutons(false, false); });
+    a.addEventListener('timeupdate', () => {
+      const r = Math.max(0, Math.round((a.duration - a.currentTime) / 60));
+      if (!a.paused) etat.textContent = 'Lecture en cours · encore ' + r + ' min environ';
+    });
+    a.src = bloc.dataset.audio;
+  }
+
+  /* ── 2. Voix de synthèse du navigateur ── */
+  const synth = window.speechSynthesis;
+  const FEM = /(am[ée]lie|audrey|aur[ée]lie|marie|julie|denise|eloise|[ée]lo[iï]se|hortense|c[ée]line|l[ée]a\b|virginie|chantal|sylvie|nathalie|charlotte|juliette|vivienne|brigitte|coralie|yvette|jacqueline|josephine|celeste|grandma|grand-m[èe]re|female|femme)/i;
+  const MASC = /(thomas|jacques|nicolas|henri|paul|r[ée]mi|claude|daniel|antoine|jean\b|mathieu|alain|fabrice|gr[ée]goire|jérôme|jerome|maxime|yves|guillaume|louis|grandpa|grand-p[èe]re|\bmale\b|homme)/i;
+  let voix = null, pitch = 1, segments = [], i = 0, enCours = false, enPause = false, jeton = 0;
+
+  function score(v) {
+    let s = 0;
+    if (FEM.test(v.name)) s += genre === 'f' ? 20 : -20;
+    if (MASC.test(v.name)) s += genre === 'm' ? 20 : -20;
+    if (/^fr[-_]fr/i.test(v.lang)) s += 4;
+    if (/natural|neural|premium|enhanced|online|naturelle/i.test(v.name)) s += 5;
+    if (/google/i.test(v.name)) s += genre === 'f' ? 3 : -3;   /* la voix « Google français » est féminine */
+    return s;
+  }
+  function voixFr() { return synth ? synth.getVoices().filter(v => /^fr/i.test(v.lang)) : []; }
+  function choisirVoix(v) {
+    voix = v || null;
+    const ok = v && (genre === 'f' ? FEM : MASC).test(v.name) || (v && genre === 'f' && /google/i.test(v.name));
+    pitch = ok ? 1 : (genre === 'm' ? 0.8 : 1.15);   /* voix du mauvais genre : on rapproche par la hauteur */
+  }
+  function remplirVoix() {
+    const vs = voixFr().sort((a, b) => score(b) - score(a));
+    if (!vs.length || sel.options.length === vs.length) return;
+    const avant = sel.value;
+    sel.innerHTML = '';
+    vs.forEach(v => sel.add(new Option(v.name.replace(/^(Microsoft|Google)\s+/, '').replace(/\s*-\s*French.*$/i, '') + (/^fr[-_]fr/i.test(v.lang) ? '' : ' (' + v.lang + ')'), v.name)));
+    sel.value = vs.some(v => v.name === avant) ? avant : vs[0].name;
+    choisirVoix(vs.find(v => v.name === sel.value));
+    selWrap.hidden = vs.length < 2;
+  }
+  if (synth) { remplirVoix(); synth.addEventListener ? synth.addEventListener('voiceschanged', remplirVoix) : (synth.onvoiceschanged = remplirVoix); }
+  else if (!bloc.dataset.audio || location.protocol === 'file:') {
+    etat.textContent = "La lecture à voix haute n'est pas disponible sur ce navigateur.";
+    btnPlay.disabled = true; options.hidden = true;
+  }
+
+  /* Découpe du texte : paragraphe par paragraphe, en phrases courtes (évite les coupures de certains navigateurs) */
+  function preparer() {
+    segments = [];
+    document.querySelectorAll('.conte-ouverture, .conte-texte p, .conte-texte h3, .conte-fermeture').forEach(el => {
+      const t = el.innerText.replace(/\s+/g, ' ').replace(/[✦]/g, '').trim();
+      if (!t) return;
+      const phrases = t.match(/[^.!?…]+[.!?…]+[»"]?\s*|[^.!?…]+$/g) || [t];
+      let morceau = '';
+      phrases.forEach(p => {
+        if ((morceau + p).length > 220 && morceau) { segments.push({ el, t: morceau.trim() }); morceau = ''; }
+        morceau += p;
+      });
+      if (morceau.trim()) segments.push({ el, t: morceau.trim(), pauseApres: el.tagName === 'H3' || el.matches('.conte-ouverture') });
+    });
+  }
+  let surligne = null;
+  function surligner(el) {
+    if (surligne === el) return;
+    if (surligne) surligne.classList.remove('lecture-en-cours');
+    surligne = el;
+    if (!el) return;
+    el.classList.add('lecture-en-cours');
+    if (suivre.checked) {
+      const r = el.getBoundingClientRect();
+      if (r.top < 80 || r.bottom > innerHeight - 40) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  function etatLecture() {
+    const paras = new Set(segments.map(s => s.el)), tous = [...paras];
+    const n = segments[i] ? tous.indexOf(segments[i].el) + 1 : tous.length;
+    etat.textContent = (enPause ? 'En pause' : 'Lecture en cours') + ' · paragraphe ' + n + ' sur ' + tous.length;
+  }
+  function lire() {
+    if (i >= segments.length) { arreter(true); return; }
+    const t = ++jeton, s = segments[i];
+    surligner(s.el); etatLecture();
+    const u = new SpeechSynthesisUtterance(s.t);
+    u.lang = voix ? voix.lang : 'fr-FR';
+    if (voix) u.voice = voix;
+    u.rate = 0.92; u.pitch = pitch;
+    u.onend = () => { if (t !== jeton) return; i++; setTimeout(() => { if (t === jeton) lire(); }, s.pauseApres ? 450 : 120); };
+    u.onerror = e => { if (t !== jeton || e.error === 'interrupted' || e.error === 'canceled') return; i++; lire(); };
+    synth.speak(u);
+  }
+  function arreter(fin) {
+    jeton++; if (synth) synth.cancel();
+    i = 0; enCours = false; enPause = false; surligner(null); boutons(false, false);
+    etat.textContent = fin ? 'Fin du conte. ' + libelleGenre.replace('Raconté', 'Il était raconté') + '.' : libelleGenre;
+  }
+
+  btnPlay.addEventListener('click', () => {
+    if (audio) { audio.paused ? audio.play() : audio.pause(); return; }
+    if (!synth) return;
+    if (!voix) remplirVoix();
+    if (!enCours) { preparer(); i = 0; enCours = true; enPause = false; synth.cancel(); boutons(true, true); lire(); }
+    else if (!enPause) { enPause = true; jeton++; synth.cancel(); boutons(false, true); etatLecture(); }
+    else { enPause = false; boutons(true, true); lire(); }
+  });
+  btnStop.addEventListener('click', () => {
+    if (audio) { audio.pause(); audio.currentTime = 0; boutons(false, false); etat.textContent = 'Enregistrement audio'; return; }
+    arreter(false);
+  });
+  sel.addEventListener('change', () => {
+    choisirVoix(voixFr().find(v => v.name === sel.value));
+    if (enCours && !enPause) { jeton++; synth.cancel(); lire(); }
+  });
+  /* Cliquer sur un paragraphe pendant la lecture reprend à cet endroit */
+  document.querySelector('.conte-texte')?.addEventListener('click', e => {
+    if (!enCours || audio) return;
+    const el = e.target.closest('p, h3'); if (!el) return;
+    const k = segments.findIndex(s => s.el === el); if (k < 0) return;
+    i = k; enPause = false; boutons(true, true); jeton++; synth.cancel(); lire();
+  });
+  addEventListener('pagehide', () => { if (synth) synth.cancel(); });
+})();
 </script>
 </body>
 </html>

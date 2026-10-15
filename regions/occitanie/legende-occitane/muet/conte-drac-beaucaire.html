@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Drac de Beaucaire — L'Âme des Régions</title>
+  <meta name="description" content="Conte de veillée : la lavandière de Beaucaire (Gard), enlevée par le Drac du Rhône. Une légende notée au XIIIe siècle par Gervais de Tilbury, racontée à nouveau." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+    :root {
+      --ivoire: #FAF7F0;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─── */
+    .produit-hero { background: #1F4E5A; background-size: cover; background-position: center; color: white; padding: 22px 0 0; position: relative; overflow: hidden; }
+    .produit-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px); pointer-events: none; }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap; }
+    .produit-logo { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: #FAC775; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .hero-label-bas-circuit em { color: #FAC775; font-style: italic; }
+    .hero-label-bas-circuit { color: white; font-family: var(--font-titre); font-size: 30px; letter-spacing: 0.15em; text-align: center; margin: -10px 0 14px; position: relative; z-index: 3; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .produit-hero-body h1 { font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px); font-weight: 700; line-height: 1.25; color: white; margin-bottom: 90px; margin-top: 30px; text-shadow: 3px 3px 0 #1F4E5A, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { color: #FAC775; font-style: italic; text-shadow: 4px 4px 0 #1F4E5A, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-carte-dept { height: 220px; width: auto; opacity: 0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display: block; align-self: flex-start; margin-top: 8px; }
+    .fiche-hero-ecusson { display: flex; align-items: center; justify-content: center; position: absolute; left: 50%; transform: translateX(-50%); top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none; }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .produit-nav { background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a { padding: 13px 22px; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.18s; }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 36px; align-items: start; }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre { display: flex; align-items: center; gap: 10px; font-family: var(--font-titre); font-size: 22px; font-weight: 700; color: #173C45; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid #E8DEC8; }
+    .section-titre-icon { width: 36px; height: 36px; background: #1F4E5A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+
+    /* Le conte : mise en page « livre de veillée » */
+    .conte { background: white; border: 1px solid #E0DACE; border-radius: 14px; padding: 34px 38px; position: relative; }
+    .conte-ouverture { font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #8B7355; text-align: center; margin: 0 0 26px; line-height: 1.6; }
+    .conte-texte { font-family: Georgia, 'Playfair Display', serif; font-size: 17px; line-height: 1.9; color: #3A3028; }
+    .conte-texte p { margin: 0 0 16px; }
+    .conte-texte h3 { font-family: var(--font-titre); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #C8843A; text-align: center; margin: 32px 0 16px; font-weight: 700; }
+    .conte-texte h3::before, .conte-texte h3::after { content: ' ✦ '; color: #E0C9A3; }
+    .lettrine::first-letter { float: left; font-family: var(--font-titre); font-size: 64px; line-height: 0.9; padding: 6px 10px 0 0; color: #1F4E5A; font-weight: 700; }
+    .parole { font-style: italic; color: #173C45; }
+    .conte-fermeture { font-family: var(--font-titre); font-style: italic; font-size: 16px; color: #8B7355; text-align: center; margin: 28px 0 0; padding-top: 18px; border-top: 1px dashed #E8DEC8; line-height: 1.6; }
+    .oc { font-style: italic; color: #9A3F2C; }
+
+    .conseil-conteur { background: #F2F6F5; border-left: 4px solid #1F4E5A; padding: 14px 18px; margin: 22px 0 0; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.65; }
+    .conseil-conteur strong { color: #173C45; }
+
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 { font-family: var(--font-titre); font-size: 18px; color: #C8843A; margin: 26px 0 8px; }
+    .histoire-texte h3:first-child { margin-top: 0; }
+
+    /* Fiche source */
+    .source-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 20px 22px; margin: 20px 0; }
+    .source-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8B7355; font-weight: 600; margin-bottom: 12px; }
+    .source-ligne { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #E8DEC8; font-size: 14.5px; line-height: 1.55; }
+    .source-ligne:last-child { border-bottom: none; }
+    .source-ligne span:first-child { font-weight: 700; color: #173C45; }
+    .mention-libre { font-size: 13px; color: #8B7355; font-style: italic; line-height: 1.6; margin-top: 10px; }
+
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 18px 20px; }
+    .encadre-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #C8843A; font-weight: 700; margin-bottom: 8px; }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #173C45; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6; }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn { border: 1px solid #1F4E5A; background: #1F4E5A; color: white; border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+    .btn:hover { background: #173C45; }
+    .btn.secondaire { background: #F7F3EC; color: #1F4E5A; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #1F4E5A; color: white; }
+    #map { height: 420px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker { width: 30px; height: 30px; background: #C8843A; border: 2px solid white; color: white; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4); }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #173C45; }
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s; }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num { width: 40px; height: 40px; background: #1F4E5A; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-titre); font-weight: 700; }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre { font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .etape-texte { font-size: 14px; line-height: 1.7; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header { background: #1F4E5A; color: white; padding: 14px 18px; font-family: var(--font-titre); font-size: 14px; font-weight: 700; }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px; }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #1F4E5A; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+    .lexique dt { font-weight: 700; color: #9A3F2C; font-style: italic; font-size: 13.5px; }
+    .lexique dd { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
+
+    .site-footer { background: #1F4E5A; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #FAC775; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page { position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 46px; height: 46px; border-radius: 50%; border: none; background: #1F4E5A; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(31,78,90,0.35); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: 1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .hero-label-bas-circuit { font-size: 22px; }
+      .conte { padding: 24px 20px; }
+      .conte-texte { font-size: 16px; }
+      .source-ligne { grid-template-columns: 1fr; gap: 2px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns, #sur-place { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du Rhône à Beaucaire si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(10,30,36,0.35), rgba(10,30,36,0.35)),
+        url('../../../assets/departement/occitanie/panorama-veillee.jpg');
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════ HÉRO ══════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="contes-de-veillee.html" class="produit-btn-retour">Tous les contes de veillée</a>
+        </div>
+      </div>
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>e <em>D</em>rac<br>
+            <span style="padding-left: 20px;"><em>d</em>e <em>B</em>eaucaire</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-gard.png" alt="Carte du Gard" />
+      </div>
+    </div>
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/gard.png" alt="Écusson du Gard" />
+    </div>
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>C</em>onte <em>d</em>e <em>v</em>eillée <em>⟸</em>
+    </div>
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#conte" class="active">🕯️ Le conte</a>
+          <a href="#origines">📜 D'où vient ce conte</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur les lieux du conte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CORPS ══════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <!-- LE CONTE -->
+          <section class="section" id="conte">
+            <h2 class="section-titre"><div class="section-titre-icon">🕯️</div>Le conte</h2>
+
+            <div class="conte">
+              <p class="conte-ouverture">Approchez-vous du feu, et ne laissez pas les petits trop près de la porte.<br>Ce soir, on parle de ce qui vit sous le Rhône.</p>
+
+              <div class="conte-texte">
+                <p class="lettrine">Il y a bien longtemps, au temps où l'on comptait encore les années par les foires de la Madeleine, vivait à Beaucaire une jeune femme qui lavait le linge des autres. Chaque matin, elle descendait au fleuve avec son panier sur la hanche, s'agenouillait sur une pierre plate, et frappait les draps au battoir jusqu'à ce que le soleil soit haut.</p>
+                <p>Les anciens du quartier ne manquaient jamais de le lui répéter : <span class="parole">« Lave ton linge, petite, mais ne regarde pas trop l'eau. Le Rhône a des habitants. »</span> Elle riait. Tout le monde savait qu'on disait ça aux enfants pour qu'ils ne se noient pas.</p>
+                <p>Pourtant, à Beaucaire, on parlait tout bas des <span class="oc">dracs</span>. On disait qu'ils vivaient au fond du fleuve, dans des salles où la lumière arrive verte et tremblante. On disait qu'ils savaient prendre forme humaine pour monter au marché sans être reconnus. Et on disait surtout qu'ils avaient une ruse : faire flotter à la surface un objet brillant, une coupe, un anneau, et attendre qu'une main se tende.</p>
+
+                <h3>La coupe sur l'eau</h3>
+                <p>Un matin de brume, la lavandière vit passer tout près de sa pierre une petite coupe de bois, ronde et lisse, qui tournait doucement dans le courant sans jamais couler. Elle était si belle, si bien polie, qu'on aurait dit qu'elle l'attendait.</p>
+                <p>La jeune femme hésita. Puis elle pensa à la soupe qu'elle pourrait y servir, au prix qu'elle en tirerait peut-être à la foire, et elle se pencha. Ses doigts touchèrent le bois.</p>
+                <p>Ce fut comme si le fleuve entier la prenait par le poignet. Elle n'eut pas le temps de crier. Le panier resta seul sur la berge, avec le linge à moitié battu.</p>
+
+                <h3>Sous le fleuve</h3>
+                <p>Quand elle ouvrit les yeux, elle respirait, et pourtant elle était sous l'eau. Autour d'elle s'étendait un palais aux murs de galets et de racines, éclairé d'une lueur pâle. Devant elle se tenait le Drac, ni tout à fait homme, ni tout à fait bête, avec des yeux qui ne clignaient jamais.</p>
+                <p><span class="parole">« Ma femme a mis au monde un fils, »</span> dit-il d'une voix qui ressemblait au bruit du courant contre les piles du pont. <span class="parole">« Il lui faut une nourrice. Tu le nourriras, tu le soigneras, et tu le berceras. Quand il n'aura plus besoin de toi, tu rentreras. »</span></p>
+                <p>Elle n'avait pas le choix. Alors elle prit l'enfant contre elle. Il était froid comme un caillou de rivière, mais il serrait son doigt comme tous les petits du monde.</p>
+                <p>Chaque soir, le Drac lui donnait un pot de graisse dont elle devait oindre le corps de l'enfant. Il ne lui avait donné qu'un ordre : <span class="parole">« Ne touche jamais tes yeux avec. »</span></p>
+                <p>Les jours sous l'eau ne se comptent pas comme ceux d'en haut. Un soir pourtant, fatiguée, les doigts encore gras, la lavandière se frotta l'œil sans y penser. Et soudain, avec cet œil-là, elle vit tout autrement : les ombres qui glissaient dans le palais avaient des visages, des écailles, des griffes. Elle voyait les dracs tels qu'ils étaient vraiment. Elle ne dit rien. Elle garda son secret derrière ses paupières.</p>
+
+                <h3>Le retour</h3>
+                <p>Sept ans passèrent ainsi. Un jour, l'enfant du Drac n'eut plus besoin d'elle. Le Drac tint parole : elle sentit l'eau la soulever, la porter, la déposer sur la même pierre plate d'où elle était partie.</p>
+                <p>Elle remonta les ruelles de Beaucaire, trempée, les cheveux pleins d'herbes. Les gens se retournaient sur elle sans la reconnaître. Son mari lui-même la regarda longtemps avant de laisser tomber son outil. On l'avait crue noyée. On avait dit des messes pour elle. Elle raconta tout, et beaucoup haussèrent les épaules. Mais elle était revenue, et c'était déjà un miracle.</p>
+
+                <h3>La foire de Beaucaire</h3>
+                <p>Quelque temps plus tard vint la grande foire, celle où l'on vient de partout vendre le drap, les épices, les chevaux et les mules. La lavandière se promenait entre les étals quand, au milieu de la foule, elle reconnut un visage. Un homme ordinaire, bien habillé, qui marchandait des étoffes comme n'importe quel marchand. Mais avec son œil gauche, elle voyait ses écailles.</p>
+                <p>C'était le Drac.</p>
+                <p>Peut-être par politesse, peut-être par surprise, elle s'approcha et le salua : <span class="parole">« Bonjour à vous. Et comment se porte votre fils ? »</span></p>
+                <p>Le Drac s'arrêta net. Personne, en haut, n'était censé le voir. <span class="parole">« Avec quel œil me vois-tu ? »</span> demanda-t-il tout bas.</p>
+                <p>Elle, naïvement, posa le doigt sur sa paupière : <span class="parole">« Avec celui-ci. »</span></p>
+                <p>Alors le Drac tendit la main et effleura cet œil. Ce fut froid, très froid, comme l'eau du fleuve en hiver. Quand elle se retourna, il n'y avait plus personne devant elle. Et jamais plus elle ne vit un drac, ni à la foire, ni au bord de l'eau, ni ailleurs.</p>
+              </div>
+
+              <p class="conte-fermeture">Voilà pourquoi, à Beaucaire, on dit aux enfants de ne jamais ramasser ce qui flotte sur le Rhône.<br>Et si un jour, à la foire, un marchand vous demande avec quel œil vous le regardez… ne répondez pas.</p>
+            </div>
+
+            <div class="conseil-conteur">
+              <strong>🎙️ Pour le raconter à voix haute :</strong> environ 8 minutes. Ralentissez au moment où la lavandière touche la coupe, et laissez un silence avant « C'était le Drac. » Pour les plus jeunes, on peut adoucir la fin : le Drac lui « souffle » sur l'œil plutôt que de le toucher.
+            </div>
+          </section>
+
+          <!-- ORIGINES -->
+          <section class="section" id="origines">
+            <h2 class="section-titre"><div class="section-titre-icon">📜</div>D'où vient ce conte</h2>
+            <div class="histoire-texte">
+              <h3>Une légende notée il y a 800 ans</h3>
+              <p>Cette histoire est l'une des plus anciennes légendes écrites du Languedoc. On la trouve au début du XIIIe siècle dans les <em>Otia Imperialia</em> (« Divertissements pour un empereur »), une vaste encyclopédie en latin que l'Anglais Gervais de Tilbury rédigea entre 1210 et 1214 pour l'empereur Otton IV. Gervais avait longtemps vécu en Provence et dans la région d'Arles : il y recueillit les histoires qu'on racontait sur les deux rives du Rhône, et les présenta comme des faits rapportés par des témoins.</p>
+              <p>Dans son chapitre sur les dracs, il décrit ces créatures des eaux qui attirent leurs victimes en faisant flotter des objets précieux, puis il raconte l'aventure de la lavandière de Beaucaire, devenue nourrice au fond du fleuve pendant sept ans.</p>
+              <h3>Ce que nous avons ajouté</h3>
+              <p>Le texte médiéval est bref et rapporté comme une chronique. La version ci-dessus est une réécriture originale de L'Âme des Régions : les dialogues, les descriptions du palais sous le fleuve, l'ouverture et la morale finale sont de notre plume, dans l'esprit des récits de veillée. La trame (la coupe flottante, les sept ans, la graisse sur l'œil, la rencontre à la foire) est fidèle à la légende.</p>
+            </div>
+
+            <div class="source-bloc">
+              <div class="source-titre">✦ Inspiré de</div>
+              <div class="source-ligne"><span>Œuvre</span><span><em>Otia Imperialia</em> (Divertissements pour un empereur), livre III</span></div>
+              <div class="source-ligne"><span>Auteur</span><span>Gervais de Tilbury (vers 1150 – vers 1220)</span></div>
+              <div class="source-ligne"><span>Date</span><span>Vers 1210-1214, en latin</span></div>
+              <div class="source-ligne"><span>Origine</span><span>Beaucaire (Gard), rive droite du Rhône, face à Tarascon</span></div>
+              <div class="source-ligne"><span>Édition savante</span><span>S. E. Banks et J. W. Binns (éd. et trad.), <em>Otia Imperialia: Recreation for an Emperor</em>, Oxford University Press, coll. « Oxford Medieval Texts », 2002</span></div>
+              <p class="mention-libre">Le texte de Gervais de Tilbury appartient au domaine public. Les éditions et traductions modernes citées restent protégées : elles sont mentionnées comme références, aucun passage n'en est reproduit.</p>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre"><div class="section-titre-icon">💡</div>Le saviez-vous ?</h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Bestiaire occitan</div>
+                <h4>Qu'est-ce qu'un drac ?</h4>
+                <p>Le mot vient du latin <em>draco</em>, le dragon. Mais selon les pays d'Oc, le drac est tantôt un monstre du fleuve, tantôt un petit lutin farceur qui tresse la crinière des chevaux ou renverse le lait. Celui de Beaucaire est le plus redoutable de la famille.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Famille de monstres</div>
+                <h4>Le Drac et la Tarasque</h4>
+                <p>Une tradition locale raconte que le Drac de Beaucaire se serait uni à la Tarasque, sa voisine de l'autre rive, pour donner naissance à la Coulobre, un monstre qui aurait hanté Vallabrègues, un peu plus au nord.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Littérature</div>
+                <h4>Le Drac chez Mistral</h4>
+                <p>Frédéric Mistral a repris la créature dans son <em>Poème du Rhône</em> (<em>Lou Pouèmo dóu Rose</em>, 1897), où la jeune Anglore croit voir le Drac dans un prince venu sur le fleuve.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Une histoire voyageuse</div>
+                <h4>L'œil de la nourrice</h4>
+                <p>Le motif de la femme qui nourrit un enfant de l'autre monde, voit l'invisible grâce à un onguent et perd ce don quand elle le révèle se retrouve dans des contes d'Écosse, d'Irlande ou de Bretagne. Beaucaire en offre l'une des plus anciennes versions écrites.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Sur les lieux du conte</h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Beaucaire et les rives du Rhône</span>
+                <button class="btn secondaire" id="reset">Voir tout</button>
+              </div>
+              <div id="map" aria-label="Carte de Beaucaire et du Rhône"></div>
+              <div class="carte-note">Positions indicatives, d'après OpenStreetMap. Les berges du Rhône sont dangereuses : courant fort et remous. Ne vous y baignez pas.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité du conte</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Gard (30)</span></div>
+              <div class="aside-row"><span class="aside-label">Lieu</span><span class="aside-val">Beaucaire, bords du Rhône</span></div>
+              <div class="aside-row"><span class="aside-label">Créature</span><span class="aside-val">Le Drac</span></div>
+              <div class="aside-row"><span class="aside-label">Première trace</span><span class="aside-val">vers 1210-1214</span></div>
+              <div class="aside-row"><span class="aside-label">Source</span><span class="aside-val">Gervais de Tilbury</span></div>
+              <div class="aside-row"><span class="aside-label">Ambiance</span><span class="aside-val">Merveilleux, un peu inquiétant</span></div>
+              <div class="aside-row"><span class="aside-label">Âge conseillé</span><span class="aside-val">dès 8 ans</span></div>
+              <div class="aside-row"><span class="aside-label">Durée</span><span class="aside-val">≈ 8 min à voix haute</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🗣️ Petit lexique occitan</div>
+            <div class="aside-card-body">
+              <dl class="lexique" style="margin:0">
+                <dt>lo drac</dt><dd>le drac, créature des eaux ou lutin selon les pays</dd>
+                <dt>la velhada</dt><dd>la veillée, où l'on racontait ces histoires</dd>
+                <dt>lo Ròse</dt><dd>le Rhône</dd>
+                <dt>la bugadiera</dt><dd>la lavandière</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/Les_Divertissements_pour_un_empereur" target="_blank" rel="noopener">Wikipédia, <em>Les Divertissements pour un empereur</em></a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Otia_Imperialia" target="_blank" rel="noopener">Wikipedia (EN), <em>Otia Imperialia</em></a></li>
+                <li><a href="https://fr.vikidia.org/wiki/Drac_(cr%C3%A9ature)" target="_blank" rel="noopener">Vikidia, le Drac (pour les plus jeunes)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer le conte</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION — seule partie à modifier pour un autre conte
+   ============================================================ */
+const lieux=[
+{name:'Le château de Beaucaire',lat:43.8087,lng:4.6436,desc:'La forteresse domine le Rhône depuis son rocher : c\'est de là qu\'on surveillait le fleuve où vivait le Drac.'},
+{name:'Les quais du Rhône',lat:43.8062,lng:4.6420,desc:'Les berges où les lavandières battaient le linge. C\'est ici que la coupe du Drac serait passée.'},
+{name:'Le pré de la foire',lat:43.8040,lng:4.6405,desc:'Le long du fleuve se tenait la grande foire de la Madeleine, où la lavandière reconnut le Drac.'},
+{name:'Tarascon, l\'autre rive',lat:43.8061,lng:4.6602,desc:'Juste en face, le domaine de la Tarasque, l\'autre monstre du Rhône.'}
+];
+/* ============================================================ */
+
+if(window.L){
+const map=L.map('map',{scrollWheelZoom:false});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(lieux.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.35));
+lieux.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],16);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>map.fitBounds(bounds.pad(.35));
+} else { document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>'; }
+
+/* Navigation interne + bouton haut de page */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+</body>
+</html>
