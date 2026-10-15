@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contes de veillée — L'Âme des Régions</title>
+  <meta name="description" content="Contes et légendes de veillée d'Occitanie : un récit par département, raconté à nouveau, avec ses sources, ses lieux et des conseils pour le dire à voix haute." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+    :root {
+      --ivoire: #FAF7F0;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─── */
+    .produit-hero { background: #2C4A7C; background-size: cover; background-position: center; color: white; padding: 22px 0 0; position: relative; overflow: hidden; }
+    .produit-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px); pointer-events: none; }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap; }
+    .produit-logo { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: #FAC775; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .hero-label-bas-circuit em { color: #FAC775; font-style: italic; }
+    .hero-label-bas-circuit { color: white; font-family: var(--font-titre); font-size: 30px; letter-spacing: 0.15em; text-align: center; margin: -10px 0 14px; position: relative; z-index: 3; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .produit-hero-body h1 { font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px); font-weight: 700; line-height: 1.25; color: white; margin-bottom: 90px; margin-top: 30px; text-shadow: 3px 3px 0 #2C4A7C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { color: #FAC775; font-style: italic; text-shadow: 4px 4px 0 #2C4A7C, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-carte-dept { height: 220px; width: auto; opacity: 0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display: block; align-self: flex-start; margin-top: 8px; }
+    .fiche-hero-ecusson { display: flex; align-items: center; justify-content: center; position: absolute; left: 50%; transform: translateX(-50%); top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none; }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .produit-nav { background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a { padding: 13px 22px; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.18s; }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 36px; align-items: start; }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre { display: flex; align-items: center; gap: 10px; font-family: var(--font-titre); font-size: 22px; font-weight: 700; color: #1E3560; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid #E8DEC8; }
+    .section-titre-icon { width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+
+    /* Le conte : mise en page « livre de veillée » */
+    .conte { background: white; border: 1px solid #E0DACE; border-radius: 14px; padding: 34px 38px; position: relative; }
+    .conte-ouverture { font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #8B7355; text-align: center; margin: 0 0 26px; line-height: 1.6; }
+    .conte-texte { font-family: Georgia, 'Playfair Display', serif; font-size: 17px; line-height: 1.9; color: #3A3028; }
+    .conte-texte p { margin: 0 0 16px; }
+    .conte-texte h3 { font-family: var(--font-titre); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #C8843A; text-align: center; margin: 32px 0 16px; font-weight: 700; }
+    .conte-texte h3::before, .conte-texte h3::after { content: ' ✦ '; color: #E0C9A3; }
+    .lettrine::first-letter { float: left; font-family: var(--font-titre); font-size: 64px; line-height: 0.9; padding: 6px 10px 0 0; color: #2C4A7C; font-weight: 700; }
+    .parole { font-style: italic; color: #1E3560; }
+    .conte-fermeture { font-family: var(--font-titre); font-style: italic; font-size: 16px; color: #8B7355; text-align: center; margin: 28px 0 0; padding-top: 18px; border-top: 1px dashed #E8DEC8; line-height: 1.6; }
+    .oc { font-style: italic; color: #9A3F2C; }
+
+    .conseil-conteur { background: #F2F6F5; border-left: 4px solid #2C4A7C; padding: 14px 18px; margin: 22px 0 0; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.65; }
+    .conseil-conteur strong { color: #1E3560; }
+
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 { font-family: var(--font-titre); font-size: 18px; color: #C8843A; margin: 26px 0 8px; }
+    .histoire-texte h3:first-child { margin-top: 0; }
+
+    /* Fiche source */
+    .source-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 20px 22px; margin: 20px 0; }
+    .source-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8B7355; font-weight: 600; margin-bottom: 12px; }
+    .source-ligne { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #E8DEC8; font-size: 14.5px; line-height: 1.55; }
+    .source-ligne:last-child { border-bottom: none; }
+    .source-ligne span:first-child { font-weight: 700; color: #1E3560; }
+    .mention-libre { font-size: 13px; color: #8B7355; font-style: italic; line-height: 1.6; margin-top: 10px; }
+
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 18px 20px; }
+    .encadre-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #C8843A; font-weight: 700; margin-bottom: 8px; }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #1E3560; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6; }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn { border: 1px solid #2C4A7C; background: #2C4A7C; color: white; border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+    .btn:hover { background: #1E3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2C4A7C; color: white; }
+    #map { height: 420px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker { width: 30px; height: 30px; background: #C8843A; border: 2px solid white; color: white; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4); }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #1E3560; }
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s; }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num { width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-titre); font-weight: 700; }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre { font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .etape-texte { font-size: 14px; line-height: 1.7; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header { background: #2C4A7C; color: white; padding: 14px 18px; font-family: var(--font-titre); font-size: 14px; font-weight: 700; }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px; }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+    .lexique dt { font-weight: 700; color: #9A3F2C; font-style: italic; font-size: 13.5px; }
+    .lexique dd { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
+
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #FAC775; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page { position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 46px; height: 46px; border-radius: 50%; border: none; background: #2C4A7C; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: 1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .hero-label-bas-circuit { font-size: 22px; }
+      .conte { padding: 24px 20px; }
+      .conte-texte { font-size: 16px; }
+      .source-ligne { grid-template-columns: 1fr; gap: 2px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns, #sur-place { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+  
+    /* ─── Index des contes ─── */
+    .intro { max-width: 760px; margin: 0 auto 34px; text-align: center; }
+    .intro p { font-size: 16px; line-height: 1.8; margin: 0 0 12px; }
+    .intro .conte-ouverture { margin-bottom: 18px; }
+    .filtres { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 0 0 28px; }
+    .filtres button { border: 1px solid #E0DACE; background: white; color: #2C4A7C; border-radius: 20px; padding: 7px 16px; font-family: var(--font-corps); font-size: 13px; font-weight: 600; cursor: pointer; }
+    .filtres button.actif { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .carte-conte { display: flex; flex-direction: column; background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .18s, box-shadow .18s; }
+    .carte-conte:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+    .cc-bandeau { background: var(--c); height: 64px; position: relative; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 1px, transparent 1px 12px); }
+    .cc-dept { position: absolute; left: 16px; bottom: 10px; color: #FAC775; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; font-weight: 700; }
+    .cc-corps { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
+    .cc-corps h3 { font-family: var(--font-titre); font-size: 20px; color: #3A3028; margin: 0 0 8px; }
+    .cc-corps p { font-size: 14px; line-height: 1.6; margin: 0 0 14px; flex: 1; }
+    .cc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cc-tags span { font-size: 11.5px; background: #F7F3EC; color: #8B7355; border-radius: 12px; padding: 3px 9px; }
+    .carte-conte.cache { display: none; }
+    .note-bas { max-width: 760px; margin: 40px auto 0; }
+    /* ── Liens de navigation en haut à droite (repris de histoires-de-clocher.html) ── */
+    .produit-hero > .container { position: relative; }
+    .produit-topbar-btns {
+      position: absolute; top: 0; right: 24px; z-index: 4;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 6px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; text-shadow: 0 2px 6px rgba(0,0,0,0.8); transition: opacity 0.18s, color 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: .7; }
+    .circuit-menu { position: relative; }
+    button.circuit-declencheur { background: none; border: none; cursor: pointer; margin: 0; line-height: inherit; }
+    .circuit-declencheur .fleche { display: inline-block; font-size: 0.8em; transition: transform .25s; }
+    .circuit-sous-menu {
+      position: absolute; right: 100%; top: 50%; padding-right: 12px; display: flex; gap: 8px;
+      opacity: 0; visibility: hidden; transform: translate(4px, -50%);
+      transition: opacity .2s, transform .2s, visibility 0s .2s;
+    }
+    .circuit-option {
+      display: inline-flex; align-items: center; padding: 6px 16px;
+      font-family: var(--font-corps); font-size: 16px; color: #fff; text-decoration: none; white-space: nowrap;
+      background: rgba(12, 20, 30, .55); border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(12, 20, 30, .25), 0 0 0 3px rgba(250, 199, 117, .5);
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .6); transition: background .2s, border-color .2s, color .2s;
+    }
+    .circuit-option:hover { background: rgba(12, 20, 30, .75); border-color: #FAC775; color: #FAC775; box-shadow: 0 0 0 2px rgba(12, 20, 30, .3), 0 0 0 3px rgba(250, 199, 117, .9); }
+    .circuit-option:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .circuit-menu.ouvert .circuit-sous-menu,
+    .circuit-menu:focus-within .circuit-sous-menu { opacity: 1; visibility: visible; transform: translate(0, -50%); transition: opacity .2s, transform .2s, visibility 0s; }
+    .circuit-menu.ouvert .circuit-declencheur,
+    .circuit-menu:focus-within .circuit-declencheur { color: #FAC775; opacity: 1; }
+    .circuit-menu.ouvert .fleche,
+    .circuit-menu:focus-within .fleche { transform: rotate(180deg); }
+    @media (hover: hover) {
+      .circuit-menu:hover .circuit-sous-menu { opacity: 1; visibility: visible; transform: translate(0, -50%); transition: opacity .2s, transform .2s, visibility 0s; }
+      .circuit-menu:hover .circuit-declencheur { color: #FAC775; opacity: 1; }
+      .circuit-menu:hover .fleche { transform: rotate(180deg); }
+    }
+    @media (max-width: 860px) {
+      .produit-topbar-btns { position: static; margin-top: 10px; }
+      .produit-btn-retour { font-size: 16px; }
+      .circuit-sous-menu { position: static; transform: none; padding: 4px 0 6px; display: none; }
+      .circuit-menu.ouvert .circuit-sous-menu,
+      .circuit-menu:focus-within .circuit-sous-menu { display: flex; transform: none; }
+      .circuit-option { font-size: 14px; padding: 5px 12px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <style>
+    .produit-hero { background-image: linear-gradient(rgba(30,53,96,0.35), rgba(30,53,96,0.35)), url('../../../assets/departement/occitanie/panorama-veillee.jpg'); }
+    .produit-hero-body { grid-template-columns: 1fr; }
+  </style>
+</head>
+<body class="produit-page">
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+      <!-- Liens en haut à droite, l'un sous l'autre (comme sur Histoires de clocher) -->
+      <nav class="produit-topbar-btns" aria-label="Navigation Occitanie">
+        <a href="../carte-occitanie.html" class="produit-btn-retour">Carte Occitanie</a>
+        <a href="../occitanie-info.html" class="produit-btn-retour">Identité &amp; repères de la région</a>
+        <div class="circuit-menu">
+          <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
+            Circuit découverte <span class="fleche" aria-hidden="true">▾</span>
+          </button>
+          <div class="circuit-sous-menu" id="menu-circuit">
+            <a class="circuit-option" href="../essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
+            <a class="circuit-option" href="../essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
+          </div>
+        </div>
+      </nav>
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>C</em>ontes<br>
+            <span style="padding-left: 20px;"><em>d</em>e <em>v</em>eillée</span></h1>
+        </div>
+      </div>
+    </div>
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>O</em>ccitanie <em>⟸</em>
+    </div>
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+      <div class="intro">
+        <p class="conte-ouverture">Autrefois, quand les soirées d'hiver étaient longues, on se retrouvait autour du feu pour la <em>velhada</em>.<br>On épluchait les châtaignes, on reprisait, et quelqu'un racontait.</p>
+        <p>Voici treize histoires, une pour chaque département d'Occitanie : des diables et des saints, des monstres de rivière, des ruses de siège, un troubadour amoureux et une vraie bête qui fit trembler le Gévaudan. Chacune est racontée à nouveau, avec son origine, ses sources et les lieux où elle s'est passée.</p>
+      </div>
+
+      <div class="filtres" role="group" aria-label="Filtrer par âge">
+        <button class="actif" data-max="99">Tous les contes</button>
+        <button data-max="6">Pour les petits (dès 5-6 ans)</button>
+        <button data-max="8">Dès 7-8 ans</button>
+        <button data-min="9">Pour les grands</button>
+      </div>
+
+      <div class="grille">
+        <a class="carte-conte" href="conte-jean-de-l-ours.html" style="--c:#5B4A32" data-age="7">
+          <div class="cc-bandeau"><span class="cc-dept">Ariège (09)</span></div>
+          <div class="cc-corps">
+            <h3>Jean de l'Ours</h3>
+            <p>Fils d'une bergère et d'un ours, Jean part courir le monde avec sa canne de fer. Le grand conte des Pyrénées.</p>
+            <div class="cc-tags"><span>Merveilleux et aventure</span><span>dès 7 ans</span><span>≈ 12 min (ou 2 soirées)</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-dame-carcas.html" style="--c:#5C3A6E" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Aude (11)</span></div>
+          <div class="cc-corps">
+            <h3>Dame Carcas</h3>
+            <p>Cinq ans de siège, un cochon, un sac de blé et une ruse qui donna son nom à Carcassonne.</p>
+            <div class="cc-tags"><span>Ruse et humour</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-berger-de-roquefort.html" style="--c:#3F6670" data-age="5">
+          <div class="cc-bandeau"><span class="cc-dept">Aveyron (12)</span></div>
+          <div class="cc-corps">
+            <h3>Le berger de Roquefort</h3>
+            <p>Un jeune berger amoureux oublie son fromage dans une grotte du Combalou. Le roquefort est né.</p>
+            <div class="cc-tags"><span>Tendre et gourmande</span><span>dès 5 ans</span><span>≈ 5 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-drac-beaucaire.html" style="--c:#1F4E5A" data-age="8">
+          <div class="cc-bandeau"><span class="cc-dept">Gard (30)</span></div>
+          <div class="cc-corps">
+            <h3>Le Drac de Beaucaire</h3>
+            <p>Une lavandière enlevée sous le Rhône par le Drac, et le secret de son œil.</p>
+            <div class="cc-tags"><span>Merveilleux, un peu inquiétant</span><span>dès 8 ans</span><span>≈ 8 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-crocodile-saint-bertrand.html" style="--c:#5E6130" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Haute-Garonne (31)</span></div>
+          <div class="cc-corps">
+            <h3>Le crocodile de Saint-Bertrand</h3>
+            <p>Un monstre dans la Garonne, un évêque sans armes, et un crocodile accroché dans la cathédrale.</p>
+            <div class="cc-tags"><span>Merveilleux et frisson</span><span>dès 6 ans</span><span>≈ 6 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-roi-des-corbeaux.html" style="--c:#3B3350" data-age="8">
+          <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
+          <div class="cc-corps">
+            <h3>Le Roi des Corbeaux</h3>
+            <p>La fille de l'Homme vert épouse le Roi des Corbeaux. Un grand conte gascon de Jean-François Bladé.</p>
+            <div class="cc-tags"><span>Merveilleux et épreuves</span><span>dès 8 ans</span><span>≈ 10 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-pont-du-diable.html" style="--c:#2F6B4F" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Hérault (34)</span></div>
+          <div class="cc-corps">
+            <h3>Le Pont du Diable</h3>
+            <p>Le diable bâtit un pont en une nuit contre la première âme qui le traversera. Guilhem a une idée.</p>
+            <div class="cc-tags"><span>Diablerie et malice</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-gouffre-padirac.html" style="--c:#2E3F5C" data-age="5">
+          <div class="cc-bandeau"><span class="cc-dept">Lot (46)</span></div>
+          <div class="cc-corps">
+            <h3>Le gouffre de Padirac</h3>
+            <p>Le diable ouvre le causse d'un coup de talon et défie saint Martin et sa vieille mule.</p>
+            <div class="cc-tags"><span>Diablerie et bravoure</span><span>dès 5 ans</span><span>≈ 6 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-bete-du-gevaudan.html" style="--c:#3E4A3D" data-age="9">
+          <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
+          <div class="cc-corps">
+            <h3>La Bête du Gévaudan</h3>
+            <p>Une histoire vraie : la Bête qui terrorisa le Gévaudan, et sept enfants qui lui tinrent tête.</p>
+            <div class="cc-tags"><span>Frisson et courage</span><span>dès 9-10 ans</span><span>≈ 9 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-mirat-lourdes.html" style="--c:#2F5D7C" data-age="7">
+          <div class="cc-bandeau"><span class="cc-dept">Hautes-Pyrénées (65)</span></div>
+          <div class="cc-corps">
+            <h3>Mirat et la truite de Lourdes</h3>
+            <p>Assiégé par Charlemagne, le chef Mirat reçoit du ciel une truite… et la jette à l'ennemi.</p>
+            <div class="cc-tags"><span>Ruse et honneur</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-guifred-canigou.html" style="--c:#8C3B2E" data-age="11">
+          <div class="cc-bandeau"><span class="cc-dept">Pyrénées-Orientales (66)</span></div>
+          <div class="cc-corps">
+            <h3>Le comte Guifred et le Canigou</h3>
+            <p>Un comte puissant, un instant de colère, et une vie entière pour demander pardon.</p>
+            <div class="cc-tags"><span>Grave et émouvante</span><span>dès 11 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-troubadour-burlats.html" style="--c:#8A4A5E" data-age="9">
+          <div class="cc-bandeau"><span class="cc-dept">Tarn (81)</span></div>
+          <div class="cc-corps">
+            <h3>Le troubadour de Burlats</h3>
+            <p>Un clerc timide écrit pour sa comtesse des chansons qu'il n'ose pas signer.</p>
+            <div class="cc-tags"><span>Tendre et mélancolique</span><span>dès 9-10 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte" href="conte-javelot-moissac.html" style="--c:#A0522D" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Tarn-et-Garonne (82)</span></div>
+          <div class="cc-corps">
+            <h3>Le javelot de Clovis</h3>
+            <p>Clovis lance son javelot pour choisir l'emplacement d'une abbaye. Il tombe dans un marais.</p>
+            <div class="cc-tags"><span>Épique et souriante</span><span>dès 6 ans</span><span>≈ 5 min</span></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="conseil-conteur note-bas">
+        <strong>📜 Nos sources :</strong> les légendes appartiennent à la tradition populaire. Chaque récit est une réécriture originale de L'Âme des Régions ; la fiche de chaque conte précise son origine, l'œuvre ancienne dont il s'inspire et ce que nous avons ajouté.
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<script>
+// Ouverture / fermeture du menu « Circuit découverte » au clic (utile sur mobile et tablette)
+(function () {
+  const menu = document.querySelector('.circuit-menu');
+  const declencheur = menu.querySelector('button');
+  function basculer(ouvrir) { menu.classList.toggle('ouvert', ouvrir); declencheur.setAttribute('aria-expanded', ouvrir); }
+  declencheur.addEventListener('click', (e) => { e.stopPropagation(); basculer(!menu.classList.contains('ouvert')); });
+  document.addEventListener('click', (e) => { if (!menu.contains(e.target)) { basculer(false); declencheur.blur(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { basculer(false); declencheur.blur(); } });
+})();
+document.querySelectorAll('.filtres button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filtres button').forEach(x => x.classList.remove('actif'));
+  b.classList.add('actif');
+  const max = +(b.dataset.max || 99), min = +(b.dataset.min || 0);
+  document.querySelectorAll('.carte-conte').forEach(c => {
+    const a = +c.dataset.age || 0;
+    c.classList.toggle('cache', !(a <= max && a >= min));
+  });
+}));
+</script>
+</body>
+</html>

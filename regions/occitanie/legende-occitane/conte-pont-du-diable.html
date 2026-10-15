@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Pont du Diable — L'Âme des Régions</title>
+  <meta name="description" content="Conte de veillée : le Pont du Diable de Saint-Jean-de-Fos (Hérault), le pacte entre saint Guilhem et le diable. Légende racontée à nouveau." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+    :root {
+      --ivoire: #FAF7F0;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─── */
+    .produit-hero { background: #2F6B4F; background-size: cover; background-position: center; color: white; padding: 22px 0 0; position: relative; overflow: hidden; }
+    .produit-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px); pointer-events: none; }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap; }
+    .produit-logo { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: #FAC775; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .hero-label-bas-circuit em { color: #FAC775; font-style: italic; }
+    .hero-label-bas-circuit { color: white; font-family: var(--font-titre); font-size: 30px; letter-spacing: 0.15em; text-align: center; margin: -10px 0 14px; position: relative; z-index: 3; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .produit-hero-body h1 { font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px); font-weight: 700; line-height: 1.25; color: white; margin-bottom: 90px; margin-top: 30px; text-shadow: 3px 3px 0 #2F6B4F, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { color: #FAC775; font-style: italic; text-shadow: 4px 4px 0 #2F6B4F, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-carte-dept { height: 220px; width: auto; opacity: 0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display: block; align-self: flex-start; margin-top: 8px; }
+    .fiche-hero-ecusson { display: flex; align-items: center; justify-content: center; position: absolute; left: 50%; transform: translateX(-50%); top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none; }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .produit-nav { background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a { padding: 13px 22px; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.18s; }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 36px; align-items: start; }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre { display: flex; align-items: center; gap: 10px; font-family: var(--font-titre); font-size: 22px; font-weight: 700; color: #224D39; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid #E8DEC8; }
+    .section-titre-icon { width: 36px; height: 36px; background: #2F6B4F; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+
+    /* Le conte : mise en page « livre de veillée » */
+    .conte { background: white; border: 1px solid #E0DACE; border-radius: 14px; padding: 34px 38px; position: relative; }
+    .conte-ouverture { font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #8B7355; text-align: center; margin: 0 0 26px; line-height: 1.6; }
+    .conte-texte { font-family: Georgia, 'Playfair Display', serif; font-size: 17px; line-height: 1.9; color: #3A3028; }
+    .conte-texte p { margin: 0 0 16px; }
+    .conte-texte h3 { font-family: var(--font-titre); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #C8843A; text-align: center; margin: 32px 0 16px; font-weight: 700; }
+    .conte-texte h3::before, .conte-texte h3::after { content: ' ✦ '; color: #E0C9A3; }
+    .lettrine::first-letter { float: left; font-family: var(--font-titre); font-size: 64px; line-height: 0.9; padding: 6px 10px 0 0; color: #2F6B4F; font-weight: 700; }
+    .parole { font-style: italic; color: #224D39; }
+    .conte-fermeture { font-family: var(--font-titre); font-style: italic; font-size: 16px; color: #8B7355; text-align: center; margin: 28px 0 0; padding-top: 18px; border-top: 1px dashed #E8DEC8; line-height: 1.6; }
+    .oc { font-style: italic; color: #9A3F2C; }
+
+    .conseil-conteur { background: #EEF3F1; border-left: 4px solid #2F6B4F; padding: 14px 18px; margin: 22px 0 0; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.65; }
+    .conseil-conteur strong { color: #224D39; }
+
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 { font-family: var(--font-titre); font-size: 18px; color: #C8843A; margin: 26px 0 8px; }
+    .histoire-texte h3:first-child { margin-top: 0; }
+
+    /* Fiche source */
+    .source-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 20px 22px; margin: 20px 0; }
+    .source-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8B7355; font-weight: 600; margin-bottom: 12px; }
+    .source-ligne { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #E8DEC8; font-size: 14.5px; line-height: 1.55; }
+    .source-ligne:last-child { border-bottom: none; }
+    .source-ligne span:first-child { font-weight: 700; color: #224D39; }
+    .mention-libre { font-size: 13px; color: #8B7355; font-style: italic; line-height: 1.6; margin-top: 10px; }
+
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 18px 20px; }
+    .encadre-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #C8843A; font-weight: 700; margin-bottom: 8px; }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #224D39; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6; }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn { border: 1px solid #2F6B4F; background: #2F6B4F; color: white; border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+    .btn:hover { background: #224D39; }
+    .btn.secondaire { background: #F7F3EC; color: #2F6B4F; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2F6B4F; color: white; }
+    #map { height: 420px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker { width: 30px; height: 30px; background: #C8843A; border: 2px solid white; color: white; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4); }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #224D39; }
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s; }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num { width: 40px; height: 40px; background: #2F6B4F; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-titre); font-weight: 700; }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre { font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .etape-texte { font-size: 14px; line-height: 1.7; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header { background: #2F6B4F; color: white; padding: 14px 18px; font-family: var(--font-titre); font-size: 14px; font-weight: 700; }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px; }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2F6B4F; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+    .lexique dt { font-weight: 700; color: #9A3F2C; font-style: italic; font-size: 13.5px; }
+    .lexique dd { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
+
+    .site-footer { background: #2F6B4F; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #FAC775; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page { position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 46px; height: 46px; border-radius: 50%; border: none; background: #2F6B4F; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(47,107,79,0.35); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: 1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .hero-label-bas-circuit { font-size: 22px; }
+      .conte { padding: 24px 20px; }
+      .conte-texte { font-size: 16px; }
+      .source-ligne { grid-template-columns: 1fr; gap: 2px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns, #sur-place { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du lieu si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(34,77,57,0.35), rgba(34,77,57,0.35)),
+        url('../../../assets/departement/occitanie/panorama-veillee.jpg');
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════ HÉRO ══════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="contes-de-veillee.html" class="produit-btn-retour">Tous les contes de veillée</a>
+        </div>
+      </div>
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>e <em>P</em>ont<br>
+            <span style="padding-left: 20px;"><em>d</em>u <em>D</em>iable</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-herault.png" alt="Carte de l'Hérault" />
+      </div>
+    </div>
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/herault.png" alt="Écusson de l'Hérault" />
+    </div>
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>C</em>onte <em>d</em>e <em>v</em>eillée <em>⟸</em>
+    </div>
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#conte" class="active">🕯️ Le conte</a>
+          <a href="#origines">📜 D'où vient ce conte</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur les lieux du conte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CORPS ══════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <!-- LE CONTE -->
+          <section class="section" id="conte">
+            <h2 class="section-titre"><div class="section-titre-icon">🕯️</div>Le conte</h2>
+            <div class="conte">
+              <p class="conte-ouverture">Écoutez bien le bruit de l'eau, là-bas, au fond des gorges.<br>Ce n'est peut-être pas que l'eau.</p>
+              <div class="conte-texte">
+                <p class="lettrine">Au temps de Charlemagne vivait dans les gorges de l'Hérault un homme qui avait été un grand guerrier et qui s'était fait moine. On l'appelait Guilhem. Il avait bâti son abbaye dans un vallon sauvage, à Gellone, entre des falaises si hautes qu'en hiver le soleil n'y descendait qu'à midi.</p>
+                <p>De l'autre côté de la rivière, à Aniane, vivaient d'autres moines, ses amis. Mais entre les deux abbayes coulait l'Hérault, vert, profond, et parfois furieux. Pour aller de l'une à l'autre, il fallait un pont.</p>
+                <h3>Le chantier maudit</h3>
+                <p>Les moines se mirent au travail. Le jour, ils taillaient la pierre, montaient les cintres de bois et posaient les premières assises. Mais chaque matin, quand ils revenaient au chantier, tout était par terre. Les pierres avaient roulé dans la rivière, les poutres étaient brisées, comme si une force énorme avait tout défait pendant la nuit.</p>
+                <p>Guilhem décida de veiller. Il se cacha derrière un rocher, son bâton à la main, et attendit. Vers minuit, il vit une silhouette noire sortir de l'eau. Elle avait des cornes, des sabots, et une odeur de soufre. Tranquillement, elle arracha une à une les pierres posées dans la journée et les jeta dans le gouffre.</p>
+                <p>C'était le diable.</p>
+                <h3>Le marché</h3>
+                <p>Guilhem sortit de sa cachette. <span class="parole">« Pourquoi détruis-tu notre pont ? »</span></p>
+                <p>Le diable ricana. <span class="parole">« Parce que cette rivière est à moi. Mais je suis bon prince : laisse-moi bâtir le pont moi-même. Il sera plus solide que tout ce que tes moines pourraient faire, il tiendra mille ans. En échange, je ne demande presque rien : l'âme du premier qui le traversera. »</span></p>
+                <p>Guilhem réfléchit un long moment en caressant sa barbe. Puis il tendit la main. <span class="parole">« Marché conclu. »</span></p>
+                <p>En une seule nuit, le diable bâtit le pont : deux arches de pierre blonde, puissantes, posées au-dessus du gouffre comme si elles avaient toujours été là.</p>
+                <h3>Le premier passant</h3>
+                <p>Au lever du jour, le diable se cacha sous l'arche pour attendre son dû. Les villageois, eux, restaient prudemment sur la rive. Personne ne voulait être le premier.</p>
+                <p>Alors Guilhem arriva, tenant dans ses bras un chat. Un gros chat de ferme, maigre et râleur, à la queue duquel il avait attaché une vieille casserole. Il le posa à l'entrée du pont et frappa dans ses mains. Le chat, affolé par le vacarme de la casserole, fila droit devant lui et traversa le pont d'un bout à l'autre.</p>
+                <p>Le diable bondit de sous l'arche et resta là, bêtement, avec une âme de chat sur les bras.</p>
+                <p>Fou de rage, il voulut démolir son propre ouvrage. Mais il l'avait trop bien bâti : les pierres ne bougèrent pas. Alors, de colère, il se jeta dans la rivière, et il frappa le fond si fort qu'il creusa un trou noir et sans fond, que l'on appelle depuis le Gouffre Noir.</p>
+              </div>
+              <p class="conte-fermeture">C'est pour cela que les pèlerins, en traversant le pont, jettent encore une pierre dans le gouffre : pour que le diable reste bien au fond.<br>Et si vous voyez un chat sur le pont, laissez-le passer devant.</p>
+            </div>
+            <div class="conseil-conteur">
+              <strong>🎙️ Pour le raconter à voix haute :</strong> environ 7 minutes. À partir de 6 ans. Faites un petit suspense au moment où Guilhem arrive « tenant dans ses bras… » et laissez les enfants deviner. Le bruit de la casserole peut être imité en tapant sur une gamelle. Selon les versions, c'est un chat ou un chien : vous pouvez choisir.
+            </div>
+          </section>
+
+          <!-- ORIGINES -->
+          <section class="section" id="origines">
+            <h2 class="section-titre"><div class="section-titre-icon">📜</div>D'où vient ce conte</h2>
+            <div class="histoire-texte">
+                <h3>Une légende née d'une chanson de geste</h3>
+                <p>Le pont qui enjambe l'Hérault entre Aniane et Saint-Jean-de-Fos est l'un des plus anciens ponts médiévaux de France. Il a été construit par les moines des abbayes d'Aniane et de Gellone, à qui il servait de lien.</p>
+                <p>La légende qui lui donne son nom remonte au XIIe siècle. On la trouve dans la seconde rédaction du <em>Moniage Guillaume</em>, une chanson de geste écrite vers 1160, qui attribue à tort la construction du pont à Guillaume, le héros devenu moine. Le texte raconte comment le diable défaisait chaque nuit le travail des bâtisseurs. Le pacte et la ruse de l'animal envoyé en premier sont des motifs que la tradition populaire a ensuite ajoutés, comme pour beaucoup d'autres « ponts du Diable » d'Europe.</p>
+                <h3>Ce que nous avons ajouté</h3>
+                <p>Notre version est une réécriture originale de L'Âme des Régions : les dialogues, la veillée de Guilhem derrière le rocher et la description du chat sont de notre plume. Nous avons gardé le chat de certaines versions et la casserole d'autres versions, où c'est un chien qui traverse.</p>
+            </div>
+            <div class="source-bloc">
+              <div class="source-titre">✦ Inspiré de</div>
+              <div class="source-ligne"><span>Œuvre</span><span><em>Le Moniage Guillaume</em>, seconde rédaction</span></div>
+              <div class="source-ligne"><span>Auteur</span><span>Anonyme (chanson de geste)</span></div>
+              <div class="source-ligne"><span>Date</span><span>Vers 1160</span></div>
+              <div class="source-ligne"><span>Origine</span><span>Pont du Diable, entre Aniane et Saint-Jean-de-Fos (Hérault)</span></div>
+              <div class="source-ligne"><span>Tradition</span><span>Version populaire du pacte avec le diable, transmise oralement dans la vallée de l'Hérault</span></div>
+              <p class="mention-libre">Le <em>Moniage Guillaume</em> et la tradition orale appartiennent au domaine public. Aucun texte d'auteur moderne n'est reproduit ici.</p>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre"><div class="section-titre-icon">💡</div>Le saviez-vous ?</h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Le vrai Guilhem</div>
+                <h4>Un cousin de Charlemagne</h4>
+                <p>Guillaume de Gellone, comte de Toulouse et cousin de Charlemagne, se retira à Gellone où il fonda une abbaye au début du IXe siècle. Canonisé, il a donné son nom au village de Saint-Guilhem-le-Désert.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Patrimoine mondial</div>
+                <h4>Sur le chemin de Compostelle</h4>
+                <p>Le pont est classé monument historique depuis 1935 et inscrit au patrimoine mondial de l'Unesco depuis 1998, au titre des chemins de Saint-Jacques-de-Compostelle.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Pique-le !</div>
+                <h4>La suite de la légende</h4>
+                <p>Selon une autre partie du récit, le diable revint harceler les habitants de Saint-Jean-de-Fos. Ils le chassèrent à coups de piques en criant « Pica-lo ! », c'est-à-dire « Pique-le ! ».</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Pas qu'un seul</div>
+                <h4>Trois ponts du Diable</h4>
+                <p>L'Hérault compte au moins trois ponts du Diable : à Saint-Jean-de-Fos, à Olargues et à Villemagne-l'Argentière.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Sur les lieux du conte</h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Les gorges de l'Hérault, entre Aniane et Saint-Guilhem-le-Désert</span>
+                <button class="btn secondaire" id="reset">Voir tout</button>
+              </div>
+              <div id="map" aria-label="Carte des lieux du conte"></div>
+              <div class="carte-note">Positions indicatives, d'après OpenStreetMap. La baignade au Pont du Diable est réglementée : respectez les zones autorisées et la signalisation.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité du conte</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Hérault (34)</span></div>
+              <div class="aside-row"><span class="aside-label">Lieu</span><span class="aside-val">Saint-Jean-de-Fos et Aniane</span></div>
+              <div class="aside-row"><span class="aside-label">Personnages</span><span class="aside-val">Saint Guilhem, le diable</span></div>
+              <div class="aside-row"><span class="aside-label">Première trace</span><span class="aside-val">vers 1160</span></div>
+              <div class="aside-row"><span class="aside-label">Source</span><span class="aside-val"><em>Moniage Guillaume</em></span></div>
+              <div class="aside-row"><span class="aside-label">Ambiance</span><span class="aside-val">Diablerie et malice</span></div>
+              <div class="aside-row"><span class="aside-label">Âge conseillé</span><span class="aside-val">dès 6 ans</span></div>
+              <div class="aside-row"><span class="aside-label">Durée</span><span class="aside-val">≈ 7 min à voix haute</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🗣️ Petit lexique occitan</div>
+            <div class="aside-card-body">
+              <dl class="lexique" style="margin:0">
+                <dt>lo diable</dt><dd>le diable</dd>
+                <dt>lo pont</dt><dd>le pont</dd>
+                <dt>Sant Guilhèm del Desèrt</dt><dd>Saint-Guilhem-le-Désert</dd>
+                <dt>lo gorg negre</dt><dd>le gouffre noir</dd>
+                <dt>pica-lo !</dt><dd>pique-le !</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://www.herault-tourisme.com/fr/decouvrir/culture-et-patrimoine/legendes/la-legende-du-pont-du-diable/" target="_blank" rel="noopener">Hérault Tourisme, la légende du Pont du Diable</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Pont_du_Diable_(Saint-Jean-de-Fos)" target="_blank" rel="noopener">Wikipédia, Pont du Diable (Saint-Jean-de-Fos)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer le conte</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION — seule partie à modifier pour un autre conte
+   ============================================================ */
+const lieux=[
+ {
+  "name": "Le Pont du Diable",
+  "lat": 43.7048,
+  "lng": 3.5547,
+  "desc": "Le pont roman aux deux arches, au-dessus du Gouffre Noir."
+ },
+ {
+  "name": "Saint-Guilhem-le-Désert",
+  "lat": 43.734,
+  "lng": 3.549,
+  "desc": "Le village et l'abbaye de Gellone, fondée par Guilhem."
+ },
+ {
+  "name": "L'abbaye d'Aniane",
+  "lat": 43.685,
+  "lng": 3.587,
+  "desc": "L'autre abbaye que le pont devait relier à Gellone."
+ },
+ {
+  "name": "Saint-Jean-de-Fos",
+  "lat": 43.701,
+  "lng": 3.552,
+  "desc": "Le village des potiers, dont les habitants chassèrent le diable à coups de piques."
+ }
+];
+/* ============================================================ */
+if(window.L){
+const map=L.map('map',{scrollWheelZoom:false});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(lieux.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.35));
+lieux.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],16);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>map.fitBounds(bounds.pad(.35));
+} else { document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>'; }
+
+/* Navigation interne + bouton haut de page */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+</body>
+</html>
