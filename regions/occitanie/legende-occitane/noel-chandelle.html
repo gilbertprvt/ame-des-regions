@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La chandelle de Noël — L'Âme des Régions</title>
+  <meta name="description" content="Conte de Noël : la chandelle de Noël allumée par chaque membre de la famille, et la lumière à la fenêtre qui guida un père perdu dans la tempête sur le mont Lozère. Une coutume racontée en conte." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+    :root {
+      --ivoire: #FAF7F0;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─── */
+    .produit-hero { background: #3A4A6B; background-size: cover; background-position: center; color: white; padding: 22px 0 0; position: relative; overflow: hidden; }
+    .produit-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px); pointer-events: none; }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap; }
+    .produit-logo { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: #FAC775; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .hero-label-bas-circuit em { color: #FAC775; font-style: italic; }
+    .hero-label-bas-circuit { color: white; font-family: var(--font-titre); font-size: 30px; letter-spacing: 0.15em; text-align: center; margin: -10px 0 14px; position: relative; z-index: 3; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .produit-hero-body h1 { font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px); font-weight: 700; line-height: 1.25; color: white; margin-bottom: 90px; margin-top: 30px; text-shadow: 3px 3px 0 #3A4A6B, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { color: #FAC775; font-style: italic; text-shadow: 4px 4px 0 #3A4A6B, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-carte-dept { height: 220px; width: auto; opacity: 0.85; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05); display: block; align-self: flex-start; margin-top: 8px; }
+    .fiche-hero-ecusson { display: flex; align-items: center; justify-content: center; position: absolute; left: 50%; transform: translateX(-50%); top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none; }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .produit-nav { background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a { padding: 13px 22px; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.18s; }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 36px; align-items: start; }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre { display: flex; align-items: center; gap: 10px; font-family: var(--font-titre); font-size: 22px; font-weight: 700; color: #28344C; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid #E8DEC8; }
+    .section-titre-icon { width: 36px; height: 36px; background: #3A4A6B; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+
+    /* Le conte : mise en page « livre de veillée » */
+    .conte { background: white; border: 1px solid #E0DACE; border-radius: 14px; padding: 34px 38px; position: relative; }
+    .conte-ouverture { font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #8B7355; text-align: center; margin: 0 0 26px; line-height: 1.6; }
+    .conte-texte { font-family: Georgia, 'Playfair Display', serif; font-size: 17px; line-height: 1.9; color: #3A3028; }
+    .conte-texte p { margin: 0 0 16px; }
+    .conte-texte h3 { font-family: var(--font-titre); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #C8843A; text-align: center; margin: 32px 0 16px; font-weight: 700; }
+    .conte-texte h3::before, .conte-texte h3::after { content: ' ✦ '; color: #E0C9A3; }
+    .lettrine::first-letter { float: left; font-family: var(--font-titre); font-size: 64px; line-height: 0.9; padding: 6px 10px 0 0; color: #3A4A6B; font-weight: 700; }
+    .parole { font-style: italic; color: #28344C; }
+    .conte-fermeture { font-family: var(--font-titre); font-style: italic; font-size: 16px; color: #8B7355; text-align: center; margin: 28px 0 0; padding-top: 18px; border-top: 1px dashed #E8DEC8; line-height: 1.6; }
+    .oc { font-style: italic; color: #9A3F2C; }
+
+    .conseil-conteur { background: #EFF1F3; border-left: 4px solid #3A4A6B; padding: 14px 18px; margin: 22px 0 0; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.65; }
+    .conseil-conteur strong { color: #28344C; }
+
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 { font-family: var(--font-titre); font-size: 18px; color: #C8843A; margin: 26px 0 8px; }
+    .histoire-texte h3:first-child { margin-top: 0; }
+
+    /* Fiche source */
+    .source-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 20px 22px; margin: 20px 0; }
+    .source-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8B7355; font-weight: 600; margin-bottom: 12px; }
+    .source-ligne { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #E8DEC8; font-size: 14.5px; line-height: 1.55; }
+    .source-ligne:last-child { border-bottom: none; }
+    .source-ligne span:first-child { font-weight: 700; color: #28344C; }
+    .mention-libre { font-size: 13px; color: #8B7355; font-style: italic; line-height: 1.6; margin-top: 10px; }
+
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre { background: white; border: 1px solid #E0DACE; border-radius: 12px; padding: 18px 20px; }
+    .encadre-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #C8843A; font-weight: 700; margin-bottom: 8px; }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #28344C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6; }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn { border: 1px solid #3A4A6B; background: #3A4A6B; color: white; border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+    .btn:hover { background: #28344C; }
+    .btn.secondaire { background: #F7F3EC; color: #3A4A6B; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #3A4A6B; color: white; }
+    #map { height: 420px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker { width: 30px; height: 30px; background: #C8843A; border: 2px solid white; color: white; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4); }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #28344C; }
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s; }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num { width: 40px; height: 40px; background: #3A4A6B; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-titre); font-weight: 700; }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre { font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .etape-texte { font-size: 14px; line-height: 1.7; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header { background: #3A4A6B; color: white; padding: 14px 18px; font-family: var(--font-titre); font-size: 14px; font-weight: 700; }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px; }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #3A4A6B; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+    .lexique dt { font-weight: 700; color: #9A3F2C; font-style: italic; font-size: 13.5px; }
+    .lexique dd { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
+
+    .site-footer { background: #3A4A6B; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #FAC775; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page { position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 46px; height: 46px; border-radius: 50%; border: none; background: #3A4A6B; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(58,74,107,0.35); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: 1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .hero-label-bas-circuit { font-size: 22px; }
+      .conte { padding: 24px 20px; }
+      .conte-texte { font-size: 16px; }
+      .source-ligne { grid-template-columns: 1fr; gap: 2px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns, #sur-place { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Lecteur « Écouter le conte » -->
+  <style>
+    .lecteur-conte { background: white; border: 1px solid #E0DACE; border-left: 4px solid var(--lc-c, #3A4A6B); border-radius: 12px;
+      padding: 14px 18px; margin: 0 0 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+    .lc-tete { display: flex; align-items: center; gap: 12px; flex: 1 1 220px; }
+    .lc-icone { font-size: 26px; line-height: 1; }
+    .lc-titre { font-family: var(--font-titre); font-weight: 700; font-size: 16px; color: var(--lc-c, #3A4A6B); }
+    .lc-etat { font-size: 13px; color: #8B7355; margin-top: 2px; }
+    .lc-commandes { display: flex; gap: 8px; }
+    .lc-btn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--lc-c, #3A4A6B); background: var(--lc-c, #3A4A6B);
+      color: white; border-radius: 22px; padding: 9px 18px; font-family: var(--font-corps); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .18s; }
+    .lc-btn:hover { opacity: .85; }
+    .lc-btn:disabled { opacity: .4; cursor: default; }
+    .lc-stop { background: #F7F3EC; color: var(--lc-c, #3A4A6B); border-color: #E0DACE; padding: 9px 14px; }
+    .lc-options { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: #8B7355; }
+    .lc-options[hidden], .lc-voix-wrap[hidden] { display: none; }
+    .lc-voix { margin-left: 6px; font-family: var(--font-corps); font-size: 12.5px; padding: 3px 6px; border: 1px solid #E0DACE; border-radius: 6px; background: #FAF7F0; color: #3A3028; max-width: 220px; }
+    .lc-suivre input { vertical-align: -2px; margin-right: 4px; }
+    .conte-texte p, .conte-texte h3, .conte-ouverture, .conte-fermeture { transition: background-color .3s, box-shadow .3s; border-radius: 6px; }
+    .lecture-en-cours { background-color: rgba(250,199,117,.25); box-shadow: 0 0 0 6px rgba(250,199,117,.25); }
+    @media print { .lecteur-conte { display: none !important; } }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du lieu si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(40,52,76,0.35), rgba(40,52,76,0.35)),
+        url('../../../assets/departement/occitanie/panorama-veillee.jpg');
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════ HÉRO ══════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="contes-de-veillee.html" class="produit-btn-retour">Tous les contes de veillée</a>
+        </div>
+      </div>
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>a <em>c</em>handelle<br>
+            <span style="padding-left: 20px;"><em>d</em>e <em>N</em>oël</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-lozere.png" alt="Carte de la Lozère" />
+      </div>
+    </div>
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/lozere.png" alt="Écusson de la Lozère" />
+    </div>
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>C</em>onte <em>d</em>e <em>N</em>oël <em>⟸</em>
+    </div>
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#conte" class="active">🕯️ Le conte</a>
+          <a href="#origines">📜 D'où vient ce conte</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur les lieux du conte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CORPS ══════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <!-- LE CONTE -->
+          <section class="section" id="conte">
+            <h2 class="section-titre"><div class="section-titre-icon">🕯️</div>Le conte</h2>
+            <div class="lecteur-conte" id="lecteur-conte" data-voix="f" data-audio="audio/noel-chandelle.mp3">
+              <div class="lc-tete">
+                <span class="lc-icone" aria-hidden="true">🎧</span>
+                <div><div class="lc-titre">Écouter le conte</div><div class="lc-etat" aria-live="polite">Raconté par une voix féminine</div></div>
+              </div>
+              <div class="lc-commandes">
+                <button type="button" class="lc-btn lc-play"><span class="lc-ico" aria-hidden="true">▶</span><span class="lc-txt">Écouter</span></button>
+                <button type="button" class="lc-btn lc-stop" disabled aria-label="Arrêter la lecture">■</button>
+              </div>
+              <div class="lc-options">
+                <label class="lc-voix-wrap" hidden>Voix<select class="lc-voix"></select></label>
+                <label class="lc-suivre"><input type="checkbox" checked />Suivre le texte</label>
+              </div>
+            </div>
+            <div class="conte">
+              <p class="conte-ouverture">Sur le mont Lozère, l'hiver ne plaisante pas.<br>Mais il existe une petite flamme que même la tempête ne peut pas éteindre.</p>
+              <div class="conte-texte">
+                <p class="lettrine">Il y a bien longtemps, sur les pentes du mont Lozère, vivait une famille dans une maison de granit au toit de lauzes. Il y avait la mère, la grand-mère, et trois enfants : Pèire, Ana et la petite Lisa. Le père, lui, était parti quelques jours plus tôt vers la vallée pour vendre des moutons à la foire. Il avait promis d'être rentré pour Noël.</p>
+                <h3>La chandelle</h3>
+                <p>Le soir du 24 décembre, la grand-mère sortit du coffre une grosse chandelle de cire, bien plus grande que les autres. C'était la chandelle de Noël. On la gardait toute l'année pour ce soir-là.</p>
+                <p><span class="parole">« Chacun doit l'allumer à son tour, »</span> expliqua-t-elle. <span class="parole">« Le plus vieux d'abord, puis tous les autres, jusqu'au plus petit. Comme ça, elle brûle pour toute la maison. »</span></p>
+                <p>La grand-mère l'alluma, puis la souffla. La mère l'alluma, puis la souffla. Pèire, Ana… Et quand vint le tour de Lisa, elle s'arrêta, l'allumette à la main.</p>
+                <p><span class="parole">« Et papa ? Il n'est pas là. Il ne peut pas l'allumer. »</span></p>
+                <p>La mère regarda par la fenêtre. Depuis le matin, le vent s'était levé. Maintenant, c'était la <span class="oc">tormenta</span>, la tempête de neige des hauts plateaux, qui hurlait autour de la maison et effaçait tous les chemins. Personne ne disait rien, mais tout le monde y pensait : le père était dehors, quelque part, dans cette nuit blanche.</p>
+                <h3>La lumière à la fenêtre</h3>
+                <p>Alors Lisa eut une idée. Elle alluma la chandelle, et au lieu de la souffler, elle la porta jusqu'à la petite fenêtre qui donnait sur la montagne, et la posa sur le rebord.</p>
+                <p><span class="parole">« Comme ça, papa pourra l'allumer en arrivant. »</span></p>
+                <p>On ne la gronda pas. La grand-mère hocha la tête et dit simplement : <span class="parole">« Laissons-la. »</span></p>
+                <p>Ils mangèrent le repas de Noël en silence : un bol de lait chaud, un morceau de saucisse, un peu de pain. Puis ils attendirent. La flamme tremblait derrière la vitre, toute petite contre l'immensité de la tempête.</p>
+                <h3>Dans la tempête</h3>
+                <p>Là-haut, sur le plateau, le père marchait depuis des heures. Il ne voyait plus rien : ni les murets, ni les arbres, ni les grandes bornes de granit qui marquaient le chemin. Il tournait en rond, il le savait. Le froid lui mordait les mains, ses jambes ne voulaient plus avancer.</p>
+                <p>Il allait s'asseoir dans la neige, juste un instant, quand il la vit. Une toute petite lumière, en contrebas, qui tremblait sans s'éteindre. Il se releva. Il marcha vers elle, droit devant, sans la quitter des yeux.</p>
+                <p>Un peu avant minuit, on frappa à la porte. Le père entra, couvert de neige, la barbe gelée. Lisa se jeta dans ses bras. Puis elle lui tendit la chandelle.</p>
+                <p><span class="parole">« C'est ton tour. »</span></p>
+              </div>
+              <p class="conte-fermeture">Depuis, dans cette maison, la chandelle de Noël passe toute la nuit à la fenêtre.<br>Pour ceux qui sont sur la route, et pour ceux qui ne sont pas encore rentrés.</p>
+            </div>
+            <div class="conseil-conteur">
+              <strong>🎙️ Pour le raconter à voix haute :</strong> environ 8 minutes, dès 5 ans. Un conte idéal à raconter à la lueur d'une bougie, que chaque membre de la famille peut allumer à son tour, du plus vieux au plus jeune, comme dans l'histoire (avec un adulte à côté des plus petits).
+            </div>
+          </section>
+
+          <!-- ORIGINES -->
+          <section class="section" id="origines">
+            <h2 class="section-titre"><div class="section-titre-icon">📜</div>D'où vient ce conte</h2>
+            <div class="histoire-texte">
+                <h3>Une coutume de Lozère et d'Auvergne</h3>
+                <p>Au début du XXe siècle, des correspondants d'Auvergne et de Lozère décrivaient une coutume de la veillée : la « chandelle de Noël », que chaque membre de la famille allumait à son tour pendant le repas, et que l'on conservait ensuite jusqu'à l'Épiphanie. Un correspondant lozérien décrivait aussi un repas de Noël très simple : du lait chaud, de la saucisse et du vin. Ces témoignages ont été publiés par Mgr Chabot dans <em>La Nuit de Noël dans tous les pays</em> (1907-1912).</p>
+                <p>La lumière posée à la fenêtre pour guider le voyageur, elle, est une image universelle des veillées d'hiver dans les pays de montagne, où l'on sonnait parfois aussi des « cloches des tourmentes » pour guider les égarés.</p>
+                <h3>Ce que nous avons ajouté</h3>
+                <p>Notre conte est une création originale de L'Âme des Régions, construite autour de cette coutume. La famille, la tempête et le retour du père sont de notre plume.</p>
+            </div>
+            <div class="source-bloc">
+              <div class="source-titre">✦ Inspiré de</div>
+              <div class="source-ligne"><span>Coutume</span><span>La chandelle de Noël allumée par chaque membre de la famille</span></div>
+              <div class="source-ligne"><span>Témoignage</span><span>Correspondants d'Auvergne et de Lozère, dans Mgr Chabot, <em>La Nuit de Noël dans tous les pays</em> (1907-1912)</span></div>
+              <div class="source-ligne"><span>Aire</span><span>Lozère, Auvergne</span></div>
+              <div class="source-ligne"><span>Origine</span><span>Mont Lozère</span></div>
+              <div class="source-ligne"><span>Image associée</span><span>La lumière à la fenêtre et les cloches des tourmentes</span></div>
+              <p class="mention-libre">Cette coutume populaire appartient au domaine public. L'ouvrage cité est mentionné comme référence ; aucun passage n'en est reproduit. Le conte lui-même est une création originale.</p>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre"><div class="section-titre-icon">💡</div>Le saviez-vous ?</h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Montagne</div>
+                <h4>La tormenta</h4>
+                <p>Sur le mont Lozère et l'Aubrac, la <em>tormenta</em> est une tempête de neige et de vent si violente qu'on n'y voit plus rien. Elle a coûté la vie à de nombreux voyageurs.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Patrimoine</div>
+                <h4>Les clochers de tourmente</h4>
+                <p>Sur le mont Lozère, certains hameaux possèdent un « clocher de tourmente », une petite tour avec une cloche qu'on sonnait par mauvais temps pour guider ceux qui s'étaient égarés.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Les bornes</div>
+                <h4>Les montjoies</h4>
+                <p>De grandes pierres dressées, les montjoies, jalonnaient les chemins du mont Lozère pour qu'on retrouve sa route même sous la neige.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">La lumière</div>
+                <h4>Une coutume de partout</h4>
+                <p>Poser une bougie à la fenêtre la nuit de Noël, pour le voyageur ou pour la Sainte Famille qui cherche un abri, est une coutume présente dans de nombreux pays.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre"><div class="section-titre-icon">🗺️</div>Sur les lieux du conte</h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Le mont Lozère</span>
+                <button class="btn secondaire" id="reset">Voir tout</button>
+              </div>
+              <div id="map" aria-label="Carte des lieux du conte"></div>
+              <div class="carte-note">Positions indicatives, d'après OpenStreetMap. En hiver, ne partez jamais sur le mont Lozère sans consulter la météo.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité du conte</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Lozère (48)</span></div>
+              <div class="aside-row"><span class="aside-label">Lieu</span><span class="aside-val">Le mont Lozère</span></div>
+              <div class="aside-row"><span class="aside-label">Personnages</span><span class="aside-val">Lisa, sa famille, le père</span></div>
+              <div class="aside-row"><span class="aside-label">Moment</span><span class="aside-val">Le soir du 24 décembre</span></div>
+              <div class="aside-row"><span class="aside-label">Source</span><span class="aside-val">Coutume lozérienne, conte original</span></div>
+              <div class="aside-row"><span class="aside-label">Ambiance</span><span class="aside-val">Émouvante et chaleureuse</span></div>
+              <div class="aside-row"><span class="aside-label">Âge conseillé</span><span class="aside-val">dès 5 ans</span></div>
+              <div class="aside-row"><span class="aside-label">Durée</span><span class="aside-val">≈ 8 min à voix haute</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🗣️ Petit lexique occitan</div>
+            <div class="aside-card-body">
+              <dl class="lexique" style="margin:0">
+                <dt>la candela</dt><dd>la chandelle</dd>
+                <dt>la tormenta</dt><dd>la tempête de neige</dd>
+                <dt>Nadal</dt><dd>Noël</dd>
+                <dt>la lausa</dt><dd>la lauze, pierre plate du toit</dd>
+                <dt>Lausèra</dt><dd>la Lozère</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://www.gutenberg.org/files/14788/14788-h/14788-h.htm" target="_blank" rel="noopener">Gutenberg, Mgr Chabot, <em>La Nuit de Noël dans tous les pays</em></a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Mont_Loz%C3%A8re" target="_blank" rel="noopener">Wikipédia, mont Lozère</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer le conte</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION — seule partie à modifier pour un autre conte
+   ============================================================ */
+const lieux=[
+ {
+  "name": "Le mont Lozère, sommet de Finiels",
+  "lat": 44.428,
+  "lng": 3.757,
+  "desc": "Le point culminant du mont Lozère (1 699 m), balayé par les tempêtes."
+ },
+ {
+  "name": "Le Pont-de-Montvert",
+  "lat": 44.366,
+  "lng": 3.7465,
+  "desc": "Le village au pied du mont Lozère, côté sud."
+ },
+ {
+  "name": "Le Bleymard",
+  "lat": 44.487,
+  "lng": 3.732,
+  "desc": "Le village au pied du versant nord."
+ }
+];
+/* ============================================================ */
+if(window.L){
+const map=L.map('map',{scrollWheelZoom:false});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(lieux.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.35));
+lieux.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],16);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>map.fitBounds(bounds.pad(.35));
+} else { document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>'; }
+
+/* Navigation interne + bouton haut de page */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+<script>
+/* ============================================================
+   LECTEUR « ÉCOUTER LE CONTE »
+   - Si un fichier audio/<nom-de-la-fiche>.mp3 existe à côté de la page, il est utilisé.
+   - Sinon, le texte est lu par la voix de synthèse du navigateur (voix féminine ou masculine).
+   ============================================================ */
+(function () {
+  const bloc = document.getElementById('lecteur-conte');
+  if (!bloc) return;
+  const genre = bloc.dataset.voix === 'm' ? 'm' : 'f';
+  const btnPlay = bloc.querySelector('.lc-play'), ico = btnPlay.querySelector('.lc-ico'), txt = btnPlay.querySelector('.lc-txt');
+  const btnStop = bloc.querySelector('.lc-stop'), etat = bloc.querySelector('.lc-etat');
+  const selWrap = bloc.querySelector('.lc-voix-wrap'), sel = bloc.querySelector('.lc-voix');
+  const suivre = bloc.querySelector('.lc-suivre input'), options = bloc.querySelector('.lc-options');
+  const libelleGenre = 'Raconté par une voix ' + (genre === 'f' ? 'féminine' : 'masculine');
+
+  function boutons(lecture, actif) {
+    ico.textContent = lecture ? '❚❚' : '▶';
+    txt.textContent = lecture ? 'Pause' : (actif ? 'Reprendre' : 'Écouter');
+    btnStop.disabled = !actif;
+  }
+
+  /* ── 1. Fichier(s) audio enregistré(s), prioritaires s'ils existent ──
+     audio/<fiche>.mp3, puis éventuellement audio/<fiche>-2.mp3, -3.mp3… joués à la suite */
+  let audio = null;
+  if (bloc.dataset.audio) {
+    const base = bloc.dataset.audio.replace(/\.mp3$/, '');
+    const parts = []; let cur = 0, total = 0;
+    const ctl = {
+      get paused() { return parts[cur].paused; },
+      play() { parts[cur].play(); },
+      pause() { parts[cur].pause(); },
+      stop() { parts.forEach(p => { p.pause(); p.currentTime = 0; }); cur = 0; }
+    };
+    const charger = (url, idx) => {
+      const a = new Audio(); a.preload = 'metadata';
+      a.addEventListener('loadedmetadata', () => {
+        parts[idx] = a; total += a.duration;
+        if (idx === 0) { audio = ctl; options.hidden = true; }
+        etat.textContent = 'Enregistrement audio · ' + Math.max(1, Math.round(total / 60)) + ' min';
+        charger(base + '-' + (idx + 2) + '.mp3', idx + 1);
+      });
+      a.addEventListener('play', () => boutons(true, true));
+      a.addEventListener('pause', () => { if (!a.ended) boutons(false, true); });
+      a.addEventListener('ended', () => {
+        if (parts[idx + 1]) { cur = idx + 1; parts[cur].play(); }
+        else { ctl.stop(); boutons(false, false); etat.textContent = 'Fin du conte.'; }
+      });
+      a.addEventListener('timeupdate', () => {
+        if (a.paused) return;
+        let reste = a.duration - a.currentTime;
+        for (let k = idx + 1; k < parts.length; k++) reste += parts[k].duration;
+        etat.textContent = 'Lecture en cours · encore ' + Math.max(0, Math.round(reste / 60)) + ' min environ';
+      });
+      a.src = url;
+    };
+    charger(bloc.dataset.audio, 0);
+  }
+
+  /* ── 2. Voix de synthèse du navigateur ── */
+  const synth = window.speechSynthesis;
+  const FEM = /(am[ée]lie|audrey|aur[ée]lie|marie|julie|denise|eloise|[ée]lo[iï]se|hortense|c[ée]line|l[ée]a\b|virginie|chantal|sylvie|nathalie|charlotte|juliette|vivienne|brigitte|coralie|yvette|jacqueline|josephine|celeste|grandma|grand-m[èe]re|female|femme)/i;
+  const MASC = /(thomas|jacques|nicolas|henri|paul|r[ée]mi|claude|daniel|antoine|jean\b|mathieu|alain|fabrice|gr[ée]goire|jérôme|jerome|maxime|yves|guillaume|louis|grandpa|grand-p[èe]re|\bmale\b|homme)/i;
+  let voix = null, pitch = 1, segments = [], i = 0, enCours = false, enPause = false, jeton = 0;
+
+  function score(v) {
+    let s = 0;
+    if (FEM.test(v.name)) s += genre === 'f' ? 20 : -20;
+    if (MASC.test(v.name)) s += genre === 'm' ? 20 : -20;
+    if (/^fr[-_]fr/i.test(v.lang)) s += 4;
+    if (/natural|neural|premium|enhanced|online|naturelle/i.test(v.name)) s += 5;
+    if (/google/i.test(v.name)) s += genre === 'f' ? 3 : -3;   /* la voix « Google français » est féminine */
+    return s;
+  }
+  function voixFr() { return synth ? synth.getVoices().filter(v => /^fr/i.test(v.lang)) : []; }
+  function choisirVoix(v) {
+    voix = v || null;
+    const ok = v && (genre === 'f' ? FEM : MASC).test(v.name) || (v && genre === 'f' && /google/i.test(v.name));
+    pitch = ok ? 1 : (genre === 'm' ? 0.8 : 1.15);   /* voix du mauvais genre : on rapproche par la hauteur */
+  }
+  function remplirVoix() {
+    const vs = voixFr().sort((a, b) => score(b) - score(a));
+    if (!vs.length || sel.options.length === vs.length) return;
+    const avant = sel.value;
+    sel.innerHTML = '';
+    vs.forEach(v => sel.add(new Option(v.name.replace(/^(Microsoft|Google)\s+/, '').replace(/\s*-\s*French.*$/i, '') + (/^fr[-_]fr/i.test(v.lang) ? '' : ' (' + v.lang + ')'), v.name)));
+    sel.value = vs.some(v => v.name === avant) ? avant : vs[0].name;
+    choisirVoix(vs.find(v => v.name === sel.value));
+    selWrap.hidden = vs.length < 2;
+  }
+  if (synth) { remplirVoix(); synth.addEventListener ? synth.addEventListener('voiceschanged', remplirVoix) : (synth.onvoiceschanged = remplirVoix); }
+  else if (!bloc.dataset.audio) {
+    etat.textContent = "La lecture à voix haute n'est pas disponible sur ce navigateur.";
+    btnPlay.disabled = true; options.hidden = true;
+  }
+
+  /* Découpe du texte : paragraphe par paragraphe, en phrases courtes (évite les coupures de certains navigateurs) */
+  function preparer() {
+    segments = [];
+    document.querySelectorAll('.conte-ouverture, .conte-texte p, .conte-texte h3, .conte-fermeture').forEach(el => {
+      const t = el.innerText.replace(/\s+/g, ' ').replace(/[✦]/g, '').trim();
+      if (!t) return;
+      const phrases = t.match(/[^.!?…]+[.!?…]+[»"]?\s*|[^.!?…]+$/g) || [t];
+      let morceau = '';
+      phrases.forEach(p => {
+        if ((morceau + p).length > 220 && morceau) { segments.push({ el, t: morceau.trim() }); morceau = ''; }
+        morceau += p;
+      });
+      if (morceau.trim()) segments.push({ el, t: morceau.trim(), pauseApres: el.tagName === 'H3' || el.matches('.conte-ouverture') });
+    });
+  }
+  let surligne = null;
+  function surligner(el) {
+    if (surligne === el) return;
+    if (surligne) surligne.classList.remove('lecture-en-cours');
+    surligne = el;
+    if (!el) return;
+    el.classList.add('lecture-en-cours');
+    if (suivre.checked) {
+      const r = el.getBoundingClientRect();
+      if (r.top < 80 || r.bottom > innerHeight - 40) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  function etatLecture() {
+    const paras = new Set(segments.map(s => s.el)), tous = [...paras];
+    const n = segments[i] ? tous.indexOf(segments[i].el) + 1 : tous.length;
+    etat.textContent = (enPause ? 'En pause' : 'Lecture en cours') + ' · paragraphe ' + n + ' sur ' + tous.length;
+  }
+  function lire() {
+    if (i >= segments.length) { arreter(true); return; }
+    const t = ++jeton, s = segments[i];
+    surligner(s.el); etatLecture();
+    const u = new SpeechSynthesisUtterance(s.t);
+    u.lang = voix ? voix.lang : 'fr-FR';
+    if (voix) u.voice = voix;
+    u.rate = 0.92; u.pitch = pitch;
+    u.onend = () => { if (t !== jeton) return; i++; setTimeout(() => { if (t === jeton) lire(); }, s.pauseApres ? 450 : 120); };
+    u.onerror = e => { if (t !== jeton || e.error === 'interrupted' || e.error === 'canceled') return; i++; lire(); };
+    synth.speak(u);
+  }
+  function arreter(fin) {
+    jeton++; if (synth) synth.cancel();
+    i = 0; enCours = false; enPause = false; surligner(null); boutons(false, false);
+    etat.textContent = fin ? 'Fin du conte. ' + libelleGenre.replace('Raconté', 'Il était raconté') + '.' : libelleGenre;
+  }
+
+  btnPlay.addEventListener('click', () => {
+    if (audio) { audio.paused ? audio.play() : audio.pause(); return; }
+    if (!synth) return;
+    if (!voix) remplirVoix();
+    if (!enCours) { preparer(); i = 0; enCours = true; enPause = false; synth.cancel(); boutons(true, true); lire(); }
+    else if (!enPause) { enPause = true; jeton++; synth.cancel(); boutons(false, true); etatLecture(); }
+    else { enPause = false; boutons(true, true); lire(); }
+  });
+  btnStop.addEventListener('click', () => {
+    if (audio) { audio.stop(); boutons(false, false); etat.textContent = 'Enregistrement audio'; return; }
+    arreter(false);
+  });
+  sel.addEventListener('change', () => {
+    choisirVoix(voixFr().find(v => v.name === sel.value));
+    if (enCours && !enPause) { jeton++; synth.cancel(); lire(); }
+  });
+  /* Cliquer sur un paragraphe pendant la lecture reprend à cet endroit */
+  document.querySelector('.conte-texte')?.addEventListener('click', e => {
+    if (!enCours || audio) return;
+    const el = e.target.closest('p, h3'); if (!el) return;
+    const k = segments.findIndex(s => s.el === el); if (k < 0) return;
+    i = k; enPause = false; boutons(true, true); jeton++; synth.cancel(); lire();
+  });
+  addEventListener('pagehide', () => { if (synth) synth.cancel(); });
+})();
+</script>
+</body>
+</html>

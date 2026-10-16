@@ -463,22 +463,41 @@ navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();cons
     btnStop.disabled = !actif;
   }
 
-  /* ── 1. Fichier audio enregistré (prioritaire s'il existe) ── */
+  /* ── 1. Fichier(s) audio enregistré(s), prioritaires s'ils existent ──
+     audio/<fiche>.mp3, puis éventuellement audio/<fiche>-2.mp3, -3.mp3… joués à la suite */
   let audio = null;
-  if (bloc.dataset.audio && location.protocol !== 'file:') {
-    const a = new Audio(); a.preload = 'metadata';
-    a.addEventListener('loadedmetadata', () => {
-      audio = a; options.hidden = true;
-      etat.textContent = 'Enregistrement audio · ' + Math.round(a.duration / 60) + ' min';
-    });
-    a.addEventListener('play', () => boutons(true, true));
-    a.addEventListener('pause', () => boutons(false, a.currentTime > 0));
-    a.addEventListener('ended', () => { a.currentTime = 0; boutons(false, false); });
-    a.addEventListener('timeupdate', () => {
-      const r = Math.max(0, Math.round((a.duration - a.currentTime) / 60));
-      if (!a.paused) etat.textContent = 'Lecture en cours · encore ' + r + ' min environ';
-    });
-    a.src = bloc.dataset.audio;
+  if (bloc.dataset.audio) {
+    const base = bloc.dataset.audio.replace(/\.mp3$/, '');
+    const parts = []; let cur = 0, total = 0;
+    const ctl = {
+      get paused() { return parts[cur].paused; },
+      play() { parts[cur].play(); },
+      pause() { parts[cur].pause(); },
+      stop() { parts.forEach(p => { p.pause(); p.currentTime = 0; }); cur = 0; }
+    };
+    const charger = (url, idx) => {
+      const a = new Audio(); a.preload = 'metadata';
+      a.addEventListener('loadedmetadata', () => {
+        parts[idx] = a; total += a.duration;
+        if (idx === 0) { audio = ctl; options.hidden = true; }
+        etat.textContent = 'Enregistrement audio · ' + Math.max(1, Math.round(total / 60)) + ' min';
+        charger(base + '-' + (idx + 2) + '.mp3', idx + 1);
+      });
+      a.addEventListener('play', () => boutons(true, true));
+      a.addEventListener('pause', () => { if (!a.ended) boutons(false, true); });
+      a.addEventListener('ended', () => {
+        if (parts[idx + 1]) { cur = idx + 1; parts[cur].play(); }
+        else { ctl.stop(); boutons(false, false); etat.textContent = 'Fin du conte.'; }
+      });
+      a.addEventListener('timeupdate', () => {
+        if (a.paused) return;
+        let reste = a.duration - a.currentTime;
+        for (let k = idx + 1; k < parts.length; k++) reste += parts[k].duration;
+        etat.textContent = 'Lecture en cours · encore ' + Math.max(0, Math.round(reste / 60)) + ' min environ';
+      });
+      a.src = url;
+    };
+    charger(bloc.dataset.audio, 0);
   }
 
   /* ── 2. Voix de synthèse du navigateur ── */
@@ -513,7 +532,7 @@ navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();cons
     selWrap.hidden = vs.length < 2;
   }
   if (synth) { remplirVoix(); synth.addEventListener ? synth.addEventListener('voiceschanged', remplirVoix) : (synth.onvoiceschanged = remplirVoix); }
-  else if (!bloc.dataset.audio || location.protocol === 'file:') {
+  else if (!bloc.dataset.audio) {
     etat.textContent = "La lecture à voix haute n'est pas disponible sur ce navigateur.";
     btnPlay.disabled = true; options.hidden = true;
   }
@@ -577,7 +596,7 @@ navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();cons
     else { enPause = false; boutons(true, true); lire(); }
   });
   btnStop.addEventListener('click', () => {
-    if (audio) { audio.pause(); audio.currentTime = 0; boutons(false, false); etat.textContent = 'Enregistrement audio'; return; }
+    if (audio) { audio.stop(); boutons(false, false); etat.textContent = 'Enregistrement audio'; return; }
     arreter(false);
   });
   sel.addEventListener('change', () => {
