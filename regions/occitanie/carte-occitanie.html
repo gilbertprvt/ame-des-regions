@@ -473,10 +473,10 @@
     }
 
 
-    /* Légende des anciennes régions, dans le coin haut gauche de la carte */
+    /* Légende des anciennes régions : encadré affiché sous la carte sur tablette en portrait et téléphone */
     .legende-carte {
-      position: absolute; top: 18px; left: 18px; z-index: 3;   /* ← position dans la carte */
-      display: flex; flex-direction: column; gap: 6px;
+      position: absolute; top: 18px; left: 18px; z-index: 3;
+      display: none;   /* sur grand écran, la légende est dessinée dans la carte elle-même (voir le script) */ flex-direction: column; gap: 6px;
       background: rgba(253,248,240,0.92); border: 1px solid #C8B88A; border-radius: 10px;
       padding: 10px 14px; box-shadow: 0 2px 8px rgba(139,115,85,0.15);
     }
@@ -485,9 +485,10 @@
     .legende-carte .legende-item em { color: #8B7355; font-style: normal; }
     .legende-carte .legende-swatch { width: 14px; height: 14px; border-radius: 3px; }
     @media (max-width: 860px) {
-      /* sur téléphone la carte est trop petite : la légende passe sous la carte */
-      .legende-carte { position: relative; top: auto; left: auto; flex-direction: row; flex-wrap: wrap;
-        align-items: center; gap: 4px 14px; margin-top: 10px; padding: 7px 10px; }
+      /* écran étroit : la légende passe sous la carte */
+      .legende-svg { display: none; }   /* la légende dessinée dans la carte est masquée */
+      .legende-carte { display: flex; position: relative; top: auto; left: auto; flex-direction: row; flex-wrap: wrap;
+        align-items: center; gap: 4px 14px; margin-top: 10px; margin-right: 50px; padding: 7px 10px; }   /* margin-right : place pour la boussole */
       .legende-carte-titre { width: 100%; font-size: 9px; }
       .legende-carte .legende-item { font-size: 11px; }
       .legende-carte .legende-swatch { width: 11px; height: 11px; }
@@ -948,6 +949,24 @@
     lines.forEach((line, i) => {
       textEl.append("tspan").attr("x", cx).attr("dy", i === 0 ? 0 : lineHeight).text(line);
     });
+  });
+
+  // Légende des anciennes régions, dessinée dans le coin haut gauche de la carte :
+  // elle rétrécit avec la carte et ne chevauche jamais un département.
+  // ← déplacer : changer les deux nombres de translate(6,6)
+  const leg = svg.append("g").attr("class","legende-svg").attr("transform","translate(6,6)").style("pointer-events","none");
+  leg.append("rect").attr("width",200).attr("height",76).attr("rx",10)
+     .attr("fill","rgba(253,248,240,0.92)").attr("stroke","#C8B88A");
+  leg.append("text").attr("x",12).attr("y",20).attr("font-size",10).attr("letter-spacing","1")
+     .attr("fill","#8B7355").attr("font-weight",600).attr("font-family","Source Sans 3,sans-serif")
+     .text("ANCIENNES RÉGIONS");
+  [["#C2785A","Languedoc-Roussillon","(5 dép.)"],["#7C9CA8","Midi-Pyrénées","(8 dép.)"]].forEach(([coul,nom,nb],i) => {
+    const y = 38 + i*22;
+    leg.append("rect").attr("x",12).attr("y",y-1).attr("width",13).attr("height",13).attr("rx",3)
+       .attr("fill",coul).attr("stroke","rgba(0,0,0,0.12)");
+    const t = leg.append("text").attr("x",31).attr("y",y+10).attr("font-size",12.5)
+       .attr("font-family","Source Sans 3,sans-serif").attr("fill","#555").text(nom + " ");
+    t.append("tspan").attr("fill","#8B7355").text(nb);
   });
 
   svg.append("text").attr("x",W/2).attr("y",H-5).attr("text-anchor","middle")
