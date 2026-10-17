@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La crème catalane — L'Âme des Régions</title>
+  <meta name="description" content="Recette sucrée : la crème catalane, crème au citron et à la cannelle sous une croûte de sucre caramélisé. Son histoire, sa recette et les vins pour l&#x27;accompagner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles propres aux fiches « recette sucrée » (ingrédients, accords) -->
+  <style>
+    .ingredients-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .ingredients-grille .ingredients-bloc { margin: 0; }
+    .ingredients-liste { list-style: none; margin: 0; padding: 0; }
+    .ingredients-liste li {
+      display: grid; grid-template-columns: 78px 1fr; gap: 10px;
+      font-size: 14.5px; line-height: 1.5; padding: 7px 0; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredients-liste li:last-child { border-bottom: none; }
+    .ingredients-liste .qte { font-weight: 700; color: #C8843A; text-align: right; white-space: nowrap; }
+    .astuce {
+      background: #FFF8EA; border: 1px dashed #E3B672; border-radius: 10px;
+      padding: 12px 16px; font-size: 14px; line-height: 1.6; margin: 18px 0;
+    }
+    .astuce strong { color: #862A20; }
+    .vin-carte .vin-nom { font-family: var(--font-titre); font-size: 17px; font-weight: 700; color: #862A20; margin: 0 0 2px; }
+    .vin-carte .vin-aop { font-size: 12px; color: #8B7355; margin: 0 0 10px; }
+    .vin-carte .vin-service { font-size: 12.5px; color: #8B7355; margin-top: 10px; border-top: 1px solid #F0EAD6; padding-top: 8px; }
+    .vin-carte.principal { border: 2px solid #C8843A; }
+    @media (max-width: 700px) { .ingredients-grille { grid-template-columns: 1fr; } }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à cette fiche : rouge catalan -->
+  <style>
+    .produit-hero { background-color: #B0392B; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .site-footer, .btn-haut-page, .frise .date { background: #B0392B; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong { color: #862A20; }
+    .btn { background: #B0392B; border-color: #B0392B; }
+    .btn:hover { background: #862A20; }
+    .btn.secondaire { background: #F7F3EC; color: #B0392B; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #B0392B; color: white; border-color: #B0392B; }
+    .footer-logo span { color: #FAC775; }
+    .lettrine::first-letter { color: #B0392B; }
+    .chiffre .val { color: #B0392B; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #B0392B, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #B0392B, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU : commune à toutes les recettes sucrées -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+          url('../../../assets/departement/occitanie/panorama-sucre.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="recettes-sucrees.html" class="produit-btn-retour">Toutes les recettes sucrées</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>a <em>c</em>rème<br>
+            <span style="padding-left: 20px;"><em>c</em>atalane</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-pyrenees-orientales.png" alt="Carte Pyrénées-Orientales" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/pyrenees-orientales.png" alt="Écusson Pyrénées-Orientales" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>R</em>ecette <em>s</em>ucrée <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#recette">🍮 La recette</a>
+          <a href="#accord-vin">🍷 Quel vin ?</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Une cuillère qui fait craquer une fine plaque de caramel, puis une crème douce au citron et à la cannelle. La <em>crema catalana</em> est le dessert-symbole de la Catalogne, des deux côtés des Pyrénées, et l'un des plus anciens desserts d'Europe dont on ait gardé la trace.</p>
+
+              <h3>Une crème venue du Moyen Âge</h3>
+              <p class="lettrine">Les livres de cuisine catalans sont parmi les plus anciens d'Europe. Dès le XIVe siècle, le <em>Llibre de Sent Soví</em> décrit déjà des crèmes cuites à base de lait, d'œufs et de sucre. Elles ne sont pas encore caramélisées, mais l'essentiel est là. La littérature catalane évoque ces crèmes à partir de cette époque, ce qui fait de la crème catalane l'un des plus vieux desserts du pays.</p>
+              <p>Une légende raconte que des moines catalans l'auraient inventée pour se réconforter après de longues heures de prière. Rien ne le prouve, mais l'histoire a de la saveur.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                <img src="photo/creme-catalane1.jpg" alt="Crème catalane" />
+                <figcaption>La crème catalane et sa croûte de sucre caramélisé</figcaption>
+              </figure>
+
+              <h3>La crème de Saint-Joseph</h3>
+              <p>Autrefois, on l'appelait <em>crema cremada</em>, la « crème brûlée », ou <strong><em>crema de Sant Josep</em></strong>. Elle était en effet le dessert traditionnel du <strong>19 mars</strong>, jour de la Saint-Joseph, à la veille du printemps. C'est au XVIIIe siècle que son nom actuel apparaît : en 1745, le moine aragonais Juan de Altamiras la nomme « crème catalane » dans son livre de cuisine et lui attribue une origine catalane. La croûte de sucre brûlé, elle, est documentée en 1770.</p>
+
+              <div class="citation-bloc">
+                <p>Le sucre ne se brûlait pas au chalumeau : on posait sur la crème un fer rond, chauffé au rouge dans les braises, et le caramel se formait en un instant.</p>
+              </div>
+
+              <h3>Cousine de la crème brûlée</h3>
+              <p>On la compare souvent à la crème brûlée française. Les deux desserts se ressemblent, mais diffèrent sur trois points : la crème catalane est faite au <strong>lait</strong> et non à la crème, elle est toujours parfumée au <strong>citron et à la cannelle</strong>, et elle cuit sur le feu, épaissie à la fécule, au lieu de prendre au four. En Roussillon, la Catalogne du Nord, elle est restée le dessert incontournable des tables familiales et des restaurants. Elle garnit aussi des pâtisseries catalanes, comme certaines coques.</p>
+
+             
+
+
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li class="fort"><span class="date">XIVe</span><span>Le <em>Llibre de Sent Soví</em>, livre de cuisine catalan, décrit des crèmes au lait et aux œufs.</span></li>
+              <li><span class="date">XVIe</span><span>Le <em>Llibre del Coch</em> poursuit la tradition des recettes de crèmes.</span></li>
+              <li class="fort"><span class="date">1745</span><span>Juan de Altamiras emploie pour la première fois le nom de <strong>crème catalane</strong>.</span></li>
+              <li><span class="date">1770</span><span>La couche de <strong>sucre brûlé</strong> est documentée pour la première fois.</span></li>
+              <li><span class="date">XVIIIe</span><span>On la sert pour la <strong>Saint-Joseph</strong>, le 19 mars : c'est la <em>crema de Sant Josep</em>.</span></li>
+              <li><span class="date">Aujourd'hui</span><span>Dessert-symbole de la Catalogne et du Roussillon, elle se mange toute l'année.</span></li>
+            </ol>
+          </section>
+
+          <!-- RECETTE -->
+          <section class="section" id="recette">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍮</div>
+              La recette
+            </h2>
+
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">6</div><div class="lib">personnes</div></div>
+              <div class="chiffre"><div class="val">20 min</div><div class="lib">de préparation</div></div>
+              <div class="chiffre"><div class="val">15 min</div><div class="lib">de cuisson</div></div>
+              <div class="chiffre"><div class="val">3 h</div><div class="lib">au frais minimum</div></div>
+            </div>
+
+            <div class="ingredients-grille">
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ La crème</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">1 l</span><span>de lait entier</span></li>
+                  <li><span class="qte">8</span><span>jaunes d'œufs</span></li>
+                  <li><span class="qte">200 g</span><span>de sucre en poudre</span></li>
+                  <li><span class="qte">40 g</span><span>de fécule de maïs</span></li>
+                  <li><span class="qte">1</span><span>citron bio (le zeste)</span></li>
+                  <li><span class="qte">1</span><span>bâton de cannelle</span></li>
+                </ul>
+              </div>
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ La finition</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">6 c. à s.</span><span>de sucre en poudre</span></li>
+                  <li><span class="qte">1</span><span>fer à caraméliser ou un chalumeau</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les étapes</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Infuser :</strong> portez le lait à frémissement avec le zeste de citron prélevé en ruban et le bâton de cannelle. Couvrez et laissez infuser 15 minutes hors du feu, puis retirez zeste et cannelle.</span></li>
+                <li><span><strong>Mélanger :</strong> fouettez les jaunes avec le sucre jusqu'à ce que le mélange blanchisse, puis ajoutez la fécule.</span></li>
+                <li><span><strong>Lier :</strong> versez le lait chaud petit à petit sur les jaunes en fouettant.</span></li>
+                <li><span><strong>Cuire :</strong> remettez sur feu doux et remuez sans cesse à la cuillère en bois jusqu'à ce que la crème épaississe et nappe la cuillère. Ne la laissez pas bouillir longtemps.</span></li>
+                <li><span><strong>Répartir :</strong> versez la crème dans des cassolettes plates en terre cuite. Laissez refroidir, puis réservez au moins 3 heures au réfrigérateur.</span></li>
+                <li><span><strong>Caraméliser :</strong> au moment de servir, saupoudrez chaque crème d'une fine couche de sucre et caramélisez-la au fer chaud ou au chalumeau. Servez aussitôt, tant que le caramel craque.</span></li>
+              </ol>
+            </div>
+
+            <div class="astuce">
+              <strong>💡 Le conseil :</strong> utilisez des cassolettes larges et plates : plus la surface est grande, plus il y a de caramel. Et ne caramélisez qu'au dernier moment, sinon le sucre fond au contact de la crème.
+            </div>
+          </section>
+
+          <!-- ACCORD VIN -->
+          <section class="section" id="accord-vin">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Avec quel vin ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Caramel, citron et cannelle : la crème catalane appelle un vin doux naturel du Roussillon, dont les arômes de fruits secs et d'épices prolongent le goût du sucre brûlé.</p>
+            </div>
+            <div class="encadres">
+              <div class="encadre vin-carte principal">
+                <div class="encadre-titre">★ L'accord idéal</div>
+                <p class="vin-nom">Rivesaltes ambré</p>
+                <p class="vin-aop">AOP Rivesaltes · Pyrénées-Orientales (66)</p>
+                <p>Un vin doux naturel élevé plusieurs années au contact de l'air : noix, abricot sec, écorce d'orange et caramel. L'écho parfait de la croûte brûlée.</p>
+                <div class="vin-service">Servir à 12-14 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord frais</div>
+                <p class="vin-nom">Muscat de Rivesaltes</p>
+                <p class="vin-aop">AOP · Pyrénées-Orientales (66)</p>
+                <p>Plus jeune et plus floral, il souligne le zeste de citron et allège la crème.</p>
+                <div class="vin-service">Servir à 8 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord de la côte</div>
+                <p class="vin-nom">Banyuls ambré</p>
+                <p class="vin-aop">AOP Banyuls · Pyrénées-Orientales (66)</p>
+                <p>Le vin doux de la Côte Vermeille dans sa version oxydative : notes de café, de fruits secs et d'épices.</p>
+                <div class="vin-service">Servir à 12-14 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord du Minervois</div>
+                <p class="vin-nom">Muscat de Saint-Jean-de-Minervois</p>
+                <p class="vin-aop">AOP · Hérault (34)</p>
+                <p>Un muscat de montagne, vif et aux notes d'agrumes, pour une version plus légère.</p>
+                <div class="vin-service">Servir à 8 °C</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Calendrier</div>
+                <h4>Le dessert du 19 mars</h4>
+                <p>En Catalogne, la crème était servie pour la Saint-Joseph, fête des pères et veille du printemps. Elle se mange aujourd'hui toute l'année.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Ustensile</div>
+                <h4>Le fer à brûler</h4>
+                <p>Le caramel se faisait avec un fer rond à long manche, chauffé dans les braises puis posé sur le sucre : le geste a donné le nom de <em>crema cremada</em>.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Comparaison</div>
+                <h4>Catalane ou brûlée ?</h4>
+                <p>Crème catalane : lait, citron, cannelle, cuisson sur le feu. Crème brûlée : crème, vanille, cuisson au four. Le caramel, lui, est le même.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Gourmandise</div>
+                <h4>Partout dans la pâtisserie</h4>
+                <p>La crème catalane sert aussi de garniture aux coques, aux tortells et aux feuilletés catalans, et parfume glaces et liqueurs.</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Pyrénées-Orientales (66)</span></div>
+              <div class="aside-row"><span class="aside-label">Nom catalan</span><span class="aside-val">Crema catalana</span></div>
+              <div class="aside-row"><span class="aside-label">Famille</span><span class="aside-val">Crème cuite</span></div>
+              <div class="aside-row"><span class="aside-label">Saveurs</span><span class="aside-val">Citron, cannelle, caramel</span></div>
+              <div class="aside-row"><span class="aside-label">Fête</span><span class="aside-val">Saint-Joseph (19 mars)</span></div>
+              <div class="aside-row"><span class="aside-label">Difficulté</span><span class="aside-val">Facile</span></div>
+              <div class="aside-row"><span class="aside-label">Conservation</span><span class="aside-val">2 jours au frais (sans caramel)</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">⏱️ Le temps de la recette</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="temps-graph" viewBox="0 0 300 128" role="img" aria-label="Répartition du temps de la recette : 20 minutes de préparation, 15 minutes de cuisson, 3 heures au frais"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">La crème se prépare à l'avance ; seul le caramel se fait au dernier moment.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🍷 Accord express</div>
+            <div class="aside-card-body">
+              <p class="aside-texte"><strong>Rivesaltes ambré</strong>, servi à 12-14 °C. À défaut, un muscat de Rivesaltes.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/Cr%C3%A8me_catalane" target="_blank" rel="noopener">Wikipédia, Crème catalane</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Crema_catalana" target="_blank" rel="noopener">Wikipedia (EN), Crema catalana</a></li>
+                <li><a href="https://barcelona.cat/culturapopular/en/festivals-and-traditions/food-and-drink/crema-de-sant-josep" target="_blank" rel="noopener">Ville de Barcelone, Crema de Sant Josep</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour une autre recette
+   ============================================================ */
+// Temps de la recette, en minutes
+const temps=[['Préparation',20],['Cuisson',15],['Repos au frais',180]];
+/* ============================================================ */
+
+/* Barres du temps de la recette */
+(function(){
+ const svg=document.getElementById('temps-graph'),W=300,g={l:92,r:50},h=22,gap=14,top=10;
+ const max=Math.max(...temps.map(t=>t[1]));
+ const couleurs=['#B0392B','#E3B672','#C8843A','#8B7355'];
+ const fmt=m=>m>=60?(Math.floor(m/60)+' h'+(m%60?' '+String(m%60).padStart(2,'0'):'')):m+' min';
+ let s='';
+ temps.forEach(([lib,min],i)=>{
+  const y=top+i*(h+gap), w=Math.max(4,min/max*(W-g.l-g.r));
+  s+=`<text x="${g.l-8}" y="${y+h/2+4}" text-anchor="end" style="font-size:11px">${lib}</text>`;
+  s+=`<rect x="${g.l}" y="${y}" width="${w}" height="${h}" rx="4" fill="${couleurs[i%4]}"><title>${lib} : ${fmt(min)}</title></rect>`;
+  s+=`<text x="${g.l+w+6}" y="${y+h/2+4}" style="fill:#862A20;font-weight:700;font-size:11px">${fmt(min)}</text>`;
+ });
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

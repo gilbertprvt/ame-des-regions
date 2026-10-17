@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le fénétra toulousain — L'Âme des Régions</title>
+  <meta name="description" content="Recette sucrée : le fénétra, gâteau toulousain au citron confit, à l'abricot et aux amandes. Son histoire, sa recette et les vins pour l'accompagner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles propres aux fiches « recette sucrée » (ingrédients, accords) -->
+  <style>
+    .ingredients-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .ingredients-grille .ingredients-bloc { margin: 0; }
+    .ingredients-liste { list-style: none; margin: 0; padding: 0; }
+    .ingredients-liste li {
+      display: grid; grid-template-columns: 78px 1fr; gap: 10px;
+      font-size: 14.5px; line-height: 1.5; padding: 7px 0; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredients-liste li:last-child { border-bottom: none; }
+    .ingredients-liste .qte { font-weight: 700; color: #C8843A; text-align: right; white-space: nowrap; }
+    .astuce {
+      background: #FFF8EA; border: 1px dashed #E3B672; border-radius: 10px;
+      padding: 12px 16px; font-size: 14px; line-height: 1.6; margin: 18px 0;
+    }
+    .astuce strong { color: #8A4A1E; }
+    .vin-carte .vin-nom { font-family: var(--font-titre); font-size: 17px; font-weight: 700; color: #8A4A1E; margin: 0 0 2px; }
+    .vin-carte .vin-aop { font-size: 12px; color: #8B7355; margin: 0 0 10px; }
+    .vin-carte .vin-service { font-size: 12.5px; color: #8B7355; margin-top: 10px; border-top: 1px solid #F0EAD6; padding-top: 8px; }
+    .vin-carte.principal { border: 2px solid #C8843A; }
+    @media (max-width: 700px) { .ingredients-grille { grid-template-columns: 1fr; } }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à cette fiche : ambre d'abricot -->
+  <style>
+    .produit-hero { background-color: #A85A26; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .site-footer, .btn-haut-page, .frise .date { background: #A85A26; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong { color: #8A4A1E; }
+    .btn { background: #A85A26; border-color: #A85A26; }
+    .btn:hover { background: #8A4A1E; }
+    .btn.secondaire { background: #F7F3EC; color: #A85A26; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #A85A26; color: white; border-color: #A85A26; }
+    .footer-logo span { color: #FAC775; }
+    .lettrine::first-letter { color: #A85A26; }
+    .chiffre .val { color: #A85A26; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #A85A26, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #A85A26, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU : commune à toutes les recettes sucrées -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+          url('../../../assets/departement/occitanie/panorama-sucre.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="recettes-sucrees.html" class="produit-btn-retour">Toutes les recettes sucrées</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>e <em>f</em>énétra<br>
+            <span style="padding-left: 20px;"><em>t</em>oulousain</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-haute-garonne.png" alt="Carte Haute-Garonne" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/haute-garonne.png" alt="Écusson Haute-Garonne" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>R</em>ecette <em>s</em>ucrée <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#recette">🥧 La recette</a>
+          <a href="#accord-vin">🍷 Quel vin ?</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Un fond de pâte sablée, une couche d'abricot piquée de citron confit, un nuage d'amandes doré au four. Derrière ce gâteau tout simple se cache une fête des morts venue de l'Antiquité, une tradition oubliée entre les deux guerres et une renaissance orchestrée par les pâtissiers de Toulouse.</p>
+
+              <h3>Un gâteau pour les morts</h3>
+              <p class="lettrine">Selon la tradition toulousaine, le fénétra tire son nom des <em>Feretralia</em>, une fête des morts célébrée chaque année au mois de mars, à l'époque gallo-romaine. Ce jour-là, les familles de Tolosa se rendaient en procession à la grande nécropole qui s'étendait au sud de la ville, pour honorer leurs défunts. On y partageait des offrandes, on y organisait des jeux et des spectacles de rue. Le mot a glissé au fil des siècles, de <em>Feretralia</em> à « férétra », puis à « fénétra ».</p>
+              <p>Le souvenir de ce lieu est resté inscrit dans la ville : l'actuelle <strong>rue du Férétra</strong>, au sud de Toulouse, suit le tracé de l'ancien chemin qui menait à la nécropole.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                <img src="photo/fenetra1.jpg" alt="Fénétra toulousain" />
+                <figcaption>Le fénétra, ovale et doré, saupoudré de sucre</figcaption>
+              </figure>
+
+              <h3>Le dessert des dimanches toulousains</h3>
+              <p>Au XVIIIe siècle, la fête perd son caractère funèbre et prend des airs de carnaval. Le fénétra, lui, entre dans les maisons : aux XVIIIe et XIXe siècles, il fait partie des desserts des repas de fête et des déjeuners familiaux du dimanche. Riche en sucre, il se garde plusieurs jours hors du réfrigérateur, et l'on peut le grignoter jusqu'au milieu de la semaine.</p>
+
+              <h3>L'oubli, puis le retour</h3>
+              <p>Entre les deux guerres, la tradition s'éteint. Les pâtissiers cessent d'en faire, la fête disparaît du calendrier. La recette ne survit que dans quelques familles, qui la transmettent de génération en génération.</p>
+              <p>En 1963, Fernand Cousteaux, rédacteur en chef de <em>La Dépêche du Midi</em>, se bat pour relancer la fête : le <strong>Grand Fénétra</strong> renaît sous la forme d'un festival de danses et de musiques traditionnelles, chaque dernier week-end de juin. En 1970, le Comité des fêtes de la ville demande aux pâtissiers de lui redonner un gâteau. Un concours est organisé, avec un cahier des charges précis : il faut un <em>gâteau de voyage</em>, solide et qui se conserve, capable de porter le nom de Toulouse hors de la ville.</p>
+
+              <div class="citation-bloc">
+                <p>On ne cherchait pas un entremets fragile, mais un gâteau qu'on emporte dans sa valise : le cannelé de Bordeaux ou le nougat de Montélimar version toulousaine.</p>
+              </div>
+
+              <p>La recette de <strong>Christian Lacoste</strong>, qui remet le gâteau au goût du jour, devient la référence. L'Union des artisans pâtissiers de la Haute-Garonne dépose l'appellation « gâteau du Fénétra » et fixe sa composition : pâte sablée, marmelade d'abricots, écorces de citron confites et dessus aux amandes de type dacquoise.</p>
+
+             
+
+              <p>Malgré ces efforts, le fénétra reste un secret mal partagé : l'office de tourisme lui-même reconnaît qu'il est plus connu des visiteurs, guidés par leurs livres de voyage, que des Toulousains. Quelques pâtisseries de la ville le proposent toute l'année.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li class="fort"><span class="date">Antiquité</span><span>À Tolosa, les <strong>Feretralia</strong> : en mars, les familles vont honorer leurs morts à la nécropole du sud de la ville.</span></li>
+              <li><span class="date">XVIIIe</span><span>La fête devient joyeuse, proche du carnaval. Le gâteau s'installe dans les repas de famille.</span></li>
+              <li><span class="date">XIXe</span><span>Le fénétra est un <strong>dessert du dimanche</strong> dans les maisons toulousaines.</span></li>
+              <li><span class="date">1918-39</span><span>Entre-deux-guerres : la tradition s'éteint, les pâtissiers cessent d'en fabriquer.</span></li>
+              <li class="fort"><span class="date">1963</span><span>Sous l'impulsion de Fernand Cousteaux (<em>La Dépêche du Midi</em>), renaissance de la fête du <strong>Grand Fénétra</strong>.</span></li>
+              <li class="fort"><span class="date">1970</span><span>Le Comité des fêtes lance un <strong>concours de pâtissiers</strong> pour recréer un « gâteau de voyage » toulousain.</span></li>
+              <li><span class="date">Ensuite</span><span>L'Union des artisans pâtissiers de la Haute-Garonne dépose l'appellation, sur la base de la recette de <strong>Christian Lacoste</strong>.</span></li>
+              <li><span class="date">Aujourd'hui</span><span>Le Grand Fénétra a lieu chaque <strong>dernier week-end de juin</strong> ; quelques maisons font le gâteau toute l'année.</span></li>
+            </ol>
+          </section>
+
+          <!-- RECETTE -->
+          <section class="section" id="recette">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥧</div>
+              La recette
+            </h2>
+
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">10</div><div class="lib">parts</div></div>
+              <div class="chiffre"><div class="val">35 min</div><div class="lib">de préparation</div></div>
+              <div class="chiffre"><div class="val">1 h</div><div class="lib">de repos au frais</div></div>
+              <div class="chiffre"><div class="val">30 min</div><div class="lib">de cuisson à 180 °C</div></div>
+            </div>
+
+            <div class="ingredients-grille">
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ La pâte sablée</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">250 g</span><span>de farine</span></li>
+                  <li><span class="qte">125 g</span><span>de beurre à température ambiante</span></li>
+                  <li><span class="qte">125 g</span><span>de sucre en poudre</span></li>
+                  <li><span class="qte">1</span><span>œuf</span></li>
+                  <li><span class="qte">1</span><span>gousse de vanille</span></li>
+                  <li><span class="qte">1 pincée</span><span>de sel</span></li>
+                </ul>
+              </div>
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ La garniture</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">350 g</span><span>de confiture d'abricots (1 pot)</span></li>
+                  <li><span class="qte">1</span><span>citron confit (ou écorces de citron confites)</span></li>
+                  <li><span class="qte">4</span><span>blancs d'œufs</span></li>
+                  <li><span class="qte">100 g</span><span>de sucre en poudre + 25 g pour finir</span></li>
+                  <li><span class="qte">125 g</span><span>de poudre d'amandes</span></li>
+                  <li><span class="qte">50 g</span><span>de farine</span></li>
+                  <li><span class="qte">1 c. à c.</span><span>d'extrait d'amande amère</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les étapes</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Sabler la pâte :</strong> dans un saladier, mélangez la farine, le sucre, le sel et les graines de la gousse de vanille. Ajoutez le beurre en dés et frottez entre vos doigts jusqu'à obtenir un sable.</span></li>
+                <li><span><strong>Lier et reposer :</strong> ajoutez l'œuf, mélangez juste ce qu'il faut pour former une boule homogène. Filmez-la et laissez reposer 1 heure au réfrigérateur.</span></li>
+                <li><span><strong>Préchauffer :</strong> pendant le repos, allumez le four à 180 °C.</span></li>
+                <li><span><strong>Foncer le moule :</strong> étalez la pâte, garnissez un moule à tarte (ovale si vous en avez un, comme le veut la tradition) et piquez le fond à la fourchette.</span></li>
+                <li><span><strong>L'abricot et le citron :</strong> étalez la confiture d'abricots sur le fond, puis parsemez de citron confit haché finement.</span></li>
+                <li><span><strong>Monter les blancs :</strong> battez les blancs en neige et ajoutez les 100 g de sucre peu à peu, comme pour une meringue, jusqu'à ce qu'ils soient fermes et brillants.</span></li>
+                <li><span><strong>Les amandes :</strong> incorporez délicatement à la spatule la farine tamisée, la poudre d'amandes et l'extrait d'amande amère, sans casser les blancs.</span></li>
+                <li><span><strong>Cuire :</strong> versez cet appareil sur la confiture, lissez et enfournez 30 minutes à 180 °C, jusqu'à ce que le dessus soit bien doré.</span></li>
+                <li><span><strong>Finir :</strong> à la sortie du four, saupoudrez des 25 g de sucre restants (ou de sucre glace). Laissez refroidir complètement avant de découper.</span></li>
+              </ol>
+            </div>
+
+            <div class="astuce">
+              <strong>💡 Le conseil :</strong> le fénétra se déguste froid, et il est encore meilleur le lendemain, quand l'abricot a imprégné le sablé. Il se conserve plusieurs jours à température ambiante, sous une cloche. Certaines familles remplacent le dessus aux amandes par une simple meringue.
+            </div>
+          </section>
+
+          <!-- ACCORD VIN -->
+          <section class="section" id="accord-vin">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Avec quel vin ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Le fénétra réunit trois saveurs : la douceur fruitée de l'abricot, l'amertume légère du citron confit et le grillé des amandes. Il lui faut un vin un peu moins sucré que lui, avec assez de fraîcheur pour ne pas alourdir. Le vignoble de la région en offre plusieurs, à moins d'une heure de Toulouse.</p>
+            </div>
+            <div class="encadres">
+              <div class="encadre vin-carte principal">
+                <div class="encadre-titre">★ L'accord idéal</div>
+                <p class="vin-nom">Gaillac doux</p>
+                <p class="vin-aop">AOP Gaillac · Tarn (81)</p>
+                <p>Le mauzac et le loin-de-l'œil, cépages locaux, donnent des notes de coing, de pomme cuite et de fruits secs qui répondent à l'abricot et à l'amande. Le voisin du fénétra, au sens propre : le vignoble est à 50 km de Toulouse.</p>
+                <div class="vin-service">Servir à 8-10 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord fruité</div>
+                <p class="vin-nom">Muscat de Rivesaltes</p>
+                <p class="vin-aop">AOP · Pyrénées-Orientales (66)</p>
+                <p>Un vin doux naturel aux arômes d'agrumes, de fleurs blanches et d'abricot. Il souligne le citron confit et s'accorde avec la confiture sans la couvrir.</p>
+                <div class="vin-service">Servir à 8 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord gascon</div>
+                <p class="vin-nom">Pacherenc du Vic-Bilh moelleux</p>
+                <p class="vin-aop">AOP · Gers (32), Hautes-Pyrénées (65)</p>
+                <p>Le petit manseng lui apporte une acidité vive et des notes de fruits exotiques et de fruits confits : un bel équilibre face au sucre du gâteau.</p>
+                <div class="vin-service">Servir à 10 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord pétillant</div>
+                <p class="vin-nom">Blanquette de Limoux, méthode ancestrale</p>
+                <p class="vin-aop">AOP · Aude (11)</p>
+                <p>Légèrement sucrée, peu alcoolisée et fine en bulles, elle allège le dessert. Idéale pour un goûter ou un fénétra servi en fin de grand repas.</p>
+                <div class="vin-service">Servir à 6-8 °C</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Toponymie</div>
+                <h4>La rue du Férétra</h4>
+                <p>Au sud de Toulouse, la rue du Férétra rappelle le chemin que suivaient les processions vers l'ancienne nécropole. Le gâteau et la rue portent le même nom, hérité de la même fête.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Un cahier des charges</div>
+                <h4>Un « gâteau de voyage »</h4>
+                <p>En 1970, le Comité des fêtes voulait un gâteau qui se transporte et se conserve, pour remplacer le pain traditionnellement offert pendant la fête et faire connaître Toulouse au-delà de ses murs.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Une forme</div>
+                <h4>Ovale, pas rond</h4>
+                <p>Le fénétra classique est ovale. Rond, il ressemble à une tarte comme une autre ; ovale, on le reconnaît sur l'étal d'une pâtisserie toulousaine.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Une question d'historiens</div>
+                <h4>Feretralia ou Feralia ?</h4>
+                <p>Le nom de <em>Feretralia</em> est celui que retient la tradition toulousaine. Les calendriers romains connus mentionnent surtout les <em>Feralia</em>, fête des morts de février : l'origine exacte du mot reste discutée.</p>
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Haute-Garonne (31)</span></div>
+              <div class="aside-row"><span class="aside-label">Ville</span><span class="aside-val">Toulouse</span></div>
+              <div class="aside-row"><span class="aside-label">Famille</span><span class="aside-val">Gâteau de voyage</span></div>
+              <div class="aside-row"><span class="aside-label">Saveurs</span><span class="aside-val">Abricot, citron confit, amande</span></div>
+              <div class="aside-row"><span class="aside-label">Origine</span><span class="aside-val">Antiquité (tradition)</span></div>
+              <div class="aside-row"><span class="aside-label">Recette fixée</span><span class="aside-val">après 1970</span></div>
+              <div class="aside-row"><span class="aside-label">Difficulté</span><span class="aside-val">Facile</span></div>
+              <div class="aside-row"><span class="aside-label">Conservation</span><span class="aside-val">Plusieurs jours</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">⏱️ Le temps de la recette</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="temps-graph" viewBox="0 0 300 120" role="img" aria-label="Répartition du temps de la recette : 35 minutes de préparation, 1 heure de repos, 30 minutes de cuisson"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Total : 2 h 05, dont 1 h 05 de travail ou de cuisson. Comptez aussi le refroidissement avant la découpe.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🍷 Accord express</div>
+            <div class="aside-card-body">
+              <p class="aside-texte"><strong>Gaillac doux</strong>, servi frais (8-10 °C). À défaut, un muscat de Rivesaltes.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/F%C3%A9n%C3%A9tra" target="_blank" rel="noopener">Wikipédia, Fénétra</a></li>
+                <li><a href="https://www.toulouseinfos.fr/dossiers/toulouse-en-questions/11075-connaissez-vous-le-fenetra-le-gateau-de-toulouse.html" target="_blank" rel="noopener">Toulouse Infos, « Connaissez-vous le Fénétra ? » (2014)</a></li>
+                <li><a href="https://www.jours-de-marche.fr/specialites/fenetra.html" target="_blank" rel="noopener">Jours de marché, le fénétra</a></li>
+                <li><a href="https://www.lebonbon.fr/toulouse/pepites/la-popote-la-veritable-recette-du-fenetra" target="_blank" rel="noopener">Le Bonbon Toulouse, la recette du fénétra</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour une autre recette
+   ============================================================ */
+// Temps de la recette, en minutes
+const temps=[['Préparation',35],['Repos au frais',60],['Cuisson',30]];
+/* ============================================================ */
+
+
+/* Barres du temps de la recette */
+(function(){
+ const svg=document.getElementById('temps-graph'),W=300,g={l:92,r:44},h=22,gap=14,top=10;
+ const max=Math.max(...temps.map(t=>t[1]));
+ const couleurs=['#A85A26','#E3B672','#C8843A'];
+ let s='';
+ temps.forEach(([lib,min],i)=>{
+  const y=top+i*(h+gap), w=min/max*(W-g.l-g.r);
+  s+=`<text x="${g.l-8}" y="${y+h/2+4}" text-anchor="end" style="font-size:11px">${lib}</text>`;
+  s+=`<rect x="${g.l}" y="${y}" width="${w}" height="${h}" rx="4" fill="${couleurs[i]}"><title>${lib} : ${min} min</title></rect>`;
+  s+=`<text x="${g.l+w+6}" y="${y+h/2+4}" style="fill:#8A4A1E;font-weight:700;font-size:11px">${min>=60?(min/60)+' h':min+' min'}</text>`;
+ });
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

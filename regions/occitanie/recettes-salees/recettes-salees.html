@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les saveurs d'Occitanie — L'Âme des Régions</title>
+  <meta name="description" content="Vingt recettes salées d'Occitanie : leur histoire, leur recette et le vin pour les accompagner." />
+  <link rel="preload" as="image" href="../../../assets/departement/occitanie/panorama-sel.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bleu: #2C4A7C; --bleu-fonce: #1e3560; --ocre: #C8843A; --or: #FAC775;
+      --ivoire-page: #F7F3EC; --brun: #5A3E1B; --texte: #3A3028; --gris: #8B7355;
+      --titre: 'Playfair Display', Georgia, serif; --corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    body.accueil-histoire { margin: 0; background: var(--ivoire-page); color: var(--texte); font-family: var(--corps); }
+    /* Même largeur que les fiches : c'est .container (style.css / fiche.css) qui fixe la largeur */
+    .wrap { margin-left: auto; margin-right: auto; }
+
+    /* ─── BANDEAU (même format que les fiches, ex. vigne-occitanie) ─── */
+    .produit-hero {
+      background-color: #2C4A7C;
+      background-image: linear-gradient(rgba(24,28,38,.40), rgba(24,28,38,.50)),
+        url('../../../assets/departement/occitanie/panorama-sel.jpg');
+      background-size: cover; background-position: center 48%; background-repeat: no-repeat;
+      color: white; padding: 22px 0 0; position: relative; overflow: hidden;
+    }
+    .produit-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+    }
+    .produit-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 3; }
+    .produit-logo { font-family: var(--titre); font-size: 28px; font-weight: 700; color: white; text-decoration: none; }
+    .produit-logo span { color: var(--ocre); }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour { display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px; color: white; font-size: 18px; font-family: var(--corps); text-decoration: none; transition: opacity 0.18s; }
+    .produit-btn-retour:hover { opacity: 0.7; }
+    .produit-hero-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 28px; position: relative; z-index: 2; }
+    .hero-topic { font-family: var(--titre); font-size: clamp(30px, 5vw, 52px); font-weight: 700; line-height: 1.05; color: white; margin: 0 0 70px; }
+    .hero-topic em { color: var(--ocre); font-style: italic; }
+    .topic-map { font-size: 110px; opacity: .82; filter: drop-shadow(0 4px 12px rgba(0,0,0,.3)); align-self: flex-start; }
+    .hero-label-bas { color: white; font-family: var(--titre); font-size: 20px; letter-spacing: 0.15em; text-align: center; margin: -50px 0 0; padding-bottom: 28px; position: relative; z-index: 3; }
+    .hero-label-bas em { color: var(--or); }
+    .intro-histoire { font-size: 17px; line-height: 1.65; color: var(--texte); max-width: 860px; margin: 0 auto 22px; text-align: center; }
+    @media (max-width: 640px) { .produit-hero-body { grid-template-columns: 1fr; } .topic-map { font-size: 70px; } .hero-label-bas { margin-top: -30px; font-size: 16px; } }
+
+    /* ─── CARTE ─── */
+    .carte-section { padding: 34px 0 10px; }
+    .carte-cadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 18px;
+      box-shadow: 0 6px 24px rgba(44,74,124,.08); padding: 10px;
+    }
+    .carte-cadre svg { width: 100%; height: auto; display: block; }
+    .consigne { text-align: center; color: var(--gris); font-size: 14px; margin: 12px 0 0; font-style: italic; }
+
+    .mer { fill: #DCE7F2; }
+    .region { fill: #F4ECDD; stroke: var(--bleu); stroke-width: 2.2; stroke-linejoin: round; }
+    .riviere { fill: none; stroke: #8DB0D3; stroke-width: 1.6; stroke-linecap: round; }
+    .canal-trace { fill: none; stroke: #5E8FC2; stroke-width: 1.4; stroke-dasharray: 5 4; opacity: .8; }
+    .relief { fill: none; stroke: #BCA887; stroke-width: 1.2; }
+    .lbl-relief { font: italic 11px var(--corps); fill: #9A8666; letter-spacing: .08em; }
+    .lbl-mer { font: italic 17px var(--titre); fill: var(--bleu); opacity: .75; }
+    .lbl-pays { font: 600 13px var(--corps); fill: #A89A86; letter-spacing: .3em; }
+    .lbl-pays.small { font-size: 9px; letter-spacing: .15em; }
+    .lbl-riv { font: italic 10px var(--corps); fill: #5E8FC2; }
+    .ville { fill: var(--texte); }
+    .ville.grande { fill: var(--bleu); stroke: white; stroke-width: 2; }
+    .lbl-ville { font: 500 12px var(--corps); fill: var(--texte); paint-order: stroke; stroke: #F4ECDD; stroke-width: 3px; }
+    .lbl-ville.grande { font: 700 15px var(--titre); fill: var(--bleu); }
+
+    .zone { fill: rgba(139,115,85,.10); stroke: rgba(139,115,85,.45); stroke-width: 1.4; stroke-dasharray: 4 4; transition: all .25s; }
+    .zone-ligne { fill: none; stroke: rgba(139,115,85,.35); stroke-width: 9; stroke-linecap: round; transition: all .25s; }
+    .zone-ligne.on-hover { stroke: rgba(200,132,58,.55); stroke-width: 12; }
+    .zone-ligne.fine { stroke: rgba(44,74,124,.28); stroke-width: 2.2; stroke-dasharray: 6 5; }
+    .zone-ligne.fine.on-hover { stroke: rgba(200,132,58,.85); stroke-width: 4; stroke-dasharray: none; }
+    .fleche { fill: none; stroke: #B7A88F; stroke-width: 1.8; stroke-dasharray: 5 5; transition: all .25s; }
+    .fleche.actif { stroke: var(--ocre); stroke-width: 2.6; stroke-dasharray: none; }
+    /* Protestantisme : flèche secondaire discrète, éclats visibles au survol */
+    .fleche.secondaire { stroke: #C8843A; stroke-width: 1.6; stroke-dasharray: 3 5; opacity: .75; }
+    .fleche.secondaire.on-hover { stroke-width: 2.6; stroke-dasharray: none; opacity: 1; }
+    .zone-region { fill: transparent; stroke: transparent; stroke-width: 5; transition: all .3s; pointer-events: none; }
+    .zone-region.on-hover { fill: rgba(200,132,58,.10); stroke: rgba(200,132,58,.85); }
+    .hub { fill: #FFF8EC; stroke: #C8843A; stroke-width: 2; transition: all .25s; }
+    .hub.on-hover { fill: #C8843A; }
+    .eclat { fill: none; stroke: #C8843A; stroke-width: 2; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .eclat.on-hover { opacity: 1; }
+    .eclat-pt { fill: rgba(200,132,58,.25); stroke: #C8843A; stroke-width: 1.5; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .eclat-pt.on-hover { opacity: 1; }
+    .depart { fill: #B7A88F; } .depart.actif { fill: var(--ocre); }
+    /* Au repos, la carte reste entièrement dégagée : flèches, zones et éclats n'apparaissent qu'au survol du bouton */
+    .fleche, .depart, .zone, .zone-ligne, .hub, .zone-region, .eclat, .eclat-pt { opacity: 0; pointer-events: none; transition: opacity .3s, fill .25s, stroke .25s, stroke-width .25s; }
+    .fleche.on-hover, .depart.on-hover, .zone.on-hover, .zone-ligne.on-hover, .hub.on-hover, .zone-region.on-hover, .eclat.on-hover, .eclat-pt.on-hover { opacity: 1; }
+    .fleche.on-hover { animation: trace .45s ease-out; stroke-dasharray: 900; stroke-dashoffset: 0; }
+    .eclat.on-hover { animation: trace .5s ease-out .3s backwards; stroke-dasharray: 600; }
+    @keyframes trace { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .fleche.on-hover, .eclat.on-hover { animation: none; } }
+    .marq { opacity: 0; transition: opacity .25s; pointer-events: none; }
+    .marq rect { fill: #A0522D; stroke: white; stroke-width: 1.5; }
+    .marq text { font: 600 11px var(--corps); fill: #7A3B1E; paint-order: stroke; stroke: white; stroke-width: 3px; }
+
+    .bouton { cursor: pointer; outline: none; }
+    .btn-fond { fill: white; stroke: #E0DACE; stroke-width: 1.5; transition: all .2s; }
+    .btn-icone { fill: #EEF2F8; }
+    .btn-emoji { font-size: 22px; }
+    .btn-titre { font: 700 14.5px var(--titre); fill: var(--bleu); }
+    .btn-sous { font: 11px var(--corps); fill: var(--gris); }
+    .btn-etat { font: 600 10.5px var(--corps); fill: #A89A86; letter-spacing: .06em; text-transform: uppercase; }
+    .btn-etat.on { fill: var(--ocre); }
+    .bouton.actif .btn-fond { stroke: var(--ocre); stroke-width: 2; }
+    .bouton.actif .btn-icone { fill: #FFF1DC; }
+    .bouton.avenir { opacity: .72; cursor: default; }
+
+    /* Survol : le bouton, sa flèche et sa zone s'allument ensemble */
+    .on-hover .btn-fond { fill: var(--bleu); stroke: var(--bleu); }
+    .on-hover .btn-titre { fill: white; } .on-hover .btn-sous { fill: #D7E0EE; }
+    .on-hover .btn-etat, .on-hover .btn-etat.on { fill: var(--or); }
+    .on-hover .btn-icone { fill: rgba(255,255,255,.15); }
+    .bouton.avenir.on-hover { opacity: 1; }
+    .bouton.avenir.on-hover .btn-fond { fill: #6B7A92; stroke: #6B7A92; }
+    .zone.on-hover { fill: rgba(200,132,58,.38); stroke: var(--ocre); stroke-width: 2.5; stroke-dasharray: none; }
+    .fleche.on-hover { stroke: var(--ocre); stroke-width: 3.2; stroke-dasharray: none; }
+    .depart.on-hover { fill: var(--ocre); }
+    .marq.on-hover { opacity: 1; }
+
+    /* ─── LISTE DES THÈMES (utile sur téléphone) ─── */
+    .themes-section { padding: 30px 0 34px; }
+    .themes-section h2 {
+      font-family: var(--titre); color: var(--bleu); font-size: 24px;
+      border-bottom: 2px solid #E8DEC8; padding-bottom: 10px; margin: 0 0 18px;
+    }
+    .themes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .carte-theme {
+      display: flex; gap: 14px; align-items: flex-start; background: white; border: 1px solid #E0DACE;
+      border-radius: 14px; padding: 16px; text-decoration: none; color: inherit; transition: all .2s;
+    }
+    .carte-theme.actif { border: 2px solid var(--ocre); }
+    .carte-theme.actif:hover, .carte-theme.on-hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(44,74,124,.14); }
+    .carte-theme.avenir { opacity: .7; }
+    .ct-ico { font-size: 28px; background: #EEF2F8; border-radius: 12px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .carte-theme.actif .ct-ico { background: #FFF1DC; }
+    .ct-titre { display: block; font: 700 17px var(--titre); color: var(--bleu); }
+    .ct-sous { display: block; font-size: 13px; color: var(--gris); margin: 3px 0 6px; line-height: 1.4; }
+    .ct-etat { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #A89A86; }
+    .carte-theme.actif .ct-etat { color: var(--ocre); }
+    .intro-texte { font-size: 15px; line-height: 1.75; max-width: 860px; margin: 0 0 22px; }
+
+    /* Bouton de retour vers la carte des départements (même style que les cartes départements) */
+    .retour-carte { padding: 0 0 60px; }
+    .dep-carte { position: relative; display: block; height: 175px; border-radius: 14px; overflow: hidden; text-decoration: none; color: white;
+      background-color: #2C4A7C; background-image: url('../../../assets/departement/occitanie/photo/panorama-occitanie.jpg'), url('../../../assets/departement/occitanie/panorama-aude.jpg');
+      background-size: cover; background-position: center; box-shadow: 0 6px 18px rgba(44,74,124,0.18); transition: transform 0.25s, box-shadow 0.25s; }
+    .dep-carte::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 100%); transition: background 0.25s; }
+    .dep-carte:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(44,74,124,0.28); }
+    .dep-carte:hover::before { background: linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.10) 100%); }
+    .dep-carte img { position: absolute; top: 12px; right: 12px; height: 70px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5)); }
+    .dep-carte .dep-num { position: absolute; top: 12px; left: 14px; font-size: 12px; background: rgba(0,0,0,0.35); padding: 2px 9px; border-radius: 10px; }
+    .dep-carte .dep-texte { position: absolute; left: 16px; right: 150px; bottom: 16px; }
+    .dep-carte .dep-nom { font-family: var(--titre); font-size: 26px; font-weight: 700; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+    .dep-carte .dep-nom::first-letter { color: var(--or); }
+    .dep-carte .dep-chef { font-size: 14px; opacity: 0.9; }
+    .dep-carte .dep-go { position: absolute; right: 16px; bottom: 16px; font-family: var(--titre); font-style: italic; font-size: 15px; background: var(--ocre); padding: 6px 14px; border-radius: 20px; }
+    .dep-carte .dep-bande { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(to right, #C2785A 50%, #7C9CA8 50%); }
+    @media (max-width: 600px) { .dep-carte .dep-go { display: none; } .dep-carte .dep-texte { right: 16px; } .dep-carte .dep-nom { font-size: 21px; } }
+
+    footer.pied { background: var(--bleu); color: white; text-align: center; padding: 26px 16px; }
+    footer.pied .logo { font-family: var(--titre); font-size: 22px; font-weight: 700; color: white; }
+    footer.pied p { margin: 6px 0 0; opacity: .75; font-size: 14px; }
+
+    @media (max-width: 900px) { .themes-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 620px) {
+      .themes-grid { grid-template-columns: 1fr; }
+      .consigne { display: none; }
+    }
+
+    /* ─── PHOTOS DANS LES BOUTONS (comme les vignettes de carte-occitanie.html) ─── */
+    .btn-fond { fill: #2C4A7C; stroke: none; }
+    /* Dégradé léger uniquement sous le texte (gauche du bouton) ; le reste de la photo reste intact */
+    .btn-voile { fill: url(#voile); }
+    .btn-voile-hover { display: none; }
+    .btn-cadre { fill: none; stroke: rgba(255,255,255,.5); stroke-width: 1.5; transition: all .2s; }
+    .bouton.actif .btn-cadre { stroke: var(--ocre); stroke-width: 2; }
+    .bouton .btn-icone, .bouton.actif .btn-icone, .on-hover .btn-icone { fill: rgba(255,255,255,.88); }
+    .btn-titre, .on-hover .btn-titre, .btn-sous, .on-hover .btn-sous, .btn-etat, .btn-etat.on { filter: url(#ombre-texte); stroke: none; }
+    .btn-titre, .on-hover .btn-titre { fill: white; }
+    .btn-titre .ini { fill: var(--or); }
+    .btn-sous, .on-hover .btn-sous { fill: white; }
+    .btn-etat, .btn-etat.on, .on-hover .btn-etat.on { fill: var(--or); }
+    .on-hover .btn-fond { fill: #2C4A7C; stroke: none; }
+    .bouton.actif.on-hover .btn-cadre { stroke: var(--or); stroke-width: 3; }
+
+    .carte-theme { position: relative; overflow: hidden; background-color: var(--bleu); background-size: cover; background-position: center; color: white; }
+    .carte-theme::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,18,30,.55) 0%, rgba(10,18,30,.25) 40%, rgba(10,18,30,0) 70%); }
+    .carte-theme > * { position: relative; }
+    .carte-theme.actif:hover, .carte-theme.on-hover { border-color: var(--or); }
+    .carte-theme .ct-ico, .carte-theme.actif .ct-ico { background: rgba(255,255,255,.88); }
+    .carte-theme .ct-titre { color: white; text-shadow: 0 1px 2px rgba(0,0,0,.95), 0 0 6px rgba(0,0,0,.7), 0 0 16px rgba(0,0,0,.5); }
+    .carte-theme .ct-titre::first-letter { color: var(--or); }
+    .carte-theme .ct-sous, .carte-theme .ct-etat { text-shadow: 0 1px 2px rgba(0,0,0,.95), 0 0 6px rgba(0,0,0,.7), 0 0 14px rgba(0,0,0,.45); }
+    .carte-theme .ct-sous { color: white; }
+    .carte-theme .ct-etat, .carte-theme.actif .ct-etat { color: var(--or); }
+  </style>
+</head>
+<body class="accueil-histoire produit-page">
+
+  <header class="produit-hero">
+    <div class="wrap container">
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns"><a href="../carte-occitanie.html" class="produit-btn-retour">← Carte de l'Occitanie</a></div>
+      </div>
+      <div class="produit-hero-body">
+        <div><h1 class="hero-topic"><em>L</em>es <em>s</em>aveurs<br><span style="padding-left:40px">d'<em>O</em>ccitanie…</span></h1></div>
+      </div>
+    </div>
+    <br><br>
+    <div class="hero-label-bas">⟹ <em>Recettes salées</em> · choisissez un plat sur la carte ⟸</div>
+  </header>
+
+  <section class="carte-section">
+    <div class="wrap container">
+      <p class="intro-histoire">Du cassoulet de Castelnaudary à la brandade de Nîmes, de l'aligot de l'Aubrac à la tielle de Sète, de la garbure gasconne à l'ouillade catalane : vingt plats d'Occitanie, avec leur histoire, leur recette et le vin pour les accompagner.</p>
+      <div class="carte-cadre">
+        <svg viewBox="0 0 1200 720" role="img" aria-labelledby="carte-titre">
+          <title id="carte-titre">Carte de l'Occitanie et de ses recettes salées</title>
+          <defs>
+            <linearGradient id="voile" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0A121E" stop-opacity=".55"/><stop offset=".45" stop-color="#0A121E" stop-opacity=".25"/><stop offset=".75" stop-color="#0A121E" stop-opacity="0"/></linearGradient>
+            <filter id="ombre-texte" x="-10%" y="-40%" width="120%" height="180%"><feDropShadow dx="0" dy="1" stdDeviation="0.8" flood-color="#000" flood-opacity=".95"/><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#000" flood-opacity=".65"/></filter>
+            <marker id="pointe-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#C8843A"/>
+            </marker>
+            <radialGradient id="fondu-grad" cx="0.25" cy="0.25" r="0.8">
+              <stop offset="0.55" stop-color="white"/><stop offset="1" stop-color="black"/>
+            </radialGradient>
+            <mask id="fondu" maskContentUnits="objectBoundingBox">
+              <rect width="1" height="1" fill="url(#fondu-grad)"/>
+            </mask>
+          </defs>
+<polygon class="mer" mask="url(#fondu)" points="922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 722.2,599.0 741.5,627.5 726.0,659.6 719.6,695.2 687.4,730.8 668.0,757.5 1164.3,757.5 1164.3,330.3"/>
+<polygon class="region" points="500.5,132.7 522.4,146.9 543.0,155.8 579.1,146.9 598.4,166.5 633.2,161.2 664.2,166.5 691.2,152.3 713.2,164.7 731.2,154.0 751.8,152.3 767.3,175.4 786.6,173.6 811.1,203.9 822.7,221.7 822.7,250.2 847.2,268.0 879.4,262.6 913.0,268.0 919.4,300.0 922.0,330.3 911.7,357.0 889.8,378.3 858.8,417.5 842.1,403.2 809.8,419.3 790.5,428.2 767.3,451.3 731.2,463.8 713.2,485.1 705.4,511.8 704.1,547.4 706.7,579.5 722.2,599.0 693.8,595.5 661.6,602.6 635.8,615.1 597.1,609.7 564.9,600.8 536.6,588.4 500.5,570.6 461.8,549.2 436.0,535.0 403.8,526.1 384.5,552.8 352.2,554.5 313.6,552.8 296.8,538.5 272.3,527.8 274.9,490.5 300.7,449.5 277.5,415.7 281.3,389.0 300.7,371.2 307.1,333.8 339.3,323.1 384.5,308.9 414.1,307.1 425.7,276.9 450.2,255.5 439.9,223.5 455.4,211.0 481.1,179.0 494.0,152.3 500.5,132.7"/>
+<path class="riviere" d="M311.0,543.9 Q311.0,543.9 347.7,519.8 Q384.5,495.8 410.2,479.8 Q436.0,463.8 458.6,441.5 Q481.1,419.3 488.9,404.1 Q496.6,389.0 482.4,364.1 Q468.2,339.2 452.1,321.4 Q436.0,303.6 425.1,305.3 L414.1,307.1"/>
+<path class="riviere" d="M777.6,259.1 Q777.6,259.1 755.1,274.2 Q732.5,289.3 709.9,300.9 Q687.4,312.5 655.2,319.6 Q622.9,326.7 603.6,331.1 Q584.3,335.6 558.5,332.9 Q532.7,330.3 510.1,324.0 Q487.6,317.8 470.2,312.5 L452.8,307.1"/>
+<path class="riviere" d="M584.3,570.6 Q584.3,570.6 593.9,545.6 Q603.6,520.7 600.4,505.6 Q597.1,490.5 606.8,476.2 Q616.5,462.0 642.3,460.2 Q668.0,458.4 684.2,457.5 Q700.3,456.6 714.4,456.6 L728.6,456.6"/>
+<path class="riviere" d="M913.0,268.0 Q913.0,268.0 916.2,284.0 Q919.4,300.0 920.7,315.1 Q922.0,330.3 916.8,343.6 Q911.7,357.0 909.1,374.8 L906.5,392.6"/>
+<path class="relief" d="M333.3,513.6 l6,-8 l6,8"/><path class="relief" d="M349.3,519.6 l6,-8 l6,8"/><path class="relief" d="M365.3,513.6 l6,-8 l6,8"/><path class="relief" d="M381.3,519.6 l6,-8 l6,8"/><path class="relief" d="M397.3,513.6 l6,-8 l6,8"/><path class="relief" d="M413.3,519.6 l6,-8 l6,8"/><path class="relief" d="M462.2,535.0 l6,-8 l6,8"/><path class="relief" d="M478.2,541.0 l6,-8 l6,8"/><path class="relief" d="M494.2,535.0 l6,-8 l6,8"/><path class="relief" d="M510.2,541.0 l6,-8 l6,8"/><path class="relief" d="M526.2,535.0 l6,-8 l6,8"/><path class="relief" d="M765.2,276.9 l6,-8 l6,8"/><path class="relief" d="M779.2,282.9 l6,-8 l6,8"/><path class="relief" d="M793.2,276.9 l6,-8 l6,8"/><path class="relief" d="M807.2,282.9 l6,-8 l6,8"/><path class="relief" d="M623.4,421.0 l6,-8 l6,8"/><path class="relief" d="M637.4,427.0 l6,-8 l6,8"/><path class="relief" d="M651.4,421.0 l6,-8 l6,8"/>
+<text class="lbl-relief" x="371.6" y="588.4" text-anchor="middle">P Y R É N É E S</text>
+<text class="lbl-relief" x="738.9" y="268.0" >Cévennes</text>
+<text class="lbl-relief" x="610.0" y="410.4" >Montagne Noire</text>
+<text class="lbl-mer" x="861.4" y="526.1" text-anchor="middle">Mer Méditerranée</text>
+<text class="lbl-pays" x="339.3" y="613.3" text-anchor="middle">ESPAGNE</text>
+<text class="lbl-pays small" x="513.4" y="597.3" text-anchor="middle">ANDORRE</text>
+<text class="lbl-riv" x="393.5" y="478.0" >Garonne</text>
+<text class="lbl-riv" x="896.2" y="246.6" >Rhône</text>
+<text class="lbl-riv" x="687.4" y="303.6" >Tarn</text>
+<circle class="ville grande" cx="499.2" cy="392.6" r="5"/>
+<text class="lbl-ville grande" x="499.2" y="412.6" text-anchor="middle">Toulouse</text>
+<circle class="ville grande" cx="813.7" cy="390.8" r="5"/>
+<text class="lbl-ville grande" x="820.7" y="394.8">Montpellier</text>
+<circle class="ville" cx="875.6" cy="349.8" r="3.2"/>
+<text class="lbl-ville" x="882.6" y="353.8">Nîmes</text>
+<circle class="ville" cx="687.4" cy="552.8" r="3.2"/>
+<text class="lbl-ville" x="680.4" y="556.8" text-anchor="end">Perpignan</text>
+<circle class="ville" cx="616.5" cy="462.0" r="3.2"/>
+<text class="lbl-ville" x="609.5" y="466.0" text-anchor="end">Carcassonne</text>
+<circle class="ville" cx="700.3" cy="467.3" r="3.2"/>
+<text class="lbl-ville" x="693.3" y="471.3" text-anchor="end">Narbonne</text>
+<circle class="ville" cx="728.6" cy="438.8" r="3.2"/>
+<text class="lbl-ville" x="721.6" y="442.8" text-anchor="end">Béziers</text>
+<circle class="ville" cx="590.7" cy="333.8" r="3.2"/>
+<text class="lbl-ville" x="597.7" y="337.8">Albi</text>
+<circle class="ville" cx="644.8" cy="259.1" r="3.2"/>
+<text class="lbl-ville" x="651.8" y="263.1">Rodez</text>
+<circle class="ville" cx="499.2" cy="241.3" r="3.2"/>
+<text class="lbl-ville" x="506.2" y="245.3">Cahors</text>
+<circle class="ville" cx="487.6" cy="317.8" r="3.2"/>
+<text class="lbl-ville" x="480.6" y="321.8" text-anchor="end">Montauban</text>
+<circle class="ville" cx="323.9" cy="458.4" r="3.2"/>
+<text class="lbl-ville" x="330.9" y="462.4">Tarbes</text>
+<circle class="ville" cx="389.6" cy="383.7" r="3.2"/>
+<text class="lbl-ville" x="382.6" y="387.7" text-anchor="end">Auch</text>
+<circle class="ville" cx="521.1" cy="506.5" r="3.2"/>
+<text class="lbl-ville" x="514.1" y="510.5" text-anchor="end">Foix</text>
+<circle class="ville" cx="764.7" cy="228.8" r="3.2"/>
+<text class="lbl-ville" x="771.7" y="232.8">Mende</text>
+<circle class="ville" cx="790.5" cy="428.2" r="3.2"/>
+<text class="lbl-ville" x="790.5" y="443.2" text-anchor="middle">Sète</text>
+<circle class="ville" cx="839.5" cy="298.2" r="3.2"/>
+<text class="lbl-ville" x="846.5" y="302.2">Alès</text>
+<circle class="ville" cx="602.3" cy="390.8" r="3.2"/>
+<text class="lbl-ville" x="595.3" y="394.8" text-anchor="end">Castres</text>
+
+<!-- ═══ ZONES DES RECETTES (visibles au survol) ═══ -->
+<ellipse class="zone actif" data-t="garbure" cx="360" cy="420" rx="50" ry="48" transform="rotate(0 360 420)"/>
+<ellipse class="zone actif" data-t="magret" cx="389.6" cy="383.7" rx="20" ry="14" transform="rotate(0 389.6 383.7)"/>
+<ellipse class="zone actif" data-t="saucisse" cx="499.2" cy="392.6" rx="26" ry="18" transform="rotate(0 499.2 392.6)"/>
+<ellipse class="zone actif" data-t="cassoulet" cx="565" cy="435" rx="18" ry="13" transform="rotate(0 565 435)"/>
+<ellipse class="zone actif" data-t="azinat" cx="495" cy="505" rx="40" ry="16" transform="rotate(0 495 505)"/>
+<ellipse class="zone actif" data-t="mique" cx="505" cy="222" rx="38" ry="34" transform="rotate(0 505 222)"/>
+<ellipse class="zone actif" data-t="estofinado" cx="603.6" cy="221.7" rx="16" ry="12" transform="rotate(0 603.6 221.7)"/>
+<ellipse class="zone actif" data-t="tripous" cx="615" cy="298" rx="14" ry="11" transform="rotate(0 615 298)"/>
+<ellipse class="zone actif" data-t="farcous" cx="665" cy="285" rx="22" ry="14" transform="rotate(0 665 285)"/>
+<ellipse class="zone actif" data-t="aligot" cx="718" cy="210" rx="32" ry="18" transform="rotate(-10 718 210)"/>
+<ellipse class="zone actif" data-t="manouls" cx="732" cy="254" rx="14" ry="11" transform="rotate(0 732 254)"/>
+<ellipse class="zone actif" data-t="brandade" cx="875.6" cy="349.8" rx="20" ry="14" transform="rotate(0 875.6 349.8)"/>
+<ellipse class="zone actif" data-t="gardiane" cx="865" cy="398" rx="22" ry="13" transform="rotate(0 865 398)"/>
+<ellipse class="zone actif" data-t="tielle" cx="790.5" cy="428.2" rx="16" ry="11" transform="rotate(0 790.5 428.2)"/>
+<ellipse class="zone actif" data-t="macaronade" cx="790.5" cy="428.2" rx="16" ry="11" transform="rotate(0 790.5 428.2)"/>
+<ellipse class="zone actif" data-t="ouillade" cx="630" cy="574" rx="28" ry="14" transform="rotate(0 630 574)"/>
+<ellipse class="zone actif" data-t="boles" cx="680" cy="555" rx="34" ry="22" transform="rotate(0 680 555)"/>
+<ellipse class="zone actif" data-t="freginat" cx="655" cy="500" rx="34" ry="18" transform="rotate(0 655 500)"/>
+<ellipse class="zone actif" data-t="pezenas" cx="745" cy="424" rx="12" ry="10" transform="rotate(0 745 424)"/>
+<ellipse class="zone actif" data-t="bourride" cx="790.5" cy="428.2" rx="16" ry="11" transform="rotate(0 790.5 428.2)"/>
+<!-- ═══ LIEUX ═══ -->
+<g class="marq" data-t="garbure"><rect x="385.6" y="379.7" width="8" height="8" transform="rotate(45 389.6 383.7)"/></g>
+<g class="marq" data-t="garbure"><rect x="319.9" y="454.4" width="8" height="8" transform="rotate(45 323.9 458.4)"/></g>
+<g class="marq" data-t="magret"><rect x="385.6" y="379.7" width="8" height="8" transform="rotate(45 389.6 383.7)"/></g>
+<g class="marq" data-t="saucisse"><rect x="495.2" y="388.6" width="8" height="8" transform="rotate(45 499.2 392.6)"/></g>
+<g class="marq" data-t="cassoulet"><rect x="561.0" y="431.0" width="8" height="8" transform="rotate(45 565 435)"/><text x="574.0" y="450.0" text-anchor="start">Castelnaudary</text></g>
+<g class="marq" data-t="azinat"><rect x="517.1" y="502.5" width="8" height="8" transform="rotate(45 521.1 506.5)"/></g>
+<g class="marq" data-t="azinat"><rect x="458.0" y="499.0" width="8" height="8" transform="rotate(45 462 503)"/><text x="462" y="493.0" text-anchor="middle">Couserans</text></g>
+<g class="marq" data-t="mique"><rect x="495.2" y="237.3" width="8" height="8" transform="rotate(45 499.2 241.3)"/></g>
+<g class="marq" data-t="estofinado"><rect x="599.6" y="217.7" width="8" height="8" transform="rotate(45 603.6 221.7)"/><text x="594.6" y="225.7" text-anchor="end">Decazeville</text></g>
+<g class="marq" data-t="tripous"><rect x="611.0" y="294.0" width="8" height="8" transform="rotate(45 615 298)"/><text x="624.0" y="302.0" text-anchor="start">Naucelle</text></g>
+<g class="marq" data-t="farcous"><rect x="661.0" y="281.0" width="8" height="8" transform="rotate(45 665 285)"/><text x="674.0" y="289.0" text-anchor="start">Lévézou</text></g>
+<g class="marq" data-t="aligot"><rect x="714.0" y="202.0" width="8" height="8" transform="rotate(45 718 206)"/><text x="718" y="225.0" text-anchor="middle">Aubrac</text></g>
+<g class="marq" data-t="manouls"><rect x="728.0" y="250.0" width="8" height="8" transform="rotate(45 732 254)"/><text x="732" y="244.0" text-anchor="middle">La Canourgue</text></g>
+<g class="marq" data-t="brandade"><rect x="871.6" y="345.8" width="8" height="8" transform="rotate(45 875.6 349.8)"/></g>
+<g class="marq" data-t="gardiane"><rect x="858.0" y="400.0" width="8" height="8" transform="rotate(45 862 404)"/><text x="862" y="423.0" text-anchor="middle">Petite Camargue</text></g>
+<g class="marq" data-t="tielle"><rect x="786.5" y="424.2" width="8" height="8" transform="rotate(45 790.5 428.2)"/></g>
+<g class="marq" data-t="macaronade"><rect x="786.5" y="424.2" width="8" height="8" transform="rotate(45 790.5 428.2)"/></g>
+<g class="marq" data-t="ouillade"><rect x="613.0" y="559.0" width="8" height="8" transform="rotate(45 617 563)"/><text x="608.0" y="567.0" text-anchor="end">Conflent</text></g>
+<g class="marq" data-t="ouillade"><rect x="641.0" y="582.0" width="8" height="8" transform="rotate(45 645 586)"/><text x="645" y="605.0" text-anchor="middle">Vallespir</text></g>
+<g class="marq" data-t="boles"><rect x="683.4" y="548.8" width="8" height="8" transform="rotate(45 687.4 552.8)"/></g>
+<g class="marq" data-t="freginat"><rect x="656.0" y="496.0" width="8" height="8" transform="rotate(45 660 500)"/><text x="669.0" y="504.0" text-anchor="start">Corbières</text></g>
+<g class="marq" data-t="pezenas"><rect x="741.0" y="420.0" width="8" height="8" transform="rotate(45 745 424)"/><text x="745" y="414.0" text-anchor="middle">Pézenas</text></g>
+<g class="marq" data-t="bourride"><rect x="786.5" y="424.2" width="8" height="8" transform="rotate(45 790.5 428.2)"/></g>
+<!-- ═══ FLÈCHES ═══ -->
+<path class="fleche actif" data-t="garbure" d="M240.0,162.0 C322.3,162.0 362.1,298.6 384.6,376.2" marker-end="url(#pointe-on)"/>
+<path class="fleche actif" data-t="garbure" d="M240.0,162.0 C286.1,162.0 308.9,346.0 321.4,449.7" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="garbure" cx="240" cy="162" r="4"/>
+<path class="fleche actif" data-t="magret" d="M240.0,268.0 C322.3,268.0 360.0,337.7 382.5,378.2" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="magret" cx="240" cy="268" r="4"/>
+<path class="fleche actif" data-t="saucisse" d="M240.0,374.0 C382.6,374.0 451.3,385.4 490.2,392.0" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="saucisse" cx="240" cy="374" r="4"/>
+<path class="fleche actif" data-t="cassoulet" d="M240.0,480.0 C418.8,480.0 507.3,452.0 556.1,436.2" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="cassoulet" cx="240" cy="480" r="4"/>
+<path class="fleche actif" data-t="azinat" d="M240.0,586.0 C394.6,586.0 470.3,536.8 512.4,508.9" marker-end="url(#pointe-on)"/>
+<path class="fleche actif" data-t="azinat" d="M240.0,586.0 C362.1,586.0 420.3,535.2 453.6,506.2" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="azinat" cx="240" cy="586" r="4"/>
+<path class="fleche actif" data-t="mique" d="M132.0,102.0 C132.0,178.6 362.3,217.2 490.8,238.1" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="mique" cx="132" cy="102" r="4"/>
+<path class="fleche actif" data-t="estofinado" d="M367.0,102.0 C367.0,167.8 512.8,199.7 595.6,217.6" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="estofinado" cx="367" cy="102" r="4"/>
+<path class="fleche actif" data-t="tripous" d="M602.0,102.0 C602.0,209.8 609.9,259.6 614.4,289.0" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="tripous" cx="602" cy="102" r="4"/>
+<path class="fleche actif" data-t="farcous" d="M837.0,102.0 C837.0,202.7 731.4,251.0 671.2,278.4" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="farcous" cx="837" cy="102" r="4"/>
+<path class="fleche actif" data-t="aligot" d="M1072.0,102.0 C1072.0,159.2 850.5,187.9 726.6,203.5" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="aligot" cx="1072" cy="102" r="4"/>
+<path class="fleche actif" data-t="manouls" d="M964.0,162.0 C836.4,162.0 775.2,218.5 740.4,250.7" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="manouls" cx="964" cy="162" r="4"/>
+<path class="fleche actif" data-t="brandade" d="M964.0,268.0 C915.4,268.0 895.5,315.1 882.2,343.7" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="brandade" cx="964" cy="268" r="4"/>
+<path class="fleche actif" data-t="gardiane" d="M964.0,374.0 C907.9,374.0 885.9,391.0 870.6,401.5" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="gardiane" cx="964" cy="374" r="4"/>
+<path class="fleche actif" data-t="tielle" d="M964.0,480.0 C868.6,480.0 825.1,448.9 799.1,430.8" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="tielle" cx="964" cy="480" r="4"/>
+<path class="fleche actif" data-t="macaronade" d="M964.0,586.0 C868.6,586.0 823.2,489.5 797.2,434.3" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="macaronade" cx="964" cy="586" r="4"/>
+<path class="fleche actif" data-t="ouillade" d="M132.0,632.0 C132.0,594.0 438.3,574.6 608.1,564.3" marker-end="url(#pointe-on)"/>
+<path class="fleche actif" data-t="ouillade" d="M132.0,632.0 C132.0,606.7 456.5,593.7 636.0,586.8" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="ouillade" cx="132" cy="632" r="4"/>
+<path class="fleche actif" data-t="boles" d="M367.0,632.0 C367.0,588.4 566.5,566.8 678.7,555.0" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="boles" cx="367" cy="632" r="4"/>
+<path class="fleche actif" data-t="freginat" d="M602.0,632.0 C602.0,559.4 636.1,528.0 656.4,508.2" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="freginat" cx="602" cy="632" r="4"/>
+<path class="fleche actif" data-t="pezenas" d="M837.0,632.0 C837.0,517.6 780.8,463.4 748.6,432.2" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="pezenas" cx="837" cy="632" r="4"/>
+<path class="fleche actif" data-t="bourride" d="M1072.0,632.0 C1072.0,519.9 896.3,464.0 797.8,433.5" marker-end="url(#pointe-on)"/>
+<circle class="depart actif" data-t="bourride" cx="1072" cy="632" r="4"/>
+<!-- ═══ BOUTONS ═══ -->
+<a href="recette-garbure-gasconne.html" class="bouton actif" data-t="garbure" aria-label="La garbure gasconne — ouvrir la fiche"><clipPath id="clip-garbure"><rect x="24" y="123" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="123" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="123" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-garbure)"/><rect class="btn-voile" x="24" y="123" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="123" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="123" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="140" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="170" text-anchor="middle">🥬</text><text class="btn-titre" x="86" y="153"><tspan class="ini">L</tspan>a garbure</text><text class="btn-sous" x="86" y="171">Chou &amp; confit · Gers, 65</text><text class="btn-etat on" x="86" y="189">Découvrir →</text></a>
+<a href="recette-magret-de-canard.html" class="bouton actif" data-t="magret" aria-label="Le magret de canard grillé — ouvrir la fiche"><clipPath id="clip-magret"><rect x="24" y="229" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="229" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="229" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-magret)"/><rect class="btn-voile" x="24" y="229" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="229" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="229" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="246" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="276" text-anchor="middle">🦆</text><text class="btn-titre" x="86" y="259"><tspan class="ini">L</tspan>e magret</text><text class="btn-sous" x="86" y="277">Canard grillé · Gers</text><text class="btn-etat on" x="86" y="295">Découvrir →</text></a>
+<a href="recette-saucisse-de-toulouse.html" class="bouton actif" data-t="saucisse" aria-label="La saucisse de Toulouse grillée — ouvrir la fiche"><clipPath id="clip-saucisse"><rect x="24" y="335" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="335" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="335" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-saucisse)"/><rect class="btn-voile" x="24" y="335" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="335" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="335" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="352" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="382" text-anchor="middle">🌭</text><text class="btn-titre" x="86" y="365"><tspan class="ini">L</tspan>a saucisse</text><text class="btn-sous" x="86" y="383">Toulouse · Haute-Garonne</text><text class="btn-etat on" x="86" y="401">Découvrir →</text></a>
+<a href="recette-cassoulet-de-castelnaudary.html" class="bouton actif" data-t="cassoulet" aria-label="Le cassoulet de Castelnaudary — ouvrir la fiche"><clipPath id="clip-cassoulet"><rect x="24" y="441" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="441" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="441" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-cassoulet)"/><rect class="btn-voile" x="24" y="441" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="441" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="441" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="458" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="488" text-anchor="middle">🫘</text><text class="btn-titre" x="86" y="471"><tspan class="ini">L</tspan>e cassoulet</text><text class="btn-sous" x="86" y="489">Castelnaudary · Aude</text><text class="btn-etat on" x="86" y="507">Découvrir →</text></a>
+<a href="recette-azinat-ariegeois.html" class="bouton actif" data-t="azinat" aria-label="L'azinat ariégeois — ouvrir la fiche"><clipPath id="clip-azinat"><rect x="24" y="547" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="547" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="547" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-azinat)"/><rect class="btn-voile" x="24" y="547" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="547" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="547" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="564" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="594" text-anchor="middle">🥘</text><text class="btn-titre" x="86" y="577"><tspan class="ini">L</tspan>'azinat</text><text class="btn-sous" x="86" y="595">Potée &amp; rouzole · Ariège</text><text class="btn-etat on" x="86" y="613">Découvrir →</text></a>
+<a href="recette-mique-au-petit-sale.html" class="bouton actif" data-t="mique" aria-label="La mique quercynoise au petit salé — ouvrir la fiche"><clipPath id="clip-mique"><rect x="24" y="24" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="24" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="24" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-mique)"/><rect class="btn-voile" x="24" y="24" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="24" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="24" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="41" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="71" text-anchor="middle">🥟</text><text class="btn-titre" x="86" y="54"><tspan class="ini">L</tspan>a mique</text><text class="btn-sous" x="86" y="72">Petit salé · Lot</text><text class="btn-etat on" x="86" y="90">Découvrir →</text></a>
+<a href="recette-estofinado.html" class="bouton actif" data-t="estofinado" aria-label="L'estofinado — ouvrir la fiche"><clipPath id="clip-estofinado"><rect x="259" y="24" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="259" y="24" width="216" height="78" rx="14"/><image class="btn-photo" x="259" y="24" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-estofinado)"/><rect class="btn-voile" x="259" y="24" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="259" y="24" width="216" height="78" rx="14"/><rect class="btn-cadre" x="259" y="24" width="216" height="78" rx="14"/><rect class="btn-icone" x="268" y="41" width="44" height="44" rx="11"/><text class="btn-emoji" x="290" y="71" text-anchor="middle">🐟</text><text class="btn-titre" x="321" y="54"><tspan class="ini">L</tspan>'estofinado</text><text class="btn-sous" x="321" y="72">Stockfisch · Aveyron</text><text class="btn-etat on" x="321" y="90">Découvrir →</text></a>
+<a href="recette-tripous-aveyronnais.html" class="bouton actif" data-t="tripous" aria-label="Les tripous aveyronnais — ouvrir la fiche"><clipPath id="clip-tripous"><rect x="494" y="24" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="494" y="24" width="216" height="78" rx="14"/><image class="btn-photo" x="494" y="24" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-tripous)"/><rect class="btn-voile" x="494" y="24" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="494" y="24" width="216" height="78" rx="14"/><rect class="btn-cadre" x="494" y="24" width="216" height="78" rx="14"/><rect class="btn-icone" x="503" y="41" width="44" height="44" rx="11"/><text class="btn-emoji" x="525" y="71" text-anchor="middle">🍲</text><text class="btn-titre" x="556" y="54"><tspan class="ini">L</tspan>es tripous</text><text class="btn-sous" x="556" y="72">Naucelle · Aveyron</text><text class="btn-etat on" x="556" y="90">Découvrir →</text></a>
+<a href="recette-farcous-aveyronnais.html" class="bouton actif" data-t="farcous" aria-label="Les farçous aveyronnais — ouvrir la fiche"><clipPath id="clip-farcous"><rect x="729" y="24" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="729" y="24" width="216" height="78" rx="14"/><image class="btn-photo" x="729" y="24" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-farcous)"/><rect class="btn-voile" x="729" y="24" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="729" y="24" width="216" height="78" rx="14"/><rect class="btn-cadre" x="729" y="24" width="216" height="78" rx="14"/><rect class="btn-icone" x="738" y="41" width="44" height="44" rx="11"/><text class="btn-emoji" x="760" y="71" text-anchor="middle">🥬</text><text class="btn-titre" x="791" y="54"><tspan class="ini">L</tspan>es farçous</text><text class="btn-sous" x="791" y="72">Galettes de blettes · 12</text><text class="btn-etat on" x="791" y="90">Découvrir →</text></a>
+<a href="recette-aligot-de-l-aubrac.html" class="bouton actif" data-t="aligot" aria-label="L'aligot de l'Aubrac — ouvrir la fiche"><clipPath id="clip-aligot"><rect x="964" y="24" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="24" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="24" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-aligot)"/><rect class="btn-voile" x="964" y="24" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="24" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="24" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="41" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="71" text-anchor="middle">🧀</text><text class="btn-titre" x="1026" y="54"><tspan class="ini">L</tspan>'aligot</text><text class="btn-sous" x="1026" y="72">Aubrac · Aveyron, Lozère</text><text class="btn-etat on" x="1026" y="90">Découvrir →</text></a>
+<a href="recette-manouls-lozeriens.html" class="bouton actif" data-t="manouls" aria-label="Les manouls lozériens — ouvrir la fiche"><clipPath id="clip-manouls"><rect x="964" y="123" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="123" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="123" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-manouls)"/><rect class="btn-voile" x="964" y="123" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="123" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="123" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="140" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="170" text-anchor="middle">🍖</text><text class="btn-titre" x="1026" y="153"><tspan class="ini">L</tspan>es manouls</text><text class="btn-sous" x="1026" y="171">La Canourgue · Lozère</text><text class="btn-etat on" x="1026" y="189">Découvrir →</text></a>
+<a href="recette-brandade-de-nimes.html" class="bouton actif" data-t="brandade" aria-label="La brandade de morue de Nîmes — ouvrir la fiche"><clipPath id="clip-brandade"><rect x="964" y="229" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="229" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="229" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-brandade)"/><rect class="btn-voile" x="964" y="229" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="229" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="229" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="246" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="276" text-anchor="middle">🐟</text><text class="btn-titre" x="1026" y="259"><tspan class="ini">L</tspan>a brandade</text><text class="btn-sous" x="1026" y="277">Nîmes · Gard</text><text class="btn-etat on" x="1026" y="295">Découvrir →</text></a>
+<a href="recette-gardiane-de-taureau.html" class="bouton actif" data-t="gardiane" aria-label="La gardiane de taureau — ouvrir la fiche"><clipPath id="clip-gardiane"><rect x="964" y="335" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="335" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="335" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-gardiane)"/><rect class="btn-voile" x="964" y="335" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="335" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="335" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="352" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="382" text-anchor="middle">🐂</text><text class="btn-titre" x="1026" y="365"><tspan class="ini">L</tspan>a gardiane</text><text class="btn-sous" x="1026" y="383">Taureau · Camargue</text><text class="btn-etat on" x="1026" y="401">Découvrir →</text></a>
+<a href="recette-tielle-setoise.html" class="bouton actif" data-t="tielle" aria-label="La tielle sétoise — ouvrir la fiche"><clipPath id="clip-tielle"><rect x="964" y="441" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="441" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="441" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-tielle)"/><rect class="btn-voile" x="964" y="441" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="441" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="441" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="458" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="488" text-anchor="middle">🐙</text><text class="btn-titre" x="1026" y="471"><tspan class="ini">L</tspan>a tielle</text><text class="btn-sous" x="1026" y="489">Poulpe &amp; tomate · Sète</text><text class="btn-etat on" x="1026" y="507">Découvrir →</text></a>
+<a href="recette-macaronade-setoise.html" class="bouton actif" data-t="macaronade" aria-label="La macaronade sétoise — ouvrir la fiche"><clipPath id="clip-macaronade"><rect x="964" y="547" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="547" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="547" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-macaronade)"/><rect class="btn-voile" x="964" y="547" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="547" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="547" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="564" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="594" text-anchor="middle">🍝</text><text class="btn-titre" x="1026" y="577"><tspan class="ini">L</tspan>a macaronade</text><text class="btn-sous" x="1026" y="595">Pâtes &amp; brageoles · Sète</text><text class="btn-etat on" x="1026" y="613">Découvrir →</text></a>
+<a href="recette-ouillade-catalane.html" class="bouton actif" data-t="ouillade" aria-label="L'ouillade catalane — ouvrir la fiche"><clipPath id="clip-ouillade"><rect x="24" y="632" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="24" y="632" width="216" height="78" rx="14"/><image class="btn-photo" x="24" y="632" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-ouillade)"/><rect class="btn-voile" x="24" y="632" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="24" y="632" width="216" height="78" rx="14"/><rect class="btn-cadre" x="24" y="632" width="216" height="78" rx="14"/><rect class="btn-icone" x="33" y="649" width="44" height="44" rx="11"/><text class="btn-emoji" x="55" y="679" text-anchor="middle">🍲</text><text class="btn-titre" x="86" y="662"><tspan class="ini">L</tspan>'ouillade</text><text class="btn-sous" x="86" y="680">Potée catalane · 66</text><text class="btn-etat on" x="86" y="698">Découvrir →</text></a>
+<a href="recette-boles-de-picolat.html" class="bouton actif" data-t="boles" aria-label="Les boles de picolat — ouvrir la fiche"><clipPath id="clip-boles"><rect x="259" y="632" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="259" y="632" width="216" height="78" rx="14"/><image class="btn-photo" x="259" y="632" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-boles)"/><rect class="btn-voile" x="259" y="632" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="259" y="632" width="216" height="78" rx="14"/><rect class="btn-cadre" x="259" y="632" width="216" height="78" rx="14"/><rect class="btn-icone" x="268" y="649" width="44" height="44" rx="11"/><text class="btn-emoji" x="290" y="679" text-anchor="middle">🧆</text><text class="btn-titre" x="321" y="662"><tspan class="ini">L</tspan>es boles de picolat</text><text class="btn-sous" x="321" y="680">Boulettes catalanes · 66</text><text class="btn-etat on" x="321" y="698">Découvrir →</text></a>
+<a href="recette-freginat-audois.html" class="bouton actif" data-t="freginat" aria-label="Le fréginat audois — ouvrir la fiche"><clipPath id="clip-freginat"><rect x="494" y="632" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="494" y="632" width="216" height="78" rx="14"/><image class="btn-photo" x="494" y="632" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-freginat)"/><rect class="btn-voile" x="494" y="632" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="494" y="632" width="216" height="78" rx="14"/><rect class="btn-cadre" x="494" y="632" width="216" height="78" rx="14"/><rect class="btn-icone" x="503" y="649" width="44" height="44" rx="11"/><text class="btn-emoji" x="525" y="679" text-anchor="middle">🐖</text><text class="btn-titre" x="556" y="662"><tspan class="ini">L</tspan>e fréginat</text><text class="btn-sous" x="556" y="680">Corbières · Aude</text><text class="btn-etat on" x="556" y="698">Découvrir →</text></a>
+<a href="recette-petits-pates-de-pezenas.html" class="bouton actif" data-t="pezenas" aria-label="Les petits pâtés de Pézenas — ouvrir la fiche"><clipPath id="clip-pezenas"><rect x="729" y="632" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="729" y="632" width="216" height="78" rx="14"/><image class="btn-photo" x="729" y="632" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-pezenas)"/><rect class="btn-voile" x="729" y="632" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="729" y="632" width="216" height="78" rx="14"/><rect class="btn-cadre" x="729" y="632" width="216" height="78" rx="14"/><rect class="btn-icone" x="738" y="649" width="44" height="44" rx="11"/><text class="btn-emoji" x="760" y="679" text-anchor="middle">🥧</text><text class="btn-titre" x="791" y="662"><tspan class="ini">L</tspan>es petits pâtés</text><text class="btn-sous" x="791" y="680">Pézenas · Hérault</text><text class="btn-etat on" x="791" y="698">Découvrir →</text></a>
+<a href="recette-bourride-de-baudroie.html" class="bouton actif" data-t="bourride" aria-label="La bourride de baudroie — ouvrir la fiche"><clipPath id="clip-bourride"><rect x="964" y="632" width="216" height="78" rx="14"/></clipPath><rect class="btn-fond" x="964" y="632" width="216" height="78" rx="14"/><image class="btn-photo" x="964" y="632" width="216" height="78" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-bourride)"/><rect class="btn-voile" x="964" y="632" width="216" height="78" rx="14"/><rect class="btn-voile-hover" x="964" y="632" width="216" height="78" rx="14"/><rect class="btn-cadre" x="964" y="632" width="216" height="78" rx="14"/><rect class="btn-icone" x="973" y="649" width="44" height="44" rx="11"/><text class="btn-emoji" x="995" y="679" text-anchor="middle">🐠</text><text class="btn-titre" x="1026" y="662"><tspan class="ini">L</tspan>a bourride</text><text class="btn-sous" x="1026" y="680">Baudroie &amp; aïoli · Sète</text><text class="btn-etat on" x="1026" y="698">Découvrir →</text></a>
+        </svg>
+      </div>
+      <p class="consigne">Survolez un bouton : sa flèche apparaît et montre d'où vient le plat · cliquez pour ouvrir la fiche</p>
+    </div>
+  </section>
+
+  <section class="themes-section">
+    <div class="wrap container">
+      <h2>Les fiches de la série</h2>
+      <p class="intro-texte">Chaque fiche raconte un plat : son histoire et ses dates clés, sa recette pas à pas, les vins qui l'accompagnent et quelques anecdotes. La série s'enrichira au fil du temps de nouveaux plats.</p>
+      <div class="themes-grid">
+<a class="carte-theme actif" data-t="garbure" href="recette-garbure-gasconne.html"><span class="ct-ico">🥬</span><span><span class="ct-titre">La garbure gasconne</span><span class="ct-sous">Soupe au chou, haricots &amp; confit · Gers, Hautes-Pyrénées</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="magret" href="recette-magret-de-canard.html"><span class="ct-ico">🦆</span><span><span class="ct-titre">Le magret de canard grillé</span><span class="ct-sous">Filet de canard gras, rosé et croustillant · Gers</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="saucisse" href="recette-saucisse-de-toulouse.html"><span class="ct-ico">🌭</span><span><span class="ct-titre">La saucisse de Toulouse grillée</span><span class="ct-sous">Porc, sel &amp; poivre, avec pommes de terre · Haute-Garonne</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="cassoulet" href="recette-cassoulet-de-castelnaudary.html"><span class="ct-ico">🫘</span><span><span class="ct-titre">Le cassoulet de Castelnaudary</span><span class="ct-sous">Haricots lingots, confit, saucisse &amp; porc · Aude</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="azinat" href="recette-azinat-ariegeois.html"><span class="ct-ico">🥘</span><span><span class="ct-titre">L'azinat ariégeois</span><span class="ct-sous">Potée au chou servie avec la rouzole · Ariège</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="mique" href="recette-mique-au-petit-sale.html"><span class="ct-ico">🥟</span><span><span class="ct-titre">La mique quercynoise au petit salé</span><span class="ct-sous">Pâte levée pochée, petit salé &amp; légumes · Lot</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="estofinado" href="recette-estofinado.html"><span class="ct-ico">🐟</span><span><span class="ct-titre">L'estofinado</span><span class="ct-sous">Stockfisch, pommes de terre &amp; huile de noix · Aveyron</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="tripous" href="recette-tripous-aveyronnais.html"><span class="ct-ico">🍲</span><span><span class="ct-titre">Les tripous aveyronnais</span><span class="ct-sous">Paquets de panse farcis, cuits au bouillon · Aveyron</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="farcous" href="recette-farcous-aveyronnais.html"><span class="ct-ico">🥬</span><span><span class="ct-titre">Les farçous aveyronnais</span><span class="ct-sous">Galettes aux blettes &amp; au persil · Aveyron</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="aligot" href="recette-aligot-de-l-aubrac.html"><span class="ct-ico">🧀</span><span><span class="ct-titre">L'aligot de l'Aubrac</span><span class="ct-sous">Purée filée à la tome fraîche · Aveyron, Lozère</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="manouls" href="recette-manouls-lozeriens.html"><span class="ct-ico">🍖</span><span><span class="ct-titre">Les manouls lozériens</span><span class="ct-sous">Paquets de tripes d'agneau au vin blanc · Lozère</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="brandade" href="recette-brandade-de-nimes.html"><span class="ct-ico">🐟</span><span><span class="ct-titre">La brandade de morue de Nîmes</span><span class="ct-sous">Morue à l'huile d'olive &amp; au lait · Gard</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="gardiane" href="recette-gardiane-de-taureau.html"><span class="ct-ico">🐂</span><span><span class="ct-titre">La gardiane de taureau</span><span class="ct-sous">Taureau mijoté au vin rouge, riz de Camargue · Gard</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="tielle" href="recette-tielle-setoise.html"><span class="ct-ico">🐙</span><span><span class="ct-titre">La tielle sétoise</span><span class="ct-sous">Tourte au poulpe en sauce tomate · Hérault</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="macaronade" href="recette-macaronade-setoise.html"><span class="ct-ico">🍝</span><span><span class="ct-titre">La macaronade sétoise</span><span class="ct-sous">Macaronis, sauce tomate &amp; brageoles · Hérault</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="bourride" href="recette-bourride-de-baudroie.html"><span class="ct-ico">🐠</span><span><span class="ct-titre">La bourride de baudroie</span><span class="ct-sous">Lotte au bouillon liée à l'aïoli · Hérault</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="pezenas" href="recette-petits-pates-de-pezenas.html"><span class="ct-ico">🥧</span><span><span class="ct-titre">Les petits pâtés de Pézenas</span><span class="ct-sous">Agneau, cassonade &amp; citron, en bobine · Hérault</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="freginat" href="recette-freginat-audois.html"><span class="ct-ico">🐖</span><span><span class="ct-titre">Le fréginat audois</span><span class="ct-sous">Ragoût de porc aux oignons &amp; à la tomate · Aude</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="boles" href="recette-boles-de-picolat.html"><span class="ct-ico">🧆</span><span><span class="ct-titre">Les boles de picolat</span><span class="ct-sous">Boulettes aux olives &amp; aux cèpes · Pyrénées-Orientales</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+<a class="carte-theme actif" data-t="ouillade" href="recette-ouillade-catalane.html"><span class="ct-ico">🍲</span><span><span class="ct-titre">L'ouillade catalane</span><span class="ct-sous">Potée de chou, haricots &amp; porc · Pyrénées-Orientales</span><span class="ct-etat">Découvrir la fiche →</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="retour-carte">
+    <div class="wrap container">
+      <a class="dep-carte" href="../carte-occitanie.html">
+        <span class="dep-num">13 départements</span>
+        <img src="../../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie">
+        <div class="dep-texte">
+          <div class="dep-nom">Occitanie</div>
+          <div class="dep-chef">Retour à la carte des départements · Languedoc-Roussillon &amp; Midi-Pyrénées</div>
+        </div>
+        <span class="dep-go">← Voir la carte</span>
+        <span class="dep-bande"></span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="pied">
+    <div class="logo">L'<span style="color:#C8843A">Âme</span> des Régions</div>
+    <p>Valoriser le patrimoine vivant de la France</p>
+  </footer>
+
+  <script>
+    // Survol ou focus d'un bouton (ou d'une carte) : on allume tout ce qui porte le même data-t
+    (function () {
+      var declencheurs = document.querySelectorAll('.bouton, .carte-theme');
+      function allumer(t, on) {
+        document.querySelectorAll('[data-t="' + t + '"]').forEach(function (el) {
+          el.classList.toggle('on-hover', on);
+        });
+      }
+      declencheurs.forEach(function (el) {
+        var t = el.getAttribute('data-t');
+        el.addEventListener('mouseenter', function () { allumer(t, true); });
+        el.addEventListener('mouseleave', function () { allumer(t, false); });
+        el.addEventListener('focus', function () { allumer(t, true); });
+        el.addEventListener('blur', function () { allumer(t, false); });
+        // Écran tactile : un premier toucher sur un bouton de la carte montre la flèche, un second ouvre la fiche
+        if (el.classList.contains('bouton')) {
+          el.addEventListener('touchend', function (e) {
+            if (!el.classList.contains('on-hover')) {
+              e.preventDefault();
+              document.querySelectorAll('.on-hover').forEach(function (x) { x.classList.remove('on-hover'); });
+              allumer(t, true);
+            }
+          });
+        }
+      });
+      // Titres trop longs : on réduit légèrement la police pour qu'ils tiennent dans le bouton
+      document.querySelectorAll('.btn-titre').forEach(function (tx) {
+        try { var l = tx.getComputedTextLength(); if (l > 146) tx.style.fontSize = (14.5 * 146 / l).toFixed(1) + 'px'; } catch (e) {}
+      });
+    })();
+  </script>
+
+  <script>
+    // ═══ PHOTOS DES BOUTONS ═══
+    // Une ligne par fiche : la première photo de la fiche (dossier photo/).
+    // Le chemin part de ce fichier (recettes-salees.html).
+    // Si une photo est introuvable, le bouton reste simplement bleu.
+    var PHOTOS = {
+      garbure:     'photo/garbure-gasconne1.jpg',
+      magret:      'photo/magret-de-canard1.jpg',
+      saucisse:    'photo/saucisse-de-toulouse1.jpg',
+      cassoulet:   'photo/cassoulet-de-castelnaudary1.jpg',
+      azinat:      'photo/azinat-ariegeois1.jpg',
+      mique:       'photo/mique-au-petit-sale1.jpg',
+      estofinado:  'photo/estofinado1.jpg',
+      tripous:     'photo/tripous-aveyronnais1.jpg',
+      farcous:     'photo/farcous-aveyronnais1.jpg',
+      aligot:      'photo/aligot-de-l-aubrac1.jpg',
+      manouls:     'photo/manouls-lozeriens1.jpg',
+      brandade:    'photo/brandade-de-nimes1.jpg',
+      gardiane:    'photo/gardiane-de-taureau1.jpg',
+      tielle:      'photo/tielle-setoise1.jpg',
+      macaronade:  'photo/macaronade-setoise1.jpg',
+      ouillade:    'photo/ouillade-catalane1.jpg',
+      boles:       'photo/boles-de-picolat1.jpg',
+      freginat:    'photo/freginat-audois1.jpg',
+      pezenas:     'photo/petits-pates-de-pezenas1.jpg',
+      bourride:    'photo/bourride-de-baudroie1.jpg'
+    };
+    Object.keys(PHOTOS).forEach(function (t) {
+      // On n'affiche la photo qu'une fois chargée : sinon le bouton reste bleu
+      var test = new Image();
+      test.onload = function () {
+        var img = document.querySelector('.bouton[data-t="' + t + '"] .btn-photo');
+        if (img) img.setAttribute('href', PHOTOS[t]);
+        var carte = document.querySelector('.carte-theme[data-t="' + t + '"]');
+        if (carte) carte.style.backgroundImage = "url('" + PHOTOS[t] + "')";
+      };
+      test.src = PHOTOS[t];
+    });
+  </script>
+</body>
+</html>

@@ -198,7 +198,16 @@
     .carte-hero .legende-swatch { border-color: rgba(255,255,255,0.4); }
 
     /* Carte + panneau d'information côte à côte */
-    .carte-main { grid-template-columns: minmax(0, 1fr) 340px; max-width: 1400px; padding: 32px 32px 40px; }
+    .carte-main {
+      max-width: 1400px; padding: 32px 32px 40px; gap: 22px;   /* même écart que la galerie */
+      /* colonne de droite = largeur exacte d'une carte département (galerie sur 3 colonnes),
+         la carte occupe la largeur de deux cartes département */
+      grid-template-columns: minmax(0, 1fr) calc((100% - 44px) / 3);
+    }
+    @media (max-width: 1187px) and (min-width: 861px) {
+      /* la galerie passe sur 2 colonnes : on suit */
+      .carte-main { grid-template-columns: minmax(0, 1fr) calc((100% - 22px) / 2); }
+    }
     .carte-panel .panel-idle h3 { font-family: var(--font-titre); color: #2C4A7C; font-size: 20px; margin-bottom: 8px; }
     .pd-photo { height: 150px; background-size: cover; background-position: center; position: relative; }
     .pd-photo img.pd-blason { position: absolute; left: 16px; bottom: -34px; height: 78px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); }
@@ -242,7 +251,7 @@
       .carte-hero-infos dt { width: 190px; }
     }
     /* ── Carte « Histoire occitane » : identique aux cartes départements ── */
-    .histoire-btn-wrap { margin-top: 22px; }
+    .histoire-btn-wrap { margin-top: 22px; display: grid; grid-template-columns: min(100%, 620px); justify-content: center; }   /* centrée sous la carte ; ← 620px = largeur de la carte « Histoire » */
     .dep-carte.histoire { background-color: #2C4A7C; background-size: cover; background-position: center; background-repeat: no-repeat;
       /* La première photo trouvée s'affiche ; la dernière (déjà sur le site) sert de secours */
       background-image: url('departement/histoire occitane/photo/panorama-occitane.jpg'), url('departement/histoire occitane/photo/panorama-occitane.jpeg'), url('departement/histoire occitane/photo/panorama-occitanie.jpg'), url('departement/histoire occitane/photo/panorama-occitane.JPG'), url('../../assets/departement/occitanie/panorama-occitanie.jpg'); }
@@ -265,9 +274,6 @@
     @media (max-width: 860px) {
       .carte-hero .produit-topbar-btns { right: 16px; top: 8px; }
       .carte-hero .produit-btn-retour { font-size: 16px; }
-      /* sur téléphone, l'écusson descend pour laisser la place aux trois liens */
-      .carte-hero .fiche-hero-ecusson { top: 140px; }
-      .carte-hero-inner { padding-top: 399px; }
     }
 
     /* ── « Circuit découverte » et son sous-menu (À pied / En voiture) ── */
@@ -338,79 +344,222 @@
   transform: translate(4px, 0);
 }
 
+    /* ── Colonne de droite : cartes-liens de la région ── */
+    .carte-liens { display: flex; flex-direction: column; gap: 22px; position: sticky; top: 24px; }
+        .dep-carte.lien .dep-bande { background: #FAC775; }
+    @media (max-width: 860px) {
+      .histoire-btn-wrap { grid-template-columns: 1fr; }
+      .carte-liens { position: static; display: grid; grid-template-columns: 1fr; }
+    }
 
+    /* ── Carte « Circuits » : les deux choix apparaissent au survol ── */
+    .carte-circuit { cursor: pointer; outline: none; }
+    .carte-circuit .circuit-choix {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: rgba(12,20,30,0.55);
+      opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s;
+    }
+    .carte-circuit:hover .circuit-choix,
+    .carte-circuit:focus-within .circuit-choix,
+    .carte-circuit.ouvert .circuit-choix { opacity: 1; visibility: visible; transition: opacity .25s, visibility 0s; }
+    .circuit-choix a {
+      padding: 9px 18px; border-radius: 999px; text-decoration: none; white-space: nowrap;
+      font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #fff;
+      background: rgba(12,20,30,.6); border: 1px solid rgba(255,255,255,.6);
+      box-shadow: 0 0 0 3px rgba(250,199,117,.45);
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .circuit-choix a:hover, .circuit-choix a:focus-visible { background: #FAC775; color: #2C4A7C; border-color: #FAC775; outline: none; }
+
+    /* ── Bouton « Si l'Occitanie m'était contée… » : il s'étire vers le bas
+          jusqu'au niveau du bas de la carte « Recettes », quelle que soit la largeur de l'écran ── */
+    .carte-main { align-items: stretch; }                      /* les deux colonnes ont la même hauteur */
+    .carte-gauche { display: flex; flex-direction: column; }
+    .carte-gauche .histoire-btn-wrap { flex: 1; grid-template-rows: 1fr; }   /* prend toute la place restante */
+    .dep-carte.histoire { height: auto; min-height: 175px; }   /* jamais plus petit qu'une carte département */
+    .carte-liens { align-self: start; }                        /* la colonne de droite garde sa hauteur naturelle */
+    @media (max-width: 860px) {
+      .carte-gauche .histoire-btn-wrap { flex: none; }
+    }
+
+
+    /* ══════════ NOUVEAU BANDEAU CENTRÉ (écusson, titre, sous-titre, icônes) ══════════ */
+    .bandeau {
+      position: relative; max-width: 1400px; margin: 0 auto; overflow: hidden;
+      border-radius: 0 0 16px 16px; color: #fff; text-align: center;
+      background: #2C4A7C url('../../assets/departement/occitanie/panorama-occi.jpg') center / cover no-repeat;
+    }
+    /* voile : plus sombre au centre (lisibilité du titre) et en bas (icônes) */
+    .bandeau::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 45%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.55) 100%);
+    }
+    .bandeau > * { position: relative; z-index: 1; }
+    .bandeau-haut { padding: 22px 24px 4px; }   /* ← espace au-dessus de l'écusson */
+
+    /* Écusson encadré de deux ornements dorés */
+    .bandeau-ecusson { display: flex; align-items: flex-end; justify-content: center; gap: 4px; }
+    .bandeau-ecusson img { height: 140px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }   /* ← taille de l'écusson */
+    .bandeau-ornement { width: 200px; height: 61px; margin-bottom: 14px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6)); }
+    .bandeau-ornement.droite { transform: scaleX(-1); }
+
+    /* Titre entre deux filets dorés */
+    .bandeau-titre-ligne { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 4px; }
+    .bandeau-filet { flex: 0 1 150px; height: 3px; border-radius: 3px;
+      background: linear-gradient(to right, rgba(250,199,117,0), #E9C27A 30%, #FAE3A8 50%, #E9C27A 70%, rgba(250,199,117,0)); }
+    .bandeau h1 {
+      margin: 0; font-family: var(--font-titre); font-weight: 700; line-height: 1;
+      font-size: 86px;                     /* ← taille du titre */
+      background: linear-gradient(to bottom, #FFFFFF 0%, #FBF1DC 45%, #E9C27A 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(3px 4px 0 rgba(60,35,10,0.75)) drop-shadow(0 0 18px rgba(0,0,0,0.5));
+    }
+    .bandeau h1 .titre-initial { font-size: 1.12em; }
+    .bandeau-sous-titre {
+      margin: 6px 0 0; font-family: var(--font-titre); font-style: italic; font-size: 26px;
+      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    }
+
+    /* Rangée d'icônes rondes, séparées par de fins traits dorés */
+    .bandeau-icones {
+      display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;
+      list-style: none; margin: 0; padding: 14px 24px 16px;
+    }
+    .bandeau-icones li { display: flex; }
+    .bandeau-icones li + li { border-left: 1px solid rgba(250,199,117,0.55); }
+    .bandeau-theme {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 0 24px; color: #fff; cursor: default;
+      font-family: var(--font-titre); font-weight: 700; font-size: 12px; letter-spacing: 0.06em;
+      text-transform: uppercase; text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+    }
+    .bandeau-pastille {
+      width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+      border: 2px solid #E9C27A; box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 6px 14px rgba(0,0,0,0.5), inset 0 -8px 16px rgba(0,0,0,0.3);
+    }
+    .bandeau-pastille svg { width: 26px; height: 26px; }
+        .p-patrimoine   { background: radial-gradient(circle at 35% 30%, #A8312B, #5E1512); }
+    .p-nature       { background: radial-gradient(circle at 35% 30%, #3E8A4A, #1C4A25); }
+    .p-gastronomie  { background: radial-gradient(circle at 35% 30%, #C25A28, #6A2810); }
+    .p-mer          { background: radial-gradient(circle at 35% 30%, #2E66B0, #12305E); }
+    .p-vignobles    { background: radial-gradient(circle at 35% 30%, #7A5528, #3C2610); }
+    .p-traditions   { background: radial-gradient(circle at 35% 30%, #7B44A8, #3A1A58); }
+    .p-decouvrir    { background: radial-gradient(circle at 35% 30%, #2C6E78, #123A40); }
+
+    /* Légende des anciennes régions : désormais sous le bandeau */
+    .legende-regions .container { max-width: 1400px; padding: 0 48px; margin: 0 auto; }
+
+    @media (max-width: 1100px) {
+      .bandeau h1 { font-size: 72px; }
+      .bandeau-theme { padding: 0 16px; }
+    }
+    @media (max-width: 860px) {
+      .bandeau-haut { padding: 22px 16px 6px; }
+      .bandeau-ecusson img { height: 105px; }
+      .bandeau-ornement { width: 90px; height: 40px; margin-bottom: 10px; }
+      .bandeau h1 { font-size: 52px; }
+      .bandeau-filet { flex-basis: 40px; }
+      .bandeau-sous-titre { font-size: 19px; }
+      .bandeau-icones { padding: 12px 8px 14px; row-gap: 12px; }
+      .bandeau-icones li { flex: 0 0 25%; justify-content: center; }
+      .bandeau-icones li + li { border-left: none; }
+      .bandeau-theme { padding: 0 4px; font-size: 10px; }
+      .bandeau-pastille { width: 40px; height: 40px; }
+      .bandeau-pastille svg { width: 22px; height: 22px; }
+      .legende-regions .container { padding: 0 16px; }
+    }
+
+
+    /* Légende des anciennes régions, dans le coin haut gauche de la carte */
+    .legende-carte {
+      position: absolute; top: 18px; left: 18px; z-index: 3;   /* ← position dans la carte */
+      display: flex; flex-direction: column; gap: 6px;
+      background: rgba(253,248,240,0.92); border: 1px solid #C8B88A; border-radius: 10px;
+      padding: 10px 14px; box-shadow: 0 2px 8px rgba(139,115,85,0.15);
+    }
+    .legende-carte-titre { font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em; color: #8B7355; font-weight: 600; font-family: var(--font-corps); }
+    .legende-carte .legende-item { font-size: 12px; }
+    .legende-carte .legende-item em { color: #8B7355; font-style: normal; }
+    .legende-carte .legende-swatch { width: 14px; height: 14px; border-radius: 3px; }
+    @media (max-width: 860px) {
+      /* sur téléphone la carte est trop petite : la légende passe sous la carte */
+      .legende-carte { position: relative; top: auto; left: auto; flex-direction: row; flex-wrap: wrap;
+        align-items: center; gap: 4px 14px; margin-top: 10px; padding: 7px 10px; }
+      .legende-carte-titre { width: 100%; font-size: 9px; }
+      .legende-carte .legende-item { font-size: 11px; }
+      .legende-carte .legende-swatch { width: 11px; height: 11px; }
+    }
   </style>
 </head>
 <body class="carte-page">
 
-  <div class="carte-hero">
-    
-    <!-- Lien vers la fiche d'identité de la région (même style que « Vers la carte Occitanie ») -->
-    <div class="produit-topbar-btns">
-      <a href="occitanie-info.html" class="produit-btn-retour">Identité &amp; repères de la région</a>
-      <!-- « Circuit découverte » : un clic ouvre deux choix, comme « Visites guidées » sur la page d'accueil -->
-      <div class="circuit-menu">
-        <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-circuit" title="Choisir un circuit découverte">
-          Circuits découvertes <span class="fleche" aria-hidden="true">▾</span>
-        </button>
-        <div class="circuit-sous-menu" id="menu-circuit">
-          <a class="circuit-option" href="essai-circuit/circuits-a-pied.html" title="Circuits de visite à pied">À pied</a>
-          <a class="circuit-option" href="essai-circuit2/circuits-en-voiture.html" title="Circuits de visite en voiture">En voiture</a>
-        </div>
+  <!-- ═══ BANDEAU : écusson, titre et sous-titre centrés, puis rangée d'icônes ═══ -->
+  <header class="bandeau">
+    <div class="bandeau-haut">
+      <div class="bandeau-ecusson">
+        <svg class="bandeau-ornement" viewBox="0 0 230 70" aria-hidden="true">
+            <defs><linearGradient id="or1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FAE3A8"/><stop offset="1" stop-color="#C8913E"/></linearGradient></defs>
+            <g fill="none" stroke="url(#or1)" stroke-width="3.2" stroke-linecap="round">
+              <path d="M6 64 H224"/>
+              <path d="M30 64 C40 40 70 38 78 52 C84 62 70 70 62 62 C56 56 62 48 68 50"/>
+              <path d="M98 64 C96 34 120 18 142 26 C160 32 158 54 142 54 C130 54 128 40 138 38"/>
+              <path d="M150 64 C170 58 190 40 214 46"/>
+              <path d="M176 14 C190 8 204 16 200 28 C197 36 186 34 188 26"/>
+              <path d="M150 64 C160 40 172 26 188 26"/>
+            </g>
+            <circle cx="224" cy="64" r="3.5" fill="#FAE3A8"/>
+          </svg>
+        <img src="../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
+        <svg class="bandeau-ornement droite" viewBox="0 0 230 70" aria-hidden="true">
+            <defs><linearGradient id="or2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FAE3A8"/><stop offset="1" stop-color="#C8913E"/></linearGradient></defs>
+            <g fill="none" stroke="url(#or2)" stroke-width="3.2" stroke-linecap="round">
+              <path d="M6 64 H224"/>
+              <path d="M30 64 C40 40 70 38 78 52 C84 62 70 70 62 62 C56 56 62 48 68 50"/>
+              <path d="M98 64 C96 34 120 18 142 26 C160 32 158 54 142 54 C130 54 128 40 138 38"/>
+              <path d="M150 64 C170 58 190 40 214 46"/>
+              <path d="M176 14 C190 8 204 16 200 28 C197 36 186 34 188 26"/>
+              <path d="M150 64 C160 40 172 26 188 26"/>
+            </g>
+            <circle cx="224" cy="64" r="3.5" fill="#FAE3A8"/>
+          </svg>
       </div>
-      <a href="histoires-de-clocher/histoires-de-clocher.html" class="produit-btn-retour">Histoires de clocher</a>
-      <a href="legende-occitane/contes-de-veillee.html" class="produit-btn-retour">Contes de veillée Occitane</a>
-  
-      <!-- « Départements voisins » : un clic ouvre les 5 départements -->
- <!-- 
-      <div class="circuit-menu">
-  <button type="button" class="produit-btn-retour circuit-declencheur" aria-expanded="false" aria-controls="menu-voisins" title="Voir les départements voisins">
-    Départements voisins <span class="fleche" aria-hidden="true">▾</span>
-  </button>
-  <div class="circuit-sous-menu vertical" id="menu-voisins">
-    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/dordogne/dordogne.html">Dordogne</a>
-    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/correze/correze.html">Corrèze</a>
-    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/lot-et-garonne/lot-et-garonne.html">Lot-et-Garonne</a>
-    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/landes/landes.html">Landes</a>
-    <a class="circuit-option" href="../nouvelle-aquitaine/nouvelle-aquitaine-departement/pyrenees-atlantiques/pyrenees-atlantiques.html">Pyrénées-Atlantiques</a>
-  </div>
-</div>
-      -->   
- 
-    </div>
-    <div class="container">
-      <div class="carte-hero-inner">
-        <div class="carte-hero-left">
-          <h1><span class="titre-initial">O</span>ccitanie</h1>
-        </div>
-
-        <div class="fiche-hero-ecusson">
-          <img src="../../assets/régions/ecusson-occitanie.png" alt="Écusson Occitanie" />
-          <p class="carte-hero-sub">Languedoc-Roussillon · Midi-Pyrénées</p>
-        </div>
-
-        
+      <div class="bandeau-titre-ligne">
+        <span class="bandeau-filet"></span>
+        <h1><span class="titre-initial">O</span>ccitanie</h1>
+        <span class="bandeau-filet"></span>
       </div>
+      <p class="bandeau-sous-titre">Terre d'histoire, de nature et de traditions</p>
     </div>
 
-    <!-- Légende des anciennes régions, intégrée au bas du bandeau -->
-    <div class="legende-regions">
-      <div class="container">
-        <div class="legende-inner">
-          <span class="legende-label">Anciennes régions :</span>
-          <div class="legende-item"><div class="legende-swatch sw-lr"></div> Languedoc-Roussillon (5 dép.)</div>
-          <div class="legende-item"><div class="legende-swatch sw-mp"></div> Midi-Pyrénées (8 dép.)</div>
-        </div>
-      </div>
+    <!-- Icônes décoratives (non cliquables) -->
+    <div aria-label="Thèmes">
+      <ul class="bandeau-icones">
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-patrimoine"><svg viewBox="0 0 40 40" fill="#F4E7C8"><path d="M7 34V14h4v3h3v-3h4v3h4v-3h4v3h3v-3h4v20H23v-8a3 3 0 0 0-6 0v8z"/><path d="M14 13V7h3v2h2V7h2v2h2V7h3v6z"/></svg></span>Patrimoine</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-nature"><svg viewBox="0 0 40 40" fill="#F4E7C8"><path d="M2 33 15 12l6 9 4-5 13 17z"/><path d="M15 12l3.6 5.8-2.2-1.4-1.4 2-1.6-2.2-2 1.3z" fill="#fff"/></svg></span>Nature</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-gastronomie"><svg viewBox="0 0 40 40" fill="#F4E7C8"><circle cx="20" cy="20" r="10"/><circle cx="20" cy="20" r="7" fill="none" stroke="#C8913E" stroke-width="1.2"/><path d="M5 8v7c0 1.6 1 2.4 2 2.6V33h2V17.6c1-.2 2-1 2-2.6V8h-1.4v6H8.7V8H7.3v6H6.4V8z"/><path d="M33 8c-2.4 1-3.4 4-3.4 8v4H32v13h2V8z"/></svg></span>Gastronomie</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-mer"><svg viewBox="0 0 40 40" fill="#F4E7C8"><path d="M3 28c4 0 5-3 8-3s4 3 8 3 5-3 8-3 4 3 10 3v4c-6 0-7-3-10-3s-4 3-8 3-5-3-8-3-4 3-8 3z"/><path d="M5 24c2-9 9-15 18-14 6 .6 10 5 9 10-1 4-6 5-8 2-1.6-2.4.6-5 3-4-1-3-5-4-9-2-5 2.4-7 6-8 8z"/></svg></span>Mer</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-vignobles"><svg viewBox="0 0 40 40" fill="#F4E7C8"><circle cx="14" cy="16" r="3.4"/><circle cx="21" cy="16" r="3.4"/><circle cx="28" cy="16" r="3.4"/><circle cx="17.5" cy="22" r="3.4"/><circle cx="24.5" cy="22" r="3.4"/><circle cx="21" cy="28" r="3.4"/><path d="M21 12c0-4 2-6 6-7 0 3-2 5-6 7z"/><path d="M21 12V8" stroke="#F4E7C8" stroke-width="1.6"/></svg></span>Vignobles</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-traditions"><svg viewBox="0 0 40 40" fill="#F4E7C8"><circle cx="13" cy="8" r="3.2"/><circle cx="27" cy="8" r="3.2"/><path d="M13 12c-3 0-4 2-5 5l-2 8h4l-1 9h3v-8h2v8h3l-1-9h4l-2-8c-1-3-2-5-5-5z"/><path d="M27 12c-3 0-4 2-5 5l-2 8h4l-1 9h3v-8h2v8h3l-1-9h4l-2-8c-1-3-2-5-5-5z"/><path d="M18 18h4" stroke="#F4E7C8" stroke-width="2"/></svg></span>Traditions</span></li>
+        <li><span class="bandeau-theme"><span class="bandeau-pastille p-decouvrir"><svg viewBox="0 0 40 40" fill="#F4E7C8"><circle cx="20" cy="20" r="15" fill="none" stroke="#F4E7C8" stroke-width="1.4"/><path d="M20 3l3 14 14 3-14 3-3 14-3-14-14-3 14-3z"/><path d="M20 12l1.6 6.4L28 20l-6.4 1.6L20 28l-1.6-6.4L12 20l6.4-1.6z" fill="#2C6E78"/></svg></span>Découvrir</span></li>
+      </ul>
     </div>
-  </div>
+  </header>
 
-  <div class="container">
-    <div class="carte-main">
-      <div>
+  <!-- carte-main sans .container : même largeur et mêmes marges que la galerie,
+       pour que le bord droit des cartes de la colonne s'aligne sur celui des cartes départements -->
+  <div class="carte-main">
+      <div class="carte-gauche">
         <div class="carte-svg-wrap" id="mapWrap">
           <svg id="carte-svg" xmlns="http://www.w3.org/2000/svg"></svg>
           <div class="map-tooltip" id="mapTooltip"></div>
+          <div class="legende-carte">
+            <span class="legende-carte-titre">Anciennes régions</span>
+            <div class="legende-item"><div class="legende-swatch sw-lr"></div> Languedoc-Roussillon <em>(5 dép.)</em></div>
+            <div class="legende-item"><div class="legende-swatch sw-mp"></div> Midi-Pyrénées <em>(8 dép.)</em></div>
+          </div>
           <div class="compass-wrap">
             <svg width="38" height="38" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="18" fill="none" stroke="#8B7355" stroke-width="0.8"/>
@@ -422,7 +571,7 @@
             </svg>
           </div>
         </div>
-        <p class="carte-hint">Survolez pour voir le nom · Cliquez pour découvrir le département</p>
+        <p class="carte-hint">Survolez un département pour voir son nom · Cliquez pour ouvrir sa page</p>
 
         <!-- Carte vers la série « Histoire occitane », au même format que les cartes départements -->
         <div class="galerie-grille histoire-btn-wrap">
@@ -434,38 +583,53 @@
           </a>
         </div>
       </div>
-      <aside class="carte-panel">
-        <div class="panel-idle" id="panelIdle">
-          <div class="idle-icon">🗺️</div>
-          <h3>13 départements à découvrir</h3>
-          <p>Survolez un département sur la carte pour afficher sa présentation, puis cliquez pour ouvrir sa page.</p>
+
+      <!-- Colonne de droite : liens de la région, au même format que les cartes départements.
+           Pour mettre une photo sur une carte, remplacez le dégradé dans style="background: ..." par
+           url('chemin/de/la/photo.jpg') center/cover -->
+      <aside class="carte-liens">
+        <a class="dep-carte lien" href="occitanie-info.html" style="background: url('../../assets/departement/occitanie/panorama-identite.jpg') center/cover, linear-gradient(135deg,#2C4A7C,#5B7BB0);">
+          <span class="dep-num">Région</span>
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="">
+          <div class="dep-texte"><div class="dep-nom">Identité &amp; repères</div><div class="dep-chef">Fiche d'identité de la région</div></div>
+          <span class="dep-bande"></span>
+        </a>
+        <!-- Carte « Circuits » : au survol (ou au toucher sur téléphone), deux choix apparaissent -->
+        <div class="dep-carte lien carte-circuit" tabindex="0" style="background: url('../../assets/departement/occitanie/panorama-index.jpg') center/cover, linear-gradient(135deg,#4F6B3A,#8BA66A);">
+          <span class="dep-num">Circuit</span>
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="">
+          <div class="dep-texte"><div class="dep-nom">Circuits</div><div class="dep-chef">Circuits découvertes</div></div>
+          <span class="dep-bande"></span>
+          <div class="circuit-choix">
+            <a href="essai-circuit/circuits-a-pied.html">🚶 À pied</a>
+            <a href="essai-circuit2/circuits-en-voiture.html">🚗 En voiture</a>
+          </div>
         </div>
-        <div class="panel-dept" id="panelDept">
-          <div class="pd-card">
-            <div class="pd-photo" id="pdPhoto">
-              <img class="pd-blason" id="pdBlason" alt="" />
-              <img class="pd-medaillon" id="pdMedaillon" alt="" />
-            </div>
-            <div class="pd-header">
-              <div class="pd-num" id="pdNum"></div>
-              <h2 id="pdNom"></h2>
-              <div class="pd-chef" id="pdChef"></div>
-            </div>
-            <div class="pd-body">
-              <span class="pd-region-badge" id="pdBadge"></span>
-              <div class="pd-stat-row">
-                <div class="pd-stat"><span class="pd-stat-val" id="pdPop"></span><span class="pd-stat-lab">habitants</span></div>
-                <div class="pd-stat"><span class="pd-stat-val" id="pdSup"></span><span class="pd-stat-lab">km²</span></div>
-              </div>
-              <p class="pd-info" id="pdInfo"></p>
-              <div class="pd-tags" id="pdTags"></div>
-              <a class="pd-btn" id="pdBtn" href="#">Découvrir le département →</a>
-            </div>
+        <a class="dep-carte lien" href="histoires-de-clocher/histoires-de-clocher.html" style="background: url('../../assets/departement/occitanie/panorama-clocher.jpg') center/cover, linear-gradient(135deg,#7A4530,#C2785A);">
+          <span class="dep-num">Patrimoine</span>
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="">
+          <div class="dep-texte"><div class="dep-nom">Histoires de clocher</div><div class="dep-chef">Églises et villages</div></div>
+          <span class="dep-bande"></span>
+        </a>
+        <a class="dep-carte lien" href="legende-occitane/contes-de-veillee.html" style="background: url('../../assets/departement/occitanie/panorama-contes.jpg') center/cover, linear-gradient(135deg,#355A68,#7C9CA8);">
+          <span class="dep-num">Légende</span>
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="">
+          <div class="dep-texte"><div class="dep-nom">Contes de veillée</div><div class="dep-chef">Légendes occitanes</div></div>
+          <span class="dep-bande"></span>
+        </a>
+        <!-- Carte « Recettes » : au survol (ou au toucher sur téléphone), deux choix apparaissent -->
+        <div class="dep-carte lien carte-circuit" tabindex="0" style="background: url('../../assets/departement/occitanie/panorama-sel.jpg') center/cover, linear-gradient(135deg,#9C3D54,#C8843A);">
+          <span class="dep-num">Cuisine</span>
+          <img src="../../assets/régions/ecusson-occitanie.png" alt="">
+          <div class="dep-texte"><div class="dep-nom">Recettes</div><div class="dep-chef">Saveurs d'Occitanie</div></div>
+          <span class="dep-bande"></span>
+          <div class="circuit-choix">
+            <a href="recette-sucre/recettes-sucrees.html">🍰 Sucrées</a>
+            <a href="recettes-salees/recettes-salees.html">🍲 Salées</a>
           </div>
         </div>
       </aside>
 
-    </div>
   </div>
 
   <section class="galerie">
@@ -512,6 +676,25 @@
     });
   })();
 </script>
+
+  <script>
+  // Carte « Circuits » : sur téléphone (pas de survol), un toucher affiche les deux choix
+  // (fonctionne pour toutes les cartes à deux choix : « Circuits », « Recettes »…)
+  (function () {
+    const cartes = document.querySelectorAll('.carte-circuit');
+    cartes.forEach(carte => {
+      carte.addEventListener('click', (e) => {
+        if (e.target.closest('.circuit-choix a')) return;   // un choix a été cliqué : on laisse le lien s'ouvrir
+        const ouvrir = !carte.classList.contains('ouvert');
+        cartes.forEach(c => c.classList.remove('ouvert'));  // une seule carte ouverte à la fois
+        carte.classList.toggle('ouvert', ouvrir);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      cartes.forEach(c => { if (!c.contains(e.target)) c.classList.remove('ouvert'); });
+    });
+  })();
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <script>
@@ -588,28 +771,6 @@
   const fondDept = code => `url('${ASSETS}vignette-${slugs[code]}.jpg'), url('${ASSETS}panorama-${slugs[code]}.jpg'), ${COULEUR[DEPTS[code].region]}`;
   const posDept = code => `${CADRAGE[code] || "50%"} center`;
 
-  function afficherPanneau(code) {
-    const info = DEPTS[code]; if (!info) return;
-    document.getElementById("panelIdle").style.display = "none";
-    document.getElementById("panelDept").classList.add("visible");
-    document.getElementById("pdPhoto").style.background = fondDept(code);
-    document.getElementById("pdPhoto").style.backgroundSize = "cover";
-    document.getElementById("pdPhoto").style.backgroundPosition = posDept(code);
-    document.getElementById("pdBlason").src = `${ASSETS}${slugs[code]}.png`;
-    document.getElementById("pdMedaillon").src = `${ASSETS}carte-${slugs[code]}.png`;
-    document.getElementById("pdNum").textContent = `Département ${code}`;
-    document.getElementById("pdNom").textContent = info.nom;
-    document.getElementById("pdChef").textContent = `Préfecture : ${info.chef}`;
-    const badge = document.getElementById("pdBadge");
-    badge.className = "pd-region-badge " + (info.region === "lr" ? "lr-badge" : "mp-badge");
-    badge.textContent = info.region === "lr" ? "Ancien Languedoc-Roussillon" : "Ancien Midi-Pyrénées";
-    document.getElementById("pdPop").textContent = info.pop;
-    document.getElementById("pdSup").textContent = info.sup;
-    document.getElementById("pdInfo").textContent = info.info;
-    document.getElementById("pdTags").innerHTML = info.tags.map(t => `<span class="pd-tag">${t}</span>`).join("");
-    document.getElementById("pdBtn").href = lienDept(code);
-  }
-
   // ── Galerie des 13 départements (ordre alphabétique) ──
   const galerie = document.getElementById("galerie");
   Object.keys(DEPTS)
@@ -626,7 +787,6 @@
         <img src="${ASSETS}${slugs[code]}.png" alt="Blason ${info.nom}">
         <div class="dep-texte"><div class="dep-nom">${info.nom}</div><div class="dep-chef">${info.chef}</div></div>
         <span class="dep-bande"></span>`;
-      a.addEventListener("mouseenter", () => afficherPanneau(code));
       galerie.appendChild(a);
     });
 
@@ -656,7 +816,6 @@
       return `dept-shape ${cls}`;
     })
     .attr("d", path)
-    .on("mouseenter", function(event, d) { afficherPanneau(d.properties.code); })
     .on("mousemove", function(event, d) {
       const info = DEPTS[d.properties.code];
       tooltip.textContent   = info ? `${info.nom} (${d.properties.code})` : d.properties.nom;
@@ -667,14 +826,9 @@
     })
     .on("mouseleave", () => { tooltip.style.display = "none"; })
     .on("click", function(event, d) {
+      // Un clic ouvre directement la page du département
       const code = d.properties.code;
-      const info = DEPTS[code];
-      if (!info) return;
-
-
-      if (slugs[code]) {
-        window.location.href = lienDept(code);
-      }
+      if (slugs[code]) window.location.href = lienDept(code);
     });
   
   // Labels — placement par "pôle d'inaccessibilité"

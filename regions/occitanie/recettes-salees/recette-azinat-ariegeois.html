@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'azinat ariégeois — L'Âme des Régions</title>
+  <meta name="description" content="Recette salée : l&#x27;azinat, potée ariégeoise au chou, aux pommes de terre et au porc, servie avec une rouzole. Son histoire, sa recette et les vins pour l&#x27;accompagner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles propres aux fiches « recette salée » (ingrédients, accords) -->
+  <style>
+    .ingredients-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .ingredients-grille .ingredients-bloc { margin: 0; }
+    .ingredients-liste { list-style: none; margin: 0; padding: 0; }
+    .ingredients-liste li {
+      display: grid; grid-template-columns: 78px 1fr; gap: 10px;
+      font-size: 14.5px; line-height: 1.5; padding: 7px 0; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredients-liste li:last-child { border-bottom: none; }
+    .ingredients-liste .qte { font-weight: 700; color: #C8843A; text-align: right; white-space: nowrap; }
+    .astuce {
+      background: #FFF8EA; border: 1px dashed #E3B672; border-radius: 10px;
+      padding: 12px 16px; font-size: 14px; line-height: 1.6; margin: 18px 0;
+    }
+    .astuce strong { color: #3B502B; }
+    .vin-carte .vin-nom { font-family: var(--font-titre); font-size: 17px; font-weight: 700; color: #3B502B; margin: 0 0 2px; }
+    .vin-carte .vin-aop { font-size: 12px; color: #8B7355; margin: 0 0 10px; }
+    .vin-carte .vin-service { font-size: 12.5px; color: #8B7355; margin-top: 10px; border-top: 1px solid #F0EAD6; padding-top: 8px; }
+    .vin-carte.principal { border: 2px solid #C8843A; }
+    @media (max-width: 700px) { .ingredients-grille { grid-template-columns: 1fr; } }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à cette fiche : vert des Pyrénées -->
+  <style>
+    .produit-hero { background-color: #4F6B3A; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .site-footer, .btn-haut-page, .frise .date { background: #4F6B3A; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong { color: #3B502B; }
+    .btn { background: #4F6B3A; border-color: #4F6B3A; }
+    .btn:hover { background: #3B502B; }
+    .btn.secondaire { background: #F7F3EC; color: #4F6B3A; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #4F6B3A; color: white; border-color: #4F6B3A; }
+    .footer-logo span { color: #FAC775; }
+    .lettrine::first-letter { color: #4F6B3A; }
+    .chiffre .val { color: #4F6B3A; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #4F6B3A, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #4F6B3A, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU : commune à toutes les recettes salées -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+          url('../../../assets/departement/occitanie/panorama-sel.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="recettes-salees.html" class="produit-btn-retour">Toutes les recettes salées</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>'azinat<br>
+            <span style="padding-left: 20px;"><em>a</em>riégeois</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-ariege.png" alt="Carte Ariège" />
+      </div>
+
+    </div>
+
+    <div class="fiche-hero-ecusson">
+      <img src="../../../assets/departement/occitanie/ariege.png" alt="Écusson Ariège" />
+    </div>
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>R</em>ecette <em>s</em>alée <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#recette">🥘 La recette</a>
+          <a href="#accord-vin">🍷 Quel vin ?</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Une grande potée de chou, de carottes, de pommes de terre et de porc, cuite des heures au coin du feu, et sur le bouillon, une galette de farce dorée : la rouzole. L'azinat est le plat paysan de l'Ariège, celui de tous les jours dans sa version pauvre, celui des fêtes dans sa version riche.</p>
+
+              <h3>Le plat de tous les jours</h3>
+              <p class="lettrine">Dans les vallées ariégeoises, du pays de Foix au Couserans, l'azinat a longtemps été la nourriture de base des familles paysannes. Chaque village, et presque chaque maison, avait sa façon de le préparer, selon les saisons et ce que donnaient le potager et le saloir. C'est une potée au chou, de la même famille que la garbure gasconne : des légumes, de l'eau, du porc, et des heures de cuisson.</p>
+              <p>On distingue deux azinats. Le <strong>pauvre</strong>, de tous les jours, proche de la garbure, avec peu de viande. Et le <strong>riche</strong>, plat de fête, avec jarrets, saucisses de couenne, confits de canard et rouzole.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                <img src="photo/azinat-ariegeois1.jpg" alt="Azinat ariégeois" />
+                <figcaption>L'azinat, potée de chou et de porc avec sa rouzole</figcaption>
+              </figure>
+
+              <h3>La rouzole</h3>
+              <p>Ce qui fait l'azinat de fête, c'est la <strong>rouzole</strong>, une spécialité du comté de Foix. C'est une grosse galette de farce : chair à saucisse, jambon de pays, œufs, ail, persil et pain trempé dans le lait, hachés ensemble puis dorés à la poêle. On la pose sur le bouillon une demi-heure avant de servir : elle s'imprègne du goût de la potée et on la découpe en parts avec les viandes. Chaque maison avait sa rouzole, avec les ingrédients de la saison.</p>
+
+              <div class="citation-bloc">
+                <p>Avec le bouillon de l'azinat, on fait d'abord une soupe gratinée sur le pain ; viennent ensuite les viandes, les légumes et la rouzole.</p>
+              </div>
+
+              <h3>Un repas en deux temps</h3>
+              <p>Comme beaucoup de potées, l'azinat se sert en deux temps. On verse d'abord le bouillon sur des tranches de pain de campagne, on les parsème de fromage râpé et on les fait gratiner au four : c'est la soupe. Puis on sert les viandes, les légumes et la rouzole, en plat complet. L'Agence de développement touristique de l'Ariège en a fait l'une des recettes phares du département.</p>
+
+             
+
+
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li class="fort"><span class="date">Tradition</span><span>Dans les vallées de l'Ariège, l'<strong>azinat</strong> est la nourriture de base des familles paysannes.</span></li>
+              <li><span class="date">Jours ordinaires</span><span>L'azinat pauvre, proche de la garbure, se fait avec peu de viande.</span></li>
+              <li class="fort"><span class="date">Jours de fête</span><span>L'azinat riche s'enrichit de confits, de saucisses et de <strong>rouzole</strong>.</span></li>
+              <li><span class="date">Aujourd'hui</span><span>L'Ariège en a fait l'une de ses recettes phares.</span></li>
+            </ol>
+          </section>
+
+          <!-- RECETTE -->
+          <section class="section" id="recette">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥘</div>
+              La recette
+            </h2>
+
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">10</div><div class="lib">personnes</div></div>
+              <div class="chiffre"><div class="val">45 min</div><div class="lib">de préparation</div></div>
+              <div class="chiffre"><div class="val">3 h</div><div class="lib">de cuisson</div></div>
+              <div class="chiffre"><div class="val">2</div><div class="lib">choux verts</div></div>
+            </div>
+
+            <div class="ingredients-grille">
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ L'azinat</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">2</span><span>choux verts</span></li>
+                  <li><span class="qte">10</span><span>carottes</span></li>
+                  <li><span class="qte">8</span><span>pommes de terre</span></li>
+                  <li><span class="qte">3</span><span>jarrets de porc</span></li>
+                  <li><span class="qte">8</span><span>cuisses de canard confites</span></li>
+                  <li><span class="qte">3</span><span>saucisses de couenne</span></li>
+                  <li><span class="qte">1</span><span>os de jambon</span></li>
+                  <li><span class="qte"></span><span>sel, poivre</span></li>
+                  <li><span class="qte"></span><span>pain de campagne et fromage râpé pour la soupe</span></li>
+                </ul>
+              </div>
+              <div class="ingredients-bloc">
+                <div class="ingredients-titre">✦ La rouzole</div>
+                <ul class="ingredients-liste">
+                  <li><span class="qte">350 g</span><span>de chair à saucisse</span></li>
+                  <li><span class="qte">150 g</span><span>de jambon cru de pays</span></li>
+                  <li><span class="qte">3</span><span>œufs</span></li>
+                  <li><span class="qte">1 bouquet</span><span>de persil</span></li>
+                  <li><span class="qte">2</span><span>gousses d'ail</span></li>
+                  <li><span class="qte">1 bol</span><span>de pain trempé dans le lait</span></li>
+                  <li><span class="qte">1 c. à s.</span><span>de graisse de canard</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les étapes</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Blanchir :</strong> blanchissez les choux entiers 10 minutes à l'eau bouillante, puis égouttez-les.</span></li>
+                <li><span><strong>La potée :</strong> dans une grande marmite d'eau froide, mettez les choux, les carottes, l'os de jambon, les jarrets et les saucisses. Salez légèrement, poivrez et laissez cuire doucement 2 heures.</span></li>
+                <li><span><strong>La rouzole :</strong> hachez ensemble la chair à saucisse, le jambon, l'ail et le persil. Ajoutez les œufs et le pain pressé. Formez une grande galette et faites-la dorer des deux côtés dans la graisse de canard.</span></li>
+                <li><span><strong>Finir :</strong> ajoutez à la potée les pommes de terre, les confits et la rouzole. Laissez cuire encore 1 heure à feu doux.</span></li>
+                <li><span><strong>La soupe :</strong> versez du bouillon sur des tranches de pain de campagne, parsemez de fromage râpé et faites gratiner au four.</span></li>
+                <li><span><strong>Servir :</strong> servez d'abord la soupe gratinée, puis les viandes, les légumes et la rouzole coupée en parts.</span></li>
+              </ol>
+            </div>
+
+            <div class="astuce">
+              <strong>💡 Le conseil :</strong> l'azinat se prépare en grande quantité, pour une tablée : il se réchauffe très bien. La rouzole peut aussi se faire en petites galettes, plus faciles à servir.
+            </div>
+          </section>
+
+          <!-- ACCORD VIN -->
+          <section class="section" id="accord-vin">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Avec quel vin ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Potée de chou et de porc, confits, rouzole : l'azinat appelle un rouge du Sud-Ouest ou des Pyrénées, franc et charpenté.</p>
+            </div>
+            <div class="encadres">
+              <div class="encadre vin-carte principal">
+                <div class="encadre-titre">★ L'accord idéal</div>
+                <p class="vin-nom">Ariège rouge</p>
+                <p class="vin-aop">IGP Ariège · Ariège (09)</p>
+                <p>Les vins du pays ariégeois, notamment des coteaux de Pamiers : des rouges fruités et frais, l'accord de terroir.</p>
+                <div class="vin-service">Servir à 15 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord corsé</div>
+                <p class="vin-nom">Madiran</p>
+                <p class="vin-aop">AOP Madiran · Gers (32), Hautes-Pyrénées (65)</p>
+                <p>Le tannat, puissant, tient tête aux confits et au porc.</p>
+                <div class="vin-service">Servir à 16-17 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord voisin</div>
+                <p class="vin-nom">Malepère rouge</p>
+                <p class="vin-aop">AOP Malepère · Aude (11)</p>
+                <p>Un rouge souple et fruité, au nord-est de l'Ariège.</p>
+                <div class="vin-service">Servir à 16 °C</div>
+              </div>
+              <div class="encadre vin-carte">
+                <div class="encadre-titre">L'accord toulousain</div>
+                <p class="vin-nom">Fronton rouge</p>
+                <p class="vin-aop">AOP Fronton · Haute-Garonne (31)</p>
+                <p>La négrette, aux arômes de violette, pour un repas de famille.</p>
+                <div class="vin-service">Servir à 15-16 °C</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Deux versions</div>
+                <h4>Pauvre ou riche</h4>
+                <p>L'azinat pauvre, de tous les jours, est proche de la garbure ; l'azinat riche, de fête, contient confits et rouzole.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Rouzole</div>
+                <h4>Une galette de farce</h4>
+                <p>La rouzole, spécialité du comté de Foix, est une galette de farce dorée, posée sur le bouillon avant de servir.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Service</div>
+                <h4>La soupe gratinée</h4>
+                <p>Le bouillon de l'azinat se sert d'abord sur du pain, gratiné au fromage.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Famille</div>
+                <h4>Cousine de la garbure</h4>
+                <p>L'azinat appartient à la grande famille des potées au chou du Sud-Ouest, avec la garbure gasconne.</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Ariège (09)</span></div>
+              <div class="aside-row"><span class="aside-label">Terroir</span><span class="aside-val">Pays de Foix, Couserans</span></div>
+              <div class="aside-row"><span class="aside-label">Famille</span><span class="aside-val">Potée</span></div>
+              <div class="aside-row"><span class="aside-label">Ingrédients clés</span><span class="aside-val">Chou, porc, confit, rouzole</span></div>
+              <div class="aside-row"><span class="aside-label">Saison</span><span class="aside-val">Hiver</span></div>
+              <div class="aside-row"><span class="aside-label">Difficulté</span><span class="aside-val">Moyenne</span></div>
+              <div class="aside-row"><span class="aside-label">Conservation</span><span class="aside-val">3 jours au frais</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">⏱️ Le temps de la recette</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="temps-graph" viewBox="0 0 300 92" role="img" aria-label="Répartition du temps de la recette : 45 minutes de préparation, 3 heures de cuisson"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Préparez la rouzole pendant que la potée cuit.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🍷 Accord express</div>
+            <div class="aside-card-body">
+              <p class="aside-texte"><strong>Ariège rouge</strong>, servi à 15 °C. Pour plus de puissance, un madiran.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://www.ariegepyrenees.com/?p=568" target="_blank" rel="noopener">Ariège Pyrénées Tourisme, l'azinat</a></li>
+                <li><a href="https://www.ariegepyrenees.com/en/preparer/manger-bon-bien/meilleures-recettes-ariegeoises/rouzole/" target="_blank" rel="noopener">Ariège Pyrénées Tourisme, la rouzole</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour une autre recette
+   ============================================================ */
+// Temps de la recette, en minutes
+const temps=[['Préparation',45],['Cuisson',180]];
+/* ============================================================ */
+
+/* Barres du temps de la recette */
+(function(){
+ const svg=document.getElementById('temps-graph'),W=300,g={l:92,r:50},h=22,gap=14,top=10;
+ const max=Math.max(...temps.map(t=>t[1]));
+ const couleurs=['#4F6B3A','#E3B672','#C8843A','#8B7355'];
+ const fmt=m=>m>=60?(Math.floor(m/60)+' h'+(m%60?' '+String(m%60).padStart(2,'0'):'')):m+' min';
+ let s='';
+ temps.forEach(([lib,min],i)=>{
+  const y=top+i*(h+gap), w=Math.max(4,min/max*(W-g.l-g.r));
+  s+=`<text x="${g.l-8}" y="${y+h/2+4}" text-anchor="end" style="font-size:11px">${lib}</text>`;
+  s+=`<rect x="${g.l}" y="${y}" width="${w}" height="${h}" rx="4" fill="${couleurs[i%4]}"><title>${lib} : ${fmt(min)}</title></rect>`;
+  s+=`<text x="${g.l+w+6}" y="${y+h/2+4}" style="fill:#3B502B;font-weight:700;font-size:11px">${fmt(min)}</text>`;
+ });
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>
