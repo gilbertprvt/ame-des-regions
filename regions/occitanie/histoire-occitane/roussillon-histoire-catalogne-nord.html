@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roussillon &amp; Catalogne du Nord — L'Âme des Régions</title>
+  <!-- Photo du bandeau chargée en priorité, avant les styles et les polices -->
+  <link rel="preload" as="image" href="photo/panorama-roussillon.jpg" fetchpriority="high" />
+  <!-- Valeurs de secours : utilisées seulement si style.css / fiche.css ne sont pas trouvés.
+       Placées AVANT style.css pour que les feuilles du site gardent toujours la priorité. -->
+  <style>
+    :root { --ivoire: #FAF6EE; --font-titre: 'Playfair Display', serif; --font-corps: 'Source Sans 3', sans-serif; }
+    body { margin: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .produit-hero { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+  </style>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches sites */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* Blocs repris de la fiche cathare */
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+
+    /* ─── PROPRE À CETTE FICHE ─── */
+    .lexique { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    .mot {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px; padding: 10px 12px;
+      font-family: var(--font-corps); text-align: center;
+    }
+    .mot b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); color: #2C4A7C; font-size: 17px; }
+    .mot span { font-size: 12px; color: #8B7355; }
+
+    @media (max-width: 760px) {
+      .repere-grid { grid-template-columns: 1fr; }
+      .lexique { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page (à déposer dans photo/) : par ex. le Canigou vu de la plaine -->
+  <style>
+    .produit-hero{background-image:url('photo/panorama-roussillon.jpg');background-size:cover;background-position:center 40%}
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="occitanie-histoire-accueil.html" class="produit-btn-retour">
+            ← Retour à l'accueil
+          </a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>R</em>oussillon<br><span style="padding-left: 40px;">&amp; <em>C</em>atalogne du Nord</span></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-label-bas">
+      ⟹ De Tautavel à l'Occitanie · Une terre catalane devenue française ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#comprendre" class="active">📖 Comprendre</a>
+          <a href="#territoire">🧭 Territoire</a>
+          <a href="#origines">🦴 Origines</a>
+          <a href="#moyen-age">🛡️ Moyen Âge</a>
+          <a href="#majorque">👑 Majorque</a>
+          <a href="#deux-couronnes">⚔️ Deux couronnes</a>
+          <a href="#traite">📜 1659</a>
+          <a href="#francisation">🇫🇷 Francisation</a>
+          <a href="#contemporain">🕰️ XIX<sup>e</sup>–XXI<sup>e</sup></a>
+          <a href="#catalogne">🤝 Catalogne</a>
+          <a href="#langue">🗣️ Langue</a>
+          <a href="#coutumes">💃 Coutumes</a>
+          <a href="#table">🍷 Table</a>
+          <a href="#patrimoine">🏰 Patrimoine</a>
+          <a href="#personnalites">👤 Personnages</a>
+          <a href="#frise">⏳ Chronologie</a>
+          <a href="#mythes">🔎 Idées reçues</a>
+          <a href="#parcours">🥾 Circuit</a>
+          <a href="#infos-pratiques">ℹ️ Infos</a>
+          <a href="#sources">📚 Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- ═══ COMPRENDRE ═══ -->
+          <section class="section" id="comprendre">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Le Roussillon : de quoi parle-t-on ?
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Le Roussillon est une terre catalane devenue française.</strong> Pendant près de mille ans, de l'époque carolingienne au XVII<sup>e</sup> siècle, il a partagé le destin de Barcelone : mêmes comtes, mêmes rois, même langue, mêmes institutions. Ce n'est qu'en <strong>1659</strong>, par le <strong>traité des Pyrénées</strong>, qu'il est cédé par l'Espagne à la France de Louis XIV. Depuis 1790, il forme l'essentiel du département des <strong>Pyrénées-Orientales</strong> (66), rattaché depuis 2016 à la région <strong>Occitanie</strong>.</p>
+              <p>Le mot « Roussillon » vient de <strong>Ruscino</strong>, l'oppidum ibère puis ville romaine dont les vestiges dominent la Têt à Château-Roussillon, aux portes de Perpignan. Au sens strict, le Roussillon (<em>Rosselló</em> en catalan) désigne seulement la plaine autour de Perpignan ; au sens large, il désigne toute la « <strong>Catalogne du Nord</strong> » (<em>Catalunya Nord</em>), c'est-à-dire les terres catalanes situées au nord des Pyrénées.</p>
+
+              <div class="repere-grid">
+                <div class="repere"><strong>IX<sup>e</sup> – XII<sup>e</sup> s.</strong><span>Comtés carolingiens puis catalans de Roussillon, Cerdagne, Conflent et Vallespir.</span></div>
+                <div class="repere"><strong>1172 – 1659</strong><span>Sous la Couronne d'Aragon (avec l'intermède du royaume de Majorque), puis de l'Espagne.</span></div>
+                <div class="repere"><strong>Depuis 1659</strong><span>Province française, puis département des Pyrénées-Orientales (1790), en Occitanie (2016).</span></div>
+              </div>
+
+              <div class="notice"><strong>À retenir :</strong> trois noms se recouvrent sans être identiques. Le <strong>Roussillon</strong> est un nom historique ; les <strong>Pyrénées-Orientales</strong> sont une circonscription administrative (qui inclut aussi le Fenouillèdes, de langue occitane) ; la <strong>Catalogne du Nord</strong> est une expression culturelle et linguistique, revendiquée par une partie des habitants.</div>
+            </div>
+
+            <h3 class="sous-titre">Les souverainetés successives, en un coup d'œil</h3>
+            <figure class="schema">
+              <svg viewBox="0 0 640 230" role="img" aria-label="Frise des souverainetés sur le Roussillon de 800 à 2000">
+                <rect width="640" height="230" fill="#FBF8F2"/>
+                <!-- axe : x = 40 + (année-800)*0.5 -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B7355" text-anchor="middle">
+                  <line x1="40" y1="150" x2="640" y2="150" stroke="#B8A58A"/>
+                  <g stroke="#B8A58A">
+                    <line x1="40" y1="150" x2="40" y2="156"/><line x1="140" y1="150" x2="140" y2="156"/>
+                    <line x1="240" y1="150" x2="240" y2="156"/><line x1="340" y1="150" x2="340" y2="156"/>
+                    <line x1="440" y1="150" x2="440" y2="156"/><line x1="540" y1="150" x2="540" y2="156"/>
+                    <line x1="638" y1="150" x2="638" y2="156"/>
+                  </g>
+                  <text x="40" y="168">800</text><text x="140" y="168">1000</text><text x="240" y="168">1200</text>
+                  <text x="340" y="168">1400</text><text x="440" y="168">1600</text><text x="540" y="168">1800</text><text x="625" y="168">2000</text>
+                </g>
+                <!-- bandes -->
+                <rect x="40" y="100" width="186" height="44" fill="#8FA6C9"/>
+                <rect x="226" y="100" width="52" height="44" fill="#C8102E"/>
+                <rect x="278" y="100" width="34" height="44" fill="#E3A83B"/>
+                <rect x="312" y="100" width="59.5" height="44" fill="#C8102E"/>
+                <rect x="371.5" y="100" width="15" height="44" fill="#2C4A7C"/>
+                <rect x="386.5" y="100" width="74" height="44" fill="#A33B2A"/>
+                <rect x="460.5" y="100" width="179.5" height="44" fill="#2C4A7C"/>
+                <!-- étiquettes -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#2C2418">
+                  <text x="133" y="126" text-anchor="middle" fill="white" font-weight="700">Comtes carolingiens puis catalans</text>
+                  <line x1="252" y1="100" x2="230" y2="70" stroke="#C8102E"/><text x="190" y="64" fill="#C8102E" font-weight="700">Aragon 1172</text>
+                  <line x1="295" y1="100" x2="295" y2="40" stroke="#C8843A"/><text x="262" y="34" fill="#8B5E0A" font-weight="700">Royaume de Majorque 1276–1344</text>
+                  <line x1="341" y1="100" x2="350" y2="70" stroke="#C8102E"/><text x="335" y="64" fill="#C8102E" font-weight="700">Aragon</text>
+                  <line x1="379" y1="144" x2="379" y2="190" stroke="#2C4A7C"/><text x="330" y="202" fill="#2C4A7C" font-weight="700">France (Louis XI) 1463–1493</text>
+                  <line x1="423" y1="100" x2="423" y2="78" stroke="#A33B2A"/><text x="395" y="72" fill="#A33B2A" font-weight="700">Aragon / Espagne</text>
+                  <text x="550" y="126" text-anchor="middle" fill="white" font-weight="700">France</text>
+                  <line x1="469.5" y1="92" x2="469.5" y2="150" stroke="#C8843A" stroke-width="2" stroke-dasharray="3 2"/>
+                  <text x="474" y="90" fill="#C8843A" font-weight="700">1659</text>
+                  <line x1="535" y1="144" x2="535" y2="190" stroke="#2C4A7C"/><text x="500" y="202" fill="#2C4A7C">1790 : Pyrénées-Orientales</text>
+                </g>
+              </svg>
+              <figcaption>Près de neuf siècles dans l'orbite catalano-aragonaise, un peu plus de trois siècles et demi dans le royaume puis la République française (échelle respectée).</figcaption>
+            </figure>
+          </section>
+
+          <!-- ═══ TERRITOIRE ═══ -->
+          <section class="section" id="territoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧭</div>
+              Un territoire : plaine, vallées et hauts plateaux
+            </h2>
+            <div class="histoire-texte">
+              <p>Le territoire forme un amphithéâtre ouvert sur la Méditerranée. Trois fleuves côtiers, l'<strong>Agly</strong>, la <strong>Têt</strong> et le <strong>Tech</strong>, descendent des montagnes vers une plaine alluviale très fertile. Au-dessus, le <strong>Canigou</strong> (2 784 m), montagne sacrée des Catalans, domine tout le pays ; le point culminant du département est le <strong>Puigmal</strong> (2 910 m), sur la frontière. Au sud, les Albères plongent dans la mer et dessinent la <strong>Côte Vermeille</strong> (Collioure, Port-Vendres, Banyuls, Cerbère).</p>
+              <p>Les Catalans découpent traditionnellement ce pays en <strong>comarques</strong>, des « pays » historiques qui ont chacun leur identité.</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 420" role="img" aria-label="Carte schématique des comarques de Catalogne du Nord">
+                <rect width="640" height="420" fill="#FBF8F2"/>
+                <!-- mer -->
+                <path d="M565 60 L640 60 L640 420 L540 420 L560 330 L572 280 L566 170 Z" fill="#D8E4F0"/>
+                <text x="605" y="230" font-family="Playfair Display, serif" font-style="italic" font-size="13" fill="#2C4A7C" text-anchor="middle" transform="rotate(90 605 230)">Mer Méditerranée</text>
+                <!-- Espagne -->
+                <path d="M0 300 L20 300 L170 290 L300 350 L450 340 L560 330 L540 420 L0 420 Z" fill="#F3E6D3"/>
+                <text x="250" y="400" font-family="Playfair Display, serif" font-size="13" fill="#A33B2A" font-weight="700" letter-spacing="1.5">CATALOGNE DU SUD (Espagne)</text>
+                <!-- Nord : Aude / Ariège -->
+                <text x="250" y="20" font-family="Playfair Display, serif" font-size="12" fill="#8B7355" font-weight="700" letter-spacing="1.5">AUDE · ARIÈGE (Occitanie)</text>
+
+                <!-- comarques -->
+                <g stroke="white" stroke-width="2">
+                  <path d="M150 40 L420 30 L430 100 L330 112 L160 120 Z" fill="#D9C7A6"/>
+                  <path d="M60 120 L160 120 L160 190 L70 200 Z" fill="#B7CBB0"/>
+                  <path d="M10 200 L70 200 L160 190 L170 290 L20 300 Z" fill="#9FBF9A"/>
+                  <path d="M160 120 L330 112 L330 230 L300 280 L170 290 L160 190 Z" fill="#C9D6E6"/>
+                  <path d="M330 112 L430 100 L560 90 L566 170 L572 260 L470 270 L400 250 L330 230 Z" fill="#F2D59A"/>
+                  <path d="M300 280 L330 230 L400 250 L470 270 L450 340 L300 350 Z" fill="#E7B9A6"/>
+                  <path d="M470 270 L572 260 L560 330 L450 340 Z" fill="#E59A8A"/>
+                </g>
+                <!-- noms de comarques -->
+                <g font-family="Playfair Display, serif" font-size="13" font-weight="700" text-anchor="middle">
+                  <text x="290" y="62" fill="#5A3E1B">Fenouillèdes</text>
+                  <text x="110" y="140" fill="#3E5C38">Capcir</text>
+                  <text x="85" y="282" fill="#3E5C38">Cerdagne</text>
+                  <text x="240" y="140" fill="#2C4A7C">Conflent</text>
+                  <text x="470" y="140" fill="#8B5E0A">Roussillon</text>
+                  <text x="375" y="330" fill="#7A3B1E">Vallespir</text>
+                  <text x="515" y="318" fill="#7A3B1E" font-size="11">Côte Vermeille</text>
+                </g>
+                <!-- fleuves -->
+                <g fill="none" stroke="#5A8FC4" stroke-width="2">
+                  <path d="M260 70 Q 380 80 470 95 T 566 110"/>
+                  <path d="M120 175 Q 200 170 260 195 Q 360 190 470 180 T 566 170"/>
+                  <path d="M320 330 Q 400 300 470 300 T 566 290"/>
+                </g>
+                <g font-family="Source Sans 3, sans-serif" font-size="10" font-style="italic" fill="#3D6E9E">
+                  <text x="400" y="80">Agly</text><text x="330" y="185">Têt</text><text x="440" y="295">Tech</text>
+                </g>
+                <!-- Canigou -->
+                <path d="M290 250 L305 222 L320 250 Z" fill="#8B7355"/>
+                <path d="M300 232 L305 222 L310 232 Z" fill="white"/>
+                <text x="305" y="266" font-family="Source Sans 3, sans-serif" font-size="10.5" font-weight="700" fill="#5A3E1B" text-anchor="middle">Canigou 2 784 m</text>
+                <!-- villes -->
+                <g font-family="Source Sans 3, sans-serif" font-size="11" fill="#2C2418">
+                  <circle cx="490" cy="175" r="6" fill="#2C2418"/><text x="470" y="200" font-weight="700" font-size="12">Perpignan</text>
+                  <circle cx="250" cy="200" r="4" fill="#2C2418"/><text x="225" y="215">Prades</text>
+                  <circle cx="400" cy="305" r="4" fill="#2C2418"/><text x="390" y="290">Céret</text>
+                  <circle cx="115" cy="235" r="4" fill="#2C2418"/><text x="80" y="230">Font-Romeu</text>
+                  <circle cx="110" cy="160" r="3.5" fill="#2C2418"/><text x="75" y="178">Formiguères</text>
+                  <circle cx="290" cy="85" r="3.5" fill="#2C2418"/><text x="230" y="100">St-Paul-de-Fenouillet</text>
+                  <circle cx="545" cy="300" r="3.5" fill="#2C2418"/><text x="500" y="290">Collioure</text>
+                  <circle cx="500" cy="120" r="3.5" fill="#2C2418"/><text x="510" y="124">Salses</text>
+                  <circle cx="520" cy="225" r="3.5" fill="#2C2418"/><text x="530" y="229">Elne</text>
+                </g>
+                <!-- Llívia et Andorre -->
+                <circle cx="75" cy="255" r="8" fill="#F3E6D3" stroke="#A33B2A" stroke-width="1.5"/>
+                <text x="30" y="250" font-family="Source Sans 3, sans-serif" font-size="9.5" fill="#A33B2A" font-weight="700">Llívia</text>
+                <rect x="4" y="170" width="38" height="24" rx="4" fill="#EDE3F2" stroke="#7A3E7C"/>
+                <text x="23" y="186" font-family="Source Sans 3, sans-serif" font-size="9" fill="#7A3E7C" text-anchor="middle" font-weight="700">Andorre</text>
+                <!-- frontière -->
+                <path d="M20 300 L170 290 L300 350 L450 340 L560 330" fill="none" stroke="#B03A2E" stroke-width="2.5" stroke-dasharray="8 5"/>
+                <text x="175" y="318" font-family="Source Sans 3, sans-serif" font-size="10" fill="#B03A2E" font-weight="600" transform="rotate(22 175 318)">Frontière de 1659</text>
+              </svg>
+              <figcaption>Carte schématique (formes et positions approximatives). Llívia, ville espagnole, forme une enclave au cœur de la Cerdagne française.</figcaption>
+            </figure>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Comarque</th><th>Nom catalan</th><th>Paysage</th><th>Lieux phares</th><th>Particularité</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Roussillon</strong></td><td>Rosselló</td><td>Plaine, Salanque, Aspres, littoral</td><td>Perpignan, Elne, Salses, Thuir</td><td>Cœur politique et agricole (vigne, maraîchage, fruits)</td></tr>
+                  <tr><td><strong>Côte Vermeille</strong></td><td>Costa Vermella</td><td>Albères plongeant dans la mer</td><td>Collioure, Port-Vendres, Banyuls, Cerbère</td><td>Vignobles en terrasses, anchois, peintres fauves</td></tr>
+                  <tr><td><strong>Vallespir</strong></td><td>Vallespir</td><td>Vallée du Tech, châtaigneraies</td><td>Céret, Arles-sur-Tech, Prats-de-Mollo</td><td>Cerises de Céret, fêtes de l'ours, contrebande d'autrefois</td></tr>
+                  <tr><td><strong>Conflent</strong></td><td>Conflent</td><td>Vallée de la Têt, massif du Canigou</td><td>Prades, Villefranche-de-Conflent, Vernet-les-Bains</td><td>Grandes abbayes romanes, fortifications de Vauban</td></tr>
+                  <tr><td><strong>Cerdagne</strong></td><td>Cerdanya</td><td>Haut plateau ensoleillé (≈ 1 200 m)</td><td>Font-Romeu, Mont-Louis, Bourg-Madame, Saillagouse</td><td>Partagée en 1660 entre France et Espagne ; four solaire d'Odeillo</td></tr>
+                  <tr><td><strong>Capcir</strong></td><td>Capcir</td><td>Haut plateau froid (≈ 1 500 m), lacs</td><td>Formiguères, Les Angles, Matemale</td><td>Pays d'élevage devenu station de ski</td></tr>
+                  <tr><td><strong>Fenouillèdes</strong></td><td>Fenolledès</td><td>Collines et gorges calcaires</td><td>Saint-Paul-de-Fenouillet, Maury, Caudiès</td><td>Terre <strong>occitane</strong> de langue, rattachée au Languedoc jusqu'en 1790</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · un département « composé »</div>
+              <p>En créant les Pyrénées-Orientales en 1790, la Révolution a réuni la province catalane du Roussillon et un morceau du Languedoc, le Fenouillèdes. C'est pourquoi on y entend encore, au nord, des parlers occitans proches de ceux de l'Aude. La frontière linguistique entre catalan et occitan suit à peu près la ligne de crête des Corbières, l'ancienne frontière de 1258 entre France et Aragon, dont les « châteaux cathares » (Quéribus, Peyrepertuse, Puilaurens) étaient les sentinelles.</p>
+            </div>
+          </section>
+
+          <!-- ═══ ORIGINES ═══ -->
+          <section class="section" id="origines">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🦴</div>
+              Des premiers hommes aux Wisigoths
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">L'Homme de Tautavel</h3>
+              <p>Le Roussillon abrite l'un des plus anciens sites habités d'Europe : la <strong>Caune de l'Arago</strong>, à Tautavel. En <strong>1971</strong>, l'équipe d'Henry de Lumley y découvre le crâne d'un homme vieux d'environ <strong>450 000 ans</strong>, rattaché à <em>Homo heidelbergensis</em>. La grotte a livré des centaines de milliers d'objets : outils de pierre, ossements de chevaux, de rennes, de bisons ou de rhinocéros, qui racontent la vie de chasseurs nomades. Le Musée de Préhistoire de Tautavel présente ces découvertes.</p>
+
+              <h3 class="sous-titre">Ibères, Grecs et Romains</h3>
+              <p>À l'âge du fer, la plaine est peuplée par les <strong>Sordes</strong>, un peuple apparenté aux Ibères. Deux oppida dominent le pays : <strong>Ruscino</strong> (Château-Roussillon) et <strong>Illibéris</strong> (Elne). En <strong>218 av. J.-C.</strong>, <strong>Hannibal</strong> traverse la région avec ses éléphants en route vers l'Italie, négociant son passage avec les chefs locaux. Après la conquête romaine, la <strong>Via Domitia</strong> (vers 118 av. J.-C.), qui relie l'Italie à l'Espagne, franchit les Pyrénées au col de Panissars, près du Perthus, où l'on voit encore les vestiges du <strong>trophée de Pompée</strong>. La région fait alors partie de la province de <strong>Narbonnaise</strong>.</p>
+              <p>Sous l'empereur Constantin, Illibéris prend le nom d'<strong>Helena</strong>, en l'honneur de sa mère : c'est l'origine du nom d'<strong>Elne</strong>, qui devient au VI<sup>e</sup> siècle le siège d'un <strong>évêché</strong>. Elne restera la capitale religieuse du Roussillon jusqu'en 1602, date du transfert de l'évêché à Perpignan.</p>
+
+              <h3 class="sous-titre">Wisigoths, Arabes et Francs</h3>
+              <p>Au V<sup>e</sup> siècle, les <strong>Wisigoths</strong> s'installent. Leur royaume, centré sur Tolède, conserve une province au nord des Pyrénées, la <strong>Septimanie</strong> (de Narbonne au Roussillon). Vers <strong>720</strong>, les troupes musulmanes venues d'Al-Andalus prennent Narbonne et contrôlent la région pendant une quarantaine d'années. Les <strong>Francs</strong> de Pépin le Bref reprennent Narbonne en <strong>759</strong> ; Charlemagne organise ensuite au sud des Pyrénées une zone tampon, la <strong>Marche d'Espagne</strong>, après la prise de Barcelone en <strong>801</strong>. Le Roussillon devient l'un de ses comtés.</p>
+            </div>
+            <div class="schema">
+              <span class="schema-titre">De l'oppidum au département</span>
+              <div class="schema-flow">
+                <div class="schema-box">Ruscino<br><span class="small">oppidum ibère puis ville romaine</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Pagus Ruscinonensis<br><span class="small">« pays de Ruscino », comté carolingien</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Rosselló<br><span class="small">comté puis province catalane</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort"><strong>Roussillon</strong><br><span style="font-size:12px;opacity:.85">province française (1659)</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ MOYEN ÂGE ═══ -->
+          <section class="section" id="moyen-age">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🛡️</div>
+              Le Moyen Âge : la naissance de la Catalogne
+            </h2>
+            <div class="histoire-texte">
+              <p>Au IX<sup>e</sup> siècle, l'Empire carolingien se délite. Dans la Marche d'Espagne, des comtes d'origine locale transmettent leurs charges à leurs fils. Le plus célèbre est <strong>Guifred le Velu</strong> (<em>Guifré el Pilós</em>, mort en 897), comte de Cerdagne, d'Urgell puis de Barcelone, considéré comme le père de la Catalogne. Sa famille, la maison de Barcelone, gouvernera les comtés catalans pendant cinq siècles. Les comtés de <strong>Cerdagne</strong>, <strong>Conflent</strong>, <strong>Vallespir</strong> et <strong>Roussillon</strong> font pleinement partie de ce monde catalan naissant.</p>
+
+              <h3 class="sous-titre">Le temps des grandes abbayes</h3>
+              <p>Les X<sup>e</sup> et XI<sup>e</sup> siècles voient fleurir un <strong>art roman</strong> d'une richesse exceptionnelle. <strong>Saint-Michel-de-Cuxa</strong>, près de Prades, devient l'un des grands monastères d'Europe ; l'abbé <strong>Oliba</strong> (vers 971-1046), à la fois abbé de Cuxa et de Ripoll et évêque de Vic, en est la figure majeure. Le comte Guifred de Cerdagne fonde <strong>Saint-Martin-du-Canigou</strong>, consacré en 1009, accroché à la montagne à plus de 1 000 m. Le linteau de <strong>Saint-Génis-des-Fontaines</strong> (1019-1020) est l'un des plus anciens reliefs romans datés d'Europe. Plus tard viennent le prieuré de <strong>Serrabona</strong> et sa tribune de marbre rose, et le cloître d'<strong>Elne</strong>.</p>
+              <p>En <strong>1027</strong>, à <strong>Toulouges</strong>, près de Perpignan, un synode réuni à l'initiative d'Oliba proclame l'une des premières <strong>trêves de Dieu</strong> : interdiction de combattre du samedi soir au lundi matin. Ce mouvement de « paix de Dieu » cherche à limiter la violence des seigneurs.</p>
+
+              <div class="citation-bloc">
+                <p>« Que nul n'attaque son ennemi depuis l'heure de none du samedi jusqu'à l'heure de prime du lundi. »</p>
+                <cite>— Principe de la trêve de Dieu proclamée à Toulouges en 1027 (traduction résumée)</cite>
+              </div>
+
+              <h3 class="sous-titre">L'entrée dans la Couronne d'Aragon (1172)</h3>
+              <p>En 1137, le mariage du comte de Barcelone <strong>Raimond-Bérenger IV</strong> avec l'héritière du royaume d'Aragon unit les deux ensembles : c'est la naissance de la <strong>Couronne d'Aragon</strong>, une confédération où la Catalogne conserve ses lois et sa langue. En <strong>1172</strong>, le dernier comte de Roussillon, <strong>Girard II</strong>, meurt sans enfant et lègue son comté au roi <strong>Alphonse II d'Aragon</strong>. Le Roussillon rejoint ainsi directement le domaine du souverain catalano-aragonais.</p>
+              <p>Au XIII<sup>e</sup> siècle, pendant la croisade contre les Albigeois, le roi d'Aragon Pierre II est tué à Muret (1213) en défendant ses vassaux languedociens. Son fils, <strong>Jacques I<sup>er</sup> le Conquérant</strong>, se tourne vers la Méditerranée (conquête de Majorque en 1229, de Valence en 1238) et renonce au Languedoc par le <strong>traité de Corbeil (1258)</strong> signé avec Saint Louis. En échange, le roi de France abandonne ses droits théoriques sur les comtés catalans, dont le Roussillon. La frontière passe alors sur les Corbières, au nord du Roussillon.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une frontière qui n'a pas toujours été les Pyrénées</div>
+              <p>On imagine volontiers que les Pyrénées ont toujours séparé la France de l'Espagne. Pendant tout le Moyen Âge, c'est faux : la montagne était au contraire le cœur d'un même ensemble catalan, et la vraie frontière politique et linguistique se trouvait plus au nord, dans les Corbières. La crête pyrénéenne ne devient une frontière d'État qu'en 1659.</p>
+            </div>
+          </section>
+
+          <!-- ═══ MAJORQUE ═══ -->
+          <section class="section" id="majorque">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👑</div>
+              Le royaume de Majorque : Perpignan capitale (1276 – 1344)
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🏛️</div>
+                <div><div class="recette-meta-label">Capitale continentale</div><div class="recette-meta-val">Perpignan</div></div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🗺️</div>
+                <div><div class="recette-meta-label">Territoires</div><div class="recette-meta-val">Baléares, Roussillon, Cerdagne, Montpellier</div></div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">👑</div>
+                <div><div class="recette-meta-label">Rois</div><div class="recette-meta-val">Jacques II, Sanche, Jacques III</div></div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏳</div>
+                <div><div class="recette-meta-label">Durée</div><div class="recette-meta-val">68 ans</div></div>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <p>À sa mort en 1276, Jacques I<sup>er</sup> le Conquérant partage ses États entre ses deux fils. L'aîné, Pierre III, reçoit l'Aragon, la Catalogne et Valence ; le cadet, <strong>Jacques II</strong>, reçoit un royaume discontinu : les <strong>îles Baléares</strong>, les comtés de <strong>Roussillon</strong> et de <strong>Cerdagne</strong> et la seigneurie de <strong>Montpellier</strong>. C'est le <strong>royaume de Majorque</strong>, dont <strong>Perpignan</strong> devient la principale résidence royale sur le continent.</p>
+              <p>Cette période est l'âge d'or de la ville. Jacques II fait construire sur la colline du Puig del Rei le <strong>palais des rois de Majorque</strong>, avec sa double chapelle gothique ; il agrandit l'enceinte et lance la <strong>cathédrale Saint-Jean-Baptiste</strong> (commencée en 1324). Perpignan, peut-être deuxième ville de la Couronne après Barcelone, prospère grâce à la <strong>draperie</strong> : les draps de laine du Roussillon s'exportent dans toute la Méditerranée.</p>
+              <p>Mais le royaume est fragile : dès 1279, Pierre III impose à son frère de lui prêter hommage. En <strong>1343-1344</strong>, le roi d'Aragon <strong>Pierre IV le Cérémonieux</strong> s'empare des Baléares puis du Roussillon et réunit le royaume de Majorque à la Couronne d'Aragon. Le dernier roi, <strong>Jacques III</strong>, meurt en 1349 à la bataille de Llucmajor en tentant de reconquérir son trône.</p>
+            </div>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Souverain</th><th>Règne</th><th>Événement marquant</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Jacques II de Majorque</strong></td><td>1276 – 1311</td><td>Construction du palais royal de Perpignan ; vassalité imposée par l'Aragon (1279)</td></tr>
+                  <tr><td><strong>Sanche</strong></td><td>1311 – 1324</td><td>Paix et prospérité ; développement de la marine baléare</td></tr>
+                  <tr><td><strong>Jacques III</strong></td><td>1324 – 1344</td><td>Début de la cathédrale Saint-Jean ; dépossédé par Pierre IV d'Aragon</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Perpignan après Majorque</h3>
+              <p>Réintégrée à la Couronne d'Aragon, Perpignan reste une ville majeure. Pierre IV y fonde une <strong>université</strong> en <strong>1350</strong>. La ville se dote du <strong>Castillet</strong> (1368), porte fortifiée devenue son emblème, et de la <strong>Loge de Mer</strong> (1397), siège du tribunal de commerce maritime, l'une des plus belles constructions gothiques civiles de la Couronne. La <strong>peste noire</strong> de 1348 et ses retours frappent cependant durement la population.</p>
+            </div>
+          </section>
+
+          <!-- ═══ DEUX COURONNES ═══ -->
+          <section class="section" id="deux-couronnes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">⚔️</div>
+              Entre France et Espagne (1463 – 1659)
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Louis XI et la « très fidèle ville » (1463 – 1493)</h3>
+              <p>En 1462, la Catalogne se révolte contre son roi <strong>Jean II d'Aragon</strong>. Pour obtenir l'aide militaire de <strong>Louis XI</strong>, Jean II lui engage le Roussillon et la Cerdagne en garantie d'une somme de 300 000 écus. Les troupes françaises occupent le pays en 1463. En 1473, Perpignan se soulève contre l'occupant ; assiégée, elle résiste longtemps, au point que les habitants mangent les rats. Jean II lui décerne le titre de <strong>« fidelíssima vila »</strong> (très fidèle ville), que Perpignan porte encore dans ses armoiries. La ville finit par capituler en 1475.</p>
+              <p>En <strong>1493</strong>, par le <strong>traité de Barcelone</strong>, <strong>Charles VIII</strong>, pressé de conquérir l'Italie, rend le Roussillon et la Cerdagne à <strong>Ferdinand le Catholique</strong>. Ferdinand fait bâtir aussitôt la <strong>forteresse de Salses</strong> (1497-1503), chef-d'œuvre d'architecture militaire de transition, à demi enterrée pour résister à l'artillerie, qui garde le passage étroit entre les Corbières et les étangs.</p>
+
+              <h3 class="sous-titre">Les Habsbourg et la guerre des Faucheurs (1640 – 1659)</h3>
+              <p>Au XVI<sup>e</sup> siècle, le Roussillon devient une province frontière de la monarchie espagnole des Habsbourg, régulièrement traversée par les armées. Au XVII<sup>e</sup> siècle, la pression fiscale et le logement des soldats castillans exaspèrent les Catalans. Le 7 juin 1640, le <strong>Corpus de Sang</strong> (« Fête-Dieu de sang ») à Barcelone déclenche la <strong>guerre des Faucheurs</strong> (<em>Guerra dels Segadors</em>), dont le chant est devenu l'hymne national catalan, <em>Els Segadors</em>.</p>
+              <p>En janvier 1641, le président de la Generalitat <strong>Pau Claris</strong> place la Catalogne sous la protection de la France et proclame <strong>Louis XIII</strong> comte de Barcelone. Les armées françaises assiègent <strong>Perpignan</strong>, tenue par une garnison espagnole ; Louis XIII et Richelieu viennent en personne. La ville capitule le <strong>9 septembre 1642</strong>. La Catalogne du Sud revient à l'Espagne en 1652, mais le Roussillon reste aux mains des Français.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · un pays monnaie d'échange</div>
+              <p>De 1463 à 1659, le Roussillon change cinq fois de mains. Ces changements ne viennent pas de la volonté de ses habitants : ce sont des gages, des restitutions, des compensations négociées entre rois. Le paradoxe est cruel : en 1640, les Catalans appellent la France à l'aide contre Madrid pour défendre leurs libertés ; vingt ans plus tard, c'est cette même France qui les supprimera en Roussillon.</p>
+            </div>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Date</th><th>Événement</th><th>Souverain du Roussillon après l'événement</th></tr></thead>
+                <tbody>
+                  <tr><td>1462 – 1463</td><td>Traité de Bayonne, occupation française</td><td><strong>Louis XI</strong> (France, en gage)</td></tr>
+                  <tr><td>1473 – 1475</td><td>Révolte et siège de Perpignan</td><td>Brièvement Jean II, puis France</td></tr>
+                  <tr><td>1493</td><td>Traité de Barcelone</td><td><strong>Ferdinand le Catholique</strong> (Aragon)</td></tr>
+                  <tr><td>1516</td><td>Avènement de Charles Quint</td><td><strong>Habsbourg d'Espagne</strong></td></tr>
+                  <tr><td>1641 – 1642</td><td>Guerre des Faucheurs, prise de Perpignan</td><td><strong>Louis XIII</strong> (de fait)</td></tr>
+                  <tr><td>1659</td><td>Traité des Pyrénées</td><td><strong>Louis XIV</strong> (de droit)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ═══ TRAITÉ DES PYRÉNÉES ═══ -->
+          <section class="section" id="traite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              1659 : le traité des Pyrénées
+            </h2>
+            <div class="histoire-texte">
+              <p>Le <strong>7 novembre 1659</strong>, sur l'<strong>île des Faisans</strong>, au milieu de la Bidassoa, à l'autre bout des Pyrénées, le cardinal <strong>Mazarin</strong> et le ministre espagnol <strong>Luis de Haro</strong> signent la paix qui met fin à vingt-quatre ans de guerre. Le traité prévoit le mariage de Louis XIV avec l'infante <strong>Marie-Thérèse</strong> (célébré en 1660) et redessine les frontières : l'Espagne cède l'Artois au nord et, au sud, les « <strong>comtés de Roussillon et de Conflent</strong> », avec le Vallespir et le Capcir. Les « monts Pyrénées » deviennent la limite entre les deux royaumes.</p>
+              <p>Restait la <strong>Cerdagne</strong>, coupée en deux par la montagne. Après les conférences de Céret, le <strong>traité de Llívia</strong> (12 novembre 1660) attribue à la France <strong>33 villages</strong> de haute Cerdagne. <strong>Llívia</strong>, qui a le statut de « ville » et non de village, reste espagnole : elle forme depuis une <strong>enclave</strong> d'environ 13 km² entourée de territoire français, reliée à l'Espagne par une route dite « neutre ». Le bornage précis de la frontière n'est achevé qu'en 1868.</p>
+              <p>Le traité est signé sans consulter les institutions catalanes. Les Cortes catalanes, qui auraient dû approuver toute cession de territoire, ne sont pas réunies : beaucoup de Catalans y voient une amputation, souvenir encore vivant dans l'expression « <em>Catalunya Nord</em> ».</p>
+            </div>
+
+            <div class="compare">
+              <div class="compare-col compare-cath">
+                <h4>Ce que l'Espagne cède</h4>
+                <ul>
+                  <li>Le comté de <strong>Roussillon</strong> (plaine, Côte Vermeille)</li>
+                  <li>Le <strong>Conflent</strong> et le <strong>Capcir</strong></li>
+                  <li>Le <strong>Vallespir</strong></li>
+                  <li><strong>33 villages</strong> de Cerdagne (traité de Llívia, 1660)</li>
+                  <li>Au nord du royaume : l'<strong>Artois</strong> et des places en Flandre</li>
+                </ul>
+              </div>
+              <div class="compare-col compare-rom">
+                <h4>Ce que l'Espagne garde</h4>
+                <ul>
+                  <li>La <strong>Catalogne</strong> au sud des Pyrénées</li>
+                  <li>Le reste de la <strong>Cerdagne</strong> (Puigcerdà)</li>
+                  <li>L'enclave de <strong>Llívia</strong></li>
+                  <li>Le Val d'Aran (pourtant au nord de la crête)</li>
+                  <li>Les droits sur l'héritage espagnol, sous condition de dot (jamais payée)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="encadre">
+              <strong>🔎 Llívia, la ville qui n'était pas un village</strong><br>
+              Le traité parlait de céder des « villages ». Les négociateurs espagnols firent valoir que Llívia, ancienne capitale de la Cerdagne (la <em>Julia Libyca</em> romaine), avait le titre de <em>vila</em> depuis Charles Quint. Elle resta donc espagnole. On y visite la <strong>pharmacie Esteve</strong>, l'une des plus anciennes d'Europe, transformée en musée.
+            </div>
+          </section>
+
+          <!-- ═══ FRANCISATION ═══ -->
+          <section class="section" id="francisation">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🇫🇷</div>
+              Devenir français (1659 – 1815)
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Supprimer les institutions catalanes</h3>
+              <p>Louis XIV abolit les institutions catalanes (Corts, Generalitat, Usatges dans leur fonctionnement politique) et les remplace par un <strong>Conseil souverain du Roussillon</strong> (1660), cour de justice suprême siégeant à Perpignan, et par un <strong>intendant</strong>. L'université est réorganisée, les jésuites et des religieux français encouragés à enseigner en français. Le <strong>2 avril 1700</strong>, un édit royal interdit l'usage du catalan dans les actes officiels (notaires, tribunaux, registres) sous peine de nullité.</p>
+
+              <h3 class="sous-titre">Résistances : les Angelets et la conspiration de Villefranche</h3>
+              <p>L'introduction de la <strong>gabelle</strong> (impôt sur le sel), inconnue en Catalogne, provoque la révolte des <strong>Angelets de la terra</strong> (« petits anges de la terre ») dans le Vallespir et le Haut-Conflent, entre <strong>1663 et 1672</strong>. Guidés par <strong>Josep de la Trinxeria</strong>, ces paysans et contrebandiers mènent une guérilla contre les gabelous et les garnisons. En <strong>1674</strong>, la <strong>conspiration de Villefranche</strong>, qui visait à livrer la place aux Espagnols, est déjouée ; ses chefs sont exécutés.</p>
+
+              <h3 class="sous-titre">Vauban verrouille la montagne</h3>
+              <p>Pour tenir la nouvelle frontière, <strong>Vauban</strong> visite le Roussillon à plusieurs reprises. Il fonde la ville forte de <strong>Mont-Louis</strong> (1679-1681) au col de la Perche, renforce <strong>Villefranche-de-Conflent</strong> et y fait creuser le Fort Libéria, modernise <strong>Bellegarde</strong> au Perthus, <strong>Prats-de-Mollo</strong> (fort Lagarde) et Collioure. Mont-Louis et Villefranche-de-Conflent sont inscrites au <strong>patrimoine mondial de l'UNESCO</strong> depuis <strong>2008</strong>, avec le réseau des fortifications de Vauban.</p>
+
+              <h3 class="sous-titre">La Révolution et la « guerre du Roussillon »</h3>
+              <p>En <strong>1790</strong>, la province disparaît : elle devient, avec le Fenouillèdes, le département des <strong>Pyrénées-Orientales</strong>. En 1793, l'Espagne entre en guerre contre la République : l'armée du général <strong>Ricardos</strong> envahit le Roussillon, bat les Français au Mas Deu, mais échoue devant Perpignan (victoire française de Peyrestortes, septembre 1793). En 1794, le général <strong>Dugommier</strong> remporte la bataille du <strong>Boulou</strong> et chasse les Espagnols ; il est tué en novembre en Catalogne. La paix de Bâle (1795) confirme la frontière.</p>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">Les étapes de l'intégration française</span>
+              <div class="schema-flow">
+                <div class="schema-box">1660<br><b>Conseil souverain</b><br><span class="small">fin des institutions catalanes</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1661<br><b>Gabelle</b><br><span class="small">révolte des Angelets</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1679<br><b>Vauban</b><br><span class="small">Mont-Louis, Villefranche</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1700<br><b>Édit linguistique</b><br><span class="small">le français obligatoire dans les actes</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">1790<br><b>Département</b><br><span style="font-size:12px;opacity:.85">Pyrénées-Orientales</span></div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une francisation lente</div>
+              <p>Les textes officiels ne changent pas d'un coup la vie des gens. Jusqu'au début du XX<sup>e</sup> siècle, la grande majorité des Roussillonnais parlent catalan au quotidien ; seules les élites et l'administration utilisent le français. C'est l'école obligatoire de la III<sup>e</sup> République, le service militaire, la guerre de 1914-1918, puis la radio et la télévision qui feront basculer la langue de transmission familiale, surtout après 1945.</p>
+            </div>
+          </section>
+
+          <!-- ═══ CONTEMPORAIN ═══ -->
+          <section class="section" id="contemporain">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Du XIX<sup>e</sup> siècle à aujourd'hui
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Vigne, chemin de fer et savants</h3>
+              <p>Le XIX<sup>e</sup> siècle fait du Roussillon un pays de <strong>vignes</strong>. Le chemin de fer atteint Perpignan en 1858 et permet d'expédier vins doux naturels, vins de table et primeurs vers le reste de la France. Le pays donne des figures nationales, comme l'astronome et homme politique <strong>François Arago</strong>, né à Estagel en 1786, ministre en 1848 et artisan de l'abolition de l'esclavage. Le <strong>phylloxéra</strong> ravage le vignoble à partir des années 1870, puis la surproduction provoque la grande <strong>révolte viticole de 1907</strong> : le 20 juin, la préfecture de Perpignan est envahie et incendiée par des manifestants.</p>
+              <p>Dans la montagne, le <strong>Train jaune</strong> ouvre en 1910 entre Villefranche et Mont-Louis, puis atteint Latour-de-Carol en 1927 ; il franchit le pont Séjourné et le pont suspendu Gisclard. Le maréchal <strong>Joffre</strong>, né à Rivesaltes en 1852, devient le vainqueur de la Marne en 1914.</p>
+
+              <h3 class="sous-titre">Une terre d'artistes</h3>
+              <p>La lumière du pays attire les peintres. En <strong>1905</strong>, <strong>Henri Matisse</strong> et <strong>André Derain</strong> peignent à Collioure les toiles qui font naître le <strong>fauvisme</strong>. À partir de 1911, <strong>Picasso</strong>, <strong>Braque</strong>, Juan Gris, puis Chagall et Soutine séjournent à <strong>Céret</strong>, surnommée « la Mecque du cubisme », qui possède aujourd'hui un remarquable musée d'art moderne. Le sculpteur <strong>Aristide Maillol</strong>, né à Banyuls en 1861, y est enterré dans sa métairie. Le peintre <strong>Hyacinthe Rigaud</strong>, auteur du célèbre portrait de Louis XIV en costume de sacre, était déjà né à Perpignan en 1659.</p>
+
+              <h3 class="sous-titre">1939 : la Retirada</h3>
+              <p>À la fin de la guerre d'Espagne, en <strong>janvier-février 1939</strong>, la chute de Barcelone jette sur les routes près d'un demi-million de réfugiés républicains : civils, soldats, enfants. C'est la <strong>Retirada</strong> (la « retraite »). Ils franchissent les cols du Perthus, de Cerbère, de Prats-de-Mollo ou de Bourg-Madame, souvent dans la neige. Les autorités françaises, débordées, les parquent dans des <strong>camps</strong> improvisés sur les plages d'<strong>Argelès</strong>, de <strong>Saint-Cyprien</strong> et du <strong>Barcarès</strong>, entourés de barbelés, sans abri ni hygiène. Le poète <strong>Antonio Machado</strong> meurt à Collioure le 22 février 1939, quelques semaines après son arrivée. Le linguiste <strong>Pompeu Fabra</strong>, codificateur du catalan moderne, finit ses jours en exil à Prades (1948), où le violoncelliste <strong>Pau Casals</strong> s'installe et crée en 1950 le <strong>Festival Pablo Casals</strong>.</p>
+              <p>Le <strong>camp de Rivesaltes</strong> (camp Joffre) accueille successivement des républicains espagnols, des Juifs étrangers déportés vers Auschwitz en 1942, des Tsiganes, puis des <strong>harkis</strong> après 1962. Un <strong>mémorial</strong>, conçu par l'architecte Rudy Ricciotti, y a été inauguré en 2015.</p>
+
+              <h3 class="sous-titre">Tourisme, rapatriés et Occitanie</h3>
+              <p>Après 1962, le département accueille de nombreux <strong>rapatriés d'Algérie</strong>. Dans les années 1960, la <strong>mission Racine</strong> aménage le littoral languedocien et roussillonnais pour le tourisme de masse (Port-Barcarès, Saint-Cyprien). Le <strong>four solaire d'Odeillo</strong>, achevé en 1970 près de Font-Romeu, devient un symbole de recherche scientifique. L'<strong>université de Perpignan</strong>, héritière de celle de 1350, est refondée en 1979. Depuis 2010-2013, la ligne à grande vitesse <strong>Perpignan-Figueres</strong> traverse les Pyrénées par le tunnel du Perthus. En <strong>2016</strong>, la région Languedoc-Roussillon fusionne avec Midi-Pyrénées pour former l'<strong>Occitanie</strong>, un nom qui a suscité des protestations en Catalogne du Nord, où beaucoup réclamaient une référence au pays catalan.</p>
+            </div>
+
+            <h3 class="sous-titre">Population des Pyrénées-Orientales</h3>
+            <figure class="schema">
+              <svg viewBox="0 0 640 230" role="img" aria-label="Population des Pyrénées-Orientales en 2012, 2017 et 2023">
+                <rect width="640" height="230" fill="#FBF8F2"/>
+                <g font-family="Source Sans 3, sans-serif">
+                  <!-- échelle : 0 → 500 000 hab. sur 420 px, x0 = 150 -->
+                  <line x1="150" y1="20" x2="150" y2="180" stroke="#B8A58A"/>
+                  <rect x="150" y="35"  width="384.5" height="34" rx="4" fill="#8FA6C9"/>
+                  <rect x="150" y="85"  width="398.5" height="34" rx="4" fill="#5C7EB0"/>
+                  <rect x="150" y="135" width="417.4" height="34" rx="4" fill="#2C4A7C"/>
+                  <g font-size="13" fill="#2C2418" text-anchor="end" font-weight="700">
+                    <text x="140" y="57">2012</text><text x="140" y="107">2017</text><text x="140" y="157">2023</text>
+                  </g>
+                  <g font-size="12" fill="white" font-weight="700">
+                    <text x="160" y="57">457 793 hab.</text><text x="160" y="107">474 452 hab.</text><text x="160" y="157">496 855 hab.</text>
+                  </g>
+                  <text x="320" y="210" font-size="11" fill="#8B7355" text-anchor="middle" font-style="italic">+0,8 % par an entre 2017 et 2023, l'une des plus fortes hausses d'Occitanie · Perpignan : 121 616 habitants</text>
+                </g>
+              </svg>
+              <figcaption>Populations de référence au 1<sup>er</sup> janvier (source : Insee, recensements de la population).</figcaption>
+            </figure>
+          </section>
+
+          <!-- ═══ CATALOGNE ═══ -->
+          <section class="section" id="catalogne">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🤝</div>
+              Les liens avec la Catalogne espagnole
+            </h2>
+            <div class="histoire-texte">
+              <p>La frontière de 1659 a séparé deux États, mais pas une culture. La Catalogne du Nord appartient à ce que les Catalans appellent les <strong>Pays catalans</strong> (<em>Països Catalans</em>) : l'ensemble des territoires où l'on parle catalan, répartis aujourd'hui entre quatre États (Espagne, France, Andorre, Italie).</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 380" role="img" aria-label="Carte schématique des territoires de langue catalane">
+                <rect width="640" height="380" fill="#EEF2F8"/>
+                <!-- terres -->
+                <path d="M120 10 L420 10 L430 70 L420 140 L370 210 L320 250 L290 330 L240 380 L60 380 L60 10 Z" fill="#F7F0E2"/>
+                <path d="M560 70 L600 60 L615 130 L590 190 L560 170 Z" fill="#F7F0E2"/>
+                <!-- Catalogne Nord -->
+                <path d="M250 22 L380 18 L395 55 L270 62 Z" fill="#2C4A7C"/>
+                <text x="325" y="44" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" text-anchor="middle" font-weight="700">Catalogne du Nord (France)</text>
+                <!-- Andorre -->
+                <circle cx="225" cy="70" r="10" fill="#7A3E7C"/>
+                <text x="210" y="56" font-family="Source Sans 3, sans-serif" font-size="10" fill="#7A3E7C" text-anchor="end" font-weight="700">Andorre</text>
+                <!-- Catalogne -->
+                <path d="M230 82 L395 62 L420 70 L410 135 L360 195 L250 190 L235 140 Z" fill="#C8102E"/>
+                <text x="325" y="130" font-family="Source Sans 3, sans-serif" font-size="13" fill="white" text-anchor="middle" font-weight="700">Catalogne (Espagne)</text>
+                <text x="325" y="147" font-family="Source Sans 3, sans-serif" font-size="11" fill="#FFE3A3" text-anchor="middle">Barcelone</text>
+                <!-- Frange -->
+                <path d="M205 90 L232 86 L238 190 L212 195 Z" fill="#E3A83B"/>
+                <text x="198" y="150" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B5E0A" text-anchor="end" font-weight="700">Frange d'Aragon</text>
+                <!-- Valence -->
+                <path d="M215 198 L355 200 L310 255 L285 330 L240 365 L205 300 Z" fill="#E59A6A"/>
+                <text x="265" y="270" font-family="Source Sans 3, sans-serif" font-size="12" fill="#5A2E14" text-anchor="middle" font-weight="700">Pays valencien</text>
+                <text x="265" y="286" font-family="Source Sans 3, sans-serif" font-size="10" fill="#5A2E14" text-anchor="middle">(valencien)</text>
+                <!-- Baléares -->
+                <g fill="#3E7C4A">
+                  <ellipse cx="455" cy="235" rx="34" ry="20"/>
+                  <ellipse cx="515" cy="210" rx="16" ry="8"/>
+                  <ellipse cx="395" cy="275" rx="12" ry="8"/>
+                </g>
+                <text x="455" y="270" font-family="Source Sans 3, sans-serif" font-size="12" fill="#2E5C36" text-anchor="middle" font-weight="700">Îles Baléares</text>
+                <!-- Alghero -->
+                <circle cx="568" cy="120" r="7" fill="#C8843A"/>
+                <text x="580" y="100" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B5E0A" font-weight="700">L'Alguer</text>
+                <text x="580" y="112" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8B5E0A">(Sardaigne, Italie)</text>
+                <text x="500" y="340" font-family="Playfair Display, serif" font-style="italic" font-size="14" fill="#2C4A7C">Mer Méditerranée</text>
+                <text x="80" y="40" font-family="Playfair Display, serif" font-size="12" fill="#8B7355" font-weight="700">FRANCE</text>
+                <text x="80" y="230" font-family="Playfair Display, serif" font-size="12" fill="#8B7355" font-weight="700">ESPAGNE</text>
+              </svg>
+              <figcaption>Les territoires de langue catalane (schéma, non à l'échelle). On estime à environ dix millions le nombre de personnes qui parlent catalan.</figcaption>
+            </figure>
+
+            <h3 class="sous-titre">Deux Catalognes, deux statuts</h3>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Critère</th><th>Catalogne du Nord (France)</th><th>Catalogne (Espagne)</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Statut</strong></td><td>Département (66) de la région Occitanie</td><td>Communauté autonome, avec Parlement et gouvernement (Generalitat)</td></tr>
+                  <tr><td><strong>Population</strong></td><td>≈ 500 000 habitants</td><td>≈ 8 millions d'habitants</td></tr>
+                  <tr><td><strong>Ville principale</strong></td><td>Perpignan (Perpinyà)</td><td>Barcelone</td></tr>
+                  <tr><td><strong>Statut du catalan</strong></td><td>Langue régionale, sans statut officiel ; reconnue par une charte du Conseil général (2007)</td><td>Langue officielle avec le castillan ; langue principale de l'école</td></tr>
+                  <tr><td><strong>Enseignement</strong></td><td>Écoles immersives (La Bressola, Arrels), filières bilingues publiques, option au lycée et à l'université</td><td>Immersion linguistique en catalan dans l'école publique</td></tr>
+                  <tr><td><strong>Drapeau</strong></td><td>Senyera, utilisée par les communes et le Département aux côtés du drapeau français</td><td>Senyera, drapeau officiel</td></tr>
+                  <tr><td><strong>Fête nationale</strong></td><td>Pas de jour férié ; Sant Jordi et la Saint-Jean célébrées</td><td>Diada, 11 septembre (chute de Barcelone en 1714)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Une coopération transfrontalière</h3>
+              <p>Depuis la fin du franquisme (1975) et l'ouverture des frontières européennes, les liens se sont multipliés : la Generalitat a ouvert une <strong>maison de la Catalogne</strong> à Perpignan ; un <strong>Eurodistrict de l'espace catalan transfrontalier</strong> rapproche collectivités françaises et catalanes ; l'<strong>hôpital transfrontalier de Cerdagne</strong>, à Puigcerdà, ouvert en 2014, soigne indifféremment les habitants des deux côtés, une première en Europe. Les médias catalans, les clubs de sport (USAP, Dragons Catalans) et les associations culturelles circulent d'un versant à l'autre.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · proches, mais pas identiques</div>
+              <p>La Catalogne du Nord partage la langue et les symboles du Sud, mais trois siècles et demi de vie française ont forgé une identité propre. La plupart des Nord-Catalans se sentent à la fois catalans et français ; le débat sur l'indépendance de la Catalogne espagnole y suscite de la sympathie chez certains, mais n'a jamais donné naissance à un mouvement de masse comparable. Les chercheurs notent même que les Catalans du Sud, en passant souvent au français ou au castillan face à un Nord-Catalan, peuvent involontairement décourager l'usage du catalan au nord.</p>
+            </div>
+          </section>
+
+          <!-- ═══ LANGUE ═══ -->
+          <section class="section" id="langue">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗣️</div>
+              La langue catalane en Roussillon
+            </h2>
+            <div class="histoire-texte">
+              <p>Le <strong>catalan</strong> est une langue romane, issue du latin parlé, au même titre que le français, l'espagnol ou l'occitan. Ce n'est ni un dialecte de l'espagnol ni un « patois » : il possède une littérature prestigieuse depuis le Moyen Âge (Ramon Llull, Ausiàs March, la chronique de Jacques I<sup>er</sup>) et a été la langue de chancellerie de la Couronne d'Aragon. Il est très proche de l'<strong>occitan</strong>, avec lequel il formait au Moyen Âge un même espace littéraire des troubadours.</p>
+              <p>Le parler du Roussillon, le <strong>roussillonnais</strong> (<em>rossellonès</em>), appartient au catalan oriental. Isolé de Barcelone depuis 1659, il a gardé des traits anciens et adopté des emprunts au français. On dit par exemple <em>mercès</em> (merci) plutôt que <em>gràcies</em>, et la première personne des verbes se termine en <em>-i</em> (<em>parli</em>, « je parle »). Le Fenouillèdes, au nord, parle quant à lui <strong>occitan</strong> (languedocien).</p>
+            </div>
+
+            <h3 class="sous-titre">Comparer les langues voisines</h3>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Français</th><th>Catalan (Roussillon)</th><th>Catalan (Barcelone)</th><th>Espagnol</th><th>Occitan</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Bonjour</strong></td><td>Bon dia</td><td>Bon dia</td><td>Buenos días</td><td>Bonjorn</td></tr>
+                  <tr><td><strong>Merci</strong></td><td>Mercès</td><td>Gràcies</td><td>Gracias</td><td>Mercé</td></tr>
+                  <tr><td><strong>Au revoir</strong></td><td>Adéu-siau</td><td>Adéu</td><td>Adiós</td><td>Adieu-siatz</td></tr>
+                  <tr><td><strong>Eau</strong></td><td>Aigua</td><td>Aigua</td><td>Agua</td><td>Aiga</td></tr>
+                  <tr><td><strong>Nuit</strong></td><td>Nit</td><td>Nit</td><td>Noche</td><td>Nuèch</td></tr>
+                  <tr><td><strong>Fils</strong></td><td>Fill</td><td>Fill</td><td>Hijo</td><td>Filh</td></tr>
+                  <tr><td><strong>Je parle</strong></td><td>Parli</td><td>Parlo</td><td>Hablo</td><td>Parli</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Graphies usuelles ; la prononciation varie selon les villages.</p>
+
+            <h3 class="sous-titre">Petit lexique pour le visiteur</h3>
+            <div class="lexique">
+              <div class="mot"><b>Perpinyà</b><span>Perpignan</span></div>
+              <div class="mot"><b>Visca !</b><span>Vive ! (cri de fête)</span></div>
+              <div class="mot"><b>Bona nit</b><span>Bonne nuit, bonsoir</span></div>
+              <div class="mot"><b>Pa amb tomàquet</b><span>Pain à la tomate</span></div>
+              <div class="mot"><b>Aplec</b><span>Rassemblement festif autour d'un sanctuaire</span></div>
+              <div class="mot"><b>Mas</b><span>Ferme isolée</span></div>
+              <div class="mot"><b>Cobla</b><span>Orchestre de sardane</span></div>
+              <div class="mot"><b>Comarca</b><span>Pays, petite région</span></div>
+              <div class="mot"><b>Fidelíssima</b><span>Très fidèle (devise de Perpignan)</span></div>
+            </div>
+
+            <h3 class="sous-titre">Combien de Nord-Catalans parlent catalan ?</h3>
+            <figure class="schema">
+              <svg viewBox="0 0 640 260" role="img" aria-label="Compétences en catalan en Catalogne du Nord selon l'enquête de 2015">
+                <rect width="640" height="260" fill="#FBF8F2"/>
+                <g font-family="Source Sans 3, sans-serif">
+                  <!-- échelle : 100 % = 450 px, x0 = 150 -->
+                  <g stroke="#E8DEC8">
+                    <line x1="150" y1="20" x2="150" y2="215"/><line x1="262.5" y1="20" x2="262.5" y2="215"/>
+                    <line x1="375" y1="20" x2="375" y2="215"/><line x1="487.5" y1="20" x2="487.5" y2="215"/><line x1="600" y1="20" x2="600" y2="215"/>
+                  </g>
+                  <g font-size="10" fill="#8B7355" text-anchor="middle">
+                    <text x="150" y="230">0 %</text><text x="262.5" y="230">25 %</text><text x="375" y="230">50 %</text><text x="487.5" y="230">75 %</text><text x="600" y="230">100 %</text>
+                  </g>
+                  <rect x="150" y="28"  width="274.5" height="28" rx="4" fill="#2C4A7C"/>
+                  <rect x="150" y="66"  width="166.5" height="28" rx="4" fill="#3D5F95"/>
+                  <rect x="150" y="104" width="157.5" height="28" rx="4" fill="#5C7EB0"/>
+                  <rect x="150" y="142" width="63"    height="28" rx="4" fill="#C8843A"/>
+                  <rect x="150" y="180" width="25.7"  height="28" rx="4" fill="#C8102E"/>
+                  <g font-size="12.5" fill="#2C2418" text-anchor="end" font-weight="600">
+                    <text x="140" y="47">Le comprennent</text><text x="140" y="85">Le lisent</text><text x="140" y="123">Le parlent</text>
+                    <text x="140" y="161">L'écrivent</text><text x="140" y="199">L'utilisent d'habitude</text>
+                  </g>
+                  <g font-size="12" font-weight="700">
+                    <text x="432" y="47" fill="#2C4A7C">≈ 61 %</text><text x="324" y="85" fill="#3D5F95">≈ 37 %</text>
+                    <text x="315" y="123" fill="#5C7EB0">≈ 35 %</text><text x="221" y="161" fill="#C8843A">≈ 14 %</text>
+                    <text x="184" y="199" fill="#C8102E">≈ 6 %</text>
+                  </g>
+                </g>
+              </svg>
+              <figcaption>Ordres de grandeur issus de l'enquête sur les usages linguistiques en Catalogne du Nord (EUL-CN, décembre 2015, 1 760 personnes interrogées). Les valeurs sont arrondies.</figcaption>
+            </figure>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Transmission et renouveau</h3>
+              <p>La transmission familiale s'est effondrée au XX<sup>e</sup> siècle : dans beaucoup de familles, les grands-parents parlaient catalan entre eux mais français aux enfants, pour leur réussite scolaire. Le renouveau passe depuis les années 1970 par l'école : <strong>La Bressola</strong>, réseau d'écoles associatives à immersion fondé en 1976, puis <strong>Arrels</strong> (1981), des sections bilingues dans l'enseignement public, des cours à l'université de Perpignan (Institut franco-catalan transfrontalier). Le Conseil général a adopté en 2007 une <strong>charte en faveur du catalan</strong> ; on voit de plus en plus de panneaux bilingues à l'entrée des communes.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une langue connue mais peu parlée</div>
+              <p>Le graphique montre un écart frappant : une majorité d'habitants comprend le catalan, environ un tiers déclare le parler, mais très peu l'utilisent comme langue habituelle. C'est le signe d'une langue en situation de <strong>substitution avancée</strong> : présente dans la mémoire, les chansons, les noms de lieux et les fêtes, mais rarement employée dans la vie quotidienne. Les enquêtes notent en revanche un attachement très fort : la grande majorité des habitants souhaite que le catalan soit transmis et enseigné.</p>
+            </div>
+          </section>
+
+          <!-- ═══ COUTUMES ═══ -->
+          <section class="section" id="coutumes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💃</div>
+              Coutumes, fêtes et symboles
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">La sardane</h3>
+              <p>La <strong>sardane</strong> (<em>sardana</em>) est la danse emblématique des Catalans. Les danseurs, hommes et femmes alternés, forment une ronde ouverte en se tenant par la main, bras levés, et comptent leurs pas courts et longs. Chacun peut entrer dans le cercle : c'est une danse de communauté plus que de spectacle. Sous sa forme actuelle, la « sardane longue » date du XIX<sup>e</sup> siècle et du musicien <strong>Pep Ventura</strong>, qui a fixé la composition de l'orchestre, la <strong>cobla</strong>.</p>
+            </div>
+            <div class="schema">
+              <span class="schema-titre">La cobla : onze musiciens</span>
+              <div class="schema-flow">
+                <div class="schema-box"><b>Flabiol + tamborí</b><br><span class="small">petite flûte et tambourin, joués par un seul musicien</span></div>
+                <div class="schema-box"><b>2 tibles</b><br><span class="small">hautbois aigus</span></div>
+                <div class="schema-box fort"><b>2 tenores</b><br><span style="font-size:12px;opacity:.85">hautbois ténors, au son typique</span></div>
+                <div class="schema-box"><b>2 trompettes</b><br><span class="small">cuivres aigus</span></div>
+                <div class="schema-box"><b>Trombone + 2 fiscorns</b><br><span class="small">cuivres graves</span></div>
+                <div class="schema-box"><b>Contrebasse</b><br><span class="small">à trois cordes</span></div>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Le calendrier des fêtes</h3>
+            </div>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Période</th><th>Fête</th><th>Lieux</th><th>Ce qui s'y passe</th></tr></thead>
+                <tbody>
+                  <tr><td>Février (Chandeleur, carnaval)</td><td><strong>Fêtes de l'ours</strong></td><td>Prats-de-Mollo, Arles-sur-Tech, Saint-Laurent-de-Cerdans</td><td>Des hommes déguisés en ours, couverts de suie, poursuivent la foule avant d'être « rasés » par des barbiers : rite de fin d'hiver venu du fond des âges.</td></tr>
+                  <tr><td>Carnaval</td><td><strong>Carnaval catalan</strong></td><td>Céret, Perpignan, villages</td><td>Défilés, géants (<em>gegants</em>), jugement et crémation du roi Carnestoltes.</td></tr>
+                  <tr><td>Vendredi saint</td><td><strong>Procession de la Sanch</strong></td><td>Perpignan, Collioure, Arles-sur-Tech</td><td>Pénitents en cagoule rouge ou noire (<em>caparutxes</em>) portant des <em>misteris</em>, au son des goigs. Confrérie fondée en 1416.</td></tr>
+                  <tr><td>Lundi de Pâques et printemps</td><td><strong>Aplecs</strong> et cargolades</td><td>Ermitages et sanctuaires</td><td>Pèlerinage, messe, sardanes et grillade d'escargots en plein air.</td></tr>
+                  <tr><td>23 avril</td><td><strong>Sant Jordi</strong></td><td>Toute la Catalogne</td><td>Saint patron de la Catalogne ; on offre une rose et un livre.</td></tr>
+                  <tr><td>23 juin</td><td><strong>Flama del Canigó</strong> et feux de la Saint-Jean</td><td>Canigou, puis tous les villages</td><td>Une flamme allumée au sommet du Canigou est portée dans tous les Pays catalans pour embraser les feux de Sant Joan.</td></tr>
+                  <tr><td>Été</td><td><strong>Fêtes majeures</strong>, correfocs</td><td>Villages</td><td>Bals, sardanes, diables et dragons crachant le feu (<em>correfoc</em>), parfois pyramides humaines (<em>castells</em>).</td></tr>
+                  <tr><td>Décembre</td><td><strong>Tió de Nadal</strong>, crèches</td><td>Familles</td><td>Les enfants tapent sur une bûche qui « fait » des cadeaux ; crèches vivantes.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">Le voyage de la flamme du Canigou</span>
+              <div class="schema-flow">
+                <div class="schema-box">Casa Pairal<br><span class="small">la flamme est gardée toute l'année au Castillet de Perpignan</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Sommet du Canigou<br><span class="small">nuit du 22 au 23 juin</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Relais de porteurs<br><span class="small">vers la Catalogne, Andorre, Valence, Baléares</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort"><b>Feux de Sant Joan</b><br><span style="font-size:12px;opacity:.85">dans des centaines de villages</span></div>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Cette tradition, lancée en <strong>1955</strong> par le Perpignanais Francesc Pujade, symbolise l'unité des Pays catalans par-delà la frontière. Les <strong>fêtes du feu du solstice d'été dans les Pyrénées</strong>, partagées par l'Andorre, l'Espagne et la France, sont inscrites depuis <strong>2015</strong> au patrimoine culturel immatériel de l'UNESCO.</p>
+
+              <h3 class="sous-titre">Les symboles</h3>
+              <p>La <strong>Senyera</strong>, « quatre barres » rouges sur fond d'or, est l'un des plus anciens drapeaux d'Europe : ce sont les armes des comtes de Barcelone, attestées dès le XII<sup>e</sup> siècle. Elle flotte sur le Castillet et sur la plupart des mairies. L'<strong>âne catalan</strong> (<em>ruc</em>), autocollant populaire, s'est imposé en réponse au taureau espagnol. Le <strong>Canigou</strong>, chanté par le poète Jacint Verdaguer dans son épopée <em>Canigó</em> (1886), est la montagne-symbole.</p>
+
+              <h3 class="sous-titre">Le sport, nouvelle identité</h3>
+              <p>Le Roussillon est une terre de <strong>rugby</strong>. L'<strong>USAP</strong> (Union sportive arlequins perpignanais) a été sept fois championne de France, la dernière fois en 2009 ; ses supporters chantent en catalan et brandissent la Senyera. Au rugby à XIII, les <strong>Dragons Catalans</strong>, seul club français de la Super League anglaise, ont remporté la Coupe d'Angleterre (Challenge Cup) en 2018, une première pour un club non anglais.</p>
+            </div>
+          </section>
+
+          <!-- ═══ TABLE ═══ -->
+          <section class="section" id="table">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🍷</div>
+              Saveurs du Roussillon
+            </h2>
+            <div class="histoire-texte">
+              <p>La cuisine roussillonnaise est une cuisine catalane de terre et de mer : huile d'olive, ail, tomates, charcuteries de montagne, poissons de la Côte Vermeille, avec un goût marqué pour les sauces liées à la <em>picada</em> (amandes, ail, persil pilés) et pour l'<em>allioli</em>.</p>
+            </div>
+            <div class="vins-liste">
+              <div class="vin-item"><div class="vin-icon">🐌</div><div><div class="vin-nom">Cargolade</div><div class="vin-desc">Escargots grillés sur un lit de sarments, arrosés de lard fondu, servis avec aïoli, saucisse et côtelettes : le grand repas collectif du printemps.</div></div><div class="vin-badge">Pâques</div></div>
+              <div class="vin-item"><div class="vin-icon">🍲</div><div><div class="vin-nom">Boles de picolat</div><div class="vin-desc">Boulettes de viande mijotées en sauce tomate avec olives vertes et parfois cèpes.</div></div><div class="vin-badge">Plat familial</div></div>
+              <div class="vin-item"><div class="vin-icon">🥬</div><div><div class="vin-nom">Ollada</div><div class="vin-desc">Soupe épaisse de montagne au chou, pommes de terre, haricots et salaisons, typique de la Cerdagne et du Capcir.</div></div><div class="vin-badge">Hiver</div></div>
+              <div class="vin-item"><div class="vin-icon">🐟</div><div><div class="vin-nom">Anchois de Collioure</div><div class="vin-desc">Salés et maturés selon un savoir-faire séculaire ; indication géographique protégée.</div></div><div class="vin-badge">IGP</div></div>
+              <div class="vin-item"><div class="vin-icon">🍮</div><div><div class="vin-nom">Crème catalane, rousquilles, bunyetes, tourons</div><div class="vin-desc">Crème brûlée à la cannelle et au citron ; couronnes glacées du Vallespir ; beignets de carnaval ; nougats.</div></div><div class="vin-badge">Desserts</div></div>
+              <div class="vin-item"><div class="vin-icon">🍒</div><div><div class="vin-nom">Cerises de Céret, abricots, pêches</div><div class="vin-desc">Le Roussillon est l'un des premiers vergers de France ; la première cagette de cerises de Céret est traditionnellement envoyée au chef de l'État.</div></div><div class="vin-badge">Printemps-été</div></div>
+              <div class="vin-item"><div class="vin-icon">🍷</div><div><div class="vin-nom">Vins doux naturels</div><div class="vin-desc">Banyuls, Maury, Rivesaltes, Muscat de Rivesaltes : vins mutés, fierté du Roussillon, qui en produit l'essentiel en France.</div></div><div class="vin-badge">AOC</div></div>
+              <div class="vin-item"><div class="vin-icon">🍇</div><div><div class="vin-nom">Vins secs</div><div class="vin-desc">Collioure, Côtes du Roussillon, Côtes du Roussillon Villages : rouges puissants de grenache, carignan, syrah et mourvèdre.</div></div><div class="vin-badge">AOC</div></div>
+            </div>
+          </section>
+
+          <!-- ═══ PATRIMOINE ═══ -->
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏰</div>
+              Les grands sites du patrimoine
+            </h2>
+            <div class="fort-grid">
+              <div class="fort"><div class="fort-head">Palais des rois de Majorque <small>Perpignan</small></div><div class="fort-body"><span class="tag">Fin XIII<sup>e</sup> s.</span><span class="tag">Gothique</span><br>Résidence royale de Jacques II, cour d'honneur, double chapelle superposée, entourée d'une citadelle renforcée sous Charles Quint et Vauban.</div></div>
+              <div class="fort"><div class="fort-head">Castillet &amp; Loge de Mer <small>Perpignan</small></div><div class="fort-body"><span class="tag">1368</span><span class="tag">1397</span><br>Porte fortifiée en brique devenue musée catalan des arts et traditions (Casa Pairal) ; Loge de Mer, ancien tribunal maritime gothique.</div></div>
+              <div class="fort"><div class="fort-head">Saint-Michel-de-Cuxa <small>Codalet</small></div><div class="fort-body"><span class="tag">X<sup>e</sup> – XII<sup>e</sup> s.</span><span class="tag">Roman</span><br>Grande abbaye de l'abbé Oliba. Une partie de son cloître a été vendue et remontée au musée des Cloisters de New York.</div></div>
+              <div class="fort"><div class="fort-head">Saint-Martin-du-Canigou <small>Casteil</small></div><div class="fort-body"><span class="tag">Consacrée en 1009</span><br>Abbaye perchée à 1 055 m, accessible à pied ; relevée au XX<sup>e</sup> siècle après des siècles d'abandon.</div></div>
+              <div class="fort"><div class="fort-head">Cathédrale et cloître d'Elne <small>Elne</small></div><div class="fort-body"><span class="tag">XI<sup>e</sup> – XIV<sup>e</sup> s.</span><br>Ancien siège épiscopal du Roussillon ; cloître aux chapiteaux sculptés, roman puis gothique.</div></div>
+              <div class="fort"><div class="fort-head">Forteresse de Salses <small>Salses-le-Château</small></div><div class="fort-body"><span class="tag">1497 – 1503</span><span class="tag">Espagnole</span><br>Bâtie par Ferdinand le Catholique pour verrouiller la frontière nord ; architecture adaptée à l'artillerie.</div></div>
+              <div class="fort"><div class="fort-head">Villefranche-de-Conflent <small>Conflent</small></div><div class="fort-body"><span class="tag">UNESCO 2008</span><br>Cité médiévale fortifiée par Vauban, fort Libéria, gare de départ du Train jaune.</div></div>
+              <div class="fort"><div class="fort-head">Mont-Louis <small>Cerdagne</small></div><div class="fort-body"><span class="tag">UNESCO 2008</span><span class="tag">1 600 m</span><br>Ville forte créée par Vauban ; premier four solaire du monde (1949) dans la citadelle.</div></div>
+              <div class="fort"><div class="fort-head">Collioure <small>Côte Vermeille</small></div><div class="fort-body"><span class="tag">Château royal</span><span class="tag">Fauvisme</span><br>Clocher-phare au bord de l'eau, château des Templiers puis des rois de Majorque, tombe d'Antonio Machado.</div></div>
+              <div class="fort"><div class="fort-head">Mémorial de Rivesaltes <small>Rivesaltes</small></div><div class="fort-body"><span class="tag">Inauguré en 2015</span><br>Lieu d'histoire et de mémoire des internements du XX<sup>e</sup> siècle : républicains espagnols, Juifs, Tsiganes, harkis.</div></div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · lire l'histoire dans les pierres</div>
+              <p>Le patrimoine du Roussillon raconte ses souverainetés successives. Le roman des abbayes appartient à la Catalogne comtale ; le gothique du palais, du Castillet et de la Loge à la Couronne d'Aragon et au royaume de Majorque ; Salses à l'Espagne de Ferdinand ; Mont-Louis et Villefranche à la France de Louis XIV. Un même circuit permet donc de traverser un millénaire et trois États.</p>
+            </div>
+          </section>
+
+          <!-- ═══ PERSONNALITÉS ═══ -->
+          <section class="section" id="personnalites">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👤</div>
+              Les personnalités marquantes
+            </h2>
+
+            <div class="perso-groupe g-cath">
+              <div class="perso-groupe-titre">Comtes, rois et hommes d'Église</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Guifred le Velu</div><div class="perso-dates">mort en 897</div><div class="perso-desc">Comte de Cerdagne puis de Barcelone, fondateur légendaire de la Catalogne ; la légende des « quatre barres » lui est attachée.</div></div>
+                <div class="perso"><div class="perso-nom">Oliba</div><div class="perso-dates">vers 971 – 1046</div><div class="perso-desc">Abbé de Cuxa et de Ripoll, évêque de Vic, promoteur de la trêve de Dieu de Toulouges (1027).</div></div>
+                <div class="perso"><div class="perso-nom">Jacques I<sup>er</sup> le Conquérant</div><div class="perso-dates">1208 – 1276</div><div class="perso-desc">Roi d'Aragon, conquérant de Majorque et de Valence ; signe le traité de Corbeil (1258).</div></div>
+                <div class="perso"><div class="perso-nom">Jacques II de Majorque</div><div class="perso-dates">1243 – 1311</div><div class="perso-desc">Premier roi de Majorque, bâtisseur du palais de Perpignan.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre IV le Cérémonieux</div><div class="perso-dates">1319 – 1387</div><div class="perso-desc">Roi d'Aragon, il annexe le royaume de Majorque (1344) et fonde l'université de Perpignan (1350).</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-occ">
+              <div class="perso-groupe-titre">Entre France et Espagne</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Louis XI</div><div class="perso-dates">1423 – 1483</div><div class="perso-desc">Roi de France, il occupe le Roussillon engagé par Jean II d'Aragon (1463).</div></div>
+                <div class="perso"><div class="perso-nom">Ferdinand le Catholique</div><div class="perso-dates">1452 – 1516</div><div class="perso-desc">Récupère le Roussillon en 1493 et fait bâtir la forteresse de Salses.</div></div>
+                <div class="perso"><div class="perso-nom">Pau Claris</div><div class="perso-dates">1586 – 1641</div><div class="perso-desc">Président de la Generalitat, il rompt avec Madrid et place la Catalogne sous la protection de Louis XIII.</div></div>
+                <div class="perso"><div class="perso-nom">Mazarin</div><div class="perso-dates">1602 – 1661</div><div class="perso-desc">Principal ministre de Louis XIV, négociateur du traité des Pyrénées (1659).</div></div>
+                <div class="perso"><div class="perso-nom">Josep de la Trinxeria</div><div class="perso-dates">1637 – 1694</div><div class="perso-desc">Chef des Angelets de la terra, révoltés contre la gabelle dans le Vallespir.</div></div>
+                <div class="perso"><div class="perso-nom">Vauban</div><div class="perso-dates">1633 – 1707</div><div class="perso-desc">Ingénieur militaire de Louis XIV, fondateur de Mont-Louis et fortificateur de Villefranche.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-crois">
+              <div class="perso-groupe-titre">Savants, militaires et hommes publics</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">François Arago</div><div class="perso-dates">1786 – 1853</div><div class="perso-desc">Né à Estagel, astronome et physicien, directeur de l'Observatoire de Paris, ministre en 1848, artisan de l'abolition de l'esclavage.</div></div>
+                <div class="perso"><div class="perso-nom">Joseph Joffre</div><div class="perso-dates">1852 – 1931</div><div class="perso-desc">Né à Rivesaltes, maréchal de France, vainqueur de la bataille de la Marne (1914).</div></div>
+                <div class="perso"><div class="perso-nom">Pompeu Fabra</div><div class="perso-dates">1868 – 1948</div><div class="perso-desc">Linguiste barcelonais, auteur de la norme du catalan moderne, mort en exil à Prades.</div></div>
+                <div class="perso"><div class="perso-nom">Henry de Lumley</div><div class="perso-dates">né en 1934</div><div class="perso-desc">Préhistorien, découvreur de l'Homme de Tautavel (1971).</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-egl">
+              <div class="perso-groupe-titre">Artistes et écrivains</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Hyacinthe Rigaud</div><div class="perso-dates">1659 – 1743</div><div class="perso-desc">Né à Perpignan l'année même du traité, portraitiste officiel de Louis XIV.</div></div>
+                <div class="perso"><div class="perso-nom">Aristide Maillol</div><div class="perso-dates">1861 – 1944</div><div class="perso-desc">Sculpteur né à Banyuls, maître de la statuaire féminine.</div></div>
+                <div class="perso"><div class="perso-nom">Pau (Pablo) Casals</div><div class="perso-dates">1876 – 1973</div><div class="perso-desc">Violoncelliste catalan exilé à Prades, fondateur du festival qui porte son nom (1950).</div></div>
+                <div class="perso"><div class="perso-nom">Antonio Machado</div><div class="perso-dates">1875 – 1939</div><div class="perso-desc">Poète espagnol républicain, mort à Collioure pendant la Retirada ; sa tombe y reçoit encore des lettres.</div></div>
+                <div class="perso"><div class="perso-nom">Henri Matisse</div><div class="perso-dates">1869 – 1954</div><div class="perso-desc">À Collioure en 1905 avec Derain, il invente le fauvisme.</div></div>
+                <div class="perso"><div class="perso-nom">Claude Simon</div><div class="perso-dates">1913 – 2005</div><div class="perso-desc">Prix Nobel de littérature (1985), issu d'une famille perpignanaise ; le Roussillon traverse son œuvre.</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ FRISE ═══ -->
+          <section class="section" id="frise">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗓️</div>
+              Frise chronologique
+            </h2>
+            <div class="frise">
+              <div class="frise-periode">Préhistoire et Antiquité</div>
+              <div class="frise-item majeur"><span class="frise-date">≈ 450 000 ans</span> <span class="frise-texte">— Occupation de la Caune de l'Arago par l'Homme de Tautavel.</span></div>
+              <div class="frise-item"><span class="frise-date">VI<sup>e</sup> – III<sup>e</sup> s. av. J.-C.</span> <span class="frise-texte">— Oppida de Ruscino et d'Illibéris.</span></div>
+              <div class="frise-item"><span class="frise-date">218 av. J.-C.</span> <span class="frise-texte">— Passage d'Hannibal.</span></div>
+              <div class="frise-item"><span class="frise-date">vers 118 av. J.-C.</span> <span class="frise-texte">— Création de la Via Domitia ; la région entre en Narbonnaise.</span></div>
+              <div class="frise-item"><span class="frise-date">IV<sup>e</sup> siècle</span> <span class="frise-texte">— Illibéris devient Helena (Elne).</span></div>
+
+              <div class="frise-periode">Moyen Âge catalan</div>
+              <div class="frise-item"><span class="frise-date">462 – 720</span> <span class="frise-texte">— Domination wisigothique (Septimanie).</span></div>
+              <div class="frise-item"><span class="frise-date">vers 720 – 759</span> <span class="frise-texte">— Présence musulmane, puis reconquête franque.</span></div>
+              <div class="frise-item"><span class="frise-date">801</span> <span class="frise-texte">— Prise de Barcelone ; Marche d'Espagne.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">878 – 897</span> <span class="frise-texte">— Guifred le Velu, comte de Barcelone et de Cerdagne.</span></div>
+              <div class="frise-item"><span class="frise-date">1009</span> <span class="frise-texte">— Consécration de Saint-Martin-du-Canigou.</span></div>
+              <div class="frise-item"><span class="frise-date">1027</span> <span class="frise-texte">— Trêve de Dieu de Toulouges.</span></div>
+              <div class="frise-item"><span class="frise-date">1137</span> <span class="frise-texte">— Union de la Catalogne et de l'Aragon.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1172</span> <span class="frise-texte">— Le comté de Roussillon est légué au roi d'Aragon.</span></div>
+              <div class="frise-item"><span class="frise-date">1258</span> <span class="frise-texte">— Traité de Corbeil : la France renonce aux comtés catalans.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1276 – 1344</span> <span class="frise-texte">— Royaume de Majorque, Perpignan résidence royale.</span></div>
+              <div class="frise-item"><span class="frise-date">1350</span> <span class="frise-texte">— Fondation de l'université de Perpignan.</span></div>
+              <div class="frise-item"><span class="frise-date">1368 / 1397</span> <span class="frise-texte">— Castillet et Loge de Mer.</span></div>
+              <div class="frise-item"><span class="frise-date">1416</span> <span class="frise-texte">— Fondation de la confrérie de la Sanch.</span></div>
+
+              <div class="frise-periode">Entre deux couronnes</div>
+              <div class="frise-item"><span class="frise-date">1463 – 1493</span> <span class="frise-texte">— Occupation française ; siège de Perpignan (1473-1475).</span></div>
+              <div class="frise-item"><span class="frise-date">1493</span> <span class="frise-texte">— Traité de Barcelone : retour à l'Aragon.</span></div>
+              <div class="frise-item"><span class="frise-date">1497 – 1503</span> <span class="frise-texte">— Construction de la forteresse de Salses.</span></div>
+              <div class="frise-item"><span class="frise-date">1602</span> <span class="frise-texte">— L'évêché quitte Elne pour Perpignan.</span></div>
+              <div class="frise-item"><span class="frise-date">1640 – 1642</span> <span class="frise-texte">— Guerre des Faucheurs, prise de Perpignan par Louis XIII.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">7 novembre 1659</span> <span class="frise-texte">— Traité des Pyrénées.</span></div>
+              <div class="frise-item"><span class="frise-date">12 novembre 1660</span> <span class="frise-texte">— Traité de Llívia : partage de la Cerdagne.</span></div>
+
+              <div class="frise-periode">France</div>
+              <div class="frise-item"><span class="frise-date">1663 – 1672</span> <span class="frise-texte">— Révolte des Angelets de la terra.</span></div>
+              <div class="frise-item"><span class="frise-date">1679 – 1681</span> <span class="frise-texte">— Construction de Mont-Louis par Vauban.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">2 avril 1700</span> <span class="frise-texte">— Édit interdisant le catalan dans les actes officiels.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1790</span> <span class="frise-texte">— Création des Pyrénées-Orientales.</span></div>
+              <div class="frise-item"><span class="frise-date">1793 – 1795</span> <span class="frise-texte">— Guerre du Roussillon contre l'Espagne.</span></div>
+              <div class="frise-item"><span class="frise-date">1858</span> <span class="frise-texte">— Arrivée du chemin de fer à Perpignan.</span></div>
+              <div class="frise-item"><span class="frise-date">1905</span> <span class="frise-texte">— Matisse et Derain à Collioure : naissance du fauvisme.</span></div>
+              <div class="frise-item"><span class="frise-date">1907</span> <span class="frise-texte">— Révolte viticole, préfecture incendiée.</span></div>
+              <div class="frise-item"><span class="frise-date">1910</span> <span class="frise-texte">— Premier tronçon du Train jaune.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">Janvier – février 1939</span> <span class="frise-texte">— La Retirada : près d'un demi-million de réfugiés espagnols.</span></div>
+              <div class="frise-item"><span class="frise-date">1950</span> <span class="frise-texte">— Premier festival Pablo Casals à Prades.</span></div>
+              <div class="frise-item"><span class="frise-date">1955</span> <span class="frise-texte">— Première flamme du Canigou.</span></div>
+              <div class="frise-item"><span class="frise-date">1971</span> <span class="frise-texte">— Découverte du crâne de Tautavel.</span></div>
+              <div class="frise-item"><span class="frise-date">1976</span> <span class="frise-texte">— Ouverture de la première école La Bressola.</span></div>
+              <div class="frise-item"><span class="frise-date">2007</span> <span class="frise-texte">— Charte du Conseil général en faveur du catalan.</span></div>
+              <div class="frise-item"><span class="frise-date">2008</span> <span class="frise-texte">— Mont-Louis et Villefranche au patrimoine mondial.</span></div>
+              <div class="frise-item"><span class="frise-date">2014</span> <span class="frise-texte">— Ouverture de l'hôpital transfrontalier de Cerdagne.</span></div>
+              <div class="frise-item"><span class="frise-date">2015</span> <span class="frise-texte">— Mémorial de Rivesaltes ; fêtes du feu à l'UNESCO.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">2016</span> <span class="frise-texte">— Création de la région Occitanie.</span></div>
+            </div>
+          </section>
+
+          <!-- ═══ IDÉES REÇUES ═══ -->
+          <section class="section" id="mythes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔎</div>
+              Histoire, mémoire et idées reçues
+            </h2>
+            <div class="mythe"><strong>« Le Roussillon a toujours été français. »</strong><br><span class="verdict faux">Faux</span><br>Il n'est français que depuis 1659 (de fait depuis 1642), soit environ 365 ans, contre près de neuf siècles dans l'orbite de Barcelone et de l'Aragon.</div>
+            <div class="mythe"><strong>« Le catalan est un dialecte de l'espagnol. »</strong><br><span class="verdict faux">Faux</span><br>C'est une langue romane à part entière, aussi ancienne que le castillan, plus proche de l'occitan que de l'espagnol.</div>
+            <div class="mythe"><strong>« Roussillon et Pyrénées-Orientales, c'est la même chose. »</strong><br><span class="verdict nuance">À nuancer</span><br>Le département englobe aussi le Fenouillèdes, terre languedocienne et occitane, et au sens strict le Roussillon n'est que la plaine.</div>
+            <div class="mythe"><strong>« Les quatre barres sont nées des doigts ensanglantés de Guifred. »</strong><br><span class="verdict faux">Légende</span><br>Ce récit, où l'empereur trace les barres avec le sang du comte blessé, n'apparaît qu'au XVI<sup>e</sup> siècle. Les barres sont les armes de la maison de Barcelone, attestées au XII<sup>e</sup> siècle.</div>
+            <div class="mythe"><strong>« La sardane est une danse millénaire. »</strong><br><span class="verdict nuance">Trop simple</span><br>Des rondes existent depuis longtemps, mais la sardane telle qu'on la danse aujourd'hui et sa cobla datent du XIX<sup>e</sup> siècle.</div>
+            <div class="mythe"><strong>« Les Nord-Catalans veulent rejoindre la Catalogne espagnole. »</strong><br><span class="verdict nuance">Exagéré</span><br>L'attachement à l'identité catalane est fort, mais il se combine en général avec un sentiment d'appartenance française ; les mouvements séparatistes y restent marginaux.</div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une identité à double appartenance</div>
+              <p>Le Roussillon illustre une situation fréquente en Europe : une frontière d'État qui coupe une aire culturelle. L'identité nord-catalane ne s'oppose pas forcément à l'identité française ; elle s'y superpose. Comprendre son histoire, c'est accepter de penser ces deux fidélités ensemble, comme le faisaient déjà les habitants de la « très fidèle ville » de Perpignan.</p>
+            </div>
+          </section>
+
+          <!-- ═══ PARCOURS ═══ -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🥾</div>
+              Circuit conseillé : un millénaire en cinq jours
+            </h2>
+            <div class="etapes-liste">
+              <div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Perpignan</div><div class="etape-texte">Palais des rois de Majorque, cathédrale Saint-Jean et Campo Santo, Loge de Mer, Castillet et Casa Pairal. Le soir, sardanes place de la Loge en été.</div></div></div>
+              <div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Tautavel et Salses</div><div class="etape-texte">Musée de Préhistoire et Caune de l'Arago, puis forteresse de Salses ; dégustation de vins doux naturels à Rivesaltes ou Maury. Mémorial de Rivesaltes sur le retour.</div></div></div>
+              <div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Elne et la Côte Vermeille</div><div class="etape-texte">Cloître d'Elne, Collioure (château royal, sentier des peintres, tombe de Machado), Banyuls et le musée Maillol.</div></div></div>
+              <div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Vallespir</div><div class="etape-texte">Céret et son musée d'art moderne, Arles-sur-Tech, Prats-de-Mollo et le fort Lagarde ; détour par le Perthus et les vestiges du trophée de Pompée.</div></div></div>
+              <div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Conflent et Cerdagne</div><div class="etape-texte">Saint-Michel-de-Cuxa, Saint-Martin-du-Canigou, Villefranche-de-Conflent, puis le Train jaune jusqu'à Mont-Louis et la Cerdagne ; passage à Llívia.</div></div></div>
+            </div>
+          </section>
+
+          <!-- ═══ INFOS PRATIQUES ═══ -->
+          <section class="section" id="infos-pratiques">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">ℹ️</div>
+              Infos pratiques
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item"><div class="vin-icon">🚆</div><div><div class="vin-nom">Train jaune</div><div class="vin-desc">Ligne de montagne Villefranche-de-Conflent – Latour-de-Carol ; voitures découvertes l'été, très prisées : réserver ou arriver tôt.</div></div><div class="vin-badge">≈ 63 km</div></div>
+              <div class="vin-item"><div class="vin-icon">🥾</div><div><div class="vin-nom">Saint-Martin-du-Canigou</div><div class="vin-desc">Accès uniquement à pied depuis Casteil (environ 45 min de montée raide) ; visites guidées aux horaires de la communauté.</div></div><div class="vin-badge">Bonnes chaussures</div></div>
+              <div class="vin-item"><div class="vin-icon">📅</div><div><div class="vin-nom">Quand venir ?</div><div class="vin-desc">Février pour les fêtes de l'ours, Semaine sainte pour la Sanch, 23 juin pour la flamme du Canigou, printemps et automne pour la randonnée.</div></div><div class="vin-badge">Calendrier</div></div>
+              <div class="vin-item"><div class="vin-icon">💨</div><div><div class="vin-nom">Météo</div><div class="vin-desc">La tramontane souffle fort et froid ; été chaud en plaine, fraîcheur et orages en montagne.</div></div><div class="vin-badge">Vérifier avant de partir</div></div>
+            </div>
+          </section>
+
+          <!-- ═══ SOURCES ═══ -->
+          <section class="section" id="sources">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📚</div>
+              Sources et pistes documentaires
+            </h2>
+            <div class="histoire-texte">
+              <ul class="source-list">
+                <li><a href="https://www.insee.fr/fr/statistiques/8682177" target="_blank" rel="noopener">Insee Flash Occitanie n° 151 — populations de référence au 1er janvier 2023</a></li>
+                <li><a href="https://www.insee.fr/fr/statistiques/7657257" target="_blank" rel="noopener">Insee Analyses Occitanie n° 138 — les Pyrénées-Orientales, un département attractif</a></li>
+                <li><a href="https://directory.doabooks.org/handle/20.500.12854/86647" target="_blank" rel="noopener">Le catalan en Catalogne Nord et dans les Pays Catalans (Presses universitaires de Perpignan, enquête EUL-CN 2015)</a></li>
+                <li><a href="https://releve.erudit.org/en/journals/rtes/2025-n14-rtes010550/1123078ar/abstract/" target="_blank" rel="noopener">Érudit — l'influence de la Catalogne du Sud sur le catalan en Catalogne Nord</a></li>
+                <li><a href="https://cdsib.uib.cat/files/2021/01/informeCAT2020.pdf" target="_blank" rel="noopener">Plataforma per la Llengua — InformeCAT 2020 (usage habituel du catalan)</a></li>
+              </ul>
+              <p class="small">Les cartes, frises et graphiques de cette fiche sont des dessins simplifiés, non à l'échelle. Les données linguistiques sont des ordres de grandeur arrondis.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Pyrénées-Orientales (66)</span></div>
+              <div class="aside-row"><span class="aside-label">Chef-lieu</span><span class="aside-val">Perpignan (Perpinyà)</span></div>
+              <div class="aside-row"><span class="aside-label">Langues</span><span class="aside-val">Français · catalan · occitan (Fenouillèdes)</span></div>
+              <div class="aside-row"><span class="aside-label">Français depuis</span><span class="aside-val">1659 (traité des Pyrénées)</span></div>
+              <div class="aside-row"><span class="aside-label">Point culminant</span><span class="aside-val">Puigmal, 2 910 m</span></div>
+              <div class="aside-row"><span class="aside-label">Symbole</span><span class="aside-val">Le Canigou · la Senyera</span></div>
+              <div class="aside-row"><span class="aside-label">UNESCO</span><span class="aside-val">Vauban (2008) · fêtes du feu (2015)</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔢 En chiffres</div>
+            <div class="aside-card-body">
+              <div class="chiffres">
+                <div class="chiffre"><b>450 000</b><span>ans : l'Homme de Tautavel</span></div>
+                <div class="chiffre"><b>1172</b><span>Le Roussillon passe à l'Aragon</span></div>
+                <div class="chiffre"><b>1659</b><span>Traité des Pyrénées</span></div>
+                <div class="chiffre"><b>33</b><span>villages de Cerdagne cédés en 1660</span></div>
+                <div class="chiffre"><b>≈ 497 000</b><span>habitants (2023)</span></div>
+                <div class="chiffre"><b>≈ 35 %</b><span>des habitants parlent catalan (2015)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">💡 Point de méthode</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size:13px; line-height:1.65; color:#5a4a39;">L'histoire du Roussillon a longtemps été écrite soit depuis Paris, soit depuis Barcelone. Cette fiche tente de croiser les deux regards et distingue les faits établis, les débats et les légendes identitaires.</div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📚 Petit glossaire</div>
+            <div class="aside-card-body">
+              <dl class="glossaire">
+                <dt>Comarque</dt><dd>« Pays » historique catalan (Conflent, Vallespir, Cerdagne…).</dd>
+                <dt>Catalogne du Nord</dt><dd>Terres catalanes au nord des Pyrénées, cédées à la France en 1659.</dd>
+                <dt>Couronne d'Aragon</dt><dd>Union de royaumes et de comtés (Aragon, Catalogne, Valence, Majorque) de 1137 à 1716.</dd>
+                <dt>Generalitat</dt><dd>Institution de gouvernement catalane, née au XIV<sup>e</sup> siècle, recréée au XX<sup>e</sup>.</dd>
+                <dt>Senyera</dt><dd>Drapeau catalan à quatre barres rouges sur fond d'or.</dd>
+                <dt>Cobla</dt><dd>Orchestre de onze musiciens qui accompagne la sardane.</dd>
+                <dt>Aplec</dt><dd>Rassemblement festif et religieux autour d'un ermitage.</dd>
+                <dt>Gabelle</dt><dd>Impôt royal sur le sel, introduit en Roussillon après 1659.</dd>
+                <dt>Retirada</dt><dd>Exode des républicains espagnols vers la France en 1939.</dd>
+                <dt>Rossellonès</dt><dd>Variété de catalan parlée en Roussillon.</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📖 Pour aller plus loin</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size: 13px; line-height: 1.6; color:#3A3028;">
+              • Jean Sagnes (dir.), <em>Le Pays catalan</em><br>
+              • Peter Sahlins, <em>Frontières et identités nationales : la France et l'Espagne dans les Pyrénées depuis le XVII<sup>e</sup> siècle</em><br>
+              • Alícia Marcet-Juncosa, <em>Abrégé d'histoire des terres catalanes du Nord</em><br>
+              • Musée de Préhistoire de Tautavel<br>
+              • Casa Pairal, Castillet de Perpignan
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<!--  Retour flottant-->
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300;
+    function majBouton() { btn.classList.toggle('visible', window.scrollY > seuil); }
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

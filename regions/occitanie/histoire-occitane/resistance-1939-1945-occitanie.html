@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seconde Guerre mondiale &amp; Résistance — L'Âme des Régions</title>
+  <!-- Photo du bandeau chargée en priorité, avant les styles et les polices -->
+  <link rel="preload" as="image" href="photo/panorama-resistance.jpg" fetchpriority="high" />
+  <!-- Valeurs de secours : utilisées seulement si style.css / fiche.css ne sont pas trouvés.
+       Placées AVANT style.css pour que les feuilles du site gardent toujours la priorité. -->
+  <style>
+    :root { --ivoire: #FAF6EE; --font-titre: 'Playfair Display', serif; --font-corps: 'Source Sans 3', sans-serif; }
+    body { margin: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .produit-hero { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+  </style>
+  <link rel="stylesheet" href="../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches sites */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* Blocs repris de la fiche cathare */
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+
+    /* ─── PROPRE À CETTE FICHE ─── */
+    .lexique { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    .mot {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px; padding: 10px 12px;
+      font-family: var(--font-corps); text-align: center;
+    }
+    .mot b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); color: #2C4A7C; font-size: 17px; }
+    .mot span { font-size: 12px; color: #8B7355; }
+
+    @media (max-width: 760px) {
+      .repere-grid { grid-template-columns: 1fr; }
+      .lexique { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page (à déposer dans photo/) : par ex. un paysage de maquis ou le Chemin de la Liberté -->
+  <style>
+    .produit-hero{background-image:url('photo/panorama-resistance.jpg');background-size:cover;background-position:center 40%}
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero">
+    <div class="container">
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns">
+          <a href="occitanie-histoire-accueil.html" class="produit-btn-retour">← Retour à l'accueil</a>
+        </div>
+      </div>
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>a Seconde Guerre mondiale<br><span style="padding-left: 40px;">&amp; la <em>R</em>ésistance</span></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-label-bas">
+      ⟹ 1939 – 1945 · Camps, maquis &amp; chemins de la liberté ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#comprendre" class="active">📖 Comprendre</a>
+          <a href="#camps">⛓️ Les camps</a>
+          <a href="#vichy">🏛️ Vichy</a>
+          <a href="#sauver">🕯️ Sauver</a>
+          <a href="#pyrenees">🏔️ Pyrénées</a>
+          <a href="#resistance">✊ Résistance</a>
+          <a href="#maquis">🌲 Maquis</a>
+          <a href="#repression">⚠️ Répression</a>
+          <a href="#liberation">🎉 Libération</a>
+          <a href="#personnalites">👤 Personnages</a>
+          <a href="#frise">⏳ Chronologie</a>
+          <a href="#mythes">🔎 Idées reçues</a>
+          <a href="#parcours">🥾 Mémoire</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <div>
+
+          <!-- ═══ COMPRENDRE ═══ -->
+          <section class="section" id="comprendre">
+            <h2 class="section-titre"><div class="section-titre-icon">📖</div>Le Midi dans la guerre</h2>
+            <div class="histoire-texte">
+              <p><strong>Loin du front, la future Occitanie a pourtant vécu la guerre de bout en bout.</strong> Dès 1939, elle accueille l'exil républicain espagnol puis les réfugiés de l'exode ; de 1940 à 1942, elle se trouve en <strong>zone libre</strong>, sous l'autorité du régime de Vichy, qui y installe de nombreux <strong>camps d'internement</strong>. Le 11 novembre 1942, les Allemands envahissent la zone sud : commence alors l'occupation, la chasse aux Juifs et aux résistants, et la naissance des <strong>maquis</strong>. La région se libère en grande partie par elle-même en août 1944.</p>
+              <p>Toulouse est la capitale de la <strong>région R4</strong> de la Résistance, et le Languedoc méditerranéen forme la <strong>région R3</strong> (Montpellier). Les Pyrénées deviennent la grande porte de sortie de la France occupée vers l'Espagne, puis vers l'Afrique du Nord et Londres.</p>
+            </div>
+
+            <h3 class="sous-titre">Les quatre temps de la guerre dans le Midi</h3>
+            <figure class="schema">
+              <svg viewBox="0 0 640 210" role="img" aria-label="Frise des périodes de la guerre en Occitanie de 1939 à 1945">
+                <rect width="640" height="210" fill="#FBF8F2"/>
+                <!-- x = 40 + (mois depuis sept. 1939) * 8.57 ; 70 mois -> 600 px -->
+                <rect x="40" y="70" width="77" height="44" fill="#B8A58A"/>
+                <rect x="117" y="70" width="240" height="44" fill="#8FA6C9"/>
+                <rect x="357" y="70" width="180" height="44" fill="#2C4A7C"/>
+                <rect x="537" y="70" width="17" height="44" fill="#C8843A"/>
+                <rect x="554" y="70" width="86" height="44" fill="#3E7C4A"/>
+                <g font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">
+                  <text x="78" y="96">Drôle de guerre</text>
+                  <text x="237" y="90">Zone libre</text><text x="237" y="105" font-weight="400" font-size="10">Vichy, camps, Révolution nationale</text>
+                  <text x="447" y="90">Occupation allemande</text><text x="447" y="105" font-weight="400" font-size="10">STO, maquis, rafles</text>
+                  <text x="597" y="96">Après la Libération</text>
+                </g>
+                <line x1="545" y1="60" x2="545" y2="125" stroke="#C8843A" stroke-width="2"/>
+                <g font-family="Source Sans 3, sans-serif" font-size="10" fill="#2C2418">
+                  <text x="40" y="55">Sept. 1939</text>
+                  <text x="105" y="140">Juin 1940</text>
+                  <text x="330" y="140">11 nov. 1942</text>
+                  <text x="505" y="52" fill="#C8843A" font-weight="700">Août 1944</text>
+                  <text x="590" y="140">Mai 1945</text>
+                </g>
+                <g font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B7355" font-style="italic">
+                  <text x="40" y="170">Février 1939 : la Retirada amène près d'un demi-million de réfugiés espagnols (voir la fiche « La Retirada »).</text>
+                  <text x="40" y="188">Février 1943 : le STO pousse des milliers de jeunes vers les maquis.</text>
+                </g>
+              </svg>
+              <figcaption>Frise à l'échelle de septembre 1939 à mai 1945.</figcaption>
+            </figure>
+
+            <div class="notice"><strong>À retenir :</strong> la « zone libre » ne l'était que de nom. Vichy y menait sa propre politique d'exclusion : internement des étrangers, lois antijuives, répression des communistes et des gaullistes, avant même l'arrivée des Allemands.</div>
+          </section>
+
+          <!-- ═══ CAMPS ═══ -->
+          <section class="section" id="camps">
+            <h2 class="section-titre"><div class="section-titre-icon">⛓️</div>Une région de camps</h2>
+            <div class="histoire-texte">
+              <p>Les camps ouverts en 1939 pour les républicains espagnols ne ferment pas : la III<sup>e</sup> République puis Vichy y enferment successivement des « indésirables » étrangers, des antifascistes allemands et autrichiens, des Juifs étrangers, des Tsiganes. Le Midi devient l'une des régions de France les plus densément couvertes de camps.</p>
+            </div>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Camp</th><th>Département</th><th>Période</th><th>Internés</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Argelès, Saint-Cyprien, Le Barcarès</strong></td><td>Pyrénées-Orientales</td><td>1939 – 1941</td><td>Républicains espagnols, brigadistes, puis étrangers</td></tr>
+                  <tr><td><strong>Rivesaltes</strong> (camp Joffre)</td><td>Pyrénées-Orientales</td><td>1941 – 1942</td><td>Familles espagnoles, Juifs étrangers, Tsiganes ; centre de déportation à l'été 1942</td></tr>
+                  <tr><td><strong>Le Vernet</strong></td><td>Ariège</td><td>1939 – 1944</td><td>Camp répressif pour étrangers jugés « dangereux » (dont l'écrivain Arthur Koestler)</td></tr>
+                  <tr><td><strong>Septfonds</strong> (camp de Judes)</td><td>Tarn-et-Garonne</td><td>1939 – 1945</td><td>Espagnols, puis travailleurs étrangers et Juifs</td></tr>
+                  <tr><td><strong>Noé et Récébédou</strong></td><td>Haute-Garonne</td><td>1941 – 1944</td><td>« Camps-hôpitaux » pour internés âgés ou malades</td></tr>
+                  <tr><td><strong>Agde</strong></td><td>Hérault</td><td>1939 – 1942</td><td>Espagnols, soldats tchécoslovaques, puis Juifs étrangers</td></tr>
+                  <tr><td><strong>Brens</strong></td><td>Tarn</td><td>1942 – 1944</td><td>Femmes internées</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Liste non exhaustive ; les catégories d'internés varient au fil des mois.</p>
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · des camps français</div>
+              <p>Ces camps ont été créés, gardés et administrés par l'État français, sans présence allemande jusqu'en novembre 1942. À l'été 1942, c'est la police française qui y rassemble les Juifs étrangers livrés aux nazis : plusieurs milliers d'entre eux partent de Rivesaltes, du Vernet, de Noé ou de Récébédou vers Drancy, puis Auschwitz. Le mémorial de Rivesaltes, ouvert en 2015, rappelle cette histoire.</p>
+            </div>
+          </section>
+
+          <!-- ═══ VICHY ═══ -->
+          <section class="section" id="vichy">
+            <h2 class="section-titre"><div class="section-titre-icon">🏛️</div>Vivre sous Vichy (1940 – 1942)</h2>
+            <div class="histoire-texte">
+              <p>En juin 1940, des centaines de milliers de réfugiés du Nord et de Belgique affluent vers Toulouse et le Midi. Après l'armistice du 22 juin, la région se retrouve en zone non occupée. Le maréchal Pétain y est d'abord populaire : beaucoup voient en lui le vainqueur de Verdun qui a épargné l'occupation au Sud. La <strong>Légion française des combattants</strong> encadre la population, la presse est censurée, les syndicats dissous, les francs-maçons et les communistes pourchassés.</p>
+              <p>Les <strong>lois antijuives</strong> d'octobre 1940 et de juin 1941 excluent les Juifs de nombreux métiers. La vie quotidienne est marquée par les <strong>pénuries</strong> et les tickets de rationnement : la région, très agricole, souffre pourtant du manque de pain et de viande, surtout dans les villes. Le 11 novembre 1942, en réponse au débarquement allié en Afrique du Nord, les Allemands franchissent la ligne de démarcation : Toulouse, Montpellier et Perpignan sont occupées.</p>
+            </div>
+          </section>
+
+          <!-- ═══ SAUVER ═══ -->
+          <section class="section" id="sauver">
+            <h2 class="section-titre"><div class="section-titre-icon">🕯️</div>Les voix qui s'élèvent : sauver des Juifs</h2>
+            <div class="histoire-texte">
+              <p>Les rafles d'août 1942 en zone libre provoquent une réaction sans précédent. Le dimanche 23 août 1942, l'archevêque de Toulouse, <strong>Mgr Jules Saliège</strong>, fait lire dans toutes les églises de son diocèse une lettre pastorale qui condamne les persécutions. Copiée, diffusée par la BBC, elle a un retentissement national. L'évêque de Montauban, <strong>Mgr Pierre-Marie Théas</strong>, publie une protestation semblable ; il sera arrêté et déporté en 1944.</p>
+            </div>
+            <div class="citation-bloc">
+              <p>« Les Juifs sont des hommes, les Juives sont des femmes. »</p>
+              <cite>— Lettre pastorale de Mgr Saliège, archevêque de Toulouse, 23 août 1942</cite>
+            </div>
+            <div class="histoire-texte">
+              <p>À <strong>Moissac</strong>, la maison des Éclaireurs israélites de France, dirigée par Shatta et Bouli Simon, accueille des centaines d'enfants juifs ; à l'approche des rafles, ils sont dispersés dans des familles et des institutions de la région, avec la complicité des habitants et de la mairie. Des couvents, des pasteurs cévenols, des instituteurs et des familles paysannes cachent des enfants sous de faux noms. De nombreux habitants de la région ont reçu le titre de <strong>Justes parmi les nations</strong>.</p>
+            </div>
+          </section>
+
+          <!-- ═══ PYRÉNÉES ═══ -->
+          <section class="section" id="pyrenees">
+            <h2 class="section-titre"><div class="section-titre-icon">🏔️</div>Les chemins de la liberté par les Pyrénées</h2>
+            <div class="histoire-texte">
+              <p>Pour rejoindre la France libre, les armées alliées d'Afrique du Nord, ou simplement échapper à la persécution, des dizaines de milliers de personnes tentent de franchir les Pyrénées : jeunes Français refusant le STO, aviateurs alliés abattus, Juifs, résistants grillés. Ils sont guidés par des <strong>passeurs</strong>, souvent des bergers ou des contrebandiers qui connaissent les cols, parfois contre de l'argent, parfois par conviction. Des réseaux d'évasion comme <strong>Pat O'Leary</strong>, très actif à Toulouse, organisent les filières.</p>
+              <p>Le passage est dangereux : marches de nuit de deux à quatre jours, en espadrilles, dans la neige, sous la menace des patrouilles allemandes qui gardent la zone interdite le long de la frontière. Beaucoup sont arrêtés et déportés ; ceux qui réussissent sont souvent internés en Espagne, notamment au camp de Miranda de Ebro, avant de pouvoir rejoindre Gibraltar.</p>
+            </div>
+            <div class="schema">
+              <span class="schema-titre">Le parcours d'un évadé de France</span>
+              <div class="schema-flow">
+                <div class="schema-box">Toulouse<br><b>Contact avec un réseau</b><br><span class="small">faux papiers, planque</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Saint-Girons, Perpignan, Luchon<br><b>Rencontre du passeur</b></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Cols pyrénéens<br><b>2 à 4 nuits de marche</b><br><span class="small">neige, patrouilles</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">Espagne<br><b>Arrestation ou prison</b><br><span class="small">Miranda de Ebro</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">Gibraltar<br><b>Londres ou Alger</b><br><span style="font-size:12px;opacity:.85">la France libre</span></div>
+              </div>
+            </div>
+            <div class="encadre">
+              <strong>🥾 Le Chemin de la Liberté</strong><br>
+              De Saint-Girons (Ariège) à Esterri d'Àneu (Catalogne), cet itinéraire de haute montagne suit l'une des routes d'évasion les plus utilisées. Une marche commémorative y est organisée chaque été, et un musée lui est consacré à Saint-Girons.
+            </div>
+          </section>
+
+          <!-- ═══ RÉSISTANCE ═══ -->
+          <section class="section" id="resistance">
+            <h2 class="section-titre"><div class="section-titre-icon">✊</div>Les résistances</h2>
+            <div class="histoire-texte">
+              <p>La Résistance naît par petits groupes dès 1940 : tracts, journaux clandestins, hébergement d'évadés. À Toulouse, des universitaires, des syndicalistes, des catholiques et des socialistes comme <strong>Raymond Naves</strong> animent les premiers réseaux. Les mouvements de zone sud, <strong>Combat</strong>, <strong>Libération-Sud</strong> et <strong>Franc-Tireur</strong>, s'y implantent, avant de fusionner en 1943 dans les <strong>Mouvements unis de la Résistance</strong> (MUR). Né à Béziers en 1899, <strong>Jean Moulin</strong> devient en 1942-1943 l'homme qui unifie la Résistance pour le général de Gaulle.</p>
+              <p>Les étrangers jouent un rôle considérable : Espagnols républicains, Italiens antifascistes, Juifs d'Europe centrale. À Toulouse, la <strong>35<sup>e</sup> brigade FTP-MOI</strong> (Main-d'œuvre immigrée) de <strong>Marcel Langer</strong> multiplie les attentats ; Langer, arrêté, est guillotiné en 1943. Dans l'Ariège et l'Aude, les <strong>guérilleros espagnols</strong> forment les maquis les plus aguerris, forts de leur expérience de la guerre civile.</p>
+            </div>
+            <figure class="schema">
+              <svg viewBox="0 0 640 260" role="img" aria-label="Organisation de la Résistance en 1944">
+                <g font-family="Source Sans 3, sans-serif" text-anchor="middle">
+                  <rect x="230" y="10" width="180" height="44" rx="8" fill="#2C4A7C"/>
+                  <text x="320" y="30" fill="white" font-size="13" font-weight="700">Général de Gaulle</text>
+                  <text x="320" y="46" fill="#FAC775" font-size="10.5">France libre, Londres puis Alger</text>
+                  <rect x="215" y="76" width="210" height="40" rx="8" fill="#3D5F95"/>
+                  <text x="320" y="94" fill="white" font-size="12.5" font-weight="700">Conseil national de la Résistance</text>
+                  <text x="320" y="109" fill="#E8DEC8" font-size="10">1943, Jean Moulin</text>
+                  <rect x="20" y="140" width="180" height="48" rx="8" fill="#C8843A"/>
+                  <text x="110" y="160" fill="white" font-size="12" font-weight="700">MUR · Armée secrète</text>
+                  <text x="110" y="176" fill="#FFF3DD" font-size="10">Combat, Libération, Franc-Tireur</text>
+                  <rect x="230" y="140" width="180" height="48" rx="8" fill="#B03A2E"/>
+                  <text x="320" y="160" fill="white" font-size="12" font-weight="700">FTP · FTP-MOI</text>
+                  <text x="320" y="176" fill="#FDE3DE" font-size="10">communistes, immigrés</text>
+                  <rect x="440" y="140" width="180" height="48" rx="8" fill="#5C7EB0"/>
+                  <text x="530" y="160" fill="white" font-size="12" font-weight="700">ORA · réseaux</text>
+                  <text x="530" y="176" fill="#E8EEF7" font-size="10">militaires, renseignement, évasion</text>
+                  <rect x="120" y="212" width="400" height="38" rx="8" fill="#3E7C4A"/>
+                  <text x="320" y="236" fill="white" font-size="13" font-weight="700">FFI · Forces françaises de l'intérieur (1944)</text>
+                </g>
+                <g stroke="#8B7355" stroke-width="1.5">
+                  <line x1="320" y1="54" x2="320" y2="76"/>
+                  <line x1="280" y1="116" x2="110" y2="140"/><line x1="320" y1="116" x2="320" y2="140"/><line x1="360" y1="116" x2="530" y2="140"/>
+                  <line x1="110" y1="188" x2="250" y2="212"/><line x1="320" y1="188" x2="320" y2="212"/><line x1="530" y1="188" x2="390" y2="212"/>
+                </g>
+              </svg>
+              <figcaption>Organisation simplifiée : en 1944, les différents mouvements fusionnent leurs groupes armés dans les FFI. Dans la région de Toulouse (R4), le chef régional FFI est Serge Ravanel, 24 ans.</figcaption>
+            </figure>
+          </section>
+
+          <!-- ═══ MAQUIS ═══ -->
+          <section class="section" id="maquis">
+            <h2 class="section-titre"><div class="section-titre-icon">🌲</div>Le temps des maquis (1943 – 1944)</h2>
+            <div class="histoire-texte">
+              <p>En février 1943, le <strong>Service du travail obligatoire</strong> (STO) envoie de force les jeunes Français travailler en Allemagne. Des milliers de « réfractaires » se cachent dans les montagnes et les forêts : la Montagne Noire, les Cévennes, les Pyrénées, les Causses, le Ségala. Ils forment les <strong>maquis</strong>, d'abord simples refuges, puis groupes armés grâce aux parachutages alliés.</p>
+            </div>
+            <figure class="schema">
+              <svg viewBox="0 0 640 400" role="img" aria-label="Carte schématique des camps, maquis et routes d'évasion">
+                <rect width="640" height="400" fill="#FBF8F2"/>
+                <path d="M560 160 Q 540 230 520 280 Q 505 320 510 400 L640 400 L640 120 Z" fill="#D8E4F0"/>
+                <text x="590" y="300" font-family="Playfair Display, serif" font-style="italic" font-size="13" fill="#2C4A7C" text-anchor="middle">Méditerranée</text>
+                <path d="M0 360 Q 150 340 300 350 Q 420 355 510 345" fill="none" stroke="#B03A2E" stroke-width="2.5" stroke-dasharray="8 5"/>
+                <text x="210" y="390" font-family="Playfair Display, serif" font-size="12" fill="#A33B2A" font-weight="700" letter-spacing="1.5">ESPAGNE (franquiste)</text>
+                <!-- zones de maquis -->
+                <g fill="#3E7C4A" opacity=".18" stroke="#3E7C4A" stroke-width="1.5">
+                  <ellipse cx="350" cy="215" rx="60" ry="22"/>
+                  <ellipse cx="470" cy="130" rx="55" ry="35"/>
+                  <ellipse cx="200" cy="320" rx="80" ry="22"/>
+                  <ellipse cx="300" cy="90" rx="50" ry="30"/>
+                  <ellipse cx="80" cy="250" rx="45" ry="30"/>
+                </g>
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#2E5C36" font-weight="700" text-anchor="middle">
+                  <text x="350" y="219">Montagne Noire</text>
+                  <text x="470" y="125">Cévennes · Aigoual</text><text x="470" y="139" font-weight="400">Bir-Hakeim, Lozère</text>
+                  <text x="200" y="324">Pyrénées ariégeoises</text>
+                  <text x="300" y="86">Ségala · Lot</text><text x="300" y="100" font-weight="400">Vabre (Tarn)</text>
+                  <text x="80" y="254">Armagnac</text>
+                </g>
+                <!-- villes -->
+                <g font-family="Source Sans 3, sans-serif" font-size="11.5" fill="#2C2418">
+                  <circle cx="200" cy="200" r="6"/><text x="150" y="190" font-weight="700">Toulouse</text>
+                  <circle cx="455" cy="230" r="5"/><text x="465" y="235" font-weight="700">Montpellier</text>
+                  <circle cx="520" cy="190" r="4"/><text x="530" y="194">Nîmes</text>
+                  <circle cx="210" cy="140" r="4"/><text x="220" y="144">Montauban</text>
+                  <circle cx="390" cy="320" r="4"/><text x="400" y="315">Perpignan</text>
+                  <circle cx="155" cy="300" r="4"/><text x="100" y="292">Saint-Girons</text>
+                  <circle cx="300" cy="140" r="4"/><text x="310" y="152">Moissac ←</text>
+                </g>
+                <!-- camps -->
+                <g fill="#B03A2E">
+                  <rect x="392" y="336" width="9" height="9"/><rect x="235" y="290" width="9" height="9"/>
+                  <rect x="195" y="225" width="9" height="9"/><rect x="230" y="125" width="9" height="9"/><rect x="430" y="270" width="9" height="9"/>
+                </g>
+                <g font-family="Source Sans 3, sans-serif" font-size="10" fill="#B03A2E">
+                  <text x="405" y="350">Rivesaltes, Argelès</text><text x="248" y="298">Le Vernet</text>
+                  <text x="150" y="240">Noé, Récébédou</text><text x="243" y="122">Septfonds</text><text x="380" y="286">Agde</text>
+                </g>
+                <!-- routes d'évasion -->
+                <g fill="none" stroke="#C8843A" stroke-width="2" marker-end="url(#fl-evasion)">
+                  <path d="M200 205 Q 170 250 155 300 Q 150 330 160 372"/>
+                  <path d="M200 205 Q 260 270 300 350 Q 305 362 300 375"/>
+                  <path d="M390 325 Q 420 350 430 378"/>
+                </g>
+                <defs><marker id="fl-evasion" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C8843A"/></marker></defs>
+                <!-- légende -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#3A3028">
+                  <rect x="10" y="10" width="190" height="78" rx="8" fill="white" stroke="#E0DACE"/>
+                  <ellipse cx="28" cy="30" rx="10" ry="6" fill="#3E7C4A" opacity=".3" stroke="#3E7C4A"/><text x="44" y="34">Zone de maquis</text>
+                  <rect x="23" y="44" width="9" height="9" fill="#B03A2E"/><text x="44" y="53">Camp d'internement</text>
+                  <line x1="18" y1="70" x2="38" y2="70" stroke="#C8843A" stroke-width="2"/><text x="44" y="74">Route d'évasion</text>
+                </g>
+              </svg>
+              <figcaption>Carte schématique (positions approximatives) : camps, principales zones de maquis et routes d'évasion vers l'Espagne.</figcaption>
+            </figure>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead><tr><th>Maquis</th><th>Secteur</th><th>Particularité</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Guérilleros espagnols</strong></td><td>Ariège, Aude, Pyrénées</td><td>Anciens combattants républicains ; libèrent l'Ariège par eux-mêmes en août 1944</td></tr>
+                  <tr><td><strong>Corps franc de la Montagne Noire</strong></td><td>Tarn, Aude</td><td>Maquis important, ravitaillé par parachutages britanniques</td></tr>
+                  <tr><td><strong>Maquis de Vabre</strong></td><td>Tarn</td><td>Né dans un milieu protestant, il compte aussi des éclaireurs israélites</td></tr>
+                  <tr><td><strong>Maquis Bir-Hakeim</strong></td><td>Hérault, Gard, Lozère</td><td>Très mobile ; décimé à La Parade (Lozère) le 28 mai 1944</td></tr>
+                  <tr><td><strong>Maquis Aigoual-Cévennes</strong></td><td>Gard, Lozère</td><td>Appuyé sur les traditions de refuge des Cévennes</td></tr>
+                  <tr><td><strong>Corps franc Pommiès</strong></td><td>Gers, Hautes-Pyrénées, Haute-Garonne</td><td>Issu de l'Organisation de résistance de l'armée (ORA)</td></tr>
+                  <tr><td><strong>Bataillon de l'Armagnac</strong></td><td>Gers</td><td>Formé en 1944, il participe aux combats de la Libération</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · des montagnes refuges, encore une fois</div>
+              <p>Les Cévennes des Camisards, la Montagne Noire des bons hommes, les Pyrénées des passeurs : les maquis s'installent dans les mêmes reliefs que les dissidents des siècles passés. Ce n'est pas un hasard. Isolement, forêts, solidarité des villages et tradition du refus y rendent possible ce qui serait impensable en plaine.</p>
+            </div>
+          </section>
+
+          <!-- ═══ RÉPRESSION ═══ -->
+          <section class="section" id="repression">
+            <h2 class="section-titre"><div class="section-titre-icon">⚠️</div>La répression</h2>
+            <div class="histoire-texte">
+              <p>À partir de 1943, la répression s'intensifie : Gestapo, Milice française et unités de la Wehrmacht traquent résistants, réfractaires et Juifs. La prison Saint-Michel de Toulouse devient un lieu d'interrogatoires et d'exécutions. Au printemps 1944, la <strong>division SS Das Reich</strong>, cantonnée autour de <strong>Montauban</strong>, mène des opérations contre les maquis du Lot, du Tarn-et-Garonne et de l'Aveyron ; le 12 mai 1944, des centaines d'hommes sont raflés à Figeac. En juin, elle remonte vers la Normandie en commettant les massacres de Tulle et d'Oradour-sur-Glane, dans le Limousin.</p>
+              <p>À Nîmes, le 2 mars 1944, des maquisards sont pendus en pleine ville et exposés. Partout, les représailles frappent aussi les civils : villages incendiés, otages fusillés, déportations.</p>
+            </div>
+          </section>
+
+          <!-- ═══ LIBÉRATION ═══ -->
+          <section class="section" id="liberation">
+            <h2 class="section-titre"><div class="section-titre-icon">🎉</div>Août 1944 : le Midi se libère</h2>
+            <div class="histoire-texte">
+              <p>Le débarquement allié en Provence, le <strong>15 août 1944</strong>, oblige les troupes allemandes du Sud-Ouest à se replier vers la vallée du Rhône pour ne pas être encerclées. Les FFI les harcèlent tout au long de leur retraite. Ce sont donc les résistants eux-mêmes, sans armée alliée, qui libèrent la plupart des villes de la région : <strong>Toulouse</strong> les 19 et 20 août, puis Montpellier, Nîmes, Perpignan et les autres villes à la fin du mois. Le 25 août, à <strong>La Madeleine</strong>, près de Tornac (Gard), les maquisards obtiennent la reddition d'une importante colonne allemande.</p>
+              <p>À Toulouse, le général de Gaulle vient en personne le 16 septembre 1944 pour réaffirmer l'autorité de l'État face aux pouvoirs issus de la Résistance. Le commissaire de la République <strong>Pierre Bertaux</strong> organise la transition. L'épuration, d'abord sommaire, puis judiciaire, juge les collaborateurs.</p>
+            </div>
+            <div class="schema">
+              <span class="schema-titre">Comment la région s'est libérée</span>
+              <div class="schema-flow">
+                <div class="schema-box">6 juin 1944<br><b>Débarquement en Normandie</b><br><span class="small">les maquis passent à l'action</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">15 août<br><b>Débarquement en Provence</b><br><span class="small">menace d'encerclement</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">mi-août<br><b>Repli allemand</b><br><span class="small">vers la vallée du Rhône</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">19 – fin août<br><b>Libération par les FFI</b><br><span style="font-size:12px;opacity:.85">Toulouse, Montpellier, Nîmes…</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ PERSONNALITÉS ═══ -->
+          <section class="section" id="personnalites">
+            <h2 class="section-titre"><div class="section-titre-icon">👤</div>Les personnalités marquantes</h2>
+            <div class="perso-groupe g-occ">
+              <div class="perso-groupe-titre">Résistants</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Jean Moulin</div><div class="perso-dates">1899 – 1943</div><div class="perso-desc">Né à Béziers, préfet, délégué du général de Gaulle, unificateur de la Résistance ; mort après son arrestation.</div></div>
+                <div class="perso"><div class="perso-nom">Serge Ravanel</div><div class="perso-dates">1920 – 2009</div><div class="perso-desc">Chef régional des FFI de la région de Toulouse à 24 ans.</div></div>
+                <div class="perso"><div class="perso-nom">Jean-Pierre Vernant</div><div class="perso-dates">1914 – 2007</div><div class="perso-desc">Philosophe et helléniste, « colonel Berthier », chef FFI de la Haute-Garonne.</div></div>
+                <div class="perso"><div class="perso-nom">Marcel Langer</div><div class="perso-dates">1903 – 1943</div><div class="perso-desc">Chef de la 35<sup>e</sup> brigade FTP-MOI de Toulouse, guillotiné à la prison Saint-Michel.</div></div>
+                <div class="perso"><div class="perso-nom">Raymond Naves</div><div class="perso-dates">1902 – 1944</div><div class="perso-desc">Universitaire et socialiste toulousain, résistant, mort en déportation.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre Bertaux</div><div class="perso-dates">1907 – 1986</div><div class="perso-desc">Germaniste, commissaire de la République à Toulouse à la Libération.</div></div>
+              </div>
+            </div>
+            <div class="perso-groupe g-egl">
+              <div class="perso-groupe-titre">Ceux qui ont protégé</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Mgr Jules Saliège</div><div class="perso-dates">1870 – 1956</div><div class="perso-desc">Archevêque de Toulouse, auteur de la lettre pastorale du 23 août 1942 ; Juste parmi les nations.</div></div>
+                <div class="perso"><div class="perso-nom">Mgr Pierre-Marie Théas</div><div class="perso-dates">1894 – 1977</div><div class="perso-desc">Évêque de Montauban, déporté en 1944 ; Juste parmi les nations.</div></div>
+                <div class="perso"><div class="perso-nom">Shatta et Bouli Simon</div><div class="perso-dates">XX<sup>e</sup> siècle</div><div class="perso-desc">Directeurs de la maison des enfants juifs de Moissac.</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ FRISE ═══ -->
+          <section class="section" id="frise">
+            <h2 class="section-titre"><div class="section-titre-icon">🗓️</div>Frise chronologique</h2>
+            <div class="frise">
+              <div class="frise-periode">1939 – 1940</div>
+              <div class="frise-item"><span class="frise-date">Février 1939</span> <span class="frise-texte">— Retirada ; ouverture des camps des plages.</span></div>
+              <div class="frise-item"><span class="frise-date">Septembre 1939</span> <span class="frise-texte">— Déclaration de guerre.</span></div>
+              <div class="frise-item"><span class="frise-date">Mai – juin 1940</span> <span class="frise-texte">— Exode ; afflux de réfugiés à Toulouse.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">22 juin 1940</span> <span class="frise-texte">— Armistice ; le Midi en zone libre.</span></div>
+              <div class="frise-periode">Zone libre</div>
+              <div class="frise-item"><span class="frise-date">Octobre 1940</span> <span class="frise-texte">— Premier statut des Juifs.</span></div>
+              <div class="frise-item"><span class="frise-date">1941</span> <span class="frise-texte">— Ouverture du camp de Rivesaltes.</span></div>
+              <div class="frise-item"><span class="frise-date">Août 1942</span> <span class="frise-texte">— Rafles de Juifs étrangers en zone libre.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">23 août 1942</span> <span class="frise-texte">— Lettre pastorale de Mgr Saliège.</span></div>
+              <div class="frise-periode">Occupation</div>
+              <div class="frise-item majeur"><span class="frise-date">11 novembre 1942</span> <span class="frise-texte">— Invasion de la zone sud.</span></div>
+              <div class="frise-item"><span class="frise-date">Février 1943</span> <span class="frise-texte">— Création du STO ; essor des maquis.</span></div>
+              <div class="frise-item"><span class="frise-date">1943</span> <span class="frise-texte">— Exécution de Marcel Langer à Toulouse.</span></div>
+              <div class="frise-item"><span class="frise-date">2 mars 1944</span> <span class="frise-texte">— Pendaisons de maquisards à Nîmes.</span></div>
+              <div class="frise-item"><span class="frise-date">12 mai 1944</span> <span class="frise-texte">— Rafle de Figeac par la division Das Reich.</span></div>
+              <div class="frise-item"><span class="frise-date">28 mai 1944</span> <span class="frise-texte">— Massacre du maquis Bir-Hakeim à La Parade.</span></div>
+              <div class="frise-periode">Libération</div>
+              <div class="frise-item"><span class="frise-date">6 juin 1944</span> <span class="frise-texte">— Débarquement en Normandie ; la Das Reich quitte Montauban.</span></div>
+              <div class="frise-item"><span class="frise-date">15 août 1944</span> <span class="frise-texte">— Débarquement en Provence.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">19 – 20 août 1944</span> <span class="frise-texte">— Libération de Toulouse par les FFI.</span></div>
+              <div class="frise-item"><span class="frise-date">25 août 1944</span> <span class="frise-texte">— Reddition d'une colonne allemande à La Madeleine (Gard).</span></div>
+              <div class="frise-item"><span class="frise-date">16 septembre 1944</span> <span class="frise-texte">— Le général de Gaulle à Toulouse.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">8 mai 1945</span> <span class="frise-texte">— Capitulation allemande.</span></div>
+            </div>
+          </section>
+
+          <!-- ═══ IDÉES REÇUES ═══ -->
+          <section class="section" id="mythes">
+            <h2 class="section-titre"><div class="section-titre-icon">🔎</div>Histoire, mémoire et idées reçues</h2>
+            <div class="mythe"><strong>« En zone libre, on était à l'abri. »</strong><br><span class="verdict faux">Faux</span><br>Vichy y a ouvert des camps, appliqué les lois antijuives et livré des milliers de Juifs étrangers aux nazis dès l'été 1942, avant toute occupation allemande.</div>
+            <div class="mythe"><strong>« La Résistance, c'était tout le monde. »</strong><br><span class="verdict nuance">À nuancer</span><br>Les résistants actifs sont restés une minorité ; beaucoup de Français se sont adaptés, quelques-uns ont collaboré, un nombre croissant a aidé ponctuellement.</div>
+            <div class="mythe"><strong>« Les Américains ont libéré Toulouse. »</strong><br><span class="verdict faux">Faux</span><br>Toulouse, comme la plupart des villes de la région, a été libérée par les FFI, après le départ des troupes allemandes menacées d'encerclement.</div>
+            <div class="mythe"><strong>« Après la Libération, Toulouse était une république rouge. »</strong><br><span class="verdict nuance">Exagéré</span><br>L'expression, née de la crainte d'une prise de pouvoir communiste, exagère une situation de pouvoirs concurrents vite reprise en main par l'État.</div>
+            <div class="mythe"><strong>« La Résistance était uniquement française. »</strong><br><span class="verdict faux">Faux</span><br>Espagnols, Italiens, Juifs étrangers et réfugiés d'Europe centrale ont joué un rôle majeur, en particulier dans le Midi.</div>
+          </section>
+
+          <!-- ═══ MÉMOIRE ═══ -->
+          <section class="section" id="parcours">
+            <h2 class="section-titre"><div class="section-titre-icon">🥾</div>Lieux de mémoire à visiter</h2>
+            <div class="etapes-liste">
+              <div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Toulouse</div><div class="etape-texte">Musée départemental de la Résistance et de la Déportation, prison Saint-Michel, monument à la gloire de la Résistance.</div></div></div>
+              <div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Mémorial du camp de Rivesaltes</div><div class="etape-texte">Grand bâtiment semi-enterré au cœur des baraquements, consacré aux internements du XX<sup>e</sup> siècle.</div></div></div>
+              <div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Le Vernet et Saint-Girons</div><div class="etape-texte">Cimetière et musée du camp du Vernet, puis musée et départ du Chemin de la Liberté.</div></div></div>
+              <div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Moissac et Montauban</div><div class="etape-texte">Lieux liés au sauvetage des enfants juifs ; Montauban, cantonnement de la Das Reich.</div></div></div>
+              <div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Cévennes et Lozère</div><div class="etape-texte">Stèles de La Parade et du maquis Aigoual-Cévennes, sur les Causses et dans les vallées.</div></div></div>
+            </div>
+          </section>
+
+        </div>
+
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Période</span><span class="aside-val">1939 – 1945</span></div>
+              <div class="aside-row"><span class="aside-label">Régions résistantes</span><span class="aside-val">R4 (Toulouse) · R3 (Montpellier)</span></div>
+              <div class="aside-row"><span class="aside-label">Libération</span><span class="aside-val">Août 1944, par les FFI</span></div>
+              <div class="aside-row"><span class="aside-label">Catégorie</span><span class="aside-val">Histoire · Mémoire</span></div>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">🔢 En chiffres</div>
+            <div class="aside-card-body">
+              <div class="chiffres">
+                <div class="chiffre"><b>≈ 500 000</b><span>réfugiés espagnols en 1939</span></div>
+                <div class="chiffre"><b>11/11/42</b><span>fin de la zone libre</span></div>
+                <div class="chiffre"><b>23/08/42</b><span>lettre de Mgr Saliège</span></div>
+                <div class="chiffre"><b>24 ans</b><span>âge de Serge Ravanel, chef FFI</span></div>
+                <div class="chiffre"><b>19/08/44</b><span>Toulouse se soulève</span></div>
+                <div class="chiffre"><b>milliers</b><span>d'évadés par les Pyrénées</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">📚 Petit glossaire</div>
+            <div class="aside-card-body">
+              <dl class="glossaire">
+                <dt>Zone libre</dt><dd>Partie de la France non occupée de 1940 à 1942, sous l'autorité de Vichy.</dd>
+                <dt>STO</dt><dd>Service du travail obligatoire en Allemagne (1943).</dd>
+                <dt>Réfractaire</dt><dd>Jeune qui refuse de partir au STO.</dd>
+                <dt>Maquis</dt><dd>Groupe de résistants armés cachés en forêt ou en montagne.</dd>
+                <dt>FTP-MOI</dt><dd>Francs-tireurs et partisans de la Main-d'œuvre immigrée.</dd>
+                <dt>FFI</dt><dd>Forces françaises de l'intérieur, unification militaire de 1944.</dd>
+                <dt>Passeur</dt><dd>Guide qui fait franchir clandestinement la frontière.</dd>
+                <dt>Juste parmi les nations</dt><dd>Titre décerné par Yad Vashem à ceux qui ont sauvé des Juifs.</dd>
+              </dl>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">📖 Pour aller plus loin</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size: 13px; line-height: 1.6; color:#3A3028;">
+              • Musée départemental de la Résistance et de la Déportation, Toulouse<br>
+              • Mémorial du camp de Rivesaltes<br>
+              • Jean-Pierre Vernant, <em>La Traversée des frontières</em><br>
+              • Serge Ravanel, <em>L'Esprit de résistance</em>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+<div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<!--  Retour flottant-->
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300;
+    function majBouton() { btn.classList.toggle('visible', window.scrollY > seuil); }
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
