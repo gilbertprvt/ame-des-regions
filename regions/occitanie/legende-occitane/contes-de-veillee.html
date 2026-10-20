@@ -49,6 +49,8 @@
     .section-titre { display: flex; align-items: center; gap: 10px; font-family: var(--font-titre); font-size: 22px; font-weight: 700; color: #1E3560; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid #E8DEC8; }
     .section-titre-icon { width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
 
+
+    
     /* Le conte : mise en page « livre de veillée » */
     .conte { background: white; border: 1px solid #E0DACE; border-radius: 14px; padding: 34px 38px; position: relative; }
     .conte-ouverture { font-family: var(--font-titre); font-style: italic; font-size: 17px; color: #8B7355; text-align: center; margin: 0 0 26px; line-height: 1.6; }
@@ -180,6 +182,13 @@
     .serie-fees span { color: #6A5A8E; }
     .intro-noel { text-align: center; font-family: var(--font-titre); font-style: italic; color: #8B7355; margin: -8px auto 22px; max-width: 640px; }
     .note-bas { max-width: 760px; margin: 40px auto 0; }
+    /* ── Une couleur par département, la même dans toutes les parties (4 couleurs) ── */
+    .pastel-1 { --c: #E6B38F; }   /* pêche */
+    .pastel-2 { --c: #9FC4A6; }   /* vert sauge */
+    .pastel-3 { --c: #A6B8E0; }   /* bleu lavande */
+    .pastel-4 { --c: #D8BC88; }   /* sable */
+    .carte-conte .cc-bandeau { background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.3) 0 1px, transparent 1px 12px); }
+    .carte-conte .cc-dept { color: #4A3216; }   /* nom du département lisible sur fond clair */
     /* ── Liens de navigation en haut à droite (repris de histoires-de-clocher.html) ── */
     .produit-hero > .container { position: relative; }
     .produit-topbar-btns {
@@ -202,7 +211,7 @@
     .produit-hero { background-image: linear-gradient(rgba(30,53,96,0.0), rgba(30,53,96,0.0)), url('../../../assets/departement/occitanie/panorama-contes.jpg'); }
     .produit-hero-body { grid-template-columns: 1fr; }
   </style>
-</head>
+<link rel="stylesheet" href="contes.css" /></head>
 <body class="produit-page">
   <div class="produit-hero bandeau-btn-carte">
   <nav class="produit-topbar-btns zone-btn-carte" aria-label="Navigation Occitanie">
@@ -216,9 +225,13 @@
       
       <div class="produit-hero-body">
         <div>
-          <h1><em>C</em>ontes<br>
-            <span style="padding-left: 20px;"><em>d</em>e <em>v</em>eillée</span></h1>
-        </div>
+          <h1><span style="padding-left: 120px;"><em>C</em>ontes</span><br>
+            <span style="padding-left: 220px;"><em>d</em>e <em>v</em>eillée</span></h1><br>
+     <!--</h1> <span class="sous-titre"  style="padding-left: 320px;"><em>H</em>istoire au <em>c</em>oin du <em>f</em>eu</span></h1>    -->
+
+ 
+ 
+          </div>
       </div>
     </div>
     <div class="hero-label-bas-circuit">
@@ -230,7 +243,7 @@
     <div class="container">
       <div class="intro">
         <p class="conte-ouverture">Autrefois, quand les soirées d'hiver étaient longues, on se retrouvait autour du feu pour la <em>velhada</em>.<br>On épluchait les châtaignes, on reprisait, et quelqu'un racontait.</p>
-        <p>Voici vingt-sept histoires, en deux séries, avec à chaque fois un conte par département d'Occitanie : des diables et des saints, des monstres de rivière, des fées des sources, des ruses de siège, des trésors perdus et quelques histoires vraies qui ont fait trembler le pays. Chacune est racontée à nouveau, avec son origine, ses sources et les lieux où elle s'est passée. Et pour décembre, six contes de Noël, puis cinq contes de fées pour les plus petits.</p>
+        <p>Voici vingt-sept histoires, classées par département d'Occitanie : des diables et des saints, des monstres de rivière, des fées des sources, des ruses de siège, des trésors perdus et quelques histoires vraies qui ont fait trembler le pays. Chacune est racontée à nouveau, avec son origine, ses sources et les lieux où elle s'est passée. Et pour décembre, six contes de Noël, puis cinq contes de fées pour les plus petits.</p>
       </div>
 
       <div class="filtres" role="group" aria-label="Filtrer par âge">
@@ -240,9 +253,9 @@
         <button data-min="9">Pour les grands</button>
       </div>
 
-      <h2 class="serie-titre"><span>Première série</span></h2>
-      <div class="grille">
-        <a class="carte-conte" href="conte-jean-de-l-ours.html" style="--c:#5B4A32" data-age="7">
+      <h2 class="serie-titre serie-noel"><span>✦ Contes par département ✦</span></h2>
+      <div class="grille grille-dept">
+        <a class="carte-conte pastel-1" href="conte-jean-de-l-ours.html" data-age="7">
           <div class="cc-bandeau"><span class="cc-dept">Ariège (09)</span></div>
           <div class="cc-corps">
             <h3>Jean de l'Ours</h3>
@@ -250,107 +263,7 @@
             <div class="cc-tags"><span>Merveilleux et aventure</span><span>dès 7 ans</span><span>≈ 12 min (ou 2 soirées)</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-dame-carcas.html" style="--c:#5C3A6E" data-age="6">
-          <div class="cc-bandeau"><span class="cc-dept">Aude (11)</span></div>
-          <div class="cc-corps">
-            <h3>Dame Carcas</h3>
-            <p>Cinq ans de siège, un cochon, un sac de blé et une ruse qui donna son nom à Carcassonne.</p>
-            <div class="cc-tags"><span>Ruse et humour</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-berger-de-roquefort.html" style="--c:#3F6670" data-age="5">
-          <div class="cc-bandeau"><span class="cc-dept">Aveyron (12)</span></div>
-          <div class="cc-corps">
-            <h3>Le berger de Roquefort</h3>
-            <p>Un jeune berger amoureux oublie son fromage dans une grotte du Combalou. Le roquefort est né.</p>
-            <div class="cc-tags"><span>Tendre et gourmande</span><span>dès 5 ans</span><span>≈ 5 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-drac-beaucaire.html" style="--c:#1F4E5A" data-age="8">
-          <div class="cc-bandeau"><span class="cc-dept">Gard (30)</span></div>
-          <div class="cc-corps">
-            <h3>Le Drac de Beaucaire</h3>
-            <p>Une lavandière enlevée sous le Rhône par le Drac, et le secret de son œil.</p>
-            <div class="cc-tags"><span>Merveilleux, un peu inquiétant</span><span>dès 8 ans</span><span>≈ 8 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-crocodile-saint-bertrand.html" style="--c:#5E6130" data-age="6">
-          <div class="cc-bandeau"><span class="cc-dept">Haute-Garonne (31)</span></div>
-          <div class="cc-corps">
-            <h3>Le crocodile de Saint-Bertrand</h3>
-            <p>Un monstre dans la Garonne, un évêque sans armes, et un crocodile accroché dans la cathédrale.</p>
-            <div class="cc-tags"><span>Merveilleux et frisson</span><span>dès 6 ans</span><span>≈ 6 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-roi-des-corbeaux.html" style="--c:#3B3350" data-age="8">
-          <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
-          <div class="cc-corps">
-            <h3>Le Roi des Corbeaux</h3>
-            <p>La fille de l'Homme vert épouse le Roi des Corbeaux. Un grand conte gascon de Jean-François Bladé.</p>
-            <div class="cc-tags"><span>Merveilleux et épreuves</span><span>dès 8 ans</span><span>≈ 10 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-pont-du-diable.html" style="--c:#2F6B4F" data-age="6">
-          <div class="cc-bandeau"><span class="cc-dept">Hérault (34)</span></div>
-          <div class="cc-corps">
-            <h3>Le Pont du Diable</h3>
-            <p>Le diable bâtit un pont en une nuit contre la première âme qui le traversera. Guilhem a une idée.</p>
-            <div class="cc-tags"><span>Diablerie et malice</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-gouffre-padirac.html" style="--c:#2E3F5C" data-age="5">
-          <div class="cc-bandeau"><span class="cc-dept">Lot (46)</span></div>
-          <div class="cc-corps">
-            <h3>Le gouffre de Padirac</h3>
-            <p>Le diable ouvre le causse d'un coup de talon et défie saint Martin et sa vieille mule.</p>
-            <div class="cc-tags"><span>Diablerie et bravoure</span><span>dès 5 ans</span><span>≈ 6 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-bete-du-gevaudan.html" style="--c:#3E4A3D" data-age="9">
-          <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
-          <div class="cc-corps">
-            <h3>La Bête du Gévaudan</h3>
-            <p>Une histoire vraie : la Bête qui terrorisa le Gévaudan, et sept enfants qui lui tinrent tête.</p>
-            <div class="cc-tags"><span>Frisson et courage</span><span>dès 9-10 ans</span><span>≈ 9 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-mirat-lourdes.html" style="--c:#2F5D7C" data-age="7">
-          <div class="cc-bandeau"><span class="cc-dept">Hautes-Pyrénées (65)</span></div>
-          <div class="cc-corps">
-            <h3>Mirat et la truite de Lourdes</h3>
-            <p>Assiégé par Charlemagne, le chef Mirat reçoit du ciel une truite… et la jette à l'ennemi.</p>
-            <div class="cc-tags"><span>Ruse et honneur</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-guifred-canigou.html" style="--c:#8C3B2E" data-age="11">
-          <div class="cc-bandeau"><span class="cc-dept">Pyrénées-Orientales (66)</span></div>
-          <div class="cc-corps">
-            <h3>Le comte Guifred et le Canigou</h3>
-            <p>Un comte puissant, un instant de colère, et une vie entière pour demander pardon.</p>
-            <div class="cc-tags"><span>Grave et émouvante</span><span>dès 11 ans</span><span>≈ 7 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-troubadour-burlats.html" style="--c:#8A4A5E" data-age="9">
-          <div class="cc-bandeau"><span class="cc-dept">Tarn (81)</span></div>
-          <div class="cc-corps">
-            <h3>Le troubadour de Burlats</h3>
-            <p>Un clerc timide écrit pour sa comtesse des chansons qu'il n'ose pas signer.</p>
-            <div class="cc-tags"><span>Tendre et mélancolique</span><span>dès 9-10 ans</span><span>≈ 7 min</span></div>
-          </div>
-        </a>
-        <a class="carte-conte" href="conte-javelot-moissac.html" style="--c:#A0522D" data-age="6">
-          <div class="cc-bandeau"><span class="cc-dept">Tarn-et-Garonne (82)</span></div>
-          <div class="cc-corps">
-            <h3>Le javelot de Clovis</h3>
-            <p>Clovis lance son javelot pour choisir l'emplacement d'une abbaye. Il tombe dans un marais.</p>
-            <div class="cc-tags"><span>Épique et souriante</span><span>dès 6 ans</span><span>≈ 5 min</span></div>
-          </div>
-        </a>
-      </div>
-
-      <h2 class="serie-titre"><span>Deuxième série</span></h2>
-      <div class="grille">
-        <a class="carte-conte" href="conte-tresor-de-montsegur.html" style="--c:#5A4A3A" data-age="10">
+        <a class="carte-conte pastel-1" href="conte-tresor-de-montsegur.html" data-age="10">
           <div class="cc-bandeau"><span class="cc-dept">Ariège (09)</span></div>
           <div class="cc-corps">
             <h3>Le trésor de Montségur</h3>
@@ -358,7 +271,15 @@
             <div class="cc-tags"><span>Grave et mystérieuse</span><span>dès 10 ans</span><span>≈ 8 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-tresor-de-salomon.html" style="--c:#7B5B1E" data-age="8">
+        <a class="carte-conte pastel-2" href="conte-dame-carcas.html" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Aude (11)</span></div>
+          <div class="cc-corps">
+            <h3>Dame Carcas</h3>
+            <p>Cinq ans de siège, un cochon, un sac de blé et une ruse qui donna son nom à Carcassonne.</p>
+            <div class="cc-tags"><span>Ruse et humour</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-2" href="conte-tresor-de-salomon.html" data-age="8">
           <div class="cc-bandeau"><span class="cc-dept">Aude (11)</span></div>
           <div class="cc-corps">
             <h3>Le trésor de Salomon</h3>
@@ -366,7 +287,15 @@
             <div class="cc-tags"><span>Aventure et mystère</span><span>dès 8 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-sainte-foy-conques.html" style="--c:#8B6A2B" data-age="8">
+        <a class="carte-conte pastel-3" href="conte-berger-de-roquefort.html" data-age="5">
+          <div class="cc-bandeau"><span class="cc-dept">Aveyron (12)</span></div>
+          <div class="cc-corps">
+            <h3>Le berger de Roquefort</h3>
+            <p>Un jeune berger amoureux oublie son fromage dans une grotte du Combalou. Le roquefort est né.</p>
+            <div class="cc-tags"><span>Tendre et gourmande</span><span>dès 5 ans</span><span>≈ 5 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-3" href="conte-sainte-foy-conques.html" data-age="8">
           <div class="cc-bandeau"><span class="cc-dept">Aveyron (12)</span></div>
           <div class="cc-corps">
             <h3>Le moine qui vola sainte Foy</h3>
@@ -374,7 +303,15 @@
             <div class="cc-tags"><span>Ruse et patience</span><span>dès 8 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-marie-durand.html" style="--c:#6A4C3A" data-age="10">
+        <a class="carte-conte pastel-4" href="conte-drac-beaucaire.html" data-age="8">
+          <div class="cc-bandeau"><span class="cc-dept">Gard (30)</span></div>
+          <div class="cc-corps">
+            <h3>Le Drac de Beaucaire</h3>
+            <p>Une lavandière enlevée sous le Rhône par le Drac, et le secret de son œil.</p>
+            <div class="cc-tags"><span>Merveilleux, un peu inquiétant</span><span>dès 8 ans</span><span>≈ 8 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-4" href="conte-marie-durand.html" data-age="10">
           <div class="cc-bandeau"><span class="cc-dept">Gard (30)</span></div>
           <div class="cc-corps">
             <h3>Résister</h3>
@@ -382,7 +319,15 @@
             <div class="cc-tags"><span>Grave et inspirante</span><span>dès 10 ans</span><span>≈ 8 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-clemence-isaure.html" style="--c:#6B4A7A" data-age="8">
+        <a class="carte-conte pastel-1" href="conte-crocodile-saint-bertrand.html" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Haute-Garonne (31)</span></div>
+          <div class="cc-corps">
+            <h3>Le crocodile de Saint-Bertrand</h3>
+            <p>Un monstre dans la Garonne, un évêque sans armes, et un crocodile accroché dans la cathédrale.</p>
+            <div class="cc-tags"><span>Merveilleux et frisson</span><span>dès 6 ans</span><span>≈ 6 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-1" href="conte-clemence-isaure.html" data-age="8">
           <div class="cc-bandeau"><span class="cc-dept">Haute-Garonne (31)</span></div>
           <div class="cc-corps">
             <h3>Clémence Isaure</h3>
@@ -390,7 +335,15 @@
             <div class="cc-tags"><span>Douce et poétique</span><span>dès 8 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-messe-des-morts.html" style="--c:#3A3A4E" data-age="9">
+        <a class="carte-conte pastel-2" href="conte-roi-des-corbeaux.html" data-age="8">
+          <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
+          <div class="cc-corps">
+            <h3>Le Roi des Corbeaux</h3>
+            <p>La fille de l'Homme vert épouse le Roi des Corbeaux. Un grand conte gascon de Jean-François Bladé.</p>
+            <div class="cc-tags"><span>Merveilleux et épreuves</span><span>dès 8 ans</span><span>≈ 10 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-2" href="conte-messe-des-morts.html" data-age="9">
           <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
           <div class="cc-corps">
             <h3>La messe des morts</h3>
@@ -398,7 +351,15 @@
             <div class="cc-tags"><span>Frisson</span><span>dès 9 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-poulain-pezenas.html" style="--c:#7A4E2D" data-age="5">
+        <a class="carte-conte pastel-3" href="conte-pont-du-diable.html" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Hérault (34)</span></div>
+          <div class="cc-corps">
+            <h3>Le Pont du Diable</h3>
+            <p>Le diable bâtit un pont en une nuit contre la première âme qui le traversera. Guilhem a une idée.</p>
+            <div class="cc-tags"><span>Diablerie et malice</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-3" href="conte-poulain-pezenas.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Hérault (34)</span></div>
           <div class="cc-corps">
             <h3>Le Poulain de Pézenas</h3>
@@ -406,7 +367,7 @@
             <div class="cc-tags"><span>Joyeuse et festive</span><span>dès 5 ans</span><span>≈ 5 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-grotte-des-demoiselles.html" style="--c:#5B4F7A" data-age="5">
+        <a class="carte-conte pastel-3" href="conte-grotte-des-demoiselles.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Hérault (34)</span></div>
           <div class="cc-corps">
             <h3>La grotte des Demoiselles</h3>
@@ -414,7 +375,15 @@
             <div class="cc-tags"><span>Merveilleuse et douce</span><span>dès 5 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-saut-de-la-mounine.html" style="--c:#7A5236" data-age="7">
+        <a class="carte-conte pastel-4" href="conte-gouffre-padirac.html" data-age="5">
+          <div class="cc-bandeau"><span class="cc-dept">Lot (46)</span></div>
+          <div class="cc-corps">
+            <h3>Le gouffre de Padirac</h3>
+            <p>Le diable ouvre le causse d'un coup de talon et défie saint Martin et sa vieille mule.</p>
+            <div class="cc-tags"><span>Diablerie et bravoure</span><span>dès 5 ans</span><span>≈ 6 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-4" href="conte-saut-de-la-mounine.html" data-age="7">
           <div class="cc-bandeau"><span class="cc-dept">Lot (46)</span></div>
           <div class="cc-corps">
             <h3>Le Saut de la Mounine</h3>
@@ -422,7 +391,15 @@
             <div class="cc-tags"><span>Ruse et émotion</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-lac-saint-andeol.html" style="--c:#3D5A6C" data-age="7">
+        <a class="carte-conte pastel-2" href="conte-bete-du-gevaudan.html" data-age="9">
+          <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
+          <div class="cc-corps">
+            <h3>La Bête du Gévaudan</h3>
+            <p>Une histoire vraie : la Bête qui terrorisa le Gévaudan, et sept enfants qui lui tinrent tête.</p>
+            <div class="cc-tags"><span>Frisson et courage</span><span>dès 9-10 ans</span><span>≈ 9 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-2" href="conte-lac-saint-andeol.html" data-age="7">
           <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
           <div class="cc-corps">
             <h3>Le lac de Saint-Andéol</h3>
@@ -430,7 +407,15 @@
             <div class="cc-tags"><span>Mystère et morale</span><span>dès 7 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-breche-de-roland.html" style="--c:#4A6274" data-age="7">
+        <a class="carte-conte pastel-3" href="conte-mirat-lourdes.html" data-age="7">
+          <div class="cc-bandeau"><span class="cc-dept">Hautes-Pyrénées (65)</span></div>
+          <div class="cc-corps">
+            <h3>Mirat et la truite de Lourdes</h3>
+            <p>Assiégé par Charlemagne, le chef Mirat reçoit du ciel une truite… et la jette à l'ennemi.</p>
+            <div class="cc-tags"><span>Ruse et honneur</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-3" href="conte-breche-de-roland.html" data-age="7">
           <div class="cc-bandeau"><span class="cc-dept">Hautes-Pyrénées (65)</span></div>
           <div class="cc-corps">
             <h3>La Brèche de Roland</h3>
@@ -438,7 +423,15 @@
             <div class="cc-tags"><span>Épique et tragique</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-dame-de-l-eau.html" style="--c:#2E6E73" data-age="7">
+        <a class="carte-conte pastel-1" href="conte-guifred-canigou.html" data-age="11">
+          <div class="cc-bandeau"><span class="cc-dept">Pyrénées-Orientales (66)</span></div>
+          <div class="cc-corps">
+            <h3>Le comte Guifred et le Canigou</h3>
+            <p>Un comte puissant, un instant de colère, et une vie entière pour demander pardon.</p>
+            <div class="cc-tags"><span>Grave et émouvante</span><span>dès 11 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-1" href="conte-dame-de-l-eau.html" data-age="7">
           <div class="cc-bandeau"><span class="cc-dept">Pyrénées-Orientales (66)</span></div>
           <div class="cc-corps">
             <h3>La dame de l'eau</h3>
@@ -446,7 +439,15 @@
             <div class="cc-tags"><span>Merveilleux et mélancolie</span><span>dès 7 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-ail-rose-lautrec.html" style="--c:#9A4A63" data-age="5">
+        <a class="carte-conte pastel-4" href="conte-troubadour-burlats.html" data-age="9">
+          <div class="cc-bandeau"><span class="cc-dept">Tarn (81)</span></div>
+          <div class="cc-corps">
+            <h3>Le troubadour de Burlats</h3>
+            <p>Un clerc timide écrit pour sa comtesse des chansons qu'il n'ose pas signer.</p>
+            <div class="cc-tags"><span>Tendre et mélancolique</span><span>dès 9-10 ans</span><span>≈ 7 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-4" href="conte-ail-rose-lautrec.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Tarn (81)</span></div>
           <div class="cc-corps">
             <h3>L'ail rose de Lautrec</h3>
@@ -454,7 +455,15 @@
             <div class="cc-tags"><span>Gourmande et souriante</span><span>dès 5 ans</span><span>≈ 5 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="conte-saint-antonin-aigles.html" style="--c:#3E6B5A" data-age="6">
+        <a class="carte-conte pastel-1" href="conte-javelot-moissac.html" data-age="6">
+          <div class="cc-bandeau"><span class="cc-dept">Tarn-et-Garonne (82)</span></div>
+          <div class="cc-corps">
+            <h3>Le javelot de Clovis</h3>
+            <p>Clovis lance son javelot pour choisir l'emplacement d'une abbaye. Il tombe dans un marais.</p>
+            <div class="cc-tags"><span>Épique et souriante</span><span>dès 6 ans</span><span>≈ 5 min</span></div>
+          </div>
+        </a>
+        <a class="carte-conte pastel-1" href="conte-saint-antonin-aigles.html" data-age="6">
           <div class="cc-bandeau"><span class="cc-dept">Tarn-et-Garonne (82)</span></div>
           <div class="cc-corps">
             <h3>Les aigles de saint Antonin</h3>
@@ -467,7 +476,7 @@
       <h2 class="serie-titre serie-noel"><span>✦ Contes de Noël ✦</span></h2>
       <p class="intro-noel">Six histoires pour les veillées de décembre, autour des vieilles coutumes de Noël du pays d'Oc et de Catalogne.</p>
       <div class="grille">
-        <a class="carte-conte" href="noel-tio-de-nadal.html" style="--c:#9B2F2F" data-age="4">
+        <a class="carte-conte pastel-1" href="noel-tio-de-nadal.html" data-age="4">
           <div class="cc-bandeau"><span class="cc-dept">Pyrénées-Orientales (66)</span></div>
           <div class="cc-corps">
             <h3>Le Tió de Nadal</h3>
@@ -475,7 +484,7 @@
             <div class="cc-tags"><span>Joyeuse et drôle</span><span>dès 4 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="noel-nadalet.html" style="--c:#2F4A6E" data-age="6">
+        <a class="carte-conte pastel-4" href="noel-nadalet.html" data-age="6">
           <div class="cc-bandeau"><span class="cc-dept">Tarn (81)</span></div>
           <div class="cc-corps">
             <h3>Le Nadalet</h3>
@@ -483,7 +492,7 @@
             <div class="cc-tags"><span>Tendre et lumineuse</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="noel-betes-qui-parlent.html" style="--c:#5A4630" data-age="8">
+        <a class="carte-conte pastel-2" href="noel-betes-qui-parlent.html" data-age="8">
           <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
           <div class="cc-corps">
             <h3>La nuit où les bêtes parlent</h3>
@@ -491,7 +500,7 @@
             <div class="cc-tags"><span>Frisson puis douceur</span><span>dès 8 ans</span><span>≈ 8 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="noel-cacha-fuoc.html" style="--c:#7A2E2E" data-age="5">
+        <a class="carte-conte pastel-4" href="noel-cacha-fuoc.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Gard (30)</span></div>
           <div class="cc-corps">
             <h3>La bûche du grand-père</h3>
@@ -499,7 +508,7 @@
             <div class="cc-tags"><span>Chaleureuse</span><span>dès 5 ans</span><span>≈ 8 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="noel-cloches-qui-repondent.html" style="--c:#3C4F3A" data-age="6">
+        <a class="carte-conte pastel-3" href="noel-cloches-qui-repondent.html" data-age="6">
           <div class="cc-bandeau"><span class="cc-dept">Aveyron (12)</span></div>
           <div class="cc-corps">
             <h3>Les cloches qui répondent</h3>
@@ -507,7 +516,7 @@
             <div class="cc-tags"><span>Douce et mystérieuse</span><span>dès 6 ans</span><span>≈ 7 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="noel-chandelle.html" style="--c:#3A4A6B" data-age="5">
+        <a class="carte-conte pastel-2" href="noel-chandelle.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
           <div class="cc-corps">
             <h3>La chandelle de Noël</h3>
@@ -520,7 +529,7 @@
       <h2 class="serie-titre serie-fees"><span>✦ Contes de fées ✦</span></h2>
       <p class="intro-noel">Cinq histoires douces pour les plus jeunes, avec les <em>fadas</em> et les <em>hadas</em>, les fées du pays d'Oc.</p>
       <div class="grille">
-        <a class="carte-conte" href="fee-belle-jeanneton.html" style="--c:#7A3E6A" data-age="5">
+        <a class="carte-conte pastel-2" href="fee-belle-jeanneton.html" data-age="5">
           <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
           <div class="cc-corps">
             <h3>La Belle Jeanneton</h3>
@@ -528,7 +537,7 @@
             <div class="cc-tags"><span>Aventure et malice</span><span>dès 5 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="fee-trois-oranges.html" style="--c:#B0602A" data-age="4">
+        <a class="carte-conte pastel-2" href="fee-trois-oranges.html" data-age="4">
           <div class="cc-bandeau"><span class="cc-dept">Gers (32)</span></div>
           <div class="cc-corps">
             <h3>Les trois oranges</h3>
@@ -536,7 +545,7 @@
             <div class="cc-tags"><span>Merveilleuse et douce</span><span>dès 4 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="fee-hadas-cheminee.html" style="--c:#3E5E8A" data-age="4">
+        <a class="carte-conte pastel-3" href="fee-hadas-cheminee.html" data-age="4">
           <div class="cc-bandeau"><span class="cc-dept">Hautes-Pyrénées (65)</span></div>
           <div class="cc-corps">
             <h3>Les hadas de la cheminée</h3>
@@ -544,7 +553,7 @@
             <div class="cc-tags"><span>Merveilleuse et tendre</span><span>dès 4 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="fee-des-vertiges.html" style="--c:#4A6B78" data-age="4">
+        <a class="carte-conte pastel-1" href="fee-des-vertiges.html" data-age="4">
           <div class="cc-bandeau"><span class="cc-dept">Ariège (09)</span></div>
           <div class="cc-corps">
             <h3>La fée des Vertiges</h3>
@@ -552,7 +561,7 @@
             <div class="cc-tags"><span>Merveilleuse et douce</span><span>dès 4 ans</span><span>≈ 6 min</span></div>
           </div>
         </a>
-        <a class="carte-conte" href="fee-fadas-du-berceau.html" style="--c:#6A5A8E" data-age="4">
+        <a class="carte-conte pastel-2" href="fee-fadas-du-berceau.html" data-age="4">
           <div class="cc-bandeau"><span class="cc-dept">Lozère (48)</span></div>
           <div class="cc-corps">
             <h3>Les trois fadas du berceau</h3>

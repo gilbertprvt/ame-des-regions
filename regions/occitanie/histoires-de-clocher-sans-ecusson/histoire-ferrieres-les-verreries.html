@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ferrières-les-Verreries, où les nobles soufflaient le verre — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Ferrières-les-Verreries (Hérault), 47 habitants : le village des gentilshommes verriers du causse de l&#x27;Hortus et la verrerie de Couloubrines." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+
+
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- COULEUR-BANDEAU : bleu-vert du verre ancien -->
+  <style>
+    .produit-hero { background-color: #2E6F78; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #2E6F78; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #1F4E55; }
+    .lettrine::first-letter, .chiffre .val { color: #2E6F78; }
+    .btn { background: #2E6F78; border-color: #2E6F78; }
+    .btn:hover { background: #1F4E55; }
+    .btn.secondaire { background: #F7F3EC; color: #2E6F78; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #2E6F78; color: white; border-color: #2E6F78; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #2E6F78, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #2E6F78, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du village si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+        url('../../../assets/departement/occitanie/panorama-clocher.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns zone-btn-carte">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour btn-carte sans-emoji">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>F</em>errières-les-<em>V</em>erreries<br>
+            <span style="padding-left: 80px;"><em>o</em>ù <em>l</em>es <em>n</em>obles <br>
+              <em>s</em>oufflaient <em>l</em>e <em>v</em>erre</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-herault.png" alt="Carte Hérault" />
+      </div>
+
+    </div>
+
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#focus">🔥 La verrerie</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Dans la garrigue au nord du Pic Saint-Loup, un village de 47 habitants. Pendant près de cinq siècles, des nobles y ont travaillé de leurs mains, devant des fours brûlants, sans rien perdre de leur rang : c'étaient des gentilshommes verriers.</p>
+              <h3>Un village de garrigue et de pierre</h3>
+              <p class="lettrine">Ferrières-les-Verreries se trouve sur le causse de l'Hortus, à une trentaine de kilomètres au nord de Montpellier, au nord du Pic Saint-Loup. La commune s'étend sur plus de 17 km² de garrigue et de bois, entre 206 et 421 mètres d'altitude ; près de 95 % du territoire est couvert de végétation naturelle.</p>
+              <p>L'endroit est habité depuis très longtemps. Le <strong>dolmen de Ferrières</strong>, construit vers 2500-2300 avant notre ère, a donné son nom à une culture préhistorique, le « Ferrérien ». Les fouilles y ont révélé un sanctuaire avec des cheveux et des ossements, peut-être d'un couple venu d'Europe du Nord. Le lieu apparaît dans les textes en 1116, dans le cartulaire de Maguelone, sous le nom de <em>mansum de Ferreris</em> : le nom rappelle d'anciens sites où l'on fondait le minerai de fer.</p>
+             
+             
+          <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/ferrieres-les-verreries.jpg"
+                        alt="Ville Ferrières-les-Verreries" />
+                    <figcaption>L'église de Ferrières-les-Verreries</figcaption>
+          </figure>
+
+             
+             
+              <h3>Le privilège des gentilshommes verriers</h3>
+              <p>Sous l'Ancien Régime, un noble qui travaillait de ses mains risquait de « déroger », c'est-à-dire de perdre sa noblesse. Le verre fait exception. Le plus ancien privilège royal connu, un acte de Charles VI daté du 24 janvier 1399, autorise les nobles de naissance à souffler le verre sans déroger. Des arrêts successifs le confirment, jusqu'aux lettres patentes de Louis XV en 1727.</p>
+              <p>Le métier ne rend pas noble : il faut l'être avant. « Pour faire un gentilhomme verrier, il fallait d'abord prendre un gentilhomme », dit le proverbe. En revanche, les familles se transmettent jalousement le savoir-faire et le droit de l'exercer. En Languedoc, on retrouve les noms d'Audoin, d'Azémar, Cabanel, Caylar, Faucon, Riols, Suère ou Verbigier de Saint-Paul. En octobre 1753, les gentilshommes verriers du Languedoc tiennent même une assemblée à Sommières.</p>
+              <h3>Cinq siècles de verre sur le causse</h3>
+              <p>Pourquoi ici ? Parce que la verrerie dévore du bois. Il faut une forêt pour alimenter un four, et les chênes, surtout le chêne blanc, sont abondants sur le causse. Les verriers s'installent donc au cœur des bois, loin des villages. Sur le causse de l'Hortus, on a compté jusqu'à <strong>21 ateliers</strong>. La plus ancienne verrerie de Ferrières était aux Baumes.</p>
+              <p>La plus connue est celle de <strong>Couloubrines</strong>, au pied du village. Du XVIe siècle à la Révolution, elle appartient à la famille noble de La Roque de Couloubrines. Le verre partait par le « chemin des Verriers », qui passait par Claret et Valflaunès jusqu'à Sommières.</p>
+              <div class="citation-bloc">
+                <p>Les nobles verriers étaient surnommés, avec un peu de moquerie, les « roturiers du verre ».</p>
+              </div>
+              <h3>La fin d'un monde</h3>
+              <p>La Révolution supprime les privilèges : en 1791, la loi Le Chapelier abolit les corporations, et les gentilshommes verriers deviennent de simples artisans. La raréfaction du bois puis l'arrivée du charbon et de la verrerie industrielle font le reste : les fours du causse s'éteignent. En 1703 déjà, la guerre des Camisards avait gravement endommagé l'église du village.</p>
+              <p>Le village se vide : en 1968, il ne compte plus que <strong>11 habitants</strong>. Au début du XXe siècle, il avait pris officiellement le nom de Ferrières-les-Verreries, pour se distinguer de Ferrières-Poussarou et rendre hommage à ses verriers. En 1989, la verrerie de Couloubrines est fouillée et restaurée. La population remonte jusqu'à 75 habitants en 2012 ; elle est de 47 aujourd'hui.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li><span class="date">2500 av. J.-C.</span><span>Construction du <strong>dolmen de Ferrières</strong>, éponyme de la culture ferrérienne.</span></li>
+              <li><span class="date">Fin XIe s.</span><span>Construction de l'église de la Nativité-de-Saint-Jean-Baptiste.</span></li>
+              <li><span class="date">1116</span><span>Première mention : <em>mansum de Ferreris</em>, dans le cartulaire de Maguelone.</span></li>
+              <li class="fort"><span class="date">1399</span><span>Charles VI autorise les nobles à souffler le verre <strong>sans déroger</strong>.</span></li>
+              <li><span class="date">XVIe s.</span><span>La famille de <strong>La Roque</strong> exploite la verrerie de Couloubrines.</span></li>
+              <li><span class="date">1646</span><span>Fonte de la cloche de l'église par Léonard Bordes, de Montpellier.</span></li>
+              <li><span class="date">1703</span><span>Guerre des Camisards : l'église est gravement endommagée.</span></li>
+              <li><span class="date">1727</span><span>Lettres patentes de Louis XV sur les verriers.</span></li>
+              <li><span class="date">1753</span><span>Assemblée des gentilshommes verriers du Languedoc à <strong>Sommières</strong>.</span></li>
+              <li class="fort"><span class="date">1791</span><span>Fin des privilèges et des corporations (loi Le Chapelier).</span></li>
+              <li><span class="date">1918</span><span>Le village prend le nom de <strong>Ferrières-les-Verreries</strong>.</span></li>
+              <li><span class="date">1968</span><span>Point le plus bas : <strong>11 habitants</strong>.</span></li>
+              <li class="fort"><span class="date">1989</span><span>Fouilles et restauration de la <strong>verrerie de Couloubrines</strong>.</span></li>
+              <li><span class="date">2012</span><span>La population remonte à 75 habitants.</span></li>
+              <li><span class="date">2023</span><span>47 habitants.</span></li>
+            </ol>
+          </section>
+
+          <!-- LA VERRERIE -->
+          <section class="section" id="focus">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔥</div>
+              La verrerie de Couloubrines
+            </h2>
+            <div class="histoire-texte">
+              <p>La verrerie de Couloubrines est l'un des derniers témoins de l'activité des gentilshommes verriers sur le causse. C'est une <strong>verrerie à bois</strong>, dont les vestiges remontent au XVIIe siècle, fouillée et restaurée en 1989.</p>
+              
+              
+           <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/verrerie-de-couloubrines.jpg"
+                        alt="Ville Ferrières-les-Verreries" />
+                    <figcaption>La verrerie de Couloubrines</figcaption>
+          </figure>
+              
+              
+              <p>On y comprend comment travaillaient les verriers : le four, chauffé au bois de chêne, montait assez haut en température pour fondre le sable ; les verriers cueillaient la pâte au bout de leur canne et la soufflaient. Autour, tout un monde de bûcherons, de charbonniers et de muletiers vivait de l'atelier.</p>
+              <p>Le site ne se visite qu'en visite guidée, sur réservation, pour les groupes comme pour les particuliers (environ une heure). Une formule associe la visite aux vins du terroir.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les règles des gentilshommes verriers</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Être noble :</strong> le métier ne donnait pas la noblesse, il fallait l'avoir avant.</span></li>
+                <li><span><strong>Ne pas déroger :</strong> souffler le verre ne faisait pas perdre son rang, par exception.</span></li>
+                <li><span><strong>Transmettre :</strong> le savoir-faire restait dans les familles, par apprentissage.</span></li>
+                <li><span><strong>S'installer en forêt :</strong> près du bois nécessaire au four, loin des villages.</span></li>
+              </ol>
+            </div>
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">1399</div><div class="lib">premier privilège royal connu</div></div>
+              <div class="chiffre"><div class="val">21</div><div class="lib">ateliers sur le causse de l'Hortus</div></div>
+              <div class="chiffre"><div class="val">11</div><div class="lib">habitants en 1968</div></div>
+              <div class="chiffre"><div class="val">47</div><div class="lib">habitants aujourd'hui</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Littérature</div>
+                <h4>« Gentilhomme de verre »</h4>
+                <p>Le poète Saint-Amant, issu d'une famille de nobles verriers, s'attira les moqueries de Boileau, et le poète Maynard lui adressa une épigramme sur la fragilité de sa noblesse : « gentilhomme de verre ».</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Monument historique</div>
+                <h4>Une cloche de 1646</h4>
+                <p>La cloche de l'église, fondue en 1646 par Léonard Bordes, de Montpellier, est protégée au titre des monuments historiques.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Préhistoire</div>
+                <h4>Une culture porte son nom</h4>
+                <p>Le « Ferrérien » est une culture du Néolithique final, des agriculteurs-éleveurs bâtisseurs des plus anciens dolmens de la région.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Patrimoine rural</div>
+                <h4>Lavognes et moulin</h4>
+                <p>La commune garde des murets de pierre sèche, des lavognes (mares empierrées pour les troupeaux), les sources de Gorniès et du Boulidou et le moulin de Gorniès.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Ferrières-les-Verreries, causse de l'Hortus (Hérault)</span>
+                <button class="btn secondaire" id="reset">Recentrer</button>
+              </div>
+              <div id="map" aria-label="Carte de Ferrières-les-Verreries"></div>
+              <div class="carte-note">Positions indicatives, d'après OpenStreetMap et l'office de tourisme du Grand Pic Saint-Loup. Visite de la verrerie sur réservation auprès de la mairie.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Hérault (34)</span></div>
+              <div class="aside-row"><span class="aside-label">Intercommunalité</span><span class="aside-val">Grand Pic Saint-Loup</span></div>
+              <div class="aside-row"><span class="aside-label">Habitants</span><span class="aside-val">47 (2023)</span></div>
+              <div class="aside-row"><span class="aside-label">Minimum</span><span class="aside-val">11 (1968)</span></div>
+              <div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">17,42 km²</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude</span><span class="aside-val">206 à 421 m</span></div>
+              <div class="aside-row"><span class="aside-label">Patrimoine</span><span class="aside-val">Verrerie de Couloubrines</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution du nombre d'habitants"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Recensements (Insee et séries historiques).</p>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/Ferri%C3%A8res-les-Verreries" target="_blank" rel="noopener">Wikipédia, Ferrières-les-Verreries</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Gentilshommes_verriers" target="_blank" rel="noopener">Wikipédia, Gentilshommes verriers</a></li>
+                <li><a href="https://grandpicsaintloup.fr/commune/ferrieres-les-verreries/" target="_blank" rel="noopener">Grand Pic Saint-Loup, la commune</a></li>
+                <li><a href="https://www.grandpicsaintloup-tourisme.fr/patrimoine-culturel/le-site-archeologique-de-la-verrerie-de-couloubrines-ferrieres-les-verreries" target="_blank" rel="noopener">Office de tourisme, verrerie de Couloubrines</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   (un lieu sans lat/lng apparaît dans la liste mais pas sur la carte)
+   ============================================================ */
+const lieux=[{"name": "Le village de Ferrières", "lat": 43.8789, "lng": 3.7978, "desc": "L'église romane de la Nativité-de-Saint-Jean-Baptiste, son presbytère de 1715 et sa cloche de 1646."}, {"name": "La verrerie de Couloubrines", "lat": 43.88044, "lng": 3.79923, "desc": "Verrerie restaurée des gentilshommes verriers ; visite guidée uniquement, sur réservation."}, {"name": "Le dolmen de Ferrières", "desc": "Caché dans un bois de chênes verts, sur le sentier des Asphodèles."}];
+// Population (recensements)
+const population=[[1968, 11], [1975, 14], [1982, 26], [1990, 23], [1999, 38], [2007, 60], [2012, 75], [2017, 50], [2023, 47]];
+// Repère à mettre en avant sur la courbe : [année début, année fin, texte] ou null
+const periodeMarquee=[1989, 1990, "fouilles"];
+/* ============================================================ */
+
+const COUL='#2E6F78', COUL_FONCE='#1F4E55';
+const surCarte=lieux.map((s,i)=>({...s,n:i+1})).filter(s=>s.lat!=null);
+let recentrer=()=>{};
+if(window.L){
+ const map=L.map('map',{scrollWheelZoom:false});
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+ const bounds=L.latLngBounds(surCarte.map(s=>[s.lat,s.lng]));
+ recentrer=()=>surCarte.length>1?map.fitBounds(bounds.pad(.35)):map.setView([surCarte[0].lat,surCarte[0].lng],15);
+ recentrer();
+ window._markers={};
+ surCarte.forEach(s=>{
+  const icon=L.divIcon({className:'',html:`<div class="marker">${s.n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  window._markers[s.n]=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${s.n}. ${s.name}</strong><p>${s.desc}</p>`);
+ });
+ window._map=map;
+} else {
+ document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>';
+}
+lieux.forEach((s,i)=>{
+ const el=document.createElement('div');el.className='etape';
+ const surLaCarte=s.lat!=null;
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div>${surLaCarte?'<div class="etape-leg">Voir sur la carte ↗</div>':''}</div>`;
+ if(surLaCarte)el.onclick=()=>{if(!window._map)return;document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});window._map.setView([s.lat,s.lng],15);window._markers[i+1].openPopup()};
+ else el.style.cursor='default';
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>recentrer();
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph');if(!svg||!population.length)return;
+ const W=300,H=150,g={l:32,r:12,t:14,b:22};
+ const annees=population.map(p=>p[0]),vals=population.map(p=>p[1]);
+ const x0=Math.floor((Math.min(...annees)-5)/10)*10,x1=Math.max(2025,Math.max(...annees));
+ const pas=[10,20,25,50,100,200,250,500][[10,20,25,50,100,200,250,500].findIndex(p=>Math.max(...vals)/p<=5)];
+ const yMax=Math.ceil(Math.max(...vals)*1.1/pas)*pas;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ for(let v=0;v<=yMax;v+=pas)s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`;
+ const ecart=(x1-x0)>120?50:20;
+ for(let a=Math.ceil(x0/ecart)*ecart;a<=x1;a+=ecart)s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`;
+ if(periodeMarquee){const[a,b,t]=periodeMarquee;s+=`<rect x="${X(a)}" y="${g.t}" width="${Math.max(3,X(b)-X(a))}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/><text x="${X((a+b)/2)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">${t}</text>`}
+ s+=`<polyline points="${population.map(([a,v])=>X(a)+','+Y(v)).join(' ')}" fill="none" stroke="${COUL}" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="${COUL}"><title>${a} : ${v} habitants</title></circle>`});
+ const iMax=vals.indexOf(Math.max(...vals)),iMin=vals.indexOf(Math.min(...vals));
+ s+=`<text x="${X(annees[iMax])+6}" y="${Y(vals[iMax])+3}" style="fill:${COUL_FONCE};font-weight:700">${vals[iMax]}</text>`;
+ if(iMin!==iMax)s+=`<text x="${X(annees[iMin])}" y="${Y(vals[iMin])-7}" text-anchor="middle" style="fill:${COUL_FONCE};font-weight:700">${vals[iMin]}</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

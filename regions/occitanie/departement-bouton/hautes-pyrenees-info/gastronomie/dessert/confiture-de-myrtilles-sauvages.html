@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Confiture de myrtilles sauvages — L'Âme des Régions</title>
+<link href="../../../../../../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+ 
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+ 
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-hautes-pyrenees.jpg'); }</style>
+</head>
+<body class="produit-page">
+<!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+<div class="produit-hero bandeau-btn-carte">
+  <nav class="produit-topbar-btns liens-empiles zone-btn-carte" aria-label="Navigation">
+    <a href="../../../../occitanie-departement/hautes-pyrenees/hautes-pyrenees.html" class="produit-btn-retour btn-carte sans-emoji">Retour à la fiche Hautes-Pyrénées</a>
+  </nav>
+<div class="container">
+<div class="produit-topbar">
+<a class="produit-logo" href="../../../../../../index.html">L'<span>Âme</span> des Régions</a>
+</div>
+<div class="produit-hero-body">
+<div>
+<h1><em>C</em>onfiture de myrtilles<br/><span style="padding-left: 60px;">sauvages</span></h1>
+</div>
+<img alt="Carte Hautes-Pyrénées" src="../../../../../../assets/departement/occitanie/carte-hautes-pyrenees.png" style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;"/>
+</div>
+</div>
+<div class="fiche-hero-ecusson">
+<img alt="Écusson Hautes-Pyrénées" src="../../../../../../assets/departement/occitanie/hautes-pyrenees.png"/>
+</div>
+<div class="hero-label-bas">
+    ⟹ Desserts &amp; Douceurs ⟸
+    </div>
+<div class="produit-nav">
+<div class="container">
+<div class="produit-nav-inner">
+<a class="active" href="#histoire">📖 Histoire</a>
+<a href="#recette">👨‍🍳 Recette</a>
+<a href="#vins">🍷 Accords vins</a>
+<a href="#variantes">🔀 Variantes</a>
+<a href="#ou-manger">📍 Où déguster</a>
+</div>
+</div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+<div class="produit-body">
+<div class="container">
+<div class="produit-layout">
+<!-- ── COLONNE PRINCIPALE ── -->
+<div>
+<!-- HISTOIRE -->
+<section class="section" id="histoire">
+<h2 class="section-titre">
+<div class="section-titre-icon">📖</div>
+              Histoire &amp; origines
+            </h2>
+<div class="histoire-texte"><p>La myrtille sauvage (<em>Vaccinium myrtillus</em>) est un petit arbrisseau des sous-bois clairs et des landes d’altitude. Dans les Pyrénées, elle colonise les versants de l’étage montagnard et subalpin, d’environ 800 à plus de 2 000 mètres, souvent en compagnie du rhododendron et de la callune. Ses baies bleu-noir mûrissent de juillet à septembre, d’autant plus tard que l’on monte en altitude.</p>
+<figure class="photo-bloc photo-centre" style="max-width: 280px;"><img alt="Confiture de myrtilles sauvages" src="../../../../../../assets/departement/occitanie/photo/hautes-pyrenees/confiture-de-myrtilles.png"/><figcaption>Confiture de myrtilles sauvages des Pyrénées</figcaption></figure><div class="clearfix"></div>
+<p>Il ne faut pas la confondre avec la myrtille cultivée, en réalité un bleuet d’origine nord-américaine (<em>Vaccinium corymbosum</em>), plus grosse et à chair blanche. La <strong>myrtille sauvage</strong>, petite et colorée jusqu’au cœur d’un violet profond, offre un goût bien plus intense, à la fois acidulé et légèrement boisé, qui fait tout le prix de sa confiture.</p>
+<p>La cueillette des myrtilles est une pratique ancienne des vallées pyrénéennes. Ressource d’appoint pour les familles, elle mobilisait les enfants et les femmes durant l’été ; les baies étaient consommées fraîches, vendues sur les marchés ou transformées pour l’hiver. La confiture permettait de conserver la récolte de la belle saison et de garder, au cœur de l’hiver, un peu de la saveur des estives.</p>
+<p>La récolte se fait à la main ou au <strong>peigne à myrtilles</strong>, sorte de petite boîte munie de dents qui détache les baies des rameaux. Son usage est discuté, car un maniement brutal peut abîmer les plants. Pour préserver la ressource et les milieux fragiles, la cueillette peut être encadrée localement par des arrêtés municipaux ou par les règles des forêts publiques et des espaces protégés : quantités limitées, dates d’ouverture, outils autorisés.</p>
+<p>La transformation reste d’une grande simplicité : des baies, du sucre, un peu de citron. Riches en pectine modérée, les myrtilles donnent une confiture souple, presque coulante, d’un violet intense. Leurs pigments, les anthocyanes, sont à l’origine de cette couleur profonde qui tache les doigts des cueilleurs.</p>
+<p>Aujourd’hui, la confiture de myrtilles sauvages est proposée par des confituriers artisanaux, des agriculteurs et des cueilleurs des vallées. Certains produits peuvent porter la <strong>dénomination « Montagne »</strong>, encadrée par la réglementation française et européenne, ou la marque <em>Esprit parc national</em>, attribuée à des produits issus du territoire du Parc national des Pyrénées qui respectent un cahier des charges.</p>
+<p>Sur la table pyrénéenne, la confiture de myrtilles accompagne les tartines du petit-déjeuner, les crêpes, les tartes et les sablés, mais aussi le fromage de brebis des Pyrénées, à la manière de la confiture de cerises noires au Pays basque. Elle se marie volontiers avec une tranche de gâteau à la broche : deux douceurs emblématiques de la montagne réunies dans l’assiette.</p></div>
+</section>
+<!-- RECETTE -->
+<section class="section" id="recette">
+<h2 class="section-titre">
+<div class="section-titre-icon">👨‍🍳</div>
+              La recette traditionnelle — Confiture de myrtilles sauvages
+            </h2>
+<div class="recette-grid">
+<div class="recette-meta-card">
+<div class="recette-meta-icon">⏱️</div>
+<div>
+<div class="recette-meta-label">Préparation</div>
+<div class="recette-meta-val">20 min + macération</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">🔥</div>
+<div>
+<div class="recette-meta-label">Cuisson</div>
+<div class="recette-meta-val">20 min</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">👥</div>
+<div>
+<div class="recette-meta-label">Pour</div>
+<div class="recette-meta-val">5 pots de 250 g</div>
+</div>
+</div>
+<div class="recette-meta-card">
+<div class="recette-meta-icon">📊</div>
+<div>
+<div class="recette-meta-label">Difficulté</div>
+<div class="recette-meta-val">Facile</div>
+</div>
+</div>
+</div>
+<div class="ingredients-bloc">
+<div class="ingredients-titre">✦ Ingrédients</div>
+<div class="ingredients-liste">
+<div class="ingredient-item"><span class="ingredient-qte">1 kg</span> Myrtilles sauvages</div>
+<div class="ingredient-item"><span class="ingredient-qte">700 g</span> Sucre cristallisé</div>
+<div class="ingredient-item"><span class="ingredient-qte">1</span> Citron (jus)</div>
+<div class="ingredient-item"><span class="ingredient-qte">1</span> Gousse de vanille (facultatif)</div>
+</div>
+</div>
+<div class="etapes-liste">
+<div class="etape">
+<div class="etape-num">1</div>
+<div class="etape-corps">
+<div class="etape-titre">Trier les baies</div>
+<div class="etape-texte">Éliminez feuilles, brindilles et baies abîmées. Rincez rapidement les myrtilles seulement si nécessaire, puis égouttez-les bien.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">2</div>
+<div class="etape-corps">
+<div class="etape-titre">Faire macérer</div>
+<div class="etape-texte">Mélangez les myrtilles avec le sucre et le jus de citron, ajoutez la gousse de vanille fendue, et laissez macérer quelques heures ou une nuit au frais.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">3</div>
+<div class="etape-corps">
+<div class="etape-titre">Stériliser les pots</div>
+<div class="etape-texte">Ébouillantez les pots et leurs couvercles, puis laissez-les sécher à l’envers sur un linge propre.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">4</div>
+<div class="etape-corps">
+<div class="etape-titre">Cuire</div>
+<div class="etape-texte">Portez la préparation à ébullition dans une bassine à confiture, puis laissez cuire à feu vif 10 à 15 minutes en remuant et en écumant régulièrement.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">5</div>
+<div class="etape-corps">
+<div class="etape-titre">Vérifier la prise</div>
+<div class="etape-texte">Déposez une goutte de confiture sur une assiette froide : elle doit se figer légèrement. Au thermomètre, visez environ 105 °C.</div>
+</div>
+</div>
+<div class="etape">
+<div class="etape-num">6</div>
+<div class="etape-corps">
+<div class="etape-titre">Mettre en pots</div>
+<div class="etape-texte">Retirez la vanille, remplissez les pots à ras bord avec la confiture bouillante, fermez aussitôt et conservez à l’abri de la lumière.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ACCORDS VINS -->
+<section class="section" id="vins">
+<h2 class="section-titre">
+<div class="section-titre-icon">🍷</div>
+              Accords vins
+            </h2>
+<div class="vins-liste">
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Maury</div>
+<div class="vin-desc">Vin doux naturel des Pyrénées-Orientales, aux notes de fruits noirs, idéal avec une tarte aux myrtilles.</div>
+</div>
+<div class="vin-badge">⭐ Accord idéal</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Banyuls</div>
+<div class="vin-desc">Arômes de mûre et de cacao qui répondent au fruit intense de la myrtille.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+<div class="vin-item">
+<div class="vin-icon">🍷</div>
+<div>
+<div class="vin-nom">Jurançon moelleux</div>
+<div class="vin-desc">Avec la confiture servie sur un fromage de brebis des Pyrénées, sa fraîcheur fait merveille.</div>
+</div>
+<div class="vin-badge">Recommandé</div>
+</div>
+</div>
+</section>
+<!-- VARIANTES -->
+<section class="section" id="variantes">
+<h2 class="section-titre">
+<div class="section-titre-icon">🔀</div>
+              Variantes régionales
+            </h2>
+<div class="histoire-texte">
+<p><strong>Confiture myrtilles-framboises :</strong> deux fruits de cueillette d’été réunis pour une confiture plus acidulée.</p>
+<p><strong>Gelée de myrtilles :</strong> jus filtré puis cuit, plus lisse et sans pépins.</p>
+<p><strong>Confiture de myrtilles à la vanille :</strong> la gousse adoucit l’acidité et prolonge les arômes.</p>
+<p><strong>Tarte aux myrtilles :</strong> le grand dessert d’été des vallées, sur pâte sablée.</p>
+</div>
+</section>
+<!-- OÙ DÉGUSTER -->
+<section class="section" id="ou-manger">
+<h2 class="section-titre">
+<div class="section-titre-icon">📍</div>
+              Où déguster dans les Hautes-Pyrénées ?
+            </h2>
+<div class="histoire-texte">
+<p>La confiture de myrtilles sauvages se trouve auprès des producteurs et artisans des vallées, surtout après la cueillette de l’été.</p>
+<p><strong>Marchés de producteurs</strong> à Bagnères-de-Bigorre, Argelès-Gazost ou Arreau, où l’on rencontre directement cueilleurs et confituriers.</p>
+<p><strong>Fermes et boutiques du terroir</strong> dans les vallées de Cauterets, de Luz, d’Aure ou du Louron.</p>
+<p><strong>Maisons du Parc national des Pyrénées</strong> qui valorisent les produits locaux et la marque Esprit parc national.</p>
+<p><strong>Fêtes et foires d’été</strong> l’occasion de goûter la confiture fraîche de l’année, souvent accompagnée de tartes aux myrtilles.</p>
+</div>
+</section>
+</div>
+<!-- ── COLONNE DROITE ── -->
+<aside class="produit-aside">
+<!-- Carte d'identité -->
+<div class="aside-card">
+<div class="aside-card-header">📋 Carte d'identité</div>
+<div class="aside-card-body">
+<div class="aside-row">
+<span class="aside-label">Région</span>
+<span class="aside-val">Occitanie</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Territoire</span>
+<span class="aside-val">Hautes-Pyrénées · Montagne pyrénéenne</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Catégorie</span>
+<span class="aside-val">Confiture artisanale · Fruit de cueillette</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Saison</span>
+<span class="aside-val">Cueillette juillet-septembre · Dégustation toute l'année</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">Occasion</span>
+<span class="aside-val">Petit-déjeuner · Goûter · Fromage</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">LABEL / PROTECTION</span>
+<span class="aside-val">Pas d'IGP officielle · Mention « Montagne » possible</span>
+</div>
+<div class="aside-row">
+<span class="aside-label">RECONNU PAR</span>
+<span class="aside-val">Tradition de cueillette pyrénéenne</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+  </script>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/hautes-pyrenees/hautes-pyrenees.html">← Retour à la fiche Hautes-Pyrénées</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

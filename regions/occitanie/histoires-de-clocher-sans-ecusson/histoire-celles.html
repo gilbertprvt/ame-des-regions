@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Celles, le village sauvé des eaux — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Celles (Hérault), le village évacué pour le lac du Salagou que l'eau n'a jamais englouti, et sa renaissance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- Couleurs propres à cette fiche : rouge « ruffe » du Salagou -->
+  <style>
+    .produit-hero { background-color: #9A3F2C; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #9A3F2C; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #7A2F20; }
+    .btn { background: #9A3F2C; border-color: #9A3F2C; }
+    .btn:hover { background: #7A2F20; }
+    .btn.secondaire { background: #F7F3EC; color: #9A3F2C; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #9A3F2C; color: white; border-color: #9A3F2C; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #9A3F2C, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #9A3F2C, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo de Celles si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+          url('../../../assets/departement/occitanie/panorama-clocher.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns zone-btn-carte">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour btn-carte sans-emoji">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>C</em>elles,<br>
+            <span style="padding-left: 20px;"><em>l</em>e <em>v</em>illage <em>s</em>auvé <em>d</em>es <em>e</em>aux</span></h1>
+        </div>
+        <img class="hero-carte-dept" src="../../../assets/departement/occitanie/carte-herault.png" alt="Carte Hérault" />
+      </div>
+
+    </div>
+
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#renaissance">🌱 La renaissance</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Dans les années 1960, on a vidé Celles de ses habitants pour faire place à un lac. Le lac est venu, mais il s'est arrêté au pied des maisons. Commence alors un demi-siècle d'abandon, de pillage et d'obstination, jusqu'à une renaissance qui ne ressemble à aucune autre.</p>
+
+              <h3>Une vallée de vignes et de terre rouge</h3>
+              <p class="lettrine">Celles se tient sur un replat de la vallée du Salagou, au pied du Larzac, à une dizaine de kilomètres au sud de Lodève. Le paysage est l'un des plus étranges de France : des collines couleur de rouille, faites de <em>ruffe</em>, une argilite chargée d'oxyde de fer déposée au Permien, il y a plus de 250 millions d'années. Des coulées et des cheminées de basalte, bien plus récentes (1,5 à 2,5 millions d'années), y dessinent des traînées sombres. Le village lui-même est bâti de cette pierre volcanique.</p>
+              <p>Au XIXe siècle, la commune compte jusqu'à 120 habitants (1846). On y vit de la vigne, de quelques cultures et de l'élevage de moutons. Au début des années 1960, le village rassemble encore environ 80 personnes, avec son église de la Nativité-de-Notre-Dame, sa mairie, son école, son café et deux commerces.</p>
+
+         <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/celles2.jpg"
+                        alt="Ville Celles" />
+                    <figcaption>Le village de Celles</figcaption>
+          </figure>
+              
+
+              <h3>Le grand projet du Salagou</h3>
+              <p>À la fin des années 1950, le vin du Languedoc se vend mal. Les pouvoirs publics veulent pousser les agriculteurs à remplacer la vigne par des vergers, qui ont besoin de beaucoup d'eau. Le Conseil général de l'Hérault lance un barrage sur le Salagou : il doit constituer une réserve pour l'irrigation et aider à réguler les crues de l'Hérault. La ruffe, imperméable, fait de la vallée une cuvette idéale.</p>
+              <p>Le chantier dure de 1964 à 1968. Le plan prévoit un remplissage en deux temps : d'abord jusqu'à la cote 139 mètres, puis jusqu'à la cote 150. Or Celles est bâti autour de 143-144 mètres. La première étape l'épargne ; la seconde le noierait. Le village est donc déclaré condamné.</p>
+
+              <h3>L'évacuation</h3>
+              <p>Les terres et les maisons sont rachetées ou expropriées par le Département. Certains vendent, d'autres résistent. Entre le milieu des années 1960 et 1969, les familles partent les unes après les autres. L'école ferme, puis le café et les commerces. En septembre 1969, les dernières familles quittent le village. Joëlle Goudal, future maire, a alors cinq ans : sa famille d'agriculteurs est relogée à plusieurs dizaines de kilomètres, au sud de Montpellier.</p>
+              <p>La cuvette se remplit plus vite que prévu, après un très gros orage. L'eau recouvre les terres les plus basses de la commune, ses champs et ses chemins, puis s'immobilise à la cote 139. Elle n'ira jamais plus haut.</p>
+
+              <div class="citation-bloc">
+                <p>Le lac devait monter jusqu'à la cote 150. Il s'est arrêté à 139. Les maisons de Celles, elles, sont restées au sec, mais vides.</p>
+              </div>
+
+         <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/celles1.jpg"
+                        alt="Ville Celles" />
+                    <figcaption>Le lac de Celles</figcaption>
+          </figure>
+              
+
+
+
+              <h3>Un village fantôme… mais une commune vivante</h3>
+              <p>La seconde phase de remplissage n'est jamais réalisée : les vergers espérés ne se développent pas, et le niveau de 139 mètres suffit. Mais Celles reste officiellement promis à l'engloutissement. Les maisons vides sont pillées : on emporte portes, poutres, tuiles et pierres. Des squatteurs s'installent, les toitures s'effondrent. En 1975, le recensement ne compte plus que cinq habitants sur toute la commune.</p>
+              <p>Henri Goudal, le père de Joëlle, refuse d'abandonner. Il revient chaque fin de semaine et transforme des ruines au bord de l'eau, face au village, en guinguette, devenue plus tard un hôtel-restaurant et un camping. Il est maire de 1971 à 1995. Avec quelques anciens, il entretient la mairie et l'église, pour que Celles garde son statut de commune.</p>
+              <p>Car ce statut est menacé : il est question de rattacher Celles au Puech ou à Octon. L'association « Sauvons Celles » porte l'affaire jusqu'au Conseil d'État, qui lui donne raison en 1990. Pour prouver qu'une vie existe encore, la commune produit une photo : un vieil homme et un enfant assis sur un banc. Le vieil homme, surnommé « Bichette », était le gardien du village depuis 1976.</p>
+              <p>Entre 1985 et 1988, la mairie et l'église sont réhabilitées. En 1996, le Département s'engage officiellement à maintenir le lac à la cote 139 : le danger est écarté. En 2010, il cède au village la pleine propriété des ruines, pour un euro symbolique.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li><span class="date">1846</span><span>Population maximale de la commune : <strong>120 habitants</strong>.</span></li>
+              <li><span class="date">Fin 1950</span><span>Crise viticole : naissance du projet de barrage pour irriguer des vergers.</span></li>
+              <li><span class="date">1964</span><span>Début du chantier du <strong>barrage du Salagou</strong>.</span></li>
+              <li class="fort"><span class="date">1969</span><span>Mise en eau du lac. En septembre, les <strong>dernières familles quittent Celles</strong>. L'eau s'arrête à la cote 139.</span></li>
+              <li><span class="date">1971</span><span>Henri Goudal devient maire ; il le restera jusqu'en 1995.</span></li>
+              <li><span class="date">1975</span><span>Point le plus bas : <strong>5 habitants</strong> sur la commune.</span></li>
+              <li><span class="date">1985-88</span><span>Réhabilitation de la mairie et de l'église.</span></li>
+              <li><span class="date">1986</span><span>Le village sert de décor au film policier <em>Zone rouge</em>.</span></li>
+              <li class="fort"><span class="date">1990</span><span>Le <strong>Conseil d'État</strong> donne raison à « Sauvons Celles » : la commune survit.</span></li>
+              <li><span class="date">1995</span><span>Joëlle Goudal, fille d'expropriés, est élue maire.</span></li>
+              <li class="fort"><span class="date">1996</span><span>Le Département s'engage à maintenir le lac à la <strong>cote 139</strong>.</span></li>
+              <li><span class="date">2010</span><span>Le Département cède la pleine propriété du village à la commune.</span></li>
+              <li><span class="date">2014</span><span>Le conseil municipal devient entièrement féminin.</span></li>
+              <li class="fort"><span class="date">2019</span><span>Cinquante ans après l'évacuation, signature des premiers <strong>prêts à usage</strong> : trois familles s'engagent.</span></li>
+              <li><span class="date">2022</span><span>Convention avec la Banque des Territoires (projet évalué à plus de 9 M€).</span></li>
+              <li><span class="date">2024</span><span>Création du fonds de dotation qui pilote l'opération. Le site Salagou – Cirque de Mourèze reçoit le label <strong>Grand Site de France</strong>.</span></li>
+              <li><span class="date">2025</span><span>Trois maisons entièrement reconstruites et habitées ; cinq autres familles attendues.</span></li>
+            </ol>
+          </section>
+
+          <!-- RENAISSANCE -->
+          <section class="section" id="renaissance">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌱</div>
+              La renaissance
+            </h2>
+            <div class="histoire-texte">
+              <p>Une fois propriétaire de ses ruines, la commune aurait pu les vendre au plus offrant. Au bord d'un lac qui attire chaque été des centaines de milliers de visiteurs, les résidences secondaires et les locations saisonnières auraient vite remplacé les habitants. Les élues ont fait le choix inverse : <strong>aucune maison du bourg n'est vendue</strong>.</p>
+
+              <h3>Le prêt à usage : reconstruire sans posséder</h3>
+              <p>Les maisons sont confiées par un <em>prêt à usage</em> d'une durée de 35 ans. Le bénéficiaire ne paie pas de loyer, mais il s'engage à reconstruire la maison, à y vivre toute l'année et à y exercer une activité professionnelle permanente. En cas de départ, il ne revend rien : il est indemnisé selon la valeur d'usage des travaux réalisés. Hôtels et gîtes sont exclus du bourg.</p>
+              <p>Depuis 2024, un <strong>fonds de dotation</strong>, structure privée à but non lucratif, est propriétaire du foncier racheté à la commune et choisit les candidats. Il est gouverné par trois collèges : les habitants, les élus du territoire et des experts extérieurs.</p>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les « accords du Cérébou », la charte du village</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Non-spéculation :</strong> on ne revend pas, on ne loue pas pour les vacances.</span></li>
+                <li><span><strong>Habitat à l'année :</strong> les maisons sont des résidences principales.</span></li>
+                <li><span><strong>Mixité :</strong> sociale, intergénérationnelle et culturelle.</span></li>
+                <li><span><strong>Un commerce unique :</strong> géré collectivement, sans but lucratif.</span></li>
+                <li><span><strong>Activité économique :</strong> on vient vivre et travailler à Celles.</span></li>
+                <li><span><strong>Accueil et vie locale :</strong> un village ouvert, pas un village-musée.</span></li>
+              </ol>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Les premiers habitants ont des métiers bien concrets : un architecte (Vincent Courteaux, aujourd'hui adjoint à l'urbanisme, auteur de la première maison reconstruite), une infirmière, une boulangère, un menuisier. Fin 2025, un médecin et une sage-femme font partie des cinq familles attendues. Le projet prévoit à terme onze familles en prêt à usage, une douzaine de logements à loyer modéré pour des ménages modestes et des personnes âgées, des bureaux partagés et une « maison de la recherche ».</p>
+              <p>Le chantier est lent : il a d'abord fallu amener l'eau potable, créer une station d'épuration, installer le téléphone. Mais pour la première fois depuis 1969, des enfants grandissent de nouveau dans le bourg de Celles.</p>
+            </div>
+
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">~80</div><div class="lib">habitants au début des années 1960</div></div>
+              <div class="chiffre"><div class="val">5</div><div class="lib">habitants en 1975</div></div>
+              <div class="chiffre"><div class="val">35 ans</div><div class="lib">durée du prêt à usage</div></div>
+              <div class="chiffre"><div class="val">+9 M€</div><div class="lib">budget estimé de la renaissance</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Légende</div>
+                <h4>Notre-Dame des Clans</h4>
+                <p>Un 15 août, une châtelaine se rend à la messe de Celles. Un orage fait gonfler le Salagou ; elle promet à la Vierge une chapelle si elle est sauvée, et le muletier offre les grelots de sa mule, les <em>clans</em> en occitan, pour le clocher. La chapelle (XIVe-XVe siècles) domine toujours le lac, et l'on y monte encore en procession chaque 15 août.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Une preuve sur un banc</div>
+                <h4>La photo de « Bichette »</h4>
+                <p>En 1990, pour convaincre le Conseil d'État que Celles vivait encore, la commune a présenté la photo d'un vieil homme et d'un enfant sur un banc. Le vieil homme, « Bichette », gardait le village depuis 1976.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Cinéma</div>
+                <h4>Un décor de film</h4>
+                <p>Les ruines de Celles ont servi de décor à <em>Zone rouge</em> (1986), un thriller de Robert Enrico avec Sabine Azéma et Richard Anconina.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Un conseil pas comme les autres</div>
+                <h4>Sept élues</h4>
+                <p>Depuis 2014, le conseil municipal de Celles est entièrement composé de femmes, menées par Joëlle Goudal, qui se décrivait en 1995 comme une « jeune punkette » au moment de son élection.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Celles et ses alentours, sur la rive nord du lac du Salagou</span>
+                <button class="btn secondaire" id="reset">Voir tout</button>
+              </div>
+              <div id="map" aria-label="Carte de Celles et du lac du Salagou"></div>
+              <div class="carte-note">Positions indicatives, d'après OpenStreetMap. Le bourg est en cours de reconstruction et habité : visitez-le à pied, dans le respect des habitants et des chantiers.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Hérault (34)</span></div>
+              <div class="aside-row"><span class="aside-label">Intercommunalité</span><span class="aside-val">Lodévois et Larzac</span></div>
+              <div class="aside-row"><span class="aside-label">Habitants</span><span class="aside-val">26 (2023)</span></div>
+              <div class="aside-row"><span class="aside-label">Record</span><span class="aside-val">120 (1846)</span></div>
+              <div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">7,56 km²</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude du bourg</span><span class="aside-val">≈ 143 m</span></div>
+              <div class="aside-row"><span class="aside-label">Niveau du lac</span><span class="aside-val">cote 139 m</span></div>
+              <div class="aside-row"><span class="aside-label">Hameaux</span><span class="aside-val">Les Vailhés, Font Rives, Mas de Riri</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution de la population de Celles de 1846 à 2023"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Recensements (Insee). Les chiffres comptent toute la commune, hameaux compris.</p>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://www.novendi-lemag.fr/article/376/celles-le-village-qui-se-reinvente" target="_blank" rel="noopener">Novendi, « Celles, le village qui se réinvente » (2025)</a></li>
+                <li><a href="https://www.linfodurable.fr/depuis-lenfance-joelle-goudal-bataille-pour-que-son-village-sauve-des-eaux-revive-13571" target="_blank" rel="noopener">L'info durable, portrait de Joëlle Goudal (2019)</a></li>
+                <li><a href="https://www.francebleu.fr/infos/economie-social/photos-celles-le-village-sauve-des-eaux-du-salagou-va-renaitre-1506529953" target="_blank" rel="noopener">France Bleu Hérault (2017)</a></li>
+                <li><a href="https://www.banquedesterritoires.fr/sites/default/files/2022-12/20221215%20CP%20Renaissance%20du%20village%20de%20Celles_0.pdf" target="_blank" rel="noopener">Banque des Territoires, communiqué (2022)</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Celles_(H%C3%A9rault)" target="_blank" rel="noopener">Wikipédia, Celles (Hérault)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   ============================================================ */
+const lieux=[
+{name:'Le bourg de Celles',lat:43.66139,lng:3.34083,desc:'Maisons de basalte en reconstruction, mairie et église de la Nativité-de-Notre-Dame restaurées. Le lac s\'arrête quelques mètres plus bas.'},
+{name:'Chapelle Notre-Dame des Clans',lat:43.66289,lng:3.37166,desc:'Chapelle des XIVe-XVe siècles au-dessus du lac, liée à la légende des grelots. Procession chaque 15 août.'},
+{name:'Barrage du Salagou',lat:43.65493,lng:3.40339,desc:'L\'ouvrage achevé en 1968 qui retient environ 100 millions de m³ d\'eau sur quelque 750 hectares.'}
+];
+// Population de la commune (recensements)
+const population=[[1846,120],[1968,29],[1975,5],[1982,10],[1990,14],[1999,20],[2007,26],[2012,29],[2017,32],[2023,26]];
+/* ============================================================ */
+
+if(window.L){
+const map=L.map('map',{scrollWheelZoom:false});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+const bounds=L.latLngBounds(lieux.map(s=>[s.lat,s.lng]));
+map.fitBounds(bounds.pad(.35));
+lieux.forEach((s,i)=>{
+ const icon=L.divIcon({className:'',html:`<div class="marker">${i+1}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+ const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${i+1}. ${s.name}</strong><p>${s.desc}</p>`);
+ const el=document.createElement('div');el.className='etape';
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div><div class="etape-leg">Voir sur la carte ↗</div></div>`;
+ el.onclick=()=>{document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});map.setView([s.lat,s.lng],15);m.openPopup()};
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>map.fitBounds(bounds.pad(.35));
+} else { document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>'; }
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph'),W=300,H=150,g={l:28,r:10,t:12,b:22};
+ const x0=1840,x1=2025,yMax=130;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ [0,40,80,120].forEach(v=>{s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`});
+ [1850,1900,1950,2000].forEach(a=>{s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`});
+ s+=`<rect x="${X(1964)}" y="${g.t}" width="${X(1969)-X(1964)}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/>`;
+ s+=`<text x="${X(1966.5)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">barrage</text>`;
+ const pts=population.map(([a,v])=>`${X(a)},${Y(v)}`).join(' ');
+ s+=`<polyline points="${pts}" fill="none" stroke="#9A3F2C" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="#9A3F2C"><title>${a} : ${v} habitants</title></circle>`});
+ s+=`<text x="${X(1846)+6}" y="${Y(120)+3}" style="fill:#7A2F20;font-weight:700">120</text>`;
+ s+=`<text x="${X(1975)}" y="${Y(5)+14}" text-anchor="middle" style="fill:#7A2F20;font-weight:700">5</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>
