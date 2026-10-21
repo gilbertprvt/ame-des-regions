@@ -251,7 +251,8 @@
       .carte-hero-infos dt { width: 190px; }
     }
     /* ── Carte « Histoire occitane » : identique aux cartes départements ── */
-    .histoire-btn-wrap { margin-top: 22px; display: grid; grid-template-columns: min(100%, 620px); justify-content: center; }   /* centrée sous la carte ; ← 620px = largeur de la carte « Histoire » */
+    .histoire-btn-wrap { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }   /* deux cartes côte à côte sous la carte : « Histoire » et « Langue » */
+    .dep-carte.histoire.langue .dep-bande { background: #FAC775; }   /* liseré doré pour la carte « Langue » */
     .dep-carte.histoire { background-color: #2C4A7C; background-size: cover; background-position: center; background-repeat: no-repeat;
       /* La première photo trouvée s'affiche ; la dernière (déjà sur le site) sert de secours */
       background-image: url('departement/histoire occitane/photo/panorama-occitane.jpg'), url('departement/histoire occitane/photo/panorama-occitane.jpeg'), url('departement/histoire occitane/photo/panorama-occitanie.jpg'), url('departement/histoire occitane/photo/panorama-occitane.JPG'), url('../../assets/departement/occitanie/panorama-occitanie.webp'); }
@@ -381,6 +382,25 @@
     .carte-liens { align-self: start; }                        /* la colonne de droite garde sa hauteur naturelle */
     @media (max-width: 860px) {
       .carte-gauche .histoire-btn-wrap { flex: none; }
+    }
+
+    /* ── Mise à jour : les cartes « Histoire » et « Langue » gardent la hauteur des autres cartes (175px) ;
+          c'est le cadre de la carte qui s'allonge pour rejoindre le bas de la colonne de droite ── */
+    .carte-gauche .histoire-btn-wrap { flex: none; grid-template-rows: auto; }
+    .dep-carte.histoire { height: 175px; min-height: 0; }
+    @media (min-width: 861px) {
+      /* le cadre prend la place libérée et la carte y est centrée verticalement */
+      .carte-gauche .carte-svg-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+      #carte-svg { flex: none; }
+      /* légende sortie du dessin et posée dans le coin haut gauche du cadre,
+         en diagonale avec la boussole (coin bas droit) */
+      .legende-svg { display: none; }
+      .carte-svg-wrap .legende-carte { display: flex; top: 18px; left: 18px; }   /* ← déplacer la légende : modifier top / left */
+      .compass-wrap { bottom: 18px; right: 18px; }
+    }
+    @media (max-width: 1187px) and (min-width: 861px) {
+      /* écran moyen : la carte est étroite, les deux cartes « Histoire » et « Langue » passent l'une sous l'autre */
+      .histoire-btn-wrap { grid-template-columns: 1fr; }
     }
 
 
@@ -580,6 +600,13 @@
             <span class="dep-num">Histoire</span>
             <img src="../../assets/régions/ecusson-occitanie.webp" alt="Écusson Occitanie" loading="lazy" decoding="async">
             <div class="dep-texte"><div class="dep-nom">Si l'Occitanie m'était contée…</div><div class="dep-chef">Istòria d'Occitània</div></div>
+            <span class="dep-bande"></span>
+          </a>
+          <!-- Carte vers la fiche « Langue d'òc & Occitan », même format que la carte « Histoire » -->
+          <a class="dep-carte histoire langue" href="langue-occitane.html" style="background: url('../../assets/departement/occitanie/panorama-occitan.webp') center/cover, linear-gradient(135deg,#5A3E1B,#C8843A);">
+            <span class="dep-num">Langue</span>
+            <img src="../../assets/régions/ecusson-occitanie.webp" alt="" loading="lazy" decoding="async">
+            <div class="dep-texte"><div class="dep-nom">Langue d'òc &amp; occitan</div><div class="dep-chef">La lenga d'òc</div></div>
             <span class="dep-bande"></span>
           </a>
         </div>

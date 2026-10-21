@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La langue occitane — L'Âme des Régions</title>
+  <!-- Photo du bandeau chargée en priorité, avant les styles et les polices -->
+  <!-- ⚠ À FOURNIR : placer une photo dans photo/panorama-occitan.webp (ex. paysage du Lauragais, des Causses ou de Provence) -->
+  <link rel="preload" as="image" href="photo/panorama-occitan.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    } 
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches (dialectes) */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+
+    /* Mots occitans mis en valeur */
+    .oc { font-style: italic; color: #A0522D; font-weight: 600; }
+
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+  </style>
+
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>
+    /* Photo éclaircie par un voile blanc : augmenter 0.22 pour éclaircir davantage, baisser pour assombrir */
+    .produit-hero{background-image:linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.2)),url('../../assets/departement/occitanie/panorama-occitan.webp');background-size:cover;background-position:center 0%}
+
+    /* ── Lien du bandeau : en haut à droite (identique à occitanie-info) ── */
+    .produit-topbar-btns.liens-empiles {
+      position: absolute; top: 18px; right: 0; z-index: 4;   /* ← position du lien : augmenter pour descendre */
+      display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+    }
+    .liens-empiles .produit-btn-retour { padding: 5px 4px; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+    @media (max-width: 860px) {
+      .produit-topbar { flex-wrap: wrap; }
+      .produit-topbar-btns.liens-empiles { position: static; width: 100%; margin-top: 8px; }
+      .liens-empiles .produit-btn-retour { font-size: 16px; }
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+    <nav class="produit-topbar-btns liens-empiles zone-btn-carte" aria-label="Navigation Occitanie">
+      <a href="carte-occitanie.html" class="produit-btn-retour btn-carte">Carte d'Occitanie</a>
+    </nav>
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>L</em>angue d'òc<br><span style="padding-left: 40px;">&amp; <em>O</em>ccitan</span></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-label-bas">
+      ⟹ X<sup>e</sup> – XXI<sup>e</sup> siècle · Troubadours, félibres &amp; calandretas ⟸
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#langue" class="active">📖 Comprendre</a>
+          <a href="#origines">🌱 Origines</a>
+          <a href="#troubadours">🎻 Troubadours</a>
+          <a href="#declin">📉 Déclin</a>
+          <a href="#renaissance">🌸 Renaissance</a>
+          <a href="#frise">⏳ Chronologie</a>
+          <a href="#dialectes">🗣️ Dialectes</a>
+          <a href="#graphie">✒️ Écrire</a>
+          <a href="#territoire">🗺️ Où la parle-t-on</a>
+          <a href="#aujourdhui">📊 Aujourd'hui</a>
+          <a href="#personnalites">👤 Personnages</a>
+          <a href="#apprendre">🎓 Apprendre</a>
+          <a href="#premiers-mots">💬 Premiers mots</a>
+          <a href="#avenir">🔮 Avenir</a>
+          <a href="#mythes">🔎 Idées reçues</a>
+          <a href="#infos-pratiques">ℹ️ Infos</a>
+          <a href="#alentours">📍 Lieux</a>
+          <a href="#sources">📚 Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- ═══ COMPRENDRE ═══ -->
+          <section class="section" id="langue">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              L'occitan : une langue, mille ans d'histoire
+            </h2>
+            <div class="histoire-texte">
+
+              <p class="doc-intro"><strong>L'occitan, ou langue d'oc, est une langue romane</strong> née du latin parlé dans le sud de la Gaule. Pendant des siècles, ce fut la langue de tous les jours, du marché, des actes notariés, des chansons et de la prière, de Bordeaux à Nice et de Limoges aux Pyrénées. C'est la langue des <strong>troubadours</strong>, qui ont inventé l'amour courtois et donné à l'Europe sa première grande poésie en langue vulgaire. C'est aussi celle de Frédéric Mistral, prix Nobel de littérature en 1904.</p>
+
+              <p>Son nom vient de sa façon de dire « oui » : <span class="oc">òc</span>, issu du latin <em>hoc</em> (« cela »), quand le nord de la France disait <em>oïl</em> (devenu « oui »). Le mot <strong>« Occitanie »</strong> n'est pas une invention récente : il apparaît dans des documents administratifs latins vers 1300 pour désigner les pays de langue d'oc, avant de devenir, en 2016, le nom officiel d'une région administrative qui n'en couvre qu'une partie.</p>
+
+              <div class="repere-grid">
+                <div class="repere"><strong>X<sup>e</sup> – XIII<sup>e</sup> s.</strong><span>Premiers textes, âge d'or des troubadours, langue écrite des chartes et des consulats.</span></div>
+                <div class="repere"><strong>XVI<sup>e</sup> – XX<sup>e</sup> s.</strong><span>Le français s'impose dans l'écrit officiel puis à l'école ; l'occitan devient la langue « du dedans ».</span></div>
+                <div class="repere"><strong>XIX<sup>e</sup> – XXI<sup>e</sup> s.</strong><span>Renaissances littéraires, normalisation, écoles immersives et politiques publiques.</span></div>
+              </div>
+
+              <div class="notice"><strong>À retenir :</strong> l'occitan n'est ni un « patois » ni une juxtaposition de parlers sans lien. C'est une langue unique, dotée d'une littérature continue depuis le XI<sup>e</sup> siècle, qui se décline en plusieurs grands dialectes (gascon, languedocien, provençal, limousin, auvergnat, vivaro-alpin), tous mutuellement compréhensibles avec un peu d'habitude.</div>
+
+              <div class="commentaire">
+                <div class="commentaire-titre">💬 Commentaire · pourquoi cette fiche est essentielle</div>
+                <p>Les toponymes du Midi, les noms de famille, les recettes, les fêtes et même l'accent « du Sud » portent la trace de l'occitan. Comprendre cette langue, c'est disposer d'une clé de lecture pour presque tout le patrimoine présenté dans les autres fiches : les troubadours de la cour de Toulouse, la <em>Chanson de la croisade</em>, le cassoulet (<span class="oc">caçolet</span>, de <span class="oc">caçòla</span>, le plat en terre), les bastides ou les noms des villages, comme Castelnaudary (<span class="oc">Castèlnòu d'Arri</span>, « le château neuf »).</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ ORIGINES ═══ -->
+          <section class="section" id="origines">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌱</div>
+              Les origines : du latin de la Provincia à la langue d'oc
+            </h2>
+            <div class="histoire-texte">
+              <p>Dès <strong>118 av. J.-C.</strong>, la fondation de <em>Narbo Martius</em> (Narbonne) fait du littoral méditerranéen la première province romaine au-delà des Alpes, la <em>Provincia</em>, qui a donné son nom à la Provence. Le sud de la Gaule est romanisé plus tôt et plus profondément que le nord. Le latin parlé, populaire, s'y transforme lentement au contact des langues antérieures : le gaulois, l'aquitain (apparenté au basque, ce qui explique certaines particularités du gascon) et, sur la côte, le ligure et le grec de Marseille.</p>
+              <p>Les invasions du V<sup>e</sup> siècle pèsent moins ici qu'au nord. Le royaume wisigoth de Toulouse (418-507) laisse peu de mots, alors que les Francs, installés en masse au nord de la Loire, transforment profondément le latin local, qui deviendra les langues d'oïl et le français. Résultat : <strong>l'occitan est resté plus proche du latin</strong> que le français, et très proche du catalan, son « cousin » direct.</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 270" role="img" aria-label="Arbre simplifié des langues romanes">
+                <g font-family="Source Sans 3, sans-serif" text-anchor="middle">
+                  <rect x="245" y="10" width="150" height="44" rx="8" fill="#2C4A7C"/>
+                  <text x="320" y="30" fill="white" font-size="14" font-weight="700">Latin parlé</text>
+                  <text x="320" y="46" fill="#FAC775" font-size="11">Empire romain d'Occident</text>
+
+                  <rect x="10" y="100" width="112" height="40" rx="8" fill="#3D5F95"/>
+                  <text x="66" y="118" fill="white" font-size="12" font-weight="700">Ibéro-roman</text>
+                  <text x="66" y="133" fill="#E8DEC8" font-size="10">espagnol, portugais</text>
+
+                  <rect x="136" y="92" width="170" height="56" rx="8" fill="#C8843A"/>
+                  <text x="221" y="112" fill="white" font-size="13" font-weight="700">Occitano-roman</text>
+                  <text x="221" y="128" fill="#FFF3DD" font-size="11">occitan · catalan</text>
+                  <text x="221" y="142" fill="#FFF3DD" font-size="10">(langues d'« oc » et de « sí »)</text>
+
+                  <rect x="320" y="100" width="130" height="40" rx="8" fill="#3D5F95"/>
+                  <text x="385" y="118" fill="white" font-size="12" font-weight="700">Gallo-roman</text>
+                  <text x="385" y="133" fill="#E8DEC8" font-size="10">français, oïl, francoprovençal</text>
+
+                  <rect x="464" y="100" width="80" height="40" rx="8" fill="#3D5F95"/>
+                  <text x="504" y="118" fill="white" font-size="12" font-weight="700">Italo-roman</text>
+                  <text x="504" y="133" fill="#E8DEC8" font-size="10">italien…</text>
+
+                  <rect x="556" y="100" width="76" height="40" rx="8" fill="#3D5F95"/>
+                  <text x="594" y="118" fill="white" font-size="12" font-weight="700">Roumain</text>
+                  <text x="594" y="133" fill="#E8DEC8" font-size="10">Balkans</text>
+
+                  <rect x="40" y="190" width="560" height="64" rx="10" fill="#F7F3EC" stroke="#E0DACE"/>
+                  <text x="320" y="212" fill="#5A3E1B" font-size="13" font-weight="700">Six grands dialectes occitans</text>
+                  <text x="320" y="232" fill="#3A3028" font-size="12">gascon · languedocien · provençal · limousin · auvergnat · vivaro-alpin</text>
+                  <text x="320" y="248" fill="#8B7355" font-size="10.5">(sans oublier le niçois, le béarnais ou l'aranais, variétés de ces ensembles)</text>
+                </g>
+                <g stroke="#8B7355" stroke-width="1.5" fill="none">
+                  <line x1="300" y1="54" x2="66" y2="100"/><line x1="310" y1="54" x2="221" y2="92"/>
+                  <line x1="330" y1="54" x2="385" y2="100"/><line x1="340" y1="54" x2="504" y2="100"/>
+                  <line x1="350" y1="54" x2="594" y2="100"/>
+                  <line x1="221" y1="148" x2="221" y2="190" stroke="#C8843A" stroke-width="2.5"/>
+                </g>
+              </svg>
+              <figcaption>Place de l'occitan parmi les langues romanes (classification simplifiée ; les linguistes discutent du rattachement exact du groupe occitano-roman).</figcaption>
+            </figure>
+
+            <h3 class="sous-titre">Un air de famille : quelques mots du latin à aujourd'hui</h3>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Latin</th><th>Occitan</th><th>Catalan</th><th>Français</th><th>Italien</th><th>Espagnol</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><em>aqua</em></td><td><strong>aiga</strong></td><td>aigua</td><td>eau</td><td>acqua</td><td>agua</td></tr>
+                  <tr><td><em>cantare</em></td><td><strong>cantar</strong></td><td>cantar</td><td>chanter</td><td>cantare</td><td>cantar</td></tr>
+                  <tr><td><em>caballum</em></td><td><strong>caval</strong></td><td>cavall</td><td>cheval</td><td>cavallo</td><td>caballo</td></tr>
+                  <tr><td><em>filia</em></td><td><strong>filha</strong></td><td>filla</td><td>fille</td><td>figlia</td><td>hija</td></tr>
+                  <tr><td><em>noctem</em></td><td><strong>nuèch</strong></td><td>nit</td><td>nuit</td><td>notte</td><td>noche</td></tr>
+                  <tr><td><em>factum</em></td><td><strong>fach</strong></td><td>fet</td><td>fait</td><td>fatto</td><td>hecho</td></tr>
+                  <tr><td><em>lactem</em></td><td><strong>lach</strong></td><td>llet</td><td>lait</td><td>latte</td><td>leche</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Formes occitanes en languedocien, graphie classique. On remarque la proximité avec le catalan et la conservation du <em>a</em> final latin, qui distingue nettement l'occitan du français.</p>
+
+            <!-- ── Langue d'oc / langue d'oïl ── -->
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Langue d'oc, langue d'oïl : quelle différence ?</h3>
+              <p>Au Moyen Âge, la Gaule romane se partage entre deux grands ensembles, que l'on désigne par leur façon de dire « oui » : <span class="oc">òc</span> au sud (du latin <em>hoc</em>), <em>oïl</em> au nord (de <em>hoc ille</em>, devenu « oui »). La <strong>langue d'oïl</strong> n'est pas une langue unique mais une famille de parlers (francien, picard, normand, champenois, poitevin, gallo…) dont l'un, celui de Paris et de la cour, est devenu le français. La <strong>langue d'oc</strong>, c'est l'occitan. La limite entre les deux passe grossièrement de l'estuaire de la Gironde au nord du Massif central puis aux Alpes, avec la zone de transition du Croissant. Plus profondément marquées par les Francs, les langues d'oïl ont beaucoup plus transformé le latin : elles ont fait tomber les voyelles finales, changé le <em>a</em> en <em>e</em> et porté l'accent sur la dernière syllabe, là où l'occitan est resté plus proche de la prononciation latine et de ses voisins catalan, italien ou espagnol.</p>
+            </div>
+
+            <div class="compare">
+              <div class="compare-col compare-cath">
+                <h4>Langue d'oc (occitan)</h4>
+                <ul>
+                  <li>Garde le <em>a</em> latin : <em>mare</em> → <strong>mar</strong>, <em>cantare</em> → <strong>cantar</strong></li>
+                  <li>Garde les voyelles finales : <strong>filha</strong>, <strong>vida</strong></li>
+                  <li>Accent sur l'avant-dernière syllabe : <strong>cantàvem</strong></li>
+                  <li>Pronom sujet facultatif : <strong>parli</strong> = je parle</li>
+                  <li><em>c</em> + <em>a</em> reste dur (sauf au nord) : <strong>caval</strong></li>
+                </ul>
+              </div>
+              <div class="compare-col compare-rom">
+                <h4>Langue d'oïl (français)</h4>
+                <ul>
+                  <li>Le <em>a</em> devient <em>e</em> : <em>mare</em> → <strong>mer</strong>, <em>cantare</em> → <strong>chanter</strong></li>
+                  <li>Voyelles finales réduites ou muettes : <strong>fille</strong>, <strong>vie</strong></li>
+                  <li>Accent sur la dernière syllabe : <strong>chantions</strong></li>
+                  <li>Pronom sujet obligatoire : <strong>je</strong> parle</li>
+                  <li><em>c</em> + <em>a</em> devient <em>ch</em> : <strong>cheval</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Les premiers textes (X<sup>e</sup> – XI<sup>e</sup> siècle)</h3>
+              <p>Des mots occitans apparaissent dès le X<sup>e</sup> siècle dans des chartes rédigées en latin, signe que les scribes pensent déjà dans une autre langue. Les premiers textes littéraires suivent : le <em>Boecis</em>, poème inspiré de Boèce, daté des alentours de l'an mil, puis la <em>Chanson de sainte Foy d'Agen</em>, vers 1060-1070. Très tôt, l'occitan est aussi une <strong>langue d'administration</strong> : actes notariés, coutumes, registres des consulats (comme le <em>Petit Thalamus</em> de Montpellier), comptes municipaux d'Albi ou de Toulouse. Il précède souvent le français dans cet usage écrit.</p>
+            </div>
+          </section>
+
+          <!-- ═══ TROUBADOURS ═══ -->
+          <section class="section" id="troubadours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🎻</div>
+              L'âge d'or des troubadours (XII<sup>e</sup> – XIII<sup>e</sup> siècle)
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🪶</div>
+                <div>
+                  <div class="recette-meta-label">Premier troubadour connu</div>
+                  <div class="recette-meta-val">Guilhem IX d'Aquitaine</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">📜</div>
+                <div>
+                  <div class="recette-meta-label">Corpus</div>
+                  <div class="recette-meta-val">≈ 450 poètes · ≈ 2 500 pièces</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">❤️</div>
+                <div>
+                  <div class="recette-meta-label">Idéal</div>
+                  <div class="recette-meta-val">La <em>fin'amor</em> (amour courtois)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🌍</div>
+                <div>
+                  <div class="recette-meta-label">Rayonnement</div>
+                  <div class="recette-meta-val">Catalogne, Italie, Allemagne, France du Nord</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Vers 1100, le duc d'Aquitaine et comte de Poitiers <strong>Guilhem IX</strong> compose les premières chansons connues de troubadours. Le mot vient de <span class="oc">trobar</span>, « trouver » : le troubadour est celui qui invente des paroles et une mélodie. En deux siècles, environ 450 poètes, du grand seigneur au fils de boulanger, et une vingtaine de <strong>trobairitz</strong> (femmes troubadours, comme la Comtessa de Dia) laissent quelque 2 500 poèmes, dont environ 250 mélodies notées.</p>
+              <p>Ils fixent un idéal nouveau, la <strong><span class="oc">fin'amor</span></strong> : l'amant se fait le vassal d'une dame, souvent mariée et inaccessible, et l'amour devient une école de raffinement, de mesure (<span class="oc">mesura</span>) et de joie (<span class="oc">joi</span>). Les genres sont codifiés : la <em>canso</em> (chanson d'amour), le <em>sirventés</em> (poème politique ou satirique), la <em>tenso</em> (débat), l'<em>alba</em> (aube, séparation des amants), la <em>pastorela</em>. La langue des troubadours, une sorte de <em>koinè</em> littéraire commune à tout le Midi, est alors appelée <em>lemosin</em> ou <em>proensal</em>.</p>
+            </div>
+
+            <div class="citation-bloc">
+              <p>« Can vei la lauzeta mover / de joi sas alas contra·l rai… »</p>
+              <cite>— Bernart de Ventadorn (XII<sup>e</sup> siècle), début de l'une des chansons les plus célèbres du Moyen Âge : « Quand je vois l'alouette battre / de joie des ailes contre le rayon [du soleil]… »</cite>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Le prestige de cette poésie est européen. Les poètes catalans écrivent en occitan jusqu'au XV<sup>e</sup> siècle ; les <em>Minnesänger</em> allemands et les trouvères du Nord imitent les troubadours ; en Italie, Dante et Pétrarque les admirent. Dante fait même parler Arnaut Daniel en occitan dans sa <em>Divine Comédie</em> : <em>« Ieu sui Arnaut, que plor e vau cantan »</em> (« Je suis Arnaut, qui pleure et va chantant »). C'est aussi Dante qui, vers 1305, classe les langues romanes selon leur manière de dire oui : <em>oc</em>, <em>oïl</em> et <em>sì</em>.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · la croisade, un tournant pour la langue ?</div>
+              <p>La croisade contre les Albigeois (1209-1229) disperse les cours seigneuriales qui faisaient vivre les troubadours. Certains, comme Peire Cardenal, dénoncent la violence des croisés dans leurs <em>sirventés</em> ; d'autres partent en Catalogne ou en Italie. Mais la langue elle-même ne recule pas immédiatement : elle reste pendant encore deux siècles la langue écrite des notaires, des consuls et de la vie quotidienne. Le vrai recul de l'écrit occitan commence plus tard, au XV<sup>e</sup> siècle.</p>
+              <p>Pour le contexte de cette guerre, voir la fiche « Forteresses royales &amp; Cathares ».</p>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Pour sauver cet héritage, sept bourgeois de Toulouse fondent en <strong>1323</strong> le <strong>Consistori del Gai Saber</strong> (« Consistoire du Gai Savoir »), qui organise chaque printemps un concours de poésie récompensé par une violette d'or. Il fait rédiger les <strong><em>Leys d'Amors</em></strong> (achevées vers 1356), l'une des premières grammaires et poétiques d'une langue romane. L'institution survit aujourd'hui sous le nom d'<strong>Académie des Jeux floraux</strong>, l'une des plus anciennes sociétés littéraires d'Europe.</p>
+            </div>
+          </section>
+
+          <!-- ═══ DÉCLIN ═══ -->
+          <section class="section" id="declin">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📉</div>
+              Du français officiel à la « vergonha » (XV<sup>e</sup> – XX<sup>e</sup> siècle)
+            </h2>
+            <div class="histoire-texte">
+              <p>À mesure que le pouvoir royal s'étend dans le Midi, le français gagne l'écrit. Dès la fin du XV<sup>e</sup> siècle, les notaires et les consuls des grandes villes l'adoptent progressivement. L'<strong>ordonnance de Villers-Cotterêts (1539)</strong> impose que les actes de justice soient rédigés « en langage maternel françois » : visant d'abord le latin, elle achève d'écarter l'occitan de l'écrit officiel. La langue reste pourtant celle de toute la population, y compris de la noblesse et de la bourgeoisie, pour la vie orale.</p>
+              <p>Commence alors une longue <strong>diglossie</strong> : le français pour l'écrit, l'administration et le prestige ; l'occitan pour la maison, les champs, la fête. Les écrivains ne disparaissent pas pour autant : le Gascon <strong>Pey de Garros</strong> au XVI<sup>e</sup> siècle, le Toulousain <strong>Pèire Godolin</strong> (<em>Lo Ramelet mondin</em>, 1617) ou le Provençal Bellaud de la Bellaudière font vivre une littérature baroque dans la langue.</p>
+              <p>La <strong>Révolution</strong> change d'échelle. En 1794, l'abbé <strong>Grégoire</strong> présente à la Convention un rapport sur « la nécessité et les moyens d'anéantir les patois et d'universaliser l'usage de la langue française » : il estime que seuls trois millions de Français parlent correctement le français. L'unité de la langue devient une affaire d'égalité civique et de République. Le mot <strong>« patois »</strong>, péjoratif, s'impose pour désigner l'occitan.</p>
+              <p>Au XIX<sup>e</sup> siècle, l'école, la conscription, le chemin de fer et la presse diffusent le français. Avec les <strong>lois Ferry (1881-1882)</strong>, l'école devient obligatoire et se fait exclusivement en français. Dans de nombreuses classes, les enfants surpris à parler occitan sont punis : c'est le « signal » ou le « symbole », un objet que l'élève fautif doit garder jusqu'à ce qu'il surprenne un camarade. Les occitanistes appellent <strong><span class="oc">vergonha</span></strong> (la honte) ce sentiment d'infériorité intériorisé.</p>
+              <p>La saignée de la Grande Guerre, l'exode rural puis la télévision achèvent la rupture : entre les années 1920 et 1960, la plupart des familles cessent de transmettre la langue aux enfants. Des générations entières comprennent l'occitan de leurs grands-parents sans jamais le parler.</p>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">La rupture de la transmission familiale</span>
+              <div class="schema-flow">
+                <div class="schema-box">Avant 1900<br><b>Occitan langue maternelle</b><br><span class="small">quasi générale à la campagne</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1880 – 1914<br><b>École en français</b><br><span class="small">bilinguisme inégal</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1920 – 1960<br><b>Arrêt de la transmission</b><br><span class="small">les parents parlent français aux enfants</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">Depuis 1970<br><b>Néo-locuteurs</b><br><span style="font-size:12px;opacity:.85">apprentissage par l'école et les cours</span></div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une disparition « consentie » ?</div>
+              <p>On imagine souvent une langue interdite par la force. La réalité est plus subtile : aucune loi n'a interdit de parler occitan, mais tout poussait à l'abandonner. Le français était la langue de la promotion sociale, du certificat d'études, du concours des Postes ou de l'armée. Beaucoup de parents ont choisi de ne plus transmettre l'occitan par amour pour leurs enfants, afin de leur éviter les moqueries et de leur ouvrir l'avenir.</p>
+              <p>C'est ce qui rend la situation actuelle si particulière : la langue est souvent perçue avec affection, comme celle des grands-parents, mais elle a perdu sa place dans la vie quotidienne.</p>
+            </div>
+          </section>
+
+          <!-- ═══ RENAISSANCE ═══ -->
+          <section class="section" id="renaissance">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌸</div>
+              Les renaissances : du Félibrige aux calandretas
+            </h2>
+            <div class="histoire-texte">
+              <h3 class="sous-titre">1. Le Félibrige et Mistral (XIX<sup>e</sup> siècle)</h3>
+              <p>Au XIX<sup>e</sup> siècle, des poètes populaires comme le coiffeur agenais <strong>Jasmin</strong> rencontrent un immense succès. Le <strong>21 mai 1854</strong>, au château de Font-Ségugne (Vaucluse), sept jeunes poètes provençaux, dont <strong>Frédéric Mistral</strong>, Joseph Roumanille et Théodore Aubanel, fondent le <strong>Félibrige</strong>, qui veut rendre à la langue sa dignité littéraire. En 1859, Mistral publie <em>Mirèio</em>, épopée paysanne saluée par Lamartine. Il consacre ensuite vingt ans à un dictionnaire monumental, <em>Lou Tresor dóu Felibrige</em>, et reçoit en <strong>1904 le prix Nobel de littérature</strong>, dont il utilise la somme pour créer le Museon Arlaten, musée d'ethnographie provençale à Arles.</p>
+            </div>
+
+            <div class="citation-bloc">
+              <p>« Qu tèn la lengo tèn la clau / que di cadeno lou deliéuro. »</p>
+              <cite>— Frédéric Mistral (graphie mistralienne) : « Qui tient sa langue tient la clé qui le délivre de ses chaînes. »</cite>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">2. L'occitanisme et la graphie classique (XX<sup>e</sup> siècle)</h3>
+              <p>Au début du XX<sup>e</sup> siècle, des félibres languedociens, <strong>Antonin Perbosc</strong> et <strong>Prosper Estieu</strong>, veulent dépasser le cadre provençal et retrouver l'unité de la langue. Ils renouent avec l'orthographe des troubadours, que le pharmacien audois <strong>Louis Alibert</strong> systématise dans sa <em>Gramatica occitana</em> (1935). En <strong>1945</strong> naît à Toulouse l'<strong>Institut d'études occitanes (IEO)</strong>, qui diffuse cette graphie dite « classique ». Le mot « occitan » s'impose peu à peu face à « langue d'oc ».</p>
+              <p>La <strong>loi Deixonne (1951)</strong> autorise pour la première fois l'enseignement facultatif de l'occitan, du breton, du basque et du catalan à l'école. Dans les années 1960-1970, la langue se mêle aux luttes sociales : grève des mineurs de Decazeville, révolte viticole, Larzac. Le slogan <span class="oc">Volem viure al país</span> (« Nous voulons vivre au pays ») et la « nouvelle chanson occitane » de Claude Marti ou Patric portent une revendication à la fois culturelle et économique.</p>
+
+              <h3 class="sous-titre">3. L'école et les institutions (depuis 1979)</h3>
+              <p>En <strong>1979</strong>, des parents ouvrent à Pau la première <strong>Calandreta</strong> (« petite alouette »), école associative, laïque et gratuite où l'enseignement se fait en immersion en occitan dès la maternelle. Le réseau compte aujourd'hui une soixantaine d'écoles, quatre collèges et un lycée. L'enseignement public propose de son côté des sections bilingues et des options. En <strong>2008</strong>, l'article 75-1 de la Constitution reconnaît que « les langues régionales appartiennent au patrimoine de la France ». En <strong>2015</strong>, l'État et les régions Occitanie et Nouvelle-Aquitaine créent l'<strong>Office public de la langue occitane (OPLO)</strong>. La <strong>loi Molac</strong> du 21 mai 2021 renforce la protection des langues régionales, même si le Conseil constitutionnel en a censuré l'article sur l'enseignement immersif.</p>
+            </div>
+
+            <div class="schema">
+              <span class="schema-titre">Trois vagues de renaissance</span>
+              <div class="schema-flow">
+                <div class="schema-box">1854<br><b>Félibrige</b><br><span class="small">renaissance littéraire, surtout provençale</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box">1945 – 1980<br><b>Occitanisme</b><br><span class="small">unité de la langue, revendication sociale</span></div>
+                <div class="schema-arrow">→</div>
+                <div class="schema-box fort">Depuis 1979<br><b>Transmission</b><br><span style="font-size:12px;opacity:.85">écoles, offices publics, numérique</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ FRISE ═══ -->
+          <section class="section" id="frise">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗓️</div>
+              Frise chronologique
+            </h2>
+
+            <div class="frise">
+              <div class="frise-periode">Naissance et âge d'or</div>
+              <div class="frise-item"><span class="frise-date">118 av. J.-C.</span> <span class="frise-texte">— Fondation de Narbonne ; la Provincia romaine est créée dans le sud de la Gaule.</span></div>
+              <div class="frise-item"><span class="frise-date">418 – 507</span> <span class="frise-texte">— Royaume wisigoth de Toulouse, à l'influence linguistique limitée.</span></div>
+              <div class="frise-item"><span class="frise-date">vers l'an mil</span> <span class="frise-texte">— Le <em>Boecis</em>, l'un des plus anciens textes littéraires occitans.</span></div>
+              <div class="frise-item"><span class="frise-date">vers 1060 – 1070</span> <span class="frise-texte">— <em>Chanson de sainte Foy d'Agen</em>.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">vers 1100</span> <span class="frise-texte">— Guilhem IX d'Aquitaine, premier troubadour connu.</span></div>
+              <div class="frise-item"><span class="frise-date">1209 – 1229</span> <span class="frise-texte">— Croisade contre les Albigeois : dispersion des cours troubadouresques.</span></div>
+              <div class="frise-item"><span class="frise-date">vers 1292</span> <span class="frise-texte">— Mort de Guiraut Riquier, souvent appelé « le dernier troubadour ».</span></div>
+              <div class="frise-item"><span class="frise-date">vers 1305</span> <span class="frise-texte">— Dante distingue langues d'oc, d'oïl et de sì dans le <em>De vulgari eloquentia</em>.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1323</span> <span class="frise-texte">— Fondation du Consistori del Gai Saber à Toulouse (futurs Jeux floraux).</span></div>
+              <div class="frise-item"><span class="frise-date">vers 1356</span> <span class="frise-texte">— Rédaction des <em>Leys d'Amors</em>, grammaire et art poétique.</span></div>
+
+              <div class="frise-periode">Recul et diglossie</div>
+              <div class="frise-item majeur"><span class="frise-date">1539</span> <span class="frise-texte">— Ordonnance de Villers-Cotterêts : le français, langue des actes officiels.</span></div>
+              <div class="frise-item"><span class="frise-date">1617</span> <span class="frise-texte">— Pèire Godolin publie <em>Lo Ramelet mondin</em> à Toulouse.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1794</span> <span class="frise-texte">— Rapport de l'abbé Grégoire sur les « patois ».</span></div>
+              <div class="frise-item"><span class="frise-date">1881 – 1882</span> <span class="frise-texte">— Lois Ferry : école gratuite, laïque et obligatoire, en français.</span></div>
+
+              <div class="frise-periode">Renaissances</div>
+              <div class="frise-item majeur"><span class="frise-date">21 mai 1854</span> <span class="frise-texte">— Fondation du Félibrige à Font-Ségugne.</span></div>
+              <div class="frise-item"><span class="frise-date">1859</span> <span class="frise-texte">— Mistral publie <em>Mirèio</em>.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1904</span> <span class="frise-texte">— Prix Nobel de littérature pour Frédéric Mistral.</span></div>
+              <div class="frise-item"><span class="frise-date">1935</span> <span class="frise-texte">— <em>Gramatica occitana</em> de Louis Alibert : base de la graphie classique.</span></div>
+              <div class="frise-item"><span class="frise-date">1945</span> <span class="frise-texte">— Création de l'Institut d'études occitanes à Toulouse.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1951</span> <span class="frise-texte">— Loi Deixonne : premier enseignement facultatif des langues régionales.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">1979</span> <span class="frise-texte">— Première Calandreta, à Pau.</span></div>
+
+              <div class="frise-periode">Reconnaissance et politiques publiques</div>
+              <div class="frise-item"><span class="frise-date">1999</span> <span class="frise-texte">— L'Italie reconnaît l'occitan (loi 482) ; la France signe la Charte européenne des langues régionales sans la ratifier.</span></div>
+              <div class="frise-item"><span class="frise-date">2006 – 2010</span> <span class="frise-texte">— L'occitan (aranais au Val d'Aran) devient langue officielle de la Catalogne.</span></div>
+              <div class="frise-item majeur"><span class="frise-date">2008</span> <span class="frise-texte">— Article 75-1 de la Constitution : les langues régionales, patrimoine de la France.</span></div>
+              <div class="frise-item"><span class="frise-date">2015</span> <span class="frise-texte">— Création de l'Office public de la langue occitane (OPLO).</span></div>
+              <div class="frise-item"><span class="frise-date">2016</span> <span class="frise-texte">— La nouvelle région prend le nom d'« Occitanie ».</span></div>
+              <div class="frise-item"><span class="frise-date">2020</span> <span class="frise-texte">— Grande enquête sociolinguistique de l'OPLO (8 000 personnes interrogées).</span></div>
+              <div class="frise-item majeur"><span class="frise-date">21 mai 2021</span> <span class="frise-texte">— Loi Molac sur la protection et la promotion des langues régionales.</span></div>
+              <div class="frise-item"><span class="frise-date">2022</span> <span class="frise-texte">— La Région Occitanie adopte son plan « Parlem una cultura viva ».</span></div>
+              <div class="frise-item"><span class="frise-date">2026</span> <span class="frise-texte">— 20<sup>e</sup> édition du festival Total Festum ; agrégation externe ouverte en occitan.</span></div>
+            </div>
+          </section>
+
+          <!-- ═══ DIALECTES ═══ -->
+          <section class="section" id="dialectes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗣️</div>
+              Une langue, six grands dialectes
+            </h2>
+            <div class="histoire-texte">
+              <p>Comme toute langue restée longtemps sans école ni académie, l'occitan varie d'une vallée à l'autre. Les linguistes, à la suite de Pierre Bec, regroupent ces parlers en <strong>six grands ensembles</strong>, eux-mêmes répartis en trois blocs : le <strong>nord-occitan</strong> (limousin, auvergnat, vivaro-alpin), l'<strong>occitan moyen</strong> (languedocien, provençal) et le <strong>gascon</strong>, le plus original. Ces différences ressemblent à celles qui séparent l'anglais britannique de l'anglais américain : elles touchent la prononciation et le vocabulaire, beaucoup moins la grammaire.</p>
+            </div>
+
+            <div class="fort-grid">
+              <div class="fort">
+                <div class="fort-head">Gascon <small>Sud-Ouest</small></div>
+                <div class="fort-body">
+                  <span class="tag">Béarnais</span><span class="tag">Aranais</span><br>
+                  Des Landes aux Pyrénées et du Bordelais au Comminges. Le plus singulier : le <em>f</em> latin devient <em>h</em> (<span class="oc">hilh</span> pour « fils », <span class="oc">hèsta</span> pour « fête »), trace probable du substrat aquitain. Salut typique : <span class="oc">Adishatz !</span>
+                </div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Languedocien <small>Centre-Sud</small></div>
+                <div class="fort-body">
+                  <span class="tag">Toulouse · Albi · Montpellier</span><br>
+                  Le plus étendu et souvent jugé le plus proche de la langue médiévale, d'où son rôle de référence pour la norme classique. On y distingue notamment le toulousain, le rouergat, l'albigeois ou le parler du Biterrois.
+                </div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Provençal <small>Sud-Est</small></div>
+                <div class="fort-body">
+                  <span class="tag">Rhodanien · maritime</span><span class="tag">Niçois</span><br>
+                  Langue de Mistral et du Félibrige. Les consonnes finales y sont souvent muettes (le pluriel ne s'entend pas) et l'usage de la graphie mistralienne reste très vivant.
+                </div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Limousin <small>Nord-Ouest</small></div>
+                <div class="fort-body">
+                  <span class="tag">Limousin · Périgord</span><br>
+                  Nord-occitan : <em>ca</em> et <em>ga</em> latins deviennent <em>cha</em> et <em>ja</em> (<span class="oc">chantar</span> au lieu de <span class="oc">cantar</span>). Langue de la poétesse Marcelle Delpastre.
+                </div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Auvergnat <small>Massif central</small></div>
+                <div class="fort-body">
+                  <span class="tag">Cantal · Puy-de-Dôme · Haute-Loire</span><br>
+                  Parlers montagnards très riches en sons chuintants. L'Aurillacois et le Cantal restent des terres de forte pratique.
+                </div>
+              </div>
+              <div class="fort">
+                <div class="fort-head">Vivaro-alpin <small>Alpes</small></div>
+                <div class="fort-body">
+                  <span class="tag">Ardèche · Drôme · Hautes-Alpes</span><span class="tag">Vallées du Piémont</span><br>
+                  Il franchit les Alpes : c'est lui que l'on parle dans les vallées occitanes d'Italie. Chute fréquente du <em>-t-</em> entre voyelles (<span class="oc">cantaa</span> pour <span class="oc">cantada</span>).
+                </div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une ou plusieurs langues d'oc ?</div>
+              <p>La très grande majorité des linguistes et des universités considèrent l'occitan comme une langue unique à variétés multiples. Une partie du mouvement provençaliste, attachée à l'héritage de Mistral, défend toutefois l'idée d'une « langue provençale » distincte, et certains Béarnais revendiquent la spécificité de leur parler. Ce débat, plus identitaire que linguistique, rappelle que chaque locuteur reste attaché d'abord au parler de son « pays ».</p>
+            </div>
+          </section>
+
+          <!-- ═══ GRAPHIE ═══ -->
+          <section class="section" id="graphie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">✒️</div>
+              Écrire et prononcer l'occitan
+            </h2>
+            <div class="histoire-texte">
+              <p>Deux grandes façons d'écrire coexistent. La <strong>graphie classique</strong>, héritée des troubadours et codifiée par Alibert, permet d'écrire tous les dialectes avec les mêmes conventions : on écrit <span class="oc">cantar</span> partout, chacun prononçant à sa façon. La <strong>graphie mistralienne</strong>, conçue au XIX<sup>e</sup> siècle à partir de l'orthographe du français, colle davantage à la prononciation provençale. Elle reste utilisée en Provence par le Félibrige.</p>
+            </div>
+
+            <div class="compare">
+              <div class="compare-col compare-cath">
+                <h4>Graphie classique</h4>
+                <ul>
+                  <li>Héritée de l'écrit médiéval</li>
+                  <li>Commune à tous les dialectes</li>
+                  <li>Proche du catalan, lisible pour un Catalan ou un Italien</li>
+                  <li>Enseignée dans l'école publique, les Calandretas et les universités</li>
+                  <li>Exemple : <em>Mirèlha</em>, <em>Occitània</em>, <em>la lenga</em></li>
+                </ul>
+              </div>
+              <div class="compare-col compare-rom">
+                <h4>Graphie mistralienne</h4>
+                <ul>
+                  <li>Créée par Roumanille et Mistral au XIX<sup>e</sup> siècle</li>
+                  <li>Calquée sur l'orthographe française</li>
+                  <li>Facile à lire pour un francophone</li>
+                  <li>Surtout utilisée en Provence et dans le Félibrige</li>
+                  <li>Exemple : <em>Mirèio</em>, <em>Óucitanìo</em>, <em>la lengo</em></li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="sous-titre">Petit guide de prononciation (languedocien)</h3>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>On écrit</th><th>On prononce</th><th>Exemple</th><th>Sens</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>o</strong></td><td>« ou »</td><td><span class="oc">bon</span> (« boun »)</td><td>bon</td></tr>
+                  <tr><td><strong>ò</strong></td><td>« o » ouvert</td><td><span class="oc">òc</span></td><td>oui</td></tr>
+                  <tr><td><strong>a</strong> final non accentué</td><td>« o » léger</td><td><span class="oc">la lenga</span> (« lo lengo »)</td><td>la langue</td></tr>
+                  <tr><td><strong>lh</strong></td><td>« ill » (comme dans « paille »)</td><td><span class="oc">filha</span></td><td>fille</td></tr>
+                  <tr><td><strong>nh</strong></td><td>« gn »</td><td><span class="oc">montanha</span></td><td>montagne</td></tr>
+                  <tr><td><strong>u</strong></td><td>« u » français</td><td><span class="oc">luna</span></td><td>lune</td></tr>
+                  <tr><td><strong>e</strong>, <strong>é</strong>, <strong>è</strong></td><td>jamais muet</td><td><span class="oc">paire</span> (« païré »)</td><td>père</td></tr>
+                  <tr><td><strong>v</strong></td><td>souvent « b »</td><td><span class="oc">vin</span> (« bi »)</td><td>vin</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Prononciations approximatives pour un francophone ; elles varient selon les dialectes.</p>
+
+            <div class="encadre">
+              <strong>✏️ Trois traits de grammaire à connaître</strong><br>
+              • <strong>Pas de pronom sujet obligatoire</strong> : comme en espagnol ou en italien, la terminaison suffit. <span class="oc">Parli occitan</span> = je parle occitan.<br>
+              • <strong>L'accent tonique est libre et significatif</strong>, sur l'avant-dernière syllabe le plus souvent : <span class="oc">cantar</span>, <span class="oc">cantam</span>, mais <span class="oc">cantàvem</span>.<br>
+              • <strong>La négation se fait avec « pas » seul</strong>, placé après le verbe : <span class="oc">Comprèni pas</span> = je ne comprends pas.
+            </div>
+          </section>
+
+          <!-- ═══ TERRITOIRE ═══ -->
+          <section class="section" id="territoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧭</div>
+              Où parle-t-on occitan ?
+            </h2>
+            <div class="histoire-texte">
+              <p>L'espace occitan couvre environ un tiers de la France métropolitaine : <strong>32 départements</strong>, répartis sur quatre régions (Occitanie, Nouvelle-Aquitaine, Provence-Alpes-Côte d'Azur et Auvergne-Rhône-Alpes). Il déborde les frontières : au <strong>Val d'Aran</strong>, en Catalogne espagnole, l'aranais (gascon) est langue officielle ; en <strong>Italie</strong>, l'occitan est parlé dans une douzaine de vallées alpines du Piémont et, depuis le XIV<sup>e</sup> siècle, à <strong>Guardia Piemontese</strong> en Calabre, fondée par des Vaudois venus des Alpes. Au nord, une zone de transition appelée le <strong>Croissant</strong> fait la jonction avec les parlers d'oïl.</p>
+              <p>Attention : la région administrative <strong>Occitanie</strong> ne coïncide pas avec l'espace occitan. Elle en exclut la Gascogne bordelaise et landaise, le Limousin, l'Auvergne ou la Provence, et inclut le Roussillon (Pyrénées-Orientales), où l'on parle catalan.</p>
+            </div>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 460" role="img" aria-label="Carte schématique des dialectes occitans">
+                <rect x="0" y="0" width="640" height="460" fill="#FBF8F2"/>
+                <!-- Océan -->
+                <path d="M0 0 L60 0 Q 45 120 55 230 Q 62 320 40 400 L0 400 Z" fill="#D8E4F0"/>
+                <text x="28" y="200" font-family="Playfair Display, serif" font-style="italic" font-size="12" fill="#2C4A7C" transform="rotate(-90 28 200)" text-anchor="middle">Océan Atlantique</text>
+                <!-- Méditerranée -->
+                <path d="M300 460 L320 420 Q 380 400 420 395 Q 470 380 520 350 Q 570 335 640 330 L640 460 Z" fill="#D8E4F0"/>
+                <text x="520" y="420" font-family="Playfair Display, serif" font-style="italic" font-size="13" fill="#2C4A7C" text-anchor="middle">Mer Méditerranée</text>
+
+                <!-- Croissant -->
+                <path d="M70 70 Q 250 40 470 70 L 470 92 Q 250 64 70 94 Z" fill="#E8DEC8"/>
+                <text x="270" y="72" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8B7355" text-anchor="middle" font-style="italic">Croissant (transition oc / oïl)</text>
+
+                <!-- Dialectes -->
+                <path d="M62 96 Q 150 84 250 88 L 250 215 Q 160 225 62 230 Z" fill="#B9D3B0" opacity="0.85"/>
+                <path d="M250 88 Q 330 86 400 94 L 405 230 Q 330 228 250 215 Z" fill="#E7C9A0" opacity="0.9"/>
+                <path d="M400 94 Q 470 96 560 120 L 560 250 Q 480 245 405 230 Z" fill="#C9C0DE" opacity="0.9"/>
+                <path d="M62 230 Q 160 225 230 222 L 235 300 Q 200 360 175 395 Q 110 395 45 395 Q 60 310 62 230 Z" fill="#F0D57C" opacity="0.85"/>
+                <path d="M230 222 Q 330 228 420 236 L 425 330 Q 380 360 330 395 Q 260 395 200 380 Q 220 330 235 300 Z" fill="#E8A87C" opacity="0.85"/>
+                <path d="M420 236 Q 490 248 560 250 L 600 330 Q 530 340 470 375 Q 440 360 425 330 Z" fill="#9FC2E0" opacity="0.9"/>
+
+                <!-- Vallées occitanes d'Italie -->
+                <path d="M565 190 L 600 180 L 612 250 L 585 262 Z" fill="#C9C0DE" stroke="#7A3E7C" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <text x="612" y="175" font-family="Source Sans 3, sans-serif" font-size="9.5" fill="#7A3E7C" text-anchor="end">Valadas (Italie)</text>
+
+                <!-- Pays basque et catalan -->
+                <path d="M45 395 Q 110 395 140 400 L 140 440 L 40 440 Z" fill="#DDD" />
+                <text x="90" y="425" font-family="Source Sans 3, sans-serif" font-size="10" fill="#555" text-anchor="middle">Basque</text>
+                <path d="M300 400 Q 330 395 360 400 L 330 440 L 290 440 Z" fill="#DDD"/>
+                <text x="322" y="425" font-family="Source Sans 3, sans-serif" font-size="10" fill="#555" text-anchor="middle">Catalan</text>
+                <!-- Val d'Aran -->
+                <circle cx="205" cy="405" r="8" fill="#F0D57C" stroke="#8B5E0A" stroke-width="1.5"/>
+                <text x="218" y="420" font-family="Source Sans 3, sans-serif" font-size="9.5" fill="#8B5E0A">Val d'Aran</text>
+
+                <!-- Noms des dialectes -->
+                <g font-family="Playfair Display, serif" font-weight="700" font-size="15" text-anchor="middle">
+                  <text x="155" y="160" fill="#2F5E2A">LIMOUSIN</text>
+                  <text x="325" y="165" fill="#7A4A12">AUVERGNAT</text>
+                  <text x="480" y="175" fill="#4E3E7C">VIVARO-ALPIN</text>
+                  <text x="130" y="310" fill="#8B5E0A">GASCON</text>
+                  <text x="320" y="300" fill="#8A3B12">LANGUEDOCIEN</text>
+                  <text x="510" y="300" fill="#1F4E7A">PROVENÇAL</text>
+                </g>
+
+                <!-- Villes -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10.5" fill="#2C2418">
+                  <circle cx="85" cy="230" r="4"/><text x="92" y="244">Bordeaux</text>
+                  <circle cx="175" cy="115" r="4"/><text x="182" y="119">Limoges</text>
+                  <circle cx="320" cy="120" r="4"/><text x="327" y="124">Clermont</text>
+                  <circle cx="455" cy="200" r="4"/><text x="462" y="204">Valence</text>
+                  <circle cx="125" cy="360" r="4"/><text x="132" y="364">Pau</text>
+                  <circle cx="235" cy="320" r="5"/><text x="243" y="324" font-weight="700">Toulouse</text>
+                  <circle cx="285" cy="280" r="4"/><text x="292" y="276">Albi</text>
+                  <circle cx="395" cy="330" r="4"/><text x="372" y="347">Montpellier</text>
+                  <circle cx="500" cy="345" r="4"/><text x="482" y="362">Marseille</text>
+                  <circle cx="585" cy="300" r="4"/><text x="560" y="318">Nice</text>
+                </g>
+
+                <!-- Légende -->
+                <g font-family="Source Sans 3, sans-serif" font-size="10" fill="#3A3028">
+                  <rect x="470" y="10" width="160" height="60" rx="8" fill="white" stroke="#E0DACE"/>
+                  <text x="482" y="28" font-weight="700" fill="#2C4A7C">Légende</text>
+                  <rect x="482" y="36" width="12" height="9" fill="#E8DEC8"/><text x="500" y="44">Zone de transition</text>
+                  <rect x="482" y="52" width="12" height="9" fill="#DDD"/><text x="500" y="60">Autres langues</text>
+                </g>
+              </svg>
+              <figcaption>Carte schématique des grands dialectes occitans (limites approximatives, échelle non respectée). Les frontières dialectales sont des zones de transition, pas des lignes nettes.</figcaption>
+            </figure>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Territoire</th><th>Dialectes</th><th>Statut de la langue</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>France</strong> (32 départements)</td><td>Les six ensembles</td><td>Langue régionale, « patrimoine de la France » (art. 75-1) ; pas de statut officiel</td></tr>
+                  <tr><td><strong>Région Occitanie</strong></td><td>Languedocien, gascon, provençal (Gard)</td><td>Politique linguistique régionale « Parlem una cultura viva » (2022)</td></tr>
+                  <tr><td><strong>Région Nouvelle-Aquitaine</strong></td><td>Gascon, limousin, languedocien (Agenais)</td><td>Membre de l'OPLO ; politique en faveur de l'occitan et du basque</td></tr>
+                  <tr><td><strong>Val d'Aran</strong> (Espagne)</td><td>Aranais (gascon)</td><td>Langue officielle en Catalogne (Statut de 2006, loi de 2010)</td></tr>
+                  <tr><td><strong>Vallées du Piémont</strong> (Italie)</td><td>Vivaro-alpin</td><td>Minorité linguistique reconnue (loi 482 de 1999)</td></tr>
+                  <tr><td><strong>Guardia Piemontese</strong> (Calabre)</td><td>Parler d'origine alpine</td><td>Îlot linguistique protégé</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="encadre">
+              <strong>🏘️ L'occitan est partout sur la carte</strong><br>
+              Les noms de lieux du Midi sont occitans : <strong>Castelnau</strong> (<span class="oc">castèl nòu</span>, château neuf), <strong>Villeneuve</strong> (<span class="oc">vila nòva</span>), <strong>Puylaurens</strong> (<span class="oc">puèg</span>, colline), <strong>Montpellier</strong> (<span class="oc">Montpelhièr</span>), <strong>Albi</strong> (<span class="oc">Albi</span>), <strong>Toulouse</strong> (<span class="oc">Tolosa</span>). Les noms de famille aussi : Bousquet (<span class="oc">bosquet</span>), Fabre (<span class="oc">fabre</span>, forgeron), Delpech (<span class="oc">del puèch</span>, de la colline), Cazals (<span class="oc">casal</span>, maison). Dans de nombreuses communes, les panneaux d'entrée sont aujourd'hui bilingues.
+            </div>
+          </section>
+
+          <!-- ═══ AUJOURD'HUI ═══ -->
+          <section class="section" id="aujourdhui">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📊</div>
+              Qui parle occitan aujourd'hui ?
+            </h2>
+            <div class="histoire-texte">
+              <p>Il n'existe aucun recensement officiel des langues en France. La référence la plus solide est l'<strong>enquête sociolinguistique de 2020</strong>, menée par l'OPLO auprès de <strong>8 000 personnes</strong> en Nouvelle-Aquitaine, en Occitanie et au Val d'Aran. Elle estime à environ <strong>540 000</strong> le nombre de locuteurs de 15 ans et plus sur ce territoire, soit une baisse de 3 à 4 points en dix ans. Les écarts sont considérables selon les départements : environ 22 % de locuteurs en Lozère, 18 % dans l'Aveyron, 12 % dans les Pyrénées-Atlantiques, beaucoup moins dans les grandes agglomérations.</p>
+              <p>Le profil des locuteurs est inquiétant pour l'avenir : ils ont en moyenne <strong>66 ans</strong>, et seulement <strong>2 %</strong> des 15-29 ans parlent la langue. Mais l'enquête révèle aussi un fort <strong>« désir d'occitan »</strong> : près de quatre habitants sur cinq sont favorables à des actions pour maintenir et développer la langue, et un grand nombre de personnes la comprennent sans la parler (les « occitano-imprégnés »). Chez les jeunes locuteurs, les réseaux sociaux sont devenus un canal d'information en occitan important.</p>
+            </div>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Indicateur</th><th>Valeur</th><th>Source</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Locuteurs de 15 ans et plus</strong> (Nouvelle-Aquitaine, Occitanie, Val d'Aran)</td><td>≈ 540 000</td><td>Enquête OPLO 2020</td></tr>
+                  <tr><td><strong>Âge moyen des locuteurs</strong></td><td>66 ans</td><td>Enquête OPLO 2020</td></tr>
+                  <tr><td><strong>Part de locuteurs chez les 15-29 ans</strong></td><td>2 %</td><td>Enquête OPLO 2020</td></tr>
+                  <tr><td><strong>Habitants favorables à des actions</strong> pour la langue</td><td>≈ 79 %</td><td>Enquête OPLO 2020</td></tr>
+                  <tr><td><strong>Élèves apprenant l'occitan</strong> (de la maternelle au lycée)</td><td>≈ 70 000 en 2023, contre ≈ 78 800 en 2003-2004</td><td>OPLO, d'après la FELCO</td></tr>
+                  <tr><td><strong>Élèves en Calandreta</strong></td><td>≈ 4 000 (une soixantaine d'écoles, 4 collèges, 1 lycée)</td><td>Réseau Calandreta</td></tr>
+                  <tr><td><strong>Postes au CAPES d'occitan</strong></td><td>3 en 2025 et en 2026 (+ 2 à l'agrégation interne)</td><td>Ministère de l'Éducation nationale</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Les chiffres de l'enquête 2020 ne couvrent ni la Provence, ni l'Auvergne-Rhône-Alpes, ni l'Italie : le nombre total de locuteurs dans l'ensemble de l'espace occitan est donc plus élevé, mais aucune estimation globale n'est fiable.</p>
+
+            <figure class="schema">
+              <svg viewBox="0 0 640 230" role="img" aria-label="Part de locuteurs dans trois départements">
+                <rect width="640" height="230" fill="white"/>
+                <g font-family="Source Sans 3, sans-serif" font-size="12" fill="#3A3028">
+                  <text x="20" y="28" font-family="Playfair Display, serif" font-size="15" font-weight="700" fill="#2C4A7C">Part de locuteurs d'occitan (enquête OPLO 2020)</text>
+                  <text x="20" y="75">Lozère</text>
+                  <rect x="170" y="60" width="396" height="24" rx="4" fill="#C8843A"/><text x="574" y="77" font-weight="700">22 %</text>
+                  <text x="20" y="115">Aveyron</text>
+                  <rect x="170" y="100" width="324" height="24" rx="4" fill="#D89A55"/><text x="502" y="117" font-weight="700">18 %</text>
+                  <text x="20" y="155">Pyrénées-Atlantiques</text>
+                  <rect x="170" y="140" width="216" height="24" rx="4" fill="#E8B87C"/><text x="394" y="157" font-weight="700">12 %</text>
+                  <text x="20" y="195">Jeunes de 15 à 29 ans</text>
+                  <rect x="170" y="180" width="36" height="24" rx="4" fill="#2C4A7C"/><text x="214" y="197" font-weight="700">2 %</text>
+                </g>
+              </svg>
+              <figcaption>Les départements ruraux du Massif central et des Pyrénées concentrent la pratique ; chez les jeunes, la langue est devenue minoritaire partout.</figcaption>
+            </figure>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · une langue « en danger », mais pas une langue morte</div>
+              <p>L'UNESCO range l'occitan parmi les langues en danger : ce n'est pas le nombre de locuteurs qui inquiète, mais leur âge et l'arrêt de la transmission familiale. À l'inverse, l'occitan bénéficie d'atouts que beaucoup de langues menacées n'ont pas : une norme écrite, une grande littérature, des dictionnaires numériques, des écoles, des radios, une image très positive dans la population.</p>
+              <p>L'enjeu des prochaines décennies est simple à formuler et difficile à atteindre : former assez de nouveaux locuteurs, enfants et adultes, pour remplacer la génération qui a appris l'occitan dans sa famille.</p>
+            </div>
+
+            <h3 class="sous-titre">Une langue vivante : médias et culture</h3>
+            <div class="histoire-texte">
+              <p>L'occitan se lit, s'écoute et se regarde. France 3 diffuse chaque semaine des programmes régionaux en occitan et France Bleu Occitanie des chroniques quotidiennes ; plusieurs radios associatives émettent en grande partie dans la langue (Ràdio País à Pau, Ràdio Occitania à Toulouse, Ràdio Lenga d'Òc à Montpellier). La plateforme <strong>ÒCVOD</strong> propose dessins animés et séries doublés, <strong>Òc tele</strong> une web-télé 100 % occitane. La musique est le grand vecteur de la langue auprès des jeunes : Nadau en Béarn, Massilia Sound System et Moussu T à Marseille, les Fabulous Trobadors à Toulouse, ou les chanteuses de Cocanha qui ont renouvelé la polyphonie traditionnelle.</p>
+            </div>
+          </section>
+
+          <!-- ═══ PERSONNALITÉS ═══ -->
+          <section class="section" id="personnalites">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">👤</div>
+              Les grandes voix de la langue d'oc
+            </h2>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Comment lire cette galerie</div>
+              <p>Les personnages sont regroupés en quatre familles, repérables à leur couleur : les troubadours et trobairitz du Moyen Âge, les poètes de la renaissance moderne et du Félibrige, les écrivains et linguistes du XX<sup>e</sup> siècle, enfin les voix de la chanson et de la transmission.</p>
+            </div>
+
+            <div class="perso-groupe g-cath">
+              <div class="perso-groupe-titre">Troubadours et trobairitz</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Guilhem IX d'Aquitaine</div><div class="perso-dates">1071 – 1126</div><div class="perso-desc">Duc d'Aquitaine et comte de Poitiers, premier troubadour connu, tour à tour grivois et raffiné.</div></div>
+                <div class="perso"><div class="perso-nom">Bernart de Ventadorn</div><div class="perso-dates">XII<sup>e</sup> siècle</div><div class="perso-desc">Fils d'un serviteur du château de Ventadour (Corrèze), maître de la chanson d'amour.</div></div>
+                <div class="perso"><div class="perso-nom">Comtessa de Dia</div><div class="perso-dates">fin XII<sup>e</sup> siècle</div><div class="perso-desc">La plus célèbre des trobairitz ; l'une de ses chansons est la seule d'une femme troubadour conservée avec sa mélodie.</div></div>
+                <div class="perso"><div class="perso-nom">Arnaut Daniel</div><div class="perso-dates">actif vers 1180 – 1200</div><div class="perso-desc">Virtuose du <em>trobar clus</em> (art fermé), inventeur de la sextine, admiré par Dante et Pétrarque.</div></div>
+                <div class="perso"><div class="perso-nom">Peire Cardenal</div><div class="perso-dates">XIII<sup>e</sup> siècle</div><div class="perso-desc">Auteur de <em>sirventés</em> mordants contre le clergé et la violence de la croisade.</div></div>
+                <div class="perso"><div class="perso-nom">Guiraut Riquier</div><div class="perso-dates">vers 1230 – vers 1292</div><div class="perso-desc">Narbonnais, souvent présenté comme « le dernier troubadour ».</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-occ">
+              <div class="perso-groupe-titre">Renaissance et Félibrige</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Pèire Godolin</div><div class="perso-dates">1580 – 1649</div><div class="perso-desc">Poète toulousain baroque, auteur du <em>Ramelet mondin</em> ; une place de Toulouse porte son nom.</div></div>
+                <div class="perso"><div class="perso-nom">Jasmin (Jacques Boé)</div><div class="perso-dates">1798 – 1864</div><div class="perso-desc">Coiffeur-poète d'Agen, immense succès populaire dans tout le Midi, admiré de Sainte-Beuve.</div></div>
+                <div class="perso"><div class="perso-nom">Frédéric Mistral</div><div class="perso-dates">1830 – 1914</div><div class="perso-desc">Cofondateur du Félibrige, auteur de <em>Mirèio</em> et du <em>Tresor dóu Felibrige</em>, prix Nobel 1904.</div></div>
+                <div class="perso"><div class="perso-nom">Joseph Roumanille</div><div class="perso-dates">1818 – 1891</div><div class="perso-desc">Mentor de Mistral, éditeur avignonnais, à l'origine de la graphie dite mistralienne.</div></div>
+                <div class="perso"><div class="perso-nom">Antonin Perbosc</div><div class="perso-dates">1861 – 1944</div><div class="perso-desc">Instituteur du Tarn-et-Garonne, collecteur de contes, promoteur de l'unité de la langue.</div></div>
+                <div class="perso"><div class="perso-nom">Louis Alibert</div><div class="perso-dates">1884 – 1959</div><div class="perso-desc">Pharmacien audois, auteur de la <em>Gramatica occitana</em> (1935) et d'un dictionnaire de référence.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-crois">
+              <div class="perso-groupe-titre">Écrivains et linguistes du XX<sup>e</sup> siècle</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Max Rouquette</div><div class="perso-dates">1908 – 2005</div><div class="perso-desc">Médecin et écrivain héraultais, auteur de <em>Vert paradis</em> (<em>Verd paradís</em>), cofondateur de l'IEO.</div></div>
+                <div class="perso"><div class="perso-nom">Jean Boudou</div><div class="perso-dates">1920 – 1975</div><div class="perso-desc">Romancier aveyronnais (<span class="oc">Joan Bodon</span>), l'une des grandes voix de la prose occitane moderne.</div></div>
+                <div class="perso"><div class="perso-nom">Robert Lafont</div><div class="perso-dates">1923 – 2009</div><div class="perso-desc">Linguiste, écrivain et penseur de l'occitanisme, théoricien du « colonialisme intérieur ».</div></div>
+                <div class="perso"><div class="perso-nom">Bernard Manciet</div><div class="perso-dates">1923 – 2005</div><div class="perso-desc">Poète landais, auteur de <em>L'Enterrament a Sabres</em>, sommet de la poésie gasconne.</div></div>
+                <div class="perso"><div class="perso-nom">Marcelle Delpastre</div><div class="perso-dates">1925 – 1998</div><div class="perso-desc">Paysanne et poétesse corrézienne, voix majeure du limousin.</div></div>
+                <div class="perso"><div class="perso-nom">Pierre Bec</div><div class="perso-dates">1921 – 2014</div><div class="perso-desc">Linguiste, auteur du « Que sais-je ? » <em>La Langue occitane</em> et de la classification des dialectes.</div></div>
+              </div>
+            </div>
+
+            <div class="perso-groupe g-egl">
+              <div class="perso-groupe-titre">Chanson et transmission</div>
+              <div class="perso-grid">
+                <div class="perso"><div class="perso-nom">Claude Marti</div><div class="perso-dates">né en 1940</div><div class="perso-desc">Instituteur audois, figure de la « nouvelle chanson occitane » des années 1970.</div></div>
+                <div class="perso"><div class="perso-nom">Nadau</div><div class="perso-dates">groupe fondé en 1973</div><div class="perso-desc">Groupe béarnais aux concerts fédérateurs, symbole de la chanson gasconne.</div></div>
+                <div class="perso"><div class="perso-nom">Massilia Sound System</div><div class="perso-dates">depuis les années 1980</div><div class="perso-desc">Reggae marseillais en occitan et en français, qui a fait découvrir la langue à toute une génération.</div></div>
+                <div class="perso"><div class="perso-nom">Les fondateurs des Calandretas</div><div class="perso-dates">depuis 1979</div><div class="perso-desc">Parents et enseignants qui ont fait de l'école immersive le principal outil de transmission aux enfants.</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ APPRENDRE ═══ -->
+          <section class="section" id="apprendre">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🎓</div>
+              Comment apprendre l'occitan ?
+            </h2>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Pour les enfants : de la maternelle au lycée</h3>
+            </div>
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Formule</th><th>Où ?</th><th>Place de l'occitan</th><th>Pour qui ?</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Calandreta</strong></td><td>Écoles associatives laïques et gratuites, sous contrat</td><td>Immersion : l'occitan est la langue de la classe, le français arrive progressivement</td><td>Familles qui veulent un vrai bilinguisme</td></tr>
+                  <tr><td><strong>Classe bilingue publique</strong></td><td>Écoles, collèges et lycées publics</td><td>Parité horaire : la moitié des enseignements en occitan</td><td>Tous les élèves de l'école concernée</td></tr>
+                  <tr><td><strong>Enseignement renforcé</strong></td><td>Écoles publiques</td><td>Une ou plusieurs matières en partie en occitan</td><td>Élèves de cycles 2 et 3</td></tr>
+                  <tr><td><strong>Sensibilisation, initiation</strong></td><td>Écoles primaires</td><td>Quelques heures par semaine</td><td>Découverte</td></tr>
+                  <tr><td><strong>Langue vivante</strong> (LV2, LV3, option)</td><td>Collèges et lycées</td><td>Cours de langue et culture, épreuve au baccalauréat</td><td>Débutants comme confirmés</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">Pour les adultes : un parcours en six étapes</h3>
+            </div>
+            <div class="etapes-liste">
+              <div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Choisir son occitan</div><div class="etape-texte">Commencez par le dialecte de votre territoire : languedocien autour de Toulouse, d'Albi ou de Montpellier, gascon en Béarn ou dans le Gers, provençal à l'est du Rhône. Tous restent compréhensibles entre eux.</div></div></div>
+              <div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">S'équiper d'outils en ligne gratuits</div><div class="etape-texte">Le <strong>Congrès permanent de la langue occitane</strong> (Lo Congrès) propose le multidictionnaire <strong>dicod'Òc</strong> (environ 130 000 entrées, six variétés, avec audio), le conjugueur <strong>vèrb'Òc</strong>, le traducteur automatique <strong>Revirada</strong> et le dictionnaire des toponymes <strong>top'Òc</strong>.</div></div></div>
+              <div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Suivre des cours du soir</div><div class="etape-texte">Les sections locales de l'<strong>Institut d'études occitanes (IEO)</strong> et de nombreuses associations proposent des cours hebdomadaires, souvent dès septembre et accessibles à tout moment de l'année.</div></div></div>
+              <div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">Passer à l'intensif</div><div class="etape-texte">Les <strong>Centres de formation professionnelle occitan (CFPO)</strong> organisent des stages en immersion et des formations longues, y compris pour devenir formateur. Les universités d'été occitanes permettent une immersion d'une semaine.</div></div></div>
+              <div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">Faire valider son niveau</div><div class="etape-texte">Le <strong>DCL occitan</strong> (diplôme de compétence en langue) évalue chaque année, au printemps, les niveaux du cadre européen : <span class="oc">Aprendís</span> (A1-A2), <span class="oc">Biaissut</span> (B1-B2) et <span class="oc">Cèrt</span> (C1-C2).</div></div></div>
+              <div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Pratiquer, pratiquer, pratiquer</div><div class="etape-texte">Écoutez les radios occitanes, regardez ÒCVOD ou Òc tele, lisez la presse en ligne, et surtout parlez avec les anciens : beaucoup sont ravis de reprendre « lo patés » avec un nouveau venu. Les veillées, les bals trad et les fêtes de village sont les meilleures salles de classe.</div></div></div>
+            </div>
+
+            <div class="histoire-texte">
+              <h3 class="sous-titre">À l'université</h3>
+              <p>Des licences, masters et préparations aux concours d'enseignement existent notamment à Toulouse (Jean-Jaurès), Montpellier (Paul-Valéry), Pau, Bordeaux et Aix-Marseille, avec des cursus dédiés au métier de professeur bilingue. L'occitan dispose d'un <strong>CAPES</strong> depuis 1991 et a figuré en 2026 parmi les langues retenues pour l'agrégation externe de langues de France.</p>
+            </div>
+
+            <div class="encadre">
+              <strong>📚 Quelques méthodes et livres pour débuter</strong><br>
+              • Une méthode de la collection Assimil consacrée à l'occitan (avec enregistrements)<br>
+              • Le <em>Dictionnaire occitan-français</em> de Louis Alibert (languedocien), référence historique<br>
+              • Les dictionnaires de Cristian Laus (languedocien), consultables via dicod'Òc<br>
+              • Des albums jeunesse et bandes dessinées traduits en occitan, idéaux pour lire en famille
+            </div>
+          </section>
+
+          <!-- ═══ PREMIERS MOTS ═══ -->
+          <section class="section" id="premiers-mots">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💬</div>
+              Premiers mots et expressions
+            </h2>
+
+            <div class="tableau-wrap">
+              <table class="tableau">
+                <thead>
+                  <tr><th>Français</th><th>Languedocien</th><th>Gascon</th><th>Provençal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Bonjour</strong></td><td>Bonjorn</td><td>Bonjorn / Adishatz</td><td>Bonjorn</td></tr>
+                  <tr><td><strong>Au revoir</strong></td><td>Adieu-siatz / A lèu</td><td>Adishatz / Adiu</td><td>Adieu-siatz / A lèu</td></tr>
+                  <tr><td><strong>Merci</strong></td><td>Mercé</td><td>Mercés</td><td>Mercé</td></tr>
+                  <tr><td><strong>Oui / non</strong></td><td>Òc / Non</td><td>Òc / Non</td><td>Òc / Non</td></tr>
+                  <tr><td><strong>Comment ça va ?</strong></td><td>Cossí va ?</td><td>Com va ?</td><td>Coma va ?</td></tr>
+                  <tr><td><strong>Très bien</strong></td><td>Plan</td><td>Plan</td><td>Plan / Bèn</td></tr>
+                  <tr><td><strong>Je ne comprends pas</strong></td><td>Comprèni pas</td><td>Ne compreni pas</td><td>Compreni pas</td></tr>
+                  <tr><td><strong>À la vôtre !</strong></td><td>A la vòstra !</td><td>A la vòsta !</td><td>A la vòstra !</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tableau-legende">Graphie classique ; les formes varient encore d'un village à l'autre.</p>
+
+            <h3 class="sous-titre">Ces mots français qui viennent de l'occitan</h3>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">Ils sont passés de la langue d'oc au français</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">abelha</span>abeille</div>
+                <div class="ingredient-item"><span class="ingredient-qte">alberga</span>auberge</div>
+                <div class="ingredient-item"><span class="ingredient-qte">aubada</span>aubade</div>
+                <div class="ingredient-item"><span class="ingredient-qte">bastida</span>bastide</div>
+                <div class="ingredient-item"><span class="ingredient-qte">capdèl</span>cadeau</div>
+                <div class="ingredient-item"><span class="ingredient-qte">cigala</span>cigale</div>
+                <div class="ingredient-item"><span class="ingredient-qte">escaragòl</span>escargot</div>
+                <div class="ingredient-item"><span class="ingredient-qte">gojat</span>goujat (« garçon »)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">pè tancat</span>pétanque (« pieds plantés »)</div>
+                <div class="ingredient-item"><span class="ingredient-qte">trobador</span>troubadour</div>
+              </div>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · l'occitan caché dans le français du Midi</div>
+              <p>Même ceux qui croient ne pas connaître l'occitan le parlent un peu. Le « français régional » du Sud en est imprégné : on dit « adieu » pour saluer en arrivant (<span class="oc">adieu</span>), « peuchère » pour plaindre quelqu'un (<span class="oc">paure de ieu</span>, « pauvre de moi »), « il fait cagnard » au soleil, on « s'empègue » (on se colle, de <span class="oc">pega</span>, la poix). Et l'accent lui-même, avec ses <em>e</em> prononcés en fin de mot, vient tout droit de la prononciation occitane.</p>
+            </div>
+          </section>
+
+          <!-- ═══ AVENIR ═══ -->
+          <section class="section" id="avenir">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔮</div>
+              Quel avenir pour l'occitan ?
+            </h2>
+            <div class="histoire-texte">
+              <p>L'avenir de la langue se joue désormais moins dans les familles qu'à l'<strong>école</strong>, dans les <strong>médias</strong> et sur le <strong>numérique</strong>. Les signaux sont contrastés.</p>
+            </div>
+
+            <div class="compare">
+              <div class="compare-col compare-rom">
+                <h4>Les atouts</h4>
+                <ul>
+                  <li>Une image très positive : la grande majorité des habitants soutient l'occitan</li>
+                  <li>Des écoles immersives qui forment de vrais locuteurs</li>
+                  <li>Une norme écrite et des outils numériques gratuits de qualité</li>
+                  <li>Des politiques régionales actives (OPLO, plan « Parlem una cultura viva »)</li>
+                  <li>Une scène musicale et festive dynamique (Total Festum : environ 150 événements en 2026)</li>
+                  <li>Un statut officiel en Catalogne et la proximité du catalan</li>
+                </ul>
+              </div>
+              <div class="compare-col compare-cath">
+                <h4>Les fragilités</h4>
+                <ul>
+                  <li>Des locuteurs âgés et une transmission familiale quasi interrompue</li>
+                  <li>Un nombre d'élèves en baisse par rapport aux années 2000</li>
+                  <li>Très peu de postes de professeurs (3 au CAPES en 2026) face aux départs en retraite</li>
+                  <li>L'enseignement immersif fragilisé juridiquement depuis 2021</li>
+                  <li>Peu de présence dans la vie publique : administration, commerce, télévision</li>
+                  <li>Un territoire très vaste, éclaté entre quatre régions et trois États</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="histoire-texte">
+              <p>Les pouvoirs publics multiplient pourtant les initiatives : signalétique bilingue, annonces en occitan dans le métro de Toulouse, convention-cadre de l'OPLO pour 2024-2029, quinzaine « Parlem ! » chaque février en Occitanie. En 2026, des parlementaires de tous bords ont interpellé le gouvernement sur le faible nombre de postes d'enseignants, jugé incompatible avec l'objectif de la loi Molac de proposer la langue régionale à tous les élèves qui le souhaitent.</p>
+            </div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · des modèles à regarder</div>
+              <p>D'autres langues minoritaires montrent qu'un retournement est possible. Le basque, parlé par une minorité de la population il y a cinquante ans, a regagné des locuteurs jeunes grâce aux <em>ikastolak</em> et à une politique linguistique ambitieuse en Espagne. Le catalan voisin est redevenu une langue de la vie publique. L'occitan n'a ni l'un ni l'autre de ces cadres politiques, mais il dispose de leurs méthodes : immersion précoce, formation des adultes, présence dans les médias.</p>
+              <p>La question n'est donc pas de savoir si l'occitan va « disparaître » ou « survivre », mais quelle place la société du Midi voudra lui donner : celle d'un patrimoine que l'on contemple, ou celle d'une langue que l'on parle.</p>
+            </div>
+          </section>
+
+          <!-- ═══ IDÉES REÇUES ═══ -->
+          <section class="section" id="mythes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔎</div>
+              Histoire, mémoire et idées reçues
+            </h2>
+            <div class="mythe"><strong>« L'occitan, c'est un patois. »</strong><br><span class="verdict faux">Faux</span><br>Le mot « patois » est un jugement social, pas une catégorie linguistique. L'occitan possède une littérature millénaire, une grammaire, des dictionnaires et une norme écrite : c'est une langue à part entière.</div>
+            <div class="mythe"><strong>« On ne parle occitan que dans la région Occitanie. »</strong><br><span class="verdict faux">Faux</span><br>L'espace occitan s'étend sur 32 départements et quatre régions, ainsi qu'au Val d'Aran et en Italie. Bordeaux, Limoges, Clermont-Ferrand ou Nice sont en pays d'oc.</div>
+            <div class="mythe"><strong>« Gascon, provençal et occitan sont des langues différentes. »</strong><br><span class="verdict nuance">À nuancer</span><br>Pour la quasi-totalité des linguistes, ce sont des dialectes d'une même langue. Le débat existe surtout en Provence et en Béarn, pour des raisons d'identité et d'histoire.</div>
+            <div class="mythe"><strong>« L'occitan et le catalan, c'est la même chose. »</strong><br><span class="verdict nuance">Trop simple</span><br>Les deux langues sont très proches et longtemps confondues dans l'écrit littéraire, mais elles se sont séparées dès le Moyen Âge et ont chacune leur norme.</div>
+            <div class="mythe"><strong>« L'occitan a été interdit par la loi. »</strong><br><span class="verdict nuance">Exagéré</span><br>Aucune loi n'a interdit de le parler. Le français a été imposé dans l'écrit officiel (1539) puis à l'école (1880), et les punitions scolaires ont été bien réelles, mais l'abandon de la langue est surtout le fruit d'une pression sociale.</div>
+            <div class="mythe"><strong>« Plus personne ne le parle. »</strong><br><span class="verdict faux">Faux</span><br>Plusieurs centaines de milliers de personnes le parlent encore, des milliers d'enfants l'apprennent chaque année et des adultes de plus en plus nombreux s'y mettent.</div>
+
+            <div class="commentaire">
+              <div class="commentaire-titre">💬 Commentaire · pourquoi ces idées ont-elles la vie dure ?</div>
+              <p>Pendant plus d'un siècle, l'école a présenté l'occitan comme un parler fautif et sans avenir. Ces représentations se sont transmises plus sûrement que la langue elle-même. Les déconstruire est aujourd'hui une étape indispensable de toute politique linguistique : on n'apprend pas volontiers une langue que l'on croit inférieure.</p>
+            </div>
+          </section>
+
+          <!-- ═══ INFOS PRATIQUES ═══ -->
+          <section class="section" id="infos-pratiques">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">ℹ️</div>
+              Infos pratiques
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🎉</div>
+                <div>
+                  <div class="vin-nom">Parlem ! Catalan et Occitan</div>
+                  <div class="vin-desc">Quinzaine organisée chaque année en février par la Région Occitanie : animations, ateliers, initiations dans tous les départements.</div>
+                </div>
+                <div class="vin-badge">Février</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎶</div>
+                <div>
+                  <div class="vin-nom">Total Festum</div>
+                  <div class="vin-desc">Festival des cultures occitane et catalane autour de la Saint-Jean : concerts, lectures, bals, feux de la Saint-Jean.</div>
+                </div>
+                <div class="vin-badge">Mai – juillet</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">📱</div>
+                <div>
+                  <div class="vin-nom">Applications et outils</div>
+                  <div class="vin-desc">dicod'Òc, vèrb'Òc, Revirada (Lo Congrès) ; ÒCVOD pour les dessins animés ; Òc tele pour la vidéo.</div>
+                </div>
+                <div class="vin-badge">Gratuits</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🎓</div>
+                <div>
+                  <div class="vin-nom">DCL occitan</div>
+                  <div class="vin-desc">Inscriptions en général en février-mars, épreuves dans la seconde quinzaine de mai ; préparation possible au CFPO.</div>
+                </div>
+                <div class="vin-badge">Niveaux A1 à C2</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏫</div>
+                <div>
+                  <div class="vin-nom">Inscrire un enfant</div>
+                  <div class="vin-desc">Se renseigner auprès de la mairie et de l'académie pour les classes bilingues publiques, ou du réseau Calandreta (journées portes ouvertes en hiver).</div>
+                </div>
+                <div class="vin-badge">Dès 2-3 ans</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ LIEUX ═══ -->
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Lieux de la langue à découvrir
+            </h2>
+            <div class="histoire-texte">
+              <p><strong>Toulouse, Hôtel d'Assézat :</strong> siège de l'Académie des Jeux floraux, héritière du Consistori del Gai Saber de 1323. La ville compte aussi l'Ostal d'Occitània, maison des associations occitanes.</p>
+              <p><strong>Béziers, CIRDÒC :</strong> le Centre interrégional de développement de l'occitan, grande médiathèque patrimoniale de la langue (manuscrits, imprimés, archives sonores), consultable aussi en ligne.</p>
+              <p><strong>Arles, Museon Arlaten :</strong> musée d'ethnographie provençale fondé par Mistral avec l'argent de son prix Nobel.</p>
+              <p><strong>Maillane :</strong> la maison où Frédéric Mistral a vécu et écrit, conservée en l'état.</p>
+              <p><strong>Châteauneuf-de-Gadagne, Font-Ségugne :</strong> le château où fut fondé le Félibrige en 1854.</p>
+              <p><strong>Ventadour (Corrèze) :</strong> ruines du château où grandit Bernart de Ventadorn, haut lieu de la poésie des troubadours.</p>
+              <p><strong>Val d'Aran (Espagne) :</strong> le seul territoire où l'occitan est langue officielle, visible sur tous les panneaux.</p>
+            </div>
+          </section>
+
+          <!-- ═══ SOURCES ═══ -->
+          <section class="section" id="sources">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📚</div>
+              Sources et pistes documentaires
+            </h2>
+            <div class="histoire-texte">
+              <ul class="source-list">
+                <li><a href="https://www.ofici-occitan.eu/wp-content/uploads/2020/09/OPLO_Enquete-sociolingusitique-occitan-2020_Resultats.pdf" target="_blank" rel="noopener">OPLO — Résultats de l'enquête sociolinguistique 2020</a></li>
+                <li><a href="https://www.ofici-occitan.eu/wp-content/uploads/2020/09/CP_OPLO_ENQUETE-SL-2020.pdf" target="_blank" rel="noopener">OPLO — Communiqué : chiffres clés de l'enquête 2020</a></li>
+                <li><a href="https://questions.assemblee-nationale.fr/dyn/15/questions/QANR5L15QE33591.pdf" target="_blank" rel="noopener">Assemblée nationale — Question écrite sur l'occitan (âge des locuteurs, médias)</a></li>
+                <li><a href="https://felco-creo.org/wp-content/uploads/2024/09/2408-26-FELCO-reunion-OPLO-Convention-2.pdf" target="_blank" rel="noopener">FELCO — État de l'enseignement de l'occitan (2024)</a></li>
+                <li><a href="https://www.senat.fr/questions/base/2026/qSEQ260308129.html" target="_blank" rel="noopener">Sénat — Recrutement des enseignants d'occitan, réponse du ministère (2026)</a></li>
+                <li><a href="https://www.conseil-constitutionnel.fr/decision/2021/2021818DC.htm" target="_blank" rel="noopener">Conseil constitutionnel — Décision sur la loi Molac (21 mai 2021)</a></li>
+                <li><a href="https://www.locongres.org" target="_blank" rel="noopener">Lo Congrès permanent de la lenga occitana — dictionnaires et outils</a></li>
+                <li><a href="https://www.calandreta.org" target="_blank" rel="noopener">Confédération des écoles Calandreta</a></li>
+                <li><a href="https://www.cfpoccitan.org/exam/" target="_blank" rel="noopener">CFPO Région Occitanie — Le DCL occitan</a></li>
+                <li><a href="https://www.objectifgard.com/actualites/gard-un-evenement-regional-pour-faire-vivre-les-langues-doccitanie-159319.php" target="_blank" rel="noopener">Objectif Gard — Parlem ! et le plan régional « Parlem una cultura viva » (2026)</a></li>
+                <li><a href="https://www.lexilogos.com/occitan_dictionnaire.htm" target="_blank" rel="noopener">Lexilogos — Répertoire de dictionnaires occitans</a></li>
+              </ul>
+              <p class="small">Les cartes et schémas de cette fiche sont des dessins simplifiés, non à l'échelle. Les citations de troubadours et de Mistral appartiennent au domaine public. Les chiffres de locuteurs et d'élèves datent des dernières enquêtes disponibles et doivent être actualisés au fil des publications de l'OPLO.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Nom</span><span class="aside-val">Occitan · langue d'oc · <em>occitan, lenga d'òc</em></span></div>
+              <div class="aside-row"><span class="aside-label">Famille</span><span class="aside-val">Langue romane (occitano-romane)</span></div>
+              <div class="aside-row"><span class="aside-label">Territoire</span><span class="aside-val">32 départements · Val d'Aran · vallées du Piémont</span></div>
+              <div class="aside-row"><span class="aside-label">Dialectes</span><span class="aside-val">Gascon, languedocien, provençal, limousin, auvergnat, vivaro-alpin</span></div>
+              <div class="aside-row"><span class="aside-label">Écriture</span><span class="aside-val">Graphie classique · graphie mistralienne</span></div>
+              <div class="aside-row"><span class="aside-label">Statut</span><span class="aside-val">Langue régionale en France ; officielle en Catalogne</span></div>
+              <div class="aside-row"><span class="aside-label">Code ISO</span><span class="aside-val">oc / oci</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">🔢 En chiffres</div>
+            <div class="aside-card-body">
+              <div class="chiffres">
+                <div class="chiffre"><b>≈ 450</b><span>troubadours connus</span></div>
+                <div class="chiffre"><b>1323</b><span>Consistori del Gai Saber</span></div>
+                <div class="chiffre"><b>1904</b><span>Nobel de Mistral</span></div>
+                <div class="chiffre"><b>≈ 540 000</b><span>locuteurs (enquête 2020)</span></div>
+                <div class="chiffre"><b>2 %</b><span>des 15-29 ans le parlent</span></div>
+                <div class="chiffre"><b>≈ 4 000</b><span>élèves en Calandreta</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">💡 Point de méthode</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size:13px; line-height:1.65; color:#5a4a39;">Les chiffres sur les langues régionales reposent sur des enquêtes déclaratives : « parler » une langue peut recouvrir des niveaux très différents. La fiche cite ses sources et distingue les faits établis, les débats et les représentations.</div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📚 Petit glossaire</div>
+            <div class="aside-card-body">
+              <dl class="glossaire">
+                <dt>Òc</dt><dd>« Oui » en occitan, du latin <em>hoc</em> ; a donné son nom à la langue.</dd>
+                <dt>Trobar</dt><dd>« Trouver », composer ; d'où troubadour (<em>trobador</em>) et trobairitz.</dd>
+                <dt>Fin'amor</dt><dd>L'amour courtois, idéal poétique des troubadours.</dd>
+                <dt>Félibre</dt><dd>Membre du Félibrige, association fondée par Mistral en 1854.</dd>
+                <dt>Diglossie</dt><dd>Situation où deux langues se partagent les usages de façon inégale.</dd>
+                <dt>Vergonha</dt><dd>« La honte » : sentiment d'infériorité attaché à la langue.</dd>
+                <dt>Calandreta</dt><dd>« Petite alouette » : école immersive en occitan.</dd>
+                <dt>Néo-locuteur</dt><dd>Personne qui a appris l'occitan hors de sa famille.</dd>
+                <dt>Croissant</dt><dd>Zone de transition entre parlers d'oc et d'oïl.</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📖 Pour aller plus loin</div>
+            <div class="aside-card-body" style="font-family: var(--font-corps); font-size: 13px; line-height: 1.6; color:#3A3028;">
+              • Pierre Bec, <em>La Langue occitane</em> (Que sais-je ?)<br>
+              • Robert Lafont et Christian Anatole, <em>Nouvelle histoire de la littérature occitane</em><br>
+              • Michel Zink, <em>Les Troubadours. Une histoire poétique</em><br>
+              • Philippe Martel, <em>L'École française et l'occitan</em><br>
+              • Frédéric Mistral, <em>Mirèio</em> (édition bilingue)<br>
+              • CIRDÒC, Béziers — médiathèque occitane
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.produit-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = entry.target.id;
+          const active = document.querySelector(`.produit-nav a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+<div class="retour-haut"><a href="carte-occitanie.html">Vers la carte Occitanie</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<!--  Retour flottant-->
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300;
+    function majBouton() { btn.classList.toggle('visible', window.scrollY > seuil); }
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
