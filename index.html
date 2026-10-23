@@ -10,7 +10,10 @@
     html, body { margin: 0; min-height: 100%; background: #14202b; }
     body { display: grid; place-items: center; min-height: 100vh; }
     .accueil {
-      position: relative; width: 100%; max-width: 1920px; aspect-ratio: 1536 / 1024; overflow: hidden;
+      position: relative; max-width: 1920px; aspect-ratio: 1536 / 1024; overflow: hidden;
+      /* la largeur est limitée pour que toute la hauteur tienne dans l'écran */
+      width: min(100%, 100vh * 1536 / 1024);
+      width: min(100%, 100dvh * 1536 / 1024);
       container-type: inline-size;   /* les tailles en « cqw » suivent la largeur de l'image */
     }
     .accueil img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -68,7 +71,18 @@
       .bouton { animation: none; transition: none; }
     }
 
+    /* ── Mention discrète « réalisé avec l'IA », coin bas droit ── */
+    .mention-ia {
+      position: absolute; right: 1.6%; bottom: 1.2%; margin: 0;
+      font-family: Georgia, "Times New Roman", serif; font-style: italic;
+      font-size: max(9.5px, .78cqw); letter-spacing: .02em;            /* ← taille de la mention */
+      color: rgba(255, 248, 232, .72);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+      pointer-events: none; user-select: none;
+    }
+
     @media (max-width: 650px) {
+      .mention-ia { font-size: 10px; right: 10px; bottom: 8px; }
       body { align-items: start; }
       .accueil { min-height: 100svh; aspect-ratio: auto; }
       .accueil img { width: 100%; height: auto; }
@@ -119,6 +133,7 @@
         Carte des départements <svg class="croix croix-droite" viewBox="0 0 100 100" aria-hidden="true"><use href="#croix-occitane"/></svg>
       </a>
     </nav>
+    <p class="mention-ia">Textes et illustrations créés avec l'aide de l'intelligence artificielle</p>
   </main>
 </body>
 </html>
