@@ -1,0 +1,663 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Le Larzac : Roquefort, pastoralisme et lutte paysanne — L'Âme des Régions</title><!-- Valeurs de secours : utilisées seulement si style.css / fiche.css ne sont pas trouvés.
+       Placées AVANT style.css pour que les feuilles du site gardent toujours la priorité. -->
+  <style>
+    :root { --ivoire: #FAF6EE; --font-titre: 'Playfair Display', serif; --font-corps: 'Source Sans 3', sans-serif; }
+    body { margin: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .produit-hero { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+  </style>
+<link rel="stylesheet" href="../../../../style.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"><style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas {
+      color: white; font-family: var(--font-titre); font-size: 20px;
+      letter-spacing: 0.15em; text-align: center;
+      margin: -50px 0 14px; position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700; line-height: 1.05; color: white; margin-bottom: 90px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+      height: 200px; width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; gap: 0; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 18px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 20px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin-bottom: 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .sous-titre {
+      font-family: var(--font-titre); font-size: 17px; font-weight: 700;
+      color: #5A3E1B; margin: 26px 0 10px;
+    }
+
+    .histoire-texte {
+      font-size: 15px; line-height: 1.8; color: #3A3028; font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 16px;
+      color: #5A3E1B; margin: 0 0 6px 0; line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px; color: #8B7355; font-family: var(--font-corps); font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #8B7355; font-family: var(--font-corps); margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px; font-weight: 700; color: #2C4A7C; font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px; font-family: var(--font-corps);
+    }
+    .ingredients-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .ingredient-item {
+      display: flex; align-items: baseline; gap: 8px; font-size: 14px;
+      font-family: var(--font-corps); color: #3A3028;
+      padding-bottom: 7px; border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte { font-weight: 600; color: #C8843A; min-width: 80px; flex-shrink: 0; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; font-family: var(--font-corps); margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; font-family: var(--font-corps); }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom { font-family: var(--font-titre); font-size: 15px; font-weight: 700; color: #2C4A7C; margin-bottom: 2px; }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto; background: rgba(44,74,124,0.08); color: #2C4A7C;
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      font-family: var(--font-corps); white-space: nowrap;
+    }
+
+    /* ─── NOUVEAUX BLOCS : frise, tableaux, schémas ─── */
+
+    /* Frise chronologique */
+    .frise { position: relative; margin: 10px 0 10px 8px; padding-left: 26px; border-left: 3px solid #E8DEC8; }
+    .frise-periode {
+      font-family: var(--font-titre, 'Playfair Display', serif); font-size: 15px; font-weight: 700;
+      color: white; background: #2C4A7C; display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin: 18px 0 10px -40px;
+    }
+    .frise-item { position: relative; margin-bottom: 12px; font-family: var(--font-corps); }
+    .frise-item::before {
+      content: ''; position: absolute; left: -34px; top: 5px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: white; border: 3px solid #C8843A;
+    }
+    .frise-item.majeur::before { background: #C8843A; }
+    .frise-date { font-weight: 700; color: #C8843A; font-size: 14px; }
+    .frise-texte { font-size: 14px; line-height: 1.6; color: #3A3028; }
+
+    /* Tableaux */
+    .tableau-wrap {
+      overflow-x: auto; margin: 16px 0 22px; border: 1px solid #E0DACE;
+      border-radius: 12px; background: white;
+    }
+    .tableau {
+      width: 100%; border-collapse: collapse; font-family: var(--font-corps);
+      font-size: 13.5px; color: #3A3028; min-width: 620px;
+    }
+    .tableau th {
+      background: #2C4A7C; color: white; text-align: left; font-weight: 600;
+      padding: 10px 12px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tableau td { padding: 10px 12px; border-bottom: 1px solid #F0EAD6; vertical-align: top; line-height: 1.5; }
+    .tableau tr:last-child td { border-bottom: none; }
+    .tableau tr:nth-child(even) td { background: #FBF8F2; }
+    .tableau td strong { color: #2C4A7C; }
+    .tableau-legende { font-size: 12px; color: #8B7355; font-style: italic; font-family: var(--font-corps); margin-top: -14px; margin-bottom: 20px; }
+
+    /* Figures SVG */
+    .schema {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px; margin: 18px 0 22px;
+    }
+    .schema svg { width: 100%; height: auto; display: block; }
+    .schema figcaption {
+      font-size: 12px; color: #8B7355; font-style: italic;
+      font-family: var(--font-corps); margin-top: 8px; text-align: center;
+    }
+    .schema-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Comparaison deux colonnes (croyances) */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; }
+    .compare-col { border-radius: 12px; padding: 16px 18px; font-family: var(--font-corps); font-size: 14px; line-height: 1.6; }
+    .compare-col h4 { font-family: var(--font-titre, 'Playfair Display', serif); font-size: 16px; margin-bottom: 8px; }
+    .compare-col ul { padding-left: 18px; margin: 0; }
+    .compare-col li { margin-bottom: 4px; }
+    .compare-cath { background: #F7F3EC; border: 1px solid #E8DEC8; }
+    .compare-cath h4 { color: #5A3E1B; }
+    .compare-rom { background: #EEF2F8; border: 1px solid #D3DDEC; }
+    .compare-rom h4 { color: #2C4A7C; }
+
+    /* Personnalités */
+    .perso-groupe { margin-bottom: 18px; }
+    .perso-groupe-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      font-weight: 600; font-family: var(--font-corps); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .perso-groupe-titre::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .g-cath { color: #A0522D; } .g-occ { color: #3E7C4A; } .g-crois { color: #2C4A7C; } .g-egl { color: #7A3E7C; }
+    .perso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .perso {
+      background: white; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--font-corps);
+      border-left: 4px solid currentColor;
+    }
+    .perso-nom { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 15px; color: #2C2418; }
+    .perso-dates { font-size: 11px; color: #8B7355; margin-bottom: 4px; }
+    .perso-desc { font-size: 13px; line-height: 1.55; color: #3A3028; }
+
+    /* Encadré "à savoir" */
+    .encadre {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC); border: 1px solid #F0C878;
+      border-radius: 10px; padding: 14px 18px; margin: 18px 0;
+      font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #5A3E1B;
+    }
+    .encadre strong { color: #8B5E0A; }
+
+    /* Fiches forteresses */
+    .fort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .fort {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden;
+      font-family: var(--font-corps);
+    }
+    .fort-head {
+      background: #2C4A7C; color: white; padding: 10px 14px;
+      font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .fort-head small { font-family: var(--font-corps); font-weight: 400; font-size: 11px; opacity: 0.75; }
+    .fort-body { padding: 12px 14px; font-size: 13.5px; line-height: 1.6; color: #3A3028; }
+    .fort-body .tag {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px;
+      background: rgba(200,132,58,0.12); color: #8B5E0A; margin: 0 4px 6px 0;
+    }
+
+    /* ─── BLOCS REPRIS DE LA FICHE « CATHARISME EN OCCITANIE » ─── */
+    .doc-intro { font-size: 17px; line-height: 1.85; color: #3A3028; margin-bottom: 22px; }
+    .repere-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .repere { background: #fff; border: 1px solid #E0DACE; border-radius: 12px; padding: 16px; font-family: var(--font-corps); }
+    .repere strong { display: block; color: #2C4A7C; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 18px; margin-bottom: 5px; }
+    .repere span { font-size: 13px; color: #6d5c4a; line-height: 1.5; display: block; }
+    .notice {
+      background: #FFF8E8; border: 1px solid #F0C878; border-radius: 10px;
+      padding: 15px 18px; margin: 18px 0; line-height: 1.65;
+      font-family: var(--font-corps); font-size: 14px; color: #5A3E1B;
+    }
+    .schema-flow { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; }
+    .schema-box {
+      background: #F7F3EC; border: 1px solid #E0DACE; border-radius: 10px;
+      padding: 10px 13px; max-width: 190px; font-size: 13px; line-height: 1.45;
+      font-family: var(--font-corps); color: #3A3028; text-align: center;
+    }
+    .schema-box.fort { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .schema-arrow { font-size: 22px; color: #C8843A; font-weight: bold; }
+    .schema-titre { display: block; text-align: center; font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 16px; }
+    .photo-wide { margin: 22px 0; }
+    .photo-wide img { width: 100%; max-height: 430px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-wide figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .photo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+    .photo-duo img { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); display: block; }
+    .photo-duo figcaption { font-size: 12px; color: #8B7355; font-style: italic; margin-top: 7px; font-family: var(--font-corps); }
+    .mythe {
+      border-left: 4px solid #C8843A; background: #F7F3EC; padding: 14px 18px; margin: 14px 0;
+      border-radius: 0 10px 10px 0; font-family: var(--font-corps); font-size: 14px; line-height: 1.65; color: #3A3028;
+    }
+    .mythe .verdict { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin: 6px 0 4px; }
+    .verdict.faux { background: #F6DADA; color: #9B2C2C; }
+    .verdict.nuance { background: #FCEBCB; color: #8B5E0A; }
+    .source-list { font-size: 13.5px; line-height: 1.8; font-family: var(--font-corps); padding-left: 20px; }
+    .source-list a { color: #2C4A7C; }
+    .small { font-size: 12px; color: #7c6c59; font-family: var(--font-corps); }
+
+    /* Encadrés de commentaire */
+    .commentaire {
+      background: #EEF2F8; border-left: 4px solid #2C4A7C; border-radius: 0 10px 10px 0;
+      padding: 14px 18px; margin: 20px 0; font-family: var(--font-corps);
+      font-size: 14px; line-height: 1.7; color: #2C3A52;
+    }
+    .commentaire-titre {
+      font-weight: 700; color: #2C4A7C; font-size: 11.5px; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 5px;
+    }
+    .commentaire p { margin: 0 0 8px; }
+    .commentaire p:last-child { margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .repere-grid, .photo-duo { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ASIDE ─────────────────────────────────── */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #8B7355; font-family: var(--font-corps); flex-shrink: 0;
+    }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; font-family: var(--font-corps); text-align: right; }
+    .glossaire dt { font-family: var(--font-titre, 'Playfair Display', serif); font-weight: 700; color: #2C4A7C; font-size: 14px; margin-top: 10px; }
+    .glossaire dt:first-child { margin-top: 0; }
+    .glossaire dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: #3A3028; font-family: var(--font-corps); }
+    .chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chiffre { text-align: center; background: #F7F3EC; border-radius: 10px; padding: 10px 6px; }
+    .chiffre b { display: block; font-family: var(--font-titre, 'Playfair Display', serif); font-size: 22px; color: #C8843A; }
+    .chiffre span { font-size: 11px; color: #5A3E1B; font-family: var(--font-corps); line-height: 1.3; display: block; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .recette-grid, .compare, .perso-grid, .fort-grid, .schema-duo { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .vin-item { flex-wrap: wrap; }
+      .vin-badge { margin-left: 36px; }
+    }
+
+
+
+.hero-topic{font-size:clamp(30px,5vw,52px);font-family:var(--font-titre);font-weight:700;color:white;margin-bottom:70px}.hero-topic em{color:#C8843A}.topic-map{font-size:110px;opacity:.82;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));align-self:flex-start}.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.process-card{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;text-align:center}.process-card b{display:block;color:#2C4A7C;font-family:var(--font-titre);margin:6px 0}.process-card span{font-size:12.5px;line-height:1.5;color:#5d5145}.big-number{font-size:28px;color:#C8843A;font-family:var(--font-titre);font-weight:700}.photo-note{background:#EEF2F8;border:1px solid #D3DDEC;border-radius:12px;padding:14px 16px;margin:18px 0;font-size:13px;line-height:1.6}.legacy-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.legacy{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px}.legacy h4{font-family:var(--font-titre);color:#2C4A7C;margin:0 0 6px}.legacy p{font-size:13px;line-height:1.6;margin:0}@media(max-width:760px){.process-grid,.legacy-grid{grid-template-columns:1fr}}
+.g-pion{color:#A0522D}.g-sci{color:#3E7C4A}.g-ouv{color:#7A3E7C}.g-ind{color:#2C4A7C}
+.carte-soie{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:14px;margin:18px 0 22px}.carte-soie svg{width:100%;height:auto;display:block}.carte-soie figcaption{font-size:12px;color:#8B7355;font-style:italic;text-align:center;margin-top:8px;font-family:var(--font-corps)}
+.destin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.destin{background:#fff;border:1px solid #E0DACE;border-radius:12px;padding:15px 16px;font-family:var(--font-corps);border-top:4px solid #C8843A}
+.destin h4{font-family:var(--font-titre);color:#2C4A7C;font-size:16px;margin:0 0 4px}
+.destin .destin-de{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8B7355;margin-bottom:6px}
+.destin p{font-size:13.5px;line-height:1.6;margin:0;color:#3A3028}
+.relance{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.relance-item{display:grid;grid-template-columns:86px 1fr;gap:14px;background:#fff;border:1px solid #E0DACE;border-radius:10px;padding:12px 14px;font-family:var(--font-corps)}
+.relance-item b{font-family:var(--font-titre);color:#C8843A;font-size:18px}
+.relance-item div{font-size:13.5px;line-height:1.6;color:#3A3028}
+.relance-item strong{color:#2C4A7C}
+.verdict.vrai{background:#DDEFE0;color:#2E6B3A}
+@media(max-width:640px){.destin-grid{grid-template-columns:1fr}.relance-item{grid-template-columns:1fr;gap:4px}}
+</style><link rel="stylesheet" href="../../../../fiche.css"><style>.produit-hero{background-image:linear-gradient(rgba(24,28,38,.0),rgba(24,28,38,.0)),url('photo/panorama-larzac.webp');background-size:cover;background-position:center 48%}
+.produit-hero-body h1.hero-topic{margin-bottom:90px}
+/* ─── FRISE « DU GRAIN AU PAIN » (même gabarit que « du papillon au fil ») ─── */
+.compare-fib{background:#EEF2F8;border:1px solid #D3DDEC}.compare-fib h4{color:#2C4A7C}
+.compare-ser{background:#F7F3EC;border:1px solid #E8DEC8}.compare-ser h4{color:#5A3E1B}
+.compare-fib h4,.compare-ser h4{margin-top:0}
+.compare-col .compare-role{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8B7355;margin:-4px 0 6px}
+.frise-fil-fig{padding:18px 14px 14px}
+.frise-fil-sous{display:block;text-align:center;font-size:13px;color:#6d5c4a;font-family:var(--font-corps);margin:4px 0 18px;line-height:1.5}
+.frise-fil{display:grid;grid-template-columns:repeat(8,1fr);list-style:none;margin:0;padding:0}
+.ff-etape{position:relative;text-align:center;padding:0 4px;font-family:var(--font-corps)}
+.ff-etape:not(:last-child)::before{content:'';position:absolute;top:26px;left:calc(50% + 30px);width:calc(100% - 60px);height:3px;background:#E8DEC8}
+.ff-etape:not(:last-child)::after{content:'';position:absolute;top:22px;right:calc(-50% + 28px);border:5.5px solid transparent;border-left:7px solid #C8843A;border-right:0}
+.ff-icone{width:54px;height:54px;margin:0 auto 8px;border-radius:50%;background:#fff;border:3px solid #C8843A;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;position:relative;z-index:1}
+.ff-icone svg{width:34px;height:34px}
+.ff-etape.ff-final .ff-icone{background:#2C4A7C;border-color:#2C4A7C}
+.ff-nom{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#2C4A7C;margin-bottom:3px}
+.ff-etape.ff-final .ff-nom{color:#C8843A}
+.ff-texte{font-size:11.5px;line-height:1.4;color:#5d5145}
+@media(max-width:640px){
+.frise-fil{grid-template-columns:1fr;gap:12px}
+.ff-etape{display:grid;grid-template-columns:54px 1fr;gap:0 12px;text-align:left;align-items:center;padding:0}
+.ff-icone{margin:0;grid-row:span 2}
+.ff-nom{align-self:end;margin:0}.ff-texte{align-self:start}
+.ff-etape:not(:last-child)::before{top:54px;left:25.5px;width:3px;height:12px}
+.ff-etape:not(:last-child)::after{display:none}
+}
+</style>  <style>
+    /* ── Bouton du bandeau « Histoire occitane » : copie exacte du bouton « Carte d'Occitanie »
+       (règles reprises de style.css, intégrées ici pour fonctionner même si style.css n'est pas chargé) ── */
+    .bandeau-btn-carte { position: relative; }
+    .zone-btn-carte.zone-btn-carte.zone-btn-carte {
+      position: absolute !important;
+      top: 19px !important; right: 19px !important;
+      left: auto !important; bottom: auto !important;
+      transform: none !important; margin: 0 !important;
+      display: flex !important; flex-direction: row !important;
+      flex-wrap: wrap; justify-content: flex-end;
+      align-items: center !important; gap: 10px;
+      z-index: 10;
+    }
+    a.btn-carte.btn-carte.btn-carte {
+      display: inline-flex; align-items: center;
+      padding: 8px 40px; color: #fff; text-decoration: none;
+      background: rgba(20, 24, 32, .30);
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      border: 1px solid #FAC775; border-radius: 30px;
+      font-family: 'Playfair Display', Georgia, serif; font-style: italic;
+      font-weight: 400; font-size: 26px; line-height: 1.25; white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(0,0,0,.5); opacity: 1;
+      transition: background .2s, transform .2s;
+    }
+    a.btn-carte.btn-carte.btn-carte:hover { background: #C8843A; color: #fff; transform: translateY(-1px); opacity: 1; }
+    a.btn-carte.btn-carte.btn-carte::before { content: "🗺"; font-size: 22px; font-style: normal; margin-right: 6px; }
+    @media (max-width: 640px) {
+      .zone-btn-carte.zone-btn-carte.zone-btn-carte {
+        position: relative !important; top: auto !important; right: auto !important;
+        margin: 12px 12px 22px auto !important; width: max-content; max-width: calc(100% - 24px);
+      }
+      a.btn-carte.btn-carte.btn-carte { font-size: 19px; padding: 6px 22px; }
+      a.btn-carte.btn-carte.btn-carte::before { font-size: 17px; }
+    }
+  </style>
+</head><body class="produit-page">
+<div class="produit-hero bandeau-btn-carte">
+    <nav class="produit-topbar-btns liens-empiles zone-btn-carte" aria-label="Navigation Occitanie">
+      <a href="occitanie-histoire-accueil.html" class="produit-btn-retour btn-carte">Histoire occitane</a>
+    </nav>
+<div class="container"><div class="produit-topbar"><a href="../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a></div><div class="produit-hero-body"><div><h1 class="hero-topic"><em>L</em>e Larzac<br><span style="padding-left:40px"><em>R</em>oquefort, brebis &amp; résistance</span></h1></div></div></div><div class="hero-label-bas">⟹ XI<sup>e</sup> – XXI<sup>e</sup> siècle · causses, pastoralisme, roquefort &amp; lutte paysanne ⟸</div><div class="produit-nav"><div class="container"><div class="produit-nav-inner"><a href="#comprendre" class="active">📖 Comprendre</a><a href="#causses">🪨 Les causses</a><a href="#pastoralisme">🐑 Pastoralisme</a><a href="#templiers">⚔️ Templiers</a><a href="#roquefort">🧀 Roquefort</a><a href="#fabrication">⚙️ Fabrication</a><a href="#lutte">✊ La lutte</a><a href="#methodes">🕊️ Non-violence</a><a href="#victoire">🏆 1981</a><a href="#sctl">🤝 Terres du Larzac</a><a href="#territoire">🧭 Territoire</a><a href="#chronologie">⏳ Chronologie</a><a href="#heritage">🌍 Héritage</a><a href="#aujourdhui">🔄 Aujourd’hui</a><a href="#personnalites">👤 Personnages</a><a href="#mythes">🔎 Idées reçues</a><a href="#visiter">🥾 Circuit</a><a href="#sources">📚 Sources</a></div></div></div></div>
+<div class="produit-body"><div class="container"><div class="produit-layout"><div>
+
+<!-- ═════════ COMPRENDRE ═════════ -->
+<section class="section" id="comprendre"><h2 class="section-titre"><div class="section-titre-icon">📖</div>Comprendre le Larzac</h2><div class="histoire-texte"><p><strong>Le Larzac est un vaste plateau calcaire du sud de l’Aveyron, entre Millau et Lodève, à 800 mètres d’altitude.</strong> Sec, venté, couvert de pelouses rases, de buis et de genévriers, il paraît austère. Pourtant, il porte depuis des millénaires une activité d’une richesse étonnante : l’élevage des brebis, dont le lait fait naître, à quelques kilomètres, le plus célèbre fromage à pâte persillée du monde, le <strong>roquefort</strong>.</p><p>Le Larzac est aussi devenu, au XX<sup>e</sup> siècle, un nom connu dans le monde entier. De 1971 à 1981, ses paysans ont mené une lutte non violente de dix ans contre l’extension d’un camp militaire. Soutenus par des dizaines de milliers de personnes venues de toute la France, ils ont gagné. Cette victoire a fait du plateau un symbole de la défense de la terre, de l’agriculture paysanne et de la désobéissance civile.</p><p>Ce territoire fait partie, depuis 2011, du bien « <strong>Les Causses et les Cévennes, paysage culturel de l’agropastoralisme méditerranéen</strong> », inscrit au patrimoine mondial de l’UNESCO.</p><div class="repere-grid"><div class="repere"><strong>1925</strong><span>Le roquefort devient la première appellation d’origine fromagère de France.</span></div><div class="repere"><strong>1971 – 1981</strong><span>Dix ans de lutte contre l’extension du camp militaire.</span></div><div class="repere"><strong>2011</strong><span>Causses et Cévennes inscrits au patrimoine mondial de l’UNESCO.</span></div></div><div class="notice"><strong>À retenir :</strong> la brebis relie les trois thèmes de cette fiche. Elle a façonné le paysage des causses, elle fournit le lait du roquefort, et c’est pour protéger les terres de ses bergers que la lutte du Larzac a été menée.</div><div class="commentaire"><div class="commentaire-titre">💬 Commentaire · un plateau qui a fait parler le monde</div><p>Peu de territoires ruraux aussi peu peuplés ont acquis une telle renommée. Le Larzac est à la fois un paysage, un produit et une idée : celle que des paysans peuvent résister à l’État et inventer d’autres façons de posséder et de travailler la terre. Comprendre le Larzac, c’est relier l’histoire très ancienne du pastoralisme à l’une des grandes luttes sociales du XX<sup>e</sup> siècle.</p></div></div></section>
+
+<!-- ═════════ CAUSSES ═════════ -->
+<section class="section" id="causses"><h2 class="section-titre"><div class="section-titre-icon">🪨</div>Les Grands Causses : un pays de pierre et de vent</h2><div class="histoire-texte"><p><strong>Le mot « causse » vient de l’occitan <em>caus</em>, la chaux : ce sont des plateaux calcaires.</strong> Les Grands Causses (Larzac, Causse Noir, Causse Méjean, Causse de Sauveterre) sont séparés par de profondes gorges creusées par le Tarn, la Jonte, la Dourbie. L’eau de pluie s’infiltre aussitôt dans la roche fissurée : en surface, pas de rivière, peu de sources. Sous terre, au contraire, se cachent des grottes, des avens et des réseaux d’eau.</p><p>Ce milieu sec, aux sols minces, ne convient guère aux cultures. Il a pourtant été habité très tôt, grâce à l’élevage. Pour garder l’eau, les habitants ont creusé des <strong>lavognes</strong> (mares empierrées pour abreuver les troupeaux), construit des citernes et des toits de lauzes pour recueillir la pluie.</p></div>
+<div class="process-grid"><div class="process-card"><div style="font-size:26px">💧</div><b>La lavogne</b><span>Mare dallée de pierre, où boivent les brebis.</span></div><div class="process-card"><div style="font-size:26px">🏚️</div><b>La jasse</b><span>Bergerie basse en pierre sèche, voûtée, pour abriter le troupeau.</span></div><div class="process-card"><div style="font-size:26px">🧱</div><b>La clapas</b><span>Tas de pierres retirées des champs, empilées en murets.</span></div><div class="process-card"><div style="font-size:26px">🌿</div><b>La pelouse</b><span>Herbe rase, riche en orchidées et plantes aromatiques, entretenue par le pâturage.</span></div><div class="process-card"><div style="font-size:26px">🛤️</div><b>La draille</b><span>Chemin de transhumance, parfois très ancien.</span></div><div class="process-card"><div style="font-size:26px">🕳️</div><b>L’aven</b><span>Gouffre naturel ouvert dans le calcaire.</span></div></div></section>
+
+<!-- ═════════ PASTORALISME ═════════ -->
+<section class="section" id="pastoralisme"><h2 class="section-titre"><div class="section-titre-icon">🐑</div>Le pastoralisme : trois millénaires de brebis</h2><div class="histoire-texte"><p><strong>Les paysages ouverts des causses ne sont pas « naturels » : ils sont le résultat de milliers d’années de pâturage.</strong> Sans les troupeaux, buis, pins et chênes reprendraient le dessus en quelques décennies. C’est pour cette relation entre l’homme, l’animal et le paysage que l’UNESCO a inscrit en 2011 les Causses et les Cévennes, sur plus de 300 000 hectares.</p><p>Deux formes d’élevage coexistent. Le pastoralisme <strong>sédentaire</strong>, sur les causses, où les brebis pâturent autour de la ferme toute l’année. Et la <strong>transhumance</strong> : chaque été, des troupeaux montaient de la plaine languedocienne vers les montagnes de l’Aigoual ou du mont Lozère par les drailles, de larges chemins dont certains remontent au Moyen Âge. Le mont Lozère est l’un des derniers lieux où elle se pratique encore de façon traditionnelle.</p><p>Au XIX<sup>e</sup> siècle, l’élevage se tourne de plus en plus vers le <strong>lait</strong>, pour répondre à la demande des caves de Roquefort. La race <strong>Lacaune</strong>, sélectionnée pour sa production laitière, s’impose dans tout le rayon de Roquefort.</p></div>
+<div class="compare"><div class="compare-col compare-fib"><h4>Hier</h4><div class="compare-role">le troupeau du causse</div>Troupeaux gardés par un berger et ses chiens, traite à la main deux fois par jour, laine, viande et fumier aussi importants que le lait. Les bergeries de pierre, les lavognes et les murets témoignent de ce mode de vie.</div><div class="compare-col compare-ser"><h4>Aujourd’hui</h4><div class="compare-role">l’élevage laitier moderne</div>Troupeaux de plusieurs centaines de brebis Lacaune, traite mécanique, bâtiments modernes. Le pâturage reste exigé par le cahier des charges du roquefort, mais l’agrandissement des fermes et la sécheresse posent de nouveaux défis.</div></div></section>
+
+<!-- ═════════ TEMPLIERS ═════════ -->
+<section class="section" id="templiers"><h2 class="section-titre"><div class="section-titre-icon">⚔️</div>Les Templiers et les Hospitaliers du Larzac</h2><div class="histoire-texte"><p><strong>Au XII<sup>e</sup> siècle, les Templiers reçoivent de vastes domaines sur le plateau.</strong> Ils y fondent la commanderie de <strong>Sainte-Eulalie-de-Cernon</strong> et développent l’élevage ovin, dont les revenus financent leurs activités en Orient. Après la suppression de l’ordre en 1312, leurs biens passent aux <strong>Hospitaliers</strong> de Saint-Jean de Jérusalem.</p><p>Aux XIV<sup>e</sup> et XV<sup>e</sup> siècles, pendant la guerre de Cent Ans, les Hospitaliers fortifient les villages : <strong>La Couvertoirade</strong>, <strong>La Cavalerie</strong>, Le Viala-du-Pas-de-Jaux, Saint-Jean-d’Alcas. Ces cités aux remparts presque intacts comptent parmi les plus beaux ensembles médiévaux du Midi.</p></div><div class="encadre"><strong>Le savez-vous ?</strong> La Couvertoirade a gardé presque toute son enceinte du XV<sup>e</sup> siècle. Elle est classée parmi les « Plus beaux villages de France ».</div></section>
+
+<!-- ═════════ ROQUEFORT ═════════ -->
+<section class="section" id="roquefort"><h2 class="section-titre"><div class="section-titre-icon">🧀</div>Roquefort, le roi des fromages</h2><div class="histoire-texte"><p><strong>À Roquefort-sur-Soulzon, au pied du rocher du Combalou, un éboulement préhistorique a créé un réseau de failles et de caves naturelles.</strong> L’air y circule par des fissures, les <strong>fleurines</strong>, qui maintiennent toute l’année une température fraîche et une forte humidité. C’est dans ces caves que le lait de brebis caillé se transforme en fromage bleu, grâce à une moisissure, le <em>Penicillium roqueforti</em>.</p><p>Le fromage est mentionné dans des textes dès le XI<sup>e</sup> siècle. Au XV<sup>e</sup> siècle, des lettres royales accordent aux habitants le monopole de son affinage. Au XIX<sup>e</sup> siècle, avec le chemin de fer, la production explose : la <strong>Société des caves</strong>, fondée en 1842, devient l’une des premières grandes entreprises agroalimentaires françaises.</p><p>Le <strong>26 juillet 1925</strong>, une loi fait du roquefort la <strong>première appellation d’origine fromagère</strong> de France. Elle impose que le fromage soit affiné dans les caves du Combalou. Aujourd’hui reconnu AOP, il est le troisième fromage d’appellation en volume, après le comté et le reblochon.</p></div>
+<div class="tableau-wrap"><table class="tableau"><thead><tr><th>Roquefort</th><th>Repère</th><th>Commentaire</th></tr></thead><tbody>
+<tr><td><strong>Zone de collecte</strong></td><td>Rayon de Roquefort</td><td>Aveyron, Tarn, Lozère, Gard, Hérault, Aude</td></tr>
+<tr><td><strong>Éleveurs</strong></td><td>≈ 2 000 à 2 800</td><td>Selon que l’on compte tous les éleveurs ou les seuls livreurs de lait</td></tr>
+<tr><td><strong>Ventes</strong></td><td>≈ 14 000 t (2023)</td><td>Environ 16 000 t en 2019 ; tendance à la baisse</td></tr>
+<tr><td><strong>Export</strong></td><td>≈ 25 – 28 %</td><td>Espagne en tête ; États-Unis en progression</td></tr>
+<tr><td><strong>Fabricants</strong></td><td>7</td><td>Société (Lactalis, environ la moitié des volumes), Papillon, Carles, Gabriel Coulet, Vernières, Combes, Fromageries occitanes</td></tr>
+<tr><td><strong>Emplois liés</strong></td><td>≈ 5 000</td><td>Élevage, fabrication, affinage, commerce</td></tr>
+</tbody></table></div><p class="tableau-legende">Sources : Confédération générale de Roquefort, Réussir, AGRIDEA. Valeurs arrondies.</p></section>
+
+<!-- ═════════ FABRICATION ═════════ -->
+<section class="section" id="fabrication"><h2 class="section-titre"><div class="section-titre-icon">⚙️</div>De la brebis à la cave</h2>
+<figure class="schema frise-fil-fig"><span class="schema-titre">🧀 La fabrication du roquefort</span><span class="frise-fil-sous">Le cahier des charges de l’AOP impose chacune de ces étapes.</span><ol class="frise-fil"><li class="ff-etape"><div class="ff-icone">🐑</div><div class="ff-nom">Traite</div><div class="ff-texte">Lait cru et entier de brebis Lacaune</div></li><li class="ff-etape"><div class="ff-icone">🥛</div><div class="ff-nom">Emprésurage</div><div class="ff-texte">Le lait caille, on ajoute le pénicillium</div></li><li class="ff-etape"><div class="ff-icone">🔪</div><div class="ff-nom">Moulage</div><div class="ff-texte">Le caillé est découpé et mis en moules</div></li><li class="ff-etape"><div class="ff-icone">🧂</div><div class="ff-nom">Salage</div><div class="ff-texte">Au sel sec, à la main</div></li><li class="ff-etape"><div class="ff-icone">📍</div><div class="ff-nom">Piquage</div><div class="ff-texte">Des trous laissent entrer l’air</div></li><li class="ff-etape"><div class="ff-icone">⛰️</div><div class="ff-nom">Cave</div><div class="ff-texte">Affinage au Combalou, grâce aux fleurines</div></li><li class="ff-etape"><div class="ff-icone">📄</div><div class="ff-nom">Feuille d’étain</div><div class="ff-texte">Le fromage est emballé pour mûrir lentement</div></li><li class="ff-etape ff-final"><div class="ff-icone">🍽️</div><div class="ff-nom">90 jours</div><div class="ff-texte">Minimum avant d’être vendu</div></li></ol></figure>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · une légende de berger</div><p>Selon la légende, un jeune berger aurait oublié son pain et son fromage de brebis dans une grotte pour suivre une bergère. Revenu des semaines plus tard, il aurait trouvé le fromage couvert de veines bleues… et délicieux. L’histoire est invérifiable, mais elle dit l’essentiel : le roquefort est né de la rencontre entre le lait des brebis et la cave naturelle.</p></div></section>
+
+<!-- ═════════ LA LUTTE ═════════ -->
+<section class="section" id="lutte"><h2 class="section-titre"><div class="section-titre-icon">✊</div>1971 – 1981 : la lutte du Larzac</h2><div class="histoire-texte"><p><strong>Le 28 octobre 1971, le ministre de la Défense Michel Debré annonce l’extension du camp militaire du Larzac</strong>, créé au début du XX<sup>e</sup> siècle près de La Cavalerie. Il doit passer d’environ 3 000 à plus de 13 000 hectares, voire 17 000 selon les sources. Plus d’une centaine de fermes, réparties sur une douzaine de communes, sont menacées d’expropriation. Pour l’État, le plateau est presque désert et les terres ont peu de valeur ; pour les paysans, c’est leur outil de travail et leur vie.</p><p>Le 28 mars 1972, <strong>103 des 107 paysans concernés</strong> signent un serment : aucun d’entre eux ne vendra ses terres à l’armée. C’est le « serment des 103 ». Parmi eux, des familles installées depuis des générations, mais aussi de jeunes agriculteurs arrivés récemment, venus moderniser l’élevage laitier.</p><p>Pendant dix ans, ils vont multiplier les actions spectaculaires et pacifiques, et recevoir le soutien d’un mouvement national de plus en plus large : syndicalistes paysans et ouvriers, chrétiens, militants non violents, antimilitaristes, écologistes naissants, étudiants, mouvement occitan. Le Larzac devient un lieu de rassemblement pour toute une génération.</p></div>
+<div class="schema"><span class="schema-titre">Les grandes étapes de la lutte</span><div class="schema-flow"><div class="schema-box">oct. 1971<br><b>annonce de l’extension</b></div><div class="schema-arrow">→</div><div class="schema-box">mars 1972<br><b>serment des 103</b></div><div class="schema-arrow">→</div><div class="schema-box">1973 – 1974<br><b>grands rassemblements</b></div><div class="schema-arrow">→</div><div class="schema-box">1978<br><b>marche sur Paris</b></div><div class="schema-arrow">→</div><div class="schema-box fort">1981<br><b>abandon du projet</b></div></div></div></section>
+
+<!-- ═════════ MÉTHODES ═════════ -->
+<section class="section" id="methodes"><h2 class="section-titre"><div class="section-titre-icon">🕊️</div>Les armes de la non-violence</h2><div class="histoire-texte"><p><strong>Inspirés par Gandhi et par Lanza del Vasto, fondateur de la communauté de l’Arche, les paysans choisissent la non-violence.</strong> Lanza del Vasto mène un jeûne de quinze jours à La Cavalerie en mars 1972. Les actions sont conçues pour frapper l’opinion sans jamais blesser personne.</p></div>
+<div class="relance">
+<div class="relance-item"><b>1973</b><div><strong>Les tracteurs vers Paris</strong> : une marche part du Larzac en janvier ; bloquée à Orléans, elle continue grâce à des tracteurs prêtés par des paysans de l’Ouest.</div></div>
+<div class="relance-item"><b>1973</b><div><strong>La bergerie de La Blaquière</strong> : construite sans permis, sur des terres promises à l’armée, par des centaines de bénévoles. Un défi en pierre.</div></div>
+<div class="relance-item"><b>1973 – 1974</b><div><strong>Les rassemblements du Rajal del Guorp</strong> : entre 60 000 et plus de 100 000 personnes selon les sources, venues camper sur le plateau.</div></div>
+<div class="relance-item"><b>1974</b><div><strong>Les brebis sous la tour Eiffel</strong> : un troupeau pâture sur le Champ-de-Mars, à Paris, le 25 octobre.</div></div>
+<div class="relance-item"><b>1973 – 1981</b><div><strong>Les terres en parts</strong> : des milliers de parcelles sont vendues en petites parts à des soutiens, pour compliquer les expropriations ; plus de 3 000 personnes deviennent copropriétaires du plateau.</div></div>
+<div class="relance-item"><b>1978</b><div><strong>La marche à pied</strong> : dix-huit paysans parcourent 710 km jusqu’à Paris en 25 étapes.</div></div>
+<div class="relance-item"><b>Toujours</b><div><strong>Le refus de l’impôt</strong> : des milliers de sympathisants reversent une partie de leurs impôts au comité du Larzac plutôt qu’à l’armée.</div></div>
+</div>
+<div class="commentaire"><div class="commentaire-titre">💬 Commentaire · « Gardarem lo Larzac »</div><p>« Nous garderons le Larzac » : le slogan, en occitan, résume la lutte. Il dit aussi le lien entre ce combat et le renouveau de la culture occitane dans les années 1970. Défendre la terre, c’était aussi défendre une langue, un pays et une façon de vivre face au pouvoir centralisé de Paris.</p></div></section>
+
+<!-- ═════════ VICTOIRE ═════════ -->
+<section class="section" id="victoire"><h2 class="section-titre"><div class="section-titre-icon">🏆</div>1981 : la victoire</h2><div class="histoire-texte"><p><strong>Au fil des années, la lutte s’enlise pour l’État.</strong> En mai 1980, la Cour de cassation annule de nombreuses procédures d’expropriation pour vices de forme. Le candidat socialiste François Mitterrand s’est engagé à abandonner le projet. Après son élection, le <strong>10 mai 1981</strong>, l’extension est officiellement abandonnée.</p><p>Les terres déjà achetées par l’armée, environ 6 300 hectares, restent propriété de l’État. Mais elles ne sont pas revendues : elles sont confiées aux paysans eux-mêmes, qui inventent une forme originale de gestion collective.</p></div></section>
+
+<!-- ═════════ SCTL ═════════ -->
+<section class="section" id="sctl"><h2 class="section-titre"><div class="section-titre-icon">🤝</div>La Société civile des terres du Larzac</h2><div class="histoire-texte"><p><strong>En 1985, l’État confie les 6 300 hectares à la Société civile des terres du Larzac (SCTL) par un bail emphytéotique de soixante ans.</strong> C’est une expérience unique en France : la terre n’appartient pas aux agriculteurs, mais ils en ont l’usage durable. La SCTL attribue les fermes et les parcelles à ceux qui veulent s’installer, en privilégiant les jeunes et les projets agricoles plutôt que l’agrandissement.</p><p>Cette gestion collective a permis de maintenir et même d’augmenter le nombre de fermes sur le plateau, alors que partout ailleurs elles disparaissaient. En 2013, le bail a été prolongé jusqu’en <strong>2083</strong>, par un avenant signé avec le ministre de l’Agriculture Stéphane Le Foll.</p></div>
+<div class="compare"><div class="compare-col compare-cath"><h4>Le modèle classique</h4><ul><li>L’agriculteur achète ou loue sa terre</li><li>À la retraite, il vend au plus offrant</li><li>Les fermes s’agrandissent, leur nombre baisse</li><li>Le prix de la terre freine l’installation des jeunes</li></ul></div><div class="compare-col compare-rom"><h4>Le modèle de la SCTL</h4><ul><li>La terre reste un bien collectif</li><li>L’agriculteur a un bail de carrière transmissible</li><li>Les terres libérées vont à de nouveaux installés</li><li>Pas de spéculation foncière</li></ul></div></div></section>
+
+<!-- ═════════ TERRITOIRE ═════════ -->
+<section class="section" id="territoire"><h2 class="section-titre"><div class="section-titre-icon">🧭</div>Le plateau et ses alentours</h2>
+<figure class="carte-soie"><svg viewBox="0 0 720 520" role="img" aria-label="Carte schématique du Larzac et de Roquefort"><defs><marker id="fl-lz" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#7A3E7C"/></marker></defs><g font-family="Source Sans 3,sans-serif"><rect width="720" height="520" fill="#FBF8F2"/>
+<path d="M300,180 Q380,160 470,185 Q540,210 560,280 Q560,350 500,400 Q420,440 340,420 Q270,390 250,320 Q245,230 300,180Z" fill="#EDE6D6" stroke="#B8A58A" stroke-dasharray="5 4"/><text x="410" y="205" text-anchor="middle" font-size="16" font-weight="700" fill="#8B7355" letter-spacing="6" font-family="Playfair Display,serif">L A R Z A C</text>
+<path d="M380,240 Q420,230 470,250 Q500,280 480,320 Q440,345 400,330 Q370,300 380,240Z" fill="#E7D3B0" opacity=".8"/><text x="432" y="355" text-anchor="middle" font-size="10" fill="#8B5E0A" font-weight="600">camp militaire actuel</text><path d="M330,215 Q420,195 520,230 Q555,300 515,380 Q430,425 330,395 Q280,330 300,250Z" fill="none" stroke="#A0522D" stroke-width="2" stroke-dasharray="3 4"/><text x="520" y="410" font-size="10" fill="#A0522D" font-weight="600">extension prévue</text><text x="520" y="422" font-size="10" fill="#A0522D" font-weight="600">(abandonnée)</text>
+<ellipse cx="420" cy="80" rx="140" ry="38" fill="#E3EBDD" opacity=".9"/><text x="420" y="60" text-anchor="middle" font-size="11" font-style="italic" fill="#5C7A52" letter-spacing="2">CAUSSE NOIR · CAUSSE MÉJEAN</text>
+<ellipse cx="650" cy="230" rx="60" ry="55" fill="#E3EBDD" opacity=".9"/><text x="650" y="230" text-anchor="middle" font-size="11" font-style="italic" fill="#5C7A52">AIGOUAL</text><text x="650" y="244" text-anchor="middle" font-size="10" fill="#5C7A52">transhumance</text>
+<path d="M120,120 Q200,140 280,150 Q330,140 380,125 Q450,110 520,115" fill="none" stroke="#7FA3C8" stroke-width="2.4"/><text x="210" y="128" font-size="10" font-style="italic" fill="#5E8FC2">Tarn</text>
+<path d="M300,150 Q290,190 240,210 Q200,220 150,230" fill="none" stroke="#7FA3C8" stroke-width="1.6"/><text x="200" y="210" font-size="10" font-style="italic" fill="#5E8FC2">Soulzon</text>
+<path d="M330,140 Q420,155 520,175 Q580,180 620,170" fill="none" stroke="#7FA3C8" stroke-width="1.6"/><text x="560" y="168" font-size="10" font-style="italic" fill="#5E8FC2">Dourbie</text>
+<circle cx="320" cy="148" r="6" fill="#2C4A7C" stroke="white" stroke-width="2"/><text x="328" y="142" font-size="13" font-weight="700" fill="#2C4A7C">Millau</text>
+<rect x="190" y="218" width="12" height="12" transform="rotate(45 196 224)" fill="#C8843A" stroke="white" stroke-width="2"/><text x="188" y="246" font-size="13" font-weight="700" fill="#8B5E0A" text-anchor="end">Roquefort</text><text x="188" y="260" font-size="10" fill="#8B5E0A" text-anchor="end">caves du Combalou</text>
+<circle cx="150" cy="280" r="3.5" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="143" y="284" font-size="11.5" fill="#3A3028" text-anchor="end">Saint-Affrique</text>
+<circle cx="80" cy="370" r="3.5" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="88" y="374" font-size="11.5" fill="#3A3028">Lacaune</text>
+<circle cx="420" cy="290" r="5" fill="#A0522D" stroke="white" stroke-width="2"/><text x="420" y="278" font-size="12" font-weight="700" fill="#A0522D" text-anchor="middle">La Cavalerie</text>
+<circle cx="345" cy="245" r="3.5" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="338" y="234" font-size="11" fill="#3A3028" text-anchor="end">Ste-Eulalie-de-Cernon</text>
+<circle cx="465" cy="390" r="4" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="458" y="380" font-size="11.5" fill="#3A3028" text-anchor="end">La Couvertoirade</text>
+<circle cx="360" cy="340" r="3.5" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="353" y="344" font-size="11" fill="#3A3028" text-anchor="end">La Blaquière</text>
+<circle cx="440" cy="480" r="4" fill="#3A3028" stroke="white" stroke-width="1.5"/><text x="448" y="484" font-size="11.5" fill="#3A3028">Lodève</text>
+<path d="M500,500 Q560,420 620,290" fill="none" stroke="#7A3E7C" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#fl-lz)"/><text x="505" y="512" font-size="11" fill="#7A3E7C" font-weight="600">drailles depuis la plaine</text>
+<g font-size="11" fill="#3A3028"><rect x="20" y="420" width="250" height="80" rx="8" fill="white" stroke="#E0DACE"/><rect x="31" y="434" width="10" height="10" transform="rotate(45 36 439)" fill="#C8843A"/><text x="50" y="443">Roquefort et ses caves</text><circle cx="36" cy="462" r="4.5" fill="#A0522D"/><text x="50" y="466">Village du camp militaire</text><line x1="28" y1="485" x2="46" y2="485" stroke="#A0522D" stroke-width="2" stroke-dasharray="3 4"/><text x="50" y="489">Limite de l’extension abandonnée</text></g></g></svg><figcaption>Le Larzac, Roquefort et les Grands Causses (carte schématique, positions et limites approximatives).</figcaption></figure></section>
+
+<!-- ═════════ CHRONOLOGIE ═════════ -->
+<section class="section" id="chronologie"><h2 class="section-titre"><div class="section-titre-icon">⏳</div>Chronologie</h2><div class="frise">
+<div class="frise-periode">Moyen Âge</div>
+<div class="frise-item"><div class="frise-date">XI<sup>e</sup> siècle</div><div class="frise-texte">Premières mentions écrites du fromage de Roquefort.</div></div>
+<div class="frise-item"><div class="frise-date">XII<sup>e</sup> siècle</div><div class="frise-texte">Les Templiers s’installent sur le Larzac (Sainte-Eulalie-de-Cernon).</div></div>
+<div class="frise-item"><div class="frise-date">1312</div><div class="frise-texte">Suppression de l’ordre du Temple ; les Hospitaliers reprennent ses biens.</div></div>
+<div class="frise-item"><div class="frise-date">XV<sup>e</sup> siècle</div><div class="frise-texte">Fortification de La Couvertoirade ; lettres royales protégeant l’affinage à Roquefort.</div></div>
+<div class="frise-periode">Le temps du roquefort</div>
+<div class="frise-item"><div class="frise-date">1842</div><div class="frise-texte">Fondation de la Société des caves de Roquefort.</div></div>
+<div class="frise-item"><div class="frise-date">début XX<sup>e</sup> siècle</div><div class="frise-texte">Création d’un camp militaire près de La Cavalerie.</div></div>
+<div class="frise-item majeur"><div class="frise-date">26 juillet 1925</div><div class="frise-texte">Loi créant l’appellation d’origine Roquefort, la première pour un fromage.</div></div>
+<div class="frise-item"><div class="frise-date">1930</div><div class="frise-texte">Création de la Confédération générale de Roquefort.</div></div>
+<div class="frise-periode">La lutte</div>
+<div class="frise-item majeur"><div class="frise-date">28 octobre 1971</div><div class="frise-texte">Michel Debré annonce l’extension du camp.</div></div>
+<div class="frise-item majeur"><div class="frise-date">28 mars 1972</div><div class="frise-texte">Serment des 103.</div></div>
+<div class="frise-item"><div class="frise-date">janvier 1973</div><div class="frise-texte">Marche vers Paris et tracteurs bloqués à Orléans.</div></div>
+<div class="frise-item majeur"><div class="frise-date">août 1973</div><div class="frise-texte">Premier grand rassemblement du Rajal del Guorp.</div></div>
+<div class="frise-item"><div class="frise-date">25 octobre 1974</div><div class="frise-texte">Les brebis pâturent sous la tour Eiffel.</div></div>
+<div class="frise-item"><div class="frise-date">décembre 1978</div><div class="frise-texte">Marche à pied de 710 km jusqu’à Paris.</div></div>
+<div class="frise-item"><div class="frise-date">mai 1980</div><div class="frise-texte">La Cour de cassation annule de nombreuses procédures d’expropriation.</div></div>
+<div class="frise-item majeur"><div class="frise-date">mai – juin 1981</div><div class="frise-texte">Élection de François Mitterrand ; abandon du projet d’extension.</div></div>
+<div class="frise-periode">Après la victoire</div>
+<div class="frise-item majeur"><div class="frise-date">1985</div><div class="frise-texte">Bail emphytéotique confié à la Société civile des terres du Larzac.</div></div>
+<div class="frise-item"><div class="frise-date">1996</div><div class="frise-texte">Le roquefort devient AOP européenne.</div></div>
+<div class="frise-item"><div class="frise-date">12 août 1999</div><div class="frise-texte">Démontage du McDonald’s de Millau, en réaction aux surtaxes américaines sur le roquefort.</div></div>
+<div class="frise-item"><div class="frise-date">août 2003</div><div class="frise-texte">Grand rassemblement altermondialiste sur le plateau.</div></div>
+<div class="frise-item majeur"><div class="frise-date">2011</div><div class="frise-texte">Inscription des Causses et Cévennes à l’UNESCO.</div></div>
+<div class="frise-item"><div class="frise-date">2013</div><div class="frise-texte">Bail de la SCTL prolongé jusqu’en 2083.</div></div>
+<div class="frise-item"><div class="frise-date">2016 – 2018</div><div class="frise-texte">Installation de la 13<sup>e</sup> demi-brigade de Légion étrangère au camp du Larzac.</div></div>
+<div class="frise-item"><div class="frise-date">2025</div><div class="frise-texte">Centenaire de l’appellation Roquefort.</div></div>
+</div></section>
+
+<!-- ═════════ HÉRITAGE ═════════ -->
+<section class="section" id="heritage"><h2 class="section-titre"><div class="section-titre-icon">🌍</div>Un héritage militant</h2><div class="histoire-texte"><p><strong>La lutte du Larzac a laissé une empreinte durable dans les mouvements sociaux.</strong> Plusieurs de ses acteurs ont fondé ou rejoint la <strong>Confédération paysanne</strong>, créée en 1987, qui défend une agriculture paysanne face à l’agriculture industrielle. Le plateau a accueilli de nombreuses associations, des rencontres internationales et des militants venus du monde entier.</p><p>Le <strong>12 août 1999</strong>, des paysans démontent le chantier d’un restaurant McDonald’s à Millau, pour protester contre la surtaxe imposée par les États-Unis au roquefort, en riposte à l’interdiction européenne du bœuf aux hormones. José Bové, éleveur sur le Larzac, devient une figure de la lutte contre la « malbouffe » et la mondialisation. En août 2003, un rassemblement réunit plusieurs centaines de milliers de personnes selon les organisateurs.</p><p>Les mouvements d’occupation contre de grands projets, de Notre-Dame-des-Landes à Sivens, se réfèrent souvent au Larzac, considéré comme l’une des premières « zones à défendre ».</p></div>
+<div class="compare"><div class="compare-col compare-fib"><h4>Ce que retiennent ses partisans</h4><ul><li>Une victoire pacifique contre la raison d’État</li><li>Une agriculture paysanne vivante et des fermes maintenues</li><li>Une gestion collective de la terre exemplaire</li><li>Une source d’inspiration pour les luttes environnementales</li></ul></div><div class="compare-col compare-ser"><h4>Les critiques et les nuances</h4><ul><li>Des actions illégales parfois contestées, comme le démontage de 1999</li><li>Un camp militaire finalement maintenu et renforcé</li><li>Un modèle difficile à reproduire ailleurs</li><li>Une forte politisation du plateau, que tous ses habitants ne partagent pas</li></ul></div></div></section>
+
+<!-- ═════════ AUJOURD'HUI ═════════ -->
+<section class="section" id="aujourdhui"><h2 class="section-titre"><div class="section-titre-icon">🔄</div>Le Larzac et Roquefort aujourd’hui</h2><div class="histoire-texte"><p><strong>Le camp militaire existe toujours, dans ses limites d’avant 1971.</strong> Depuis 2016, il accueille la <strong>13<sup>e</sup> demi-brigade de Légion étrangère</strong>, revenue des Émirats arabes unis : environ 1 300 légionnaires. Son installation a été accueillie favorablement par une partie des élus, pour l’économie locale, mais a ravivé la mémoire et les inquiétudes des anciens de la lutte.</p><p>Le <strong>roquefort</strong> traverse une période difficile : les ventes reculent d’année en année, en raison de l’inflation qui réduit la consommation de fromage, du désintérêt des jeunes et de la concurrence de bleus de brebis moins chers. La filière, qui a fêté son centenaire en 2025, mise sur la qualité, l’export et de nouvelles façons de consommer. Les éleveurs doivent aussi faire face aux <strong>sécheresses</strong> répétées, qui menacent l’autonomie fourragère exigée par l’appellation.</p><p>Le <strong>pastoralisme</strong>, enfin, reste fragile : l’âge des éleveurs, la difficulté de trouver des bergers, la fermeture des paysages et le retour du loup inquiètent la profession.</p></div>
+<div class="relance">
+<div class="relance-item"><b>Fromage</b><div><strong>Relancer le roquefort</strong> : communication vers les jeunes, nouvelles recettes, défense de l’appellation contre les imitations.</div></div>
+<div class="relance-item"><b>Élevage</b><div><strong>Installer des jeunes</strong> : la moitié des éleveurs a plus de 50 ans ; la SCTL reste un modèle d’installation.</div></div>
+<div class="relance-item"><b>Climat</b><div><strong>Adapter les troupeaux</strong> : réserves de fourrage, pâturage plus économe, adaptation du cahier des charges.</div></div>
+<div class="relance-item"><b>Paysage</b><div><strong>Garder les causses ouverts</strong> : soutien au pâturage, gestion du patrimoine UNESCO, tourisme raisonné.</div></div>
+</div></section>
+
+<!-- ═════════ PERSONNALITÉS ═════════ -->
+<section class="section" id="personnalites"><h2 class="section-titre"><div class="section-titre-icon">👤</div>Personnalités importantes</h2>
+<div class="perso-groupe"><div class="perso-groupe-titre g-ouv">Les paysans et militants</div><div class="perso-grid"><div class="perso g-ouv"><div class="perso-nom">Les 103 du Larzac</div><div class="perso-dates">1972</div><div class="perso-desc">Les paysans signataires du serment de ne pas vendre leurs terres, cœur de la lutte pendant dix ans.</div></div><div class="perso g-ouv"><div class="perso-nom">Lanza del Vasto</div><div class="perso-dates">1901 – 1981</div><div class="perso-desc">Disciple de Gandhi, fondateur de la communauté de l’Arche, qui inspira la non-violence du mouvement par son jeûne de 1972.</div></div><div class="perso g-ouv"><div class="perso-nom">Bernard Lambert</div><div class="perso-dates">1931 – 1984</div><div class="perso-desc">Syndicaliste paysan de l’Ouest, il organise le soutien des tracteurs lors de la marche de 1973.</div></div><div class="perso g-ouv"><div class="perso-nom">José Bové</div><div class="perso-dates">né en 1953</div><div class="perso-desc">Installé sur le plateau en 1976, éleveur de brebis, cofondateur de la Confédération paysanne, figure de l’altermondialisme puis député européen.</div></div></div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-ind">L’État</div><div class="perso-grid"><div class="perso g-ind"><div class="perso-nom">Michel Debré</div><div class="perso-dates">1912 – 1996</div><div class="perso-desc">Ministre de la Défense, il annonce en 1971 l’extension du camp militaire.</div></div><div class="perso g-ind"><div class="perso-nom">François Mitterrand</div><div class="perso-dates">1916 – 1996</div><div class="perso-desc">Président de la République élu en 1981, qui abandonne le projet d’extension conformément à son engagement.</div></div></div></div>
+<div class="perso-groupe"><div class="perso-groupe-titre g-pion">Roquefort et le pastoralisme</div><div class="perso-grid"><div class="perso g-pion"><div class="perso-nom">Les affineurs du Combalou</div><div class="perso-dates">depuis le Moyen Âge</div><div class="perso-desc">Les « cabanières », femmes chargées du salage et de l’affinage, ont longtemps été au cœur du travail dans les caves.</div></div><div class="perso g-pion"><div class="perso-nom">Les bergers transhumants</div><div class="perso-dates">depuis des siècles</div><div class="perso-desc">Ils menaient chaque été les troupeaux de la plaine vers l’Aigoual et le mont Lozère par les drailles.</div></div></div></div></section>
+
+<!-- ═════════ IDÉES REÇUES ═════════ -->
+<section class="section" id="mythes"><h2 class="section-titre"><div class="section-titre-icon">🔎</div>Idées reçues</h2>
+<div class="mythe"><strong>« Les paysages des causses sont naturels et sauvages. »</strong><br><span class="verdict faux">Faux</span><br>Ils sont façonnés par des millénaires de pâturage ; sans les brebis, la forêt et les broussailles les recouvriraient.</div>
+<div class="mythe"><strong>« Tout le lait des brebis du rayon devient du roquefort. »</strong><br><span class="verdict faux">Faux</span><br>Moins de la moitié du lait collecté dans la zone est transformé en roquefort ; le reste sert à d’autres fromages et produits.</div>
+<div class="mythe"><strong>« Le roquefort peut être fabriqué n’importe où. »</strong><br><span class="verdict faux">Faux</span><br>Il doit être affiné dans les caves naturelles du Combalou, à Roquefort-sur-Soulzon.</div>
+<div class="mythe"><strong>« La lutte du Larzac était violente. »</strong><br><span class="verdict faux">Faux</span><br>Elle s’est revendiquée non violente pendant dix ans : jeûnes, marches, désobéissance civile, achats de terres.</div>
+<div class="mythe"><strong>« Le camp militaire a disparu du Larzac. »</strong><br><span class="verdict faux">Faux</span><br>Seule l’extension a été abandonnée ; le camp existe toujours et accueille la Légion étrangère depuis 2016.</div>
+<div class="mythe"><strong>« Les paysans du Larzac étaient tous des militants venus d’ailleurs. »</strong><br><span class="verdict nuance">À nuancer</span><br>La lutte associait des familles installées depuis des générations et de jeunes agriculteurs arrivés dans les années 1960-1970, rejoints ensuite par des soutiens extérieurs.</div></section>
+
+<!-- ═════════ CIRCUIT ═════════ -->
+<section class="section" id="visiter"><h2 class="section-titre"><div class="section-titre-icon">🥾</div>Circuit conseillé : du rocher du Combalou au plateau</h2><div class="etapes-liste">
+<div class="etape"><div class="etape-num">1</div><div class="etape-corps"><div class="etape-titre">Roquefort-sur-Soulzon</div><div class="etape-texte">Visite des caves du Combalou et de leurs fleurines, dégustation, belvédère sur le rocher.</div></div></div>
+<div class="etape"><div class="etape-num">2</div><div class="etape-corps"><div class="etape-titre">Millau</div><div class="etape-texte">La ville du gant et du Larzac, son musée, son marché et la vue sur le viaduc.</div></div></div>
+<div class="etape"><div class="etape-num">3</div><div class="etape-corps"><div class="etape-titre">Sainte-Eulalie-de-Cernon</div><div class="etape-texte">Ancienne commanderie templière, chef-lieu du Larzac templier et hospitalier.</div></div></div>
+<div class="etape"><div class="etape-num">4</div><div class="etape-corps"><div class="etape-titre">La Cavalerie et La Blaquière</div><div class="etape-texte">Le village fortifié au cœur de la lutte, puis la bergerie construite en défi à l’armée.</div></div></div>
+<div class="etape"><div class="etape-num">5</div><div class="etape-corps"><div class="etape-titre">La Couvertoirade</div><div class="etape-texte">Cité hospitalière aux remparts presque intacts, avec sa lavogne à l’entrée du village.</div></div></div>
+<div class="etape"><div class="etape-num">6</div><div class="etape-corps"><div class="etape-titre">Sentiers du plateau</div><div class="etape-texte">Randonnée sur les drailles, entre jasses, lavognes et pelouses fleuries, en restant discret près des troupeaux.</div></div></div>
+</div><p class="small" style="margin-top:12px">Horaires et périodes d’ouverture variables : se renseigner avant la visite. Respecter les clôtures et refermer les barrières derrière soi.</p></section>
+
+<!-- ═════════ SOURCES ═════════ -->
+<section class="section" id="sources"><h2 class="section-titre"><div class="section-titre-icon">📚</div>Sources et pistes documentaires</h2><div class="histoire-texte"><ul class="source-list">
+<li><a href="https://en.wikipedia.org/wiki/Fight_for_the_Larzac" target="_blank" rel="noopener">Wikipedia — La lutte du Larzac</a></li>
+<li><a href="https://reporterre.net/C-etaient-les-premieres-zad-50-ans-apres-les-veterans-du-Larzac-se-souviennent" target="_blank" rel="noopener">Reporterre — 50 ans après, les vétérans du Larzac se souviennent</a></li>
+<li><a href="https://www.batiweb.com/actualites/collectivites-territoriales/plateau-du-larzac-le-bail-prolonge-jusqu-en-2083-22678" target="_blank" rel="noopener">Batiweb — Le bail du Larzac prolongé jusqu’en 2083</a></li>
+<li><a href="https://whc.unesco.org/fr/list/1153" target="_blank" rel="noopener">UNESCO — Les Causses et les Cévennes</a></li>
+<li><a href="https://www.parc-grands-causses.fr/sites/all/files/agropastoralisme-fr_web.pdf" target="_blank" rel="noopener">Parc naturel régional des Grands Causses — L’agropastoralisme</a></li>
+<li><a href="https://www.reussir.fr/patre/laop-roquefort-fete-son-centenaire" target="_blank" rel="noopener">Réussir Pâtre — L’AOP Roquefort fête son centenaire</a></li>
+<li><a href="https://reussir.fr/patre/le-roi-des-fromages-chahute-imite-mais-toujours-sur-pied" target="_blank" rel="noopener">Réussir Pâtre — Le roi des fromages chahuté</a></li>
+<li><a href="https://www.agridea.ch/fileadmin/AGRIDEA/Theme/Marches__filieres_agricoles_et_alimentaires/AOP-IGP_et_produits_du_terroir/Roquefort_Agri_15092023.pdf" target="_blank" rel="noopener">AGRIDEA — Le roquefort, fiche filière</a></li>
+<li><a href="https://www.sudradio.fr/societe/12-aout-1999-le-jour-ou-jose-bove-demonte-le-mcdo-de-millau" target="_blank" rel="noopener">Sud Radio — 12 août 1999 à Millau</a></li>
+<li><a href="https://en.wikipedia.org/wiki/13th_Demi-Brigade_of_the_Foreign_Legion" target="_blank" rel="noopener">Wikipedia — 13<sup>e</sup> demi-brigade de Légion étrangère</a></li>
+</ul><p class="small">Pour approfondir : le film documentaire <em>Tous au Larzac</em> de Christian Rouaud (2011).</p><p class="small">Les liens s’ouvrent dans un nouvel onglet. La carte est un schéma pédagogique : les limites du camp et de l’extension sont approximatives.</p></div></section></div>
+
+<!-- ═════════ ASIDE ═════════ -->
+<aside class="produit-aside"><div class="aside-card"><div class="aside-card-header">📋 Carte d'identité</div><div class="aside-card-body"><div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div><div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Aveyron (et Hérault)</span></div><div class="aside-row"><span class="aside-label">Milieu</span><span class="aside-val">Plateau calcaire, ≈ 800 m</span></div><div class="aside-row"><span class="aside-label">Animal</span><span class="aside-val">Brebis Lacaune</span></div><div class="aside-row"><span class="aside-label">Produit</span><span class="aside-val">Roquefort AOP</span></div><div class="aside-row"><span class="aside-label">Lutte</span><span class="aside-val">1971 – 1981</span></div><div class="aside-row"><span class="aside-label">UNESCO</span><span class="aside-val">2011</span></div></div></div>
+<div class="aside-card"><div class="aside-card-header">🔢 Quelques repères</div><div class="aside-card-body"><div class="chiffres"><div class="chiffre"><b>1925</b><span>1<sup>re</sup> appellation fromagère</span></div><div class="chiffre"><b>90 j</b><span>d’affinage minimum</span></div><div class="chiffre"><b>≈ 14 000 t</b><span>de roquefort vendues (2023)</span></div><div class="chiffre"><b>7</b><span>fabricants</span></div><div class="chiffre"><b>103</b><span>paysans du serment</span></div><div class="chiffre"><b>10 ans</b><span>de lutte</span></div><div class="chiffre"><b>&gt; 100 000</b><span>personnes au rassemblement de 1974</span></div><div class="chiffre"><b>6 300 ha</b><span>gérés par la SCTL</span></div><div class="chiffre"><b>2083</b><span>fin du bail de la SCTL</span></div><div class="chiffre"><b>&gt; 300 000 ha</b><span>inscrits à l’UNESCO</span></div></div></div></div>
+<div class="aside-card"><div class="aside-card-header">📖 Petit glossaire</div><div class="aside-card-body"><dl class="glossaire"><dt>Causse</dt><dd>Plateau calcaire du sud du Massif central.</dd><dt>Agropastoralisme</dt><dd>Système associant l’élevage en plein air et les cultures.</dd><dt>Transhumance</dt><dd>Déplacement saisonnier des troupeaux vers les pâturages d’été.</dd><dt>Draille</dt><dd>Chemin de transhumance.</dd><dt>Lavogne</dt><dd>Mare empierrée servant d’abreuvoir aux troupeaux.</dd><dt>Jasse</dt><dd>Bergerie traditionnelle en pierre.</dd><dt>Fleurine</dt><dd>Fissure naturelle qui ventile les caves de Roquefort.</dd><dt>Combalou</dt><dd>Rocher de Roquefort, au pied duquel se trouvent les caves.</dd><dt>AOP</dt><dd>Appellation d’origine protégée, qui lie un produit à son terroir.</dd><dt>Expropriation</dt><dd>Prise d’un bien privé par l’État pour un motif d’utilité publique, contre indemnité.</dd><dt>Bail emphytéotique</dt><dd>Location de très longue durée, de 18 à 99 ans.</dd><dt>SCTL</dt><dd>Société civile des terres du Larzac.</dd></dl></div></div>
+<div class="aside-card"><div class="aside-card-header">💡 Fil conducteur</div><div class="aside-card-body" style="font-size:13px;line-height:1.65;color:#3A3028">Suivre la brebis : elle a dessiné le paysage des causses, elle donne le lait du roquefort, et c’est pour la terre de ses bergers que des milliers de personnes se sont levées entre 1971 et 1981.</div></div></aside></div></div></div>
+<script>const navLinks=document.querySelectorAll('.produit-nav a');const sections=document.querySelectorAll('.section');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const active=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(active)active.classList.add('active')}})},{threshold:.15});sections.forEach(s=>observer.observe(s));navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));</script><div class="retour-haut"><a href="occitanie-histoire-accueil.html">← Retour à l'accueil</a></div><footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body></html>
