@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Occitan gascon et languedocien — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-haute-garonne.webp'); }</style>
+</head>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+  <nav class="produit-topbar-btns liens-empiles zone-btn-carte" aria-label="Navigation">
+    <a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html" class="produit-btn-retour btn-carte sans-emoji">Retour à la fiche Haute-Garonne</a>
+  </nav>
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>O</em>ccitan gascon<br><span style="padding-left: 60px;">& <em>l</em>anguedocien</span><span class="sous-titre">La lenga d’òc, langue des troubadours</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-haute-garonne.webp"
+               alt="Carte Haute-Garonne"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/haute-garonne.webp" alt="Écusson Haute-Garonne" loading="lazy" decoding="async" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Patrimoine Immatériel ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#visite"              >🗣️ Découvrir & pratiquer</a>
+          <a href="#patrimoine"              >🏆 Reconnaissance</a>
+          <a href="#legendes"              >🌿 Lieux & symboles</a>
+          <a href="#alentours"              >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>La langue d’oc.</strong> Née du latin parlé dans le sud de la Gaule, l’occitan doit son nom au mot « òc », qui signifie « oui ». Son domaine s’étend du Val d’Aran aux vallées alpines du Piémont, en passant par Monaco. Il se décline en six grands dialectes : gascon, languedocien, provençal, limousin, auvergnat et vivaro-alpin. La région Occitanie en réunit principalement deux : le gascon à l’ouest de la Garonne, le languedocien à l’est.</p>
+
+              <p><strong>Le siècle des troubadours.</strong> Aux XII<sup>e</sup> et XIII<sup>e</sup> siècles, l’occitan est la grande langue poétique de l’Europe. Guilhem IX, duc d’Aquitaine (1071-1126), est le premier troubadour connu ; après lui, des centaines de poètes chantent la <em>fin’amor</em> dans les cours de Toulouse, de Foix ou de Carcassonne. Leur art inspire les poètes catalans, italiens et allemands : Dante fait même parler le troubadour Arnaut Daniel en occitan dans sa <em>Divine Comédie</em>.</p>
+
+              <p><strong>Toulouse et le Gai Savoir.</strong> En 1323, sept bourgeois toulousains fondent le <em>Consistori del Gai Saber</em> pour maintenir la poésie des troubadours. Ce cénacle, devenu l’Académie des Jeux floraux, est considéré comme la plus ancienne société littéraire d’Europe. Au milieu du XIV<sup>e</sup> siècle, il fait rédiger les <em>Leys d’Amors</em>, premier grand traité de grammaire et de poétique occitanes.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Hôtel d’Assézat à Toulouse, siège de l’Académie des Jeux floraux" src="../../../../../../assets/departement/occitanie/photo/haute-garonne/hotel-assezat-jeux-floraux.jpg" loading="lazy" decoding="async"/>
+<figcaption>L’hôtel d’Assézat, à Toulouse, siège de l’Académie des Jeux floraux</figcaption>
+</figure>
+<div class="clearfix"></div>
+
+              <p><strong>Le temps du recul.</strong> Après la croisade contre les Albigeois et le rattachement du Languedoc à la Couronne, le français gagne du terrain. L’ordonnance de Villers-Cotterêts (1539) l’impose dans les actes officiels. Aux XIX<sup>e</sup> et XX<sup>e</sup> siècles, l’école de la République interdit les « patois » : les élèves surpris à parler occitan reçoivent le « signal », un objet honteux à transmettre au suivant. La transmission familiale s’effondre en quelques générations.</p>
+
+              <p><strong>Les renaissances.</strong> Dès le XVII<sup>e</sup> siècle, le Toulousain Pèire Godolin (1580-1649) redonne ses lettres à la langue. En 1854, Frédéric Mistral fonde le Félibrige en Provence et reçoit le prix Nobel en 1904. En 1945, l’Institut d’Estudis Occitans est créé à Toulouse et diffuse la graphie dite « classique », commune à tous les dialectes. La loi Deixonne (1951) autorise l’enseignement des langues régionales et les premières écoles immersives Calandreta ouvrent en 1979.</p>
+
+              <p><strong>Deux visages d’une même langue.</strong> Le gascon, parlé de la Garonne aux Pyrénées et à l’Atlantique, est le plus original des dialectes : il remplace le <em>f</em> latin par un <em>h</em> aspiré (<em>hilh</em> pour « fils », <em>hèsta</em> pour « fête »). Le languedocien, au contraire, est réputé le plus proche de la langue classique des troubadours, et sert souvent de référence à l’enseignement.</p>
+
+            </div>
+          </section>
+
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗣️</div>
+              Découvrir & pratiquer
+            </h2>
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🗺️</div>
+                <div>
+                  <div class="recette-meta-label">Aire</div>
+                  <div class="recette-meta-val">Gascon à l’ouest de la Garonne · languedocien à l’est</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">👥</div>
+                <div>
+                  <div class="recette-meta-label">Locuteurs</div>
+                  <div class="recette-meta-val">Plusieurs centaines de milliers (estimations)</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">✍️</div>
+                <div>
+                  <div class="recette-meta-label">Graphie</div>
+                  <div class="recette-meta-val">Classique (IEO) commune aux dialectes</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⚖️</div>
+                <div>
+                  <div class="recette-meta-label">Statut</div>
+                  <div class="recette-meta-val">Langue régionale de France</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Infos pratiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Apprendre</span> Écoles Calandreta, filières bilingues publiques, option au lycée</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Adultes</span> Cours du soir, stages d’été et universités occitanes</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Médias</span> Émission Vaquí sur France 3 Occitanie, radios associatives</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Toulouse</span> Annonces bilingues dans le métro, plaques de rues en occitan</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Festivals</span> Festival Occitània à Toulouse, Estivada à Rodez</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Dictionnaires</span> Ressources en ligne du Congrès permanent de la lenga occitana</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Ostal d’Occitània</div>
+                  <div class="etape-texte">Au cœur du vieux Toulouse, la maison des associations occitanes propose cours, conférences, expositions et bibliothèque.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Hôtel d’Assézat</div>
+                  <div class="etape-texte">Siège de l’Académie des Jeux floraux, dont le concours décerne encore chaque printemps ses fleurs d’or et d’argent.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Écouter le gascon</div>
+                  <div class="etape-texte"><em>Hilh</em>, <em>hemna</em> (femme), <em>lua</em> (lune), <em>arròda</em> (roue) : le h aspiré, la chute du n et le r renforcé signent le parler gascon, que font vivre des groupes comme Nadau.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Écouter le languedocien</div>
+                  <div class="etape-texte"><em>Filh</em>, <em>femna</em>, <em>luna</em> : plus proche du latin et de la langue des troubadours, il est porté par la poésie de Joan Bodon ou la chanson de Claude Marti.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Vivre la langue</div>
+                  <div class="etape-texte">Bals traditionnels, cafés occitans, chorales et veillées : la langue se transmet aussi par la fête, le chant polyphonique et la danse.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">⚖️</div>
+                <div>
+                  <div class="vin-nom">Patrimoine de la France</div>
+                  <div class="vin-desc">Depuis la révision de 2008, l’article 75-1 de la Constitution dispose que les langues régionales appartiennent au patrimoine de la France.</div>
+                </div>
+                <div class="vin-badge">Constitution 2008</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🏛️</div>
+                <div>
+                  <div class="vin-nom">Office public de la langue occitane</div>
+                  <div class="vin-desc">Créé en 2015 par les régions Occitanie et Nouvelle-Aquitaine avec l’État pour coordonner la politique en faveur de la langue.</div>
+                </div>
+                <div class="vin-badge">OPLO 2015</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">📜</div>
+                <div>
+                  <div class="vin-nom">Loi Molac</div>
+                  <div class="vin-desc">La loi du 21 mai 2021 relative à la protection patrimoniale des langues régionales conforte leur enseignement et leur signalétique.</div>
+                </div>
+                <div class="vin-badge">Loi 2021</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🌍</div>
+                <div>
+                  <div class="vin-nom">Langue en danger</div>
+                  <div class="vin-desc">L’Atlas UNESCO des langues en danger classe les dialectes occitans parmi les langues menacées, faute de transmission familiale.</div>
+                </div>
+                <div class="vin-badge">Atlas UNESCO</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌿</div>
+              Lieux & symboles
+            </h2>
+            <div class="histoire-texte">
+
+              <p>La croix occitane, dite aussi croix de Toulouse, cléchée et pommetée de douze perles d’or sur fond rouge, est devenue l’emblème de toute l’Occitanie. On la retrouve au sol de la place du Capitole, sur les drapeaux et jusque dans le logo de la région.</p>
+
+              <div class="citation-bloc">
+                <p>« Qu tèn sa lengo tèn la clau / Que di cadeno lou deliéuro. »</p>
+                <cite>— Frédéric Mistral : « Qui tient sa langue tient la clé qui le délivre de ses chaînes »</cite>
+              </div>
+
+              <p>Le chant <em>Se canta</em>, attribué par la tradition à Gaston Fébus, comte de Foix, fait office d’hymne : on l’entonne aussi bien dans les stades que dans les fêtes de village. Les toponymes rappellent partout la langue : les terminaisons en <em>-ac</em> du Languedoc, les <em>hount</em> (sources) et <em>arrieu</em> (ruisseaux) de Gascogne.</p>
+
+            </div>
+          </section>
+
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Capitole de Toulouse</strong> et sa salle des Illustres, avec la grande croix occitane incrustée au sol de la place.</p>
+
+              <p><strong>Basilique Saint-Sernin</strong> chef-d’œuvre de l’art roman, inscrite au patrimoine mondial au titre des chemins de Compostelle.</p>
+
+              <p><strong>Musée du Vieux-Toulouse</strong> qui conserve objets, costumes et souvenirs de la vie toulousaine et occitane.</p>
+
+              <p><strong>CIRDÒC à Béziers</strong> Institut occitan de cultura, grande médiathèque patrimoniale de la langue d’oc.</p>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Haute-Garonne (Toulouse) · Gascogne & Languedoc</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Langue régionale · Patrimoine linguistique</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Locuteurs</span>
+                <span class="aside-val">Plusieurs centaines de milliers</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Langue régionale (Constitution, art. 75-1)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">République française · OPLO</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/haute-garonne/haute-garonne.html">← Retour à la fiche Haute-Garonne</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>

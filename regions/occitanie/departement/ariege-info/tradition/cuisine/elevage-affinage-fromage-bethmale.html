@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Élevage et affinage du fromage de Bethmale — L'Âme des Régions</title>
+  <link rel="stylesheet" href="../../../../../../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+
+    /* Topbar */
+    .produit-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 3;
+    }
+    .produit-logo {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+
+    .produit-btn-retour {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 4px;
+      color: white;
+      font-size: 18px;
+      font-family: var(--font-corps);
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    /* ─── LABEL BAS DU HÉRO ──────────────────────── */
+    .hero-label-bas {
+      color: white;
+      font-family: var(--font-titre);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 14px;
+      margin-left: 0px;
+      margin-right: 0px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Titre héro */
+    .produit-hero-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      margin-bottom: 90px;
+      margin-top: 30px;
+    }
+    .produit-hero-body h1 em {
+      color: #C8843A;
+      font-style: italic;
+    }
+    .produit-hero-body h1 .sous-titre {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+    }
+
+    .produit-hero-top {
+      position: relative;
+    }
+
+    .fiche-hero-ecusson {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--ecusson-top, 30px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fiche-hero-ecusson img {
+       height: 200px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Barre de navigation interne */
+    .produit-nav {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .produit-nav-inner {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .produit-nav a {
+      padding: 13px 22px;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-titre);
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px;
+      background: #2C4A7C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .histoire-texte {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+    .histoire-texte p { margin-bottom: 14px; }
+
+    .citation-bloc {
+      background: #F7F3EC;
+      border-left: 4px solid #C8843A;
+      padding: 16px 20px;
+      margin: 22px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 16px;
+      color: #5A3E1B;
+      margin: 0 0 6px 0;
+      line-height: 1.6;
+    }
+    .citation-bloc cite {
+      font-size: 12px;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      font-style: normal;
+    }
+
+    .recette-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .recette-meta-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recette-meta-icon { font-size: 24px; }
+    .recette-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      margin-bottom: 2px;
+    }
+    .recette-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      font-family: var(--font-titre);
+    }
+
+    .ingredients-bloc {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .ingredients-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8B7355;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: var(--font-corps);
+    }
+    .ingredients-liste {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      font-family: var(--font-corps);
+      color: #3A3028;
+      padding-bottom: 7px;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .ingredient-qte {
+      font-weight: 600;
+      color: #C8843A;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; }
+    .etape {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .etape-num {
+      width: 40px; height: 40px;
+      background: #2C4A7C;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-titre);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #C8843A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: var(--font-corps);
+      margin-bottom: 4px;
+    }
+    .etape-texte {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #3A3028;
+      font-family: var(--font-corps);
+    }
+
+    .vins-liste { display: flex; flex-direction: column; gap: 10px; }
+    .vin-item {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vin-icon { font-size: 22px; }
+    .vin-nom {
+      font-family: var(--font-titre);
+      font-size: 15px;
+      font-weight: 700;
+      color: #2C4A7C;
+      margin-bottom: 2px;
+    }
+    .vin-desc { font-size: 12px; color: #8B7355; font-family: var(--font-corps); }
+    .vin-badge {
+      margin-left: auto;
+      background: rgba(44,74,124,0.08);
+      color: #2C4A7C;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-corps);
+      white-space: nowrap;
+    }
+
+    .produit-aside {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .aside-card {
+      background: white;
+      border: 1px solid #E0DACE;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .aside-card-header {
+      background: #2C4A7C;
+      color: white;
+      padding: 14px 18px;
+      font-family: var(--font-titre);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #F0EAD6;
+      gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8B7355;
+      font-family: var(--font-corps);
+      flex-shrink: 0;
+    }
+    .aside-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3028;
+      font-family: var(--font-corps);
+      text-align: right;
+    }
+    .aside-label-aop {
+      background: linear-gradient(135deg, #FFF8E8, #FFF0CC);
+      border: 1px solid #F0C878;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .aside-aop-logo { font-size: 32px; margin-bottom: 6px; }
+    .aside-aop-titre {
+      font-family: var(--font-titre);
+      font-size: 14px;
+      color: #8B5E0A;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .aside-aop-desc {
+      font-size: 12px;
+      color: #A07835;
+      font-family: var(--font-corps);
+      line-height: 1.5;
+    }
+    .aside-liens { display: flex; flex-direction: column; gap: 8px; }
+    .aside-lien {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: #F7F3EC;
+      border: 1px solid #E0DACE;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2C4A7C;
+      font-size: 13px;
+      font-family: var(--font-corps);
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .aside-lien:hover { background: #2C4A7C; color: white; border-color: #2C4A7C; }
+    .aside-lien-arrow { margin-left: auto; font-size: 11px; opacity: 0.5; }
+
+    .btn-retour-fixe {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 100;
+      background: #2C4A7C;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-family: var(--font-titre);
+      font-style: italic;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35);
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-retour-fixe:hover { background: #1e3560; transform: translateY(-2px); }
+    .btn-retour-fixe.visible { display: flex; align-items: center; gap: 8px; }
+
+    .photo-bloc { margin: 24px 0; }
+    .photo-bloc img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .photo-bloc figcaption {
+      font-size: 12px;
+      color: #8B7355;
+      font-style: italic;
+      font-family: var(--font-corps);
+      margin-top: 8px;
+    }
+    .photo-gauche { float: left; margin: 0 28px 16px 0; max-width: 340px; }
+    .photo-droite { float: right; margin: 0 0 16px 28px; max-width: 340px; }
+    .photo-centre { margin: 24px auto; text-align: center; }
+    .photo-centre img { max-width: 700px; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    @media (max-width: 680px) {
+      .photo-gauche, .photo-droite { float: none; margin: 20px auto; max-width: 100%; }
+    }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+      .recette-grid { grid-template-columns: 1fr 1fr; }
+      .ingredients-liste { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .recette-grid { grid-template-columns: 1fr; }
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .fiche-hero-ecusson {
+        position: static;
+        transform: none;
+        margin: 12px auto 0;
+      }
+    }
+
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../../../../fiche.css" />
+  <!-- Photo du bandeau propre à cette page -->
+  <style>.produit-hero { background-image: url('../../../../../../assets/departement/occitanie/panorama-ariege.webp'); }</style>
+</head>
+
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+  <nav class="produit-topbar-btns liens-empiles zone-btn-carte" aria-label="Navigation">
+    <a href="../../../../occitanie-departement/ariege/ariege.html" class="produit-btn-retour btn-carte sans-emoji">Retour à la fiche Ariège</a>
+  </nav>
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+      </div>
+
+    <div class="produit-hero-body">
+      <div>
+          
+          <h1><em>É</em>levage et affinage<br><span style="padding-left: 60px;">du <em>B</em>ethmale</span><span class="sous-titre">Fromage de vache du Couserans</span></h1>
+          
+        </div>   
+        <img src="../../../../../../assets/departement/occitanie/carte-ariege.webp"
+               alt="Carte Ariège"
+               style="height:220px; width:auto; opacity:0.85;
+                      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+                      display:block; align-self:flex-start; margin-top:8px;" />
+
+      </div>
+
+    </div>
+
+  <div class="fiche-hero-ecusson">
+         <img src="../../../../../../assets/departement/occitanie/ariege.webp" alt="Écusson Ariège" loading="lazy" decoding="async" />
+        </div>
+
+    
+
+    <div class="hero-label-bas">
+    ⟹ Patrimoine Immatériel ⟸
+    </div>
+
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📖 Histoire</a>
+          <a href="#visite"              >🧀 Savoir-faire</a>
+          <a href="#patrimoine"              >🏆 Reconnaissance</a>
+          <a href="#legendes"              >🌿 Terroir & symboles</a>
+          <a href="#alentours"              >📍 Aux alentours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📖</div>
+              Histoire & origines
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Un fromage de vallée.</strong> Le Bethmale tire son nom de la vallée de Bethmale, petite vallée du Couserans, au sud-ouest de l’Ariège, entre Castillon-en-Couserans et le col de la Core. Depuis des siècles, les familles y fabriquent une tomme de vache au lait cru pour conserver le lait des beaux jours.</p>
+
+              <p><strong>La légende royale.</strong> La tradition rapporte que le roi Louis VI le Gros, de passage dans les Pyrénées au XII<sup>e</sup> siècle, aurait goûté ce fromage et l’aurait tant apprécié qu’il en aurait fait venir à sa table. Le récit, invérifiable, témoigne de l’ancienneté de sa réputation.</p>
+
+              <figure class="photo-bloc photo-centre" style="max-width: 320px;">
+<img alt="Meules de Bethmale en cave d'affinage" src="../../../../../../assets/departement/occitanie/photo/ariege/fromage-bethmale.jpg" loading="lazy" decoding="async"/>
+<figcaption>Meules de Bethmale à la croûte orangée, retournées et brossées en cave</figcaption>
+</figure>
+<div class="clearfix"></div>
+
+              <p><strong>Une économie pastorale.</strong> Le fromage s’inscrit dans le cycle de l’élevage montagnard : les vaches passent l’hiver à l’étable dans les granges du fond de vallée, montent à la belle saison vers les prés de fauche puis les estives, où le lait d’herbe et de fleurs donne au fromage ses arômes les plus riches.</p>
+
+              <p><strong>La race Casta.</strong> Le Couserans a vu naître la Casta, dite aussi « Aure et Saint-Girons », vache rustique au pelage froment qui fournissait lait, travail et viande. Devenue très rare, elle fait l’objet d’un programme de sauvegarde ; aujourd’hui le lait provient surtout de Brunes et de Montbéliardes.</p>
+
+              <p><strong>Du fermier au laitier.</strong> Longtemps exclusivement fermier, le Bethmale est désormais produit à la fois par des fermes du Couserans et par des fromageries artisanales de la région de Saint-Girons, qui l’ont fait connaître bien au-delà de l’Ariège.</p>
+
+            </div>
+          </section>
+
+          <section class="section" id="visite">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🧀</div>
+              Savoir-faire : de l’étable à la cave
+            </h2>
+
+            <div class="recette-grid">
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🐄</div>
+                <div>
+                  <div class="recette-meta-label">Lait</div>
+                  <div class="recette-meta-val">Vache, cru et entier</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">🧀</div>
+                <div>
+                  <div class="recette-meta-label">Pâte</div>
+                  <div class="recette-meta-val">Pressée non cuite</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⏳</div>
+                <div>
+                  <div class="recette-meta-label">Affinage</div>
+                  <div class="recette-meta-val">2 à 6 mois en cave</div>
+                </div>
+              </div>
+              <div class="recette-meta-card">
+                <div class="recette-meta-icon">⚖️</div>
+                <div>
+                  <div class="recette-meta-label">Format</div>
+                  <div class="recette-meta-val">Meule de 3 à 6 kg</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Caractéristiques</div>
+              <div class="ingredients-liste">
+                <div class="ingredient-item"><span class="ingredient-qte">Forme</span> Meule plate de 25 à 40 cm de diamètre, 8 à 10 cm de haut</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Croûte</span> Naturelle, morgée, orangée à brun-rouge</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Pâte</span> Ivoire à jaune pâle, souple, quelques petites ouvertures</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Goût</span> Lactique et doux jeune, noisette et végétal affiné</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Variante</span> Bethmale au lait de chèvre, plus rare</div>
+                <div class="ingredient-item"><span class="ingredient-qte">Accord</span> Vins rouges du Sud-Ouest, confiture de cerises noires</div>
+              </div>
+            </div>
+
+            <div class="etapes-liste">
+              <div class="etape">
+                <div class="etape-num">1</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Traite et emprésurage</div>
+                  <div class="etape-texte">Le lait cru, tout juste trait, est légèrement réchauffé puis emprésuré. Il caille en une quarantaine de minutes environ.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">2</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Décaillage et brassage</div>
+                  <div class="etape-texte">Le caillé est tranché finement, puis brassé pour expulser le petit-lait, sans être chauffé au-delà de la température du lait : c’est une pâte non cuite.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">3</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Moulage et pressage</div>
+                  <div class="etape-texte">Le caillé est rassemblé dans des moules garnis de toiles, puis pressé plusieurs heures en étant régulièrement retourné.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">4</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Salage</div>
+                  <div class="etape-texte">Les meules sont salées au sel sec ou en saumure, ce qui ferme la croûte et règle l’égouttage.</div>
+                </div>
+              </div>
+              <div class="etape">
+                <div class="etape-num">5</div>
+                <div class="etape-corps">
+                  <div class="etape-titre">Affinage en cave</div>
+                  <div class="etape-texte">Posées sur des planches d’épicéa dans une cave fraîche et humide, les meules sont retournées et frottées à l’eau salée : la morge orangée se développe et le goût s’affirme au fil des semaines.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="patrimoine">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏆</div>
+              Reconnaissance & patrimoine
+            </h2>
+            <div class="vins-liste">
+              <div class="vin-item">
+                <div class="vin-icon">🧀</div>
+                <div>
+                  <div class="vin-nom">Fromage traditionnel des Pyrénées</div>
+                  <div class="vin-desc">Le Bethmale ne bénéficie pas d’une AOP propre ; il compte parmi les tommes pyrénéennes les plus anciennes et les plus réputées d’Ariège.</div>
+                </div>
+                <div class="vin-badge">Couserans</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">🐄</div>
+                <div>
+                  <div class="vin-nom">Race Casta</div>
+                  <div class="vin-desc">Race bovine locale « Aure et Saint-Girons », menacée de disparition et suivie par un programme de conservation.</div>
+                </div>
+                <div class="vin-badge">Race à protéger</div>
+              </div>
+              <div class="vin-item">
+                <div class="vin-icon">⛰️</div>
+                <div>
+                  <div class="vin-nom">Pastoralisme pyrénéen</div>
+                  <div class="vin-desc">Montée en estive, prés de fauche et granges foraines façonnent les paysages de la vallée et la qualité du lait.</div>
+                </div>
+                <div class="vin-badge">Estives</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="legendes">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🌿</div>
+              Terroir & symboles
+            </h2>
+            <div class="histoire-texte">
+
+              <p>La vallée de Bethmale est célèbre au-delà de son fromage : son costume traditionnel aux couleurs vives, porté lors des fêtes, et ses sabots à longue pointe recourbée en font l’une des vallées les plus singulières des Pyrénées.</p>
+
+              <div class="citation-bloc">
+                <p>« Le fromage se fait à l’étable, mais il se gagne à la cave. »</p>
+                <cite>— Adage de fromagers pyrénéens</cite>
+              </div>
+
+              <p><strong>La légende des sabots.</strong> On raconte que les jeunes Bethmalais auraient repoussé des envahisseurs maures et que l’un d’eux, trahi par sa fiancée, aurait sculpté des sabots à pointe pour y fixer le cœur de son rival. Les sabots de fiançailles, à pointe d’autant plus longue que l’amour est grand, en perpétueraient le souvenir.</p>
+
+              <p><strong>Le lac de Bethmale.</strong> Petit lac aux eaux vert émeraude entouré de hêtraies, il est le symbole paysager de la vallée et un but de promenade apprécié.</p>
+
+            </div>
+          </section>
+
+          <section class="section" id="alentours">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📍</div>
+              Aux alentours
+            </h2>
+            <div class="histoire-texte">
+
+              <p><strong>Lac de Bethmale</strong> au pied du col de la Core, entouré de sentiers forestiers.</p>
+
+              <p><strong>Marché de Saint-Girons</strong> chaque samedi, vitrine des fromages et produits fermiers du Couserans.</p>
+
+              <p><strong>Saint-Lizier</strong> cité épiscopale, avec sa cathédrale, son cloître roman et sa pharmacie du XVIII<sup>e</sup> siècle.</p>
+
+              <p><strong>Castillon-en-Couserans</strong> et sa chapelle Saint-Pierre perchée au-dessus du village, porte d’entrée de la vallée.</p>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+
+          <!-- Carte d'identité -->
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row">
+                <span class="aside-label">Région</span>
+                <span class="aside-val">Occitanie</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Territoire</span>
+                <span class="aside-val">Ariège (Couserans, vallée de Bethmale)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Catégorie</span>
+                <span class="aside-val">Fromage · Savoir-faire pastoral</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">Lait</span>
+                <span class="aside-val">Vache, cru (variante chèvre)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">LABEL / PROTECTION</span>
+                <span class="aside-val">Fromage traditionnel (sans AOP)</span>
+              </div>
+              <div class="aside-row">
+                <span class="aside-label">RECONNU PAR</span>
+                <span class="aside-val">Producteurs fermiers et fromageries du Couserans</span>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<div class="retour-haut"><a href="../../../../occitanie-departement/ariege/ariege.html">← Retour à la fiche Ariège</a></div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+<!--  Retour flottant-->
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+<script>
+  (function () {
+    var btn = document.querySelector('.btn-haut-page');
+    var seuil = 300; // distance de défilement (en pixels) avant apparition
+
+    function majBouton() {
+      btn.classList.toggle('visible', window.scrollY > seuil);
+    }
+
+    window.addEventListener('scroll', majBouton, { passive: true });
+    majBouton();
+
+    btn.addEventListener('click', function () {
+      var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
