@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saint-Michel-de-Vax, le château du général régicide — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Saint-Michel-de-Vax (Tarn), 79 habitants : le château où naquit et mourut le général Lacombe-Saint-Michel, régicide, ancêtre du prix Nobel Claude Simon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+
+
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- COULEUR-BANDEAU : bleu nuit républicain -->
+  <style>
+    .produit-hero { background-color: #3B4C7A; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #3B4C7A; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #283559; }
+    .lettrine::first-letter, .chiffre .val { color: #3B4C7A; }
+    .btn { background: #3B4C7A; border-color: #3B4C7A; }
+    .btn:hover { background: #283559; }
+    .btn.secondaire { background: #F7F3EC; color: #3B4C7A; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #3B4C7A; color: white; border-color: #3B4C7A; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #3B4C7A, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #3B4C7A, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du village si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+        url('../../../assets/departement/occitanie/panorama-clocher.webp');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns zone-btn-carte">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour btn-carte sans-emoji">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>S</em>aint-<em>M</em>ichel-de-<em>V</em>ax<br>
+            <span style="padding-left: 80px;"><em>l</em>e <em>c</em>hâteau <em>d</em>u <br>
+              <em>g</em>énéral <em>r</em>égicide</span></h1>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#focus">🏰 Le château</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Sur le causse, à la lisière du Tarn-et-Garonne, un village de 79 habitants. Dans son petit château est né, puis mort, un général de la Révolution qui vota la mort du roi, épousa une royaliste et compte parmi ses descendants un prix Nobel de littérature.</p>
+              <h3>Des moines, une grotte et un archange</h3>
+              <p class="lettrine">Saint-Michel-de-Vax se trouve dans le nord-ouest du Tarn, sur un causse largement boisé, entre Saint-Antonin-Noble-Val et Cordes-sur-Ciel. La commune ne couvre que 5,9 km², entre 158 et 413 mètres d'altitude ; la moitié de son territoire est faite de forêts, aux portes de la Grésigne.</p>
+              <p>Selon la tradition locale, tout commence au Ve siècle : des moines s'installent dans une grotte, au lieu-dit la combe de <strong>Batz</strong>, et placent l'endroit sous la protection de saint Michel. Le « Vax » du nom serait une déformation de ce Batz.</p>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/saint-michel-de-vax.jpg"
+                        alt="Village de Saint-Michel-de-Vax" onerror="this.closest('figure').style.display='none'" />
+                    <figcaption>L'église Saint-Michel de Saint-Michel-de-Vax</figcaption>
+          </figure>
+
+              <h3>Une forteresse du temps de Blanche de Castille</h3>
+              <p>Le château est bâti entre 1200 et 1250, à l'époque de Blanche de Castille. C'est alors une forteresse flanquée de quatre tours, élevée peu après la croisade contre les Albigeois, quand le comté de Toulouse passe peu à peu sous l'autorité de la couronne. C'est autour de lui que le village se forme.</p>
+              <p>Il n'en reste aujourd'hui que deux tours. Le corps de logis a été largement remanié, et à la Révolution les tours sont mises à la même hauteur. Le château est une propriété privée et ne se visite pas.</p>
+              <h3>Lacombe-Saint-Michel, un républicain au cœur de la tempête</h3>
+              <p>En 1753 naît au château <strong>Jean-Pierre Lacombe-Saint-Michel</strong>. Officier d'artillerie, il embrasse la Révolution : il aurait pris part à la prise de la Bastille, il siège à la Convention et vote la mort de Louis XVI. Général des armées de la République puis de l'Empire, il est nommé gouverneur de Barcelone, avant que la maladie ne le ramène dans son château natal, où il meurt en 1812.</p>
+              <p>Pendant ses campagnes, il ne cesse d'envoyer des instructions à son intendant pour la gestion du domaine. Sa vie privée, elle, est un roman : sa seconde épouse, Marie Micoud, épousée en 1793, avait tenté de sauver le roi de la guillotine et fut emprisonnée pour cela. Son frère, royaliste, est condamné à mort, et la famille lui en tiendra rigueur.</p>
+              <div class="citation-bloc">
+                <p>Un général qui vote la mort du roi, une épouse qui tente de le sauver, un descendant prix Nobel : trois siècles d'histoire de France tiennent dans ce château.</p>
+              </div>
+              <h3>Le village qui s'est vidé</h3>
+              <p>Au milieu du XIXe siècle, Saint-Michel-de-Vax compte <strong>411 habitants</strong> (1856). L'exode rural fait son œuvre : la commune tombe à une soixantaine d'habitants à la fin du XXe siècle, puis remonte doucement. Elle en compte 79 en 2023. Quatre exploitations agricoles y ont encore leur siège, tournées vers l'élevage de brebis et de chèvres.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li><span class="date">Ve s.</span><span>Selon la tradition, des moines s'installent dans une grotte de la combe de <strong>Batz</strong>.</span></li>
+              <li class="fort"><span class="date">1200-1250</span><span>Construction du <strong>château</strong>, forteresse à quatre tours.</span></li>
+              <li><span class="date">1753</span><span>Naissance au château de <strong>Jean-Pierre Lacombe-Saint-Michel</strong>.</span></li>
+              <li><span class="date">1789</span><span>Il aurait participé à la prise de la Bastille.</span></li>
+              <li><span class="date">1790</span><span>Mort de sa première épouse, Marianne Hasselaër, à 33 ans.</span></li>
+              <li class="fort"><span class="date">1793</span><span>Conventionnel, il vote la mort de Louis XVI ; il épouse Marie Micoud, royaliste.</span></li>
+              <li><span class="date">1812</span><span>Il meurt au château de Saint-Michel-de-Vax.</span></li>
+              <li><span class="date">1856</span><span>Pic de population : <strong>411 habitants</strong>.</span></li>
+              <li><span class="date">1981</span><span><em>Les Géorgiques</em> de Claude Simon font revivre l'aïeul.</span></li>
+              <li class="fort"><span class="date">1985</span><span>Claude Simon reçoit le <strong>prix Nobel de littérature</strong>.</span></li>
+              <li><span class="date">2023</span><span>79 habitants.</span></li>
+            </ol>
+          </section>
+
+          <!-- FOCUS -->
+          <section class="section" id="focus">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🏰</div>
+              Le château et son général
+            </h2>
+            <div class="histoire-texte">
+              <p>Le château de Saint-Michel-de-Vax est à l'origine du village. Bâti au XIIIe siècle comme une forteresse carrée à quatre tours, il a été transformé au fil des siècles en demeure seigneuriale : seules deux tours subsistent, et la façade du logis porte la marque des remaniements de la Renaissance.</p>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/chateau-saint-michel-de-vax.jpg"
+                        alt="Château de Saint-Michel-de-Vax" loading="lazy" decoding="async" onerror="this.closest('figure').style.display='none'" />
+                    <figcaption>Le château de Saint-Michel-de-Vax</figcaption>
+          </figure>
+
+              <p>C'est ici que Lacombe-Saint-Michel est né et c'est ici qu'il est revenu mourir. Son descendant direct, l'écrivain <strong>Claude Simon</strong>, a fait de lui l'un des personnages des <em>Géorgiques</em>, en s'appuyant sur les lettres que le général adressait à son intendant pour diriger ses terres depuis les champs de bataille.</p>
+              <p>Le château est une propriété privée qui ne se visite pas : on le découvre depuis le village et les chemins de randonnée (GR 46 et Grésinhòla) qui traversent la commune.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les quatre vies du château</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Forteresse :</strong> construite entre 1200 et 1250, flanquée de quatre tours.</span></li>
+                <li><span><strong>Demeure :</strong> remaniée à la Renaissance, elle ne garde que deux tours.</span></li>
+                <li><span><strong>Révolution :</strong> les tours sont ramenées à la même hauteur.</span></li>
+                <li><span><strong>Mémoire :</strong> elle entre en littérature avec <em>Les Géorgiques</em> de Claude Simon.</span></li>
+              </ol>
+            </div>
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">1753</div><div class="lib">naissance du général au château</div></div>
+              <div class="chiffre"><div class="val">1985</div><div class="lib">prix Nobel de son descendant</div></div>
+              <div class="chiffre"><div class="val">411</div><div class="lib">habitants en 1856</div></div>
+              <div class="chiffre"><div class="val">79</div><div class="lib">habitants aujourd'hui</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Littérature</div>
+                <h4>Un aïeul de roman</h4>
+                <p>Dans <em>Les Géorgiques</em> (1981), Claude Simon entremêle la vie de son ancêtre le général, celle d'un cavalier de 1940 et la guerre d'Espagne. Saint-Michel-de-Vax y est évoqué.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Mystère</div>
+                <h4>Une tombe dans les bois</h4>
+                <p>La première épouse du général, la protestante hollandaise Marianne Hasselaër, morte à 33 ans en 1790, reposerait sous une grande dalle dans un vallon boisé non loin du château. L'inscription serait effacée par le temps.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Paradoxe</div>
+                <h4>Républicain, mais pas sa famille</h4>
+                <p>Le général républicain a épousé en secondes noces une femme emprisonnée pour avoir voulu sauver Louis XVI, et son propre frère royaliste fut condamné à mort.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Nature</div>
+                <h4>Aux portes de la Grésigne</h4>
+                <p>La commune fait partie du site Natura 2000 « forêt de Grésigne et environs », où nichent notamment le faucon pèlerin et le grand-duc d'Europe.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Saint-Michel-de-Vax, causse du nord-ouest du Tarn</span>
+                <button class="btn secondaire" id="reset">Recentrer</button>
+              </div>
+              <div id="map" aria-label="Carte de Saint-Michel-de-Vax"></div>
+              <div class="carte-note">Positions indicatives, d'après Wikipédia et OpenStreetMap. Le château est une propriété privée : il ne se visite pas.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Tarn (81)</span></div>
+              <div class="aside-row"><span class="aside-label">Intercommunalité</span><span class="aside-val">Cordais et Causse (4C)</span></div>
+              <div class="aside-row"><span class="aside-label">Habitants</span><span class="aside-val">79 (2023)</span></div>
+              <div class="aside-row"><span class="aside-label">Maximum</span><span class="aside-val">411 (1856)</span></div>
+              <div class="aside-row"><span class="aside-label">Superficie</span><span class="aside-val">5,9 km²</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude</span><span class="aside-val">158 à 413 m</span></div>
+              <div class="aside-row"><span class="aside-label">Patrimoine</span><span class="aside-val">Château, église Saint-Michel</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution du nombre d'habitants"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Pic de 1856, puis recensements depuis 1962 (Insee, Cassini/EHESS).</p>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://fr.wikipedia.org/wiki/Saint-Michel-de-Vax" target="_blank" rel="noopener">Wikipédia, Saint-Michel-de-Vax</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Jean-Pierre_Lacombe-Saint-Michel" target="_blank" rel="noopener">Wikipédia, Jean-Pierre Lacombe-Saint-Michel</a></li>
+                <li><a href="https://lifeonlalune.com/2018/06/17/every-chateau-tells-a-story-16-le-chateau-de-saint-michel-de-vax/" target="_blank" rel="noopener">Life on La Lune, le château (en anglais)</a></li>
+                <li><a href="https://fr.geneawiki.com/wiki/81265_-_Saint-Michel-de-Vax" target="_blank" rel="noopener">Geneawiki, Saint-Michel-de-Vax</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   (un lieu sans lat/lng apparaît dans la liste mais pas sur la carte)
+   ============================================================ */
+const lieux=[{"name": "Le village et l'église Saint-Michel", "lat": 44.1078, "lng": 1.7997, "desc": "Le bourg, son église Saint-Michel et, tout près, le château (propriété privée, ne se visite pas)."}, {"name": "La tombe de Marianne Hasselaër", "desc": "Dans un vallon boisé non loin du château ; emplacement non signalé."}, {"name": "Roussayrolles, le village voisin", "lat": 44.1022, "lng": 1.8342, "desc": "À quelques kilomètres : l'église Notre-Dame et ses fresques de Nicolaï Greschny."}];
+// Population (recensements)
+const population=[[1856, 411], [1962, 72], [1968, 78], [1975, 80], [1982, 89], [1990, 70], [1999, 66], [2006, 65], [2011, 66], [2016, 66], [2023, 79]];
+// Repère à mettre en avant sur la courbe : [année début, année fin, texte] ou null
+const periodeMarquee=[1981, 1986, "Nobel"];
+/* ============================================================ */
+
+const COUL='#3B4C7A', COUL_FONCE='#283559';
+const surCarte=lieux.map((s,i)=>({...s,n:i+1})).filter(s=>s.lat!=null);
+let recentrer=()=>{};
+if(window.L){
+ const map=L.map('map',{scrollWheelZoom:false});
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+ const bounds=L.latLngBounds(surCarte.map(s=>[s.lat,s.lng]));
+ recentrer=()=>surCarte.length>1?map.fitBounds(bounds.pad(.35)):map.setView([surCarte[0].lat,surCarte[0].lng],15);
+ recentrer();
+ window._markers={};
+ surCarte.forEach(s=>{
+  const icon=L.divIcon({className:'',html:`<div class="marker">${s.n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  window._markers[s.n]=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${s.n}. ${s.name}</strong><p>${s.desc}</p>`);
+ });
+ window._map=map;
+} else {
+ document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>';
+}
+lieux.forEach((s,i)=>{
+ const el=document.createElement('div');el.className='etape';
+ const surLaCarte=s.lat!=null;
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div>${surLaCarte?'<div class="etape-leg">Voir sur la carte ↗</div>':''}</div>`;
+ if(surLaCarte)el.onclick=()=>{if(!window._map)return;document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});window._map.setView([s.lat,s.lng],15);window._markers[i+1].openPopup()};
+ else el.style.cursor='default';
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>recentrer();
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph');if(!svg||!population.length)return;
+ const W=300,H=150,g={l:32,r:12,t:14,b:22};
+ const annees=population.map(p=>p[0]),vals=population.map(p=>p[1]);
+ const x0=Math.floor((Math.min(...annees)-5)/10)*10,x1=Math.max(2025,Math.max(...annees));
+ const pas=[10,20,25,50,100,200,250,500][[10,20,25,50,100,200,250,500].findIndex(p=>Math.max(...vals)/p<=5)];
+ const yMax=Math.ceil(Math.max(...vals)*1.1/pas)*pas;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ for(let v=0;v<=yMax;v+=pas)s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`;
+ const ecart=(x1-x0)>120?50:20;
+ for(let a=Math.ceil(x0/ecart)*ecart;a<=x1;a+=ecart)s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`;
+ if(periodeMarquee){const[a,b,t]=periodeMarquee;s+=`<rect x="${X(a)}" y="${g.t}" width="${Math.max(3,X(b)-X(a))}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/><text x="${X((a+b)/2)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">${t}</text>`}
+ s+=`<polyline points="${population.map(([a,v])=>X(a)+','+Y(v)).join(' ')}" fill="none" stroke="${COUL}" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="${COUL}"><title>${a} : ${v} habitants</title></circle>`});
+ const iMax=vals.indexOf(Math.max(...vals)),iMin=vals.indexOf(Math.min(...vals));
+ s+=`<text x="${X(annees[iMax])+6}" y="${Y(vals[iMax])+3}" style="fill:${COUL_FONCE};font-weight:700">${vals[iMax]}</text>`;
+ if(iMin!==iMax)s+=`<text x="${X(annees[iMin])}" y="${Y(vals[iMin])-7}" text-anchor="middle" style="fill:${COUL_FONCE};font-weight:700">${vals[iMin]}</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aubrac, le hameau de la cloche des perdus — L'Âme des Régions</title>
+  <meta name="description" content="Histoire de clocher : Aubrac (Aveyron), hameau du plateau à 1 300 mètres : la dômerie fondée en 1120, la tour des Anglais et la cloche Maria qui sonnait pour les voyageurs perdus dans la tempête." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <style>
+
+
+
+
+    /* ─── VARIABLES (reprises des fiches du site) ─ */
+    :root {
+      --ivoire: #FAF7F0;
+      --bleu: #2C4A7C;
+      --ocre: #C8843A;
+      --font-titre: 'Playfair Display', Georgia, serif;
+      --font-corps: 'Source Sans 3', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── BASE ─────────────────────────────────── */
+    .produit-page { background: var(--ivoire); font-family: var(--font-corps); color: #3A3028; }
+
+    /* ─── BANDEAU HÉRO ─────────────────────────── */
+    .produit-hero {
+      background: #2C4A7C;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 22px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .produit-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px);
+      pointer-events: none;
+    }
+    .produit-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; position: relative; z-index: 3; gap: 12px; flex-wrap: wrap;
+    }
+    .produit-logo {
+      font-family: var(--font-titre); font-size: 28px; font-weight: 700;
+      color: white; text-decoration: none;
+    }
+    .produit-logo span { color: #C8843A; }
+    .produit-topbar-btns { display: flex; gap: 10px; }
+    .produit-btn-retour {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 4px;
+      color: white; font-size: 18px; font-family: var(--font-corps);
+      text-decoration: none; transition: opacity 0.18s;
+    }
+    .produit-btn-retour:hover { opacity: 0.7; }
+
+    .hero-label-bas-circuit em { color: #C8843A; font-style: italic; }
+    .hero-label-bas-circuit {
+      color: white; font-family: var(--font-titre); font-size: 30px;
+      letter-spacing: 0.15em; text-align: center; margin: -50px 0 14px;
+      position: relative; z-index: 3;
+    }
+
+    .produit-hero-body {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; padding-bottom: 28px; position: relative; z-index: 2;
+    }
+    .produit-hero-body h1 {
+      font-family: var(--font-titre); font-size: clamp(26px, 4.4vw, 48px);
+      font-weight: 700; line-height: 1.25; color: white;
+      margin-bottom: 90px; margin-top: 30px;
+    }
+    .produit-hero-body h1 em { color: #C8843A; font-style: italic; }
+    .hero-carte-dept {
+      height: 220px; width: auto; opacity: 0.85;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)) brightness(1.05);
+      display: block; align-self: flex-start; margin-top: 8px;
+    }
+    .fiche-hero-ecusson {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: var(--ecusson-top, 30px); z-index: 1; pointer-events: none;
+    }
+    .fiche-hero-ecusson img { height: 200px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+
+    .produit-nav {
+      background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative; z-index: 3;
+    }
+    .produit-nav-inner { display: flex; overflow-x: auto; }
+    .produit-nav a {
+      padding: 13px 22px; font-size: 13px; font-family: var(--font-corps);
+      color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.18s;
+    }
+    .produit-nav a:hover { color: white; border-bottom-color: rgba(255,255,255,0.4); }
+    .produit-nav a.active { color: #FAC775; border-bottom-color: #C8843A; }
+
+    /* ─── CORPS ─────────────────────────────────── */
+    .produit-body { padding: 48px 0 80px; }
+    .produit-layout {
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px; align-items: start;
+    }
+    .section { margin-bottom: 44px; scroll-margin-top: 16px; }
+    .section-titre {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-titre); font-size: 22px; font-weight: 700;
+      color: #2C4A7C; margin: 0 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid #E8DEC8;
+    }
+    .section-titre-icon {
+      width: 36px; height: 36px; background: #2C4A7C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .histoire-texte { font-size: 15.5px; line-height: 1.8; color: #3A3028; }
+    .histoire-texte p { margin: 0 0 14px; }
+    .histoire-texte h3 {
+      font-family: var(--font-titre); font-size: 18px; color: #C8843A;
+      margin: 26px 0 8px; font-weight: 700;
+    }
+    .histoire-texte h3:first-child { margin-top: 0; }
+    .chapeau {
+      font-family: var(--font-titre); font-size: 18px; font-style: italic;
+      line-height: 1.6; color: #5A3E1B; margin: 0 0 22px;
+    }
+    .lettrine::first-letter {
+      float: left; font-family: var(--font-titre); font-size: 58px;
+      line-height: 0.9; padding: 6px 8px 0 0; color: #9A3F2C; font-weight: 700;
+    }
+
+    .citation-bloc {
+      background: #F7F3EC; border-left: 4px solid #C8843A;
+      padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0;
+    }
+    .citation-bloc p {
+      font-family: var(--font-titre); font-style: italic; font-size: 15px;
+      color: #5A3E1B; margin: 0; line-height: 1.6;
+    }
+    .citation-bloc .auteur { font-family: var(--font-corps); font-style: normal; font-size: 12px; color: #8B7355; margin-top: 6px; }
+
+    /* Chronologie */
+    .frise { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+    .frise::before {
+      content: ''; position: absolute; left: 47px; top: 6px; bottom: 6px;
+      width: 2px; background: #E8DEC8;
+    }
+    .frise li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 16px;
+      padding: 8px 0; position: relative; font-size: 14.5px; line-height: 1.6;
+    }
+    .frise .date {
+      font-family: var(--font-titre); font-weight: 700; color: white;
+      background: #2C4A7C; border-radius: 20px; text-align: center;
+      padding: 3px 0; font-size: 13.5px; align-self: start; position: relative; z-index: 1;
+    }
+    .frise li.fort .date { background: #C8843A; }
+    .frise strong { color: #2C4A7C; }
+
+    /* Cartes « le saviez-vous » */
+    .encadres { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .encadre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .encadre-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #C8843A; font-weight: 700; margin-bottom: 8px;
+    }
+    .encadre h4 { font-family: var(--font-titre); font-size: 17px; color: #2C4A7C; margin: 0 0 8px; }
+    .encadre p { font-size: 14px; line-height: 1.65; margin: 0; }
+
+    /* Principes de la renaissance */
+    .ingredients-bloc {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 20px 22px; margin: 20px 0;
+    }
+    .ingredients-titre {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em;
+      color: #8B7355; font-weight: 600; margin-bottom: 14px;
+    }
+    .parcours-liste { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .parcours-liste li {
+      counter-increment: p; display: grid; grid-template-columns: 26px 1fr;
+      gap: 8px; font-size: 14.5px; line-height: 1.6; padding: 9px 0;
+      border-bottom: 1px dashed #E8DEC8;
+    }
+    .parcours-liste li:last-child { border-bottom: none; }
+    .parcours-liste li::before { content: counter(p) "."; font-weight: 700; color: #C8843A; }
+    .parcours-liste strong { color: #2C4A7C; }
+
+    /* Chiffres clés */
+    .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0; }
+    .chiffre {
+      background: white; border: 1px solid #E0DACE; border-radius: 12px;
+      padding: 14px 10px; text-align: center;
+    }
+    .chiffre .val { font-family: var(--font-titre); font-size: 28px; font-weight: 700; color: #9A3F2C; line-height: 1.1; }
+    .chiffre .lib { font-size: 12px; color: #8B7355; margin-top: 4px; line-height: 1.35; }
+
+    /* Carte */
+    .carte-bloc { background: white; border: 1px solid #E0DACE; border-radius: 12px; overflow: hidden; }
+    .carte-outils {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid #F0EAD6;
+    }
+    .carte-statut { font-size: 12px; color: #8B7355; }
+    .btn {
+      border: 1px solid #2C4A7C; background: #2C4A7C; color: white;
+      border-radius: 20px; padding: 8px 16px; font-family: var(--font-corps);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .btn:hover { background: #1e3560; }
+    .btn.secondaire { background: #F7F3EC; color: #2C4A7C; border-color: #E0DACE; }
+    #map { height: 460px; width: 100%; background: #e9ece7; }
+    .carte-note { padding: 12px 16px; font-size: 12px; color: #8B7355; font-style: italic; line-height: 1.5; }
+    .marker {
+      width: 30px; height: 30px; background: #C8843A; border: 2px solid white;
+      color: white; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-titre); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .leaflet-popup-content { font-family: var(--font-corps); }
+    .leaflet-popup-content strong { font-family: var(--font-titre); color: #2C4A7C; }
+
+    .etapes-liste { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .etape {
+      display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+      cursor: pointer; border-radius: 10px; padding: 6px; margin: -6px; transition: background 0.18s;
+    }
+    .etape:hover { background: #F7F3EC; }
+    .etape-num {
+      width: 40px; height: 40px; background: #2C4A7C; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-titre); font-weight: 700; font-size: 15px;
+    }
+    .etape-corps { padding-top: 9px; }
+    .etape-titre {
+      font-size: 13px; font-weight: 600; color: #C8843A; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .etape-texte { font-size: 14px; line-height: 1.7; color: #3A3028; }
+    .etape-leg { font-size: 12px; color: #8B7355; margin-top: 4px; }
+
+    /* Colonne droite */
+    .produit-aside { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .aside-card { background: white; border: 1px solid #E0DACE; border-radius: 14px; overflow: hidden; }
+    .aside-card-header {
+      background: #2C4A7C; color: white; padding: 14px 18px;
+      font-family: var(--font-titre); font-size: 14px; font-weight: 700;
+    }
+    .aside-card-body { padding: 16px 18px; }
+    .aside-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #F0EAD6; gap: 10px;
+    }
+    .aside-row:last-child { border-bottom: none; }
+    .aside-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #8B7355; flex-shrink: 0; }
+    .aside-val { font-size: 13px; font-weight: 600; color: #3A3028; text-align: right; }
+    .aside-texte { font-size: 13.5px; line-height: 1.6; margin: 0; }
+    .aside-sources { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55; }
+    .aside-sources li { margin-bottom: 6px; }
+    .aside-sources a { color: #2C4A7C; }
+    .aside-btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+
+    /* Courbe de population */
+    .pop-graph { width: 100%; height: auto; display: block; }
+    .pop-graph text { font-family: var(--font-corps); font-size: 10px; fill: #8B7355; }
+
+    /* Bas de page */
+    .site-footer { background: #2C4A7C; color: white; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-titre); font-size: 22px; font-weight: 700; }
+    .footer-logo span { color: #C8843A; }
+    .footer-tagline { margin: 0; font-size: 13px; opacity: .8; }
+    .btn-haut-page {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: #2C4A7C; color: white; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,74,124,0.35); display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .btn-haut-page svg { width: 22px; height: 22px; }
+    .btn-haut-page.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 860px) {
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; order: -1; }
+    }
+    @media (max-width: 700px) {
+      .encadres { grid-template-columns: 1fr; }
+      .chiffres { grid-template-columns: 1fr 1fr; }
+      .frise::before { left: 35px; }
+      .frise li { grid-template-columns: 64px 1fr; gap: 12px; }
+      .hero-label-bas-circuit { font-size: 22px; }
+    }
+    @media (max-width: 560px) {
+      .produit-hero-body { grid-template-columns: 1fr; }
+      .hero-carte-dept { display: none; }
+      .fiche-hero-ecusson { position: static; transform: none; margin: 12px auto 0; }
+      .container { padding: 0 16px; }
+    }
+    @media print {
+      .produit-nav, .btn-haut-page, .carte-outils, .produit-topbar-btns { display: none !important; }
+      .produit-layout { grid-template-columns: 1fr; }
+      .produit-aside { position: static; }
+    }
+
+  
+    /* ── Photos des fiches : toujours centrées dans la colonne de texte ── */
+    figure.photo-bloc { display: block; margin: 28px auto !important; text-align: center; }
+    figure.photo-bloc img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; }
+    figure.photo-bloc figcaption { text-align: center; margin-top: 8px; font-size: 13px; font-style: italic; color: #8B7355; }
+  </style>
+  <!-- Styles communs à toutes les fiches (bandeau, titre, largeurs) -->
+  <link rel="stylesheet" href="../../../fiche.css" />
+  <!-- COULEUR-BANDEAU : vert des estives -->
+  <style>
+    .produit-hero { background-color: #4C6A48; }
+    .produit-logo span, .hero-label-bas-circuit em, .produit-hero-body h1 em { color: #FAC775; }
+    .aside-card-header, .section-titre-icon, .etape-num, .site-footer, .btn-haut-page, .frise .date { background: #4C6A48; }
+    .frise li.fort .date { background: #C8843A; }
+    .section-titre, .encadre h4, .frise strong, .parcours-liste strong, .leaflet-popup-content strong { color: #344A31; }
+    .lettrine::first-letter, .chiffre .val { color: #4C6A48; }
+    .btn { background: #4C6A48; border-color: #4C6A48; }
+    .btn:hover { background: #344A31; }
+    .btn.secondaire { background: #F7F3EC; color: #4C6A48; border-color: #E0DACE; }
+    .btn.secondaire:hover { background: #4C6A48; color: white; border-color: #4C6A48; }
+    .footer-logo span { color: #FAC775; }
+    .produit-hero-body h1 { text-shadow: 3px 3px 0 #4C6A48, 6px 6px 0 rgba(0,0,0,0.55), 0 0 30px rgba(0,0,0,0.6); }
+    .produit-hero-body h1 em { text-shadow: 4px 4px 0 #4C6A48, 8px 8px 0 rgba(0,0,0,0.55); }
+    .hero-label-bas-circuit { margin-top: -10px; }
+  </style>
+  <!-- PHOTO-BANDEAU (facultatif) : remplacer par une photo du village si vous en avez une -->
+  <style>
+    .produit-hero {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+        url('../../../assets/departement/occitanie/panorama-clocher.webp');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="produit-page">
+
+  <!-- ══════════════════════════════════════════
+       HÉRO
+  ══════════════════════════════════════════ -->
+  <div class="produit-hero bandeau-btn-carte">
+    <div class="container">
+
+      <div class="produit-topbar">
+        <a href="../../../index.html" class="produit-logo">L'<span>Âme</span> des Régions</a>
+        <div class="produit-topbar-btns zone-btn-carte">
+          <a href="histoires-de-clocher.html" class="produit-btn-retour btn-carte sans-emoji">Toutes les histoires de clocher</a>
+        </div>
+      </div>
+
+      <div class="produit-hero-body">
+        <div>
+          <h1><em>A</em>ubrac<br>
+            <span style="padding-left: 80px;"><em>l</em>e <em>h</em>ameau <em>d</em>e <em>l</em>a <br>
+              <em>c</em>loche <em>d</em>es <em>p</em>erdus</span></h1>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="hero-label-bas-circuit">
+      <em>⟹</em> <em>H</em>istoire <em>d</em>e <em>c</em>locher <em>⟸</em>
+    </div>
+
+    <div class="produit-nav">
+      <div class="container">
+        <div class="produit-nav-inner">
+          <a href="#histoire" class="active">📜 L'histoire</a>
+          <a href="#chronologie">🕰️ Chronologie</a>
+          <a href="#focus">🔔 La cloche des perdus</a>
+          <a href="#saviez-vous">💡 Le saviez-vous ?</a>
+          <a href="#sur-place">🗺️ Sur place</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CORPS
+  ══════════════════════════════════════════ -->
+  <div class="produit-body">
+    <div class="container">
+      <div class="produit-layout">
+
+        <!-- ── COLONNE PRINCIPALE ── -->
+        <div>
+
+          <!-- HISTOIRE -->
+          <section class="section" id="histoire">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">📜</div>
+              L'histoire
+            </h2>
+            <div class="histoire-texte">
+              <p class="chapeau">Sur un plateau battu par la neige et le brouillard, à 1 300 mètres d'altitude, un hameau de quelques maisons autour d'une église et d'une tour. Pendant des siècles, une cloche y a sonné des heures entières pour ramener vers l'abri les pèlerins égarés.</p>
+              <h3>Un hameau au toit de l'Aveyron</h3>
+              <p class="lettrine">Aubrac est un hameau de la commune de Saint-Chély-d'Aubrac, dans le nord de l'Aveyron, au carrefour du Cantal et de la Lozère. Il se trouve sur le plateau de l'Aubrac, dont l'altitude moyenne avoisine 1 200 mètres, au cœur du parc naturel régional. Le chemin de Compostelle venu du Puy (GR 65) le traverse.</p>
+              <p>Aujourd'hui, ce n'est qu'une poignée de bâtiments de basalte et de granit : une église, une tour, quelques maisons. Mais pendant six siècles, ce fut l'un des grands hôpitaux de la route de Saint-Jacques.</p>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/aubrac.jpg"
+                        alt="Hameau d'Aubrac" onerror="this.closest('figure').style.display='none'" />
+                    <figcaption>L'église et la tour des Anglais à Aubrac</figcaption>
+          </figure>
+
+              <h3>Le vœu d'Adalard</h3>
+              <p>Vers 1120, un vicomte de Flandre, <strong>Adalard</strong>, traverse le plateau sur le chemin de Compostelle. À l'aller, il est attaqué par des brigands. Au retour, une tempête de neige le bloque au même endroit. Il y voit un signe et fait le vœu de bâtir un abri s'il survit : ce sera l'hospice Notre-Dame-des-Pauvres. Il meurt en 1135 ; des prêtres suivant la règle de saint Augustin prennent le relais.</p>
+              <h3>La dômerie, un monde à part</h3>
+              <p>La communauté est dirigée par un prieur élu à vie qui porte le titre de <strong>Dom</strong> : d'où le nom de « dômerie ». Autour de lui vivent des prêtres, des chevaliers chargés de guider et de protéger les pèlerins, des frères qui servent les pauvres, des dames souvent nobles qui soignent les malades, et des « donats », laïcs qui se donnent avec leurs biens à l'hôpital. Au début du XIVe siècle, on compte 120 frères, 30 sœurs, 4 chevaliers et 15 prêtres.</p>
+              <p>Le pèlerin reçoit de l'eau pour se laver les mains, des soins, un lit et un repas ; les malades restent aussi longtemps qu'il le faut, et l'on enterre ceux qui meurent sur place. À la « porte de la Miche », le pain est distribué sans compter.</p>
+              <div class="citation-bloc">
+                <p>« Errantes revoco » : « je rappelle ceux qui errent ». C'est l'inscription de la cloche Maria, qui sonnait dans la tourmente pour guider les voyageurs perdus.</p>
+              </div>
+              <h3>Brigands, Anglais et un roi de France</h3>
+              <p>En 1353, face aux Anglais qui s'installent en Rouergue, le Dom Durant Olivier fait élever en hâte une tour de 30 mètres, la <strong>tour des Anglais</strong>. Elle ne suffit pas : en 1360, des routiers menés par Berducat d'Albret prennent le monastère, et en 1385, après avoir incendié l'église de Saint-Chély, ils extorquent mille florins d'or aux religieux.</p>
+              <p>En juillet 1533, le roi <strong>François Ier</strong> fait halte trois jours à la dômerie. Il vient remercier les religieux d'avoir participé à la rançon payée après sa capture à Pavie, et chasse les oiseaux autour du lac des Salhiens. La Révolution met fin à la dômerie, dont une partie des bâtiments disparaît.</p>
+            </div>
+          </section>
+
+          <!-- CHRONOLOGIE -->
+          <section class="section" id="chronologie">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🕰️</div>
+              Chronologie
+            </h2>
+            <ol class="frise">
+              <li class="fort"><span class="date">v. 1120</span><span>Le vicomte flamand <strong>Adalard</strong> fonde l'hospice Notre-Dame-des-Pauvres.</span></li>
+              <li><span class="date">1135</span><span>Mort d'Adalard ; une communauté de chanoines augustins prend le relais.</span></li>
+              <li><span class="date">1162</span><span>Statuts de la dômerie : le Dom est élu à vie par le chapitre.</span></li>
+              <li><span class="date">1220</span><span>Achèvement de l'église, de transition romane et gothique.</span></li>
+              <li><span class="date">1353</span><span>Construction de la <strong>tour des Anglais</strong>, haute de 30 mètres.</span></li>
+              <li><span class="date">1360</span><span>Les routiers de Berducat d'Albret prennent le monastère.</span></li>
+              <li><span class="date">1533</span><span>Séjour du roi <strong>François Ier</strong>, du 20 au 22 juillet.</span></li>
+              <li><span class="date">1595</span><span>La cloche est brisée lors d'une attaque des ligueurs.</span></li>
+              <li><span class="date">1668</span><span>Première refonte de la cloche.</span></li>
+              <li><span class="date">1772</span><span>Nouvelle refonte : la cloche porte l'inscription <em>Errantes revoco</em>.</span></li>
+              <li class="fort"><span class="date">1841</span><span>Les habitants de Saint-Chély emportent la cloche dans leur église.</span></li>
+              <li><span class="date">1848</span><span>Seconde tentative ; ils sont condamnés à la remonter le 9 juin.</span></li>
+              <li><span class="date">1902</span><span>Ouverture d'un sanatorium, le Royal Aubrac.</span></li>
+            </ol>
+          </section>
+
+          <!-- FOCUS -->
+          <section class="section" id="focus">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🔔</div>
+              La cloche des perdus
+            </h2>
+            <div class="histoire-texte">
+              <p>De toutes les cloches de la dômerie, une seule a survécu : <strong>Maria</strong>, logée dans la tour défensive devenue clocher. Par temps de neige ou de brouillard, on la sonnait longuement, le jour comme la nuit, pour que les voyageurs égarés sur le plateau retrouvent le chemin de l'hôpital. On l'appelle depuis la « cloche des perdus ».</p>
+
+          <figure class="photo-bloc photo-centre" style="max-width: 600px;">
+                   <img src="photo/cloche-aubrac.jpg"
+                        alt="Clocher de l'église d'Aubrac" loading="lazy" decoding="async" onerror="this.closest('figure').style.display='none'" />
+                    <figcaption>La tour-clocher de la cloche des perdus</figcaption>
+          </figure>
+
+              <p>Son histoire est mouvementée. Brisée en 1595 lors d'une attaque des ligueurs, elle est refondue en 1668, puis à nouveau en 1772, avec l'inscription latine <em>Errantes revoco</em>. Au XIXe siècle, les habitants de Saint-Chély-d'Aubrac, en contrebas, la convoitent : en 1841, ils la descendent dans leur propre église. Il faut la remonter à Aubrac en 1846. En 1848, ils recommencent, et sont condamnés à la remettre en place le 9 juin.</p>
+              <p>La cloche est toujours là, et on la sonne encore à quelques occasions.</p>
+            </div>
+            <div class="ingredients-bloc">
+              <div class="ingredients-titre">✦ Les vies de la cloche Maria</div>
+              <ol class="parcours-liste">
+                <li><span><strong>Sonner :</strong> dans la neige et le brouillard, pour guider les pèlerins perdus.</span></li>
+                <li><span><strong>Se briser :</strong> en 1595, lors de l'attaque des ligueurs.</span></li>
+                <li><span><strong>Renaître :</strong> refondue en 1668, puis en 1772 avec sa devise latine.</span></li>
+                <li><span><strong>Être enlevée :</strong> par les voisins de Saint-Chély, en 1841 et en 1848.</span></li>
+              </ol>
+            </div>
+            <div class="chiffres">
+              <div class="chiffre"><div class="val">1120</div><div class="lib">fondation de l'hospice</div></div>
+              <div class="chiffre"><div class="val">30 m</div><div class="lib">de hauteur pour la tour des Anglais</div></div>
+              <div class="chiffre"><div class="val">1 / 5</div><div class="lib">seule cloche survivante sur cinq</div></div>
+              <div class="chiffre"><div class="val">2</div><div class="lib">enlèvements de la cloche</div></div>
+            </div>
+          </section>
+
+          <!-- LE SAVIEZ-VOUS -->
+          <section class="section" id="saviez-vous">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">💡</div>
+              Le saviez-vous ?
+            </h2>
+            <div class="encadres">
+              <div class="encadre">
+                <div class="encadre-titre">Histoire de France</div>
+                <h4>Un roi reconnaissant</h4>
+                <p>En 1533, François Ier séjourne trois jours à Aubrac pour remercier les religieux d'avoir contribué à la rançon versée après sa défaite de Pavie, en 1525.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Santé</div>
+                <h4>La cure de petit-lait</h4>
+                <p>Au début du XXe siècle, les citadins venaient prendre l'air et boire au buron le petit-lait, la « gaspe », réputé purgatif. Un sanatorium contre la tuberculose, le Royal Aubrac, ouvre en 1902.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Nature</div>
+                <h4>Un jardin du plateau</h4>
+                <p>Sous la maison de l'Aubrac, un jardin botanique présente plus de 650 espèces de plantes du plateau.</p>
+              </div>
+              <div class="encadre">
+                <div class="encadre-titre">Tradition</div>
+                <h4>La transhumance</h4>
+                <p>Chaque année en mai, les vaches de race Aubrac montent aux estives, parées de fleurs, de drapeaux et de sonnailles. Elles redescendent à la mi-octobre.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUR PLACE -->
+          <section class="section" id="sur-place">
+            <h2 class="section-titre">
+              <div class="section-titre-icon">🗺️</div>
+              Sur place
+            </h2>
+            <div class="carte-bloc">
+              <div class="carte-outils">
+                <span class="carte-statut">Aubrac, plateau de l'Aubrac (Aveyron)</span>
+                <button class="btn secondaire" id="reset">Recentrer</button>
+              </div>
+              <div id="map" aria-label="Carte de Aubrac"></div>
+              <div class="carte-note">Positions indicatives. La tour des Anglais accueille un gîte d'étape ; l'église est ouverte aux visiteurs.</div>
+            </div>
+            <div class="etapes-liste" id="steps"></div>
+          </section>
+
+        </div>
+
+        <!-- ── COLONNE DROITE ── -->
+        <aside class="produit-aside">
+          <div class="aside-card">
+            <div class="aside-card-header">📋 Carte d'identité</div>
+            <div class="aside-card-body">
+              <div class="aside-row"><span class="aside-label">Région</span><span class="aside-val">Occitanie</span></div>
+              <div class="aside-row"><span class="aside-label">Département</span><span class="aside-val">Aveyron (12)</span></div>
+              <div class="aside-row"><span class="aside-label">Commune</span><span class="aside-val">Saint-Chély-d'Aubrac</span></div>
+              <div class="aside-row"><span class="aside-label">Statut</span><span class="aside-val">Hameau</span></div>
+              <div class="aside-row"><span class="aside-label">Altitude</span><span class="aside-val">env. 1 300 m</span></div>
+              <div class="aside-row"><span class="aside-label">Commune</span><span class="aside-val">517 hab. (2023)</span></div>
+              <div class="aside-row"><span class="aside-label">Chemin</span><span class="aside-val">GR 65 (Compostelle)</span></div>
+              <div class="aside-row"><span class="aside-label">Patrimoine</span><span class="aside-val">Dômerie, tour des Anglais</span></div>
+            </div>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-header">📉 Habitants de la commune</div>
+            <div class="aside-card-body">
+              <svg class="pop-graph" id="pop-graph" viewBox="0 0 300 150" role="img" aria-label="Évolution du nombre d'habitants"></svg>
+              <p class="aside-texte" style="font-size:12px;color:#8B7355;margin-top:6px">Commune de Saint-Chély-d'Aubrac : le hameau n'est pas recensé à part (Insee).</p>
+            </div>
+          </div>
+          <div class="aside-card">
+            <div class="aside-card-header">🔎 Pour aller plus loin</div>
+            <div class="aside-card-body">
+              <ul class="aside-sources">
+                <li><a href="https://www.techno-science.net/fr/definitions/la-domerie-d-aubrac" target="_blank" rel="noopener">Techno-science, la Dômerie d'Aubrac</a></li>
+                <li><a href="https://www.tourisme-en-aubrac.com/en/destination/aubrac-village-emblematique-du-plateau/" target="_blank" rel="noopener">Tourisme en Aubrac, le village d'Aubrac</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Saint-Ch%C3%A9ly-d%27Aubrac" target="_blank" rel="noopener">Wikipédia, Saint-Chély-d'Aubrac</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn aside-btn" onclick="window.print()">Imprimer la fiche</button>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="container footer-inner"><div class="footer-logo">L'<span>Âme</span> des Régions</div><p class="footer-tagline">Valoriser le patrimoine vivant de la France</p></div></footer>
+
+<button type="button" class="btn-haut-page" aria-label="Revenir en haut de la page" title="Haut de page">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+</svg>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================
+   CONFIGURATION DE LA FICHE — seule partie à modifier pour un autre village
+   (un lieu sans lat/lng apparaît dans la liste mais pas sur la carte)
+   ============================================================ */
+const lieux=[{"name": "L'église et la cloche des perdus", "lat": 44.6219, "lng": 2.9861, "desc": "Église de la dômerie, achevée en 1220 ; la cloche Maria dans la tour-clocher."}, {"name": "La tour des Anglais", "desc": "Tour de 30 mètres élevée en 1353, aujourd'hui gîte d'étape, au cœur du hameau."}, {"name": "La maison de l'Aubrac et le jardin botanique", "desc": "Expositions, produits du plateau et plus de 650 espèces de plantes (d'avril à octobre)."}, {"name": "Saint-Chély-d'Aubrac", "lat": 44.591, "lng": 2.921, "desc": "Le village voisin dont les habitants ont deux fois emporté la cloche."}];
+// Population (recensements)
+const population=[[1968, 726], [1975, 606], [1982, 556], [1990, 547], [1999, 532], [2007, 547], [2012, 543], [2017, 529], [2023, 517]];
+// Repère à mettre en avant sur la courbe : [année début, année fin, texte] ou null
+const periodeMarquee=null;
+/* ============================================================ */
+
+const COUL='#4C6A48', COUL_FONCE='#344A31';
+const surCarte=lieux.map((s,i)=>({...s,n:i+1})).filter(s=>s.lat!=null);
+let recentrer=()=>{};
+if(window.L){
+ const map=L.map('map',{scrollWheelZoom:false});
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs',maxZoom:19}).addTo(map);
+ const bounds=L.latLngBounds(surCarte.map(s=>[s.lat,s.lng]));
+ recentrer=()=>surCarte.length>1?map.fitBounds(bounds.pad(.35)):map.setView([surCarte[0].lat,surCarte[0].lng],15);
+ recentrer();
+ window._markers={};
+ surCarte.forEach(s=>{
+  const icon=L.divIcon({className:'',html:`<div class="marker">${s.n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  window._markers[s.n]=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`<strong>${s.n}. ${s.name}</strong><p>${s.desc}</p>`);
+ });
+ window._map=map;
+} else {
+ document.getElementById('map').innerHTML='<p style="padding:20px;font-style:italic;color:#8B7355">Carte indisponible (connexion Internet nécessaire).</p>';
+}
+lieux.forEach((s,i)=>{
+ const el=document.createElement('div');el.className='etape';
+ const surLaCarte=s.lat!=null;
+ el.innerHTML=`<div class="etape-num">${i+1}</div><div class="etape-corps"><div class="etape-titre">${s.name}</div><div class="etape-texte">${s.desc}</div>${surLaCarte?'<div class="etape-leg">Voir sur la carte ↗</div>':''}</div>`;
+ if(surLaCarte)el.onclick=()=>{if(!window._map)return;document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});window._map.setView([s.lat,s.lng],15);window._markers[i+1].openPopup()};
+ else el.style.cursor='default';
+ document.getElementById('steps').appendChild(el);
+});
+document.getElementById('reset').onclick=()=>recentrer();
+
+/* Courbe de population (axe des années à l'échelle) */
+(function(){
+ const svg=document.getElementById('pop-graph');if(!svg||!population.length)return;
+ const W=300,H=150,g={l:32,r:12,t:14,b:22};
+ const annees=population.map(p=>p[0]),vals=population.map(p=>p[1]);
+ const x0=Math.floor((Math.min(...annees)-5)/10)*10,x1=Math.max(2025,Math.max(...annees));
+ const pas=[10,20,25,50,100,200,250,500][[10,20,25,50,100,200,250,500].findIndex(p=>Math.max(...vals)/p<=5)];
+ const yMax=Math.ceil(Math.max(...vals)*1.1/pas)*pas;
+ const X=a=>g.l+(a-x0)/(x1-x0)*(W-g.l-g.r), Y=v=>H-g.b-v/yMax*(H-g.t-g.b);
+ let s='';
+ for(let v=0;v<=yMax;v+=pas)s+=`<line x1="${g.l}" x2="${W-g.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#F0EAD6"/><text x="${g.l-5}" y="${Y(v)+3}" text-anchor="end">${v}</text>`;
+ const ecart=(x1-x0)>120?50:20;
+ for(let a=Math.ceil(x0/ecart)*ecart;a<=x1;a+=ecart)s+=`<text x="${X(a)}" y="${H-6}" text-anchor="middle">${a}</text>`;
+ if(periodeMarquee){const[a,b,t]=periodeMarquee;s+=`<rect x="${X(a)}" y="${g.t}" width="${Math.max(3,X(b)-X(a))}" height="${H-g.t-g.b}" fill="#C8843A" opacity=".18"/><text x="${X((a+b)/2)}" y="${g.t+8}" text-anchor="middle" style="fill:#C8843A;font-weight:700">${t}</text>`}
+ s+=`<polyline points="${population.map(([a,v])=>X(a)+','+Y(v)).join(' ')}" fill="none" stroke="${COUL}" stroke-width="2" stroke-linejoin="round"/>`;
+ population.forEach(([a,v])=>{s+=`<circle cx="${X(a)}" cy="${Y(v)}" r="3" fill="${COUL}"><title>${a} : ${v} habitants</title></circle>`});
+ const iMax=vals.indexOf(Math.max(...vals)),iMin=vals.indexOf(Math.min(...vals));
+ s+=`<text x="${X(annees[iMax])+6}" y="${Y(vals[iMax])+3}" style="fill:${COUL_FONCE};font-weight:700">${vals[iMax]}</text>`;
+ if(iMin!==iMax)s+=`<text x="${X(annees[iMin])}" y="${Y(vals[iMin])-7}" text-anchor="middle" style="fill:${COUL_FONCE};font-weight:700">${vals[iMin]}</text>`;
+ svg.innerHTML=s;
+})();
+
+/* ============================================================
+   NAVIGATION INTERNE + BOUTON HAUT DE PAGE (comme les fiches)
+   ============================================================ */
+const navLinks=document.querySelectorAll('.produit-nav a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){
+ navLinks.forEach(l=>l.classList.remove('active'));
+ const a=document.querySelector(`.produit-nav a[href="#${entry.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:0.2});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+navLinks.forEach(link=>link.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(link.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+(function(){const btn=document.querySelector('.btn-haut-page');const maj=()=>btn.classList.toggle('visible',window.scrollY>300);
+ window.addEventListener('scroll',maj,{passive:true});maj();
+ btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))})();
+</script>
+
+</body>
+</html>
