@@ -19,7 +19,7 @@
     '.hl-p .hl-go{font:600 16px system-ui,sans-serif;background:#2C4A7C;color:#fff;border:0;border-radius:10px;padding:12px 16px;cursor:pointer;width:100%}' +
     '.hl-p .hl-go[disabled]{opacity:.6;cursor:default}.hl-p .hl-x{position:absolute;top:8px;right:8px;background:none;border:0;font-size:22px;line-height:1;padding:6px 10px;cursor:pointer;color:#555}' +
     '.hl-bar{height:10px;background:#E0DACE;border-radius:5px;overflow:hidden;margin:10px 0 6px}.hl-bar i{display:block;height:100%;width:0;background:#3B6D11;transition:width .2s}' +
-    '.hl-p [hidden]{display:none!important}';
+    '.hl-p [hidden],.hl-btn[hidden]{display:none!important}';
   document.head.appendChild(st);
 
   var ICONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>';
@@ -36,6 +36,9 @@
   document.body.appendChild(p); document.body.appendChild(btn);
   var go = p.querySelector('.hl-go'), etat = p.querySelector('#hl-etat'), bar = p.querySelector('.hl-bar'), barI = bar.querySelector('i'), prog = p.querySelector('#hl-prog');
   var enCours = false;
+  // Le bouton n'est affiché que tant que le site n'est pas enregistré sur l'appareil (ou pendant une mise à jour).
+  // Pour le faire réapparaître : ajouter #hors-connexion à la fin de l'adresse.
+  function visibilite() { btn.hidden = !!lire('hl-date') && p.hidden && !enCours; }
 
   function mo(n) { return (n / 1048576).toLocaleString('fr-FR', {maximumFractionDigits: n < 10485760 ? 1 : 0}) + ' Mo'; }
   function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -48,7 +51,7 @@
     if (!enCours) go.textContent = d ? 'Vérifier les nouveautés maintenant' : 'Tout enregistrer sur cet appareil';
   }
   btn.addEventListener('click', function () { p.hidden = !p.hidden; btn.setAttribute('aria-expanded', String(!p.hidden)); if (!p.hidden) montrerEtat(); });
-  p.querySelector('.hl-x').addEventListener('click', function () { p.hidden = true; btn.setAttribute('aria-expanded', 'false'); btn.focus(); });
+  p.querySelector('.hl-x').addEventListener('click', function () { p.hidden = true; btn.setAttribute('aria-expanded', 'false'); visibilite(); if (!btn.hidden) btn.focus(); });
 
   // Synchronisation : compare la liste GitHub avec ce qui est déjà enregistré, ne télécharge que la différence.
   function synchro(auto, suivi) {
@@ -125,7 +128,7 @@
     }).catch(function (e) {
       prog.textContent = e.message === 'place' ? 'Pas assez de place libre sur cet appareil pour tout enregistrer.'
         : e.message === 'liste' ? 'GitHub n’a pas répondu. Réessayez dans quelques minutes.' : 'L’enregistrement a été interrompu. Relancez-le : ce qui est déjà fait est gardé.';
-    }).then(function () { enCours = false; go.disabled = false; montrerEtat(); });
+    }).then(function () { enCours = false; go.disabled = false; montrerEtat(); visibilite(); });
   });
 
   // Mise à jour automatique, discrète, à l'ouverture
@@ -136,10 +139,12 @@
     if (Date.now() - der < ATTENTE) return;
     ecrire('hl-verif', String(Date.now()));
     enCours = true;
-    synchro(true, function () { etiquette('Mise à jour…'); }).then(function (r) {
-      if (r.ok) { ecrire('hl-date', String(Date.now())); etiquette('Site à jour'); setTimeout(function () { etiquette('Hors connexion'); }, 4000); }
-      else etiquette('Hors connexion');
-    }).catch(function () { etiquette('Hors connexion'); }).then(function () { enCours = false; });
+    synchro(true, function () { etiquette('Mise à jour…'); btn.hidden = false; }).then(function (r) {
+      if (r.ok) { ecrire('hl-date', String(Date.now())); etiquette('Site à jour'); return new Promise(function (ok) { setTimeout(ok, 4000); }); }
+    }).catch(function () {}).then(function () { enCours = false; etiquette('Hors connexion'); visibilite(); });
   }
+  if (location.hash === '#hors-connexion') { p.hidden = false; btn.setAttribute('aria-expanded', 'true'); montrerEtat(); }
+  visibilite();
+  window.addEventListener('hashchange', function () { if (location.hash === '#hors-connexion') { p.hidden = false; montrerEtat(); visibilite(); } });
   if (document.readyState === 'complete') setTimeout(auto, 1500); else window.addEventListener('load', function () { setTimeout(auto, 1500); });
 })();
