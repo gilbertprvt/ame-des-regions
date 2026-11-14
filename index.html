@@ -98,8 +98,56 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#14202b">
+
+  <!-- ── INTRODUCTION « Papy en Occitanie » : s'affiche à l'arrivée sur le site ── -->
+  <script>
+    /* Pas d'introduction quand on revient à l'accueil depuis une autre page du site */
+    try { var r = document.referrer && new URL(document.referrer);
+      if (r && r.origin === location.origin && r.pathname.indexOf('/ame-des-regions/') === 0)
+        document.documentElement.classList.add('sans-intro'); } catch (e) {}
+  </script>
+  <style>
+    #intro { position: fixed; inset: 0; display: grid; place-items: center; background: #282316; z-index: 10000;
+             transition: opacity 1.25s ease, visibility 1.25s; }
+    #intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    .sans-intro #intro { display: none; }
+    html:not(.sans-intro) body.intro-active { overflow: hidden; }
+    #intro .scene { position: relative; width: min(100vw, 150vh); width: min(100vw, 150dvh); aspect-ratio: 3 / 2; overflow: hidden; background: #87c7eb; }
+    #intro .scene > img { width: 100%; height: 100%; display: block; }
+    #equipage { position: absolute; pointer-events: none; left: 13%; top: 22%; width: 36%; height: auto;
+                transform-origin: top left; will-change: transform, opacity; backface-visibility: hidden; transform: translate3d(0,0,0); }
+    #panneau { position: absolute; left: 61%; top: 36%; width: 37%; height: 30%; border: 0; background: transparent;
+               cursor: pointer; border-radius: 35%; font-size: 0; }
+    #panneau:focus-visible { outline: 5px solid #fff; outline-offset: 3px; }
+    #indice { position: absolute; right: 6%; bottom: 8%; color: #fff; background: #5d2b16cc; padding: .6em 1em; border-radius: 2em;
+              font: 600 clamp(12px, 1.6vw, 22px) system-ui, sans-serif; pointer-events: none; }
+    #passer { position: absolute; left: 2%; bottom: 3%; color: #fff; background: #0006; border: 0; border-radius: 2em;
+              padding: .4em .9em; font: clamp(11px, 1.2vw, 16px) system-ui, sans-serif; cursor: pointer; }
+    #intro.go #equipage { animation: ride 8s linear forwards; }
+    #intro.go #indice, #intro.go #passer { opacity: 0; transition: opacity .3s; }
+    /* le vélo descend le chemin en s'éloignant */
+    @keyframes ride {
+      0%   { transform: translate3d(0,0,0) scale(1); opacity: 1 }
+      15%  { transform: translate3d(calc(var(--sw)*.035), calc(var(--sw)*.013), 0) scale(.94); opacity: 1 }
+      35%  { transform: translate3d(calc(var(--sw)*.11),  calc(var(--sw)*.055), 0) scale(.79); opacity: 1 }
+      55%  { transform: translate3d(calc(var(--sw)*.19),  calc(var(--sw)*.102), 0) scale(.60); opacity: 1 }
+      75%  { transform: translate3d(calc(var(--sw)*.27),  calc(var(--sw)*.155), 0) scale(.38); opacity: 1 }
+      92%  { transform: translate3d(calc(var(--sw)*.32),  calc(var(--sw)*.185), 0) scale(.20); opacity: 1 }
+      100% { transform: translate3d(calc(var(--sw)*.34),  calc(var(--sw)*.20),  0) scale(.12); opacity: 0 }
+    }
+    @media (prefers-reduced-motion: reduce) { #intro.go #equipage { animation: none; } #intro { transition: none; } }
+  </style>
 </head>
-<body>
+<body class="intro-active">
+  <section id="intro" aria-label="Introduction animée">
+    <div class="scene">
+      <img src="intro-decor.webp" alt="Paysage d'Occitanie avec le panneau Bienvenue en Occitanie" width="1536" height="1024">
+      <img id="equipage" src="intro-papy-velo.webp" alt="" width="900" height="1190">
+      <button id="panneau" aria-label="Entrer sur le site L'Âme des Régions"></button>
+      <span id="indice">Cliquez sur le panneau pour entrer</span>
+      <button id="passer" type="button">Passer l'introduction</button>
+    </div>
+  </section>
   <main class="accueil">
     <img src="accueil-occitanie-sans-bouton.webp" alt="L'Âme des Régions : L'Occitanie, terre d'émotions. Paysages, patrimoine, traditions et découverte des 13 départements d'Occitanie." width="1536" height="1024">
     <nav class="boutons" aria-label="Découvrir l'Occitanie">
@@ -139,6 +187,24 @@
     </nav>
     <p class="mention-ia">Textes et illustrations créés avec l'aide de l'intelligence artificielle</p>
   </main>
+  <script>
+    (function () {
+      var intro = document.getElementById('intro'), panneau = document.getElementById('panneau'),
+          scene = intro.querySelector('.scene'), parti = false;
+      function taille() { scene.style.setProperty('--sw', scene.getBoundingClientRect().width + 'px'); }
+      taille(); addEventListener('resize', taille, { passive: true });
+      function fin() {
+        intro.classList.add('done'); document.body.classList.remove('intro-active');
+        setTimeout(function () { intro.remove(); }, 1300);
+      }
+      panneau.addEventListener('click', function () {
+        if (parti) return; parti = true;
+        intro.classList.add('go'); panneau.disabled = true;
+        setTimeout(fin, matchMedia('(prefers-reduced-motion: reduce)').matches ? 150 : 8000);
+      });
+      document.getElementById('passer').addEventListener('click', fin);
+    })();
+  </script>
   <script src="hors-ligne.js"></script>
 </body>
 </html>
